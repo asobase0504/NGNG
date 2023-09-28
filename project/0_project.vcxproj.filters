@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main">
+      <UniqueIdentifier>{d98e6a9b-a3c5-489a-b787-7efcf3012c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main\01_Input">
+      <UniqueIdentifier>{b5492f8a-70f7-46e3-b088-a1eb3868fb39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main\00_Object">
+      <UniqueIdentifier>{c53256cb-eda0-49e1-83d9-8821475c628f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Particle">
+      <UniqueIdentifier>{c5a5fa9e-472f-4cf8-909a-94d4b1d28fe6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode">
+      <UniqueIdentifier>{4e0a8f10-95eb-467c-8ffa-dc5efedc9c62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main\File">
+      <UniqueIdentifier>{321d770b-9cfd-4d58-b2a8-4f510f81785f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D">
+      <UniqueIdentifier>{4c50ce22-cb4c-4b53-b597-2b3e0b3023e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\Game">
+      <UniqueIdentifier>{49403d4c-db67-4593-8246-908061209e6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\Title">
+      <UniqueIdentifier>{1ddbac7c-5219-4943-92c8-793177843ddf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\precompile.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\application.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\DirectInput.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\inputjoypad.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\inputkeyboard.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\inputmouse.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\debug_proc.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object_mesh.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object_polygon3d.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object2d.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objectX.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\motion.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\motion_model3D.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particle.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particle_emitter.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particle_manager.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\letter.cpp">
+      <Filter>ソース ファイル\00_Main\File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fade.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mode.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task_group.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sound.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\file.cpp">
+      <Filter>ソース ファイル\00_Main\File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\line.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objectX_group.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\parts.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\number.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\light.cpp">
+      <Filter>ソース ファイル\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera.cpp">
+      <Filter>ソース ファイル\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game.cpp">
+      <Filter>ソース ファイル\Mode\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\title.cpp">
+      <Filter>ソース ファイル\Mode\Title</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\precompile.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\DirectInput.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\inputjoypad.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\inputkeyboard.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\inputkeydata.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\inputmouse.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\debug_proc.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objectX.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object_mesh.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object_polygon3d.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object2d.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion_model3D.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particle_manager.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particle.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particle_emitter.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\text.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\letter.h">
+      <Filter>ソース ファイル\00_Main\File</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fade.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mode.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texture.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task_group.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sound.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\file.h">
+      <Filter>ソース ファイル\00_Main\File</Filter>
+    </ClInclude>
+    <ClInclude Include="src\line.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\parts.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objectX_group.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\number.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\light.h">
+      <Filter>ソース ファイル\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camera.h">
+      <Filter>ソース ファイル\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game.h">
+      <Filter>ソース ファイル\Mode\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\title.h">
+      <Filter>ソース ファイル\Mode\Title</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
