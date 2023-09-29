@@ -17,7 +17,7 @@ public:
 	~CNumber();
 	HRESULT Init() override;
 	void Uninit() override;
-	void NormalUpdate() override;
+	void Update() override;
 	void Draw() override;
 	static CNumber* Create();
 	

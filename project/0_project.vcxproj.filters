@@ -119,9 +119,6 @@
     <ClCompile Include="src\sound.cpp">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>ソース ファイル\00_Main\01_Input</Filter>
-    </ClCompile>
     <ClCompile Include="src\file.cpp">
       <Filter>ソース ファイル\00_Main\File</Filter>
     </ClCompile>
@@ -151,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="src\title.cpp">
       <Filter>ソース ファイル\Mode\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

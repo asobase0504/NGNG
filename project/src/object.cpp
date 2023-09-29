@@ -23,10 +23,7 @@ CObject::CObject(CTaskGroup::EPriority inPriority, CTaskGroup::EPushMethod inMet
 	m_moveRot(0.0f, 0.0f, 0.0f),		// 回転量
 	m_size(0.0f, 0.0f, 0.0f),			// 大きさ
 	m_color(1.0f, 1.0f, 1.0f,1.0f),		// 色
-	m_type(NONE),
-	m_updateStatus(EUpdateStatus::POP),
-	m_isPopInNormalUpdate(false),
-	m_isEndInNormalUpdate(false)
+	m_type(NONE)
 {
 	SetRole(ROLE_OBJECT);
 }
@@ -48,22 +45,6 @@ void CObject::Update()
 	// 移動
 	AddPos(GetMove());
 	AddRot(GetMoveRot());
-
-	switch (m_updateStatus)
-	{
-	case EUpdateStatus::POP:
-		PopUpdate();
-		break;
-	case EUpdateStatus::NORMAL:
-		NormalUpdate();
-		break;
-	case EUpdateStatus::END:
-		EndUpdate();
-		break;
-	default:
-		assert(false);
-		break;
-	}
 }
 
 //-----------------------------------------------------------------------------
@@ -140,27 +121,4 @@ void CObject::MulSize(const D3DXVECTOR3 & inRatio)
 	size.y = m_size.y * inRatio.y;
 	size.z = m_size.z * inRatio.z;
 	SetSize(size);
-}
-
-//-----------------------------------------------------------------------------
-// 出現中の更新
-//-----------------------------------------------------------------------------
-void CObject::PopUpdate()
-{
-	m_updateStatus = EUpdateStatus::NORMAL;
-}
-
-//-----------------------------------------------------------------------------
-// 通常中の更新
-//-----------------------------------------------------------------------------
-void CObject::NormalUpdate()
-{
-}
-
-//-----------------------------------------------------------------------------
-// 終了中の更新
-//-----------------------------------------------------------------------------
-void CObject::EndUpdate()
-{
-	Release();
 }

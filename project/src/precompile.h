@@ -51,6 +51,7 @@
 #include <chrono>
 #include <string>
 
+// newデバッグ用
 #pragma push_macro("new")
 #undef new
 

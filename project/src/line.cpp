@@ -120,7 +120,7 @@ void CLine::Uninit()
 // Author : 唐﨑結斗
 // 概要 : 2D更新を行う
 //=============================================================================
-void CLine::NormalUpdate()
+void CLine::Update()
 {
 
 }

@@ -34,23 +34,11 @@ public:
 		NONE
 	};
 
-	// 更新状態の列挙
-	enum class EUpdateStatus
-	{
-		POP = 0,
-		NORMAL,
-		END,
-		MAX
-	};
-
-private:
-	void Update() override final;
 public:
 	CObject(CTaskGroup::EPriority inPriority = CTaskGroup::LEVEL_2D_BG, CTaskGroup::EPushMethod inMethod = CTaskGroup::EPushMethod::PUSH_CURRENT);
 	virtual ~CObject() override;
 
-	// 更新
-	void SetUpdateStatus(const EUpdateStatus inStatus) { m_updateStatus = inStatus; }
+	void Update() override;
 
 	/* 種類系 */
 	void SetType(const EType inType) { m_type = inType; }
@@ -110,11 +98,6 @@ public:
 	std::string GetTexture() { return m_textureKey; }
 
 protected:
-	virtual void PopUpdate();
-	virtual void NormalUpdate();
-	virtual void EndUpdate();
-
-protected:
 	D3DXVECTOR3 m_pos;		// 位置
 	D3DXVECTOR3 m_posOld;	// 過去の位置
 	D3DXVECTOR3 m_move;		// 移動量
@@ -125,10 +108,5 @@ protected:
 
 	EType m_type;	// 種別
 	std::string m_textureKey;	// テクスチャにアクセスするキー
-	
-	/* 更新処理 */
-	EUpdateStatus m_updateStatus;	// 更新状態
-	bool m_isPopInNormalUpdate;		// 出現中に通常更新を行うか
-	bool m_isEndInNormalUpdate;		// 終了中に通常更新を行うか
-};
+	};
 #endif

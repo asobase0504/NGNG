@@ -17,7 +17,7 @@
 // 4“_‚Ì’¸“_
 struct PositionVec4
 {
-	float     P0, P1, P2, P3;
+	float P0, P1, P2, P3;
 	constexpr PositionVec4() : P0(0.0f), P1(0.0f), P2(0.0f), P3(0.0f) { }
 	constexpr PositionVec4(float _P0, float _P1, float _P2, float _P3) : P0(_P0), P1(_P1), P2(_P2), P3(_P3) { }
 };
@@ -51,7 +51,7 @@ public:
 	~CObject2d() override;
 	HRESULT Init() override;
 	void Uninit() override;
-	void NormalUpdate() override;
+	void Update() override;
 	void Draw() override;
 
 	// Setter

@@ -51,7 +51,7 @@ public:
 	//--------------------------------------------------------------------
 	HRESULT Init() override;																				// 初期化
 	void Uninit() override;																					// 終了
-	void NormalUpdate() override;																			// 更新
+	void Update() override;																			// 更新
 	void Draw() override;																					// 描画
 	void SetPos(const D3DXVECTOR3 &pos) override;															// 位置のセッター
 	void SetPosOld(const D3DXVECTOR3 &posOld) { m_posOld = posOld; }										// 過去位置のセッター

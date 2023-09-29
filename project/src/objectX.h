@@ -17,33 +17,6 @@
 //-----------------------------------------------------------------------------
 class CObjectPolygon3D;
 
-struct RI
-{
-	char inR;
-	char outR;
-	char inI;
-	char outI;
-};
-
-
-union FeaturePair
-{
-	RI ri;
-
-	int key;
-};
-
-struct ClipVertex
-{
-	ClipVertex()
-	{
-		f.key = ~0;
-	}
-
-	D3DXVECTOR3 v;
-	FeaturePair f;
-};
-
 //-----------------------------------------------------------------------------
 // クラスの定義
 //-----------------------------------------------------------------------------
@@ -64,8 +37,6 @@ public:
 	/* 描画 */
 	void Draw() override;
 	void DrawMaterial();
-	void DrawOutLine();
-	void DrawShadow();
 	void Projection();			// 平行投影処理
 
 	/* 生成処理 */
@@ -114,19 +85,11 @@ public:
 	void SetCollisionFlag(bool inFlag) { m_isCollision = inFlag; }	// 当たり判定の有無を設定
 
 	bool IsCollision() { return m_isCollision; }	// 当たり判定の有無を取得
-	bool OBBAndOBB(CObjectX* inObjectX);
-	bool OBBAndOBB(CObjectX* inObjectX,D3DXVECTOR3* outPos);
 	bool SphereAndAABB(CObjectX* inObjectX,D3DXVECTOR3* outPos = nullptr);
 	bool RayAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inNormal, D3DXVECTOR3* outPos = nullptr);
 	bool SegmentAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inPos2, D3DXVECTOR3* outPos = nullptr);
 
 	float AABBAndPointLength(CObjectX* inObject, D3DXVECTOR3* outDist = nullptr);
-
-private:
-	float LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = nullptr);
-	void ComputeIncidentFace(const D3DXVECTOR3& itx_pos, const D3DXMATRIX& itx_mtxRot, const D3DXVECTOR3& e, D3DXVECTOR3 n, ClipVertex* out);
-	void ComputeReferenceEdgesAndBasis(const D3DXVECTOR3& eR, const D3DXVECTOR3& rtx_pos, const D3DXMATRIX& rtx_mtxRot, D3DXVECTOR3 n, int axis, char* out, D3DXMATRIX* basis, D3DXVECTOR3* e);
-	int Clip(const D3DXVECTOR3& rPos, const D3DXVECTOR3& e, char* clipEdges, const D3DXMATRIX& basis, ClipVertex* incident, ClipVertex* outVerts, float* outDepths);
 
 private:
 	//-------------------------------------------------------------------------

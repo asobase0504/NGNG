@@ -50,9 +50,9 @@ void CFade::Uninit(void)
 //=============================================================================
 // 更新
 //=============================================================================
-void CFade::NormalUpdate(void)
+void CFade::Update(void)
 {
-	CObject2d::NormalUpdate();
+	CObject2d::Update();
 	if (m_fade != FADENON)
 	{
 		// 現在のモーション番号の保管

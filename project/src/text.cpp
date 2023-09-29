@@ -77,9 +77,9 @@ void CText::Uninit()
 //=============================================================================
 // çXêVä÷êî
 //=============================================================================
-void CText::NormalUpdate()
+void CText::Update()
 {
-	CObject2d::NormalUpdate();
+	CObject2d::Update();
 
 	if (m_isRelease)
 	{

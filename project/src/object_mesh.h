@@ -25,7 +25,7 @@ public:
 
 	HRESULT Init() override;		// 初期化
 	void Uninit() override;			// 破棄
-	void NormalUpdate() override;	// 更新
+	void Update() override;	// 更新
 	void Draw() override;			// 描画
 
 	static CMesh* Create();

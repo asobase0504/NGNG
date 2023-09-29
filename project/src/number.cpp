@@ -54,9 +54,9 @@ void CNumber::Uninit()
 //=============================================================================
 // çXêVä÷êî
 //=============================================================================
-void CNumber::NormalUpdate()
+void CNumber::Update()
 {
-	CObject2d::NormalUpdate();
+	CObject2d::Update();
 
 	if (m_isRelease)
 	{
