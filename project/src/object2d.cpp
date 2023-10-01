@@ -28,7 +28,7 @@ const D3DXVECTOR3 CObject2d::m_Vtx[4] =
 // コンストラクト関数
 //--------------------------------------------------------------
 CObject2d::CObject2d(CTaskGroup::EPriority list) :
-	CObject(list,CTaskGroup::EPushMethod::PUSH_CURRENT)
+	CObject(list,CTaskGroup::EPushMethod::PUSH_CURRENT), m_pVtxBuff(nullptr)
 {
 }
 
@@ -107,6 +107,8 @@ HRESULT CObject2d::Init()
 	 m_Timar = 0;
 	 m_TimaCount = 0;
 	 m_OnAnimation = false;
+	 m_Loop = false;
+
 	return S_OK;
 }
 

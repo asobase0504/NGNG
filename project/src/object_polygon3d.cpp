@@ -35,7 +35,7 @@ CObjectPolygon3D::CObjectPolygon3D(CTaskGroup::EPriority list) :
 	CObject(list,CTaskGroup::EPushMethod::PUSH_CURRENT),
 	m_pVtxBuff(nullptr)
 {
-	
+	D3DXMatrixIdentity(&m_mtxWorld);
 }
 
 //--------------------------------------------------------------

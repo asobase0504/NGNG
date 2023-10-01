@@ -176,7 +176,6 @@ CText *CText::Create(Type talkType,int DeleteTime, int SpeedText,const char* Tex
 	return pObject;
 }
 
-
 //--------------------------------------------------------------
 // ‚¯‚·‚Ü‚Å‚ÌŠÔİ’èŠÖ”
 //--------------------------------------------------------------

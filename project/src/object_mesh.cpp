@@ -15,7 +15,7 @@
 //==============================================================
 // 定数
 //==============================================================
-#define MOUNTAIN (50.0f)
+const float CMesh::MOUNTAIN(50.0f);
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -65,16 +65,16 @@ HRESULT CMesh::Init()
 void CMesh::Uninit()
 {
 	// 頂点バッファーの解放
-	if (m_pVtxBuff != NULL)
+	if (m_pVtxBuff != nullptr)
 	{
 		m_pVtxBuff->Release();
-		m_pVtxBuff = NULL;
+		m_pVtxBuff = nullptr;
 	}
 
-	if (m_pIdxBuff != NULL)
+	if (m_pIdxBuff != nullptr)
 	{
 		m_pIdxBuff->Release();
-		m_pIdxBuff = NULL;
+		m_pIdxBuff = nullptr;
 	}
 
 	Release();
@@ -137,7 +137,7 @@ void CMesh::Draw()
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, m_vtx, 0, m_polygonCount);
 
 	//テクスチャの設定
-	pDevice->SetTexture(0, NULL);
+	pDevice->SetTexture(0, nullptr);
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
@@ -157,7 +157,6 @@ CMesh* CMesh::Create()
 	return pObject;
 }
 
-
 //--------------------------------------------------------------
 // 当たり判定
 // Author: hamada ryuuga
@@ -169,7 +168,7 @@ bool CMesh::Collision(D3DXVECTOR3* pPos)
 	const int nTri = 3;
 
 	// 頂点座標をロック
-	VERTEX_3D* pVtx = NULL;
+	VERTEX_3D* pVtx = nullptr;
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//インデックスバッファのロック
@@ -270,7 +269,7 @@ bool CMesh::CreateMesh(D3DXVECTOR3* pPos)
 {
 	bool bIsLanding = false;
 
-	VERTEX_3D* pVtx = NULL;
+	VERTEX_3D* pVtx = nullptr;
 
 	const int nTri = 3;
 
@@ -346,7 +345,6 @@ bool CMesh::CreateMesh(D3DXVECTOR3* pPos)
 	m_pIdxBuff->Unlock();
 
 	CMesh::SetVtxMeshLight();
-	
 
 	return bIsLanding;
 }
@@ -370,14 +368,14 @@ void CMesh::SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx,int nCnt,bool isUp)
 //--------------------------------------------------------------
 // 今あるオブジェクトの読み込み
 //--------------------------------------------------------------
-void CMesh::Loadfile(const char * pFileName)
+void CMesh::Loadfile(const char* pFileName)
 {
 	Uninit();
 	//NotRelease();
 	std::ifstream ifs(pFileName);
 
 	int nIndex = 0;
-	VERTEX_3D* pVtx = NULL;
+	VERTEX_3D* pVtx = nullptr;
 	// 頂点座標をロック	
 	std::string str;
 	if (ifs)
@@ -439,9 +437,9 @@ void CMesh::Loadfile(const char * pFileName)
 //--------------------------------------------------------------
 // 今あるオブジェクトの保存
 //--------------------------------------------------------------
-void CMesh::Savefile(const char * pFileName)
+void CMesh::Savefile(const char* pFileName)
 {
-	VERTEX_3D* pVtx = NULL;
+	VERTEX_3D* pVtx = nullptr;
 
 	// 頂点座標をロック
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
@@ -570,7 +568,7 @@ void CMesh::SetVtxMeshSize(int Size)
 //--------------------------------------------------------------
 void CMesh::SetVtxMeshLight()
 {
-	VERTEX_3D* pVtx = NULL;
+	VERTEX_3D* pVtx = nullptr;
 	//インデックスバッファのロック
 	WORD* pIdx;
 

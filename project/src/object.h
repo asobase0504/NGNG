@@ -109,5 +109,5 @@ protected:
 
 	EType m_type;	// 種別
 	std::string m_textureKey;	// テクスチャにアクセスするキー
-	};
+};
 #endif

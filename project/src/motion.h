@@ -31,11 +31,11 @@ public:
 	//--------------------------------------------------------------
 	// 定数定義
 	//--------------------------------------------------------------
-	static const unsigned int MAX_MOTION = (128);			// モーション数の最大数
-	static const unsigned int MAX_MODEL_PARTS = (128);		// モデル数の最大数
-	static const unsigned int MAX_KEY = (64);				// キーの最大数
-	static const unsigned int MAX_KEYSET = (64);			// キー設定の最大数
-	static const unsigned int MOTION_BLEND_FRAM = (12);		// モーションブレンドのフレーム数	
+	static const unsigned int MAX_MOTION;			// モーション数の最大数
+	static const unsigned int MAX_MODEL_PARTS;		// モデル数の最大数
+	static const unsigned int MAX_KEY;				// キーの最大数
+	static const unsigned int MAX_KEYSET;			// キー設定の最大数
+	static const unsigned int MOTION_BLEND_FRAM;	// モーションブレンドのフレーム数
 
 	//--------------------------------------------------------------
 	// キー構造体を定義

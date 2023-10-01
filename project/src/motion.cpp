@@ -16,6 +16,15 @@
 #include "utility.h"
 
 //--------------------------------------------------------------
+// 定数定義
+//--------------------------------------------------------------
+const unsigned int CMotion::MAX_MOTION (128);			// モーション数の最大数
+const unsigned int CMotion::MAX_MODEL_PARTS (128);		// モデル数の最大数
+const unsigned int CMotion::MAX_KEY (64);				// キーの最大数
+const unsigned int CMotion::MAX_KEYSET (64);			// キー設定の最大数
+const unsigned int CMotion::MOTION_BLEND_FRAM (12);		// モーションブレンドのフレーム数
+
+//--------------------------------------------------------------
 // コンストラクタ
 // Author : 唐﨑結斗
 // 概要 : インスタンス生成時に行う処理
@@ -81,21 +90,14 @@ void CMotion::Uninit()
 
 	for (int i = 0; i < m_nMaxParts; i++)
 	{
-		if (m_parts[i] != NULL)
+		if (m_parts[i] != nullptr)
 		{
 			m_parts[i]->Uninit();
 			m_parts[i] = nullptr;
 		}
 	}
 
-	for (int i = 0; i < (int)m_parts.size(); i++)
-	{
-		if (m_parts.at(i) != nullptr)
-		{
-			delete m_parts.at(i);
-			m_parts.at(i) = nullptr;
-		}
-	}
+	m_parts.clear();
 }
 
 //--------------------------------------------------------------

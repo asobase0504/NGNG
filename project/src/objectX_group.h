@@ -43,7 +43,6 @@ public:
 	void Load(std::vector<std::string> inModel) { Load(inModel[0], inModel[1]); }			// 指定の読み込み
 	void Unload(std::string inKey);				// 指定の破棄
 
-	// Getter
 	LPD3DXMESH GetMesh(std::string inKey);		// メッシュの取得
 	LPD3DXBUFFER GetBuffMat(std::string inKey);	// バッファーの取得
 	DWORD GetNumMat(std::string inKey);			// マテリアル数の取得

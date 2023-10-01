@@ -72,7 +72,7 @@ protected:
 	D3DXMATRIX m_mtxWorld;	// マトリックス
 
 private:
-	LPDIRECT3DVERTEXBUFFER9	m_pVtxBuff = NULL;
+	LPDIRECT3DVERTEXBUFFER9	m_pVtxBuff;
 
 	/* アニメーション系統 */
 	// 現在のアニメーション状況

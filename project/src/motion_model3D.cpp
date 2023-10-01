@@ -74,7 +74,7 @@ HRESULT CMotionModel3D::Init()
 	m_posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	// 過去位置
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// 向き
 
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 //--------------------------------------------------------------
@@ -499,7 +499,7 @@ bool CMotionModel3D::SegmentCollision(CObjectX* inObjectX)
 //--------------------------------------------------------------
 //　// TODO YUDA 関数の説明書いてね
 //--------------------------------------------------------------
-float CMotionModel3D::LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3)
+float CMotionModel3D::LenSegOnSeparateAxis(D3DXVECTOR3* Sep, D3DXVECTOR3* e1, D3DXVECTOR3* e2, D3DXVECTOR3* e3)
 {
 	// 3つの内積の絶対値の和で投影線分長を計算
 	// 分離軸Sepは標準化されていること

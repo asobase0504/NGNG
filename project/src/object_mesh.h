@@ -18,6 +18,9 @@
 class CMesh : public CObjectPolygon3D
 {
 public:
+	static const float MOUNTAIN;
+
+public:
 	virtual void OnHit() {}	// ƒƒbƒVƒ…‚Ì“–‚½‚Á‚½‚Ì”»’è
 
 	CMesh(CTaskGroup::EPriority nPriority = CTaskGroup::EPriority::LEVEL_3D_1);

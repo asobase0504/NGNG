@@ -72,7 +72,7 @@ CObject* CObject::SearchType(EType inType, int inPriority)
 //--------------------------------------------------------------
 // Ž©g‚Æ“¯‚¶Ží•Ê‚Ìobject‚ð’T‚·
 //--------------------------------------------------------------
-CObject * CObject::NextSameType()
+CObject* CObject::NextSameType()
 {
 	CTaskGroup* taskGroup = CApplication::GetInstance()->GetTaskGroup();
 	CObject* now = (CObject*)taskGroup->SearchSameRoleNext(this);

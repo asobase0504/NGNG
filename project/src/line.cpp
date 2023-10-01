@@ -18,7 +18,7 @@
 // Author : 唐﨑結斗
 // 概要 : 2Dオブジェクトを生成する
 //--------------------------------------------------------------
-CLine* CLine::Create(void)
+CLine* CLine::Create()
 {
 	// オブジェクトインスタンス
 	CLine *pLine = nullptr;
