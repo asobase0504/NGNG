@@ -250,9 +250,6 @@
     <ClInclude Include="src\objectX_group.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\number.h">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClInclude>
     <ClInclude Include="src\renderer.h">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClInclude>
@@ -267,6 +264,9 @@
     </ClInclude>
     <ClInclude Include="src\title.h">
       <Filter>ソース ファイル\Mode\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="src\number.h">
+      <Filter>ソース ファイル\00_Main</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -50,7 +50,6 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	// Setter
 	void SetTex(PositionVec4 inTex);
 	void SetPos(const D3DXVECTOR3& inPos) override;
 	void SetRot(const D3DXVECTOR3& inRot) override;

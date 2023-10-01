@@ -25,7 +25,7 @@ public:
 
 	HRESULT Init() override;		// 初期化
 	void Uninit() override;			// 破棄
-	void Update() override;	// 更新
+	void Update() override;			// 更新
 	void Draw() override;			// 描画
 
 	static CMesh* Create();
@@ -36,22 +36,21 @@ public:
 	void Loadfile(const char * pFileName);	// メッシュの読み込み
 	void Savefile(const char * pFileName);	// メッシュの書き出し
 	
-	//セッター
 	void SetMesh(const int Size);
+
 	void SetNumber(int IsNumber) { m_Number = IsNumber; }
-	void SetType(int IsType) { m_Type = IsType; }
-
-	void SetOneMeshSize(D3DXVECTOR3 IsSize);
-
-	void SwitchCollision(bool onCollision) { IsCollision = onCollision; };
-
-	//ゲッター
-	D3DXVECTOR3 GetOneMeshSize() { return m_MeshSize; }
-	D3DXVECTOR3 GetMeshSize() { return D3DXVECTOR3(m_vtxCountX * m_MeshSize.x, 0.0f, m_vtxCountZ * m_MeshSize.z); }
 	int GetNumber() { return m_Number; }
+
+	void SetType(int IsType) { m_Type = IsType; }
 	int GetMeshType() { return m_Type; }
 
+	D3DXVECTOR3 GetMeshSize() { return D3DXVECTOR3(m_vtxCountX * m_MeshSize.x, 0.0f, m_vtxCountZ * m_MeshSize.z); }
+
+	void SetOneMeshSize(D3DXVECTOR3 IsSize);
+	D3DXVECTOR3 GetOneMeshSize() { return m_MeshSize; }
 	int GetMeshSizeX() { return m_vtxCountX; }
+
+	void SwitchCollision(bool onCollision) { IsCollision = onCollision; };
 
 	std::string GetDataNeme() { return DataName; }
 

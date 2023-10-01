@@ -18,9 +18,9 @@
 #include "camera.h"
 #include "light.h"
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // コンストラクタ
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 	CObject(nPriority),
 	m_scale(1.0f,1.0f,1.0f),
@@ -44,18 +44,18 @@ CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 	m_materialDiffuse.clear();
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // デストラクタ
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 CObjectX::~CObjectX()
 {
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // オブジェクトの初期化
 // Author : Yuda Kaito
 // 概要 : 初期化を行う
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 HRESULT CObjectX::Init()
 {
 	extern LPD3DXEFFECT pEffect;	// シェーダー
@@ -73,11 +73,11 @@ HRESULT CObjectX::Init()
 	return S_OK;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 描画
 // Author : Yuda Kaito
 // 概要 : 描画を行う
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CObjectX::Draw()
 {
 	// 計算用マトリックス
@@ -109,11 +109,11 @@ void CObjectX::Draw()
 	DrawMaterial();
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 描画
 // Author : Yuda Kaito
 // 概要 : 描画を行う
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CObjectX::DrawMaterial()
 {
 	extern LPD3DXEFFECT pEffect;		// シェーダー
@@ -221,9 +221,9 @@ void CObjectX::DrawMaterial()
 	pEffect->End();
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // scaleの設定
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CObjectX::SetScale(const D3DXVECTOR3& inScale)
 {
 	m_scale = inScale;
@@ -237,10 +237,10 @@ void CObjectX::SetScale(const D3DXVECTOR3& inScale)
 	m_MaxVtx.z = m_scale.z * m_MaxVtxOrigin.z;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 向きの設定
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CObjectX::SetRot(const D3DXVECTOR3 & inRot)
 {
 	if (m_rot != inRot)
@@ -250,10 +250,10 @@ void CObjectX::SetRot(const D3DXVECTOR3 & inRot)
 	m_rot = inRot;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 頂点最大小値の計算処理
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CObjectX::SetMtxRot(const D3DXVECTOR3 & inRot)
 {
 	D3DXQUATERNION quaternion;
@@ -261,10 +261,10 @@ void CObjectX::SetMtxRot(const D3DXVECTOR3 & inRot)
 	SetMtxQuaternion(quaternion);
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 頂点最大小値の計算処理
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CObjectX::CalculationVtx()
 {
 	D3DXMATRIX mtxTrans, mtxWorld;
@@ -299,10 +299,10 @@ void CObjectX::CalculationVtx()
 	}
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 生成処理
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 CObjectX * CObjectX::Create(D3DXVECTOR3 pos, CTaskGroup::EPriority nPriority)
 {
 	// ポインタ宣言
@@ -326,11 +326,11 @@ CObjectX * CObjectX::Create(D3DXVECTOR3 pos, CTaskGroup::EPriority nPriority)
 	return pObjectX;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // モデルの読み込み
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
-void CObjectX::LoadModel(const char *aFileName)
+//--------------------------------------------------------------
+void CObjectX::LoadModel(const char* aFileName)
 {
 	CObjectXGroup *xGroup = CApplication::GetInstance()->GetObjectXGroup();
 	m_pBuffMat = xGroup->GetBuffMat(aFileName);
@@ -343,10 +343,10 @@ void CObjectX::LoadModel(const char *aFileName)
 	m_size = xGroup->GetSize(aFileName);
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 平行投影処理
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CObjectX::Projection(void)
 {
 	// デバイスの取得
@@ -411,11 +411,11 @@ void CObjectX::Projection(void)
 	pDevice->SetMaterial(&matDef);
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 色味（拡散反射光）の設定
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
-void CObjectX::SetMaterialDiffuse(unsigned int index, const D3DXCOLOR & inColor)
+//--------------------------------------------------------------
+void CObjectX::SetMaterialDiffuse(unsigned int index, const D3DXCOLOR& inColor)
 {
 	// 変更予定のマテリアルがない場合
 	if (index >= m_NumMat)
@@ -434,11 +434,11 @@ void CObjectX::SetMaterialDiffuse(unsigned int index, const D3DXCOLOR & inColor)
 	}
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // SphereとAABBの当たり判定
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
-bool CObjectX::SphereAndAABB(CObjectX * inObjectX, D3DXVECTOR3 * outPos)
+//--------------------------------------------------------------
+bool CObjectX::SphereAndAABB(CObjectX* inObjectX, D3DXVECTOR3* outPos)
 {
 	if (!inObjectX->IsCollision())
 	{
@@ -461,11 +461,11 @@ bool CObjectX::SphereAndAABB(CObjectX * inObjectX, D3DXVECTOR3 * outPos)
 	return m_MaxVtx.x * 1.4f > length;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // RayとAABBの当たり判定
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
-bool CObjectX::RayAndAABB(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inNormal, D3DXVECTOR3* outPos)
+//--------------------------------------------------------------
+bool CObjectX::RayAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inNormal, D3DXVECTOR3* outPos)
 {
 	float tmin = (m_MinVtx.x + m_pos.x - inPos.x) / inNormal.x;
 	float tmax = (m_MaxVtx.x + m_pos.x - inPos.x) / inNormal.x;
@@ -526,11 +526,11 @@ bool CObjectX::RayAndAABB(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inNorma
 	return true;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 線分とAABBの当たり判定
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
-bool CObjectX::SegmentAndAABB(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inPos2, D3DXVECTOR3* outPos)
+//--------------------------------------------------------------
+bool CObjectX::SegmentAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inPos2, D3DXVECTOR3* outPos)
 {
 	// 線分の両端点がAABB内に含まれているかどうかを判定する。
 	{
@@ -621,11 +621,11 @@ bool CObjectX::SegmentAndAABB(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inP
 	return false;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 現在地とAABBの最小距離
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
-float CObjectX::AABBAndPointLength(CObjectX * inObject, D3DXVECTOR3* outDist)
+//--------------------------------------------------------------
+float CObjectX::AABBAndPointLength(CObjectX* inObject, D3DXVECTOR3* outDist)
 {
 	float SqLen = 0.0f;	// 長さのべき乗の値を格納
 

@@ -56,7 +56,6 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	// Setter
 	void SetTex(PositionVec4 Tex);
 	void SetColor(const D3DXCOLOR& inColor) override;
 	void SetAnimation(const int U, const int V, const int Speed, const int Drawtimer, const bool loop);
