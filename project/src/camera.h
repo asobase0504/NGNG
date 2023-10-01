@@ -8,15 +8,15 @@
 #ifndef _CAMERA_H_
 #define _CAMERA_H_
 
-//-----------------------------------------------------------------------------
+//==============================================================
 // include
-//-----------------------------------------------------------------------------
+//==============================================================
 #include "renderer.h"
 #include "task.h"
 
-//=============================================================================
+//==============================================================
 // カメラクラス
-//=============================================================================
+//==============================================================
 class CCamera : public CTask
 {
 private:
@@ -36,7 +36,7 @@ public:
 	const D3DXMATRIX& GetMtxView() { return m_MtxView; }
 	const D3DXVECTOR3& GetPos() { return m_posV; }
 
-	const D3DXVECTOR3& VectorCombinedRot(const D3DXVECTOR3& inVector);
+	const D3DXVECTOR3 VectorCombinedRot(const D3DXVECTOR3& inVector);
 
 	// カメラを揺らす
 	void Shake(float ShakeFrame, float Magnitude);
