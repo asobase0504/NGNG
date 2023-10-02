@@ -83,17 +83,17 @@ public:
 	void SetPartsOrigin();							// パーツをもとの場所に配置する
 
 	void SetMotion(const int nCntMotionSet);		// モーションの初期設定
-	bool GetMotion() { return m_bMotion; }			// モーションを行っているか取得
+	bool GetMotion() { return m_isMotion; }			// モーションを行っているか取得
 
 	void SetParts(D3DXMATRIX mtxWorld);				// パーツの設定
 	CParts* GetParts(int index) { return m_parts[index]; }	// モーションブレンドを行っているか取得
 
 	void SetNumMotion(const int nNumMotion);		// モーション番号の設定
-	void SetUseMotion(bool isMotion) { m_bMotion = isMotion; }			// モーションを行っているか設定
-	void SetMotionBlend(bool isBlend) { m_bMotionBlend = isBlend; }		// モーションブレンドを行っているか設定
+	void SetUseMotion(bool isMotion) { m_isMotion = isMotion; }			// モーションを行っているか設定
+	void SetMotionBlend(bool isBlend) { m_isMotionBlend = isBlend; }		// モーションブレンドを行っているか設定
 
-	int GetMaxParts() { return m_nMaxParts; }				// パーツの最大数の取得
-	bool GetMotionBlend() { return m_bMotionBlend; }		// モーションブレンドを行っているか取得
+	int GetMaxParts() { return m_maxParts; }				// パーツの最大数の取得
+	bool GetMotionBlend() { return m_isMotionBlend; }		// モーションブレンドを行っているか取得
 
 private:
 	//--------------------------------------------------------------------
@@ -109,14 +109,14 @@ private:
 	//--------------------------------------------------------------------
 	// メンバ変数
 	//--------------------------------------------------------------------
-	CModel3D	*m_pParent;						// 親
-	std::vector<MyMotion> m_motion;				// モーション
-	std::vector<CParts*> m_parts;				// パーツ
-	std::vector<char*> m_partsFile;	// パーツのXファイル名
-	int m_nMaxParts;							// パーツ数
-	int m_nNumMotion;							// 扱うモーション
-	bool m_bMotion;								// モーションを行うか
-	bool m_bMotionBlend;						// モーションブレンド
+	CModel3D* m_parent;					// 親
+	std::vector<MyMotion> m_motion;		// モーション
+	std::vector<CParts*> m_parts;		// パーツ
+	std::vector<char*> m_partsFile;		// パーツのXファイル名
+	int m_maxParts;						// パーツ数
+	int m_numMotion;					// 扱うモーション
+	bool m_isMotion;					// モーションを行うか
+	bool m_isMotionBlend;				// モーションブレンド
 };
 #endif
 

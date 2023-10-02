@@ -29,12 +29,12 @@ CMesh::CMesh(CTaskGroup::EPriority nPriority) :
 	m_vtx(0),			// 頂点数
 	m_index(0),			// インデックス
 	m_polygonCount(0),
-	m_NowMesh(0),
-	m_Number(0),
-	m_Type(0),
-	IsCollision(true)
+	m_nowMesh(0),
+	m_number(0),
+	m_type(0),
+	m_IsCollision(true)
 {
-	m_MeshSize = { 10.0f,0.0f,10.0f };
+	m_meshSize = { 10.0f,0.0f,10.0f };
 }
 
 //--------------------------------------------------------------
@@ -42,7 +42,6 @@ CMesh::CMesh(CTaskGroup::EPriority nPriority) :
 //--------------------------------------------------------------
 CMesh::~CMesh()
 {
-
 }
 
 //--------------------------------------------------------------
@@ -85,7 +84,6 @@ void CMesh::Uninit()
 //--------------------------------------------------------------
 void CMesh::Update()
 {
-
 }
 
 //--------------------------------------------------------------
@@ -247,7 +245,7 @@ bool CMesh::Collision(D3DXVECTOR3* pPos)
 			SwitchCollision(true);
 			OnHit();
 
-			if (IsCollision)
+			if (m_IsCollision)
 			{
 				pPos->y = (posLineVec[0].y - (Normal.x*(pPos->x - posLineVec[0].x) + Normal.z*(pPos->z - posLineVec[0].z)) / Normal.y) + 10.0f;
 			}
@@ -403,7 +401,7 @@ void CMesh::Loadfile(const char* pFileName)
 		CMesh::SetTexture(str.c_str());
 
 		m_pos = D3DXVECTOR3(JMesh["POSORIGIN"]["X"], JMesh["POSORIGIN"]["Y"], JMesh["POSORIGIN"]["Z"]);
-		m_MeshSize = D3DXVECTOR3(JMesh["MESHDATASIZE"]["X"], JMesh["MESHDATASIZE"]["Y"], JMesh["MESHDATASIZE"]["Z"]);
+		m_meshSize = D3DXVECTOR3(JMesh["MESHDATASIZE"]["X"], JMesh["MESHDATASIZE"]["Y"], JMesh["MESHDATASIZE"]["Z"]);
 		
 		m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -467,9 +465,9 @@ void CMesh::Savefile(const char* pFileName)
 
 	JMesh["INDEX"] = nIndex;
 	JMesh["MESHDATASIZE"] = {
-		{ "X", m_MeshSize.x } ,
-		{ "Y", m_MeshSize.y } ,
-		{ "Z", m_MeshSize.z } };
+		{ "X", m_meshSize.x } ,
+		{ "Y", m_meshSize.y } ,
+		{ "Z", m_meshSize.z } };
 	
 	JMesh["TEXPASS"] = m_pFileName;
 	JMesh["MESHSIZE"] = m_xsiz;
@@ -543,11 +541,10 @@ void CMesh::SetVtxMeshSize(int Size)
 		float texV = 1.0f / m_zsiz * (i / m_vtxCountZ);
 
 		// メッシュを真ん中にする補正
-		//m_pos = (D3DXVECTOR3(-(posx - 1) * m_MeshSize.x * 0.5f, 0.0f, -posz * m_MeshSize.z * 0.5f)) + m_pos;
+		//m_pos = (D3DXVECTOR3(-(posx - 1) * m_meshSize.x * 0.5f, 0.0f, -posz * m_meshSize.z * 0.5f)) + m_pos;
 
 		// 座標の補正
-		pVtx[i].pos += D3DXVECTOR3(posx * m_MeshSize.x, 0.0f, posz * m_MeshSize.z);
-
+		pVtx[i].pos += D3DXVECTOR3(posx * m_meshSize.x, 0.0f, posz * m_meshSize.z);
 
 		// 各頂点の法線の設定(※ベクトルの大きさは1にする必要がある)
 		pVtx[i].nor = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -656,7 +653,7 @@ void CMesh::SetVtxMeshLight()
 //--------------------------------------------------------------
 void CMesh::SetMesh(const int Size)
 {
-	m_NowMesh = Size;		// 枚数保存
+	m_nowMesh = Size;		// 枚数保存
 	SetVtxMeshSize(Size);	// サイズ決定
 	SetVtxMeshLight();		// 法線設定
 }
@@ -666,6 +663,6 @@ void CMesh::SetMesh(const int Size)
 //--------------------------------------------------------------
 void CMesh::SetOneMeshSize(D3DXVECTOR3 IsSize)
 {
-	m_MeshSize = IsSize;
-	CMesh::SetMesh(m_NowMesh);
+	m_meshSize = IsSize;
+	CMesh::SetMesh(m_nowMesh);
 }
