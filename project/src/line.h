@@ -70,7 +70,7 @@ private:
 	//--------------------------------------------------------------------
 	// メンバ変数
 	//--------------------------------------------------------------------
-	LPDIRECT3DVERTEXBUFFER9			m_pVtxBuff;			// 頂点バッファ
+	LPDIRECT3DVERTEXBUFFER9			m_vtxBuff;			// 頂点バッファ
 	D3DXMATRIX						m_mtxWorld;			// ワールドマトリックス
 	D3DXVECTOR3						m_start;			// 始点
 	D3DXVECTOR3						m_goal;				// 終点
