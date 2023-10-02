@@ -27,9 +27,9 @@ int g_nCountFPS;
 //==============================================================
 static CApplication* pApplication;
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // メイン関数
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int nCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -158,9 +158,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpC
 	return (int)msg.wParam;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // ウインドウプロシージャ
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	//if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
@@ -204,9 +204,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 #ifdef _DEBUG
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 時間
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 int GetTime(void)
 {
 	return g_nCountFPS;
