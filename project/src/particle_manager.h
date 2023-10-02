@@ -54,7 +54,7 @@ public:
 private:
 	std::vector<BundledData> m_bundledData;	// 情報体
 	std::list<CParticleEmitter*> m_particleEmitter;	// エミッタ―情報
-	int m_Index;
+	int m_index;
 };
 
 #endif // !_PARTICLE_FACTORY_H_
