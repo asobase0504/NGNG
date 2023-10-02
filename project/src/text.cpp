@@ -32,7 +32,7 @@ CText::~CText()
 //--------------------------------------------------------------
 HRESULT CText::Init()
 {
-	m_Text = "";
+	m_text = "";
 	CObject2d::Init();
 	
 	m_col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -52,10 +52,10 @@ HRESULT CText::Init()
 
 	// デバッグ情報表示用フォントの生成
 	D3DXCreateFont(CApplication::GetInstance()->GetRenderer()->GetDevice(), 38, 0, 0, 0, FALSE, SHIFTJIS_CHARSET,
-		OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, _T("FZゴンタかな"), &m_pFont);
+		OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, _T("FZゴンタかな"), &m_font);
 
 	m_isRelease = false;
-	m_DesTimar = 0;
+	m_desTimar = 0;
 
 	return S_OK;
 }
@@ -86,27 +86,27 @@ void CText::Update()
 
 	if (m_isRelease)
 	{
-		m_DesTimar--;
+		m_desTimar--;
 
-		m_AddCount++;
+		m_addCount++;
 
-		if (m_AddCount >= m_Addnumber)
+		if (m_addCount >= m_addNumber)
 		{
-			if (m_AddLetter <= m_TextSize)
+			if (m_addLetter <= m_textSize)
 			{
-				m_Text+=m_ALLText[m_AddLetter];
-				if (m_AddLetter + 1 <= m_TextSize)
+				m_text+=m_allText[m_addLetter];
+				if (m_addLetter + 1 <= m_textSize)
 				{
-					m_Text += m_ALLText[m_AddLetter + 1];
+					m_text += m_allText[m_addLetter + 1];
 				}
-				m_AddLetter+=2;
+				m_addLetter+=2;
 			}
-			m_AddCount = 0;
+			m_addCount = 0;
 		}
 
 		CObject2d::SetColor(m_col);
 
-		if (m_DesTimar <= 0)
+		if (m_desTimar <= 0)
 		{
 			Uninit();
 		}
@@ -129,9 +129,9 @@ void CText::Draw()
 	RECT rect = { 60, 500, SCREEN_WIDTH, SCREEN_HEIGHT };
 	TCHAR str[256];
 
-	wsprintf(str, _T(m_Text.c_str()));
+	wsprintf(str, _T(m_text.c_str()));
 
-	m_pFont->DrawText(NULL, str, -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0xff, 0xff, 0xff));
+	m_font->DrawText(NULL, str, -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0xff, 0xff, 0xff));
 
 	// 新規深度値 <= Zバッファ深度値 (初期設定)
 	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
@@ -181,8 +181,8 @@ CText *CText::Create(Type talkType,int DeleteTime, int SpeedText,const char* Tex
 //--------------------------------------------------------------
 void CText::ReleaseTimer(int nTimar)
 {
-	m_DesTimar = nTimar;
-	m_DesTimarMax = m_DesTimar;
+	m_desTimar = nTimar;
+	m_desTimarMax = m_desTimar;
 	m_isRelease = true;
 }
 
@@ -191,8 +191,8 @@ void CText::ReleaseTimer(int nTimar)
 //--------------------------------------------------------------
 void CText::TextLetter(const char* Text, int SpeedText)
 {
-	m_ALLText = Text;
-	m_TextSize = m_ALLText.size();
-	m_Addnumber = SpeedText;
-	m_AddLetter = 0;
+	m_allText = Text;
+	m_textSize = m_allText.size();
+	m_addNumber = SpeedText;
+	m_addLetter = 0;
 }

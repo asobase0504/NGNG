@@ -45,7 +45,7 @@ CObject2d::~CObject2d()
 HRESULT CObject2d::Init()
 {
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_nScale = 10.0f;
+	m_scale = 10.0f;
 
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetInstance()->GetDevice();	//デバイスの取得
 
@@ -93,21 +93,21 @@ HRESULT CObject2d::Init()
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();
 
-	 m_CounterAnim = 0;
-	 m_PatternAnimX = 1;
-	 m_PatternAnimY = 1;
+	 m_counterAnim = 0;
+	 m_patternAnimX = 1;
+	 m_patternAnimY = 1;
 
-	 m_DivisionX = 1;
-	 m_DivisionY = 1;
-	 m_DivisionMAX = m_DivisionX*m_DivisionY;
+	 m_divisionX = 1;
+	 m_divisionY = 1;
+	 m_divisionMAX = m_divisionX*m_divisionY;
 
-	 m_AnimationSpeed = 0;
-	 m_AnimationSpeedCount = 0;
+	 m_animationSpeed = 0;
+	 m_animationSpeedCount = 0;
 
-	 m_Timar = 0;
-	 m_TimaCount = 0;
-	 m_OnAnimation = false;
-	 m_Loop = false;
+	 m_timar = 0;
+	 m_timaCount = 0;
+	 m_isOnAnimation = false;
+	 m_isLoop = false;
 
 	return S_OK;
 }
@@ -226,29 +226,29 @@ bool CObject2d::PointAndAABB(const D3DXVECTOR3& inPos)
 //--------------------------------------------------------------
 void CObject2d::Animation()
 {
-	if (!m_OnAnimation)
+	if (!m_isOnAnimation)
 	{
 		return;
 	}
 
-	m_TimaCount++;
+	m_timaCount++;
 
-	if (m_TimaCount >= m_Timar)
+	if (m_timaCount >= m_timar)
 	{
-		m_AnimationSpeedCount++;
-		if (m_AnimationSpeedCount >= m_AnimationSpeed)
+		m_animationSpeedCount++;
+		if (m_animationSpeedCount >= m_animationSpeed)
 		{
-			m_AnimationSpeedCount = 0;
-			m_PatternAnimX++;
+			m_animationSpeedCount = 0;
+			m_patternAnimX++;
 
-			if (m_PatternAnimX > m_DivisionX)
+			if (m_patternAnimX > m_divisionX)
 			{//アニメーション
-				m_PatternAnimX = 0;
-				m_PatternAnimY++;
-				if (m_PatternAnimY >= m_DivisionY)
+				m_patternAnimX = 0;
+				m_patternAnimY++;
+				if (m_patternAnimY >= m_divisionY)
 				{
-					m_PatternAnimY = 0;
-					if (!m_Loop)
+					m_patternAnimY = 0;
+					if (!m_isLoop)
 					{
 						Uninit();
 					}
@@ -256,10 +256,10 @@ void CObject2d::Animation()
 				}
 			}
 
-			float U = 1.0f / (m_DivisionX);
-			float V = 1.0f / (m_DivisionY);
-			float AnimU = U * (m_PatternAnimX);
-			float AnimV = V * (m_PatternAnimY);
+			float U = 1.0f / (m_divisionX);
+			float V = 1.0f / (m_divisionY);
+			float AnimU = U * (m_patternAnimX);
+			float AnimV = V * (m_patternAnimY);
 			SetTex(PositionVec4(AnimU, AnimU + U, AnimV, AnimV + V));
 		}
 	}
@@ -312,21 +312,21 @@ void CObject2d::SetColor(const D3DXCOLOR& inColor)
 //--------------------------------------------------------------
 void CObject2d::SetAnimation(const int U, const int V,const int Speed,const int Drawtimer,const bool loop)
 {
-	m_DivisionX = U;
-	m_DivisionY = V;
-	m_DivisionMAX = m_DivisionY*m_DivisionX;
+	m_divisionX = U;
+	m_divisionY = V;
+	m_divisionMAX = m_divisionY*m_divisionX;
 
-	m_PatternAnimX = 0;
-	m_PatternAnimY = 0;
-	m_AnimationSpeed = Speed;
-	m_Timar = Drawtimer;
-	m_OnAnimation = true;
-	m_Loop = loop;
+	m_patternAnimX = 0;
+	m_patternAnimY = 0;
+	m_animationSpeed = Speed;
+	m_timar = Drawtimer;
+	m_isOnAnimation = true;
+	m_isLoop = loop;
 
 	//表示座標を更新
 	SetTex(PositionVec4(
-		1.0f / m_DivisionX * (m_PatternAnimX / (m_DivisionX))
-		, 1.0f / m_DivisionX *(m_PatternAnimX / (m_DivisionX)) + 1.0f / m_DivisionX
-		, 1.0f / m_DivisionY * (m_PatternAnimY % (m_DivisionY))
-		, 1.0f / m_DivisionY * (m_PatternAnimY % (m_DivisionY)+1.0f / m_DivisionY* m_DivisionY)));
+		1.0f / m_divisionX * (m_patternAnimX / (m_divisionX))
+		, 1.0f / m_divisionX *(m_patternAnimX / (m_divisionX)) + 1.0f / m_divisionX
+		, 1.0f / m_divisionY * (m_patternAnimY % (m_divisionY))
+		, 1.0f / m_divisionY * (m_patternAnimY % (m_divisionY)+1.0f / m_divisionY* m_divisionY)));
 }
