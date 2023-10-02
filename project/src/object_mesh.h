@@ -62,7 +62,7 @@ private:
 	void SetVtxMeshSize(int Size);
 	void SetVtxMeshLight();
 
-	LPDIRECT3DINDEXBUFFER9 m_pIdxBuff;	// インデックスバッファ
+	LPDIRECT3DINDEXBUFFER9 m_idxBuff;	// インデックスバッファ
 
 	int m_xsiz;				// 面数
 	int m_zsiz;				// 面数

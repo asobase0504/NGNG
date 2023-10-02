@@ -28,7 +28,7 @@ const D3DXVECTOR3 CObject2d::m_Vtx[4] =
 // コンストラクト関数
 //--------------------------------------------------------------
 CObject2d::CObject2d(CTaskGroup::EPriority list) :
-	CObject(list,CTaskGroup::EPushMethod::PUSH_CURRENT), m_pVtxBuff(nullptr)
+	CObject(list,CTaskGroup::EPushMethod::PUSH_CURRENT), m_vtxBuff(nullptr)
 {
 }
 
@@ -54,13 +54,13 @@ HRESULT CObject2d::Init()
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,		//頂点フォーマット
 		D3DPOOL_MANAGED,
-		&m_pVtxBuff,
+		&m_vtxBuff,
 		NULL);
 
 	VERTEX_2D*pVtx;		//頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//------------------------ 
 	// 頂点情報の設定
@@ -91,7 +91,7 @@ HRESULT CObject2d::Init()
 
 
 	//頂点バッファをアンロックする
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 
 	 m_counterAnim = 0;
 	 m_patternAnimX = 1;
@@ -118,10 +118,10 @@ HRESULT CObject2d::Init()
 void CObject2d::Uninit()
 {
 	// 破棄
-	if (m_pVtxBuff != nullptr)
+	if (m_vtxBuff != nullptr)
 	{
-		m_pVtxBuff->Release();
-		m_pVtxBuff = nullptr;
+		m_vtxBuff->Release();
+		m_vtxBuff = nullptr;
 	}
 	Release();
 }
@@ -136,7 +136,7 @@ void CObject2d::Update()
 	VERTEX_2D *pVtx; //頂点へのポインタ
 
 	// 頂点バッファをロックし頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	D3DXVECTOR3 addPos[4];
 	D3DXMATRIX mtx;	// 計算用マトリックス
@@ -156,7 +156,7 @@ void CObject2d::Update()
 	}
 
 	//頂点バッファをアンロック
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 
 	Animation();	// アニメーションの更新
 }
@@ -170,7 +170,7 @@ void CObject2d::Draw()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();		//デバイスへのポインタ
 
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
+	pDevice->SetStreamSource(0, m_vtxBuff, 0, sizeof(VERTEX_2D));
 
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
@@ -273,7 +273,7 @@ void CObject2d::SetTex(PositionVec4 Tex)
 	VERTEX_2D *pVtx; //頂点へのポインタ
 
 	 //頂点バッファをロックし頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//テクスチャの座標設定
 	pVtx[0].tex = D3DXVECTOR2(Tex.P0, Tex.P2);
@@ -282,7 +282,7 @@ void CObject2d::SetTex(PositionVec4 Tex)
 	pVtx[3].tex = D3DXVECTOR2(Tex.P1, Tex.P3);
 
 	//頂点バッファをアンロック
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 }
 
 //--------------------------------------------------------------
@@ -295,7 +295,7 @@ void CObject2d::SetColor(const D3DXCOLOR& inColor)
 	VERTEX_2D *pVtx;	// 頂点へのポインタ
 
 	// 頂点バッファをロックし頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点カラーの設定
 	pVtx[0].col = m_color;
@@ -304,7 +304,7 @@ void CObject2d::SetColor(const D3DXCOLOR& inColor)
 	pVtx[3].col = m_color;
 
 	// 頂点バッファをアンロック
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 }
 
 //--------------------------------------------------------------
