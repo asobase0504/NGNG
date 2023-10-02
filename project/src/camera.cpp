@@ -82,39 +82,39 @@ void CCamera::Draw()
 void CCamera::Set(int Type)
 {
 	// 揺れカウンターを減らす
-	m_nCntFrame--;
+	m_countFrame--;
 
-	if (m_nCntFrame >= 0)
+	if (m_countFrame >= 0)
 	{
 		D3DXVECTOR3 adjustPos = {};
 
-		adjustPos.x = FloatRandom(m_Magnitude, -m_Magnitude);
-		adjustPos.y = FloatRandom(m_Magnitude, -m_Magnitude);
-		adjustPos.z = FloatRandom(m_Magnitude, -m_Magnitude);
+		adjustPos.x = FloatRandom(m_magnitude, -m_magnitude);
+		adjustPos.y = FloatRandom(m_magnitude, -m_magnitude);
+		adjustPos.z = FloatRandom(m_magnitude, -m_magnitude);
 
 		m_posV += adjustPos;
 		m_posR += adjustPos;
 	}
 
-	m_Type = Type;
+	m_type = Type;
 	LPDIRECT3DDEVICE9  pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();	// デバイスのポインタ
 
 	// ビューマトリックスを初期化
-	D3DXMatrixIdentity(&m_MtxView);
+	D3DXMatrixIdentity(&m_mtxView);
 
 	// ビューマトリックスの作成
-	D3DXMatrixLookAtLH(&m_MtxView, &m_posV, &m_posR, &m_vecU);
+	D3DXMatrixLookAtLH(&m_mtxView, &m_posV, &m_posR, &m_vecU);
 
 	// 適用
-	pDevice->SetTransform(D3DTS_VIEW, &m_MtxView);
+	pDevice->SetTransform(D3DTS_VIEW, &m_mtxView);
 
 	// プロジェクションマトリックスを初期化
-	D3DXMatrixIdentity(&m_MtxProject);
+	D3DXMatrixIdentity(&m_mtxProject);
 
 	if (Type == 0)
 	{
 		//プロジェクションマトリックス作成
-		D3DXMatrixPerspectiveFovLH(&m_MtxProject,
+		D3DXMatrixPerspectiveFovLH(&m_mtxProject,
 			D3DXToRadian(VIEWING_ANGLE),
 			(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,
 			10.0f,
@@ -123,7 +123,7 @@ void CCamera::Set(int Type)
 	else
 	{
 		// プロジェクションマトリックスの作成(平行投影)
-		D3DXMatrixOrthoLH(&m_MtxProject,	// プロジェクションマトリックス
+		D3DXMatrixOrthoLH(&m_mtxProject,	// プロジェクションマトリックス
 			(float)SCREEN_WIDTH,			// 幅
 			(float)SCREEN_HEIGHT,			// 高さ
 			10.0f,						// ニア
@@ -131,7 +131,7 @@ void CCamera::Set(int Type)
 	}
 
 	// 適用
-	pDevice->SetTransform(D3DTS_PROJECTION, &m_MtxProject);
+	pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProject);
 }
 
 //--------------------------------------------------------------
@@ -166,6 +166,6 @@ const D3DXVECTOR3 CCamera::VectorCombinedRot(const D3DXVECTOR3& inVector)
 //--------------------------------------------------------------
 void CCamera::Shake(float ShakeFrame, float Magnitude)
 {
-	m_nCntFrame = ShakeFrame;	// 揺れるフレームカウント
-	m_Magnitude = Magnitude;	// 揺れ
+	m_countFrame = ShakeFrame;	// 揺れるフレームカウント
+	m_magnitude = Magnitude;	// 揺れ
 }

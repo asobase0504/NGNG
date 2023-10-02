@@ -32,8 +32,8 @@ public:
 	void Set(int Type);
 
 	// Getter
-	const D3DXMATRIX& GetMtxProje() { return m_MtxProject; }
-	const D3DXMATRIX& GetMtxView() { return m_MtxView; }
+	const D3DXMATRIX& GetMtxProje() { return m_mtxProject; }
+	const D3DXMATRIX& GetMtxView() { return m_mtxView; }
 	const D3DXVECTOR3& GetPos() { return m_posV; }
 
 	const D3DXVECTOR3 VectorCombinedRot(const D3DXVECTOR3& inVector);
@@ -48,13 +48,13 @@ protected:
 	D3DXVECTOR3 m_posRDest;		// 目的地からの差
 	D3DXVECTOR3 m_vecU;			// ベクトル
 	D3DXVECTOR3 m_rot;			// 位置回転
-	D3DXMATRIX m_MtxProject;	// プロジェクションマトリックス
-	D3DXMATRIX m_MtxView;		// ビューマトリックス
-	int m_Type;
+	D3DXMATRIX m_mtxProject;	// プロジェクションマトリックス
+	D3DXMATRIX m_mtxView;		// ビューマトリックス
+	int m_type;
 
 	/* 揺れ */
-	float m_nCntFrame;	// 揺れるフレームカウント
-	float m_Magnitude;	// 揺れ
+	float m_countFrame;	// 揺れるフレームカウント
+	float m_magnitude;	// 揺れ
 };
 
 #endif		// _CAMERA_H_
