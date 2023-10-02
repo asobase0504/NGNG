@@ -39,7 +39,6 @@ struct DeepTable {
 //--------------------------------------------------------------
 // プロトタイプ宣言
 //--------------------------------------------------------------
-void OutputStatus();
 nlohmann::json LoadJson(const wchar_t* cUrl);
 nlohmann::json LoadJson(const char* cUrl);
 nlohmann::json LoadJson(std::string cUrl);
