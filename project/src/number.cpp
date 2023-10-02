@@ -30,8 +30,8 @@ CNumber::~CNumber()
 //--------------------------------------------------------------
 HRESULT CNumber::Init()
 {
-	m_MyNumber = 0;
-	m_Speed = 0.0f;
+	m_myNumber = 0;
+	m_speed = 0.0f;
 	CObject2d::Init();
 	CObject2d::SetTexture("NUMBER");
 	m_col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -39,8 +39,8 @@ HRESULT CNumber::Init()
 	SetTex(PositionVec4(
 		0.0f, 0.1f, 0.0f, 1.0f));
 	m_isRelease = false;
-	m_DesTimar = 0;
-	m_Move = true;
+	m_deathTimar = 0;
+	m_isMove = true;
 	return S_OK;
 }
 
@@ -62,26 +62,26 @@ void CNumber::Update()
 
 	if (m_isRelease)
 	{
-		m_DesTimar--;
+		m_deathTimar--;
 
-		m_col.a -= 1.0f / m_DesTimarMax;
+		m_col.a -= 1.0f / m_deathTimarMax;
 
 		m_pos.y -= 1.0f;
 
 		CObject2d::SetColor(m_col);
 
-		if (m_DesTimar <= 0)
+		if (m_deathTimar <= 0)
 		{
 			Uninit();
 			return;
 		}
 	}
-	if (m_Move)
+	if (m_isMove)
 	{
-		m_Speed += (0.0f - m_Speed)* 0.5f;//（目的の値-現在の値）＊減衰係数
+		m_speed += (0.0f - m_speed)* 0.5f;//（目的の値-現在の値）＊減衰係数
 
 		SetTex(PositionVec4(
-			0.1f*m_MyNumber, 0.1f*m_MyNumber + 0.1f, 0.0f + m_Speed, 1.0f + m_Speed));
+			0.1f*m_myNumber, 0.1f*m_myNumber + 0.1f, 0.0f + m_speed, 1.0f + m_speed));
 	}
 }
 
@@ -127,7 +127,7 @@ CNumber *CNumber::Create()
 //--------------------------------------------------------------
 void CNumber::ReleaseTimer(int nTimar)
 {
-	m_DesTimar = nTimar;
-	m_DesTimarMax = m_DesTimar;
+	m_deathTimar = nTimar;
+	m_deathTimarMax = m_deathTimar;
 	m_isRelease = true;
 }

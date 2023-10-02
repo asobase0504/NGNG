@@ -16,8 +16,8 @@
 //==============================================================
 // 静的メンバ変数の定義
 //==============================================================
-LPD3DXFONT CDebugProc::m_pFont = nullptr;	// フォント情報
-std::string CDebugProc::m_aStr;				// 登録文字列
+LPD3DXFONT CDebugProc::m_font = nullptr;	// フォント情報
+std::string CDebugProc::m_str;				// 登録文字列
 bool CDebugProc::m_use = false;	// フォント情報
 
 //--------------------------------------------------------------
@@ -41,7 +41,7 @@ void CDebugProc::Print(const char *pFormat, ...)
 	vsprintf(&aStrCpy[0], pFormat, args);
 	va_end(args);
 
-	m_aStr += aStrCpy;
+	m_str += aStrCpy;
 }
 
 //--------------------------------------------------------------
@@ -59,8 +59,8 @@ void CDebugProc::Draw(void)
 	RECT rect = { 0, 0, 1280, 720 };
 
 	// テキスト描画
-	m_pFont->DrawText(NULL, m_aStr.c_str(), -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0x00, 0xff, 0x00));
-	m_aStr.clear();
+	m_font->DrawText(NULL, m_str.c_str(), -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0x00, 0xff, 0x00));
+	m_str.clear();
 }
 
 //--------------------------------------------------------------
@@ -96,7 +96,7 @@ void CDebugProc::Init()
 
 	// デバッグ情報表示用フォントの生成
 	D3DXCreateFont(pDevice, 18, 0, 0, 0, FALSE, SHIFTJIS_CHARSET,
-		OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, _T("HGRSGU.TTC"), &m_pFont);
+		OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, _T("HGRSGU.TTC"), &m_font);
 }
 
 //--------------------------------------------------------------
@@ -112,9 +112,9 @@ void CDebugProc::Uninit()
 	}
 
 	// デバッグ情報表示用フォントの破棄
-	if (m_pFont != nullptr)
+	if (m_font != nullptr)
 	{
-		m_pFont->Release();
-		m_pFont = nullptr;
+		m_font->Release();
+		m_font = nullptr;
 	}
 }

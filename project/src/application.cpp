@@ -39,12 +39,12 @@ CApplication * CApplication::GetInstance()
 // コンストラクト関数
 //--------------------------------------------------------------
 CApplication::CApplication() :
-	m_pTexture(nullptr),
-	m_pRenderer(nullptr),
-	m_pTaskGroup(nullptr),
-	m_pFade(nullptr),
-	m_pMode(nullptr),
-	m_pSound(nullptr)
+	m_texture(nullptr),
+	m_renderer(nullptr),
+	m_taskGroup(nullptr),
+	m_fade(nullptr),
+	m_mode(nullptr),
+	m_sound(nullptr)
 {
 }
 
@@ -62,18 +62,18 @@ CApplication::~CApplication()
 HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 {
 	// Window情報のポインタ保存
-	m_hWindow = hWnd;
+	m_window = hWnd;
 
 	// 根幹グループの初期化処理
-	m_pTaskGroup = new CTaskGroup;
-	if (FAILED(m_pTaskGroup->Init()))
+	m_taskGroup = new CTaskGroup;
+	if (FAILED(m_taskGroup->Init()))
 	{
 		return E_FAIL;
 	}
 
 	// レンダラーの初期化処理
-	m_pRenderer = CRenderer::GetInstance();
-	if (FAILED(m_pRenderer->Init(hWnd, true)))
+	m_renderer = CRenderer::GetInstance();
+	if (FAILED(m_renderer->Init(hWnd, true)))
 	{
 		return E_FAIL;
 	}
@@ -86,26 +86,26 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	}
 
 	// 音楽処理の初期化処理
-	m_pSound = new CSound;
-	if (FAILED(m_pSound->Init(hWnd)))
+	m_sound = new CSound;
+	if (FAILED(m_sound->Init(hWnd)))
 	{
 		return E_FAIL;
 	}
 
 	// objectXの初期化処理
-	m_pObjectXGroup = new CObjectXGroup;
-	m_pObjectXGroup->LoadAll();
+	m_objectXGroup = new CObjectXGroup;
+	m_objectXGroup->LoadAll();
 
 	// Textureの読込み
-	m_pTexture = CTexture::GetInstance();
-	m_pTexture->LoadAll();
+	m_texture = CTexture::GetInstance();
+	m_texture->LoadAll();
 
-	m_mode = CApplication::MODE_TITLE;	//現在のモード
+	m_modeType = CApplication::MODE_TITLE;	//現在のモード
 
 	//モードの設定
-	SetMode(m_mode);
+	SetMode(m_modeType);
 
-	m_pFade = CFade::Create();
+	m_fade = CFade::Create();
 
 	return S_OK;
 }
@@ -115,41 +115,41 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 //--------------------------------------------------------------
 void CApplication::Uninit()
 {
-	if (m_pTaskGroup != nullptr)
+	if (m_taskGroup != nullptr)
 	{// 終了処理
-		m_pTaskGroup->Uninit();
-		delete m_pTaskGroup;
-		m_pTaskGroup = nullptr;
+		m_taskGroup->Uninit();
+		delete m_taskGroup;
+		m_taskGroup = nullptr;
 	}
 
-	if (m_pObjectXGroup != nullptr)
+	if (m_objectXGroup != nullptr)
 	{// 終了処理
-		m_pObjectXGroup->UnloadAll();
-		delete m_pObjectXGroup;
-		m_pObjectXGroup = nullptr;
+		m_objectXGroup->UnloadAll();
+		delete m_objectXGroup;
+		m_objectXGroup = nullptr;
 	}
 	
-	if (m_pTexture != nullptr)
+	if (m_texture != nullptr)
 	{// 終了処理
-		m_pTexture->UnloadAll();
-		delete m_pTexture;
-		m_pTexture = nullptr;
+		m_texture->UnloadAll();
+		delete m_texture;
+		m_texture = nullptr;
 	}
 
-	if (m_pRenderer != nullptr)
+	if (m_renderer != nullptr)
 	{// 終了処理
 
-		m_pRenderer->Uninit();
-		delete m_pRenderer;
-		m_pRenderer = nullptr;
+		m_renderer->Uninit();
+		delete m_renderer;
+		m_renderer = nullptr;
 	}
 
-	if (m_pSound != nullptr)
+	if (m_sound != nullptr)
 	{// 終了処理
 
-		m_pSound->Uninit();
-		delete m_pSound;
-		m_pSound = nullptr;
+		m_sound->Uninit();
+		delete m_sound;
+		m_sound = nullptr;
 	}
 
 	//入力処理の終了処理
@@ -170,12 +170,12 @@ void CApplication::Update()
 	CDebugProc::Print("ポーズ【 2 】 : %s\n", ppp ? "OFF" : "STOP");
 	if (CInput::GetKey()->Trigger(DIK_2))
 	{
-		m_pTaskGroup->Pause(ppp);
+		m_taskGroup->Pause(ppp);
 		ppp = !ppp;
 	}
 #endif // _DEBUG
 
-	m_pRenderer->Update();
+	m_renderer->Update();
 }
 
 //--------------------------------------------------------------
@@ -183,7 +183,7 @@ void CApplication::Update()
 //--------------------------------------------------------------
 void CApplication::Draw()
 {
-	m_pRenderer->Draw();	// 描画処理
+	m_renderer->Draw();	// 描画処理
 }
 
 //--------------------------------------------------------------
@@ -191,23 +191,23 @@ void CApplication::Draw()
 //--------------------------------------------------------------
 void CApplication::SetMode(MODE mode)
 {
-	m_mode = mode;
-	m_pTaskGroup->AllRelease();
+	m_modeType = mode;
+	m_taskGroup->AllRelease();
 
 	switch (mode)
 	{
 	case CApplication::MODE_TITLE:
-		m_pMode = new CTitle;
+		m_mode = new CTitle;
 		break;
 	case CApplication::MODE_GAME:
-		m_pMode = new CGame;
+		m_mode = new CGame;
 		break;
 	default:
 		break;
 	}
 
 	// 初期化処理
-	if (FAILED(m_pMode->Init()))	//画面サイズ
+	if (FAILED(m_mode->Init()))	//画面サイズ
 	{
 		//初期化処理が失敗した場合
 		return;

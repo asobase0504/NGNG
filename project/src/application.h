@@ -65,33 +65,32 @@ public:	// ÉÅÉìÉoÅ[ä÷êî
 	void SetWcex(WNDCLASSEX inWcex) { m_wcex = inWcex; }
 	WNDCLASSEX GetWcex() { return m_wcex; }
 
-	HWND GetWindow() { return m_hWindow; }
+	HWND GetWindow() { return m_window; }
 
-	CRenderer* GetRenderer() { return m_pRenderer; }
-	CTexture* GetTexture() { return m_pTexture; }
-	CTaskGroup* GetTaskGroup() { return m_pTaskGroup; }
-	CObjectXGroup* GetObjectXGroup() { return m_pObjectXGroup; }
-	CFade* GetFade() { return m_pFade; }
+	CRenderer* GetRenderer() { return m_renderer; }
+	CTexture* GetTexture() { return m_texture; }
+	CTaskGroup* GetTaskGroup() { return m_taskGroup; }
+	CObjectXGroup* GetObjectXGroup() { return m_objectXGroup; }
+	CFade* GetFade() { return m_fade; }
 
 	void SetMode(CApplication::MODE inMode);
-	MODE* GetMode() { return &m_mode; }
+	MODE* GetMode() { return &m_modeType; }
 
-	CSound* GetSound() { return m_pSound; }
+	CSound* GetSound() { return m_sound; }
 	CColor* GetColor() { return m_color; }
 
-
 private:
-	CTexture* m_pTexture;
-	CRenderer* m_pRenderer;
-	CTaskGroup* m_pTaskGroup;
-	CFade* m_pFade;
-	CMode* m_pMode;
-	CSound* m_pSound;
+	CTexture* m_texture;
+	CRenderer* m_renderer;
+	CTaskGroup* m_taskGroup;
+	CFade* m_fade;
+	CMode* m_mode;
+	CSound* m_sound;
 	CColor* m_color;
-	CObjectXGroup* m_pObjectXGroup;
-	MODE m_mode;
+	CObjectXGroup* m_objectXGroup;
+	MODE m_modeType;
 
-	HWND m_hWindow;
+	HWND m_window;
 	WNDCLASSEX m_wcex;
 };
 #endif
