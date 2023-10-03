@@ -24,6 +24,11 @@ const int SCREEN_HEIGHT = 720;	// スクリーンの高さ
 #ifdef _DEBUG
 int GetTime(void);
 #endif // _DEBUG
+//==============================================================
+// 前方宣言
+//==============================================================
+class CLight;
+class CCamera;
 
 //==============================================================
 // 描画のクラス
@@ -50,5 +55,7 @@ private:	// メンバー変数
 	LPDIRECT3DDEVICE9 m_pD3DDevice;	// Deviceオブジェクト
 
 	CDebugProc* m_debugProc;
+	CLight* m_light;
+	CCamera* m_camera;
 };
 #endif

@@ -46,7 +46,7 @@ CMotionModel3D * CMotionModel3D::Create()
 //--------------------------------------------------------------
 CMotionModel3D::CMotionModel3D(CTaskGroup::EPriority nPriority) :
 	CObjectX(nPriority),
-	m_pMotion(nullptr),			// モーション情報
+	m_motion(nullptr),			// モーション情報
 	m_posOld(D3DXVECTOR3()),	// 過去位置
 	m_isUpdateStop(false)
 {
@@ -59,7 +59,7 @@ CMotionModel3D::CMotionModel3D(CTaskGroup::EPriority nPriority) :
 //--------------------------------------------------------------
 CMotionModel3D::~CMotionModel3D()
 {
-	assert(m_pMotion == nullptr);
+	assert(m_motion == nullptr);
 }
 
 //--------------------------------------------------------------
@@ -84,13 +84,13 @@ HRESULT CMotionModel3D::Init()
 //--------------------------------------------------------------
 void CMotionModel3D::Uninit()
 {
-	if (m_pMotion != nullptr)
+	if (m_motion != nullptr)
 	{// 終了処理
-		m_pMotion->Uninit();
+		m_motion->Uninit();
 
 		// メモリの解放
-		delete m_pMotion;
-		m_pMotion = nullptr;
+		delete m_motion;
+		m_motion = nullptr;
 	}
 
 	// オブジェクト2Dの解放
@@ -104,11 +104,11 @@ void CMotionModel3D::Uninit()
 //--------------------------------------------------------------
 void CMotionModel3D::Update()
 {
-	if (m_pMotion != nullptr)
+	if (m_motion != nullptr)
 	{// モーション番号の設定
 		if(!m_isUpdateStop)
 		{
-			m_pMotion->Update();
+			m_motion->Update();
 		}
 	}
 }
@@ -145,14 +145,14 @@ void CMotionModel3D::Draw()
 
 	SetMtxWorld(mtxWorld);
 
-	if (m_pMotion != nullptr)
+	if (m_motion != nullptr)
 	{// パーツの描画設定
 		
-		for (int i = 0; i < m_pMotion->GetMaxParts(); i++)
+		for (int i = 0; i < m_motion->GetMaxParts(); i++)
 		{
-			if (m_pMotion->GetParts(i)->GetParent() == nullptr)
+			if (m_motion->GetParts(i)->GetParent() == nullptr)
 			{
-				m_pMotion->GetParts(i)->SetParent(this);
+				m_motion->GetParts(i)->SetParent(this);
 			}
 		}
 	}
@@ -165,24 +165,24 @@ void CMotionModel3D::Draw()
 //--------------------------------------------------------------
 void CMotionModel3D::SetMotion(const char* pName)
 {
-	if (m_pMotion != nullptr)
+	if (m_motion != nullptr)
 	{// 終了処理
-		m_pMotion->Uninit();
+		m_motion->Uninit();
 
 		// メモリの解放
-		delete m_pMotion;
-		m_pMotion = nullptr;
+		delete m_motion;
+		m_motion = nullptr;
 	}
 
 	// モーション情報
-	m_pMotion = new CMotion(pName);
-	assert(m_pMotion != nullptr);
+	m_motion = new CMotion(pName);
+	assert(m_motion != nullptr);
 
 	// モーションの初期設定
-	m_pMotion->SetMotion(0);
+	m_motion->SetMotion(0);
 
 	// モーション番号の設定
-	m_pMotion->SetNumMotion(0);
+	m_motion->SetNumMotion(0);
 
 	SetMaxMinVtx();
 }
@@ -197,10 +197,10 @@ void CMotionModel3D::SetMaxMinVtx()
 	D3DXVECTOR3 minVtx(FLT_MAX, FLT_MAX, FLT_MAX);
 	D3DXVECTOR3 maxVtx(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
-	for (int nCntParts = 0; nCntParts < m_pMotion->GetMaxParts(); nCntParts++)
+	for (int nCntParts = 0; nCntParts < m_motion->GetMaxParts(); nCntParts++)
 	{
-		D3DXVECTOR3 partsMinVtx = m_pMotion->GetParts(nCntParts)->GetMinVtx();
-		D3DXVECTOR3 partsMaxVtx = m_pMotion->GetParts(nCntParts)->GetMaxVtx();
+		D3DXVECTOR3 partsMinVtx = m_motion->GetParts(nCntParts)->GetMinVtx();
+		D3DXVECTOR3 partsMaxVtx = m_motion->GetParts(nCntParts)->GetMaxVtx();
 
 		//X
 		if (partsMinVtx.x < minVtx.x)

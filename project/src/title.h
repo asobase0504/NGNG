@@ -41,7 +41,6 @@ public:
 	void Update() override;
 
 private:
-
 	CSelect* m_start;
 	CObject2d* m_startShadow;
 };

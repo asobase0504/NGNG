@@ -41,28 +41,28 @@ public:
 	
 	void SetMesh(const int Size);
 
-	void SetNumber(int IsNumber) { m_Number = IsNumber; }
-	int GetNumber() { return m_Number; }
+	void SetNumber(int IsNumber) { m_number = IsNumber; }
+	int GetNumber() { return m_number; }
 
-	void SetType(int IsType) { m_Type = IsType; }
-	int GetMeshType() { return m_Type; }
+	void SetType(int IsType) { m_type = IsType; }
+	int GetMeshType() { return m_type; }
 
-	D3DXVECTOR3 GetMeshSize() { return D3DXVECTOR3(m_vtxCountX * m_MeshSize.x, 0.0f, m_vtxCountZ * m_MeshSize.z); }
+	D3DXVECTOR3 GetMeshSize() { return D3DXVECTOR3(m_vtxCountX * m_meshSize.x, 0.0f, m_vtxCountZ * m_meshSize.z); }
 
 	void SetOneMeshSize(D3DXVECTOR3 IsSize);
-	D3DXVECTOR3 GetOneMeshSize() { return m_MeshSize; }
+	D3DXVECTOR3 GetOneMeshSize() { return m_meshSize; }
 	int GetMeshSizeX() { return m_vtxCountX; }
 
-	void SwitchCollision(bool onCollision) { IsCollision = onCollision; };
+	void SwitchCollision(bool onCollision) { m_isCollision = onCollision; };
 
-	std::string GetDataNeme() { return DataName; }
+	std::string GetDataNeme() { return m_dataName; }
 
 private:
 	void SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx, int nCnt, bool isUp);
 	void SetVtxMeshSize(int Size);
 	void SetVtxMeshLight();
 
-	LPDIRECT3DINDEXBUFFER9 m_pIdxBuff;	// インデックスバッファ
+	LPDIRECT3DINDEXBUFFER9 m_idxBuff;	// インデックスバッファ
 
 	int m_xsiz;				// 面数
 	int m_zsiz;				// 面数
@@ -71,14 +71,14 @@ private:
 	int m_vtx;				// 頂点数
 	int m_index;			// インデックス
 	int m_polygonCount;		// ポリゴン数
-	int m_NowMesh;
-	int m_Number;
-	int m_Type;
-	D3DXVECTOR3 m_MeshSize;
-	D3DXVECTOR3* m_nPosMesh;
-	std::string  m_pFileName;
-	std::string  DataName;
-	bool IsCollision;
+	int m_nowMesh;
+	int m_number;
+	int m_type;
+	D3DXVECTOR3 m_meshSize;
+	D3DXVECTOR3* m_posMesh;
+	std::string m_fileName;
+	std::string m_dataName;
+	bool m_isCollision;
 };
 #endif
 

@@ -60,40 +60,40 @@ public:
 	void SetColor(const D3DXCOLOR& inColor) override;
 	void SetAnimation(const int U, const int V, const int Speed, const int Drawtimer, const bool loop);
 
-	LPDIRECT3DVERTEXBUFFER9 &GetVtx() { return m_pVtxBuff; }
+	LPDIRECT3DVERTEXBUFFER9 &GetVtx() { return m_vtxBuff; }
 
 	bool PointAndAABB(const D3DXVECTOR3& inPos);
 private:
 	void Animation();
 
 protected:
-	int  m_nTimer;
-	float m_nScale;
+	int  m_timer;
+	float m_scale;
 	D3DXMATRIX m_mtxWorld;	// マトリックス
 
 private:
-	LPDIRECT3DVERTEXBUFFER9	m_pVtxBuff;
+	LPDIRECT3DVERTEXBUFFER9	m_vtxBuff;
 
 	/* アニメーション系統 */
 	// 現在のアニメーション状況
-	int m_CounterAnim;
-	int m_PatternAnimX;
-	int m_PatternAnimY;
+	int m_counterAnim;
+	int m_patternAnimX;
+	int m_patternAnimY;
 
 	// 分割数
-	int m_DivisionX;
-	int m_DivisionY;
-	int m_DivisionMAX;
+	int m_divisionX;
+	int m_divisionY;
+	int m_divisionMAX;
 
 	// アニメーション速度
-	int m_AnimationSpeed;
-	int m_AnimationSpeedCount;
+	int m_animationSpeed;
+	int m_animationSpeedCount;
 	
 	// アニメーション時間
-	int m_Timar;
-	int m_TimaCount;
+	int m_timar;
+	int m_timaCount;
 
-	bool m_OnAnimation;	// アニメーション使用の有無
-	bool m_Loop;		// ループアニメーションか否か
+	bool m_isOnAnimation;	// アニメーション使用の有無
+	bool m_isLoop;		// ループアニメーションか否か
 };
 #endif

@@ -19,17 +19,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 #ifdef _DEBUG
 // FPSカウンタ
-int g_nCountFPS;
+int g_countFPS;
 #endif // _DEBUG
 
 //==============================================================
 // 静的変数
 //==============================================================
-static CApplication* pApplication;
+static CApplication* application;
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // メイン関数
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int nCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -70,14 +70,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpC
 		hInstance,
 		NULL);
 
-	pApplication = CApplication::GetInstance();
+	application = CApplication::GetInstance();
 
-	if (FAILED(pApplication->Init(hWnd, hInstance)))	// 画面サイズ
+	if (FAILED(application->Init(hWnd, hInstance)))	// 画面サイズ
 	{//初期化処理が失敗した場合
 		return -1;
 	}
 
-	pApplication->SetWcex(wcex);
+	application->SetWcex(wcex);
 
 	// 分解能を設定
 	timeBeginPeriod(1);
@@ -119,7 +119,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpC
 			if ((dwCurrentTime - dwFPSLastTime) >= 500)
 			{// 0.5秒ごとに実行
 				// FPSを算出
-				g_nCountFPS = dwFrameCount * 1000 / (dwCurrentTime - dwFPSLastTime);
+				g_countFPS = dwFrameCount * 1000 / (dwCurrentTime - dwFPSLastTime);
 				dwFPSLastTime = dwCurrentTime;	// 現在の時間を保存
 				dwFrameCount = 0;
 			}
@@ -130,9 +130,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpC
 				// 現在の時間を保存
 				dwExecLastTime = dwCurrentTime;
 
-				pApplication->Update();
+				application->Update();
 
-				pApplication->Draw();
+				application->Draw();
 
 #ifdef _DEBUG
 				dwFrameCount++;
@@ -141,12 +141,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpC
 		}
 	}
 
-	if (pApplication != nullptr)
+	if (application != nullptr)
 	{// 終了処理
 
-		pApplication->Uninit();
-		delete pApplication;
-		pApplication = nullptr;
+		application->Uninit();
+		delete application;
+		application = nullptr;
 	}
 	
 	// ウィンドウクラスの登録を解除
@@ -158,9 +158,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpC
 	return (int)msg.wParam;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // ウインドウプロシージャ
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	//if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
@@ -204,12 +204,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 #ifdef _DEBUG
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 時間
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 int GetTime(void)
 {
-	return g_nCountFPS;
+	return g_countFPS;
 }
 
 #endif // _DEBUG

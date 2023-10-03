@@ -20,8 +20,8 @@ public:
 	// モデルデータ
 	struct SModelData
 	{
-		LPD3DXMESH pMesh;
-		LPD3DXBUFFER pBuffMat;
+		LPD3DXMESH mesh;
+		LPD3DXBUFFER buffMat;
 		DWORD numMat;
 		D3DXVECTOR3 minVtx;
 		D3DXVECTOR3 maxVtx;

@@ -33,7 +33,7 @@ const D3DXVECTOR3 CObjectPolygon3D::m_Vtx[4] =
 //--------------------------------------------------------------
 CObjectPolygon3D::CObjectPolygon3D(CTaskGroup::EPriority list) :
 	CObject(list,CTaskGroup::EPushMethod::PUSH_CURRENT),
-	m_pVtxBuff(nullptr)
+	m_vtxBuff(nullptr)
 {
 	D3DXMatrixIdentity(&m_mtxWorld);
 }
@@ -59,15 +59,15 @@ HRESULT CObjectPolygon3D::Init()
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_3D,		//頂点フォーマット
 		D3DPOOL_MANAGED,
-		&m_pVtxBuff,
+		&m_vtxBuff,
 		NULL);
 
 	VERTEX_3D* pVtx;	// 頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-	m_Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	m_normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	pVtx[1].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	pVtx[2].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -80,7 +80,7 @@ HRESULT CObjectPolygon3D::Init()
 	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
 	//頂点バッファをアンロックする
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 
 	return S_OK;
 }
@@ -91,10 +91,10 @@ HRESULT CObjectPolygon3D::Init()
 void CObjectPolygon3D::Uninit()
 {
 	// 破棄
-	if (m_pVtxBuff != nullptr)
+	if (m_vtxBuff != nullptr)
 	{
-		m_pVtxBuff->Release();
-		m_pVtxBuff = nullptr;
+		m_vtxBuff->Release();
+		m_vtxBuff = nullptr;
 	}
 	Release();
 }
@@ -129,7 +129,7 @@ void CObjectPolygon3D::Draw()
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
 	// 頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
+	pDevice->SetStreamSource(0, m_vtxBuff, 0, sizeof(VERTEX_3D));
 
 	// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);
@@ -189,7 +189,7 @@ void CObjectPolygon3D::SetTex(PositionVec4 Tex)
 	VERTEX_3D *pVtx; //頂点へのポインタ
 
 	//頂点バッファをロックし頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//テクスチャの座標設定
 	pVtx[0].tex = D3DXVECTOR2(Tex.P0, Tex.P2);
@@ -198,7 +198,7 @@ void CObjectPolygon3D::SetTex(PositionVec4 Tex)
 	pVtx[3].tex = D3DXVECTOR2(Tex.P1, Tex.P3);
 
 	//頂点バッファをアンロック
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 }
 
 //--------------------------------------------------------------
@@ -233,7 +233,7 @@ void CObjectPolygon3D::SetSize(const D3DXVECTOR3 &size)
 	VERTEX_3D *pVtx;	// 頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//------------------------
 	// 頂点情報の設定
@@ -246,7 +246,7 @@ void CObjectPolygon3D::SetSize(const D3DXVECTOR3 &size)
 	}
 
 	//頂点バッファをアンロックする
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 }
 
 //--------------------------------------------------------------
@@ -259,7 +259,7 @@ void CObjectPolygon3D::SetColor(const D3DXCOLOR& Collar)
 	VERTEX_3D *pVtx; //頂点へのポインタ
 
 	//頂点バッファをロックし頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	D3DXCOLOR color(GetColor());
 
@@ -271,5 +271,5 @@ void CObjectPolygon3D::SetColor(const D3DXCOLOR& Collar)
 	pVtx[3].col = color;
 
 	//頂点バッファをアンロック
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 }

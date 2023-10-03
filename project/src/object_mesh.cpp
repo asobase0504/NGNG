@@ -29,12 +29,12 @@ CMesh::CMesh(CTaskGroup::EPriority nPriority) :
 	m_vtx(0),			// 頂点数
 	m_index(0),			// インデックス
 	m_polygonCount(0),
-	m_NowMesh(0),
-	m_Number(0),
-	m_Type(0),
-	IsCollision(true)
+	m_nowMesh(0),
+	m_number(0),
+	m_type(0),
+	m_isCollision(true)
 {
-	m_MeshSize = { 10.0f,0.0f,10.0f };
+	m_meshSize = { 10.0f,0.0f,10.0f };
 }
 
 //--------------------------------------------------------------
@@ -42,7 +42,6 @@ CMesh::CMesh(CTaskGroup::EPriority nPriority) :
 //--------------------------------------------------------------
 CMesh::~CMesh()
 {
-
 }
 
 //--------------------------------------------------------------
@@ -51,8 +50,8 @@ CMesh::~CMesh()
 HRESULT CMesh::Init()
 {
 	// 初期化処理
-	m_pVtxBuff = nullptr;		// 頂点バッファーへのポインタ
-	m_pIdxBuff = nullptr;		// インデックスバッファ
+	m_vtxBuff = nullptr;		// 頂点バッファーへのポインタ
+	m_idxBuff = nullptr;		// インデックスバッファ
 	
 	SetMesh(10);
 
@@ -65,16 +64,16 @@ HRESULT CMesh::Init()
 void CMesh::Uninit()
 {
 	// 頂点バッファーの解放
-	if (m_pVtxBuff != nullptr)
+	if (m_vtxBuff != nullptr)
 	{
-		m_pVtxBuff->Release();
-		m_pVtxBuff = nullptr;
+		m_vtxBuff->Release();
+		m_vtxBuff = nullptr;
 	}
 
-	if (m_pIdxBuff != nullptr)
+	if (m_idxBuff != nullptr)
 	{
-		m_pIdxBuff->Release();
-		m_pIdxBuff = nullptr;
+		m_idxBuff->Release();
+		m_idxBuff = nullptr;
 	}
 
 	Release();
@@ -85,7 +84,6 @@ void CMesh::Uninit()
 //--------------------------------------------------------------
 void CMesh::Update()
 {
-
 }
 
 //--------------------------------------------------------------
@@ -119,10 +117,10 @@ void CMesh::Draw()
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
 	// 頂点バッファをデバイスのデータストリームに設定
-	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
+	pDevice->SetStreamSource(0, m_vtxBuff, 0, sizeof(VERTEX_3D));
 
 	//インデックスバッファ設定
-	pDevice->SetIndices(m_pIdxBuff);
+	pDevice->SetIndices(m_idxBuff);
 
 	// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);
@@ -169,11 +167,11 @@ bool CMesh::Collision(D3DXVECTOR3* pPos)
 
 	// 頂点座標をロック
 	VERTEX_3D* pVtx = nullptr;
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//インデックスバッファのロック
 	WORD* pIdx;
-	m_pIdxBuff->Lock(0, 0, (void**)&pIdx, 0);
+	m_idxBuff->Lock(0, 0, (void**)&pIdx, 0);
 
 	D3DXMATRIX mtxRot, mtxTrans;	// 計算用マトリックス
 	D3DXMATRIX mtxWorld;
@@ -247,16 +245,16 @@ bool CMesh::Collision(D3DXVECTOR3* pPos)
 			SwitchCollision(true);
 			OnHit();
 
-			if (IsCollision)
+			if (m_isCollision)
 			{
 				pPos->y = (posLineVec[0].y - (Normal.x*(pPos->x - posLineVec[0].x) + Normal.z*(pPos->z - posLineVec[0].z)) / Normal.y) + 10.0f;
 			}
 		}
 	}
 	// 頂点座標をアンロック
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 	// 頂点インデックスをアンロック
-	m_pIdxBuff->Unlock();
+	m_idxBuff->Unlock();
 
 	return bIsLanding;
 }
@@ -274,11 +272,11 @@ bool CMesh::CreateMesh(D3DXVECTOR3* pPos)
 	const int nTri = 3;
 
 	// 頂点座標をロック
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//インデックスバッファのロック
 	WORD* pIdx;
-	m_pIdxBuff->Lock(0, 0, (void**)&pIdx, 0);
+	m_idxBuff->Lock(0, 0, (void**)&pIdx, 0);
 
 	D3DXMATRIX mtxRot, mtxTrans;	// 計算用マトリックス
 	D3DXMATRIX mtxWorld;
@@ -340,9 +338,9 @@ bool CMesh::CreateMesh(D3DXVECTOR3* pPos)
 	}
 
 	// 頂点座標をアンロック
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 	// 頂点座標をアンロック
-	m_pIdxBuff->Unlock();
+	m_idxBuff->Unlock();
 
 	CMesh::SetVtxMeshLight();
 
@@ -403,9 +401,9 @@ void CMesh::Loadfile(const char* pFileName)
 		CMesh::SetTexture(str.c_str());
 
 		m_pos = D3DXVECTOR3(JMesh["POSORIGIN"]["X"], JMesh["POSORIGIN"]["Y"], JMesh["POSORIGIN"]["Z"]);
-		m_MeshSize = D3DXVECTOR3(JMesh["MESHDATASIZE"]["X"], JMesh["MESHDATASIZE"]["Y"], JMesh["MESHDATASIZE"]["Z"]);
+		m_meshSize = D3DXVECTOR3(JMesh["MESHDATASIZE"]["X"], JMesh["MESHDATASIZE"]["Y"], JMesh["MESHDATASIZE"]["Z"]);
 		
-		m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+		m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 		for (int nCnt = 0; nCnt < m_vtx; nCnt++)
 		{
@@ -429,7 +427,7 @@ void CMesh::Loadfile(const char* pFileName)
 			pVtx[nCnt].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		}
 		// 頂点座標をアンロック
-		m_pVtxBuff->Unlock();
+		m_vtxBuff->Unlock();
 		CMesh::SetVtxMeshLight();
 	}
 }
@@ -442,7 +440,7 @@ void CMesh::Savefile(const char* pFileName)
 	VERTEX_3D* pVtx = nullptr;
 
 	// 頂点座標をロック
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 	int nIndex = 0;
 	
 	nlohmann::json JMesh;//リストの生成
@@ -463,15 +461,15 @@ void CMesh::Savefile(const char* pFileName)
 	}
 
 	// 頂点座標をアンロック
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 
 	JMesh["INDEX"] = nIndex;
 	JMesh["MESHDATASIZE"] = {
-		{ "X", m_MeshSize.x } ,
-		{ "Y", m_MeshSize.y } ,
-		{ "Z", m_MeshSize.z } };
+		{ "X", m_meshSize.x } ,
+		{ "Y", m_meshSize.y } ,
+		{ "Z", m_meshSize.z } };
 	
-	JMesh["TEXPASS"] = m_pFileName;
+	JMesh["TEXPASS"] = m_fileName;
 	JMesh["MESHSIZE"] = m_xsiz;
 	JMesh["POSORIGIN"] = {
 			{ "X", m_pos.x } ,
@@ -516,7 +514,7 @@ void CMesh::SetVtxMeshSize(int Size)
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_3D,
 		D3DPOOL_MANAGED,
-		&m_pVtxBuff,
+		&m_vtxBuff,
 		NULL);
 
 	//インデックスバッファ生成
@@ -524,13 +522,13 @@ void CMesh::SetVtxMeshSize(int Size)
 		D3DUSAGE_WRITEONLY,
 		D3DFMT_INDEX16,
 		D3DPOOL_MANAGED,
-		&m_pIdxBuff,
+		&m_idxBuff,
 		NULL);
 
 	VERTEX_3D* pVtx = NULL;
 
 	// 頂点座標をロック
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点座標の設定
 	for (int i = 0; i < m_vtx; i++)
@@ -543,11 +541,10 @@ void CMesh::SetVtxMeshSize(int Size)
 		float texV = 1.0f / m_zsiz * (i / m_vtxCountZ);
 
 		// メッシュを真ん中にする補正
-		//m_pos = (D3DXVECTOR3(-(posx - 1) * m_MeshSize.x * 0.5f, 0.0f, -posz * m_MeshSize.z * 0.5f)) + m_pos;
+		//m_pos = (D3DXVECTOR3(-(posx - 1) * m_meshSize.x * 0.5f, 0.0f, -posz * m_meshSize.z * 0.5f)) + m_pos;
 
 		// 座標の補正
-		pVtx[i].pos += D3DXVECTOR3(posx * m_MeshSize.x, 0.0f, posz * m_MeshSize.z);
-
+		pVtx[i].pos += D3DXVECTOR3(posx * m_meshSize.x, 0.0f, posz * m_meshSize.z);
 
 		// 各頂点の法線の設定(※ベクトルの大きさは1にする必要がある)
 		pVtx[i].nor = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -560,7 +557,7 @@ void CMesh::SetVtxMeshSize(int Size)
 	}
 
 	// 頂点座標をアンロック
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 }
 
 //--------------------------------------------------------------
@@ -572,8 +569,8 @@ void CMesh::SetVtxMeshLight()
 	//インデックスバッファのロック
 	WORD* pIdx;
 
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-	m_pIdxBuff->Lock(0, 0, (void**)&pIdx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_idxBuff->Lock(0, 0, (void**)&pIdx, 0);
 
 	for (int z = 0; z < m_zsiz; z++)
 	{
@@ -647,8 +644,8 @@ void CMesh::SetVtxMeshLight()
 	}
 
 	// 頂点座標をアンロック
-	m_pVtxBuff->Unlock();
-	m_pIdxBuff->Unlock();
+	m_vtxBuff->Unlock();
+	m_idxBuff->Unlock();
 }
 
 //--------------------------------------------------------------
@@ -656,7 +653,7 @@ void CMesh::SetVtxMeshLight()
 //--------------------------------------------------------------
 void CMesh::SetMesh(const int Size)
 {
-	m_NowMesh = Size;		// 枚数保存
+	m_nowMesh = Size;		// 枚数保存
 	SetVtxMeshSize(Size);	// サイズ決定
 	SetVtxMeshLight();		// 法線設定
 }
@@ -666,6 +663,6 @@ void CMesh::SetMesh(const int Size)
 //--------------------------------------------------------------
 void CMesh::SetOneMeshSize(D3DXVECTOR3 IsSize)
 {
-	m_MeshSize = IsSize;
-	CMesh::SetMesh(m_NowMesh);
+	m_meshSize = IsSize;
+	CMesh::SetMesh(m_nowMesh);
 }

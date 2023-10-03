@@ -50,7 +50,7 @@ public:
 	D3DXVECTOR3 GetPosOld() { return m_posOld; }				// 過去位置
 
 	void SetMotion(const char *pName);							// モーション情報の設定
-	CMotion *GetMotion() { return m_pMotion; }					// モーション情報の取得
+	CMotion *GetMotion() { return m_motion; }					// モーション情報の取得
 
 	void SetUpdateStop(bool isStop) { m_isUpdateStop = isStop; }
 	void SetMaxMinVtx();
@@ -62,7 +62,7 @@ private:
 	//--------------------------------------------------------------
 	// メンバ変数
 	//--------------------------------------------------------------
-	CMotion			*m_pMotion;			// モーションインスタンス
+	CMotion*		m_motion;			// モーションインスタンス
 	D3DXVECTOR3		m_posOld;			// 過去位置
 	bool			m_isUpdateStop;		// 更新を停止させる。
 };

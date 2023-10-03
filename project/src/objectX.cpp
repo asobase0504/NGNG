@@ -24,18 +24,18 @@
 CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 	CObject(nPriority),
 	m_scale(1.0f,1.0f,1.0f),
-	m_MinVtxOrigin(0.0f, 0.0f, 0.0f),
-	m_MaxVtxOrigin(0.0f, 0.0f, 0.0f),
-	m_MinVtx(0.0f, 0.0f, 0.0f),
-	m_MaxVtx(0.0f, 0.0f, 0.0f),
-	m_pMesh(nullptr),
-	m_pBuffMat(nullptr),
-	m_NumMat(0),
-	m_pParent(nullptr),
+	m_minVtxOrigin(0.0f, 0.0f, 0.0f),
+	m_maxVtxOrigin(0.0f, 0.0f, 0.0f),
+	m_minVtx(0.0f, 0.0f, 0.0f),
+	m_maxVtx(0.0f, 0.0f, 0.0f),
+	m_mesh(nullptr),
+	m_buffMat(nullptr),
+	m_numMat(0),
+	m_parent(nullptr),
 	m_isCollision(true),
-	m_hasOutLine(false),
-	m_hasShadow(false),
-	pTex0(nullptr)
+	m_isHasOutLine(false),
+	m_isHasShadow(false),
+	tex0(nullptr)
 {
 	//オブジェクトのタイプセット処理
 	CObject::SetType(CObject::MODEL);
@@ -98,9 +98,9 @@ void CObjectX::Draw()
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
-	if (m_pParent != nullptr)
+	if (m_parent != nullptr)
 	{
-		D3DXMATRIX mtxParent = m_pParent->GetMtxWorld();
+		D3DXMATRIX mtxParent = m_parent->GetMtxWorld();
 
 		// 行列掛け算関数
 		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
@@ -176,9 +176,9 @@ void CObjectX::DrawMaterial()
 	pEffect->SetVector(m_hvEyePos, &EyePos);	//視点をシェーダーに渡す
 
 	//マテリアルデータのポインタを取得する
-	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
+	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
 
-	for (int nCntMat = 0; nCntMat < (int)m_NumMat; nCntMat++)
+	for (int nCntMat = 0; nCntMat < (int)m_numMat; nCntMat++)
 	{
 		// モデルの色の設定 
 		{
@@ -207,14 +207,14 @@ void CObjectX::DrawMaterial()
 		LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
 		if (texture != nullptr)
 		{// テクスチャの適応
-			pTex0 = texture;
+			tex0 = texture;
 		}
 
 		// テクスチャの設定
-		pEffect->SetTexture(m_hTexture, pTex0);
+		pEffect->SetTexture(m_hTexture, tex0);
 
 		pEffect->BeginPass(0);
-		m_pMesh->DrawSubset(nCntMat);	//モデルパーツの描画
+		m_mesh->DrawSubset(nCntMat);	//モデルパーツの描画
 		pEffect->EndPass();
 	}
 
@@ -228,13 +228,13 @@ void CObjectX::SetScale(const D3DXVECTOR3& inScale)
 {
 	m_scale = inScale;
 
-	m_MinVtx.x = m_scale.x * m_MinVtxOrigin.x;
-	m_MinVtx.y = m_scale.y * m_MinVtxOrigin.y;
-	m_MinVtx.z = m_scale.z * m_MinVtxOrigin.z;
+	m_minVtx.x = m_scale.x * m_minVtxOrigin.x;
+	m_minVtx.y = m_scale.y * m_minVtxOrigin.y;
+	m_minVtx.z = m_scale.z * m_minVtxOrigin.z;
 
-	m_MaxVtx.x = m_scale.x * m_MaxVtxOrigin.x;
-	m_MaxVtx.y = m_scale.y * m_MaxVtxOrigin.y;
-	m_MaxVtx.z = m_scale.z * m_MaxVtxOrigin.z;
+	m_maxVtx.x = m_scale.x * m_maxVtxOrigin.x;
+	m_maxVtx.y = m_scale.y * m_maxVtxOrigin.y;
+	m_maxVtx.z = m_scale.z * m_maxVtxOrigin.z;
 }
 
 //--------------------------------------------------------------
@@ -274,28 +274,28 @@ void CObjectX::CalculationVtx()
 	// 向きの反映
 	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &m_mtxRot);		// 行列掛け算関数
 
-	D3DXVec3TransformCoord(&m_MaxVtx, &m_MaxVtx, &mtxWorld);
-	D3DXVec3TransformCoord(&m_MinVtx, &m_MinVtx, &mtxWorld);
+	D3DXVec3TransformCoord(&m_maxVtx, &m_maxVtx, &mtxWorld);
+	D3DXVec3TransformCoord(&m_minVtx, &m_minVtx, &mtxWorld);
 
-	if (m_MaxVtx.x < m_MinVtx.x)
+	if (m_maxVtx.x < m_minVtx.x)
 	{
-		float change = m_MaxVtx.x;
-		m_MaxVtx.x = m_MinVtx.x;
-		m_MinVtx.x = change;
+		float change = m_maxVtx.x;
+		m_maxVtx.x = m_minVtx.x;
+		m_minVtx.x = change;
 	}
 
-	if (m_MaxVtx.y < m_MinVtx.y)
+	if (m_maxVtx.y < m_minVtx.y)
 	{
-		float change = m_MaxVtx.y;
-		m_MaxVtx.y = m_MinVtx.y;
-		m_MinVtx.y = change;
+		float change = m_maxVtx.y;
+		m_maxVtx.y = m_minVtx.y;
+		m_minVtx.y = change;
 	}
 
-	if (m_MaxVtx.z < m_MinVtx.z)
+	if (m_maxVtx.z < m_minVtx.z)
 	{
-		float change = m_MaxVtx.z;
-		m_MaxVtx.z = m_MinVtx.z;
-		m_MinVtx.z = change;
+		float change = m_maxVtx.z;
+		m_maxVtx.z = m_minVtx.z;
+		m_minVtx.z = change;
 	}
 }
 
@@ -333,13 +333,13 @@ CObjectX * CObjectX::Create(D3DXVECTOR3 pos, CTaskGroup::EPriority nPriority)
 void CObjectX::LoadModel(const char* aFileName)
 {
 	CObjectXGroup *xGroup = CApplication::GetInstance()->GetObjectXGroup();
-	m_pBuffMat = xGroup->GetBuffMat(aFileName);
-	m_MaxVtxOrigin = xGroup->GetMaxVtx(aFileName);
-	m_MaxVtx = m_MaxVtxOrigin;
-	m_MinVtxOrigin = xGroup->GetMinVtx(aFileName);
-	m_MinVtx = m_MinVtxOrigin;
-	m_pMesh = xGroup->GetMesh(aFileName);
-	m_NumMat = xGroup->GetNumMat(aFileName);
+	m_buffMat = xGroup->GetBuffMat(aFileName);
+	m_maxVtxOrigin = xGroup->GetMaxVtx(aFileName);
+	m_maxVtx = m_maxVtxOrigin;
+	m_minVtxOrigin = xGroup->GetMinVtx(aFileName);
+	m_minVtx = m_minVtxOrigin;
+	m_mesh = xGroup->GetMesh(aFileName);
+	m_numMat = xGroup->GetNumMat(aFileName);
 	m_size = xGroup->GetSize(aFileName);
 }
 
@@ -385,12 +385,12 @@ void CObjectX::Projection(void)
 	D3DMATERIAL9 matDef;
 	pDevice->GetMaterial(&matDef);
 
-	if (m_pBuffMat != nullptr)
+	if (m_buffMat != nullptr)
 	{
 		// マテリアルデータへのポインタを取得
-		D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
+		D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
 
-		for (int nCntMat = 0; nCntMat < (int)m_NumMat; nCntMat++)
+		for (int nCntMat = 0; nCntMat < (int)m_numMat; nCntMat++)
 		{
 			// マテリアルの設定
 			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
@@ -403,7 +403,7 @@ void CObjectX::Projection(void)
 			pDevice->SetMaterial(&Material);
 
 			// モデルパーツの描画
-			m_pMesh->DrawSubset(nCntMat);
+			m_mesh->DrawSubset(nCntMat);
 		}
 	}
 
@@ -418,7 +418,7 @@ void CObjectX::Projection(void)
 void CObjectX::SetMaterialDiffuse(unsigned int index, const D3DXCOLOR& inColor)
 {
 	// 変更予定のマテリアルがない場合
-	if (index >= m_NumMat)
+	if (index >= m_numMat)
 	{
 		assert(false);
 		return;
@@ -448,17 +448,17 @@ bool CObjectX::SphereAndAABB(CObjectX* inObjectX, D3DXVECTOR3* outPos)
 	D3DXVECTOR3 dist(0.0f,0.0f,0.0f);
 	float length = AABBAndPointLength(inObjectX, &dist);	// 最短距離
 
-	if (m_MaxVtx.x * 1.4f > length)
+	if (m_maxVtx.x * 1.4f > length)
 	{
 		if (outPos != nullptr)
 		{
 			*outPos = dist;
 		}
 
-		m_pos -= dist * (m_MaxVtx.x * 1.4f - length);
+		m_pos -= dist * (m_maxVtx.x * 1.4f - length);
 	}
 
-	return m_MaxVtx.x * 1.4f > length;
+	return m_maxVtx.x * 1.4f > length;
 }
 
 //--------------------------------------------------------------
@@ -467,16 +467,16 @@ bool CObjectX::SphereAndAABB(CObjectX* inObjectX, D3DXVECTOR3* outPos)
 //--------------------------------------------------------------
 bool CObjectX::RayAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inNormal, D3DXVECTOR3* outPos)
 {
-	float tmin = (m_MinVtx.x + m_pos.x - inPos.x) / inNormal.x;
-	float tmax = (m_MaxVtx.x + m_pos.x - inPos.x) / inNormal.x;
+	float tmin = (m_minVtx.x + m_pos.x - inPos.x) / inNormal.x;
+	float tmax = (m_maxVtx.x + m_pos.x - inPos.x) / inNormal.x;
 
 	if (tmin > tmax)
 	{
 		std::swap(tmin, tmax);
 	}
 
-	float tymin = (m_MinVtx.y + m_pos.y - inPos.y) / inNormal.y;
-	float tymax = (m_MaxVtx.y + m_pos.y - inPos.y) / inNormal.y;
+	float tymin = (m_minVtx.y + m_pos.y - inPos.y) / inNormal.y;
+	float tymax = (m_maxVtx.y + m_pos.y - inPos.y) / inNormal.y;
 
 	if (tymin > tymax)
 	{
@@ -498,8 +498,8 @@ bool CObjectX::RayAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inNormal,
 		tmax = tymax;
 	}
 
-	float tzmin = (m_MinVtx.z + m_pos.z - inPos.z) / inNormal.z;
-	float tzmax = (m_MaxVtx.z + m_pos.z - inPos.z) / inNormal.z;
+	float tzmin = (m_minVtx.z + m_pos.z - inPos.z) / inNormal.z;
+	float tzmax = (m_maxVtx.z + m_pos.z - inPos.z) / inNormal.z;
 
 	if (tzmin > tzmax)
 	{
@@ -534,8 +534,8 @@ bool CObjectX::SegmentAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inPos
 {
 	// 線分の両端点がAABB内に含まれているかどうかを判定する。
 	{
-		D3DXVECTOR3 min = m_pos + m_MinVtx;
-		D3DXVECTOR3 max = m_pos + m_MaxVtx;
+		D3DXVECTOR3 min = m_pos + m_minVtx;
+		D3DXVECTOR3 max = m_pos + m_maxVtx;
 
 		bool isBoxContainsPos;
 		{
@@ -631,8 +631,8 @@ float CObjectX::AABBAndPointLength(CObjectX* inObject, D3DXVECTOR3* outDist)
 
 	// 各軸で点が最小値以下もしくは最大値以上ならば、差を考慮
 
-	D3DXVECTOR3 min = inObject->m_pos + inObject->m_MinVtx;
-	D3DXVECTOR3 max = inObject->m_pos + inObject->m_MaxVtx;
+	D3DXVECTOR3 min = inObject->m_pos + inObject->m_minVtx;
+	D3DXVECTOR3 max = inObject->m_pos + inObject->m_maxVtx;
 	D3DXVECTOR3 dist(0.0f,0.0f,0.0f);
 
 	if (m_pos.x < min.x)

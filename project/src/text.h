@@ -36,22 +36,23 @@ public:
 
 	void ReleaseTimer(int nTimar);
 private:
-	D3DXCOLOR  m_col;
-	int m_DesTimarMax;	// 消える最大時間
-	int m_DesTimar;		// 消える時間
+	void TextLetter(const char* Text, int SpeedText);
 
-	int m_TextSize;		// 文字のサイズ
-	int m_Addnumber;	// 1つの文字が加算されるまでの時間
-	int m_AddCount;		// 文字が加算されるまでのカウント
-	int m_AddLetter;	// 何文字目入れるか指定
+private:
+	D3DXCOLOR  m_col;
+	int m_desTimarMax;	// 消える最大時間
+	int m_desTimar;		// 消える時間
+
+	int m_textSize;		// 文字のサイズ
+	int m_addNumber;	// 1つの文字が加算されるまでの時間
+	int m_addCount;		// 文字が加算されるまでのカウント
+	int m_addLetter;	// 何文字目入れるか指定
 
 	bool m_isRelease;
 
-	LPD3DXFONT m_pFont = nullptr;
+	LPD3DXFONT m_font = nullptr;
 
-	std::string m_Text;
-	std::string m_ALLText;
-
-	void TextLetter(const char * Text, int SpeedText);
+	std::string m_text;
+	std::string m_allText;
 };
 #endif
