@@ -32,7 +32,7 @@ CMesh::CMesh(CTaskGroup::EPriority nPriority) :
 	m_nowMesh(0),
 	m_number(0),
 	m_type(0),
-	m_IsCollision(true)
+	m_isCollision(true)
 {
 	m_meshSize = { 10.0f,0.0f,10.0f };
 }
@@ -245,7 +245,7 @@ bool CMesh::Collision(D3DXVECTOR3* pPos)
 			SwitchCollision(true);
 			OnHit();
 
-			if (m_IsCollision)
+			if (m_isCollision)
 			{
 				pPos->y = (posLineVec[0].y - (Normal.x*(pPos->x - posLineVec[0].x) + Normal.z*(pPos->z - posLineVec[0].z)) / Normal.y) + 10.0f;
 			}

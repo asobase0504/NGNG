@@ -119,7 +119,7 @@ private:
 	//=========================================
 	//ハンドル一覧
 	//=========================================
-	IDirect3DTexture9	*tex0;	// テクスチャ保存用
+	IDirect3DTexture9*	tex0;	// テクスチャ保存用
 	D3DXHANDLE			m_hmWVP;		// ワールド～射影行列
 	D3DXHANDLE			m_hmWIT;		// ローカル - ワールド変換行列
 	D3DXHANDLE			m_hvLightDir;	// ライトの方向

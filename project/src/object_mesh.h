@@ -53,7 +53,7 @@ public:
 	D3DXVECTOR3 GetOneMeshSize() { return m_meshSize; }
 	int GetMeshSizeX() { return m_vtxCountX; }
 
-	void SwitchCollision(bool onCollision) { m_IsCollision = onCollision; };
+	void SwitchCollision(bool onCollision) { m_isCollision = onCollision; };
 
 	std::string GetDataNeme() { return m_dataName; }
 
@@ -76,9 +76,9 @@ private:
 	int m_type;
 	D3DXVECTOR3 m_meshSize;
 	D3DXVECTOR3* m_posMesh;
-	std::string  m_fileName;
-	std::string  m_dataName;
-	bool m_IsCollision;
+	std::string m_fileName;
+	std::string m_dataName;
+	bool m_isCollision;
 };
 #endif
 

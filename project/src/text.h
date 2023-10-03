@@ -36,6 +36,9 @@ public:
 
 	void ReleaseTimer(int nTimar);
 private:
+	void TextLetter(const char* Text, int SpeedText);
+
+private:
 	D3DXCOLOR  m_col;
 	int m_desTimarMax;	// Á‚¦‚éÅ‘åŠÔ
 	int m_desTimar;		// Á‚¦‚éŠÔ
@@ -51,7 +54,5 @@ private:
 
 	std::string m_text;
 	std::string m_allText;
-
-	void TextLetter(const char* Text, int SpeedText);
 };
 #endif
