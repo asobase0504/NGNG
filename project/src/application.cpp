@@ -100,7 +100,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	m_texture = CTexture::GetInstance();
 	m_texture->LoadAll();
 
-	m_mode = CApplication::MODE_GAME;	//現在のモード
+	m_modeType = CApplication::MODE_GAME;	//現在のモード
 
 	//モードの設定
 	SetMode(m_modeType);

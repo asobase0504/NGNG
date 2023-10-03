@@ -39,7 +39,5 @@ public:
 
 private:
 	static	CPlayer* m_pPlayer[MAX_PLAYER];	// プレイヤー
-	static	CCamera* m_pCamera;				// カメラ
-	static	CLight* m_pLight;				// 光源
 };
 #endif
