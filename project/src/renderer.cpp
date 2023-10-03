@@ -39,7 +39,7 @@ CRenderer * CRenderer::GetInstance()
 //--------------------------------------------------------------
 // コンストラクト関数
 //--------------------------------------------------------------
-CRenderer::CRenderer() : m_camera(nullptr), m_light(nullptr)
+CRenderer::CRenderer()
 {
 }
 
@@ -122,12 +122,6 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 	m_debugProc->Init();
 	m_debugProc = nullptr;
 
-	m_camera = new CCamera;
-	m_camera->Init();
-
-	m_light = new CLight;
-	m_light->Init();
-
 	return S_OK;
 }
 
@@ -136,22 +130,6 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 //--------------------------------------------------------------
 void CRenderer::Uninit()
 {	
-	// カメラの破棄
-	if (m_light != nullptr)
-	{
-		m_light->Uninit();
-		delete m_light;
-		m_light = nullptr;
-	}
-
-	// カメラの破棄
-	if (m_camera != nullptr)
-	{
-		m_camera->Uninit();
-		delete m_camera;
-		m_camera = nullptr;
-	}
-
 	// デバッグ情報表示用フォントの破棄
 	if (m_debugProc != nullptr)
 	{
