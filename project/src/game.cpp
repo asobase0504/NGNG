@@ -18,20 +18,18 @@
 #include "fade.h"
 #include "sound.h"
 #include "input.h"
+#include "camera.h"
+#include "light.h"
 #include "utility.h"
 
 /* 3D系統 */
 
 /* Object系統 */
+#include "object_polygon3d.h"
 
 //==============================================================
 // 定数
 //==============================================================
-
-//==============================================================
-// 静的メンバー変数の初期化
-//==============================================================
-CPlayer* CGame::m_pPlayer[MAX_PLAYER] = {};
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -55,10 +53,18 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init(void)
 {
+	m_camera = new CCamera;
+	m_camera->Init();
 
+	m_light = new CLight;
+	m_light->Init();
+
+	CObjectPolygon3D* object = CObjectPolygon3D::Create();
+	object->SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	object->SetSize(D3DXVECTOR3(50.0f, 0.0f, 50.0f));
 
 	//プレイヤーの設定
-	m_pPlayer[0] = CPlayer::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f));
+	//m_player[0] = CPlayer::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f));
 
 	return S_OK;
 }
