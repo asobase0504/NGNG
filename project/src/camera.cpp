@@ -43,7 +43,7 @@ CCamera::~CCamera()
 HRESULT CCamera::Init(void)
 {
 	// 視点　注視点　上方向　設定
-	m_posV = D3DXVECTOR3(0.0f, 100.0f, -100.0f);
+	m_posV = D3DXVECTOR3(0.0f, 1000.0f, -1000.0f);
 	m_posR = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -66,8 +66,8 @@ void CCamera::Uninit(void)
 void CCamera::Update(void)
 {
 #ifdef _DEBUG
-	CDebugProc::Print("視点 : %2f, %2f, %2f\n", m_posV.x, m_posV.y, m_posV.z);
-	CDebugProc::Print("注視点 : %2f, %2f, %2f\n", m_posR.x, m_posR.y, m_posR.z);
+	CDebugProc::Print("視点 : %0.2f, %0.2f, %0.2f\n", m_posV.x, m_posV.y, m_posV.z);
+	CDebugProc::Print("注視点 : %0.2f, %0.2f, %0.2f\n", m_posR.x, m_posR.y, m_posR.z);
 #endif // _DEBUG
 }
 
