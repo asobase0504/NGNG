@@ -125,9 +125,6 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 	m_camera = new CCamera;
 	m_camera->Init();
 
-	m_light = new CLight;
-	m_light->Init();
-
 	return S_OK;
 }
 
@@ -199,6 +196,8 @@ void CRenderer::Draw()
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
 	{
 		CApplication::GetInstance()->GetTaskGroup()->Draw();
+
+		m_camera->Draw();
 
 		CDebugProc::Draw();
 

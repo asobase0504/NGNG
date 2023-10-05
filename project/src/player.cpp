@@ -31,7 +31,11 @@ CPlayer::~CPlayer()
 //-----------------------------------------------------------------------------
 HRESULT CPlayer::Init()
 {
-
+	CObjectX* testX = CObjectX::Create(D3DXVECTOR3(15.0f, -15.0f, 0.0f));
+	testX->LoadModel("BOX");
+	testX->SetMoveRot(D3DXVECTOR3(0.0f, 0.01f, 0.0f));
+	testX->SetMaterialDiffuse(0, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f));
+	testX->CalculationVtx();
 
 	return S_OK;
 }
@@ -50,6 +54,8 @@ void CPlayer::Uninit(void)
 //-----------------------------------------------------------------------------
 void CPlayer::Update(void)
 {
+
+
 	CObject::Update();
 }
 
