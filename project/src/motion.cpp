@@ -130,8 +130,8 @@ void CMotion::SetMotion(const int nCntMotionSet)
 	for (int nCntParts = 0; nCntParts < m_maxParts; nCntParts++)
 	{
 		// •Ï”éŒ¾
-		D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					// ˆÊ’u
-		D3DXVECTOR3 rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					// Œü‚«
+		D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				// ˆÊ’u
+		D3DXVECTOR3 rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				// Œü‚«
 		D3DXVECTOR3 posOrigin = m_parts[nCntParts]->GetPosOrigin();		// Œ³‚ÌˆÊ’u
 		D3DXVECTOR3 rotOrigin = m_parts[nCntParts]->GetRotOrigin();		// Œ³‚ÌŒü‚«
 
@@ -164,10 +164,6 @@ void CMotion::SetParts(D3DXMATRIX mtxWorld)
 		if (m_parts[nCntParts]->GetParent() != nullptr)
 		{
 			m_parts[nCntParts]->Draw();
-		}
-		else
-		{
-			//m_parts[nCntParts]->Draw(mtxWorld);
 		}
 	}
 

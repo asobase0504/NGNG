@@ -71,4 +71,7 @@
 // Debug
 #include "debug_proc.h"
 
+// Input
+#include "input.h"
+
 #endif

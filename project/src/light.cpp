@@ -94,7 +94,7 @@ void CLight::Set(D3DLIGHTTYPE type,D3DXCOLOR col, D3DXVECTOR3 vec, int nNum)
 
 	D3DXVECTOR3 vecDir;		// ライトの方向ベクトル
 
-	m_light[nNum].Type = D3DLIGHT_DIRECTIONAL;	// ライトの種類を設定 ( 平行光源 )
+	m_light[nNum].Type = type;	// ライトの種類を設定 ( 平行光源 )
 	m_light[nNum].Diffuse = col;	// ライトの拡散光を設定 ( ライトの色 )
 
 	vecDir = vec;	// ライトの方向を設定

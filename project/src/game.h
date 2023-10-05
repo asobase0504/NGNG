@@ -38,6 +38,8 @@ public:
 	void Update() override;
 
 private:
-	static	CPlayer* m_pPlayer[MAX_PLAYER];	// プレイヤー
+	CPlayer* m_player[MAX_PLAYER];	// プレイヤー
+	CCamera* m_camera;
+	CLight* m_light;
 };
 #endif

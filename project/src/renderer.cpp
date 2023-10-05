@@ -39,7 +39,7 @@ CRenderer * CRenderer::GetInstance()
 //--------------------------------------------------------------
 // コンストラクト関数
 //--------------------------------------------------------------
-CRenderer::CRenderer() : m_camera(nullptr), m_light(nullptr)
+CRenderer::CRenderer()
 {
 }
 
@@ -116,14 +116,11 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 	m_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
 
 	// シェーダーの読込み
-	D3DXCreateEffectFromFile(m_pD3DDevice, "Effect.fx", NULL, NULL, 0, NULL, &pEffect, nullptr);
+	D3DXCreateEffectFromFile(m_pD3DDevice, "data\\FX\\Effect.fx", NULL, NULL, 0, NULL, &pEffect, nullptr);
 
 	m_debugProc = new CDebugProc;
 	m_debugProc->Init();
 	m_debugProc = nullptr;
-
-	m_camera = new CCamera;
-	m_camera->Init();
 
 	return S_OK;
 }
@@ -133,22 +130,6 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 //--------------------------------------------------------------
 void CRenderer::Uninit()
 {	
-	// カメラの破棄
-	if (m_light != nullptr)
-	{
-		m_light->Uninit();
-		delete m_light;
-		m_light = nullptr;
-	}
-
-	// カメラの破棄
-	if (m_camera != nullptr)
-	{
-		m_camera->Uninit();
-		delete m_camera;
-		m_camera = nullptr;
-	}
-
 	// デバッグ情報表示用フォントの破棄
 	if (m_debugProc != nullptr)
 	{
@@ -181,6 +162,13 @@ void CRenderer::Update()
 	CDebugProc::Print(_T("FPS : %d\n"), GetTime());
 #endif // !_DEBUG
 
+	if (CInput::GetKey()->Trigger(DIK_F1))
+	{
+		static bool m_bMesh = true;
+		m_bMesh = !m_bMesh;
+		m_pD3DDevice->SetRenderState(D3DRS_FILLMODE, m_bMesh ? D3DFILL_SOLID : D3DFILL_WIREFRAME);
+	}
+
 	CApplication::GetInstance()->GetTaskGroup()->Update();
 }
 
@@ -190,7 +178,7 @@ void CRenderer::Update()
 void CRenderer::Draw()
 {
 	//画面クリア(バックバッファ&Zバッファのクリア)
-	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(0, 0, 0, 0), 1.0f, 0);
+	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(100, 0, 0, 0), 1.0f, 0);
 
 	// Direct3Dによる描画の開始
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))

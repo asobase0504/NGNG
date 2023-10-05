@@ -55,7 +55,5 @@ private:	// メンバー変数
 	LPDIRECT3DDEVICE9 m_pD3DDevice;	// Deviceオブジェクト
 
 	CDebugProc* m_debugProc;
-	CLight* m_light;
-	CCamera* m_camera;
 };
 #endif
