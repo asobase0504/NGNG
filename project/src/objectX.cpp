@@ -106,7 +106,28 @@ void CObjectX::Draw()
 		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
 	}
 
-	DrawMaterial();
+	//ワールドマトリックスの設定
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
+	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
+
+	D3DMATERIAL9 matDef;			// 現在のマテリアル保存用
+	D3DXMATERIAL *pMat;				// マテリアルの情報
+
+	//マテリアルデータへのポインタを取得
+	pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
+
+	//マテリアルの描画
+	for (int nCnt2 = 0; nCnt2 < (int)m_numMat; nCnt2++)
+	{
+		//マテリアルの設定
+		pDevice->SetMaterial(&pMat[nCnt2].MatD3D);
+
+		//プレイヤーパーツの描画
+		m_mesh->DrawSubset(nCnt2);
+
+	}
+	//保持していたマテリアルを戻す
+	pDevice->SetMaterial(&matDef);
 }
 
 //--------------------------------------------------------------
@@ -213,7 +234,7 @@ void CObjectX::DrawMaterial()
 		// テクスチャの設定
 		pEffect->SetTexture(m_hTexture, tex0);
 
-		pEffect->BeginPass(0);
+		pEffect->BeginPass(1);
 		m_mesh->DrawSubset(nCntMat);	//モデルパーツの描画
 		pEffect->EndPass();
 	}
