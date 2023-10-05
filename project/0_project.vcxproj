@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="item_data.cpp" />
+    <ClCompile Include="item_model.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\Controller.cpp" />
@@ -65,6 +67,8 @@
     <ClCompile Include="src\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="item_data.h" />
+    <ClInclude Include="item_model.h" />
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\Controller.h" />

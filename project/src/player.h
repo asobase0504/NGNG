@@ -1,9 +1,9 @@
-//=============================================================================
+//**************************************************************
 //
 // プレイヤー
 // Author : 髙野馨將
 //
-//=============================================================================
+//**************************************************************
 #ifndef _PLAYER_H_			// このマクロ定義がされてなかったら
 #define _PLAYER_H_			// 二重インクルード防止のマクロ定義
 
@@ -16,6 +16,7 @@
 // 前方宣言
 //==============================================================
 class CObjectX;
+class CController;
 
 //==============================================================
 // プレイヤークラス
@@ -36,18 +37,24 @@ public:
 	// 静的メンバ関数
 	static CPlayer *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);			// プレイヤーの生成
 
+	// Setter
+	void SetController(CController* inOperate);
+
 private:
-	// メンバ変数
+	void Move();				// 移動
+	void Updatepos();			// 座標の更新
+
+private:		// メンバ変数
 	D3DXVECTOR3		m_pos;			// 位置
 	D3DXVECTOR3		m_posold;		// 前回の位置
 
-	D3DXVECTOR3		m_rot;
+	D3DXVECTOR3		m_rot;			// 角度
 	D3DXVECTOR3		m_rotDest;		// 目的の角度の保存
 
 	D3DXVECTOR3		m_move;			// 移動量
-	D3DXVECTOR3		m_moveVec;		// 移動ベクトル
 
 	D3DXMATRIX		m_mtxWorld;					// ワールドマトリックス
+	CController*	m_controller;				// 命令を出す人
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
 };
 #endif
