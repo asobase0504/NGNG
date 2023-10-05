@@ -79,6 +79,12 @@ HRESULT CObjectPolygon3D::Init()
 	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
 	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
+	//頂点カラー設定
+	for (int i = 0; i < 4; i++)
+	{
+		pVtx[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	}
+
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();
 
@@ -104,6 +110,7 @@ void CObjectPolygon3D::Uninit()
 //--------------------------------------------------------------
 void CObjectPolygon3D::Update()
 {
+	AddRot(D3DXVECTOR3(0.1f,0.1f,0.1f));
 }
 
 //--------------------------------------------------------------
@@ -111,57 +118,63 @@ void CObjectPolygon3D::Update()
 //--------------------------------------------------------------
 void CObjectPolygon3D::Draw()
 {
-	// デバイスへのポインタ
-	// デバイスの取得
- 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetInstance()->GetDevice();
+	//デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CRenderer::GetInstance()->GetDevice();	//デバイスの取得
 
-	// カリングの設定
-	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 
-	// テクスチャステージステートの設定
-	pDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
-	pDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-	pDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+									//ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&m_mtxWorld);
 
-	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
 
-	// ワールド座標行列の設定
+	//位置を反映
+	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+
+	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	// 頂点バッファをデータストリームに設定
+	//頂点バッファをデータストリームに設定
 	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
 
-	// 頂点フォーマットの設定
+	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
+	// テクスチャの取得
+	CTexture* pTexture = CTexture::GetInstance();
+
 	// テクスチャの設定
-	pDevice->SetTexture(0, CApplication::GetInstance()->GetTexture()->GetTexture(GetTexture()));
+	pDevice->SetTexture(0, pTexture->GetTexture(m_textureKey));
 
-	// ポリゴンの描画
-	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+	// αテストを有効
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 
-	// ライトを有効
+	// αテストの設定
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 100);
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	// ライトを無効
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	//ポリゴンの描画
+	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//ポリゴンの形
+		0,										//頂点の開始場所
+		4);
+
+	// ライトを有効	
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-	// テクスチャステージステートを元に戻す
-	pDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
-	pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-	pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
+	// αテストを無効
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
-	// カリングを元に戻す
+	//カリングの設定を元に戻す
 	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
-	//デバイス設定の初期化
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-
-	// Zテストの終了
-	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
-
-	// αテストの終了
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-
+	//テクスチャの設定
 	pDevice->SetTexture(0, NULL);
 }
 

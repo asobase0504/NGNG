@@ -109,14 +109,13 @@ private:
 	//--------------------------------------------------------------------
 	// メンバ変数
 	//--------------------------------------------------------------------
-	CModel3D	*m_pParent;						// 親
-	std::vector<MyMotion> m_motion;				// モーション
-	std::vector<CParts*> m_parts;				// パーツ
-	std::vector<char*> m_partsFile;	// パーツのXファイル名
-	int m_nMaxParts;							// パーツ数
-	int m_nNumMotion;							// 扱うモーション
-	bool m_bMotion;								// モーションを行うか
-	bool m_bMotionBlend;						// モーションブレンド
+	std::vector<MyMotion> m_motion;		// モーション
+	std::vector<CParts*> m_parts;		// パーツ
+	std::vector<char*> m_partsFile;		// パーツのXファイル名
+	int m_nMaxParts;					// パーツ数
+	int m_nNumMotion;					// 扱うモーション
+	bool m_bMotion;						// モーションを行うか
+	bool m_bMotionBlend;				// モーションブレンド
 };
 #endif
 
