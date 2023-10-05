@@ -63,7 +63,7 @@ HRESULT CTitle::Init(void)
 	{
 		CObjectPolygon3D* test = CObjectPolygon3D::Create();
 		test->SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-		test->SetSize(D3DXVECTOR3(50.0f, 5.0f, 0.0f));
+		test->SetSize(D3DXVECTOR3(50.0f, 50.0f, 0.0f));
 	}
 	return S_OK;
 }
