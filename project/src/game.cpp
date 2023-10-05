@@ -13,6 +13,7 @@
 #include "camera.h"
 #include "light.h"
 #include "object_polygon3d.h"
+#include "PlayerController.h"
 
 /* SestemŒn“ */
 #include "application.h"
@@ -60,12 +61,14 @@ HRESULT CGame::Init(void)
 	m_light = new CLight;
 	m_light->Init();
 
-	CObjectPolygon3D* object = CObjectPolygon3D::Create();
+	/*CObjectPolygon3D* object = CObjectPolygon3D::Create();
 	object->SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	object->SetSize(D3DXVECTOR3(50.0f, 50.0f, 0.0f));
+	object->SetSize(D3DXVECTOR3(50.0f, 50.0f, 0.0f));*/
 
 	//ƒvƒŒƒCƒ„[‚ÌÝ’è
-	//m_player[0] = CPlayer::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f));
+	m_player[0] = CPlayer::Create(D3DXVECTOR3(50.0f,0.0f,0.0f), D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f));
+
+	m_player[0]->SetController(new CPlayerController(-1));
 
 	return S_OK;
 }
@@ -76,6 +79,7 @@ HRESULT CGame::Init(void)
 //--------------------------------------------------------------
 void CGame::Uninit(void)
 {
+
 }
 
 //--------------------------------------------------------------
