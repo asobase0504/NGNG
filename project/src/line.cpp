@@ -18,7 +18,7 @@
 // Author : 唐﨑結斗
 // 概要 : 2Dオブジェクトを生成する
 //--------------------------------------------------------------
-CLine* CLine::Create(void)
+CLine* CLine::Create()
 {
 	// オブジェクトインスタンス
 	CLine *pLine = nullptr;
@@ -44,7 +44,7 @@ CLine* CLine::Create(void)
 CLine::CLine() :
 	CObject(CTaskGroup::EPriority::LEVEL_3D_1)
 {
-	m_pVtxBuff = nullptr;						// 頂点バッファ
+	m_vtxBuff = nullptr;						// 頂点バッファ
 	m_mtxWorld = {};							// ワールドマトリックス
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// 向き
 	m_size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// 大きさ
@@ -76,7 +76,7 @@ HRESULT CLine::Init()
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_3D,									// 頂点ファーマット
 		D3DPOOL_MANAGED,
-		&m_pVtxBuff,
+		&m_vtxBuff,
 		NULL);
 
 	// ポリゴン情報の設定
@@ -101,11 +101,11 @@ HRESULT CLine::Init()
 void CLine::Uninit()
 {
 	//頂点バッファを破棄
-	if (m_pVtxBuff != nullptr)
+	if (m_vtxBuff != nullptr)
 	{
-		m_pVtxBuff->Release();
+		m_vtxBuff->Release();
 
-		m_pVtxBuff = nullptr;
+		m_vtxBuff = nullptr;
 	}
 
 	// オブジェクト3Dの解放
@@ -170,7 +170,7 @@ void CLine::Draw()
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	// 頂点バッファをデバイスのデータストリームに設定
-	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
+	pDevice->SetStreamSource(0, m_vtxBuff, 0, sizeof(VERTEX_3D));
 
 	// 頂点フォーマット
 	pDevice->SetFVF(FVF_VERTEX_3D);
@@ -244,7 +244,7 @@ void CLine::SetVtx()
 	VERTEX_3D *pVtx;
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点座標
 	pVtx[0].pos = m_start;
@@ -255,7 +255,7 @@ void CLine::SetVtx()
 	pVtx[1].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 	//頂点バッファをアンロック
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 }
 
 //--------------------------------------------------------------
@@ -269,14 +269,14 @@ void CLine::SetCol(const D3DXCOLOR color)
 	VERTEX_3D *pVtx;
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点カラーの設定
 	pVtx[0].col = color;
 	pVtx[1].col = color;
 
 	//頂点バッファをアンロック
-	m_pVtxBuff->Unlock();
+	m_vtxBuff->Unlock();
 }
 
 //--------------------------------------------------------------

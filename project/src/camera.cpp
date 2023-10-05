@@ -11,34 +11,35 @@
 #include "application.h"
 #include "camera.h"
 #include "utility.h"
+#include "debug_proc.h"
 
 //==============================================================
 // 定数
 //==============================================================
 const float CCamera::VIEWING_ANGLE = 55.0f;	// 視野角
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // コンストラクタ
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 CCamera::CCamera(CTaskGroup::EPriority inPriority) :
 	CTask(inPriority,CTaskGroup::EPushMethod::PUSH_TOP)
 {
 	SetRole(ROLE_CAMERA);
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // デストラクタ
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 CCamera::~CCamera()
 {
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 初期化
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 HRESULT CCamera::Init(void)
 {
 	// 視点　注視点　上方向　設定
@@ -50,71 +51,75 @@ HRESULT CCamera::Init(void)
 	return S_OK;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 終了
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CCamera::Uninit(void)
 {
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 更新
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CCamera::Update(void)
 {
+#ifdef _DEBUG
+	CDebugProc::Print("視点 : %0.2f, %0.2f, %0.2f\n", m_posV.x, m_posV.y, m_posV.z);
+	CDebugProc::Print("注視点 : %0.2f, %0.2f, %0.2f\n", m_posR.x, m_posR.y, m_posR.z);
+#endif // _DEBUG
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 描画
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CCamera::Draw()
 {
 	Set(0);
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 描画
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CCamera::Set(int Type)
 {
 	// 揺れカウンターを減らす
-	m_nCntFrame--;
+	m_countFrame--;
 
-	if (m_nCntFrame >= 0)
+	if (m_countFrame >= 0)
 	{
 		D3DXVECTOR3 adjustPos = {};
 
-		adjustPos.x = FloatRandom(m_Magnitude, -m_Magnitude);
-		adjustPos.y = FloatRandom(m_Magnitude, -m_Magnitude);
-		adjustPos.z = FloatRandom(m_Magnitude, -m_Magnitude);
+		adjustPos.x = FloatRandom(m_magnitude, -m_magnitude);
+		adjustPos.y = FloatRandom(m_magnitude, -m_magnitude);
+		adjustPos.z = FloatRandom(m_magnitude, -m_magnitude);
 
 		m_posV += adjustPos;
 		m_posR += adjustPos;
 	}
 
-	m_Type = Type;
+	m_type = Type;
 	LPDIRECT3DDEVICE9  pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();	// デバイスのポインタ
 
 	// ビューマトリックスを初期化
-	D3DXMatrixIdentity(&m_MtxView);
+	D3DXMatrixIdentity(&m_mtxView);
 
 	// ビューマトリックスの作成
-	D3DXMatrixLookAtLH(&m_MtxView, &m_posV, &m_posR, &m_vecU);
+	D3DXMatrixLookAtLH(&m_mtxView, &m_posV, &m_posR, &m_vecU);
 
 	// 適用
-	pDevice->SetTransform(D3DTS_VIEW, &m_MtxView);
+	pDevice->SetTransform(D3DTS_VIEW, &m_mtxView);
 
 	// プロジェクションマトリックスを初期化
-	D3DXMatrixIdentity(&m_MtxProject);
+	D3DXMatrixIdentity(&m_mtxProject);
 
 	if (Type == 0)
 	{
 		//プロジェクションマトリックス作成
-		D3DXMatrixPerspectiveFovLH(&m_MtxProject,
+		D3DXMatrixPerspectiveFovLH(&m_mtxProject,
 			D3DXToRadian(VIEWING_ANGLE),
 			(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,
 			10.0f,
@@ -123,7 +128,7 @@ void CCamera::Set(int Type)
 	else
 	{
 		// プロジェクションマトリックスの作成(平行投影)
-		D3DXMatrixOrthoLH(&m_MtxProject,	// プロジェクションマトリックス
+		D3DXMatrixOrthoLH(&m_mtxProject,	// プロジェクションマトリックス
 			(float)SCREEN_WIDTH,			// 幅
 			(float)SCREEN_HEIGHT,			// 高さ
 			10.0f,						// ニア
@@ -131,13 +136,13 @@ void CCamera::Set(int Type)
 	}
 
 	// 適用
-	pDevice->SetTransform(D3DTS_PROJECTION, &m_MtxProject);
+	pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProject);
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // カメラの向きに合わせたベクトルに変換する
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 const D3DXVECTOR3 CCamera::VectorCombinedRot(const D3DXVECTOR3& inVector)
 {
 	if (D3DXVec3Length(&inVector) <= 0.0f)
@@ -160,12 +165,12 @@ const D3DXVECTOR3 CCamera::VectorCombinedRot(const D3DXVECTOR3& inVector)
 	return vector;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 // 揺れを設定する
 // Author : Yuda Kaito
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void CCamera::Shake(float ShakeFrame, float Magnitude)
 {
-	m_nCntFrame = ShakeFrame;	// 揺れるフレームカウント
-	m_Magnitude = Magnitude;	// 揺れ
+	m_countFrame = ShakeFrame;	// 揺れるフレームカウント
+	m_magnitude = Magnitude;	// 揺れ
 }

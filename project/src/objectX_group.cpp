@@ -64,23 +64,23 @@ void CObjectXGroup::Load(std::string inKey, std::string inFileName)
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
-		&model.pBuffMat,
+		&model.buffMat,
 		NULL,
 		&model.numMat,
-		&model.pMesh);
+		&model.mesh);
 
 	int nNumVtx;	// 頂点数保存用変数
 	DWORD sizeFVF;	// 頂点フォーマットのサイズ
 	BYTE *pVtxBuff;	// 頂点バッファへのポインタ
 
 	//頂点数の取得
-	nNumVtx = model.pMesh->GetNumVertices();
+	nNumVtx = model.mesh->GetNumVertices();
 
 	//頂点フォーマットのサイズを取得
-	sizeFVF = D3DXGetFVFVertexSize(model.pMesh->GetFVF());
+	sizeFVF = D3DXGetFVFVertexSize(model.mesh->GetFVF());
 
 	//頂点バッファのロック
-	model.pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
+	model.mesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
 
 	// モデルの端を格納する変数のリセット
 	model.minVtx = D3DXVECTOR3(FLT_MAX, FLT_MAX, FLT_MAX);
@@ -129,7 +129,7 @@ void CObjectXGroup::Load(std::string inKey, std::string inFileName)
 	model.size = model.maxVtx - model.minVtx;
 
 	//頂点バッファのアンロック
-	model.pMesh->UnlockVertexBuffer();
+	model.mesh->UnlockVertexBuffer();
 
 	if (!ExistsKey(inKey))
 	{
@@ -171,7 +171,7 @@ LPD3DXMESH CObjectXGroup::GetMesh(std::string inKey)
 
 	/* ↓Keyがあった場合↓ */
 
-	return m_model[inKey].pMesh;
+	return m_model[inKey].mesh;
 }
 
 //--------------------------------------------------------------
@@ -188,7 +188,7 @@ LPD3DXBUFFER CObjectXGroup::GetBuffMat(std::string inKey)
 
 	/* ↓Keyがあった場合↓ */
 
-	return m_model[inKey].pBuffMat;
+	return m_model[inKey].buffMat;
 }
 
 //--------------------------------------------------------------

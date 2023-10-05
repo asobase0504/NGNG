@@ -16,6 +16,15 @@
 #include "utility.h"
 
 //--------------------------------------------------------------
+// 定数定義
+//--------------------------------------------------------------
+const unsigned int CMotion::MAX_MOTION (128);			// モーション数の最大数
+const unsigned int CMotion::MAX_MODEL_PARTS (128);		// モデル数の最大数
+const unsigned int CMotion::MAX_KEY (64);				// キーの最大数
+const unsigned int CMotion::MAX_KEYSET (64);			// キー設定の最大数
+const unsigned int CMotion::MOTION_BLEND_FRAM (12);		// モーションブレンドのフレーム数
+
+//--------------------------------------------------------------
 // コンストラクタ
 // Author : 唐﨑結斗
 // 概要 : インスタンス生成時に行う処理
@@ -32,19 +41,19 @@ CMotion::CMotion(const char* pFileName)
 	m_parts.clear();
 
 	// パーツ数の初期化
-	m_nMaxParts = 0;
+	m_maxParts = 0;
 
 	// モーションの読み込み
 	LoodSetMotion(pFileName);
 
 	// 扱うモーション
-	m_nNumMotion = 0;
+	m_numMotion = 0;
 
 	// モーションを行うか
-	m_bMotion = false;
+	m_isMotion = false;
 
 	// モーションブレンド
-	m_bMotionBlend = false;
+	m_isMotionBlend = false;
 }
 
 //--------------------------------------------------------------
@@ -54,6 +63,7 @@ CMotion::CMotion(const char* pFileName)
 //--------------------------------------------------------------
 CMotion::~CMotion()
 {
+	assert(m_parent == nullptr);
 }
 
 //--------------------------------------------------------------
@@ -78,23 +88,16 @@ void CMotion::Uninit()
 {
 	m_motion.clear();
 
-	for (int i = 0; i < m_nMaxParts; i++)
+	for (int i = 0; i < m_maxParts; i++)
 	{
-		if (m_parts[i] != NULL)
+		if (m_parts[i] != nullptr)
 		{
 			m_parts[i]->Uninit();
 			m_parts[i] = nullptr;
 		}
 	}
 
-	for (int i = 0; i < (int)m_parts.size(); i++)
-	{
-		if (m_parts.at(i) != nullptr)
-		{
-			delete m_parts.at(i);
-			m_parts.at(i) = nullptr;
-		}
-	}
+	m_parts.clear();
 }
 
 //--------------------------------------------------------------
@@ -104,12 +107,12 @@ void CMotion::Uninit()
 //--------------------------------------------------------------
 void CMotion::Update()
 {
-	if (m_bMotionBlend)
+	if (m_isMotionBlend)
 	{
 		MotionBlend();
 	}
-	else if (m_bMotion
-		&& !m_bMotionBlend)
+	else if (m_isMotion
+		&& !m_isMotionBlend)
 	{
 		PlayMotion();
 	}
@@ -124,7 +127,7 @@ void CMotion::SetMotion(const int nCntMotionSet)
 {
 	CMotion::MyMotion* motion = &m_motion[nCntMotionSet];
 
-	for (int nCntParts = 0; nCntParts < m_nMaxParts; nCntParts++)
+	for (int nCntParts = 0; nCntParts < m_maxParts; nCntParts++)
 	{
 		// 変数宣言
 		D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				// 位置
@@ -156,7 +159,7 @@ void CMotion::SetMotion(const int nCntMotionSet)
 //--------------------------------------------------------------
 void CMotion::SetParts(D3DXMATRIX mtxWorld)
 {
-	for (int nCntParts = 0; nCntParts < m_nMaxParts; nCntParts++)
+	for (int nCntParts = 0; nCntParts < m_maxParts; nCntParts++)
 	{// モデルの描画
 		if (m_parts[nCntParts]->GetParent() != nullptr)
 		{
@@ -178,9 +181,9 @@ void CMotion::SetParts(D3DXMATRIX mtxWorld)
 //--------------------------------------------------------------
 void CMotion::PlayMotion()
 {
-	CMotion::MyMotion* motion = &m_motion[m_nNumMotion];
+	CMotion::MyMotion* motion = &m_motion[m_numMotion];
 
-	for (int nCntParts = 0; nCntParts < m_nMaxParts; nCntParts++)
+	for (int nCntParts = 0; nCntParts < m_maxParts; nCntParts++)
 	{
 		// 変数宣言
 		D3DXVECTOR3 pos = m_parts[nCntParts]->GetPos();			// 位置
@@ -248,7 +251,7 @@ void CMotion::PlayMotion()
 		else if (motion->nCntKeySet >= motion->nNumKey)
 		{
 			motion->nCntKeySet = 0;
-			m_bMotion = false;
+			m_isMotion = false;
 		}
 	}
 }
@@ -261,9 +264,9 @@ void CMotion::PlayMotion()
 //--------------------------------------------------------------
 void CMotion::MotionBlend()
 {
-	CMotion::MyMotion* motion = &m_motion[m_nNumMotion];
+	CMotion::MyMotion* motion = &m_motion[m_numMotion];
 
-	for (int nCntParts = 0; nCntParts < m_nMaxParts; nCntParts++)
+	for (int nCntParts = 0; nCntParts < m_maxParts; nCntParts++)
 	{
 		// 変数宣言
 		D3DXVECTOR3 pos = m_parts[nCntParts]->GetPos();			// 位置
@@ -321,7 +324,7 @@ void CMotion::MotionBlend()
 		motion->nCntFrame = 0;	// フレーム数の初期化
 		motion->nCntKeySet++;	// 再生中のキー番号数の加算
 
-		m_bMotionBlend = false;
+		m_isMotionBlend = false;
 	}
 }
 
@@ -402,10 +405,10 @@ void CMotion::LoodSetMotion(const char* pFileName)
 				if (strcmp(&aString[0], "NUM_PARTS") == 0)
 				{// 読み込むパーツ数
 					fscanf(pFile, "%s", &g_aEqual[0]);
-					fscanf(pFile, "%d", &m_nMaxParts);
+					fscanf(pFile, "%d", &m_maxParts);
 
 					// メモリの解放
-					m_parts.resize(m_nMaxParts);
+					m_parts.resize(m_maxParts);
 					m_motion.resize(MAX_MOTION);
 					for (int i = 0; i < MAX_MOTION; i++)
 					{
@@ -414,7 +417,7 @@ void CMotion::LoodSetMotion(const char* pFileName)
 
 					//assert(m_parts != nullptr && m_motion != nullptr);
 
-					for (int i = 0; i < m_nMaxParts; i++)
+					for (int i = 0; i < m_maxParts; i++)
 					{// パーツの生成
 						m_parts[i] = CParts::Create();
 					}
@@ -509,7 +512,7 @@ void CMotion::LoodSetMotion(const char* pFileName)
 
 					for (int nCntNumKeySet = 0; nCntNumKeySet < m_motion[nCntMotion].nNumKey; nCntNumKeySet++)
 					{
-						m_motion[nCntMotion].pKeySet[nCntNumKeySet].pKey.resize(m_nMaxParts);
+						m_motion[nCntMotion].pKeySet[nCntNumKeySet].pKey.resize(m_maxParts);
 					}
 				}
 				if (strcmp(&aString[0], "KEYSET") == 0)
@@ -589,7 +592,7 @@ void CMotion::LoodSetMotion(const char* pFileName)
 //--------------------------------------------------------------
 void CMotion::SetPartsOrigin()
 {
-	for (int nCntParts = 0; nCntParts < m_nMaxParts; nCntParts++)
+	for (int nCntParts = 0; nCntParts < m_maxParts; nCntParts++)
 	{
 		// 位置の設定
 		m_parts[nCntParts]->SetPos(m_parts[nCntParts]->GetPosOrigin());
@@ -618,12 +621,12 @@ void CMotion::CntReset(const int nNumMotionOld)
 void CMotion::SetNumMotion(const int nNumMotion)
 {
 	// モーションカウントのリセット
-	CntReset(m_nNumMotion);
+	CntReset(m_numMotion);
 
 	// モーション番号の設定
-	m_nNumMotion = nNumMotion;
+	m_numMotion = nNumMotion;
 
 	// モーションブレンドを行う
-	m_bMotionBlend = true;
-	m_bMotion = true;
+	m_isMotionBlend = true;
+	m_isMotion = true;
 }

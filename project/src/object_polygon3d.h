@@ -40,7 +40,6 @@ protected:
 	static const D3DXVECTOR3 m_Vtx[4];
 
 public:
-
 	static CObjectPolygon3D *Create(CTaskGroup::EPriority list = CTaskGroup::LEVEL_3D_1);
 
 	CObjectPolygon3D(CTaskGroup::EPriority list = CTaskGroup::LEVEL_3D_1);
@@ -56,13 +55,14 @@ public:
 	void SetSize(const D3DXVECTOR3& inSize) override;
 	void SetColor(const D3DXCOLOR& inColor) override;
 
-	LPDIRECT3DVERTEXBUFFER9 GetVtx() { return m_pVtxBuff; }	// 頂点バッファの取得
-	const D3DXVECTOR3& GetNormal() const { return m_Normal; }
+	LPDIRECT3DVERTEXBUFFER9 GetVtx() { return m_vtxBuff; }	// 頂点バッファの取得
+	const D3DXVECTOR3& GetNormal() const { return m_normal; }
 
 protected:
-	LPDIRECT3DVERTEXBUFFER9	m_pVtxBuff;	// 頂点バッファ
+	LPDIRECT3DVERTEXBUFFER9	m_vtxBuff;	// 頂点バッファ
 	D3DXMATRIX m_mtxWorld;				// ワールドマトリックス
+
 private:
-	D3DXVECTOR3 m_Normal;
+	D3DXVECTOR3 m_normal;
 };
 #endif
