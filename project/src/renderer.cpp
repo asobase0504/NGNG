@@ -185,8 +185,6 @@ void CRenderer::Draw()
 	{
 		CApplication::GetInstance()->GetTaskGroup()->Draw();
 
-		m_camera->Draw();
-
 		CDebugProc::Draw();
 
 		// Direct3D‚É‚æ‚é•`‰æ‚ÌI—¹
