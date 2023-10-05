@@ -12,6 +12,7 @@
 #include "player.h"
 #include "camera.h"
 #include "light.h"
+#include "object_polygon3d.h"
 
 /* Sestemånìù */
 #include "application.h"
