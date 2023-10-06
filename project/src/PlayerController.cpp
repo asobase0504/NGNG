@@ -105,3 +105,26 @@ D3DXVECTOR3 CPlayerController::Move()
 
 	return moveInput;
 }
+
+//-----------------------------------------
+// 移動
+//-----------------------------------------
+float CPlayerController::Jump()
+{
+	CInput* input = CInput::GetKey();
+
+	float junpInput = 0.0f;
+
+	if (input == nullptr)
+	{
+		return junpInput;
+	}
+
+	//キーボードの移動
+	if (input->Press(KEY_SHOT, -1))
+	{
+		junpInput += 8.0f;
+	}
+
+	return junpInput;
+}
