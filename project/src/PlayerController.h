@@ -23,6 +23,7 @@ public:
 	void Update() override;
 
 	D3DXVECTOR3 Move() override;
+	float		Jump() override;
 
 private:
 	int m_nInputIdx;

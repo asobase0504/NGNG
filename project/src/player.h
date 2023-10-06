@@ -42,16 +42,17 @@ public:
 
 private:
 	void Move();				// 移動
+	void Jump();				// ジャンプ
 	void Updatepos();			// 座標の更新
 
 private:		// メンバ変数
 	D3DXVECTOR3		m_pos;			// 位置
 	D3DXVECTOR3		m_posold;		// 前回の位置
-
 	D3DXVECTOR3		m_rot;			// 角度
 	D3DXVECTOR3		m_rotDest;		// 目的の角度の保存
-
 	D3DXVECTOR3		m_move;			// 移動量
+
+	bool			m_jump;			// ジャンプしているかどうか
 
 	D3DXMATRIX		m_mtxWorld;					// ワールドマトリックス
 	CController*	m_controller;				// 命令を出す人
