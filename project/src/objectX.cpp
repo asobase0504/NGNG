@@ -175,7 +175,7 @@ void CObjectX::DrawMaterial()
 	D3DXMatrixTranspose(&m, &m);
 	pEffect->SetMatrix(m_hmWIT, &m);
 
-	// ローカル-射影変換行列
+	// ワールド射影変換行列
 	m = m_mtxWorld * viewMatrix * projMatrix;
 	pEffect->SetMatrix(m_hmWVP, &m);
 

@@ -260,6 +260,10 @@ bool CInput::Release(int nkey, int)
 //*************************************************************************************
 bool CInput::Press(DirectJoypad key, int nNum)
 {
+	if (nNum == -1)
+	{
+		return false;
+	}
 	return m_pJoyPad->GetPress(key, nNum);
 }
 
@@ -268,6 +272,10 @@ bool CInput::Press(DirectJoypad key, int nNum)
 //*************************************************************************************
 bool CInput::Trigger(DirectJoypad key, int nNum)
 {
+	if (nNum == -1)
+	{
+		return false;
+	}
 	return m_pJoyPad->GetTrigger(key, nNum);
 }
 
@@ -276,6 +284,10 @@ bool CInput::Trigger(DirectJoypad key, int nNum)
 //*************************************************************************************
 bool CInput::Release(DirectJoypad key, int nNum)
 {
+	if (nNum == -1)
+	{
+		return false;
+	}
 	return m_pJoyPad->GetRelease(key, nNum);
 }
 
@@ -501,24 +513,6 @@ bool CInput::KeyChackAll(STAN_DART_INPUT_KEY key, int type)
 {
 	auto lambda = [this, type](auto a)
 	{
-		if (a == KEY_ALL)
-		{
-			switch (type)
-			{
-			case 1:
-				return m_pKeyboard->GetKeyboardAllPress() || m_pJoyPad->GetPressAll() || m_pMouse->GetPressAll();
-				break;
-			case 2:
-				return m_pKeyboard->GetKeyboardAllTrigger() || m_pJoyPad->GetTriggerAll() || m_pMouse->GetTriggerAll();
-				break;
-			case 3:
-				return m_pKeyboard->GetKeyboardAllRelease() || m_pJoyPad->GetReleaseAll() || m_pMouse->GetReleaseAll();
-				break;
-			default:
-				break;
-			}
-		}
-
 		switch (type)
 		{
 		case 1:
@@ -579,9 +573,6 @@ bool CInput::KeyChackAll(STAN_DART_INPUT_KEY key, int type)
 		break;
 	case KEY_PAUSE:
 		return lambda(DIK_P) || lambda(JOYPAD_START) || lambda(JOYPAD_HOME);
-		break;
-	case KEY_ALL:
-		return lambda(key);
 		break;
 	default:
 		break;
@@ -659,9 +650,6 @@ bool CInput::KeyChackNum(STAN_DART_INPUT_KEY key, int type, int nNum)
 		break;
 	case KEY_PAUSE:
 		return lambda(DIK_P) || lambda(JOYPAD_START) || lambda(JOYPAD_HOME);
-		break;
-	case KEY_ALL:
-		return lambda(-2);
 		break;
 	default:
 		break;
