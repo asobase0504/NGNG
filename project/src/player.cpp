@@ -35,7 +35,7 @@ HRESULT CPlayer::Init()
 	m_apModel.resize(1);
 
 	// モデルの読み込み
-	m_apModel[0] = CObjectX::Create(m_pos);
+	m_apModel[0] = CObjectX::Create(GetPos());
 	m_apModel[0]->LoadModel("BOX");
 	m_apModel[0]->SetMoveRot(D3DXVECTOR3(0.0f, 0.01f, 0.0f));
 	m_apModel[0]->SetMaterialDiffuse(0, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f));
@@ -131,7 +131,7 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
 	CPlayer* pPlayer;
 	pPlayer = new CPlayer(CObject::PLAYER);
-	pPlayer->m_pos = pos;
+	pPlayer->SetPos(pos);
 	pPlayer->m_rot = rot;
 	pPlayer->Init();
 
@@ -144,7 +144,7 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 void CPlayer::Move()
 {
 	// 移動量
-	m_move = m_controller->Move();
+	SetMove(m_controller->Move());
 }
 
 //--------------------------------------------------------------
@@ -175,15 +175,21 @@ void CPlayer::Jump()
 //--------------------------------------------------------------
 void CPlayer::Dash()
 {
+	// 移動量の取得
+	D3DXVECTOR3 move = GetMove();
+
 	// ダッシュ
 	m_isdash = m_controller->Dash();
 
 	if (m_isdash)
 	{
 		// ダッシュ速度
-		m_move.x *= DASH_SPEED;
-		m_move.z *= DASH_SPEED;
+		move.x *= DASH_SPEED;
+		move.z *= DASH_SPEED;
 	}
+
+	// 移動量の設定
+	SetMove(move);
 }
 
 //--------------------------------------------------------------
@@ -191,10 +197,15 @@ void CPlayer::Dash()
 //--------------------------------------------------------------
 void CPlayer::Updatepos()
 {
-	m_posold = m_pos;	// 前回の位置の保存
-	m_pos += m_move;	// 位置の更新
+	// 座標の取得
+	D3DXVECTOR3 pos = GetPos();
 
-	m_apModel[0]->SetPos(m_pos);
+	SetPosOld(pos);			// 前回の位置の保存
+	pos += GetMove();		// 位置の更新
+
+	// 座標の設定
+	SetPos(pos);
+	m_apModel[0]->SetPos(pos);
 }
 
 //--------------------------------------------------------------

@@ -52,8 +52,6 @@ private:
 	void Updatepos();			// 座標の更新
 
 private:		// メンバ変数
-	D3DXVECTOR3		m_pos;			// 位置
-	D3DXVECTOR3		m_posold;		// 前回の位置
 	D3DXVECTOR3		m_rot;			// 角度
 	D3DXVECTOR3		m_rotDest;		// 目的の角度の保存
 	D3DXVECTOR3		m_move;			// 移動量
