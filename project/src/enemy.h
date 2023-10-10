@@ -1,21 +1,16 @@
 //**************************************************************
 //
-// プレイヤー
-// Author : 髙野馨將
+// 敵
+// Author : 梶田大夢
 //
 //**************************************************************
-#ifndef _PLAYER_H_			// このマクロ定義がされてなかったら
-#define _PLAYER_H_			// 二重インクルード防止のマクロ定義
+#ifndef _ENEMY_H_			// このマクロ定義がされてなかったら
+#define _ENEMY_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
 #include "character.h"
-
-//==============================================================
-// マクロ宣言
-//==============================================================
-#define DASH_SPEED	(3.0f)
 
 //==============================================================
 // 前方宣言
@@ -26,13 +21,13 @@ class CController;
 //==============================================================
 // プレイヤークラス
 //==============================================================
-class CPlayer : public CCharacter
+class CEnemy : public CCharacter
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CPlayer(int nPriority = 3);
-	~CPlayer();
-	
+	explicit CEnemy(int nPriority = 3);
+	~CEnemy();
+
 	//プロトタイプ宣言
 	HRESULT	Init() override;
 	void	Uninit() override;
@@ -40,20 +35,8 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	static CPlayer *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
-
-	// Setter
-	void SetController(CController* inOperate);
-
-private:
-	void Move();				// 移動
-	void Jump();				// ジャンプ
-	void Dash();				// ダッシュ
+	static CEnemy *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
 
 private:		// メンバ変数
-	bool			m_isjump;		// ジャンプしているかどうか
-	bool			m_isdash;		// ダッシュしているかどうか
-
-	CController*	m_controller;				// 命令を出す人
 };
 #endif

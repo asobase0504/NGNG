@@ -1,79 +1,90 @@
 //**************************************************************
 //
-// item_data
-// Author: Buriya Kota
+// 敵
+// Author : 梶田大夢
 //
 //**************************************************************
 
-//==============================================================
 // include
-//==============================================================
-#include "item_data.h"
+#include "enemy.h"
+#include "Controller.h"
+#include "application.h"
+#include "objectX.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemData::CItemData(CTaskGroup::EPriority list)
+CEnemy::CEnemy(int nPriority)
 {
+
 }
 
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CItemData::~CItemData()
+CEnemy::~CEnemy()
 {
+
 }
 
 //--------------------------------------------------------------
-// 初期化
+// 初期化処理
 //--------------------------------------------------------------
-HRESULT CItemData::Init()
+HRESULT CEnemy::Init()
 {
+	// 初期化処理
+	CCharacter::Init();
+
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// 終了
+// 終了処理
 //--------------------------------------------------------------
-void CItemData::Uninit()
+void CEnemy::Uninit(void)
 {
+	// 終了処理
+	CCharacter::Uninit();
 }
 
 //--------------------------------------------------------------
-// 更新
+// 更新処理
 //--------------------------------------------------------------
-void CItemData::Update()
+void CEnemy::Update(void)
 {
-	ItemState_();
+	// 移動量の取得
+	D3DXVECTOR3 move = GetMove();
+
+	// 座標の取得
+	D3DXVECTOR3 pos = GetPos();
+
+	// 更新処理
+	CCharacter::Update();
+
+#ifdef _DEBUG
+	CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", m_pos.x, m_pos.y, m_pos.z);
+	CDebugProc::Print("Enemy：move(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
+#endif // _DEBUG
+}
+
+//--------------------------------------------------------------
+// 描画処理
+//--------------------------------------------------------------
+void CEnemy::Draw(void)
+{
+	// 描画処理
+	CCharacter::Draw();
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CItemData* CItemData::Create(int inId)
+CEnemy* CEnemy::Create(D3DXVECTOR3 pos)
 {
-	CItemData* pItemData = nullptr;
-	pItemData = new CItemData;
+	CEnemy* pEnemy;
+	pEnemy = new CEnemy(CObject::ENEMY);
+	pEnemy->SetPos(pos);
+	pEnemy->Init();
 
-	if (pItemData != nullptr)
-	{
-		pItemData->Init();
-		pItemData->SetItemData((ITEM_DATA)inId);
-	}
-
-	return pItemData;
-}
-
-//--------------------------------------------------------------
-// アイテムの効果
-//--------------------------------------------------------------
-void CItemData::ItemState_()
-{
-	switch (m_itemData)
-	{
-	case ITEM_POWER_UP:
-		break;
-	default:
-		break;
-	}
+	return pEnemy;
 }
