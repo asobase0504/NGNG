@@ -32,6 +32,7 @@ CEnemy::~CEnemy()
 //--------------------------------------------------------------
 HRESULT CEnemy::Init()
 {
+	// 初期化処理
 	CCharacter::Init();
 
 	return S_OK;
@@ -42,6 +43,7 @@ HRESULT CEnemy::Init()
 //--------------------------------------------------------------
 void CEnemy::Uninit(void)
 {
+	// 終了処理
 	CCharacter::Uninit();
 }
 
@@ -50,9 +52,13 @@ void CEnemy::Uninit(void)
 //--------------------------------------------------------------
 void CEnemy::Update(void)
 {
-	// 座標更新
-	Updatepos();
+	// 移動量の取得
+	D3DXVECTOR3 move = GetMove();
 
+	// 座標の取得
+	D3DXVECTOR3 pos = GetPos();
+
+	// 更新処理
 	CCharacter::Update();
 
 #ifdef _DEBUG
@@ -66,32 +72,19 @@ void CEnemy::Update(void)
 //--------------------------------------------------------------
 void CEnemy::Draw(void)
 {
+	// 描画処理
 	CCharacter::Draw();
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CEnemy* CEnemy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+CEnemy* CEnemy::Create(D3DXVECTOR3 pos)
 {
 	CEnemy* pEnemy;
 	pEnemy = new CEnemy(CObject::ENEMY);
-	pEnemy->m_pos = pos;
-	pEnemy->m_rot = rot;
+	pEnemy->SetPos(pos);
 	pEnemy->Init();
 
 	return pEnemy;
-}
-
-//--------------------------------------------------------------
-// 座標の更新
-//--------------------------------------------------------------
-void CEnemy::Updatepos()
-{
-	m_move = D3DXVECTOR3(0.0f,0.0f,0.0f);
-
-	m_posold = m_pos;	// 前回の位置の保存
-	m_pos += m_move;	// 位置の更新
-
-	SetPos(m_pos);
 }
