@@ -64,6 +64,11 @@ void CPlayer::Uninit(void)
 //--------------------------------------------------------------
 void CPlayer::Update(void)
 {
+	if (m_controller == nullptr)
+	{
+		return;
+	}
+
 	// 移動
 	Move();
 
@@ -73,8 +78,8 @@ void CPlayer::Update(void)
 	// 座標更新
 	Updatepos();
 
+	// 更新処理
 	CObject::Update();
-
 
 #ifdef _DEBUG
 	CDebugProc::Print("Player：pos(%f,%f,%f)\n", m_pos.x, m_pos.y, m_pos.z);
@@ -138,11 +143,6 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //--------------------------------------------------------------
 void CPlayer::Move()
 {
-	if (m_controller == nullptr)
-	{
-		return;
-	}
-
 	// 移動量
 	m_move = m_controller->Move();
 }
@@ -152,18 +152,37 @@ void CPlayer::Move()
 //--------------------------------------------------------------
 void CPlayer::Jump()
 {
-	if (m_controller == nullptr)
-	{
-		return;
-	}
+	bool jump = false;
 
-	// 移動量
-	m_move.y = m_controller->Jump();
+	// ジャンプ力
+	jump = m_controller->Jump();
+
+	if (jump)
+	{
+		m_move.y += 25.0f;
+		jump = false;
+	}
 
 	if (m_pos.y > 0.0f)
 	{
 		// 重力
 		m_move.y -= 1.0f;
+	}
+}
+
+//--------------------------------------------------------------
+// ダッシュ
+//--------------------------------------------------------------
+void CPlayer::Dash()
+{
+	// ダッシュ
+	m_isdash = m_controller->Dash();
+
+	if (m_isdash)
+	{
+		// ダッシュ速度
+		m_move.x *= DASH_SPEED;
+		m_move.z *= DASH_SPEED;
 	}
 }
 

@@ -13,6 +13,11 @@
 #include "object.h"
 
 //==============================================================
+// マクロ宣言
+//==============================================================
+#define DASH_SPEED	(3.0f)
+
+//==============================================================
 // 前方宣言
 //==============================================================
 class CObjectX;
@@ -43,6 +48,7 @@ public:
 private:
 	void Move();				// 移動
 	void Jump();				// ジャンプ
+	void Dash();				// ダッシュ
 	void Updatepos();			// 座標の更新
 
 private:		// メンバ変数
@@ -51,7 +57,8 @@ private:		// メンバ変数
 	D3DXVECTOR3		m_rotDest;		// 目的の角度の保存
 	D3DXVECTOR3		m_move;			// 移動量
 
-	bool			m_jump;			// ジャンプしているかどうか
+	bool			m_isjump;		// ジャンプしているかどうか
+	bool			m_isdash;		// ダッシュしているかどうか
 
 	D3DXMATRIX		m_mtxWorld;					// ワールドマトリックス
 	CController*	m_controller;				// 命令を出す人

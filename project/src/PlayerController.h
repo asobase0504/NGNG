@@ -1,17 +1,17 @@
-//=========================================
+//**************************************************************
 // Controller
 // プレイヤークラス
 // Author YudaKaito
 // 
-//=========================================
+//**************************************************************
 #ifndef _PLAYER_OPERATE_H_
 #define _PLAYER_OPERATE_H_
 
 #include "controller.h"
 
-//-----------------------------------------
+//--------------------------------------------------------------
 // プレイヤークラス
-//-----------------------------------------
+//--------------------------------------------------------------
 class CPlayerController : public CController
 {
 public:
@@ -23,7 +23,8 @@ public:
 	void Update() override;
 
 	D3DXVECTOR3 Move() override;
-	float		Jump() override;
+	bool		Jump() override;
+	bool		Dash() override;
 
 private:
 	int m_nInputIdx;

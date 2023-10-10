@@ -173,6 +173,9 @@
     <ClCompile Include="item_data.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="item_manager.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClCompile>
     <ClCompile Include="src\camera_game.cpp">
       <Filter>ソース ファイル\3D</Filter>
     </ClCompile>
@@ -305,6 +308,9 @@
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="item_data.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="item_manager.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="src\camera_game.h">
