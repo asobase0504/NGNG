@@ -120,10 +120,6 @@ void CParticleManager::LoadBundledData(const wchar_t * cUrl)
 	CParticle::SInfo& particleInfo = loadData.particleData;
 	CParticleEmitter::SInfo& emitterInfo = loadData.emitterData;
 
-	//文字は変換つけないとばぐるぞ＾＾これ-＞UTF8toSjis()
-	//StringToWString(UTF8toSjis(j["name"]));
-	//DataSet.unionsname = StringToWString(UTF8toSjis(j["unions"] ["name"]));
-
 	if (inData.count("ver.01") != 0)
 	{ // 新しいバージョン
 

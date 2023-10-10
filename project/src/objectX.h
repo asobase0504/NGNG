@@ -41,7 +41,7 @@ public:
 
 	/* 生成処理 */
 	static CObjectX *Create(D3DXVECTOR3 pos, CTaskGroup::EPriority nPriority = CTaskGroup::LEVEL_3D_1);
-	void LoadModel(const char *aFileName);		// モデルの読み込み処理
+	void LoadModel(std::string aFileName);		// モデルの読み込み処理
 
 	/* ワールドマトリックス */
 	void SetMtxWorld(D3DXMATRIX mtxWorld) { m_mtxWorld = mtxWorld; }	// 設定

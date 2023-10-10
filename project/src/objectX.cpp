@@ -351,7 +351,7 @@ CObjectX * CObjectX::Create(D3DXVECTOR3 pos, CTaskGroup::EPriority nPriority)
 // ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
 // Author : Yuda Kaito
 //--------------------------------------------------------------
-void CObjectX::LoadModel(const char* aFileName)
+void CObjectX::LoadModel(std::string aFileName)
 {
 	CObjectXGroup *xGroup = CApplication::GetInstance()->GetObjectXGroup();
 	m_buffMat = xGroup->GetBuffMat(aFileName);
