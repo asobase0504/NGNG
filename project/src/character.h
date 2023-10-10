@@ -36,6 +36,9 @@ public:
 	// 静的メンバ関数
 	static CCharacter *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);			// プレイヤーの生成
 
+private:
+	void UpdatePos();			// 座標の更新
+
 private:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
 	D3DXMATRIX		m_mtxWorld;					// ワールドマトリックス

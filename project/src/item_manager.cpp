@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// item_data
+// item_manager
 // Author: Buriya Kota
 //
 //**************************************************************
@@ -8,26 +8,42 @@
 //==============================================================
 // include
 //==============================================================
-#include "item_data.h"
+#include "item_manager.h"
+
+#include "item.h"
+#include "item_model.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemData::CItemData(CTaskGroup::EPriority list)
+CItemManager* CItemManager::GetInstance()
+{
+	if (m_itemManager == nullptr)
+	{
+		m_itemManager = new CItemManager;
+	}
+	return m_itemManager;
+}
+
+//--------------------------------------------------------------
+// コンストラクタ
+//--------------------------------------------------------------
+CItemManager::CItemManager(CTaskGroup::EPriority list) : 
+	m_itemData(nullptr), m_itemModel(nullptr), m_itemType(ITEM_NONE)
 {
 }
 
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CItemData::~CItemData()
+CItemManager::~CItemManager()
 {
 }
 
 //--------------------------------------------------------------
 // 初期化
 //--------------------------------------------------------------
-HRESULT CItemData::Init()
+HRESULT CItemManager::Init()
 {
 	return S_OK;
 }
@@ -35,28 +51,40 @@ HRESULT CItemData::Init()
 //--------------------------------------------------------------
 // 終了
 //--------------------------------------------------------------
-void CItemData::Uninit()
+void CItemManager::Uninit()
 {
+	m_itemData = nullptr;
+	m_itemModel = nullptr;
 }
 
 //--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
-void CItemData::Update()
+void CItemManager::Update()
 {
 }
 
 //--------------------------------------------------------------
 // 描画
 //--------------------------------------------------------------
-void CItemData::Draw()
+void CItemManager::Draw()
 {
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CItemData* CItemData::Create()
+void CItemManager::CreateItem(const D3DXVECTOR3& inPos, ITEM_TYPE inId)
 {
-	return nullptr;
+	m_itemType = inId;
+
+	switch (m_itemType)
+	{
+	case ITEM_POWER_UP:
+		m_itemData = CItem::Create(inId);
+		m_itemModel = CItemModel::Create(inPos, inId);
+		break;
+	default:
+		break;
+	}
 }

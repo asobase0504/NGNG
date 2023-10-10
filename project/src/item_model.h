@@ -1,41 +1,37 @@
 //**************************************************************
 //
-// item_data
+// item_model
 // Author: Buriya Kota
 //
 //**************************************************************
-#ifndef _ITEM_DATA_H_
-#define _ITEM_DATA_H_
+#ifndef _ITEM_MODEL_H_
+#define _ITEM_MODEL_H_
 
 //==============================================================
 // include
 //==============================================================
-#include "task.h"
+#include "objectX.h"
+#include "item_data.h"
 
 //==============================================================
 // クラス
 //==============================================================
-class CItemData : public CTask
+class CItemModel : public CObjectX
 {
 public:
-	CItemData(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
-	~CItemData();
+	CItemModel(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	~CItemModel();
 
 	HRESULT Init() override;
-	void Uninit() override;
-	void Update() override;
-	void Draw() override;
+	HRESULT Init(int inId);
+	void Uninit() override {}
+	void Update() override {}
+	void Draw() override {}
 
-	static CItemData* Create();
-
-private:
-	enum ITEM_DATA
-	{
-		ITEM_POWER_UP = 0,
-		ITEM_MAX
-	};
+	static CItemModel* Create(const D3DXVECTOR3& inPos, int inId);
 
 private:
-	ITEM_DATA m_itemData[ITEM_MAX];
+	// アイテムのモデルデータ
+	std::string m_modelData[ITEM_MAX];
 };
-#endif	// _ITEM_DATA_H_
+#endif	// _ITEM_MODEL_H_

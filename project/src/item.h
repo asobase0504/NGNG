@@ -1,45 +1,41 @@
 //**************************************************************
 //
-// item_model
+// item_data
 // Author: Buriya Kota
 //
 //**************************************************************
-#ifndef _ITEM_MODEL_H_
-#define _ITEM_MODEL_H_
+#ifndef _ITEM_DATA_H_
+#define _ITEM_DATA_H_
 
 //==============================================================
 // include
 //==============================================================
-#include "objectX.h"
+#include "task.h"
+#include "item_data.h"
 
 //==============================================================
 // クラス
 //==============================================================
-class CItemModel : public CObjectX
+class CItem : public CTask
 {
 public:
-	CItemModel(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
-	~CItemModel();
+	CItem(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	~CItem();
 
 	HRESULT Init() override;
-	HRESULT Init(int inId);
-	void Uninit() override {}
-	void Update() override {}
+	void Uninit() override;
+	void Update() override;
 	void Draw() override {}
 
-	static CItemModel* Create(int inId);
+	static CItem* Create(ITEM_TYPE inId);
 
-	std::string GetItemId(int inId) { return m_modelData[inId]; }
-
-private:
-	enum MODEL_DATA
-	{
-		MODEL_POWER_UP = 0,
-		MODEL_MAX
-	};
+	void SetItemData(ITEM_TYPE inItemData) { m_itemData = inItemData; }
+	ITEM_TYPE GetItemData(int inId) { return m_itemData; }
 
 private:
-	// アイテムのモデルデータ
-	std::string m_modelData[MODEL_MAX];
+	void ItemState_();
+
+private:
+	ITEM_TYPE m_itemData;
 };
-#endif	// _ITEM_MODEL_H_
+#endif	// _ITEM_DATA_H_
