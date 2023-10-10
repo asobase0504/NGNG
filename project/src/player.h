@@ -52,10 +52,6 @@ private:
 	void Updatepos();			// 座標の更新
 
 private:		// メンバ変数
-	D3DXVECTOR3		m_rot;			// 角度
-	D3DXVECTOR3		m_rotDest;		// 目的の角度の保存
-	D3DXVECTOR3		m_move;			// 移動量
-
 	bool			m_isjump;		// ジャンプしているかどうか
 	bool			m_isdash;		// ダッシュしているかどうか
 

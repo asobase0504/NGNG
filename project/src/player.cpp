@@ -64,6 +64,11 @@ void CPlayer::Uninit(void)
 //--------------------------------------------------------------
 void CPlayer::Update(void)
 {
+	// 移動量の取得
+	D3DXVECTOR3 move = GetMove();
+	// 座標の取得
+	D3DXVECTOR3 pos = GetPos();
+
 	if (m_controller == nullptr)
 	{
 		return;
@@ -82,8 +87,8 @@ void CPlayer::Update(void)
 	CObject::Update();
 
 #ifdef _DEBUG
-	CDebugProc::Print("Player：pos(%f,%f,%f)\n", m_pos.x, m_pos.y, m_pos.z);
-	CDebugProc::Print("Player：move(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
+	CDebugProc::Print("Player：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
+	CDebugProc::Print("Player：move(%f,%f,%f)\n", move.x, move.y, move.z);
 #endif // _DEBUG
 }
 
@@ -152,22 +157,29 @@ void CPlayer::Move()
 //--------------------------------------------------------------
 void CPlayer::Jump()
 {
+	// 移動量の取得
+	D3DXVECTOR3 move = GetMove();
+
 	bool jump = false;
 
-	// ジャンプ力
+	// ジャンプ
 	jump = m_controller->Jump();
 
 	if (jump)
 	{
-		m_move.y += 25.0f;
+		// ジャンプ力
+		move.y += 25.0f;
 		jump = false;
 	}
 
-	if (m_pos.y > 0.0f)
+	if (GetPos().y > 0.0f)
 	{
 		// 重力
-		m_move.y -= 1.0f;
+		move.y -= 1.0f;
 	}
+
+	// 移動量の設定
+	SetMove(move);
 }
 
 //--------------------------------------------------------------
