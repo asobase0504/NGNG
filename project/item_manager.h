@@ -13,6 +13,11 @@
 #include "object2d.h"
 
 //==============================================================
+// 前方宣言
+//==============================================================
+class CItemModel;
+
+//==============================================================
 // クラス
 //==============================================================
 class CItemManager : public CTask
@@ -26,18 +31,18 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	// アイテムの生成プロセス
 	static CItemManager* Create();
 
-	std::string GetItemId(int inId) { return m_itemId[inId]; }
-
-public:
-	enum ITEM_ID
-	{
-		ITEM_1 = 0,
-		ITEM_MAX
-	};
-
 private:
-	std::string m_itemId[ITEM_MAX];
+	// アイテムのデータとモデルデータのID
+	int m_itemId;
+	// アイテムのデータ(ステータスアップするよ～とか)
+
+	// アイテムのモデルデータ
+	CItemModel* m_itemModel;
 };
 #endif	// _ITEM_MANAGER_H_
+
+//アイテムマネージャーに 必要だと思うもの。
+//- 出現しているアイテムモデル

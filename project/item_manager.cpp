@@ -13,10 +13,7 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-
-CItemManager::CItemManager(CTaskGroup::EPriority list) :
-	m_itemId{
-	"BOX", }
+CItemManager::CItemManager(CTaskGroup::EPriority list)
 {
 }
 
@@ -32,9 +29,6 @@ CItemManager::~CItemManager()
 //--------------------------------------------------------------
 HRESULT CItemManager::Init()
 {
-#define ARRAY_LENGTH(a) (sizeof(a)/sizeof((a)[0])) 
-	static_assert(ARRAY_LENGTH(m_itemId) == ITEM_MAX, "aho");
-
 	return S_OK;
 }
 
