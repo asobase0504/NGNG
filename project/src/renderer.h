@@ -15,7 +15,7 @@ namespace
 	// ウインドウのクラス名
 	LPCTSTR CLASS_NAME = _T("AppClass");
 	// ウインドウのキャプション名
-	LPCTSTR WINDOW_NAME = _T("AvoidBox");
+	LPCTSTR WINDOW_NAME = _T("Last Samurai");
 }
 
 const int SCREEN_WIDTH = 1280;	// スクリーンの幅

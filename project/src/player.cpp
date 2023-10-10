@@ -35,7 +35,7 @@ HRESULT CPlayer::Init()
 	m_apModel.resize(1);
 
 	// モデルの読み込み
-	m_apModel[0] = CObjectX::Create(m_pos);
+	m_apModel[0] = CObjectX::Create(GetPos());
 	m_apModel[0]->LoadModel("BOX");
 	m_apModel[0]->SetMoveRot(D3DXVECTOR3(0.0f, 0.01f, 0.0f));
 	m_apModel[0]->SetMaterialDiffuse(0, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f));
@@ -64,6 +64,16 @@ void CPlayer::Uninit(void)
 //--------------------------------------------------------------
 void CPlayer::Update(void)
 {
+	// 移動量の取得
+	D3DXVECTOR3 move = GetMove();
+	// 座標の取得
+	D3DXVECTOR3 pos = GetPos();
+
+	if (m_controller == nullptr)
+	{
+		return;
+	}
+
 	// 移動
 	Move();
 
@@ -73,12 +83,12 @@ void CPlayer::Update(void)
 	// 座標更新
 	Updatepos();
 
+	// 更新処理
 	CObject::Update();
 
-
 #ifdef _DEBUG
-	CDebugProc::Print("Player：pos(%f,%f,%f)\n", m_pos.x, m_pos.y, m_pos.z);
-	CDebugProc::Print("Player：move(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
+	CDebugProc::Print("Player：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
+	CDebugProc::Print("Player：move(%f,%f,%f)\n", move.x, move.y, move.z);
 #endif // _DEBUG
 }
 
@@ -126,7 +136,7 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
 	CPlayer* pPlayer;
 	pPlayer = new CPlayer(CObject::PLAYER);
-	pPlayer->m_pos = pos;
+	pPlayer->SetPos(pos);
 	pPlayer->m_rot = rot;
 	pPlayer->Init();
 
@@ -138,13 +148,8 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //--------------------------------------------------------------
 void CPlayer::Move()
 {
-	if (m_controller == nullptr)
-	{
-		return;
-	}
-
 	// 移動量
-	m_move = m_controller->Move();
+	SetMove(m_controller->Move());
 }
 
 //--------------------------------------------------------------
@@ -152,19 +157,51 @@ void CPlayer::Move()
 //--------------------------------------------------------------
 void CPlayer::Jump()
 {
-	if (m_controller == nullptr)
+	// 移動量の取得
+	D3DXVECTOR3 move = GetMove();
+
+	bool jump = false;
+
+	// ジャンプ
+	jump = m_controller->Jump();
+
+	if (jump)
 	{
-		return;
+		// ジャンプ力
+		move.y += 25.0f;
+		jump = false;
 	}
 
-	// 移動量
-	m_move.y = m_controller->Jump();
-
-	if (m_pos.y > 0.0f)
+	if (GetPos().y > 0.0f)
 	{
 		// 重力
-		m_move.y -= 1.0f;
+		move.y -= 1.0f;
 	}
+
+	// 移動量の設定
+	SetMove(move);
+}
+
+//--------------------------------------------------------------
+// ダッシュ
+//--------------------------------------------------------------
+void CPlayer::Dash()
+{
+	// 移動量の取得
+	D3DXVECTOR3 move = GetMove();
+
+	// ダッシュ
+	m_isdash = m_controller->Dash();
+
+	if (m_isdash)
+	{
+		// ダッシュ速度
+		move.x *= DASH_SPEED;
+		move.z *= DASH_SPEED;
+	}
+
+	// 移動量の設定
+	SetMove(move);
 }
 
 //--------------------------------------------------------------
@@ -172,10 +209,15 @@ void CPlayer::Jump()
 //--------------------------------------------------------------
 void CPlayer::Updatepos()
 {
-	m_posold = m_pos;	// 前回の位置の保存
-	m_pos += m_move;	// 位置の更新
+	// 座標の取得
+	D3DXVECTOR3 pos = GetPos();
 
-	m_apModel[0]->SetPos(m_pos);
+	SetPosOld(pos);			// 前回の位置の保存
+	pos += GetMove();		// 位置の更新
+
+	// 座標の設定
+	SetPos(pos);
+	m_apModel[0]->SetPos(pos);
 }
 
 //--------------------------------------------------------------

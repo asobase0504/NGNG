@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="item_data.cpp" />
+    <ClCompile Include="item_manager.cpp" />
     <ClCompile Include="item_model.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\camera_game.cpp" />
     <ClCompile Include="src\character.cpp" />
     <ClCompile Include="src\Controller.cpp" />
     <ClCompile Include="src\debug_proc.cpp" />
@@ -70,9 +72,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="item_data.h" />
+    <ClInclude Include="item_manager.h" />
     <ClInclude Include="item_model.h" />
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\camera_game.h" />
     <ClInclude Include="src\character.h" />
     <ClInclude Include="src\Controller.h" />
     <ClInclude Include="src\debug_proc.h" />

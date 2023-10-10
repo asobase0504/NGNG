@@ -22,12 +22,24 @@ public:
 	~CItemModel();
 
 	HRESULT Init() override;
-	void Uninit() override;
-	void Update() override;
-	void Draw() override;
+	HRESULT Init(int inId);
+	void Uninit() override {}
+	void Update() override {}
+	void Draw() override {}
 
-	static CItemModel* Create();
+	static CItemModel* Create(int inId);
+
+	std::string GetItemId(int inId) { return m_modelData[inId]; }
 
 private:
+	enum MODEL_DATA
+	{
+		MODEL_POWER_UP = 0,
+		MODEL_MAX
+	};
+
+private:
+	// アイテムのモデルデータ
+	std::string m_modelData[MODEL_MAX];
 };
 #endif	// _ITEM_MODEL_H_
