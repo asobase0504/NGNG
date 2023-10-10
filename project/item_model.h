@@ -17,6 +17,14 @@
 //==============================================================
 class CItemModel : public CObjectX
 {
+private:
+	enum MODEL_DATA
+	{
+		MODEL_NONE = -1,
+		MODEL_POWER_UP,
+		MODEL_MAX
+	};
+
 public:
 	CItemModel(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
 	~CItemModel();
@@ -30,13 +38,6 @@ public:
 	static CItemModel* Create(int inId);
 
 	std::string GetItemId(int inId) { return m_modelData[inId]; }
-
-private:
-	enum MODEL_DATA
-	{
-		MODEL_POWER_UP = 0,
-		MODEL_MAX
-	};
 
 private:
 	// アイテムのモデルデータ
