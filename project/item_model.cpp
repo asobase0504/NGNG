@@ -42,7 +42,7 @@ HRESULT CItemModel::Init(int inId)
 #define ARRAY_LENGTH(a) (sizeof(a)/sizeof((a)[0])) 
 	static_assert(ARRAY_LENGTH(m_modelData) == MODEL_MAX, "aho");
 
-	//LoadModel(m_modelData[inId]);
+	LoadModel(m_modelData[inId]);
 
 	return S_OK;
 }
