@@ -176,6 +176,9 @@
     <ClCompile Include="item_manager.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="src\camera_game.cpp">
+      <Filter>ソース ファイル\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -309,6 +312,9 @@
     </ClInclude>
     <ClInclude Include="item_manager.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camera_game.h">
+      <Filter>ソース ファイル\3D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

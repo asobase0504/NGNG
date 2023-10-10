@@ -175,7 +175,7 @@ void CObjectX::DrawMaterial()
 	D3DXMatrixTranspose(&m, &m);
 	pEffect->SetMatrix(m_hmWIT, &m);
 
-	// ローカル-射影変換行列
+	// ワールド射影変換行列
 	m = m_mtxWorld * viewMatrix * projMatrix;
 	pEffect->SetMatrix(m_hmWVP, &m);
 
@@ -351,7 +351,7 @@ CObjectX * CObjectX::Create(D3DXVECTOR3 pos, CTaskGroup::EPriority nPriority)
 // モデルの読み込み
 // Author : Yuda Kaito
 //--------------------------------------------------------------
-void CObjectX::LoadModel(const char* aFileName)
+void CObjectX::LoadModel(std::string aFileName)
 {
 	CObjectXGroup *xGroup = CApplication::GetInstance()->GetObjectXGroup();
 	m_buffMat = xGroup->GetBuffMat(aFileName);

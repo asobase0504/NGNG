@@ -1,41 +1,35 @@
 //**************************************************************
 //
-// item_data
-// Author: Buriya Kota
+// カメラ
+// Author : Hamada Ryuuga
+// Author : Yuda Kaito
 //
 //**************************************************************
-#ifndef _ITEM_DATA_H_
-#define _ITEM_DATA_H_
+#ifndef _CAMERA_GAME_H_
+#define _CAMERA_GAME_H_
 
 //==============================================================
 // include
 //==============================================================
-#include "task.h"
+#include "camera.h"
 
 //==============================================================
-// クラス
+// カメラクラス
 //==============================================================
-class CItemData : public CTask
+class CCameraGame : public CCamera
 {
+private:
+	static const float DISTANCE;	// カメラ間距離
 public:
-	CItemData(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
-	~CItemData();
+	CCameraGame();
+	~CCameraGame() override;
 
 	HRESULT Init() override;
-	void Uninit() override;
 	void Update() override;
-	void Draw() override;
 
-	static CItemData* Create();
-
+	void SetTargetPos(const D3DXVECTOR3& pos) { m_targetPos = &pos; }
 private:
-	enum ITEM_DATA
-	{
-		ITEM_POWER_UP = 0,
-		ITEM_MAX
-	};
-
-private:
-	ITEM_DATA m_itemData[ITEM_MAX];
+	const D3DXVECTOR3* m_targetPos;
 };
-#endif	// _ITEM_DATA_H_
+
+#endif		// _CAMERA_H_

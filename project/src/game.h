@@ -21,7 +21,7 @@
 // 前方宣言
 //==============================================================
 class CPlayer;
-class CCamera;
+class CCameraGame;
 class CLight;
 
 //==============================================================
@@ -39,7 +39,7 @@ public:
 
 private:
 	CPlayer* m_player[MAX_PLAYER];	// プレイヤー
-	CCamera* m_camera;
+	CCameraGame* m_camera;
 	CLight* m_light;
 };
 #endif

@@ -24,6 +24,7 @@
     <ClCompile Include="item_model.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\camera_game.cpp" />
     <ClCompile Include="src\Controller.cpp" />
     <ClCompile Include="src\debug_proc.cpp" />
     <ClCompile Include="src\fade.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="item_model.h" />
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\camera_game.h" />
     <ClInclude Include="src\Controller.h" />
     <ClInclude Include="src\debug_proc.h" />
     <ClInclude Include="src\fade.h" />
