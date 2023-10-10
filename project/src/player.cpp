@@ -80,6 +80,9 @@ void CPlayer::Update(void)
 	// ジャンプ
 	Jump();
 
+	// ダッシュ
+	Dash();
+
 	// 座標更新
 	Updatepos();
 
