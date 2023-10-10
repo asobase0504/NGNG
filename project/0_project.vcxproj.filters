@@ -173,6 +173,12 @@
     <ClCompile Include="item_data.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\character.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -303,6 +309,12 @@
     </ClInclude>
     <ClInclude Include="item_data.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\character.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

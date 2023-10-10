@@ -23,8 +23,10 @@
     <ClCompile Include="item_model.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\character.cpp" />
     <ClCompile Include="src\Controller.cpp" />
     <ClCompile Include="src\debug_proc.cpp" />
+    <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\fade.cpp" />
     <ClCompile Include="src\file.cpp" />
     <ClCompile Include="src\game.cpp" />
@@ -71,8 +73,10 @@
     <ClInclude Include="item_model.h" />
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\character.h" />
     <ClInclude Include="src\Controller.h" />
     <ClInclude Include="src\debug_proc.h" />
+    <ClInclude Include="src\enemy.h" />
     <ClInclude Include="src\fade.h" />
     <ClInclude Include="src\file.h" />
     <ClInclude Include="src\game.h" />
