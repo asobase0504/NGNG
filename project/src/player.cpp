@@ -7,7 +7,6 @@
 
 // include
 #include "player.h"
-#include "character.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"

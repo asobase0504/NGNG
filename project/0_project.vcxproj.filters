@@ -185,6 +185,9 @@
     <ClCompile Include="src\character.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
+    <ClCompile Include="enemy_manager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -327,6 +330,9 @@
     </ClInclude>
     <ClInclude Include="src\character.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_manager.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

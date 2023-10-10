@@ -1,38 +1,46 @@
 //**************************************************************
 //
-// プレイヤー
-// Author : 髙野馨將
+// 敵管理
+// Author : 梶田大夢
 //
 //**************************************************************
-#ifndef _PLAYER_H_			// このマクロ定義がされてなかったら
-#define _PLAYER_H_			// 二重インクルード防止のマクロ定義
+#ifndef _ENEMY_MANAGER_H_			// このマクロ定義がされてなかったら
+#define _ENEMY_MANAGER_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
-#include "character.h"
-
-//==============================================================
-// マクロ宣言
-//==============================================================
-#define DASH_SPEED	(3.0f)
+#include "task.h"
 
 //==============================================================
 // 前方宣言
 //==============================================================
 class CObjectX;
 class CController;
+class CEnemy;
 
 //==============================================================
 // プレイヤークラス
 //==============================================================
-class CPlayer : public CCharacter
+class CEnemyManager : public CTask
 {
+public:	// シングルトン用のインスタンス
+	static CEnemyManager* GetInstance();
+private:
+	CEnemyManager();
+	static CEnemyManager* m_enemyManager;
+
 public:
+	enum EType
+	{
+		NONE = 0,
+		SKELETON,
+		MAX
+	};
+
 	// コンストラクタとデストラクタ
-	explicit CPlayer(int nPriority = 3);
-	~CPlayer();
-	
+	~CEnemyManager();
+
 	//プロトタイプ宣言
 	HRESULT	Init() override;
 	void	Uninit() override;
@@ -40,20 +48,10 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	static CPlayer *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
-
-	// Setter
-	void SetController(CController* inOperate);
-
-private:
-	void Move();				// 移動
-	void Jump();				// ジャンプ
-	void Dash();				// ダッシュ
+	void CreateEnemy(D3DXVECTOR3 pos, EType type);			// プレイヤーの生成
 
 private:		// メンバ変数
-	bool			m_isjump;		// ジャンプしているかどうか
-	bool			m_isdash;		// ダッシュしているかどうか
-
-	CController*	m_controller;	// 命令を出す人
+	EType m_type;
+	CEnemy *m_pEnemy;
 };
 #endif
