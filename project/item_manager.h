@@ -11,11 +11,13 @@
 // include
 //==============================================================
 #include "object2d.h"
+#include "item_data.h"
 
 //==============================================================
 // 前方宣言
 //==============================================================
 class CItemModel;
+class CItem;
 
 //==============================================================
 // クラス
@@ -31,18 +33,18 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	// アイテムの生成プロセス
-	static CItemManager* Create();
+	void CreateItem(ITEM_TYPE inId);
 
 private:
-	// アイテムのデータとモデルデータのID
-	int m_itemId;
+	// アイテムのタイプ
+	ITEM_TYPE m_itemType;
 	// アイテムのデータ(ステータスアップするよ～とか)
-
+	CItem* m_itemData;
 	// アイテムのモデルデータ
 	CItemModel* m_itemModel;
 };
 #endif	// _ITEM_MANAGER_H_
 
-//アイテムマネージャーに 必要だと思うもの。
+// アイテムマネージャーに 必要だと思うもの。
 //- 出現しているアイテムモデル
+

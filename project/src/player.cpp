@@ -78,9 +78,6 @@ void CPlayer::Update(void)
 	// ダッシュ
 	Dash();
 
-	// 座標更新
-	Updatepos();
-
 	// 更新処理
 	CCharacter::Update();
 

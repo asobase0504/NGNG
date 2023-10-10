@@ -10,10 +10,14 @@
 //==============================================================
 #include "item_manager.h"
 
+#include "item.h"
+#include "item_model.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemManager::CItemManager(CTaskGroup::EPriority list)
+CItemManager::CItemManager(CTaskGroup::EPriority list) : 
+	m_itemData(nullptr), m_itemModel(nullptr), m_itemType(ITEM_NONE)
 {
 }
 
@@ -37,6 +41,8 @@ HRESULT CItemManager::Init()
 //--------------------------------------------------------------
 void CItemManager::Uninit()
 {
+	m_itemData = nullptr;
+	m_itemModel = nullptr;
 }
 
 //--------------------------------------------------------------
@@ -56,7 +62,17 @@ void CItemManager::Draw()
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CItemManager* CItemManager::Create()
+void CItemManager::CreateItem(ITEM_TYPE inId)
 {
-	return nullptr;
+	m_itemType = inId;
+
+	switch (m_itemType)
+	{
+	case ITEM_POWER_UP:
+		m_itemData = CItem::Create(inId);
+		m_itemModel = CItemModel::Create(inId);
+		break;
+	default:
+		break;
+	}
 }
