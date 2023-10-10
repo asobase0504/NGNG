@@ -42,6 +42,9 @@
     <Filter Include="ソース ファイル\Mode\Game\00_Object\Item">
       <UniqueIdentifier>{4963ad8a-ec04-4e0e-b854-ad931565ddc4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\00_Main\Collision">
+      <UniqueIdentifier>{403c4199-35ca-4df9-8caa-fb8ce4c5685a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -185,6 +188,21 @@
     <ClCompile Include="src\character.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\collision.cpp">
+      <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision_cylinder.cpp">
+      <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision_mesh.cpp">
+      <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision_box.cpp">
+      <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision_sphere.cpp">
+      <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -327,6 +345,21 @@
     </ClInclude>
     <ClInclude Include="src\character.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision.h">
+      <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision_cylinder.h">
+      <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision_mesh.h">
+      <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision_box.h">
+      <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision_sphere.h">
+      <Filter>ソース ファイル\00_Main\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

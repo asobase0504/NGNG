@@ -120,7 +120,6 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 
 	m_debugProc = new CDebugProc;
 	m_debugProc->Init();
-	m_debugProc = nullptr;
 
 	return S_OK;
 }
