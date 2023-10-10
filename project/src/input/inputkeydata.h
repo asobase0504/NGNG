@@ -24,7 +24,7 @@ enum STAN_DART_INPUT_KEY
 	KEY_LEFT,			//左			 A  &  Left)					スティック左　＆　十字キー左
 	KEY_RIGHT,			//右			 D  &  Right					スティック右　＆　十字キー右
 	KEY_DECISION,		//決定			 エンターキー								A
-	KEY_SHOT,			//スペース		 スペースキー								R1
+	KEY_SPACE,			//スペース		 スペースキー								R1
 	KEY_BACK,			//バック		 バックスペースキー & B						B
 	KEY_SHIFT,			//シフト		 シフト左右									L1
 	KEY_MOVE,			//移動系すべて
