@@ -10,7 +10,7 @@
 //==============================================================
 // include
 //==============================================================
-#include "object.h"
+#include "character.h"
 
 //==============================================================
 // マクロ宣言
@@ -26,7 +26,7 @@ class CController;
 //==============================================================
 // プレイヤークラス
 //==============================================================
-class CPlayer : public CObject
+class CPlayer : public CCharacter
 {
 public:
 	// コンストラクタとデストラクタ
@@ -40,7 +40,7 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	static CPlayer *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);			// プレイヤーの生成
+	static CPlayer *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
 
 	// Setter
 	void SetController(CController* inOperate);
@@ -49,14 +49,11 @@ private:
 	void Move();				// 移動
 	void Jump();				// ジャンプ
 	void Dash();				// ダッシュ
-	void Updatepos();			// 座標の更新
 
 private:		// メンバ変数
 	bool			m_isjump;		// ジャンプしているかどうか
 	bool			m_isdash;		// ダッシュしているかどうか
 
-	D3DXMATRIX		m_mtxWorld;					// ワールドマトリックス
 	CController*	m_controller;				// 命令を出す人
-	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
 };
 #endif

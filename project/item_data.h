@@ -17,6 +17,14 @@
 //==============================================================
 class CItemData : public CTask
 {
+private:
+	enum ITEM_DATA
+	{
+		ITEM_NONE = -1,
+		ITEM_POWER_UP,
+		ITEM_MAX
+	};
+
 public:
 	CItemData(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
 	~CItemData();
@@ -24,18 +32,17 @@ public:
 	HRESULT Init() override;
 	void Uninit() override;
 	void Update() override;
-	void Draw() override;
+	void Draw() override {}
 
-	static CItemData* Create();
+	static CItemData* Create(int inId);
 
-private:
-	enum ITEM_DATA
-	{
-		ITEM_POWER_UP = 0,
-		ITEM_MAX
-	};
+	void SetItemData(ITEM_DATA inItemData) { m_itemData = inItemData; }
+	ITEM_DATA GetItemData(int inId) { return m_itemData; }
 
 private:
-	ITEM_DATA m_itemData[ITEM_MAX];
+	void ItemState_();
+
+private:
+	ITEM_DATA m_itemData;
 };
 #endif	// _ITEM_DATA_H_

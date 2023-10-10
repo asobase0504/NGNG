@@ -35,13 +35,8 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	static CEnemy *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);			// プレイヤーの生成
-
-private:
-	void Updatepos();			// 座標の更新
+	static CEnemy *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
 
 private:		// メンバ変数
-	D3DXVECTOR3		m_posold;		// 前回の位置
-	D3DXVECTOR3		m_move;			// 移動量
 };
 #endif

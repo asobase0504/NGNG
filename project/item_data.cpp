@@ -44,19 +44,36 @@ void CItemData::Uninit()
 //--------------------------------------------------------------
 void CItemData::Update()
 {
-}
-
-//--------------------------------------------------------------
-// •`‰æ
-//--------------------------------------------------------------
-void CItemData::Draw()
-{
+	ItemState_();
 }
 
 //--------------------------------------------------------------
 // ¶¬
 //--------------------------------------------------------------
-CItemData* CItemData::Create()
+CItemData* CItemData::Create(int inId)
 {
-	return nullptr;
+	CItemData* pItemData = nullptr;
+	pItemData = new CItemData;
+
+	if (pItemData != nullptr)
+	{
+		pItemData->Init();
+		pItemData->SetItemData((ITEM_DATA)inId);
+	}
+
+	return pItemData;
+}
+
+//--------------------------------------------------------------
+// ƒAƒCƒeƒ€‚ÌŒø‰Ê
+//--------------------------------------------------------------
+void CItemData::ItemState_()
+{
+	switch (m_itemData)
+	{
+	case ITEM_POWER_UP:
+		break;
+	default:
+		break;
+	}
 }
