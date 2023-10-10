@@ -48,7 +48,7 @@ HRESULT CItemModel::Init(int inId)
 //--------------------------------------------------------------
 // ¶¬
 //--------------------------------------------------------------
-CItemModel* CItemModel::Create(int inId)
+CItemModel* CItemModel::Create(const D3DXVECTOR3& inPos, int inId)
 {
 	CItemModel* pItemModel = nullptr;
 	pItemModel = new CItemModel;
@@ -56,6 +56,7 @@ CItemModel* CItemModel::Create(int inId)
 	if (pItemModel != nullptr)
 	{
 		pItemModel->Init(inId);
+		pItemModel->SetPos(inPos);
 	}
 
 	return pItemModel;

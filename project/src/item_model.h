@@ -28,7 +28,7 @@ public:
 	void Update() override {}
 	void Draw() override {}
 
-	static CItemModel* Create(int inId);
+	static CItemModel* Create(const D3DXVECTOR3& inPos, int inId);
 
 private:
 	// アイテムのモデルデータ

@@ -24,8 +24,12 @@ class CItem;
 //==============================================================
 class CItemManager : public CTask
 {
-public:
+public:	// シングルトン用のインスタンス
+	static CItemManager* GetInstance();
+private:
 	CItemManager(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	static CItemManager* m_itemManager;
+public:
 	~CItemManager();
 
 	HRESULT Init() override;
@@ -33,7 +37,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void CreateItem(ITEM_TYPE inId);
+	void CreateItem(const D3DXVECTOR3& inPos, ITEM_TYPE inId);
 
 private:
 	// アイテムのタイプ
