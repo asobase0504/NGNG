@@ -7,7 +7,6 @@
 
 // include
 #include "player.h"
-#include "character.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
@@ -75,6 +74,9 @@ void CPlayer::Update(void)
 
 	// ジャンプ
 	Jump();
+
+	// ダッシュ
+	Dash();
 
 	// 更新処理
 	CCharacter::Update();

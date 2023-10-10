@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="enemy_manager.cpp" />
+    <ClCompile Include="item_data.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="item_manager.cpp" />
     <ClCompile Include="item_model.cpp" />
@@ -71,6 +73,7 @@
     <ClCompile Include="src\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="enemy_manager.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="item_data.h" />
     <ClInclude Include="item_manager.h" />

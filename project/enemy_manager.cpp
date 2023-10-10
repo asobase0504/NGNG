@@ -1,20 +1,38 @@
 //**************************************************************
 //
-// 敵
+// 敵管理
 // Author : 梶田大夢
 //
 //**************************************************************
 
 // include
+#include "enemy_manager.h"
 #include "enemy.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
 
 //--------------------------------------------------------------
+//静的メンバ変数宣言
+//--------------------------------------------------------------
+CEnemyManager* CEnemyManager::m_enemyManager = nullptr;
+
+//--------------------------------------------------------------
+// シングルトンでのインスタンスの取得
+//--------------------------------------------------------------
+CEnemyManager* CEnemyManager::GetInstance()
+{
+	if (m_enemyManager == nullptr)
+	{
+		m_enemyManager = new CEnemyManager;
+	}
+	return m_enemyManager;
+}
+
+//--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CEnemy::CEnemy(int nPriority)
+CEnemyManager::CEnemyManager()
 {
 
 }
@@ -22,7 +40,7 @@ CEnemy::CEnemy(int nPriority)
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CEnemy::~CEnemy()
+CEnemyManager::~CEnemyManager()
 {
 
 }
@@ -30,61 +48,44 @@ CEnemy::~CEnemy()
 //--------------------------------------------------------------
 // 初期化処理
 //--------------------------------------------------------------
-HRESULT CEnemy::Init()
+HRESULT CEnemyManager::Init()
 {
-	// 初期化処理
-	CCharacter::Init();
-
 	return S_OK;
 }
 
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CEnemy::Uninit(void)
+void CEnemyManager::Uninit(void)
 {
-	// 終了処理
-	CCharacter::Uninit();
 }
 
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CEnemy::Update(void)
+void CEnemyManager::Update(void)
 {
-	// 移動量の取得
-	D3DXVECTOR3 move = GetMove();
-
-	// 座標の取得
-	D3DXVECTOR3 pos = GetPos();
-
-	// 更新処理
-	CCharacter::Update();
-
-#ifdef _DEBUG
-		CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
-		CDebugProc::Print("Enemy：move(%f,%f,%f)\n", move.x, move.y, move.z);
-#endif // _DEBUG
 }
 
 //--------------------------------------------------------------
 // 描画処理
 //--------------------------------------------------------------
-void CEnemy::Draw(void)
+void CEnemyManager::Draw(void)
 {
-	// 描画処理
-	CCharacter::Draw();
 }
 
-//--------------------------------------------------------------
-// 生成
-//--------------------------------------------------------------
-CEnemy* CEnemy::Create(D3DXVECTOR3 pos)
+void CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, EType type)
 {
-	CEnemy* pEnemy;
-	pEnemy = new CEnemy(CObject::ENEMY);
-	pEnemy->SetPos(pos);
-	pEnemy->Init();
-
-	return pEnemy;
+	switch (type)
+	{
+	case CEnemyManager::NONE:
+		CEnemy::Create(pos);
+		break;
+	case CEnemyManager::SKELETON:
+		break;
+	case CEnemyManager::MAX:
+		break;
+	default:
+		break;
+	}
 }

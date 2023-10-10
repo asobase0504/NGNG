@@ -21,7 +21,7 @@
 // 前方宣言
 //==============================================================
 class CPlayer;
-class CEnemy;
+class CEnemyManager;
 class CCameraGame;
 class CLight;
 
@@ -40,7 +40,7 @@ public:
 
 private:
 	CPlayer* m_player[MAX_PLAYER];	// プレイヤー
-	CEnemy* m_enemy;				// 敵
+	CEnemyManager* m_enemy;	// 敵
 	CCameraGame* m_camera;
 	CLight* m_light;
 };
