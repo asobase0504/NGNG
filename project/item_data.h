@@ -29,5 +29,13 @@ public:
 	static CItemData* Create();
 
 private:
+	enum ITEM_DATA
+	{
+		ITEM_POWER_UP = 0,
+		ITEM_MAX
+	};
+
+private:
+	ITEM_DATA m_itemData[ITEM_MAX];
 };
 #endif	// _ITEM_DATA_H_

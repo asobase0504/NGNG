@@ -13,7 +13,9 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemModel::CItemModel(CTaskGroup::EPriority list)
+CItemModel::CItemModel(CTaskGroup::EPriority list) :
+	m_modelData{
+	"BOX", }
 {
 }
 
@@ -33,30 +35,30 @@ HRESULT CItemModel::Init()
 }
 
 //--------------------------------------------------------------
-// 終了
+// 初期化(オーバーロード)
 //--------------------------------------------------------------
-void CItemModel::Uninit()
+HRESULT CItemModel::Init(int inId)
 {
-}
+#define ARRAY_LENGTH(a) (sizeof(a)/sizeof((a)[0])) 
+	static_assert(ARRAY_LENGTH(m_modelData) == MODEL_MAX, "aho");
 
-//--------------------------------------------------------------
-// 更新
-//--------------------------------------------------------------
-void CItemModel::Update()
-{
-}
+	//LoadModel(m_modelData[inId]);
 
-//--------------------------------------------------------------
-// 描画
-//--------------------------------------------------------------
-void CItemModel::Draw()
-{
+	return S_OK;
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CItemModel* CItemModel::Create()
+CItemModel* CItemModel::Create(int inId)
 {
-	return nullptr;
+	CItemModel* pItemModel = nullptr;
+	pItemModel = new CItemModel;
+
+	if (pItemModel != nullptr)
+	{
+		pItemModel->Init(inId);
+	}
+
+	return pItemModel;
 }
