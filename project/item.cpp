@@ -8,26 +8,26 @@
 //==============================================================
 // include
 //==============================================================
-#include "item_data.h"
+#include "item.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemData::CItemData(CTaskGroup::EPriority list)
+CItem::CItem(CTaskGroup::EPriority list)
 {
 }
 
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CItemData::~CItemData()
+CItem::~CItem()
 {
 }
 
 //--------------------------------------------------------------
 // 初期化
 //--------------------------------------------------------------
-HRESULT CItemData::Init()
+HRESULT CItem::Init()
 {
 	return S_OK;
 }
@@ -35,14 +35,14 @@ HRESULT CItemData::Init()
 //--------------------------------------------------------------
 // 終了
 //--------------------------------------------------------------
-void CItemData::Uninit()
+void CItem::Uninit()
 {
 }
 
 //--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
-void CItemData::Update()
+void CItem::Update()
 {
 	ItemState_();
 }
@@ -50,15 +50,15 @@ void CItemData::Update()
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CItemData* CItemData::Create(int inId)
+CItem* CItem::Create(ITEM_TYPE inId)
 {
-	CItemData* pItemData = nullptr;
-	pItemData = new CItemData;
+	CItem* pItemData = nullptr;
+	pItemData = new CItem;
 
 	if (pItemData != nullptr)
 	{
 		pItemData->Init();
-		pItemData->SetItemData((ITEM_DATA)inId);
+		pItemData->SetItemData(inId);
 	}
 
 	return pItemData;
@@ -67,7 +67,7 @@ CItemData* CItemData::Create(int inId)
 //--------------------------------------------------------------
 // アイテムの効果
 //--------------------------------------------------------------
-void CItemData::ItemState_()
+void CItem::ItemState_()
 {
 	switch (m_itemData)
 	{

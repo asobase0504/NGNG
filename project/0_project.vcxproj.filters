@@ -170,9 +170,6 @@
     <ClCompile Include="item_model.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="item_data.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
-    </ClCompile>
     <ClCompile Include="item_manager.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
@@ -184,6 +181,9 @@
     </ClCompile>
     <ClCompile Include="src\character.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -313,9 +313,6 @@
     <ClInclude Include="item_model.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="item_data.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
-    </ClInclude>
     <ClInclude Include="item_manager.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
@@ -327,6 +324,12 @@
     </ClInclude>
     <ClInclude Include="src\character.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="item_data.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
