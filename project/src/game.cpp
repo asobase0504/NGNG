@@ -20,7 +20,7 @@
 #include "fade.h"
 #include "sound.h"
 #include "input.h"
-#include "camera.h"
+#include "camera_game.h"
 #include "light.h"
 #include "utility.h"
 
@@ -56,7 +56,7 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init(void)
 {
-	m_camera = new CCamera;
+	m_camera = new CCameraGame;
 	m_camera->Init();
 
 	m_light = new CLight;
@@ -75,6 +75,7 @@ HRESULT CGame::Init(void)
 
 	//ƒvƒŒƒCƒ„[‚ÌÝ’è
 	m_player[0] = CPlayer::Create(D3DXVECTOR3(50.0f,0.0f,0.0f), D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f));
+	m_camera->SetTargetPos(m_player[0]->GetPos());
 
 	m_player[0]->SetController(new CPlayerController(-1));
 
