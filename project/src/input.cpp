@@ -76,9 +76,6 @@ HRESULT CInput::Init(HINSTANCE hInstance, HWND hWnd)
 		return E_FAIL;
 	}
 
-	//エフェクト
-	m_bEffect = true;
-
 	return S_OK;
 }
 
@@ -127,9 +124,6 @@ void CInput::Uninit()
 //*************************************************************************************
 void CInput::Update()
 {
-	//エフェクト許可の復活
-	m_bEffect = true;
-
 	//キーボードの更新
 	m_pKeyboard->Update();
 	//ジョイパッドの更新
