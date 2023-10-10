@@ -7,6 +7,7 @@
 
 // include
 #include "player.h"
+#include "character.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
@@ -32,14 +33,8 @@ CPlayer::~CPlayer()
 //--------------------------------------------------------------
 HRESULT CPlayer::Init()
 {
-	m_apModel.resize(1);
-
-	// モデルの読み込み
-	m_apModel[0] = CObjectX::Create(m_pos);
-	m_apModel[0]->LoadModel("BOX");
-	m_apModel[0]->SetMoveRot(D3DXVECTOR3(0.0f, 0.01f, 0.0f));
-	m_apModel[0]->SetMaterialDiffuse(0, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f));
-	m_apModel[0]->CalculationVtx();
+	// 初期化処理
+	CCharacter::Init();
 
 	return S_OK;
 }
@@ -56,7 +51,8 @@ void CPlayer::Uninit(void)
 		m_controller = nullptr;
 	}
 
-	CObject::Release();
+	// 終了処理
+	CCharacter::Uninit();
 }
 
 //--------------------------------------------------------------
@@ -64,6 +60,11 @@ void CPlayer::Uninit(void)
 //--------------------------------------------------------------
 void CPlayer::Update(void)
 {
+	// 移動量の取得
+	D3DXVECTOR3 move = GetMove();
+	// 座標の取得
+	D3DXVECTOR3 pos = GetPos();
+
 	if (m_controller == nullptr)
 	{
 		return;
@@ -75,15 +76,12 @@ void CPlayer::Update(void)
 	// ジャンプ
 	Jump();
 
-	// 座標更新
-	Updatepos();
-
 	// 更新処理
-	CObject::Update();
+	CCharacter::Update();
 
 #ifdef _DEBUG
-	CDebugProc::Print("Player：pos(%f,%f,%f)\n", m_pos.x, m_pos.y, m_pos.z);
-	CDebugProc::Print("Player：move(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
+	CDebugProc::Print("Player：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
+	CDebugProc::Print("Player：move(%f,%f,%f)\n", move.x, move.y, move.z);
 #endif // _DEBUG
 }
 
@@ -92,47 +90,18 @@ void CPlayer::Update(void)
 //--------------------------------------------------------------
 void CPlayer::Draw(void)
 {
-	//デバイスへのポインタ
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
-
-	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
-	D3DMATERIAL9 matDef;			//現在のマテリアル保存用
-
-	//現在のマテリアルを維持
-	pDevice->GetMaterial(&matDef);
-
-	//パーツのワールドマトリックスの初期化
-	D3DXMatrixIdentity(&m_mtxWorld);
-
-	//パーツのモデルの向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
-
-	//パーツのモデルの位置を反映
-	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
-
-	//ワールドマトリックスの設定
-	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
-
-	for (int i = 0; i < (int)m_apModel.size(); i++)
-	{
-		if (m_apModel[i]->GetParent() == nullptr)
-		{
-			m_apModel[i]->SetMtxWorld(m_mtxWorld);
-		}
-	}
+	// 描画処理
+	CCharacter::Draw();
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CPlayer* CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 {
 	CPlayer* pPlayer;
 	pPlayer = new CPlayer(CObject::PLAYER);
-	pPlayer->m_pos = pos;
-	pPlayer->m_rot = rot;
+	pPlayer->SetPos(pos);
 	pPlayer->Init();
 
 	return pPlayer;
@@ -144,7 +113,7 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 void CPlayer::Move()
 {
 	// 移動量
-	m_move = m_controller->Move();
+	SetMove(m_controller->Move());
 }
 
 //--------------------------------------------------------------
@@ -152,22 +121,29 @@ void CPlayer::Move()
 //--------------------------------------------------------------
 void CPlayer::Jump()
 {
+	// 移動量の取得
+	D3DXVECTOR3 move = GetMove();
+
 	bool jump = false;
 
-	// ジャンプ力
+	// ジャンプ
 	jump = m_controller->Jump();
 
 	if (jump)
 	{
-		m_move.y += 25.0f;
+		// ジャンプ力
+		move.y += 25.0f;
 		jump = false;
 	}
 
-	if (m_pos.y > 0.0f)
+	if (GetPos().y > 0.0f)
 	{
 		// 重力
-		m_move.y -= 1.0f;
+		move.y -= 1.0f;
 	}
+
+	// 移動量の設定
+	SetMove(move);
 }
 
 //--------------------------------------------------------------
@@ -175,26 +151,21 @@ void CPlayer::Jump()
 //--------------------------------------------------------------
 void CPlayer::Dash()
 {
+	// 移動量の取得
+	D3DXVECTOR3 move = GetMove();
+
 	// ダッシュ
 	m_isdash = m_controller->Dash();
 
 	if (m_isdash)
 	{
 		// ダッシュ速度
-		m_move.x *= DASH_SPEED;
-		m_move.z *= DASH_SPEED;
+		move.x *= DASH_SPEED;
+		move.z *= DASH_SPEED;
 	}
-}
 
-//--------------------------------------------------------------
-// 座標の更新
-//--------------------------------------------------------------
-void CPlayer::Updatepos()
-{
-	m_posold = m_pos;	// 前回の位置の保存
-	m_pos += m_move;	// 位置の更新
-
-	m_apModel[0]->SetPos(m_pos);
+	// 移動量の設定
+	SetMove(move);
 }
 
 //--------------------------------------------------------------

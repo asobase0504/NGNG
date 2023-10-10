@@ -55,6 +55,12 @@ public:
 	void MulPos(const float inRatio) { SetPos(m_pos * inRatio); }
 	const D3DXVECTOR3 &GetPos() const { return m_pos; }
 
+	/* ˆÊ’uŒn */
+	virtual void SetPosOld(const D3DXVECTOR3 &inPos) { m_posOld = inPos; }
+	void AddPosOld(const D3DXVECTOR3 &inPos) { SetPos(m_posOld + inPos); }
+	void MulPosOld(const float inRatio) { SetPos(m_posOld * inRatio); }
+	const D3DXVECTOR3 &GetPosOld() const { return m_posOld; }
+
 	/* ˆÚ“®Œn */
 	virtual void SetMove(const D3DXVECTOR3 &inMove) { m_move = inMove; }
 	void AddMove(const D3DXVECTOR3 &inMove) { SetMove(m_move + inMove); }
