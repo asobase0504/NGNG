@@ -1,0 +1,34 @@
+//**************************************************************
+//
+// 当たり判定
+// AUthor : Yuda Kaito
+//
+//**************************************************************
+#ifndef _COLLISION_BOX_H_			// このマクロ定義がされてなかったら
+#define _COLLISION_BOX_H_			// 二重インクルード防止のマクロ定義
+
+#include "collision.h"
+
+class CCollisionMesh;
+class CCollisionCyinder;
+class CCollisionSphere;
+
+class CCollisionBox : public CCollision
+{
+public:
+	CCollisionBox();
+	~CCollisionBox();
+
+	HRESULT Init();
+	void Uninit();
+
+	bool ToCylinder(CCollisionCyinder* inCyinder);
+	bool ToMesh(CCollisionMesh* inMesh);
+	bool ToBox(CCollisionBox* inBox);
+	bool ToSphere(CCollisionSphere* inSphere);
+
+private:
+
+};
+
+#endif
