@@ -63,17 +63,6 @@ HRESULT CGame::Init(void)
 	m_light = new CLight;
 	m_light->Init();
 
-	/*CObjectPolygon3D* object = CObjectPolygon3D::Create();
-	object->SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	object->SetSize(D3DXVECTOR3(50.0f, 50.0f, 0.0f));*/
-
-	{
-		CObjectX* testX = CObjectX::Create(D3DXVECTOR3(50.0f, 25.0f, 0.0f));
-		testX->LoadModel("BOX");
-		testX->SetMoveRot(D3DXVECTOR3(0.0f, 0.01f, 0.0f));
-		testX->CalculationVtx();
-	}
-
 	//ƒvƒŒƒCƒ„[‚ÌÝ’è
 	m_player[0] = CPlayer::Create(D3DXVECTOR3(50.0f,0.0f,0.0f));
 	m_camera->SetTargetPos(m_player[0]->GetPos());

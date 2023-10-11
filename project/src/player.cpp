@@ -5,7 +5,9 @@
 //
 //**************************************************************
 
+//==============================================================
 // include
+//==============================================================
 #include "player.h"
 #include "character.h"
 #include "Controller.h"
@@ -79,9 +81,6 @@ void CPlayer::Update(void)
 	// ダッシュ
 	Dash();
 
-	// 座標更新
-	Updatepos();
-
 	// 更新処理
 	CCharacter::Update();
 
@@ -138,7 +137,7 @@ void CPlayer::Jump()
 	if (jump)
 	{
 		// ジャンプ力
-		move.y += 25.0f;
+		move.y += JUMP;
 		jump = false;
 	}
 

@@ -185,6 +185,9 @@
     <ClCompile Include="src\character.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -326,6 +329,9 @@
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
     <ClInclude Include="src\character.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
   </ItemGroup>
