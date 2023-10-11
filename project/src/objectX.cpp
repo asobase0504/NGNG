@@ -116,18 +116,7 @@ void CObjectX::Draw()
 	//マテリアルデータへのポインタを取得
 	pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
 
-	//マテリアルの描画
-	for (int nCnt2 = 0; nCnt2 < (int)m_numMat; nCnt2++)
-	{
-		//マテリアルの設定
-		pDevice->SetMaterial(&pMat[nCnt2].MatD3D);
-
-		//プレイヤーパーツの描画
-		m_mesh->DrawSubset(nCnt2);
-
-	}
-	//保持していたマテリアルを戻す
-	pDevice->SetMaterial(&matDef);
+	DrawMaterial();
 }
 
 //--------------------------------------------------------------

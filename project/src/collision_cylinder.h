@@ -27,6 +27,8 @@ public:
 	bool ToBox(CCollisionBox* inBox);
 	bool ToSphere(CCollisionSphere* inSphere);
 
+	float GetLength() { return m_length; }
+	float GetHeight() { return m_height; }
 private:
 	float m_length;
 	float m_height;

@@ -13,7 +13,7 @@
 //==============================================================
 // 定数
 //==============================================================
-const float CCameraGame::DISTANCE = 200.0f;
+const float CCameraGame::DISTANCE = 145.0f;
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -35,7 +35,7 @@ CCameraGame::~CCameraGame()
 HRESULT CCameraGame::Init()
 {
 	CCamera::Init();
-	m_rot = D3DXVECTOR3(0.25f, 0.0f, 0.0f);
+	m_rot = D3DXVECTOR3(0.45f, 0.0f, 0.0f);
 	return S_OK;
 }
 
@@ -52,6 +52,7 @@ void CCameraGame::Update()
 	}
 
 	m_posR = *m_targetPos;
+	m_posR.z += 50.0f;
 	m_posV = D3DXVECTOR3(0.0f, 0.0f, -DISTANCE);
 
 	// 計算用マトリックス

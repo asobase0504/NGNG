@@ -27,6 +27,9 @@ public:
 	bool ToBox(CCollisionBox* inBox);
 	bool ToSphere(CCollisionSphere* inSphere);
 
+	static CCollisionSphere* Create(const D3DXVECTOR3& pos,const float length);
+
+	float GetLength() { return m_length; }
 private:
 	float m_length;
 };

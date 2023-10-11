@@ -45,6 +45,9 @@
     <Filter Include="ソース ファイル\00_Main\Collision">
       <UniqueIdentifier>{403c4199-35ca-4df9-8caa-fb8ce4c5685a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\character">
+      <UniqueIdentifier>{8aac6035-1c35-4b27-8404-0ba7fbb53cc3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -152,17 +155,11 @@
     <ClCompile Include="src\camera.cpp">
       <Filter>ソース ファイル\3D</Filter>
     </ClCompile>
-    <ClCompile Include="src\game.cpp">
-      <Filter>ソース ファイル\Mode\Game</Filter>
-    </ClCompile>
     <ClCompile Include="src\title.cpp">
       <Filter>ソース ファイル\Mode\Title</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>ソース ファイル\00_Main</Filter>
-    </ClCompile>
-    <ClCompile Include="src\player.cpp">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
     <ClCompile Include="src\PlayerController.cpp">
       <Filter>ソース ファイル</Filter>
@@ -172,24 +169,6 @@
     </ClCompile>
     <ClCompile Include="src\camera_game.cpp">
       <Filter>ソース ファイル\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\enemy.cpp">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="src\character.cpp">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="enemy_manager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\item.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="src\item_manager.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="src\item_model.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="src\collision.cpp">
       <Filter>ソース ファイル\00_Main\Collision</Filter>
@@ -205,6 +184,30 @@
     </ClCompile>
     <ClCompile Include="src\collision_sphere.cpp">
       <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_manager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\item.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\item_manager.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\item_model.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\player.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\character.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -313,17 +316,11 @@
     <ClInclude Include="src\camera.h">
       <Filter>ソース ファイル\3D</Filter>
     </ClInclude>
-    <ClInclude Include="src\game.h">
-      <Filter>ソース ファイル\Mode\Game</Filter>
-    </ClInclude>
     <ClInclude Include="src\title.h">
       <Filter>ソース ファイル\Mode\Title</Filter>
     </ClInclude>
     <ClInclude Include="src\number.h">
       <Filter>ソース ファイル\00_Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\player.h">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerController.h">
       <Filter>ソース ファイル</Filter>
@@ -333,27 +330,6 @@
     </ClInclude>
     <ClInclude Include="src\camera_game.h">
       <Filter>ソース ファイル\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\enemy.h">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\character.h">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="enemy_manager.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="src\item.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="src\item_manager.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="src\item_model.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="src\item_data.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="src\collision.h">
       <Filter>ソース ファイル\00_Main\Collision</Filter>
@@ -369,6 +345,33 @@
     </ClInclude>
     <ClInclude Include="src\collision_sphere.h">
       <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item_data.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item_manager.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item_model.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_manager.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\player.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\character.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
