@@ -66,8 +66,8 @@ void CEnemy::Update(void)
 	CCharacter::Update();
 
 #ifdef _DEBUG
-		CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
-		CDebugProc::Print("Enemy：move(%f,%f,%f)\n", move.x, move.y, move.z);
+	CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
+	CDebugProc::Print("Enemy：move(%f,%f,%f)\n", move.x, move.y, move.z);
 #endif // _DEBUG
 }
 

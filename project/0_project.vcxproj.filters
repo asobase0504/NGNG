@@ -170,14 +170,8 @@
     <ClCompile Include="src\camera_game.cpp">
       <Filter>ソース ファイル\3D</Filter>
     </ClCompile>
-    <ClCompile Include="src\enemy.cpp">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClCompile>
     <ClCompile Include="src\character.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="enemy_manager.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\item.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
@@ -189,6 +183,12 @@
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="src\player_manager.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy_manager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
   </ItemGroup>

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\enemy_manager.cpp" />
     <ClCompile Include="src\player_manager.cpp" />
     <ClCompile Include="src\application.cpp" />
@@ -27,7 +28,6 @@
     <ClCompile Include="src\character.cpp" />
     <ClCompile Include="src\Controller.cpp" />
     <ClCompile Include="src\debug_proc.cpp" />
-    <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\fade.cpp" />
     <ClCompile Include="src\file.cpp" />
     <ClCompile Include="src\game.cpp" />
