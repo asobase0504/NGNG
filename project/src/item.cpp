@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// item_model
+// item_data
 // Author: Buriya Kota
 //
 //**************************************************************
@@ -8,57 +8,72 @@
 //==============================================================
 // include
 //==============================================================
-#include "item_model.h"
+#include "item.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemModel::CItemModel(CTaskGroup::EPriority list) :
-	m_modelData{
-	"BOX", }
+CItem::CItem(CTaskGroup::EPriority list)
 {
 }
 
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CItemModel::~CItemModel()
+CItem::~CItem()
 {
 }
 
 //--------------------------------------------------------------
 // 初期化
 //--------------------------------------------------------------
-HRESULT CItemModel::Init()
+HRESULT CItem::Init()
 {
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// 初期化(オーバーロード)
+// 終了
 //--------------------------------------------------------------
-HRESULT CItemModel::Init(int inId)
+void CItem::Uninit()
 {
-#define ARRAY_LENGTH(a) (sizeof(a)/sizeof((a)[0])) 
-	static_assert(ARRAY_LENGTH(m_modelData) == MODEL_MAX, "aho");
+}
 
-	LoadModel(m_modelData[inId]);
-
-	return S_OK;
+//--------------------------------------------------------------
+// 更新
+//--------------------------------------------------------------
+void CItem::Update()
+{
+	ItemState_();
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CItemModel* CItemModel::Create(int inId)
+CItem* CItem::Create(ITEM_TYPE inId)
 {
-	CItemModel* pItemModel = nullptr;
-	pItemModel = new CItemModel;
+	CItem* pItemData = nullptr;
+	pItemData = new CItem;
 
-	if (pItemModel != nullptr)
+	if (pItemData != nullptr)
 	{
-		pItemModel->Init(inId);
+		pItemData->Init();
+		pItemData->SetItemData(inId);
 	}
 
-	return pItemModel;
+	return pItemData;
+}
+
+//--------------------------------------------------------------
+// アイテムの効果
+//--------------------------------------------------------------
+void CItem::ItemState_()
+{
+	switch (m_itemData)
+	{
+	case ITEM_POWER_UP:
+		break;
+	default:
+		break;
+	}
 }

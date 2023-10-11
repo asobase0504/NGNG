@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// item_data
+// item_model
 // Author: Buriya Kota
 //
 //**************************************************************
@@ -8,72 +8,84 @@
 //==============================================================
 // include
 //==============================================================
-#include "item_data.h"
+#include "item_model.h"
+#include "item_manager.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemData::CItemData(CTaskGroup::EPriority list)
+CItemModel::CItemModel(CTaskGroup::EPriority list) :
+	m_modelData{
+	"BOX", }
 {
 }
 
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CItemData::~CItemData()
+CItemModel::~CItemModel()
 {
 }
 
 //--------------------------------------------------------------
 // 初期化
 //--------------------------------------------------------------
-HRESULT CItemData::Init()
+HRESULT CItemModel::Init()
 {
+	CObjectX::Init();
+
+	return S_OK;
+}
+
+//--------------------------------------------------------------
+// 初期化(オーバーロード)
+//--------------------------------------------------------------
+HRESULT CItemModel::Init(int inId)
+{
+	CObjectX::Init();
+
+	LoadModel(m_modelData[inId]);
+
 	return S_OK;
 }
 
 //--------------------------------------------------------------
 // 終了
 //--------------------------------------------------------------
-void CItemData::Uninit()
+void CItemModel::Uninit()
 {
+	CObjectX::Uninit();
 }
 
 //--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
-void CItemData::Update()
+void CItemModel::Update()
 {
-	ItemState_();
+	CObjectX::Update();
+}
+
+//--------------------------------------------------------------
+// 描画
+//--------------------------------------------------------------
+void CItemModel::Draw()
+{
+	CObjectX::Draw();
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CItemData* CItemData::Create(int inId)
+CItemModel* CItemModel::Create(const D3DXVECTOR3& inPos, int inId)
 {
-	CItemData* pItemData = nullptr;
-	pItemData = new CItemData;
+	CItemModel* pItemModel = nullptr;
+	pItemModel = new CItemModel;
 
-	if (pItemData != nullptr)
+	if (pItemModel != nullptr)
 	{
-		pItemData->Init();
-		pItemData->SetItemData((ITEM_DATA)inId);
+		pItemModel->Init(inId);
+		pItemModel->SetPos(inPos);
 	}
 
-	return pItemData;
-}
-
-//--------------------------------------------------------------
-// アイテムの効果
-//--------------------------------------------------------------
-void CItemData::ItemState_()
-{
-	switch (m_itemData)
-	{
-	case ITEM_POWER_UP:
-		break;
-	default:
-		break;
-	}
+	return pItemModel;
 }

@@ -11,36 +11,27 @@
 // include
 //==============================================================
 #include "objectX.h"
+#include "item_data.h"
 
 //==============================================================
 // クラス
 //==============================================================
 class CItemModel : public CObjectX
 {
-private:
-	enum MODEL_DATA
-	{
-		MODEL_NONE = -1,
-		MODEL_POWER_UP,
-		MODEL_MAX
-	};
-
 public:
 	CItemModel(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
 	~CItemModel();
 
 	HRESULT Init() override;
 	HRESULT Init(int inId);
-	void Uninit() override {}
-	void Update() override {}
-	void Draw() override {}
+	void Uninit() override;
+	void Update() override;
+	void Draw() override;
 
-	static CItemModel* Create(int inId);
-
-	std::string GetItemId(int inId) { return m_modelData[inId]; }
+	static CItemModel* Create(const D3DXVECTOR3& inPos, int inId);
 
 private:
 	// アイテムのモデルデータ
-	std::string m_modelData[MODEL_MAX];
+	std::string m_modelData[ITEM_MAX];
 };
 #endif	// _ITEM_MODEL_H_

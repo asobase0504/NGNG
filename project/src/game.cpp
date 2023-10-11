@@ -12,6 +12,8 @@
 #include "player.h"
 #include "enemy.h"
 #include "enemy_manager.h"
+#include "item_manager.h"
+#include "item_data.h"
 #include "player_manager.h"
 #include "camera.h"
 #include "light.h"
@@ -80,6 +82,8 @@ HRESULT CGame::Init(void)
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
 	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(100.0f, 0.0f, 0.0f), CEnemyManager::NONE);
 
+	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(100.0f, 0.0f, 0.0f),CEnemyManager::NONE);
+	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), ITEM_POWER_UP);
 	m_camera->SetTargetPos(pPlayer->GetPos());
 
 	return S_OK;

@@ -39,6 +39,9 @@
     <ClCompile Include="src\input\inputjoypad.cpp" />
     <ClCompile Include="src\input\inputkeyboard.cpp" />
     <ClCompile Include="src\input\inputmouse.cpp" />
+    <ClCompile Include="src\item.cpp" />
+    <ClCompile Include="src\item_manager.cpp" />
+    <ClCompile Include="src\item_model.cpp" />
     <ClCompile Include="src\letter.cpp" />
     <ClCompile Include="src\light.cpp" />
     <ClCompile Include="src\line.cpp" />
@@ -74,9 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enemy_manager.h" />
-    <ClInclude Include="item_data.h" />
-    <ClInclude Include="item_manager.h" />
-    <ClInclude Include="item_model.h" />
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\camera_game.h" />
@@ -93,6 +93,10 @@
     <ClInclude Include="src\input\inputkeyboard.h" />
     <ClInclude Include="src\input\inputkeydata.h" />
     <ClInclude Include="src\input\inputmouse.h" />
+    <ClInclude Include="src\item.h" />
+    <ClInclude Include="src\item_data.h" />
+    <ClInclude Include="src\item_manager.h" />
+    <ClInclude Include="src\item_model.h" />
     <ClInclude Include="src\letter.h" />
     <ClInclude Include="src\light.h" />
     <ClInclude Include="src\line.h" />
