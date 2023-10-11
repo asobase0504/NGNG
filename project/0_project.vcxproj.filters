@@ -184,6 +184,7 @@
     </ClCompile>
     <ClCompile Include="src\collision_sphere.cpp">
       <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClCompile>
     <ClCompile Include="src\character.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
@@ -353,6 +354,7 @@
     </ClInclude>
     <ClInclude Include="src\collision_sphere.h">
       <Filter>ソース ファイル\00_Main\Collision</Filter>
+    </ClInclude>
     <ClInclude Include="src\enemy_manager.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
