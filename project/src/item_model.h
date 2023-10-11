@@ -24,9 +24,9 @@ public:
 
 	HRESULT Init() override;
 	HRESULT Init(int inId);
-	void Uninit() override {}
-	void Update() override {}
-	void Draw() override {}
+	void Uninit() override;
+	void Update() override;
+	void Draw() override;
 
 	static CItemModel* Create(const D3DXVECTOR3& inPos, int inId);
 

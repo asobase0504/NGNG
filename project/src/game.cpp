@@ -12,6 +12,8 @@
 #include "player.h"
 #include "enemy.h"
 #include "enemy_manager.h"
+#include "item_manager.h"
+#include "item_data.h"
 #include "camera.h"
 #include "light.h"
 #include "object_polygon3d.h"
@@ -82,6 +84,7 @@ HRESULT CGame::Init(void)
 	m_player[0]->SetController(new CPlayerController(-1));
 
 	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(100.0f, 0.0f, 0.0f),CEnemyManager::NONE);
+	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), ITEM_POWER_UP);
 
 	return S_OK;
 }
