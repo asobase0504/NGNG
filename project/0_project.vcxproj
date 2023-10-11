@@ -23,6 +23,7 @@
     <ClCompile Include="item_data.cpp" />
     <ClCompile Include="item_manager.cpp" />
     <ClCompile Include="item_model.cpp" />
+    <ClCompile Include="player_manager.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\camera_game.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="src\parts.h" />
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\PlayerController.h" />
+    <ClInclude Include="src\player_manager.h" />
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\sound.h" />
