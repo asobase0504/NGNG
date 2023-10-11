@@ -1,91 +1,87 @@
 //**************************************************************
 //
-// item_model
-// Author: Buriya Kota
+// プレイヤー管理
+// Author : 梶田大夢
 //
 //**************************************************************
 
-//==============================================================
 // include
-//==============================================================
-#include "item_model.h"
-#include "item_manager.h"
+#include "player_manager.h"
+#include "PlayerController.h"
+#include "player.h"
+#include "Controller.h"
+#include "application.h"
+#include "objectX.h"
+
+//--------------------------------------------------------------
+//静的メンバ変数宣言
+//--------------------------------------------------------------
+CPlayerManager* CPlayerManager::m_playerManager = nullptr;
+
+//--------------------------------------------------------------
+// シングルトンでのインスタンスの取得
+//--------------------------------------------------------------
+CPlayerManager* CPlayerManager::GetInstance()
+{
+	if (m_playerManager == nullptr)
+	{
+		m_playerManager = new CPlayerManager;
+	}
+	return m_playerManager;
+}
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemModel::CItemModel(CTaskGroup::EPriority list) :
-	m_modelData{
-	"BOX", }
+CPlayerManager::CPlayerManager()
 {
+
 }
 
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CItemModel::~CItemModel()
+CPlayerManager::~CPlayerManager()
 {
+
 }
 
 //--------------------------------------------------------------
-// 初期化
+// 初期化処理
 //--------------------------------------------------------------
-HRESULT CItemModel::Init()
+HRESULT CPlayerManager::Init()
 {
-	CObjectX::Init();
-
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// 初期化(オーバーロード)
+// 終了処理
 //--------------------------------------------------------------
-HRESULT CItemModel::Init(int inId)
+void CPlayerManager::Uninit(void)
 {
-	CObjectX::Init();
-
-	LoadModel(m_modelData[inId]);
-
-	return S_OK;
 }
 
 //--------------------------------------------------------------
-// 終了
+// 更新処理
 //--------------------------------------------------------------
-void CItemModel::Uninit()
+void CPlayerManager::Update(void)
 {
-	CObjectX::Uninit();
 }
 
 //--------------------------------------------------------------
-// 更新
+// 描画処理
 //--------------------------------------------------------------
-void CItemModel::Update()
+void CPlayerManager::Draw(void)
 {
-	CObjectX::Update();
 }
 
 //--------------------------------------------------------------
-// 描画
+// 生成処理
 //--------------------------------------------------------------
-void CItemModel::Draw()
+CPlayer* CPlayerManager::CreatePlayer(D3DXVECTOR3 pos)
 {
-	CObjectX::Draw();
-}
+	m_pPlayer = CPlayer::Create(pos);
+	m_pPlayer->SetController(new CPlayerController(-1));
 
-//--------------------------------------------------------------
-// 生成
-//--------------------------------------------------------------
-CItemModel* CItemModel::Create(const D3DXVECTOR3& inPos, int inId)
-{
-	CItemModel* pItemModel = nullptr;
-	pItemModel = new CItemModel;
-
-	if (pItemModel != nullptr)
-	{
-		pItemModel->Init(inId);
-		pItemModel->SetPos(inPos);
-	}
-
-	return pItemModel;
+	return m_pPlayer;
 }
