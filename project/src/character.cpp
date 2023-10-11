@@ -122,6 +122,14 @@ CCharacter* CCharacter::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	return pCharacter;
 }
 
+void CCharacter::Attack()
+{
+}
+
+void CCharacter::Move()
+{
+}
+
 //--------------------------------------------------------------
 // ç¿ïWÇÃçXêV
 //--------------------------------------------------------------

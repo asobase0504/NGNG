@@ -15,12 +15,11 @@
 //==============================================================
 // マクロ宣言
 //==============================================================
-#define MAX_PLAYER	(1)
 
 //==============================================================
 // 前方宣言
 //==============================================================
-class CPlayer;
+class CPlayerManager;
 class CEnemyManager;
 class CCameraGame;
 class CLight;
@@ -39,8 +38,8 @@ public:
 	void Update() override;
 
 private:
-	CPlayer* m_player[MAX_PLAYER];	// プレイヤー
-	CEnemyManager* m_enemy;	// 敵
+	CPlayerManager* m_player;	// プレイヤー
+	CEnemyManager* m_enemy;		// 敵
 	CCameraGame* m_camera;
 	CLight* m_light;
 };

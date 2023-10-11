@@ -37,6 +37,8 @@ public:
 	static CCharacter *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);			// プレイヤーの生成
 
 private:
+	virtual void Attack();
+	virtual void Move();
 	void UpdatePos();			// 座標の更新
 
 private:		// メンバ変数

@@ -1,37 +1,39 @@
 //**************************************************************
 //
-// 敵
+// プレイヤー管理
 // Author : 梶田大夢
 //
 //**************************************************************
-#ifndef _ENEMY_H_			// このマクロ定義がされてなかったら
-#define _ENEMY_H_			// 二重インクルード防止のマクロ定義
+#ifndef _PLAYER_MANAGER_H_			// このマクロ定義がされてなかったら
+#define _PLAYER_MANAGER_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
-#include "character.h"
-
-//==============================================================
-// マクロ宣言
-//==============================================================
-#define MAX_SPEED	(0.3f)
+#include "task.h"
+#include "player.h"
 
 //==============================================================
 // 前方宣言
 //==============================================================
 class CObjectX;
 class CController;
+class CPlayer;
 
 //==============================================================
-// プレイヤークラス
+// プレイヤー管理クラス
 //==============================================================
-class CEnemy : public CCharacter
+class CPlayerManager : public CTask
 {
+public:	// シングルトン用のインスタンス
+	static CPlayerManager* GetInstance();
+private:
+	CPlayerManager();
+	static CPlayerManager* m_playerManager;
+
 public:
 	// コンストラクタとデストラクタ
-	explicit CEnemy(int nPriority = 3);
-	~CEnemy();
+	~CPlayerManager();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
@@ -40,11 +42,13 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	static CEnemy *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
+	CPlayer* CreatePlayer(D3DXVECTOR3 pos);			// プレイヤーの生成
 
-private:
-	void Move();		// 移動
+	// ゲッター
+	CPlayer* GetPlayer() { return m_pPlayer; }
+	const D3DXVECTOR3& GetPlayerPos() { return m_pPlayer->GetPos(); }
 
-private:	// メンバ変数
+private:		// メンバ変数
+	CPlayer *m_pPlayer;
 };
 #endif

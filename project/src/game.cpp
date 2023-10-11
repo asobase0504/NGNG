@@ -12,6 +12,9 @@
 #include "player.h"
 #include "enemy.h"
 #include "enemy_manager.h"
+#include "item_manager.h"
+#include "item_data.h"
+#include "player_manager.h"
 #include "camera.h"
 #include "light.h"
 #include "object_polygon3d.h"
@@ -76,12 +79,11 @@ HRESULT CGame::Init(void)
 	}
 
 	//ƒvƒŒƒCƒ„[‚ÌÝ’è
-	m_player[0] = CPlayer::Create(D3DXVECTOR3(50.0f,0.0f,0.0f));
-	m_camera->SetTargetPos(m_player[0]->GetPos());
+	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
+	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(100.0f, 0.0f, 0.0f), CEnemyManager::NONE);
 
-	m_player[0]->SetController(new CPlayerController(-1));
-
-	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(100.0f, 0.0f, 0.0f),CEnemyManager::NONE);
+	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), ITEM_POWER_UP);
+	m_camera->SetTargetPos(pPlayer->GetPos());
 
 	return S_OK;
 }
