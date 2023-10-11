@@ -188,7 +188,7 @@
     <ClCompile Include="src\item_model.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="player_manager.cpp">
+    <ClCompile Include="src\player_manager.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -325,7 +325,7 @@
     <ClInclude Include="src\character.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
-    <ClInclude Include="enemy_manager.h">
+    <ClInclude Include="src\enemy_manager.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\item.h">
