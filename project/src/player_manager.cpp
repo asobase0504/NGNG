@@ -7,6 +7,7 @@
 
 // include
 #include "player_manager.h"
+#include "collision_sphere.h"
 #include "PlayerController.h"
 #include "player.h"
 #include "Controller.h"

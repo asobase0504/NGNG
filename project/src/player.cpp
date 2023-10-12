@@ -7,9 +7,12 @@
 
 // include
 #include "player.h"
+#include "enemy.h"
+#include "enemy_manager.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
+#include "collision_cylinder.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -35,6 +38,11 @@ HRESULT CPlayer::Init()
 	// 初期化処理
 	CCharacter::Init();
 
+	// 座標の取得
+	D3DXVECTOR3 pos = GetPos();
+
+	m_collision = CCollisionCyinder::Create(pos,10.0f,50.0f);
+
 	return S_OK;
 }
 
@@ -49,6 +57,8 @@ void CPlayer::Uninit(void)
 		delete m_controller;
 		m_controller = nullptr;
 	}
+
+	m_collision->Uninit();
 
 	// 終了処理
 	CCharacter::Uninit();
@@ -78,12 +88,21 @@ void CPlayer::Update(void)
 	// ダッシュ
 	Dash();
 
+	m_collision->SetPos(pos);
+	bool a = m_collision->ToSphere(CEnemyManager::GetInstance()->GetEnemySphere());
+
+	if (a)
+	{
+		int b = 0;
+	}
+
 	// 更新処理
 	CCharacter::Update();
 
 #ifdef _DEBUG
 	CDebugProc::Print("Player：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
 	CDebugProc::Print("Player：move(%f,%f,%f)\n", move.x, move.y, move.z);
+	CDebugProc::Print("PlayerCollision：pos(%f,%f,%f)\n", m_collision->GetPos().x, m_collision->GetPos().y, m_collision->GetPos().z);
 #endif // _DEBUG
 }
 
