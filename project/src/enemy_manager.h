@@ -11,6 +11,7 @@
 // include
 //==============================================================
 #include "task.h"
+#include "enemy.h"
 
 //==============================================================
 // 前方宣言
@@ -18,6 +19,7 @@
 class CObjectX;
 class CController;
 class CEnemy;
+class CCollisionSphere;
 
 //==============================================================
 // 敵管理クラス
@@ -48,7 +50,10 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	void CreateEnemy(D3DXVECTOR3 pos, EType type);			// プレイヤーの生成
+	CEnemy* CreateEnemy(D3DXVECTOR3 pos, EType type);			// プレイヤーの生成
+
+	CEnemy* GetEnemy() { return m_pEnemy; }
+	CCollisionSphere* GetEnemySphere() { return m_pEnemy->GetSphere(); }
 
 private:		// メンバ変数
 	EType m_type;
