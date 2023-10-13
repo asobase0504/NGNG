@@ -42,12 +42,12 @@ public:
 
 	// 静的メンバ関数
 	static CEnemy *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
-	CCollisionSphere* GetSphere() { return m_collision; }
+	CCollisionSphere* GetSphere() { return m_collisionSphere; }
 
 private:
 	void Move();		// 移動
 
 private:	// メンバ変数
-	CCollisionSphere* m_collision;
+	CCollisionSphere* m_collisionSphere;
 };
 #endif

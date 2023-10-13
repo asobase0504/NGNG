@@ -101,28 +101,38 @@ bool CCollisionMesh::ToCylinder(CCollisionCyinder* inCyinder, bool isExtrusion)
 		InOut[1] = Vec2Cross(&vecLine[1], &vecPlayer[1]);
 		InOut[2] = Vec2Cross(&vecLine[2], &vecPlayer[2]);
 
-		if (
-			((InOut[0] >= 0 && InOut[1] >= 0 && InOut[2] >= 0) || (InOut[0] <= 0 && InOut[1] <= 0 && InOut[2] <= 0))
-			&& isExtrusion)
+		if (((InOut[0] >= 0 && InOut[1] >= 0 && InOut[2] >= 0) ||
+			(InOut[0] <= 0 && InOut[1] <= 0 && InOut[2] <= 0)))
 		{
-			D3DXVECTOR3 V1 = posPoly[1] - posPoly[0];
-			D3DXVECTOR3 V2 = posPoly[2] - posPoly[0];
+			if (isExtrusion)
+			{
+				D3DXVECTOR3 V1 = posPoly[1] - posPoly[0];
+				D3DXVECTOR3 V2 = posPoly[2] - posPoly[0];
 
-			// 結果の箱
-			D3DXVECTOR3 vecNormal;
-			// メッシュの法線を求める
-			D3DXVec3Cross(&vecNormal, &V1, &V2);
-			// 大きさを１にする
-			D3DXVec3Normalize(&vecNormal, &vecNormal);
+				// 結果の箱
+				D3DXVECTOR3 vecNormal;
+				// メッシュの法線を求める
+				D3DXVec3Cross(&vecNormal, &V1, &V2);
+				// 大きさを１にする
+				D3DXVec3Normalize(&vecNormal, &vecNormal);
 
-			if (nCnt % 2 == 1)
-			{// 法線ベクトルの向きを正す
-				vecNormal *= -1;
+				if (nCnt % 2 == 1)
+				{// 法線ベクトルの向きを正す
+					vecNormal *= -1;
+				}
+
+				// 当たったオブジェクトの位置を設定
+				float meshHeight = posPoly[0].y - (vecNormal.x * (pos.x - posPoly[0].x) + vecNormal.z * (pos.z - posPoly[0].z)) / vecNormal.y;
+
+				if (pos.y < meshHeight)
+				{// メッシュの高さよりプレイヤーの高さのほうが下のとき
+					m_extrusionHeight = meshHeight;
+				}
+				else
+				{
+					return true;
+				}
 			}
-
-			// 当たったオブジェクトの位置を設定
-			float meshHeight = posPoly[0].y - (vecNormal.x * (pos.x - posPoly[0].x) + vecNormal.z * (pos.z - posPoly[0].z)) / vecNormal.y;
-			m_extrusionHeight = meshHeight;
 
 			return true;
 		}
