@@ -8,30 +8,31 @@
 #define _ENEMY_DATA_BASE_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
+// 前方宣言
+//==============================================================
+class CEnemy;
+
+//==============================================================
 // 敵の行動パターンデータベース
 //==============================================================
 class CEnemyDataBase
 {
 public:
-	enum ACTIVITY_STATE
-	{
-		ACTIVITY_IDLE = 0,
-		ACTIVITY_MAX
-	};
-
-	using ACTIVITY_FUNC = void(CEnemyDataBase::*)();
-
-public:
-	// コンストラクタとデストラクタ
+	using ACTIVITY_FUNC = std::function<void(CEnemy*)>;
+private:
 	explicit CEnemyDataBase();
+	static CEnemyDataBase* m_instance;
+	void Init();
+public:
+	CEnemyDataBase* GetInstance();
 	~CEnemyDataBase();
 
-	ACTIVITY_FUNC GetActivityFunc(ACTIVITY_STATE inState) { return m_activityFunc[inState]; }
+	static void Uninit();
+public:
+	ACTIVITY_FUNC GetActivityFunc(std::string inState) { return m_activityFunc[inState]; }
 private:
-	//　スキルのステート関数
-	void Activity_Idel();
-
+	
 private:	// メンバ変数
-	static const ACTIVITY_FUNC m_activityFunc[];
+	static std::unordered_map<std::string,ACTIVITY_FUNC> m_activityFunc;
 };
 #endif

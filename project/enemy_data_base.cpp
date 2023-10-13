@@ -17,10 +17,38 @@ CEnemyDataBase::CEnemyDataBase()
 {
 }
 
+CEnemyDataBase * CEnemyDataBase::GetInstance()
+{
+	if (m_instance == nullptr)
+	{
+		m_instance = new CEnemyDataBase;
+
+		assert(m_instance != nullptr);
+
+		m_instance->Init();
+	}
+
+	return m_instance;
+}
+
 CEnemyDataBase::~CEnemyDataBase()
 {
 }
 
-void CEnemyDataBase::Activity_Idel()
+void CEnemyDataBase::Uninit()
 {
+	if (m_instance == nullptr)
+	{
+		return;
+	}
+
+	delete m_instance;
+	m_instance = nullptr;
+}
+
+void CEnemyDataBase::Init()
+{
+	m_activityFunc["COME"] = []()
+	{
+	};
 }
