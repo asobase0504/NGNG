@@ -45,7 +45,7 @@ public:
 
 	// Setter
 	void SetController(CController* inOperate);
-	CCollisionCyinder* GetCylinder() { return m_collision; }
+	CCollisionCyinder* GetCylinder() { return m_collisionCyinder; }
 
 private:
 	void Attack();				// 攻撃
@@ -60,6 +60,6 @@ private:		// メンバ変数
 	bool			m_isdash;		// ダッシュしているかどうか
 
 	CController*	m_controller;	// 命令を出す人
-	CCollisionCyinder* m_collision;
+	CCollisionCyinder* m_collisionCyinder;
 };
 #endif

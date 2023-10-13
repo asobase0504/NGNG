@@ -34,6 +34,7 @@
 /* Object系統 */
 #include "object_polygon3d.h"
 #include "objectX.h"
+#include "object_mesh.h"
 
 //==============================================================
 // 定数
@@ -67,9 +68,11 @@ HRESULT CGame::Init(void)
 	m_light = new CLight;
 	m_light->Init();
 
-	//プレイヤーの設定
+	// プレイヤーの設定
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
 	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(300.0f, 0.0f, 0.0f), CEnemyManager::NONE);
+
+	CMesh::Create();
 
 	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), ITEM_POWER_UP);
 	m_camera->SetTargetPos(pPlayer->GetPos());
