@@ -123,9 +123,17 @@ bool CCollisionMesh::ToCylinder(CCollisionCyinder* inCyinder, bool isExtrusion)
 
 				// 当たったオブジェクトの位置を設定
 				float meshHeight = posPoly[0].y - (vecNormal.x * (pos.x - posPoly[0].x) + vecNormal.z * (pos.z - posPoly[0].z)) / vecNormal.y;
-				m_extrusionHeight = meshHeight;
 
+				if (pos.y < meshHeight)
+				{// メッシュの高さよりプレイヤーの高さのほうが下のとき
+					m_extrusionHeight = meshHeight;
+				}
+				else
+				{
+					return true;
+				}
 			}
+
 			return true;
 		}
 	}

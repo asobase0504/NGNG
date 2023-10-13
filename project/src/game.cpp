@@ -80,7 +80,7 @@ HRESULT CGame::Init(void)
 	}
 
 	// ƒvƒŒƒCƒ„[‚ÌÝ’è
-	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(500.0f, -100.0f, 0.0f));
+	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
 	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(300.0f, 0.0f, 0.0f), CEnemyManager::NONE);
 
 	CMesh::Create();

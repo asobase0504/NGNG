@@ -93,6 +93,7 @@ void CMesh::Update()
 		CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
 		D3DXVECTOR3 pos = player->GetPos();
 		player->SetPos(D3DXVECTOR3(pos.x, m_collision->GetExtrusionHeight(), pos.z));
+		m_collision->SetPos(D3DXVECTOR3(pos.x, m_collision->GetExtrusionHeight(), pos.z));
 	}
 }
 
