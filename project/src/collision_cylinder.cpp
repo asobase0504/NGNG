@@ -1,4 +1,22 @@
 #include "collision_cylinder.h"
+#include "collision_sphere.h"
+
+CCollisionCyinder::CCollisionCyinder()
+{
+}
+
+CCollisionCyinder::~CCollisionCyinder()
+{
+}
+
+HRESULT CCollisionCyinder::Init()
+{
+	return E_NOTIMPL;
+}
+
+void CCollisionCyinder::Uninit()
+{
+}
 
 bool CCollisionCyinder::ToCylinder(CCollisionCyinder * inCyinder)
 {
@@ -12,7 +30,100 @@ bool CCollisionCyinder::ToCylinder(CCollisionCyinder * inCyinder)
 
 	if (addLength <= differenceLength)
 	{
-
+		return true;
 	}
+
 	return false;
+}
+
+bool CCollisionCyinder::ToSphere(CCollisionSphere * inSphere)
+{
+	// â~íåÇÃîºåaÇ∆ãÖÇÃîºåaÇë´ÇµÇΩãóó£
+	float addLength = m_length + inSphere->GetLength();
+	float addHeight = m_height + inSphere->GetLength();
+
+	// â~íåÇÃíÜêSílÇ©ÇÁãÖÇÃíÜêSílÇ‹Ç≈ÇÃãóó£
+	D3DXVECTOR3 differenceX = D3DXVECTOR3(0.0f,0.0f,0.0f);
+	differenceX.x = GetPos().x - inSphere->GetPos().x;
+
+	D3DXVECTOR3 differenceY = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	differenceY.y = GetPos().y - inSphere->GetPos().y;
+
+	D3DXVECTOR3 differenceZ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	differenceZ.z = GetPos().z - inSphere->GetPos().z;
+
+	//x,y,zÇÃê‚ëŒílÇÃåvéZ
+	float differenceLengthX = D3DXVec3Length(&differenceX);
+	float differenceLengthY = D3DXVec3Length(&differenceY);
+	float differenceLengthZ = D3DXVec3Length(&differenceZ);
+
+	if (differenceLengthX <= addLength
+		&& differenceLengthY < addHeight
+		&& differenceLengthZ <= addLength)
+	{
+		if (GetPos().z + (m_length * 0.5f) > inSphere->GetPos().z - inSphere->GetLength()
+			&& GetPos().z - (m_length * 0.5f) < inSphere->GetPos().z + inSphere->GetLength()
+			&& GetPos().y + (m_height * 0.5f) > inSphere->GetPos().y - inSphere->GetLength()
+			&& GetPos().y - (m_height * 0.5f) < inSphere->GetPos().y + inSphere->GetLength())
+		{
+			if (GetPos().x + (m_length * 0.5f) > inSphere->GetPos().x - inSphere->GetLength())
+			{// ç∂ÇÃìñÇΩÇËîªíË
+				return true;
+			}
+
+			if (GetPos().x - (m_length * 0.5f) < inSphere->GetPos().x + inSphere->GetLength())
+			{// âEÇÃìñÇΩÇËîªíË
+ 				return true;
+			}
+		}
+
+		if (GetPos().x + (m_length * 0.5f) > inSphere->GetPos().x - inSphere->GetLength()
+			&& GetPos().x - (m_length * 0.5f) < inSphere->GetPos().x + inSphere->GetLength()
+			&& GetPos().y + (m_height * 0.5f) > inSphere->GetPos().y - inSphere->GetLength()
+			&& GetPos().y - (m_height * 0.5f) < inSphere->GetPos().y + inSphere->GetLength())
+		{
+			if (GetPos().z + (m_length * 0.5f) > inSphere->GetPos().z - inSphere->GetLength())
+			{// ëOÇÃìñÇΩÇËîªíË
+				return true;
+			}
+
+			if (GetPos().z - (m_length * 0.5f) < inSphere->GetPos().z + inSphere->GetLength())
+			{// âúÇÃìñÇΩÇËîªíË
+				return true;
+			}
+		}
+
+		if (GetPos().x + (m_length * 0.5f) > inSphere->GetPos().x - inSphere->GetLength()
+			&& GetPos().x - (m_length * 0.5f) < inSphere->GetPos().x + inSphere->GetLength()
+			&& GetPos().z + (m_length * 0.5f) > inSphere->GetPos().z - inSphere->GetLength()
+			&& GetPos().z - (m_length * 0.5f) < inSphere->GetPos().z + inSphere->GetLength())
+		{
+			if (GetPos().y + (m_height * 0.5f) < inSphere->GetPos().y - inSphere->GetLength()
+				)
+			{// è„ÇÃìñÇΩÇËîªíË
+				return true;
+			}
+
+			if (GetPos().y - (m_height * 0.5f) > inSphere->GetPos().y + inSphere->GetLength())
+			{// â∫ÇÃìñÇΩÇËîªíË
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+CCollisionCyinder * CCollisionCyinder::Create(const D3DXVECTOR3 & pos, const float length, const float height)
+{
+	CCollisionCyinder* collision = new CCollisionCyinder;
+
+	assert(collision != nullptr);
+
+	collision->Init();
+	collision->SetPos(pos);
+	collision->m_length = length;
+	collision->m_height = height;
+
+	return collision;
 }
