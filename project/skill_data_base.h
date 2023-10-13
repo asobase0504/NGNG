@@ -35,11 +35,6 @@ public:
 		ABILITY abilityHit;
 	};
 
-	enum SKILL_TYPE
-	{
-		YAMADO_ATTACK
-	};
-
 private:
 	// コンストラクタとデストラクタ
 	explicit CSkillDataBase();
@@ -51,14 +46,14 @@ public:
 private:
 	void Init();
 public:
-	SKILL_INFO GetInfo(std::string tag) { return m_skillDataBase[tag]; }
-	ABILITY GetAbility(std::string tag) { return m_skillDataBase[tag].ability; }
-	ABILITY GetHitAbility(std::string tag) { return m_skillDataBase[tag].abilityHit; }
-	int GetCT(std::string tag) { return m_skillDataBase[tag].baseInfo.CT; }
-	int GetStack(std::string tag) { return m_skillDataBase[tag].baseInfo.stock; }
+	SKILL_INFO GetInfo(std::string tag) { return m_dates[tag]; }
+	ABILITY GetAbility(std::string tag) { return m_dates[tag].ability; }
+	ABILITY GetHitAbility(std::string tag) { return m_dates[tag].abilityHit; }
+	int GetCT(std::string tag) { return m_dates[tag].baseInfo.CT; }
+	int GetStack(std::string tag) { return m_dates[tag].baseInfo.stock; }
 
 private:	// メンバ変数
 
-	std::unordered_map<std::string, SKILL_INFO> m_skillDataBase;
+	std::unordered_map<std::string, SKILL_INFO> m_dates;
 };
 #endif
