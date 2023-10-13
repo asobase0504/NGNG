@@ -7,10 +7,12 @@
 
 // include
 #include "enemy.h"
+#include "player.h"
 #include "player_manager.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
+#include "collision_sphere.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -36,6 +38,10 @@ HRESULT CEnemy::Init()
 	// 初期化処理
 	CCharacter::Init();
 
+	D3DXVECTOR3 pos = GetPos();
+
+	m_collision = CCollisionSphere::Create(pos, 10.0f);
+
 	return S_OK;
 }
 
@@ -46,6 +52,8 @@ void CEnemy::Uninit(void)
 {
 	// 終了処理
 	CCharacter::Uninit();
+
+	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------
@@ -59,6 +67,8 @@ void CEnemy::Update(void)
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
+	m_collision->SetPos(pos);
+
 	// 移動処理
 	Move();
 
@@ -68,6 +78,7 @@ void CEnemy::Update(void)
 #ifdef _DEBUG
 	CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
 	CDebugProc::Print("Enemy：move(%f,%f,%f)\n", move.x, move.y, move.z);
+	CDebugProc::Print("EnemyCollision：pos(%f,%f,%f)\n", m_collision->GetPos().x, m_collision->GetPos().y, m_collision->GetPos().z);
 #endif // _DEBUG
 }
 

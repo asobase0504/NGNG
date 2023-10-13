@@ -22,6 +22,7 @@
 //==============================================================
 class CObjectX;
 class CController;
+class CCollisionSphere;
 
 //==============================================================
 // 敵クラス
@@ -41,12 +42,12 @@ public:
 
 	// 静的メンバ関数
 	static CEnemy *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
+	CCollisionSphere* GetSphere() { return m_collision; }
 
 private:
 	void Move();		// 移動
 
 private:	// メンバ変数
-	//const ACTIVITY_FUNC* m_funcActivityFunc;
-	//ACTIVITY_STATE		m_skillStateNow;	// スキルステートの状態
+	CCollisionSphere* m_collision;
 };
 #endif
