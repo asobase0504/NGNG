@@ -23,15 +23,18 @@ public:
 	void Uninit();
 
 	bool ToCylinder(CCollisionCyinder* inCyinder);
-	bool ToMesh(CCollisionMesh* inMesh);
+	bool ToMesh(CCollisionMesh* inMesh, bool isExtrusion);
 	bool ToBox(CCollisionBox* inBox);
 	bool ToSphere(CCollisionSphere* inSphere);
 
 	static CCollisionSphere* Create(const D3DXVECTOR3& pos,const float length);
 
 	float GetLength() { return m_length; }
+	float GetExtrusionHeight() { return m_extrusionHeight; }
+
 private:
 	float m_length;
+	float m_extrusionHeight;	// âüÇµèoÇ∑çÇÇ≥
 };
 
 #endif
