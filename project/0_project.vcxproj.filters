@@ -391,19 +391,19 @@
     <ClInclude Include="src\item.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="enemy_manager.h" />
+    <ClInclude Include="enemy_manager.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="src\item.h" />
+    <ClInclude Include="src\item.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="src\item_data.h" />
+    <ClInclude Include="src\item_data.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="src\item_manager.h" />
+    <ClInclude Include="src\item_manager.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="src\item_model.h" />
+    <ClInclude Include="src\item_model.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="src\SkillEntity.h">
