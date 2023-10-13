@@ -30,7 +30,7 @@ public:
 	HRESULT Init();
 	void Uninit();
 
-	bool ToCylinder(CCollisionCyinder* inCyinder, bool isExtrusion);
+	bool ToCylinder(CCollisionCyinder* inCyinder, bool isExtrusion);	// TODO ‚İ‚Á‚¿‚Ì‚â‚ÂI‚í‚Á‚½‚ç‚±‚Á‚¿‚É“–‚½‚è”»’èˆÚs‚·‚é
 	bool ToSphere(CCollisionSphere* inSphere);
 
 	static CCollisionMesh* Create(int inPrimitive, LPDIRECT3DVERTEXBUFFER9 inVtxBuff, LPDIRECT3DINDEXBUFFER9 inIdxBuff, D3DXMATRIX inMtxWorld);
