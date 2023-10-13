@@ -13,6 +13,11 @@
 #include "object_polygon3d.h"
 
 //==============================================================
+// ëOï˚êÈåæ
+//==============================================================
+class CCollisionMesh;
+
+//==============================================================
 // ÉÅÉbÉVÉÖ
 //==============================================================
 class CMesh : public CObjectPolygon3D
@@ -53,6 +58,8 @@ public:
 	D3DXVECTOR3 GetOneMeshSize() { return m_meshSize; }
 	int GetMeshSizeX() { return m_vtxCountX; }
 
+	LPDIRECT3DINDEXBUFFER9 GetIdxBuff() { return m_idxBuff; }
+
 	void SwitchCollision(bool onCollision) { m_isCollision = onCollision; };
 
 	std::string GetDataNeme() { return m_dataName; }
@@ -79,6 +86,7 @@ private:
 	std::string m_fileName;
 	std::string m_dataName;
 	bool m_isCollision;
+	CCollisionMesh* m_collision;
 };
 #endif
 

@@ -41,7 +41,7 @@ HRESULT CPlayer::Init()
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
-	m_collision = CCollisionCyinder::Create(pos,10.0f,50.0f);
+	m_collisionCyinder = CCollisionCyinder::Create(pos, 10.0f, 50.0f);
 
 	return S_OK;
 }
@@ -58,7 +58,7 @@ void CPlayer::Uninit(void)
 		m_controller = nullptr;
 	}
 
-	m_collision->Uninit();
+	m_collisionCyinder->Uninit();
 
 	// 終了処理
 	CCharacter::Uninit();
@@ -88,8 +88,8 @@ void CPlayer::Update(void)
 	// ダッシュ
 	Dash();
 
-	m_collision->SetPos(pos);
-	bool a = m_collision->ToSphere(CEnemyManager::GetInstance()->GetEnemySphere());
+	m_collisionCyinder->SetPos(pos);
+	bool a = m_collisionCyinder->ToSphere(CEnemyManager::GetInstance()->GetEnemySphere());
 
 	if (a)
 	{
@@ -102,7 +102,7 @@ void CPlayer::Update(void)
 #ifdef _DEBUG
 	CDebugProc::Print("Player：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
 	CDebugProc::Print("Player：move(%f,%f,%f)\n", move.x, move.y, move.z);
-	CDebugProc::Print("PlayerCollision：pos(%f,%f,%f)\n", m_collision->GetPos().x, m_collision->GetPos().y, m_collision->GetPos().z);
+	CDebugProc::Print("PlayerCollision：pos(%f,%f,%f)\n", m_collisionCyinder->GetPos().x, m_collisionCyinder->GetPos().y, m_collisionCyinder->GetPos().z);
 #endif // _DEBUG
 }
 
