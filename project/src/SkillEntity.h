@@ -4,19 +4,13 @@
 // Author : 髙野馨將
 //
 //**************************************************************
-#ifndef _SKILL_H_			// このマクロ定義がされてなかったら
-#define _SKILL_H_			// 二重インクルード防止のマクロ定義
+#ifndef _SKILLENTITY_H_			// このマクロ定義がされてなかったら
+#define _SKILLENTITY_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
-#include "task.h"
-
-//==============================================================
-// マクロ宣言
-//==============================================================
-#define MAX_SKILL		(4)
-#define MAX_SKILL_TYPE	(16)
+#include "skill.h"
 
 //==============================================================
 // 前方宣言
@@ -26,12 +20,12 @@ class CCharacter;
 //==============================================================
 // スキルクラス
 //==============================================================
-class CSkill : public CTask
+class CSkillEntity : public CSkill
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CSkill(int nPriority = 3);
-	~CSkill();
+	explicit CSkillEntity(int nPriority = 3);
+	~CSkillEntity();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
@@ -39,12 +33,10 @@ public:
 	void	Update() override;
 
 	// 静的メンバ関数
-	static CSkill *Create(D3DXVECTOR3 pos);			// スキルの生成
+	static CSkillEntity *Create(D3DXVECTOR3 pos);			// スキルの生成
 
 private:		// メンバ変数
 	CCharacter*		m_apChara;				// キャラクターのインスタンス
-	int				m_ID;					// スキルID
-	int				m_CT[MAX_SKILL];		// クールタイム
-	float			m_AttackBuff;			// 加算される攻撃力
+	int				m_ID[MAX_SKILL];		// スキルID
 };
 #endif

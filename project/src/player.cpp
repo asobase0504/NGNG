@@ -80,6 +80,9 @@ void CPlayer::Update(void)
 	// ダッシュ
 	Dash();
 
+	// 攻撃
+	Attack();
+
 	// 更新処理
 	CCharacter::Update();
 
@@ -103,12 +106,29 @@ void CPlayer::Draw(void)
 //--------------------------------------------------------------
 CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 {
-	CPlayer* pPlayer;
-	pPlayer = new CPlayer(CObject::PLAYER);
+	CPlayer* pPlayer = new CPlayer;
 	pPlayer->SetPos(pos);
 	pPlayer->Init();
 
 	return pPlayer;
+}
+
+//--------------------------------------------------------------
+// 攻撃
+//--------------------------------------------------------------
+void CPlayer::Attack()
+{
+	// 通常攻撃(左クリック)
+	m_controller->Skill_1();
+
+	// スキル1(右クリック)
+	m_controller->Skill_2();
+	
+	// スキル2(シフト)
+	m_controller->Skill_3();
+
+	// スキル3(R)
+	m_controller->Skill_4();
 }
 
 //--------------------------------------------------------------
@@ -137,13 +157,12 @@ void CPlayer::Jump()
 	{
 		// ジャンプ力
 		move.y += JUMP;
-		jump = false;
 	}
 
 	if (GetPos().y > 0.0f)
 	{
 		// 重力
-		move.y -= 1.0f;
+		move.y -= 0.1f;
 	}
 
 	// 移動量の設定

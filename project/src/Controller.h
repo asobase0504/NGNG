@@ -29,6 +29,10 @@ public:
 	virtual D3DXVECTOR3 Move() = 0;
 	virtual bool		Jump() = 0;
 	virtual bool		Dash() = 0;
+	virtual bool		Skill_1() = 0;
+	virtual bool		Skill_2() = 0;
+	virtual bool		Skill_3() = 0;
+	virtual bool		Skill_4() = 0;
 
 	// Setter
 	void SetToOrder(CPlayer* inOrder) { m_toOrder = inOrder; }
