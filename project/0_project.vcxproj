@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="enemy_data_base.cpp" />
+    <ClCompile Include="skill_data_base.cpp" />
     <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\enemy_manager.cpp" />
     <ClCompile Include="src\player_manager.cpp" />
@@ -78,6 +80,8 @@
     <ClCompile Include="src\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="enemy_data_base.h" />
+    <ClInclude Include="skill_data_base.h" />
     <ClInclude Include="src\enemy_manager.h" />
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\camera.h" />

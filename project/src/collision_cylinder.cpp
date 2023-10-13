@@ -57,31 +57,58 @@ bool CCollisionCyinder::ToSphere(CCollisionSphere * inSphere)
 	float differenceLengthY = D3DXVec3Length(&differenceY);
 	float differenceLengthZ = D3DXVec3Length(&differenceZ);
 
-	// “–‚½‚è”»’è
 	if (differenceLengthX <= addLength
-		&& GetPos().y + (m_height * 0.5f) > inSphere->GetPos().y + inSphere->GetLength()
-		&& GetPos().z + (m_length * 0.5f) > inSphere->GetPos().z - inSphere->GetLength())
-	{// x‚Ì“–‚½‚è”»’è
-		return true;
-	}	
+		&& differenceLengthY < addHeight
+		&& differenceLengthZ <= addLength)
+	{
+		if (GetPos().z + (m_length * 0.5f) > inSphere->GetPos().z - inSphere->GetLength()
+			&& GetPos().z - (m_length * 0.5f) < inSphere->GetPos().z + inSphere->GetLength()
+			&& GetPos().y + (m_height * 0.5f) > inSphere->GetPos().y - inSphere->GetLength()
+			&& GetPos().y - (m_height * 0.5f) < inSphere->GetPos().y + inSphere->GetLength())
+		{
+			if (GetPos().x + (m_length * 0.5f) > inSphere->GetPos().x - inSphere->GetLength())
+			{// ¶‚Ì“–‚½‚è”»’è
+				return true;
+			}
 
+			if (GetPos().x - (m_length * 0.5f) < inSphere->GetPos().x + inSphere->GetLength())
+			{// ‰E‚Ì“–‚½‚è”»’è
+ 				return true;
+			}
+		}
 
-	//--------------------------------------------------------------
-	// Ÿ‰ñ : z‚Ì“–‚½‚è”»’è
-	//--------------------------------------------------------------
+		if (GetPos().x + (m_length * 0.5f) > inSphere->GetPos().x - inSphere->GetLength()
+			&& GetPos().x - (m_length * 0.5f) < inSphere->GetPos().x + inSphere->GetLength()
+			&& GetPos().y + (m_height * 0.5f) > inSphere->GetPos().y - inSphere->GetLength()
+			&& GetPos().y - (m_height * 0.5f) < inSphere->GetPos().y + inSphere->GetLength())
+		{
+			if (GetPos().z + (m_length * 0.5f) > inSphere->GetPos().z - inSphere->GetLength())
+			{// ‘O‚Ì“–‚½‚è”»’è
+				return true;
+			}
 
+			if (GetPos().z - (m_length * 0.5f) < inSphere->GetPos().z + inSphere->GetLength())
+			{// ‰œ‚Ì“–‚½‚è”»’è
+				return true;
+			}
+		}
 
-	if (differenceLengthZ <= addLength
-		&& GetPos().y + (m_height * 0.5f) > inSphere->GetPos().y + inSphere->GetLength())
-	{// z‚Ì“–‚½‚è”»’è
-		//return true;
-	}
+		if (GetPos().x + (m_length * 0.5f) > inSphere->GetPos().x - inSphere->GetLength()
+			&& GetPos().x - (m_length * 0.5f) < inSphere->GetPos().x + inSphere->GetLength()
+			&& GetPos().z + (m_length * 0.5f) > inSphere->GetPos().z - inSphere->GetLength()
+			&& GetPos().z - (m_length * 0.5f) < inSphere->GetPos().z + inSphere->GetLength())
+		{
+			if (GetPos().y + (m_height * 0.5f) < inSphere->GetPos().y - inSphere->GetLength()
+				)
+			{// ã‚Ì“–‚½‚è”»’è
+				return true;
+			}
 
-	if (differenceLengthY < addHeight
-		&& GetPos().x + (m_length * 0.5f) > inSphere->GetPos().x - inSphere->GetLength()
-		&& GetPos().z + (m_length * 0.5f) > inSphere->GetPos().z - inSphere->GetLength())
-	{// y‚Ì“–‚½‚è”»’è
-		return true;
+			if (GetPos().y - (m_height * 0.5f) > inSphere->GetPos().y + inSphere->GetLength())
+			{// ‰º‚Ì“–‚½‚è”»’è
+				return true;
+			}
+		}
 	}
 
 	return false;
