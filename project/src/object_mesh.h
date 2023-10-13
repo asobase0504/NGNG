@@ -13,6 +13,11 @@
 #include "object_polygon3d.h"
 
 //==============================================================
+// ‘O•ûéŒ¾
+//==============================================================
+class CCollisionMesh;
+
+//==============================================================
 // ƒƒbƒVƒ…
 //==============================================================
 class CMesh : public CObjectPolygon3D
@@ -81,6 +86,7 @@ private:
 	std::string m_fileName;
 	std::string m_dataName;
 	bool m_isCollision;
+	CCollisionMesh* m_collision;
 };
 #endif
 
