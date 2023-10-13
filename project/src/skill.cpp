@@ -9,7 +9,6 @@
 // include
 //==============================================================
 #include "skill.h"
-#include "object.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -32,6 +31,10 @@ CSkill::~CSkill()
 //--------------------------------------------------------------
 HRESULT CSkill::Init()
 {
+	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
+	{
+		m_CT[nCnt] = 0;
+	}
 
 	return S_OK;
 }
@@ -49,15 +52,11 @@ void CSkill::Uninit(void)
 //--------------------------------------------------------------
 void CSkill::Update(void)
 {
-	
-}
-
-//--------------------------------------------------------------
-// 生成処理
-//--------------------------------------------------------------
-CSkill * CSkill::Create(D3DXVECTOR3 pos)
-{
-	CSkill* pSkill = new CSkill;
-
-	return pSkill;
+	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
+	{
+		if (m_CT[nCnt] > 0)
+		{
+			m_CT[nCnt]--;
+		}
+	}
 }

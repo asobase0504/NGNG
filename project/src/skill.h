@@ -16,7 +16,7 @@
 // マクロ宣言
 //==============================================================
 #define MAX_SKILL		(4)
-#define MAX_SKILL_TYPE	(16)
+#define MAX_SKILL_TYPE	(1)
 
 //==============================================================
 // 前方宣言
@@ -38,13 +38,10 @@ public:
 	void	Uninit() override;
 	void	Update() override;
 
-	// 静的メンバ関数
-	static CSkill *Create(D3DXVECTOR3 pos);			// スキルの生成
-
 private:		// メンバ変数
 	CCharacter*		m_apChara;				// キャラクターのインスタンス
 	int				m_ID;					// スキルID
-	int				m_CT[MAX_SKILL];		// クールタイム
+	int				m_CT[MAX_SKILL];	// クールタイム
 	float			m_AttackBuff;			// 加算される攻撃力
 };
 #endif
