@@ -46,5 +46,7 @@ private:
 	void Move();		// 移動
 
 private:	// メンバ変数
+	//const ACTIVITY_FUNC* m_funcActivityFunc;
+	//ACTIVITY_STATE		m_skillStateNow;	// スキルステートの状態
 };
 #endif

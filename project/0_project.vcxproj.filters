@@ -60,6 +60,9 @@
     <Filter Include="ソース ファイル\Mode\01_Common\character\controller">
       <UniqueIdentifier>{4043aca2-b509-41da-a3aa-76745367ae55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Common\character\skill">
+      <UniqueIdentifier>{ea71b7de-a870-4156-a9c7-36e72bb079a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -223,6 +226,12 @@
     </ClCompile>
     <ClCompile Include="src\Controller.cpp">
       <Filter>ソース ファイル\Mode\01_Common\character\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_data_base.cpp">
+      <Filter>ソース ファイル\Mode\01_Common\character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="skill_data_base.cpp">
+      <Filter>ソース ファイル\Mode\01_Common\character\skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -390,6 +399,12 @@
     </ClInclude>
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\01_Common\character\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_data_base.h">
+      <Filter>ソース ファイル\Mode\01_Common\character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="skill_data_base.h">
+      <Filter>ソース ファイル\Mode\01_Common\character\skill</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
