@@ -38,11 +38,10 @@ HRESULT CCharacter::Init()
 
 	// ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
 	m_apModel[0] = CObjectX::Create(m_pos);
-	m_apModel[0]->LoadModel("BOX");
-	m_apModel[0]->SetMoveRot(D3DXVECTOR3(0.0f, 0.01f, 0.0f));
+	m_apModel[0]->LoadModel("PLAYER01");
 	m_apModel[0]->SetMaterialDiffuse(0, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f));
 	m_apModel[0]->CalculationVtx();
-
+	m_apModel[0]->SetMoveRot(D3DXVECTOR3(0.0f, -0.035f, 0.0f));
 	return S_OK;
 }
 
@@ -120,6 +119,14 @@ CCharacter* CCharacter::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	}
 
 	return pCharacter;
+}
+
+void CCharacter::Attack()
+{
+}
+
+void CCharacter::Move()
+{
 }
 
 //--------------------------------------------------------------

@@ -1,38 +1,47 @@
 //**************************************************************
 //
-// 敵
+// 敵管理
 // Author : 梶田大夢
 //
 //**************************************************************
-#ifndef _ENEMY_H_			// このマクロ定義がされてなかったら
-#define _ENEMY_H_			// 二重インクルード防止のマクロ定義
+#ifndef _ENEMY_MANAGER_H_			// このマクロ定義がされてなかったら
+#define _ENEMY_MANAGER_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
-#include "character.h"
-
-//==============================================================
-// マクロ宣言
-//==============================================================
-#define MAX_SPEED	(0.3f)
+#include "task.h"
+#include "enemy.h"
 
 //==============================================================
 // 前方宣言
 //==============================================================
 class CObjectX;
 class CController;
+class CEnemy;
 class CCollisionSphere;
 
 //==============================================================
-// 敵クラス
+// 敵管理クラス
 //==============================================================
-class CEnemy : public CCharacter
+class CEnemyManager : public CTask
 {
+public:	// シングルトン用のインスタンス
+	static CEnemyManager* GetInstance();
+private:
+	CEnemyManager();
+	static CEnemyManager* m_enemyManager;
+
 public:
+	enum EType
+	{
+		NONE = 0,
+		SKELETON,
+		MAX
+	};
+
 	// コンストラクタとデストラクタ
-	explicit CEnemy(int nPriority = 3);
-	~CEnemy();
+	~CEnemyManager();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
@@ -41,13 +50,13 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	static CEnemy *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
-	CCollisionSphere* GetSphere() { return m_collision; }
+	CEnemy* CreateEnemy(D3DXVECTOR3 pos, EType type);			// プレイヤーの生成
 
-private:
-	void Move();		// 移動
+	CEnemy* GetEnemy() { return m_pEnemy; }
+	CCollisionSphere* GetEnemySphere() { return m_pEnemy->GetSphere(); }
 
-private:	// メンバ変数
-	CCollisionSphere* m_collision;
+private:		// メンバ変数
+	EType m_type;
+	CEnemy *m_pEnemy;
 };
 #endif

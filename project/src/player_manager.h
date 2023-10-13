@@ -1,45 +1,40 @@
 //**************************************************************
 //
-// 敵管理
+// プレイヤー管理
 // Author : 梶田大夢
 //
 //**************************************************************
-#ifndef _ENEMY_MANAGER_H_			// このマクロ定義がされてなかったら
-#define _ENEMY_MANAGER_H_			// 二重インクルード防止のマクロ定義
+#ifndef _PLAYER_MANAGER_H_			// このマクロ定義がされてなかったら
+#define _PLAYER_MANAGER_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
 #include "task.h"
+#include "player.h"
 
 //==============================================================
 // 前方宣言
 //==============================================================
 class CObjectX;
 class CController;
-class CEnemy;
+class CPlayer;
+class CCollisionCyinder;
 
 //==============================================================
-// プレイヤークラス
+// プレイヤー管理クラス
 //==============================================================
-class CEnemyManager : public CTask
+class CPlayerManager : public CTask
 {
 public:	// シングルトン用のインスタンス
-	static CEnemyManager* GetInstance();
+	static CPlayerManager* GetInstance();
 private:
-	CEnemyManager();
-	static CEnemyManager* m_enemyManager;
+	CPlayerManager();
+	static CPlayerManager* m_playerManager;
 
 public:
-	enum EType
-	{
-		NONE = 0,
-		SKELETON,
-		MAX
-	};
-
 	// コンストラクタとデストラクタ
-	~CEnemyManager();
+	~CPlayerManager();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
@@ -48,10 +43,14 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	void CreateEnemy(D3DXVECTOR3 pos, EType type);			// プレイヤーの生成
+	CPlayer* CreatePlayer(D3DXVECTOR3 pos);			// プレイヤーの生成
+
+	// ゲッター
+	CPlayer* GetPlayer() { return m_pPlayer; }
+	const D3DXVECTOR3& GetPlayerPos() { return m_pPlayer->GetPos(); }
+	CCollisionCyinder* GetPlayerSphere() { return m_pPlayer->GetCylinder(); }
 
 private:		// メンバ変数
-	EType m_type;
-	CEnemy *m_pEnemy;
+	CPlayer *m_pPlayer;
 };
 #endif

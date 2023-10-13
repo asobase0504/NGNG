@@ -1,13 +1,15 @@
 //**************************************************************
 //
-// 敵管理
+// プレイヤー管理
 // Author : 梶田大夢
 //
 //**************************************************************
 
 // include
-#include "enemy_manager.h"
-#include "enemy.h"
+#include "player_manager.h"
+#include "collision_sphere.h"
+#include "PlayerController.h"
+#include "player.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
@@ -15,24 +17,24 @@
 //--------------------------------------------------------------
 //静的メンバ変数宣言
 //--------------------------------------------------------------
-CEnemyManager* CEnemyManager::m_enemyManager = nullptr;
+CPlayerManager* CPlayerManager::m_playerManager = nullptr;
 
 //--------------------------------------------------------------
 // シングルトンでのインスタンスの取得
 //--------------------------------------------------------------
-CEnemyManager* CEnemyManager::GetInstance()
+CPlayerManager* CPlayerManager::GetInstance()
 {
-	if (m_enemyManager == nullptr)
+	if (m_playerManager == nullptr)
 	{
-		m_enemyManager = new CEnemyManager;
+		m_playerManager = new CPlayerManager;
 	}
-	return m_enemyManager;
+	return m_playerManager;
 }
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CEnemyManager::CEnemyManager()
+CPlayerManager::CPlayerManager()
 {
 
 }
@@ -40,7 +42,7 @@ CEnemyManager::CEnemyManager()
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CEnemyManager::~CEnemyManager()
+CPlayerManager::~CPlayerManager()
 {
 
 }
@@ -48,7 +50,7 @@ CEnemyManager::~CEnemyManager()
 //--------------------------------------------------------------
 // 初期化処理
 //--------------------------------------------------------------
-HRESULT CEnemyManager::Init()
+HRESULT CPlayerManager::Init()
 {
 	return S_OK;
 }
@@ -56,36 +58,31 @@ HRESULT CEnemyManager::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CEnemyManager::Uninit(void)
+void CPlayerManager::Uninit(void)
 {
 }
 
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CEnemyManager::Update(void)
+void CPlayerManager::Update(void)
 {
 }
 
 //--------------------------------------------------------------
 // 描画処理
 //--------------------------------------------------------------
-void CEnemyManager::Draw(void)
+void CPlayerManager::Draw(void)
 {
 }
 
-void CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, EType type)
+//--------------------------------------------------------------
+// 生成処理
+//--------------------------------------------------------------
+CPlayer* CPlayerManager::CreatePlayer(D3DXVECTOR3 pos)
 {
-	switch (type)
-	{
-	case CEnemyManager::NONE:
-		CEnemy::Create(pos);
-		break;
-	case CEnemyManager::SKELETON:
-		break;
-	case CEnemyManager::MAX:
-		break;
-	default:
-		break;
-	}
+	m_pPlayer = CPlayer::Create(pos);
+	m_pPlayer->SetController(new CPlayerController(-1));
+
+	return m_pPlayer;
 }
