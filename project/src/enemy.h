@@ -22,7 +22,7 @@
 //==============================================================
 class CObjectX;
 class CController;
-class CCollisionSphere;
+class CCollisionBox;
 
 //==============================================================
 // 敵クラス
@@ -41,13 +41,13 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	static CEnemy *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
-	CCollisionSphere* GetSphere() { return m_collision; }
+	static CEnemy *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);			// プレイヤーの生成
+	CCollisionBox* GetBox() { return m_collision; }
 
 private:
 	void Move();		// 移動
 
 private:	// メンバ変数
-	CCollisionSphere* m_collision;
+	CCollisionBox* m_collision;
 };
 #endif

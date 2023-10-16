@@ -24,16 +24,20 @@ public:
 
 	bool ToCylinder(CCollisionCyinder* inCyinder);
 	bool ToMesh(CCollisionMesh* inMesh);
-	bool ToBox(CCollisionBox* inBox);
+	bool ToBox(CCollisionBox* inBox, bool isExtrusion);
 	bool ToSphere(CCollisionSphere* inSphere);
 
 	static CCollisionCyinder* Create(const D3DXVECTOR3& pos, const float length ,const float height);
 
+	D3DXVECTOR3 GetExtrusion() { return m_extrusion; }
 	float GetLength() { return m_length; }
 	float GetHeight() { return m_height; }
+
 private:
 	float m_length;
 	float m_height;
+
+	D3DXVECTOR3 m_extrusion; //	âüÇµèoÇ∑íl
 };
 
 #endif

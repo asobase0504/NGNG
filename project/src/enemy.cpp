@@ -12,7 +12,7 @@
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
-#include "collision_sphere.h"
+#include "collision_box.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -39,8 +39,8 @@ HRESULT CEnemy::Init()
 	CCharacter::Init();
 
 	D3DXVECTOR3 pos = GetPos();
-
-	m_collision = CCollisionSphere::Create(pos, 10.0f);
+	D3DXVECTOR3 size = GetSize();
+	m_collision = CCollisionBox::Create(pos, size);
 
 	return S_OK;
 }
@@ -70,7 +70,7 @@ void CEnemy::Update(void)
 	m_collision->SetPos(pos);
 
 	// 移動処理
-	Move();
+	//Move();
 
 	// 更新処理
 	CCharacter::Update();
@@ -94,11 +94,12 @@ void CEnemy::Draw(void)
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CEnemy* CEnemy::Create(D3DXVECTOR3 pos)
+CEnemy* CEnemy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
 	CEnemy* pEnemy;
 	pEnemy = new CEnemy(CObject::ENEMY);
 	pEnemy->SetPos(pos);
+	pEnemy->SetSize(size);
 	pEnemy->Init();
 
 	return pEnemy;

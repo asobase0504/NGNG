@@ -75,12 +75,12 @@ void CEnemyManager::Draw(void)
 {
 }
 
-CEnemy* CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, EType type)
+CEnemy* CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type)
 {
 	switch (type)
 	{
 	case CEnemyManager::NONE:
-		m_pEnemy = CEnemy::Create(pos);
+		m_pEnemy = CEnemy::Create(pos, size);
 		break;
 	case CEnemyManager::SKELETON:
 		break;
