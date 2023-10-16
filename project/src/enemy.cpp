@@ -14,6 +14,8 @@
 #include "objectX.h"
 #include "collision_sphere.h"
 
+#include "enemy_data_base.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -41,6 +43,8 @@ HRESULT CEnemy::Init()
 	D3DXVECTOR3 pos = GetPos();
 
 	m_collisionSphere = CCollisionSphere::Create(pos, 10.0f);
+
+	m_activity.push_back(CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GO));
 
 	return S_OK;
 }
@@ -83,6 +87,11 @@ void CEnemy::Update(void)
 
 	// 更新処理
 	CCharacter::Update();
+	
+	for (int i = 0; i < m_activity.size(); i++)
+	{
+		m_activity[i](this);
+	}
 
 #ifdef _DEBUG
 	CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
@@ -118,42 +127,4 @@ CEnemy* CEnemy::Create(D3DXVECTOR3 pos)
 //--------------------------------------------------------------
 void CEnemy::Move()
 {
-	// 移動量の取得
-	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	// 座標の取得
-	D3DXVECTOR3 pos = GetPos();
-
-	// プレイヤーの位置取得
-	D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
-
-	// 敵の追従
-	if (pos.x <= PlayerPos.x)
-	{
-		move.x += MAX_SPEED;
-	}
-	else
-	{
-		move.x -= MAX_SPEED;
-	}
-
-	if (pos.y <= PlayerPos.y)
-	{
-		move.y += MAX_SPEED;
-	}
-	else
-	{
-		move.y -= MAX_SPEED;
-	}
-
-	if (pos.z <= PlayerPos.z)
-	{
-		move.z += MAX_SPEED;
-	}
-	else
-	{
-		move.z -= MAX_SPEED;
-	}
-
-	SetMove(move);
 }

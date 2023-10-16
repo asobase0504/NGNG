@@ -23,12 +23,15 @@
 class CObjectX;
 class CController;
 class CCollisionSphere;
+class CEnemyDataBase;
 
 //==============================================================
 // 敵クラス
 //==============================================================
 class CEnemy : public CCharacter
 {
+public:
+	using ACTIVITY_FUNC = std::function<void(CEnemy*)>;
 public:
 	// コンストラクタとデストラクタ
 	explicit CEnemy(int nPriority = 3);
@@ -49,5 +52,6 @@ private:
 
 private:	// メンバ変数
 	CCollisionSphere* m_collisionSphere;
+	std::vector<ACTIVITY_FUNC> m_activity;
 };
 #endif

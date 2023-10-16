@@ -19,20 +19,27 @@ class CEnemyDataBase
 {
 public:
 	using ACTIVITY_FUNC = std::function<void(CEnemy*)>;
+
+	enum EActivityPattern
+	{
+		PATTERN_STANDBY,
+		PATTERN_GO,
+		MAX_PATTERN
+	};
 private:
 	explicit CEnemyDataBase();
 	static CEnemyDataBase* m_instance;
 	void Init();
 public:
-	CEnemyDataBase* GetInstance();
+	static CEnemyDataBase* GetInstance();
 	~CEnemyDataBase();
 
 	static void Uninit();
 public:
-	ACTIVITY_FUNC GetActivityFunc(std::string inState) { return m_activityFunc[inState]; }
+	ACTIVITY_FUNC GetActivityFunc(EActivityPattern inState) { return m_activityFunc[inState]; }
 private:
 	
 private:	// ÉÅÉìÉoïœêî
-	static std::unordered_map<std::string,ACTIVITY_FUNC> m_activityFunc;
+	std::vector<ACTIVITY_FUNC> m_activityFunc;
 };
 #endif

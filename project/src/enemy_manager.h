@@ -50,13 +50,13 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	CEnemy* CreateEnemy(D3DXVECTOR3 pos, EType type);			// プレイヤーの生成
+	CEnemy* CreateEnemy(D3DXVECTOR3 pos, EType type);	// プレイヤーの生成
 
-	CEnemy* GetEnemy() { return m_pEnemy; }
-	CCollisionSphere* GetEnemySphere() { return m_pEnemy->GetSphere(); }
+	CEnemy* GetEnemy() { return m_pEnemy[0]; }
+	CCollisionSphere* GetEnemySphere() { return m_pEnemy[0]->GetSphere(); }
 
 private:		// メンバ変数
 	EType m_type;
-	CEnemy *m_pEnemy;
+	std::vector<CEnemy*> m_pEnemy;
 };
 #endif
