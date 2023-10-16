@@ -40,8 +40,10 @@ HRESULT CEnemy::Init()
 	// ‰Šú‰»ˆ—
 	CCharacter::Init();
 
-	D3DXVECTOR3 pos = GetPos();
+	m_apModel[0]->LoadModel("SKELETON");
+	m_apModel[0]->CalculationVtx();
 
+	D3DXVECTOR3 pos = GetPos();
 	m_collisionSphere = CCollisionSphere::Create(pos, 10.0f);
 
 	m_activity.push_back(CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
@@ -81,14 +83,14 @@ void CEnemy::Update()
 	//	m_collisionSphere->SetPos(D3DXVECTOR3(pos.x, m_collisionSphere->GetExtrusionHeight(), pos.z));
 	//}
 
-
 	// ˆÚ“®ˆ—
 	Move();
 
 	// XVˆ—
 	CCharacter::Update();
 	
-	for (int i = 0; i < m_activity.size(); i++)
+	int size = m_activity.size();
+	for (int i = 0; i < size; i++)
 	{
 		m_activity[i](this);
 	}

@@ -25,6 +25,7 @@ public:
 	D3DXVECTOR3 Move() override;
 	bool		Jump() override;
 	bool		Dash() override;
+	int			TakeItem() override;
 
 private:
 	int m_nInputIdx;

@@ -22,10 +22,10 @@ public:
 	HRESULT Init();
 	void Uninit();
 
-	bool ToCylinder(CCollisionCyinder* inCyinder);
-	bool ToMesh(CCollisionMesh* inMesh);
-	bool ToBox(CCollisionBox* inBox);
-	bool ToSphere(CCollisionSphere* inSphere);
+	bool ToCylinder(CCollisionCyinder* inCyinder) override;
+	//bool ToMesh(CCollisionMesh* inMesh) override;
+	//bool ToBox(CCollisionBox* inBox) override;
+	bool ToSphere(CCollisionSphere* inSphere) override;
 
 	static CCollisionCyinder* Create(const D3DXVECTOR3& pos, const float length ,const float height);
 

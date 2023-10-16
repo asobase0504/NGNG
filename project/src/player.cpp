@@ -38,11 +38,15 @@ HRESULT CPlayer::Init()
 	// 初期化処理
 	CCharacter::Init();
 
+	// モデルの読み込み
+	m_apModel[0]->LoadModel("PLAYER01");
+	m_apModel[0]->CalculationVtx();
+
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
 	m_collisionCyinder = CCollisionCyinder::Create(pos, 10.0f, 50.0f);
-
+	m_collision.push_back(m_collisionCyinder);
 	return S_OK;
 }
 
@@ -88,10 +92,11 @@ void CPlayer::Update(void)
 	// ダッシュ
 	Dash();
 
+	m_controller->TakeItem();
 	m_collisionCyinder->SetPos(pos);
-	bool a = m_collisionCyinder->ToSphere(CEnemyManager::GetInstance()->GetEnemySphere());
+	//bool a = m_collisionCyinder->ToSphere(CEnemyManager::GetInstance()->GetEnemySphere());
 
-	if (a)
+	//if (a)
 	{
 		int b = 0;
 	}
