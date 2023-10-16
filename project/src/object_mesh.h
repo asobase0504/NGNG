@@ -63,6 +63,7 @@ public:
 	void SwitchCollision(bool onCollision) { m_isCollision = onCollision; };
 
 	std::string GetDataNeme() { return m_dataName; }
+	CCollisionMesh* GetMesh() { return m_collisionMesh; }
 
 private:
 	void SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx, int nCnt, bool isUp);
@@ -86,7 +87,7 @@ private:
 	std::string m_fileName;
 	std::string m_dataName;
 	bool m_isCollision;
-	CCollisionMesh* m_collision;
+	CCollisionMesh* m_collisionMesh;
 };
 #endif
 

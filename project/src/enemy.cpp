@@ -14,6 +14,8 @@
 #include "objectX.h"
 #include "collision_box.h"
 
+#include "enemy_data_base.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -42,24 +44,26 @@ HRESULT CEnemy::Init()
 	D3DXVECTOR3 size = GetSize();
 	m_collision = CCollisionBox::Create(pos, size);
 
+	m_activity.push_back(CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
+
 	return S_OK;
 }
 
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CEnemy::Uninit(void)
+void CEnemy::Uninit()
 {
 	// 終了処理
 	CCharacter::Uninit();
 
-	m_collision->Uninit();
+	m_collisionSphere->Uninit();
 }
 
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CEnemy::Update(void)
+void CEnemy::Update()
 {
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
@@ -67,18 +71,32 @@ void CEnemy::Update(void)
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
-	m_collision->SetPos(pos);
+	m_collisionSphere->SetPos(pos);
+
+	//if (m_collisionSphere->ToMesh(CPlayerManager::GetInstance()->GetPlayerCylinder(), true))
+	//{
+	//	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
+	//	D3DXVECTOR3 pos = player->GetPos();
+	//	player->SetPos(D3DXVECTOR3(pos.x, m_collisionSphere->GetExtrusionHeight(), pos.z));
+	//	m_collisionSphere->SetPos(D3DXVECTOR3(pos.x, m_collisionSphere->GetExtrusionHeight(), pos.z));
+	//}
+
 
 	// 移動処理
 	//Move();
 
 	// 更新処理
 	CCharacter::Update();
+	
+	for (int i = 0; i < m_activity.size(); i++)
+	{
+		m_activity[i](this);
+	}
 
 #ifdef _DEBUG
 	CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
 	CDebugProc::Print("Enemy：move(%f,%f,%f)\n", move.x, move.y, move.z);
-	CDebugProc::Print("EnemyCollision：pos(%f,%f,%f)\n", m_collision->GetPos().x, m_collision->GetPos().y, m_collision->GetPos().z);
+	CDebugProc::Print("EnemyCollision：pos(%f,%f,%f)\n", m_collisionSphere->GetPos().x, m_collisionSphere->GetPos().y, m_collisionSphere->GetPos().z);
 #endif // _DEBUG
 }
 
