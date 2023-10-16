@@ -44,7 +44,7 @@ HRESULT CEnemy::Init()
 
 	m_collisionSphere = CCollisionSphere::Create(pos, 10.0f);
 
-	m_activity.push_back(CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GO));
+	m_activity.push_back(CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
 
 	return S_OK;
 }
@@ -52,7 +52,7 @@ HRESULT CEnemy::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CEnemy::Uninit(void)
+void CEnemy::Uninit()
 {
 	// 終了処理
 	CCharacter::Uninit();
@@ -63,7 +63,7 @@ void CEnemy::Uninit(void)
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CEnemy::Update(void)
+void CEnemy::Update()
 {
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();

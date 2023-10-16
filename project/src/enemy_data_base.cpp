@@ -72,7 +72,9 @@ void CEnemyDataBase::Uninit()
 void CEnemyDataBase::Init()
 {
 	m_activityFunc.resize(MAX_PATTERN);
-	m_activityFunc[PATTERN_GO] = [](CEnemy* inEnemy)
+
+	// 空中から近寄る
+	m_activityFunc[PATTERN_AIR_GO] = [](CEnemy* inEnemy)
 	{
 		// 移動量の取得
 		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -113,4 +115,130 @@ void CEnemyDataBase::Init()
 
 		inEnemy->SetMove(move);
 	};
+
+	// 空中から一定の距離を稼ぐ
+	m_activityFunc[PATTERN_AIR_KEEP_DISTANCE] = [](CEnemy* inEnemy)
+	{
+		// 移動量の取得
+		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+		// 座標の取得
+		D3DXVECTOR3 pos = inEnemy->GetPos();
+
+		// プレイヤーの位置取得
+		D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
+
+		// 敵の追従
+		if (pos.x <= PlayerPos.x)
+		{
+			move.x += MAX_SPEED;
+		}
+		else
+		{
+			move.x -= MAX_SPEED;
+		}
+
+		if (pos.y <= PlayerPos.y)
+		{
+			move.y += MAX_SPEED;
+		}
+		else
+		{
+			move.y -= MAX_SPEED;
+		}
+
+		if (pos.z <= PlayerPos.z)
+		{
+			move.z += MAX_SPEED;
+		}
+		else
+		{
+			move.z -= MAX_SPEED;
+		}
+
+		D3DXVECTOR3 distancePos = (PlayerPos - pos);
+		float distance = D3DXVec3Length(&distancePos);
+
+		if (distance <= 150.0f)
+		{
+			move *= -0.5f;
+		}
+
+		inEnemy->SetMove(move);
+	};
+
+	// 空中から近寄る
+	m_activityFunc[PATTERN_GROUND_GO] = [](CEnemy* inEnemy)
+	{
+		// 移動量の取得
+		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+		// 座標の取得
+		D3DXVECTOR3 pos = inEnemy->GetPos();
+
+		// プレイヤーの位置取得
+		D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
+
+		// 敵の追従
+		if (pos.x <= PlayerPos.x)
+		{
+			move.x += MAX_SPEED;
+		}
+		else
+		{
+			move.x -= MAX_SPEED;
+		}
+		if (pos.z <= PlayerPos.z)
+		{
+			move.z += MAX_SPEED;
+		}
+		else
+		{
+			move.z -= MAX_SPEED;
+		}
+
+		inEnemy->SetMove(move);
+	};
+
+	// 空中から一定の距離を稼ぐ
+	m_activityFunc[PATTERN_GROUND_KEEP_DISTANCE] = [](CEnemy* inEnemy)
+	{
+		// 移動量の取得
+		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+		// 座標の取得
+		D3DXVECTOR3 pos = inEnemy->GetPos();
+
+		// プレイヤーの位置取得
+		D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
+
+		// 敵の追従
+		if (pos.x <= PlayerPos.x)
+		{
+			move.x += MAX_SPEED;
+		}
+		else
+		{
+			move.x -= MAX_SPEED;
+		}
+		if (pos.z <= PlayerPos.z)
+		{
+			move.z += MAX_SPEED;
+		}
+		else
+		{
+			move.z -= MAX_SPEED;
+		}
+
+		D3DXVECTOR3 distancePos = (PlayerPos - pos);
+		float distance = D3DXVec3Length(&distancePos);
+
+		if (distance <= 150.0f)
+		{
+			move *= -0.5f;
+		}
+
+		inEnemy->SetMove(move);
+	};
+
 }
