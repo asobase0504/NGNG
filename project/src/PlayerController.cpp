@@ -144,18 +144,22 @@ int CPlayerController::TakeItem()
 
 	if (input->Trigger(DIK_E, -1))
 	{
-		std::vector<CItemModel*> item = CItemManager::GetInstance()->GetPopItemModel();
+		std::list<CItemModel*>& item = CItemManager::GetInstance()->GetPopItemModel();
 		int size = item.size();
 
-		for (int i = 0; i < size; i++)
+		for (auto it = item.begin(); it != item.end();)
 		{
-			if (!((CCollisionCyinder*)(m_toOrder->GetCollision())->ToSphere(item[i]->GetCollision())))
+			CItemModel* itemModel = *it;
+			if (!((CCollisionCyinder*)(m_toOrder->GetCollision())->ToSphere(itemModel->GetCollision())))
 			{
+				it++;
 				continue;
 			}
-			item[i]->Uninit();	// Á‹Ž
 
-			return item[i]->GetID();
+			itemModel->Uninit();	// Á‹Ž
+			item.erase(it);
+
+			return itemModel->GetID();
 		}
 	}
 

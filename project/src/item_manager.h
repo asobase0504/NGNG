@@ -39,7 +39,7 @@ public:
 
 	void CreateItem(const D3DXVECTOR3& inPos, ITEM_TYPE inId);
 
-	std::vector<CItemModel*> GetPopItemModel() { return m_itemModel; }
+	std::list<CItemModel*>& GetPopItemModel() { return m_itemModel; }
 private:
 	// アイテムのタイプ
 	ITEM_TYPE m_itemType;
@@ -48,7 +48,7 @@ private:
 	CItem* m_itemData;
 
 	// 出現しているアイテムのモデルデータ
-	std::vector<CItemModel*> m_itemModel;
+	std::list<CItemModel*> m_itemModel;
 };
 #endif	// _ITEM_MANAGER_H_
 

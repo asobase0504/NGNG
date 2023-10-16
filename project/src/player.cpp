@@ -94,9 +94,9 @@ void CPlayer::Update(void)
 
 	m_controller->TakeItem();
 	m_collisionCyinder->SetPos(pos);
-	//bool a = m_collisionCyinder->ToSphere(CEnemyManager::GetInstance()->GetEnemySphere());
+	bool a = m_collisionCyinder->ToSphere(CEnemyManager::GetInstance()->GetEnemySphere());
 
-	//if (a)
+	if (a)
 	{
 		int b = 0;
 	}
