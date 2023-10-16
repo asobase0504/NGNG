@@ -57,7 +57,7 @@ void CEnemy::Uninit()
 	// 終了処理
 	CCharacter::Uninit();
 
-	m_collisionSphere->Uninit();
+	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------
@@ -71,7 +71,7 @@ void CEnemy::Update()
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
-	m_collisionSphere->SetPos(pos);
+	m_collision->SetPos(pos);
 
 	//if (m_collisionSphere->ToMesh(CPlayerManager::GetInstance()->GetPlayerCylinder(), true))
 	//{
@@ -96,7 +96,7 @@ void CEnemy::Update()
 #ifdef _DEBUG
 	CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
 	CDebugProc::Print("Enemy：move(%f,%f,%f)\n", move.x, move.y, move.z);
-	CDebugProc::Print("EnemyCollision：pos(%f,%f,%f)\n", m_collisionSphere->GetPos().x, m_collisionSphere->GetPos().y, m_collisionSphere->GetPos().z);
+	CDebugProc::Print("EnemyCollision：pos(%f,%f,%f)\n", m_collision->GetPos().x, m_collision->GetPos().y, m_collision->GetPos().z);
 #endif // _DEBUG
 }
 
