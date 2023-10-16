@@ -30,7 +30,7 @@ public:
 
 	virtual bool ToCylinder(CCollisionCyinder* inCyinder) { return false; }
 	virtual bool ToMesh(CCollisionMesh* inMesh) { return false; }
-	virtual bool ToBox(CCollisionBox* inBox) { return false; }
+	virtual bool ToBox(CCollisionBox* inBox, bool isExtrusion) { return false; }
 	virtual bool ToSphere(CCollisionSphere* inSphere) { return false; }
 };
 #endif
