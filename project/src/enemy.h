@@ -22,6 +22,7 @@
 //==============================================================
 class CObjectX;
 class CController;
+class CCollisionBox;
 class CCollisionSphere;
 class CEnemyDataBase;
 
@@ -44,13 +45,14 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	static CEnemy *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
-	CCollisionSphere* GetSphere() { return m_collisionSphere; }
+	static CEnemy *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);			// プレイヤーの生成
+	CCollisionBox* GetBox() { return m_collision; }
 
 private:
 	void Move();		// 移動
 
 private:	// メンバ変数
+	CCollisionBox* m_collision;
 	CCollisionSphere* m_collisionSphere;
 	std::vector<ACTIVITY_FUNC> m_activity;
 };

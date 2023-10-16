@@ -9,6 +9,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "enemy_manager.h"
+#include "player_manager.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
@@ -93,12 +94,15 @@ void CPlayer::Update(void)
 	Dash();
 
 	m_controller->TakeItem();
+	
+	bool a = m_collisionCyinder->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(),true);
 	m_collisionCyinder->SetPos(pos);
-	bool a = m_collisionCyinder->ToSphere(CEnemyManager::GetInstance()->GetEnemySphere());
 
 	if (a)
 	{
-		int b = 0;
+		//D3DXVECTOR3 pos = GetPos();
+		//SetPos(D3DXVECTOR3(m_collisionCyinder->GetExtrusion().x, pos.y, pos.z));
+		//m_collisionCyinder->SetPos(D3DXVECTOR3(m_collisionCyinder->GetExtrusion().x, pos.y, pos.z));
 	}
 
 	// XVˆ—
