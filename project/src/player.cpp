@@ -14,13 +14,14 @@
 #include "application.h"
 #include "objectX.h"
 #include "collision_cylinder.h"
+#include "utility.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
 CPlayer::CPlayer(int nPriority)
 {
-
+	m_collisionCyinder = nullptr;
 }
 
 //--------------------------------------------------------------
@@ -77,16 +78,18 @@ void CPlayer::Update()
 {
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
-	// 座標の取得
-	D3DXVECTOR3 pos = GetPos();
 
 	if (m_controller == nullptr)
 	{
 		return;
 	}
 
+
 	// 移動
 	Move();
+
+	// 更新処理
+	CCharacter::Update();
 
 	// ジャンプ
 	Jump();
@@ -96,21 +99,22 @@ void CPlayer::Update()
 
 	m_controller->TakeItem();
 	
-	bool a = m_collisionCyinder->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(),true);
-	m_collisionCyinder->SetPos(pos);
+	DEBUG_PRINT("pos1 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
 
-	if (a)
+	if (m_collisionCyinder->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(), true))
 	{
-		//D3DXVECTOR3 pos = GetPos();
-		//SetPos(D3DXVECTOR3(m_collisionCyinder->GetExtrusion().x, pos.y, pos.z));
-		//m_collisionCyinder->SetPos(D3DXVECTOR3(m_collisionCyinder->GetExtrusion().x, pos.y, pos.z));
+		// 押し出した位置
+		D3DXVECTOR3 extrusion = m_collisionCyinder->GetExtrusion();
+		SetPos(D3DXVECTOR3(extrusion));
+		m_collisionCyinder->SetPos(D3DXVECTOR3(extrusion));
+		DEBUG_PRINT("pos2 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
+		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
-	// 更新処理
-	CCharacter::Update();
+	DEBUG_PRINT("pos3 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
 
 #ifdef _DEBUG
-	CDebugProc::Print("Player：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
+	CDebugProc::Print("Player：pos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
 	CDebugProc::Print("Player：move(%f,%f,%f)\n", move.x, move.y, move.z);
 	CDebugProc::Print("PlayerCollision：pos(%f,%f,%f)\n", m_collisionCyinder->GetPos().x, m_collisionCyinder->GetPos().y, m_collisionCyinder->GetPos().z);
 #endif // _DEBUG
@@ -203,4 +207,20 @@ void CPlayer::SetController(CController * inOperate)
 {
 	m_controller = inOperate;
 	m_controller->SetToOrder(this);
+}
+
+void CPlayer::SetPos(const D3DXVECTOR3 & inPos)
+{
+	if (m_collisionCyinder != nullptr)
+	{
+		m_collisionCyinder->SetPos(inPos);
+	}
+
+	std::vector<CObjectX*> objectX = GetModel();
+	if (objectX.size() > 0)
+	{
+		GetModel()[0]->SetPos(inPos);
+	}
+
+	CCharacter::SetPos(inPos);
 }

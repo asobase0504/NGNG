@@ -23,9 +23,6 @@ public:
 	CCollision();
 	~CCollision();
 
-	HRESULT Init();
-	void Uninit();
-	void Update() final {}
 	void Draw() final {}
 
 	virtual bool ToCylinder(CCollisionCyinder* inCyinder) { return false; }

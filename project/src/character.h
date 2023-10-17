@@ -41,6 +41,8 @@ public:
 
 	CCollision* GetCollision() { return m_collision[0]; }
 
+	std::vector<CObjectX*> GetModel() { return m_apModel; }
+
 	void Damege(const int inDamage);
 
 private:

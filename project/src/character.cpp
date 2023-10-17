@@ -20,7 +20,7 @@
 //--------------------------------------------------------------
 CCharacter::CCharacter(int nPriority)
 {
-
+	m_apModel.clear();
 }
 
 //--------------------------------------------------------------
@@ -164,5 +164,4 @@ void CCharacter::UpdatePos()
 
 	// À•W‚ÌÝ’è
 	SetPos(pos);
-	m_apModel[0]->SetPos(pos);
 }
