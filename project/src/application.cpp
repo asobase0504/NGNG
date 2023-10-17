@@ -18,6 +18,7 @@
 #include "fade.h"
 
 #include "skill_data_base.h"
+#include "enemy_data_base.h"
 
 /* シーンモード */
 #include "title.h"
@@ -110,6 +111,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	m_fade = CFade::Create();
 
 	CSkillDataBase::GetInstance();
+	CEnemyDataBase::GetInstance();
 
 	return S_OK;
 }
@@ -160,6 +162,10 @@ void CApplication::Uninit()
 
 	//入力処理の終了処理
 	CInput::GetKey()->Uninit();
+
+	CSkillDataBase::Uninit();
+	CEnemyDataBase::Uninit();
+
 }
 
 //--------------------------------------------------------------

@@ -35,6 +35,10 @@ public:
 
 	static CCollisionMesh* Create(int inPrimitive, LPDIRECT3DVERTEXBUFFER9 inVtxBuff, LPDIRECT3DINDEXBUFFER9 inIdxBuff, D3DXMATRIX inMtxWorld);
 
+	int GetPrimitive() { return m_primitive; }
+	LPDIRECT3DVERTEXBUFFER9 GetVtxBuff() { return m_vtxBuff; }
+	LPDIRECT3DINDEXBUFFER9 GetIdxBuff() { return m_idxBuff; }
+	D3DXMATRIX GetMtxWorld() { return m_mtxWorld; }
 	float GetExtrusionHeight() { return m_extrusionHeight; }
 
 private:
