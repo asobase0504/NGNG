@@ -12,6 +12,7 @@
 //==============================================================
 #include "object.h"
 #include "status.h"
+#include "item_data.h"
 
 //==============================================================
 // 前方宣言
@@ -57,6 +58,9 @@ private:		// メンバ変数
 	D3DXMATRIX		m_mtxWorld;					// ワールドマトリックス
 
 protected:		// ステータス
+
+	// 持っているアイテムの個数をそれぞれ管理
+	int m_haveItem[ITEM_MAX];
 
 	CStatus<int> m_hp;					// 体力
 	CStatus<int> m_addHp;				// 追加体力

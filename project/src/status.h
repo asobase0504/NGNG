@@ -73,7 +73,7 @@ public:
 
 private:	// メンバ変数
 	T m_max;			// 最大値
-	T m_current;			// 現在値
+	T m_current;		// 現在値
 	T m_base;			// 基礎値
 	T m_addItem;		// アイテムによる加算値
 	float m_mulItem;	// アイテムによる乗算値

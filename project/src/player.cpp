@@ -139,7 +139,17 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 void CPlayer::Move()
 {
 	// ˆÚ“®—Ê
-	SetMove(m_controller->Move());
+	D3DXVECTOR3 move = m_controller->Move() * m_movePower.GetCurrent();
+
+	if (D3DXVec3Length(&move) != 0.0f)
+	{
+		SetMoveXZ(move.x, move.z);
+	}
+	else
+	{
+		D3DXVECTOR3 nowMove = GetMove();
+		AddMoveXZ(nowMove.x * -0.15f, nowMove.z * -0.15f);
+	}
 }
 
 //--------------------------------------------------------------
@@ -148,7 +158,7 @@ void CPlayer::Move()
 void CPlayer::Jump()
 {
 	// ˆÚ“®—Ê‚Ìæ“¾
-	D3DXVECTOR3 move = GetMove();
+	D3DXVECTOR3 move(0.0f,0.0f,0.0f);
 
 	// ƒWƒƒƒ“ƒv
 	bool jump = m_controller->Jump();
@@ -171,11 +181,15 @@ void CPlayer::Jump()
 	if (GetPos().y > 0.0f)
 	{
 		// d—Í
-		move.y -= 0.175f;
+		move.y -= 0.2f;
+	}
+	else
+	{
+		SetMoveY(0.0f);
 	}
 
 	// ˆÚ“®—Ê‚Ìİ’è
-	SetMove(move);
+	AddMove(move);
 }
 
 //--------------------------------------------------------------
