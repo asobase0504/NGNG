@@ -48,13 +48,14 @@ HRESULT CPlayer::Init()
 
 	m_collisionCyinder = CCollisionCyinder::Create(pos, 10.0f, 50.0f);
 	m_collision.push_back(m_collisionCyinder);
+
 	return S_OK;
 }
 
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CPlayer::Uninit(void)
+void CPlayer::Uninit()
 {
 	// コントローラーの破棄
 	if (m_controller != nullptr)
@@ -72,7 +73,7 @@ void CPlayer::Uninit(void)
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CPlayer::Update(void)
+void CPlayer::Update()
 {
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
@@ -116,15 +117,6 @@ void CPlayer::Update(void)
 }
 
 //--------------------------------------------------------------
-// 描画処理
-//--------------------------------------------------------------
-void CPlayer::Draw(void)
-{
-	// 描画処理
-	CCharacter::Draw();
-}
-
-//--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
 CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
@@ -154,22 +146,28 @@ void CPlayer::Jump()
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 
-	bool jump = false;
-
 	// ジャンプ
-	jump = m_controller->Jump();
+	bool jump = m_controller->Jump();
 
-	if (jump)
+	if (jump && !m_jumpCount.MaxCurrentSame())
 	{
+ 		m_jumpCount.AddCurrent(1);
+
 		// ジャンプ力
-		move.y += 25.0f;
-		jump = false;
+		move.y += m_jumpPower.GetCurrent();
+	}
+	else
+	{
+		if (!(GetPos().y > 0.0f))
+		{
+			m_jumpCount.SetCurrent(0);
+		}
 	}
 
 	if (GetPos().y > 0.0f)
 	{
 		// 重力
-		move.y -= 1.0f;
+		move.y -= 0.175f;
 	}
 
 	// 移動量の設定

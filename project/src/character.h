@@ -11,6 +11,7 @@
 // include
 //==============================================================
 #include "object.h"
+#include "status.h"
 
 //==============================================================
 // 前方宣言
@@ -24,114 +25,6 @@ class CCollision;
 class CCharacter : public CObject
 {
 private:		// ステータス構造体
-	struct SHP
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
-	struct SAttack
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
-	struct SDefense
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
-	struct SCriticalRate
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
-	struct SCriticalDamage
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
-	struct SMovePower
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
-	struct SJumpPower
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
-	struct SJumpCount
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
-	struct SAddHP
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
-	struct SAddHPSubTime
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
-	struct SBarrier
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
-	struct SBarrierRePopTime
-	{
-		int total;
-		int base;
-		int addItem;
-		float mulItem;
-		int addBuff;
-		float mulBuff;
-	};
 public:
 	// コンストラクタとデストラクタ
 	explicit CCharacter(int nPriority = 3);
@@ -148,6 +41,8 @@ public:
 
 	CCollision* GetCollision() { return m_collision[0]; }
 
+	void Damege(const int inDamage);
+
 private:
 	virtual void Attack();
 	virtual void Move();
@@ -159,19 +54,19 @@ protected:		// メンバ変数
 private:		// メンバ変数
 	D3DXMATRIX		m_mtxWorld;					// ワールドマトリックス
 
-private:		// ステータス
+protected:		// ステータス
 
-	SHP m_hp;
-	SAttack m_attack;
-	SDefense m_defense;
-	SCriticalRate m_criticalRate;
-	SCriticalDamage m_criticalDamage;
-	SMovePower m_movePower;
-	SJumpPower m_jumpPower;
-	SJumpCount m_jumpCount;
-	SAddHP m_addHp;
-	SAddHPSubTime m_addHpSubTime;
-	SBarrier m_barrier;
-	SBarrierRePopTime m_barrierRePopTime;
+	CStatus<int> m_hp;					// 体力
+	CStatus<int> m_addHp;				// 追加体力
+	CStatus<int> m_addHpSubTime;		// 追加体力の減少量
+	CStatus<int> m_barrier;				// バリア
+	CStatus<int> m_barrierRePopTime;	// バリアの復活時間
+	CStatus<int> m_attack;				// 攻撃力
+	CStatus<int> m_defense;				// 防御力
+	CStatus<float> m_criticalRate;		// クリティカル率
+	CStatus<float> m_criticalDamage;	// クリティカルダメージ
+	CStatus<float> m_movePower;			// 移動力
+	CStatus<float> m_jumpPower;			// ジャンプ力
+	CStatus<int> m_jumpCount;			// ジャンプ回数
 };
 #endif
