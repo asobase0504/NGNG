@@ -12,6 +12,8 @@
 //==============================================================
 #include "character.h"
 
+#include "collision_cylinder.h"
+
 //==============================================================
 // ƒ}ƒNƒéŒ¾
 //==============================================================
@@ -46,6 +48,8 @@ public:
 	// Setter
 	void SetController(CController* inOperate);
 	CCollisionCyinder* GetCylinder() { return m_collisionCyinder; }
+
+	void SetPos(const D3DXVECTOR3& inPos);
 
 private:
 	void Move();				// ˆÚ“®

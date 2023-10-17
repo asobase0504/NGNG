@@ -18,9 +18,6 @@ public:
 	CCollision();
 	~CCollision();
 
-	HRESULT Init();
-	void Uninit();
-	void Update() final {}
 	void Draw() final {}
 
 	bool ToCylinder() {}
