@@ -1,0 +1,101 @@
+#==============================================================================
+#
+# モーション設定用テキストファイル
+# Author : MEIGEN ARITA
+#
+#==============================================================================
+SCRIPT			# この行は絶対消さないこと！
+
+#------------------------------------------------------------------------------
+# モデル数
+#------------------------------------------------------------------------------
+NUM_MODEL = 8
+
+#------------------------------------------------------------------------------
+# モデルファイル名
+#------------------------------------------------------------------------------
+MODEL_FILENAME = data\MODEL\Skeleton\Body.x			# 背骨
+MODEL_FILENAME = data\MODEL\Skeleton\Head.x			# 頭
+MODEL_FILENAME = data\MODEL\Skeleton\Waist.x		# 骨盤
+MODEL_FILENAME = data\MODEL\Skeleton\HandR.x		# 右手
+MODEL_FILENAME = data\MODEL\Skeleton\HandL.x		# 左手
+MODEL_FILENAME = data\MODEL\Skeleton\LegR.x			# 右足
+MODEL_FILENAME = data\MODEL\Skeleton\LegL.x			# 左足
+MODEL_FILENAME = data\MODEL\Skeleton\Spine.x		# 肋骨
+
+#------------------------------------------------------------------------------
+# キャラクター情報
+#------------------------------------------------------------------------------
+CHARACTERSET
+	PARTSSET
+		INDEX = 0					# 背骨
+		PARENT = -1					# (親)NULL
+		POS = 0.0 52.5 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET
+		INDEX = 1					# 頭
+		PARENT = 0					# (親)背骨
+		POS = 0.0 15.2 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+	
+	PARTSSET
+		INDEX = 2					# 骨盤
+		PARENT = 0					# (親)背骨
+		POS = 0.0 -18.9 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET
+		INDEX = 3					# 右手
+		PARENT = 0					# (親)背骨
+		POS = -13.1 9.3 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET
+		INDEX = 4					# 左手
+		PARENT = 0					# (親)背骨
+		POS = 13.1 9.3 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET
+		INDEX = 5					# 右足
+		PARENT = 0					# (親)背骨
+		POS = -6.0 -5.3 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET
+		INDEX = 6					# 左足
+		PARENT = 0					# (親)背骨
+		POS = 6.0 -5.3 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET
+		INDEX = 7					# 肋骨
+		PARENT = 0					# (親)背骨
+		POS = 6.0 -5.3 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+	
+END_CHARACTERSET
+
+#------------------------------------------------------------------------------
+# モーション情報
+#------------------------------------------------------------------------------
+MOTIONSET
+	MOTION = data\TXT\template\MOTION\NEUTRAL.txt
+	MOTION = data\TXT\template\MOTION\WALK.txt
+	MOTION = data\TXT\template\MOTION\STAN.txt
+	MOTION = data\TXT\template\MOTION\WIN.txt
+	MOTION = data\TXT\template\MOTION\LOSE.txt
+	MOTION = data\TXT\template\MOTION\SKILLSELECT.txt
+	MOTION = data\TXT\template\MOTION\SKILL_WAVE.txt
+END_MOTIONSET
+
+END_SCRIPT		# この行は絶対消さないこと！

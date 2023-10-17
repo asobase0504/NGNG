@@ -29,6 +29,7 @@ public:
 	virtual D3DXVECTOR3 Move() = 0;
 	virtual bool		Jump() = 0;
 	virtual bool		Dash() = 0;
+	virtual int			TakeItem() { return -1; }
 
 	// Setter
 	void SetToOrder(CPlayer* inOrder) { m_toOrder = inOrder; }

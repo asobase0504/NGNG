@@ -22,7 +22,7 @@ public:
 	HRESULT Init();
 	void Uninit();
 
-	bool ToCylinder(CCollisionCyinder* inCyinder);
+	//bool ToCylinder(CCollisionCyinder* inCyinder);
 	bool ToMesh(CCollisionMesh* inMesh, bool isExtrusion);
 	bool ToBox(CCollisionBox* inBox);
 	bool ToSphere(CCollisionSphere* inSphere);

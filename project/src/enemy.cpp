@@ -40,6 +40,9 @@ HRESULT CEnemy::Init()
 	// ‰Šú‰»ˆ—
 	CCharacter::Init();
 
+	m_apModel[0]->LoadModel("SKELETON");
+	m_apModel[0]->CalculationVtx();
+
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 size = GetSize();
 	m_collision = CCollisionBox::Create(pos, size);
@@ -81,14 +84,14 @@ void CEnemy::Update()
 	//	m_collisionSphere->SetPos(D3DXVECTOR3(pos.x, m_collisionSphere->GetExtrusionHeight(), pos.z));
 	//}
 
-
 	// ˆÚ“®ˆ—
 	//Move();
 
 	// XVˆ—
 	CCharacter::Update();
 	
-	for (int i = 0; i < m_activity.size(); i++)
+	int size = m_activity.size();
+	for (int i = 0; i < size; i++)
 	{
 		m_activity[i](this);
 	}

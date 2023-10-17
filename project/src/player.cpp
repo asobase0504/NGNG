@@ -40,11 +40,15 @@ HRESULT CPlayer::Init()
 	// 初期化処理
 	CCharacter::Init();
 
+	// モデルの読み込み
+	m_apModel[0]->LoadModel("PLAYER01");
+	m_apModel[0]->CalculationVtx();
+
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
-	m_collisionCyinder = CCollisionCyinder::Create(pos,5.0f, 50.0f);
-
+	m_collisionCyinder = CCollisionCyinder::Create(pos, 10.0f, 50.0f);
+	m_collision.push_back(m_collisionCyinder);
 	return S_OK;
 }
 
@@ -91,6 +95,8 @@ void CPlayer::Update(void)
 
 	// ダッシュ
 	Dash();
+
+	m_controller->TakeItem();
 	
 	DEBUG_PRINT("pos1 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
 

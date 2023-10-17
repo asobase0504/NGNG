@@ -11,6 +11,10 @@
 #include "application.h"
 #include "input.h"
 
+#include "item_manager.h"
+#include "item_model.h"
+#include "collision.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -132,4 +136,32 @@ bool CPlayerController::Dash()
 	}
 
 	return isDash;
+}
+
+int CPlayerController::TakeItem()
+{
+	CInput* input = CInput::GetKey();
+
+	if (input->Trigger(DIK_E, -1))
+	{
+		std::list<CItemModel*>& item = CItemManager::GetInstance()->GetPopItemModel();
+		int size = item.size();
+
+		for (auto it = item.begin(); it != item.end();)
+		{
+			CItemModel* itemModel = *it;
+			if (!((CCollisionCyinder*)(m_toOrder->GetCollision())->ToSphere(itemModel->GetCollision())))
+			{
+				it++;
+				continue;
+			}
+
+			itemModel->Uninit();	// 消去
+			item.erase(it);
+
+			return itemModel->GetID();
+		}
+	}
+
+	return -1;
 }
