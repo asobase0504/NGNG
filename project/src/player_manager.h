@@ -19,6 +19,7 @@
 class CObjectX;
 class CController;
 class CPlayer;
+class CCollisionCyinder;
 
 //==============================================================
 // プレイヤー管理クラス
@@ -47,6 +48,7 @@ public:
 	// ゲッター
 	CPlayer* GetPlayer() { return m_pPlayer; }
 	const D3DXVECTOR3& GetPlayerPos() { return m_pPlayer->GetPos(); }
+	CCollisionCyinder* GetPlayerCylinder() { return m_pPlayer->GetCylinder(); }
 
 private:		// メンバ変数
 	CPlayer *m_pPlayer;

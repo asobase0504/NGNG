@@ -17,6 +17,9 @@
 #include "texture.h"
 #include "fade.h"
 
+#include "skill_data_base.h"
+#include "enemy_data_base.h"
+
 /* シーンモード */
 #include "title.h"
 #include "game.h"
@@ -107,6 +110,9 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 
 	m_fade = CFade::Create();
 
+	CSkillDataBase::GetInstance();
+	CEnemyDataBase::GetInstance();
+
 	return S_OK;
 }
 
@@ -115,6 +121,8 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 //--------------------------------------------------------------
 void CApplication::Uninit()
 {
+	CSkillDataBase::Uninit();
+
 	if (m_taskGroup != nullptr)
 	{// 終了処理
 		m_taskGroup->Uninit();
@@ -155,6 +163,9 @@ void CApplication::Uninit()
 	//入力処理の終了処理
 	CInput::GetKey()->Uninit();
 
+	CSkillDataBase::Uninit();
+	CEnemyDataBase::Uninit();
+
 }
 
 //--------------------------------------------------------------
@@ -167,8 +178,8 @@ void CApplication::Update()
 
 #ifdef _DEBUG
 	static bool ppp = true;
-	CDebugProc::Print("ポーズ【 2 】 : %s\n", ppp ? "OFF" : "STOP");
-	if (CInput::GetKey()->Trigger(DIK_2))
+	CDebugProc::Print("ポーズ【 F2 】 : %s\n", ppp ? "OFF" : "STOP");
+	if (CInput::GetKey()->Trigger(DIK_F2))
 	{
 		m_taskGroup->Pause(ppp);
 		ppp = !ppp;

@@ -7,9 +7,13 @@
 
 // include
 #include "player.h"
+#include "enemy.h"
+#include "enemy_manager.h"
+#include "player_manager.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
+#include "collision_cylinder.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -35,6 +39,15 @@ HRESULT CPlayer::Init()
 	// 初期化処理
 	CCharacter::Init();
 
+	// モデルの読み込み
+	m_apModel[0]->LoadModel("PLAYER01");
+	m_apModel[0]->CalculationVtx();
+
+	// 座標の取得
+	D3DXVECTOR3 pos = GetPos();
+
+	m_collisionCyinder = CCollisionCyinder::Create(pos, 10.0f, 50.0f);
+	m_collision.push_back(m_collisionCyinder);
 	return S_OK;
 }
 
@@ -49,6 +62,8 @@ void CPlayer::Uninit(void)
 		delete m_controller;
 		m_controller = nullptr;
 	}
+
+	m_collisionCyinder->Uninit();
 
 	// 終了処理
 	CCharacter::Uninit();
@@ -78,12 +93,25 @@ void CPlayer::Update(void)
 	// ダッシュ
 	Dash();
 
+	m_controller->TakeItem();
+	
+	bool a = m_collisionCyinder->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(),true);
+	m_collisionCyinder->SetPos(pos);
+
+	if (a)
+	{
+		//D3DXVECTOR3 pos = GetPos();
+		//SetPos(D3DXVECTOR3(m_collisionCyinder->GetExtrusion().x, pos.y, pos.z));
+		//m_collisionCyinder->SetPos(D3DXVECTOR3(m_collisionCyinder->GetExtrusion().x, pos.y, pos.z));
+	}
+
 	// 更新処理
 	CCharacter::Update();
 
 #ifdef _DEBUG
 	CDebugProc::Print("Player：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
 	CDebugProc::Print("Player：move(%f,%f,%f)\n", move.x, move.y, move.z);
+	CDebugProc::Print("PlayerCollision：pos(%f,%f,%f)\n", m_collisionCyinder->GetPos().x, m_collisionCyinder->GetPos().y, m_collisionCyinder->GetPos().z);
 #endif // _DEBUG
 }
 

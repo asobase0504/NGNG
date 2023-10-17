@@ -35,13 +35,8 @@ CCharacter::~CCharacter()
 HRESULT CCharacter::Init()
 {
 	m_apModel.resize(1);
-
-	// ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
 	m_apModel[0] = CObjectX::Create(m_pos);
-	m_apModel[0]->LoadModel("PLAYER01");
-	m_apModel[0]->SetMaterialDiffuse(0, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f));
-	m_apModel[0]->CalculationVtx();
-	m_apModel[0]->SetMoveRot(D3DXVECTOR3(0.0f, -0.035f, 0.0f));
+	m_apModel[0]->LoadModel("BOX");
 	return S_OK;
 }
 

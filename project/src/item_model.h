@@ -14,10 +14,17 @@
 #include "item_data.h"
 
 //==============================================================
+// 前方宣言
+//==============================================================
+class CCollisionSphere;
+
+//==============================================================
 // クラス
 //==============================================================
 class CItemModel : public CObjectX
 {
+private:
+	static const float TAKE_RANGE;
 public:
 	CItemModel(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
 	~CItemModel();
@@ -30,8 +37,14 @@ public:
 
 	static CItemModel* Create(const D3DXVECTOR3& inPos, int inId);
 
+	CCollisionSphere* GetCollision() { return m_collision; }
+
+	int GetID() { return m_ID; }
+
 private:
 	// アイテムのモデルデータ
+	int m_ID;
 	std::string m_modelData[ITEM_MAX];
+	CCollisionSphere* m_collision;
 };
 #endif	// _ITEM_MODEL_H_

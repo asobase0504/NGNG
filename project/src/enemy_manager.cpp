@@ -8,6 +8,7 @@
 // include
 #include "enemy_manager.h"
 #include "enemy.h"
+#include "collision_sphere.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
@@ -74,12 +75,14 @@ void CEnemyManager::Draw(void)
 {
 }
 
-void CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, EType type)
+CEnemy* CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type)
 {
+	CEnemy* enemy;
+
 	switch (type)
 	{
 	case CEnemyManager::NONE:
-		CEnemy::Create(pos);
+		enemy = CEnemy::Create(pos,size);
 		break;
 	case CEnemyManager::SKELETON:
 		break;
@@ -88,4 +91,8 @@ void CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, EType type)
 	default:
 		break;
 	}
+
+	m_pEnemy.push_back(enemy);
+
+	return enemy;
 }

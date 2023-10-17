@@ -10,6 +10,9 @@
 //==============================================================
 #include "object_mesh.h"
 #include "application.h"
+#include "collision_mesh.h"
+#include "player.h"
+#include "player_manager.h"
 #include "utility.h"
 
 //==============================================================
@@ -32,7 +35,8 @@ CMesh::CMesh(CTaskGroup::EPriority nPriority) :
 	m_nowMesh(0),
 	m_number(0),
 	m_type(0),
-	m_isCollision(true)
+	m_isCollision(true),
+	m_collisionMesh(nullptr)
 {
 	m_meshSize = { 10.0f,0.0f,10.0f };
 }
@@ -145,7 +149,7 @@ void CMesh::Draw()
 //--------------------------------------------------------------
 CMesh* CMesh::Create()
 {
-	CMesh * pObject = new CMesh;
+	CMesh* pObject = new CMesh;
 
 	if (pObject != nullptr)
 	{
@@ -558,6 +562,9 @@ void CMesh::SetVtxMeshSize(int Size)
 
 	// 頂点座標をアンロック
 	m_vtxBuff->Unlock();
+
+	D3DXVECTOR3 pos = GetPos();
+	m_collisionMesh = CCollisionMesh::Create(m_polygonCount, m_vtxBuff, m_idxBuff, m_mtxWorld);
 }
 
 //--------------------------------------------------------------

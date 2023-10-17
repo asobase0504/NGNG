@@ -37,6 +37,7 @@
 #include <tchar.h>
 #include <Shlwapi.h>
 #include <locale.h>
+#include <math.h>
 
 // STL
 #include <vector>
