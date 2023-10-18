@@ -5,7 +5,9 @@
 //
 //**************************************************************
 
+//==============================================================
 // include
+//==============================================================
 #include "player.h"
 #include "enemy.h"
 #include "enemy_manager.h"
@@ -15,6 +17,7 @@
 #include "objectX.h"
 #include "collision_cylinder.h"
 #include "utility.h"
+//#include "skill.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -96,6 +99,10 @@ void CPlayer::Update()
 
 	// ダッシュ
 	Dash();
+
+	// 攻撃
+	Attack();
+	
 	
 	TakeItem();
 
@@ -125,12 +132,33 @@ void CPlayer::Update()
 //--------------------------------------------------------------
 CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 {
-	CPlayer* pPlayer;
-	pPlayer = new CPlayer(CObject::PLAYER);
+	CPlayer* pPlayer = new CPlayer;
 	pPlayer->SetPos(pos);
 	pPlayer->Init();
 
 	return pPlayer;
+}
+
+//--------------------------------------------------------------
+// 攻撃
+//--------------------------------------------------------------
+void CPlayer::Attack()
+{
+	// 通常攻撃(左クリック)
+	if (m_controller->Skill_1())
+	{
+		// スキルの生成
+	//	CSkill::YamatoSkill("YAMATO_SKILL_1",this);
+	}
+
+	// スキル1(右クリック)
+	m_controller->Skill_2();
+	
+	// スキル2(シフト)
+	m_controller->Skill_3();
+
+	// スキル3(R)
+	m_controller->Skill_4();
 }
 
 //--------------------------------------------------------------
