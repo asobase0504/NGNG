@@ -17,14 +17,14 @@
 //==============================================================
 // マクロ宣言
 //==============================================================
-#define DASH_SPEED	(3.0f)
+#define DASH_SPEED	(1.5f)
+#define JUMP		(15.0f)
 
 //==============================================================
 // 前方宣言
 //==============================================================
-class CObjectX;
 class CController;
-class CCollisionCyinder;
+class CCollisionCylinder;
 
 //==============================================================
 // プレイヤークラス
@@ -46,20 +46,24 @@ public:
 
 	// Setter
 	void SetController(CController* inOperate);
-	CCollisionCyinder* GetCylinder() { return m_collisionCyinder; }
+	CCollisionCylinder* GetCylinder() { return m_collisionCyinder; }
 
 	void SetPos(const D3DXVECTOR3& inPos);
 
 private:
+	void Attack();				// 攻撃
 	void Move();	// 移動
 	void Jump();	// ジャンプ
 	void Dash();	// ダッシュ
+	void TakeItem();	// アイテムを拾う
 
 private:		// メンバ変数
+	int				m_SkillStock;	// スキルストック数
+
 	bool			m_isjump;		// ジャンプしているかどうか
 	bool			m_isdash;		// ダッシュしているかどうか
 
 	CController*	m_controller;	// 命令を出す人
-	CCollisionCyinder* m_collisionCyinder;
+	CCollisionCylinder* m_collisionCyinder;
 };
 #endif

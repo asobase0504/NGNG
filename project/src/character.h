@@ -12,7 +12,8 @@
 //==============================================================
 #include "object.h"
 #include "status.h"
-#include "item_data.h"
+#include "item_data_base.h"
+#include <array>
 
 //==============================================================
 // ‘O•ûéŒ¾

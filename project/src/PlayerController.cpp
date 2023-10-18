@@ -138,6 +138,98 @@ bool CPlayerController::Dash()
 	return isDash;
 }
 
+//--------------------------------------------------------------
+// スキル1
+//--------------------------------------------------------------
+bool CPlayerController::Skill_1()
+{
+	CInput* input = CInput::GetKey();
+
+	bool isSkill = false;
+
+	if (input == nullptr)
+	{
+		return isSkill;
+	}
+
+	// スキルの使用
+	if (input->Trigger(MOUSE_INPUT_LEFT))
+	{
+		isSkill = true;
+	}
+
+	return isSkill;
+}
+
+//--------------------------------------------------------------
+// スキル2
+//--------------------------------------------------------------
+bool CPlayerController::Skill_2()
+{
+	CInput* input = CInput::GetKey();
+
+	bool isSkill = false;
+
+	if (input == nullptr)
+	{
+		return isSkill;
+	}
+
+	// スキルの使用
+	if (input->Trigger(MOUSE_INPUT_RIGHT, -1))
+	{
+		isSkill = true;
+	}
+
+	return isSkill;
+}
+
+//--------------------------------------------------------------
+// スキル3
+//--------------------------------------------------------------
+bool CPlayerController::Skill_3()
+{
+	CInput* input = CInput::GetKey();
+
+	bool isSkill = false;
+
+	if (input == nullptr)
+	{
+		return isSkill;
+	}
+
+	// スキルの使用
+	if (input->Trigger(KEY_SHIFT, -1))
+	{
+		isSkill = true;
+	}
+
+	return isSkill;
+}
+
+//--------------------------------------------------------------
+// スキル4
+//--------------------------------------------------------------
+bool CPlayerController::Skill_4()
+{
+	CInput* input = CInput::GetKey();
+
+	bool isSkill = false;
+
+	if (input == nullptr)
+	{
+		return isSkill;
+	}
+
+	// スキルの使用
+	if (input->Trigger(DIK_R, -1))
+	{
+		isSkill = true;
+	}
+
+	return isSkill;
+}
+
 int CPlayerController::TakeItem()
 {
 	CInput* input = CInput::GetKey();
@@ -150,7 +242,7 @@ int CPlayerController::TakeItem()
 		for (auto it = item.begin(); it != item.end();)
 		{
 			CItemModel* itemModel = *it;
-			if (!((CCollisionCyinder*)(m_toOrder->GetCollision())->ToSphere(itemModel->GetCollision())))
+			if (!((CCollisionCylinder*)(m_toOrder->GetCollision())->ToSphere(itemModel->GetCollision())))
 			{
 				it++;
 				continue;

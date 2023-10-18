@@ -54,6 +54,9 @@
     <Filter Include="ソース ファイル\Mode\Game\00_Object\character\player">
       <UniqueIdentifier>{dc36bac9-aee1-42a3-ac94-366bda9d7950}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\character\skill">
+      <UniqueIdentifier>{72beb232-3206-4cde-a97e-16c6701d3460}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -167,6 +170,12 @@
     <ClCompile Include="src\main.cpp">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClCompile>
+    <ClCompile Include="src\PlayerController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="src\camera_game.cpp">
       <Filter>ソース ファイル\3D</Filter>
     </ClCompile>
@@ -185,6 +194,9 @@
     <ClCompile Include="src\collision_sphere.cpp">
       <Filter>ソース ファイル\00_Main\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
     <ClCompile Include="src\item.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
@@ -193,6 +205,12 @@
     </ClCompile>
     <ClCompile Include="src\item_model.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\player.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
     <ClCompile Include="src\character.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
@@ -206,23 +224,17 @@
     <ClCompile Include="src\game.cpp">
       <Filter>ソース ファイル\Mode\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\enemy.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\enemy</Filter>
+    <ClCompile Include="src\player_manager.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
     <ClCompile Include="src\enemy_manager.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\enemy</Filter>
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
     <ClCompile Include="src\enemy_data_base.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\enemy</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\player.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\player</Filter>
-    </ClCompile>
-    <ClCompile Include="src\player_manager.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\player</Filter>
-    </ClCompile>
-    <ClCompile Include="src\skill_data_base.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    <ClCompile Include="src\status.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\Controller.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
@@ -232,6 +244,18 @@
     </ClCompile>
     <ClCompile Include="src\status.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_data_base.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue_manager.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -346,6 +370,12 @@
     <ClInclude Include="src\number.h">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClInclude>
+    <ClInclude Include="src\PlayerController.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Controller.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="src\camera_game.h">
       <Filter>ソース ファイル\3D</Filter>
     </ClInclude>
@@ -364,6 +394,9 @@
     <ClInclude Include="src\collision_sphere.h">
       <Filter>ソース ファイル\00_Main\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
     <ClInclude Include="src\item.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
@@ -376,29 +409,29 @@
     <ClInclude Include="src\item_model.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="src\player.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
     <ClInclude Include="src\character.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClInclude>
     <ClInclude Include="src\game.h">
       <Filter>ソース ファイル\Mode\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\enemy_manager.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\enemy</Filter>
+    <ClInclude Include="src\player_manager.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClInclude>
-    <ClInclude Include="src\enemy.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\enemy</Filter>
+    <ClInclude Include="src\enemy_manager.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\status.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\enemy_data_base.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="src\player_manager.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\player</Filter>
-    </ClInclude>
-    <ClInclude Include="src\player.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\player</Filter>
-    </ClInclude>
-    <ClInclude Include="src\skill_data_base.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
@@ -408,6 +441,21 @@
     </ClInclude>
     <ClInclude Include="src\status.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item_data_base.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_data_base.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_manager.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

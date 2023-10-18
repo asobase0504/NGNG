@@ -118,8 +118,7 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 	// シェーダーの読込み
 	D3DXCreateEffectFromFile(m_pD3DDevice, "data\\FX\\Effect.fx", NULL, NULL, 0, NULL, &pEffect, nullptr);
 
-	m_debugProc = new CDebugProc;
-	m_debugProc->Init();
+	CDebugProc::Init();
 
 	return S_OK;
 }
@@ -130,12 +129,7 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 void CRenderer::Uninit()
 {	
 	// デバッグ情報表示用フォントの破棄
-	if (m_debugProc != nullptr)
-	{
-		m_debugProc->Uninit();
-		delete m_debugProc;
-		m_debugProc = nullptr;
-	}
+	CDebugProc::Uninit();
 
 	// デバイスの破棄
 	if (m_pD3DDevice != nullptr)

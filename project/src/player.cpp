@@ -5,16 +5,21 @@
 //
 //**************************************************************
 
+//==============================================================
 // include
+//==============================================================
 #include "player.h"
 #include "enemy.h"
+#include "statue.h"
 #include "enemy_manager.h"
 #include "player_manager.h"
+#include "statue_manager.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
 #include "collision_cylinder.h"
 #include "utility.h"
+#include "skill.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -47,7 +52,7 @@ HRESULT CPlayer::Init()
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
-	m_collisionCyinder = CCollisionCyinder::Create(pos, 10.0f, 50.0f);
+	m_collisionCyinder = CCollisionCylinder::Create(pos, 10.0f, 10.0f);
 	m_collision.push_back(m_collisionCyinder);
 
 	return S_OK;
@@ -97,11 +102,25 @@ void CPlayer::Update()
 	// ダッシュ
 	Dash();
 
-	m_controller->TakeItem();
+	// 攻撃
+	Attack();
 	
+	
+	TakeItem();
+
 	DEBUG_PRINT("pos1 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
 
 	if (m_collisionCyinder->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(), true))
+	{
+		// 押し出した位置
+		D3DXVECTOR3 extrusion = m_collisionCyinder->GetExtrusion();
+		SetPos(D3DXVECTOR3(extrusion));
+		m_collisionCyinder->SetPos(D3DXVECTOR3(extrusion));
+		DEBUG_PRINT("pos2 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
+		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	}
+
+	if (m_collisionCyinder->ToBox(CStatueManager::GetInstance()->GetStatueBox(), true))
 	{
 		// 押し出した位置
 		D3DXVECTOR3 extrusion = m_collisionCyinder->GetExtrusion();
@@ -125,12 +144,33 @@ void CPlayer::Update()
 //--------------------------------------------------------------
 CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 {
-	CPlayer* pPlayer;
-	pPlayer = new CPlayer(CObject::PLAYER);
+	CPlayer* pPlayer = new CPlayer;
 	pPlayer->SetPos(pos);
 	pPlayer->Init();
 
 	return pPlayer;
+}
+
+//--------------------------------------------------------------
+// 攻撃
+//--------------------------------------------------------------
+void CPlayer::Attack()
+{
+	// 通常攻撃(左クリック)
+	if (m_controller->Skill_1())
+	{
+		// スキルの生成
+		CSkill::YamatoSkill("YAMATO_SKILL_1",this);
+	}
+
+	// スキル1(右クリック)
+	m_controller->Skill_2();
+	
+	// スキル2(シフト)
+	m_controller->Skill_3();
+
+	// スキル3(R)
+	m_controller->Skill_4();
 }
 
 //--------------------------------------------------------------
@@ -181,7 +221,7 @@ void CPlayer::Jump()
 	if (GetPos().y > 0.0f)
 	{
 		// 重力
-		move.y -= 0.2f;
+		move.y -= 0.18f;
 	}
 	else
 	{
@@ -215,6 +255,21 @@ void CPlayer::Dash()
 }
 
 //--------------------------------------------------------------
+// アイテムの取得
+//--------------------------------------------------------------
+void CPlayer::TakeItem()
+{
+	int id = m_controller->TakeItem();
+
+	if (id < 0)
+	{
+		return;
+	}
+
+	m_haveItem[id]++;
+}
+
+//--------------------------------------------------------------
 // コントローラーの設定
 //--------------------------------------------------------------
 void CPlayer::SetController(CController * inOperate)
@@ -223,6 +278,9 @@ void CPlayer::SetController(CController * inOperate)
 	m_controller->SetToOrder(this);
 }
 
+//--------------------------------------------------------------
+// 位置の設定
+//--------------------------------------------------------------
 void CPlayer::SetPos(const D3DXVECTOR3 & inPos)
 {
 	if (m_collisionCyinder != nullptr)
