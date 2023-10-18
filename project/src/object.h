@@ -66,6 +66,10 @@ public:
 	void AddMove(const D3DXVECTOR3 &inMove) { SetMove(m_move + inMove); }
 	void MulMove(const float &inRatio) { SetMove(m_move * inRatio); }
 	const D3DXVECTOR3 &GetMove() const { return m_move; }
+	virtual void SetMoveY(const float inMove) { m_move.y = inMove; }
+	void AddMoveY(const float inMove) { SetMoveY(m_move.y + inMove); }
+	virtual void SetMoveXZ(const float X, const float Z) { m_move.x = X; m_move.z = Z;}
+	void AddMoveXZ(const float X, const float Z) { SetMoveXZ(m_move.x + X, m_move.z + Z); }
 
 	/* Œü‚«Œn */
 	virtual void SetRot(const D3DXVECTOR3 &inRot) { m_rot = inRot; }
