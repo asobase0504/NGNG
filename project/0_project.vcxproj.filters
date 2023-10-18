@@ -233,6 +233,9 @@
     <ClCompile Include="src\status.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\Mode\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -408,6 +411,9 @@
     </ClInclude>
     <ClInclude Include="src\item_data_base.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>ソース ファイル\Mode\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
