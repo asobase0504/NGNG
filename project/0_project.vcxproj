@@ -70,6 +70,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\sound.cpp" />
     <ClCompile Include="src\statue.cpp" />
@@ -107,7 +108,7 @@
     <ClInclude Include="src\input\inputkeydata.h" />
     <ClInclude Include="src\input\inputmouse.h" />
     <ClInclude Include="src\item.h" />
-    <ClInclude Include="src\item_data.h" />
+    <ClInclude Include="src\item_data_base.h" />
     <ClInclude Include="src\item_manager.h" />
     <ClInclude Include="src\item_model.h" />
     <ClInclude Include="src\letter.h" />
@@ -132,6 +133,7 @@
     <ClInclude Include="src\player_manager.h" />
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\renderer.h" />
+    <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\statue.h" />

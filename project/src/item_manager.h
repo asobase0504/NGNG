@@ -11,7 +11,7 @@
 // include
 //==============================================================
 #include "object2d.h"
-#include "item_data.h"
+#include "item_data_base.h"
 
 //==============================================================
 // 前方宣言
@@ -27,7 +27,7 @@ class CItemManager : public CTask
 public:	// シングルトン用のインスタンス
 	static CItemManager* GetInstance();
 private:
-	CItemManager(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	CItemManager(CTaskGroup::EPriority list = CTaskGroup::LEVEL_SYSTEM);
 	static CItemManager* m_itemManager;
 public:
 	~CItemManager();
