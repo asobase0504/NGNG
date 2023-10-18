@@ -24,7 +24,7 @@
 //==============================================================
 class CObjectX;
 class CController;
-class CCollisionCyinder;
+class CCollisionCylinder;
 
 //==============================================================
 // プレイヤークラス
@@ -46,7 +46,7 @@ public:
 
 	// Setter
 	void SetController(CController* inOperate);
-	CCollisionCyinder* GetCylinder() { return m_collisionCyinder; }
+	CCollisionCylinder* GetCylinder() { return m_collisionCyinder; }
 
 	void SetPos(const D3DXVECTOR3& inPos);
 
@@ -60,6 +60,6 @@ private:		// メンバ変数
 	bool			m_isdash;		// ダッシュしているかどうか
 
 	CController*	m_controller;	// 命令を出す人
-	CCollisionCyinder* m_collisionCyinder;
+	CCollisionCylinder* m_collisionCyinder;
 };
 #endif

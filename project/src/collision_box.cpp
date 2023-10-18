@@ -1,4 +1,5 @@
 #include "collision_box.h"
+#include "collision_cylinder.h"
 
 CCollisionBox::CCollisionBox()
 {
