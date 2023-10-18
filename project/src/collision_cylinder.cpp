@@ -89,7 +89,8 @@ bool CCollisionCyinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	{// ç∂âE
 		if (boxPos.x < cylinderPos.x)
 		{// âE
-			m_extrusion = D3DXVECTOR3(right + radius, cylinderPos.y, cylinderPos.z);
+			//vecLine = 
+			//m_extrusion = D3DXVECTOR3(right + radius, cylinderPos.y, cylinderPos.z);
 		}
 		else if (boxPos.x > cylinderPos.x)
 		{// ç∂
