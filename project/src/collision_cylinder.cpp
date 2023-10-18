@@ -1,34 +1,41 @@
 #include "collision_cylinder.h"
 #include "collision_sphere.h"
+#include "collision_box.h"
+#include "enemy_manager.h"
+#include "player_manager.h"
+#include "utility.h"
 
-CCollisionCyinder::CCollisionCyinder()
+CCollisionCylinder::CCollisionCylinder() : m_extrusion(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 {
 }
 
-CCollisionCyinder::~CCollisionCyinder()
+CCollisionCylinder::~CCollisionCylinder()
 {
 }
 
-HRESULT CCollisionCyinder::Init()
+HRESULT CCollisionCylinder::Init()
 {
 	return E_NOTIMPL;
 }
 
-void CCollisionCyinder::Uninit()
+void CCollisionCylinder::Uninit()
 {
 }
 
-bool CCollisionCyinder::ToCylinder(CCollisionCyinder * inCyinder)
+bool CCollisionCylinder::ToCylinder(CCollisionCylinder * inCyinder)
 {
-	float addLength = m_length + inCyinder->GetLength();
+	D3DXVECTOR3 pos = GetPos();
+	float radius = GetLength();
 
-	D3DXVECTOR2 difference;
-	difference.x = GetPos().x - inCyinder->GetPos().x;
-	difference.y = GetPos().y - inCyinder->GetPos().y;
+	D3DXVECTOR3 pos2 = inCyinder->GetPos();
+	float radius2 = inCyinder->GetLength();
 
-	float differenceLength =  D3DXVec2Length(&difference);
+	float pos3 = pos.x - pos2.x;
+	float pos4 = pos.z - pos2.z;
 
-	if (addLength <= differenceLength)
+	float radius3 = radius + radius2;
+
+	if ((pos3 * pos3) + (pos4 * pos4) <= (radius3 * radius3))
 	{
 		return true;
 	}
@@ -36,7 +43,85 @@ bool CCollisionCyinder::ToCylinder(CCollisionCyinder * inCyinder)
 	return false;
 }
 
-bool CCollisionCyinder::ToSphere(CCollisionSphere * inSphere)
+bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
+{
+	bool isLanding = false;
+
+	D3DXVECTOR3 boxPos = inBox->GetPos();
+	D3DXVECTOR3 boxSize = inBox->GetSize();
+	D3DXVECTOR3 cylinderPos = GetPos();
+	D3DXVECTOR3 cylinderPosOld = GetPosOld();
+	float radius = GetLength();
+
+	float left = boxPos.x - boxSize.x * 0.5f;	// x1
+	float right = boxPos.x + boxSize.x * 0.5f;	// x2
+	float back = boxPos.z + boxSize.z * 0.5f;	// z1
+	float front = boxPos.z - boxSize.z * 0.5f;	// z2
+
+	// ÇSÇ¬ÇÃí∏ì_
+	D3DXVECTOR3 pos[4];
+	pos[0] = D3DXVECTOR3(left, 0.0f, back);
+	pos[1] = D3DXVECTOR3(right, 0.0f, back);
+	pos[2] = D3DXVECTOR3(right, 0.0f, front);
+	pos[3] = D3DXVECTOR3(left, 0.0f, front);
+
+	D3DXVECTOR3 vecLine(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 vec(0.0f, 0.0f, 0.0f);
+
+	float triangleBase1 = left - cylinderPos.x;
+	float triangleBase2 = right - cylinderPos.x;
+	float triangleHeight1 = back - cylinderPos.z;
+	float triangleHeight2 = front - cylinderPos.z;
+
+	if ((cylinderPos.x > left) && (cylinderPos.x < right) &&
+		(cylinderPos.z > front - radius) && (cylinderPos.z < back + radius))
+	{// éËëOÅ@âú
+		if (boxPos.z < cylinderPos.z)
+		{// âú
+			m_extrusion = D3DXVECTOR3(cylinderPos.x, cylinderPos.y, back + radius);
+		}
+		else if (boxPos.z > cylinderPos.z)
+		{// éËëO
+			m_extrusion = D3DXVECTOR3(cylinderPos.x, cylinderPos.y, front - radius);
+		}
+
+		return true;
+	}
+	else if ((cylinderPos.x > left - radius) && (cylinderPos.x < right + radius) &&
+		(cylinderPos.z > front) && (cylinderPos.z < back))
+	{// ç∂âE
+		if (boxPos.x < cylinderPos.x)
+		{// âE
+			m_extrusion = D3DXVECTOR3(right + radius, cylinderPos.y, cylinderPos.z);
+		}
+		else if (boxPos.x > cylinderPos.x)
+		{// ç∂
+			m_extrusion = D3DXVECTOR3(left - radius, cylinderPos.y, cylinderPos.z);
+		}
+
+		return true;
+	}
+	else if ((triangleBase1 * triangleBase1) + (triangleHeight1 * triangleHeight1) < radius * radius)
+	{// ç∂è„
+		return true;
+	}
+	else if ((triangleBase2 * triangleBase2) + (triangleHeight1 * triangleHeight1) < radius * radius)
+	{// âEè„
+		return true;
+	}
+	else if ((triangleBase2 * triangleBase2) + (triangleHeight2 * triangleHeight2) < radius * radius)
+	{// âEâ∫
+		return true;
+	}
+	else if ((triangleBase1 * triangleBase1) + (triangleHeight2 * triangleHeight2) < radius * radius)
+	{// ç∂â∫
+		return true;
+	}
+
+	return false;
+}
+
+bool CCollisionCylinder::ToSphere(CCollisionSphere * inSphere)
 {
 	// â~íåÇÃîºåaÇ∆ãÖÇÃîºåaÇë´ÇµÇΩãóó£
 	float addLength = m_length + inSphere->GetLength();
@@ -114,9 +199,9 @@ bool CCollisionCyinder::ToSphere(CCollisionSphere * inSphere)
 	return false;
 }
 
-CCollisionCyinder * CCollisionCyinder::Create(const D3DXVECTOR3 & pos, const float length, const float height)
+CCollisionCylinder * CCollisionCylinder::Create(const D3DXVECTOR3 & pos, const float length, const float height)
 {
-	CCollisionCyinder* collision = new CCollisionCyinder;
+	CCollisionCylinder* collision = new CCollisionCylinder;
 
 	assert(collision != nullptr);
 

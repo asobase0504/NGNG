@@ -11,17 +11,22 @@
 // include
 //==============================================================
 #include "object.h"
+#include "status.h"
+#include "item_data_base.h"
+#include <array>
 
 //==============================================================
 // 前方宣言
 //==============================================================
 class CObjectX;
+class CCollision;
 
 //==============================================================
 // プレイヤークラス
 //==============================================================
 class CCharacter : public CObject
 {
+private:		// ステータス構造体
 public:
 	// コンストラクタとデストラクタ
 	explicit CCharacter(int nPriority = 3);
@@ -36,13 +41,39 @@ public:
 	// 静的メンバ関数
 	static CCharacter *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);			// プレイヤーの生成
 
+	CCollision* GetCollision() { return m_collision[0]; }
+
+	std::vector<CObjectX*> GetModel() { return m_apModel; }
+
+	void Damege(const int inDamage);
+
 private:
 	virtual void Attack();
 	virtual void Move();
 	void UpdatePos();			// 座標の更新
 
-private:		// メンバ変数
+protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
+	std::vector<CCollision*>	m_collision;	// 当たり判定
+private:		// メンバ変数
 	D3DXMATRIX		m_mtxWorld;					// ワールドマトリックス
+
+protected:		// ステータス
+
+	// 持っているアイテムの個数をそれぞれ管理
+	int m_haveItem[ITEM_MAX];
+
+	CStatus<int> m_hp;					// 体力
+	CStatus<int> m_addHp;				// 追加体力
+	CStatus<int> m_addHpSubTime;		// 追加体力の減少量
+	CStatus<int> m_barrier;				// バリア
+	CStatus<int> m_barrierRePopTime;	// バリアの復活時間
+	CStatus<int> m_attack;				// 攻撃力
+	CStatus<int> m_defense;				// 防御力
+	CStatus<float> m_criticalRate;		// クリティカル率
+	CStatus<float> m_criticalDamage;	// クリティカルダメージ
+	CStatus<float> m_movePower;			// 移動力
+	CStatus<float> m_jumpPower;			// ジャンプ力
+	CStatus<int> m_jumpCount;			// ジャンプ回数
 };
 #endif

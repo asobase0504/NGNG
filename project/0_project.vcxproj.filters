@@ -48,20 +48,14 @@
     <Filter Include="ソース ファイル\Mode\Game\00_Object\character">
       <UniqueIdentifier>{8aac6035-1c35-4b27-8404-0ba7fbb53cc3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Mode\01_Common\Item">
-      <UniqueIdentifier>{4963ad8a-ec04-4e0e-b854-ad931565ddc4}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\character\enemy">
+      <UniqueIdentifier>{5fa549ee-5c50-4529-a046-5ef4b0ee785c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Mode\01_Common\character\Enemy">
-      <UniqueIdentifier>{e2952d9e-0c62-41bb-bc76-fa2167f47e21}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\character\player">
+      <UniqueIdentifier>{dc36bac9-aee1-42a3-ac94-366bda9d7950}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Mode\01_Common\character\Player">
-      <UniqueIdentifier>{d36ddc35-bed7-40f4-ba94-b12969a97e9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Mode\01_Common\character\controller">
-      <UniqueIdentifier>{4043aca2-b509-41da-a3aa-76745367ae55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Mode\01_Common\character\skill">
-      <UniqueIdentifier>{ea71b7de-a870-4156-a9c7-36e72bb079a3}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\character\skill">
+      <UniqueIdentifier>{72beb232-3206-4cde-a97e-16c6701d3460}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +194,9 @@
     <ClCompile Include="src\collision_sphere.cpp">
       <Filter>ソース ファイル\00_Main\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
     <ClCompile Include="src\item.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
@@ -233,11 +230,32 @@
     <ClCompile Include="src\enemy_manager.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
-    <ClCompile Include="enemy_data_base.cpp">
-      <Filter>ソース ファイル\Mode\01_Common\character\Enemy</Filter>
+    <ClCompile Include="src\enemy_data_base.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="skill_data_base.cpp">
-      <Filter>ソース ファイル\Mode\01_Common\character\skill</Filter>
+    <ClCompile Include="src\status.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerController.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\status.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_data_base.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue_manager.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -376,6 +394,9 @@
     <ClInclude Include="src\collision_sphere.h">
       <Filter>ソース ファイル\00_Main\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
     <ClInclude Include="src\item.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
@@ -406,11 +427,35 @@
     <ClInclude Include="src\enemy_manager.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClInclude>
-    <ClInclude Include="enemy_data_base.h">
-      <Filter>ソース ファイル\Mode\01_Common\character\Enemy</Filter>
+    <ClInclude Include="src\status.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="skill_data_base.h">
-      <Filter>ソース ファイル\Mode\01_Common\character\skill</Filter>
+    <ClInclude Include="src\enemy_data_base.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Controller.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerController.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\status.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item_data_base.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_data_base.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_manager.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

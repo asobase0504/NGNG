@@ -11,6 +11,10 @@
 #include "application.h"
 #include "input.h"
 
+#include "item_manager.h"
+#include "item_model.h"
+#include "collision.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -132,4 +136,124 @@ bool CPlayerController::Dash()
 	}
 
 	return isDash;
+}
+
+//--------------------------------------------------------------
+// スキル1
+//--------------------------------------------------------------
+bool CPlayerController::Skill_1()
+{
+	CInput* input = CInput::GetKey();
+
+	bool isSkill = false;
+
+	if (input == nullptr)
+	{
+		return isSkill;
+	}
+
+	// スキルの使用
+	if (input->Trigger(MOUSE_INPUT_LEFT))
+	{
+		isSkill = true;
+	}
+
+	return isSkill;
+}
+
+//--------------------------------------------------------------
+// スキル2
+//--------------------------------------------------------------
+bool CPlayerController::Skill_2()
+{
+	CInput* input = CInput::GetKey();
+
+	bool isSkill = false;
+
+	if (input == nullptr)
+	{
+		return isSkill;
+	}
+
+	// スキルの使用
+	if (input->Trigger(MOUSE_INPUT_RIGHT, -1))
+	{
+		isSkill = true;
+	}
+
+	return isSkill;
+}
+
+//--------------------------------------------------------------
+// スキル3
+//--------------------------------------------------------------
+bool CPlayerController::Skill_3()
+{
+	CInput* input = CInput::GetKey();
+
+	bool isSkill = false;
+
+	if (input == nullptr)
+	{
+		return isSkill;
+	}
+
+	// スキルの使用
+	if (input->Trigger(KEY_SHIFT, -1))
+	{
+		isSkill = true;
+	}
+
+	return isSkill;
+}
+
+//--------------------------------------------------------------
+// スキル4
+//--------------------------------------------------------------
+bool CPlayerController::Skill_4()
+{
+	CInput* input = CInput::GetKey();
+
+	bool isSkill = false;
+
+	if (input == nullptr)
+	{
+		return isSkill;
+	}
+
+	// スキルの使用
+	if (input->Trigger(DIK_R, -1))
+	{
+		isSkill = true;
+	}
+
+	return isSkill;
+}
+
+int CPlayerController::TakeItem()
+{
+	CInput* input = CInput::GetKey();
+
+	if (input->Trigger(DIK_E, -1))
+	{
+		std::list<CItemModel*>& item = CItemManager::GetInstance()->GetPopItemModel();
+		int size = item.size();
+
+		for (auto it = item.begin(); it != item.end();)
+		{
+			CItemModel* itemModel = *it;
+			if (!((CCollisionCylinder*)(m_toOrder->GetCollision())->ToSphere(itemModel->GetCollision())))
+			{
+				it++;
+				continue;
+			}
+
+			itemModel->Uninit();	// 消去
+			item.erase(it);
+
+			return itemModel->GetID();
+		}
+	}
+
+	return -1;
 }

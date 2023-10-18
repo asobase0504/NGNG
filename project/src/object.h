@@ -66,6 +66,10 @@ public:
 	void AddMove(const D3DXVECTOR3 &inMove) { SetMove(m_move + inMove); }
 	void MulMove(const float &inRatio) { SetMove(m_move * inRatio); }
 	const D3DXVECTOR3 &GetMove() const { return m_move; }
+	virtual void SetMoveY(const float inMove) { m_move.y = inMove; }
+	void AddMoveY(const float inMove) { SetMoveY(m_move.y + inMove); }
+	virtual void SetMoveXZ(const float X, const float Z) { m_move.x = X; m_move.z = Z;}
+	void AddMoveXZ(const float X, const float Z) { SetMoveXZ(m_move.x + X, m_move.z + Z); }
 
 	/* 向き系 */
 	virtual void SetRot(const D3DXVECTOR3 &inRot) { m_rot = inRot; }
@@ -100,6 +104,10 @@ public:
 	void MulColorAlpha(float inRatio) { SetColorAlpha(m_color.a * inRatio); }
 	float GetColorAlpha() const { return m_color.a; }
 
+	/* ワールドマトリックス */
+	void SetMtxWorld(D3DXMATRIX mtxWorld) { m_mtxWorld = mtxWorld; }	// 設定
+	const D3DXMATRIX& GetMtxWorld() { return m_mtxWorld; }				// 取得
+
 	/* テスクチャ系 */
 	void SetTexture(std::string inKey) { m_textureKey = inKey; }
 	std::string GetTexture() { return m_textureKey; }
@@ -112,6 +120,7 @@ protected:
 	D3DXVECTOR3 m_moveRot;	// 回転量
 	D3DXVECTOR3 m_size;		// 大きさ
 	D3DXCOLOR m_color;		// 色
+	D3DXMATRIX m_mtxWorld;	// ワールドマトリックス
 
 	EType m_type;	// 種別
 	std::string m_textureKey;	// テクスチャにアクセスするキー

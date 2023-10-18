@@ -12,7 +12,9 @@
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
-#include "collision_sphere.h"
+#include "collision_box.h"
+
+#include "enemy_data_base.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -38,9 +40,14 @@ HRESULT CEnemy::Init()
 	// 初期化処理
 	CCharacter::Init();
 
-	D3DXVECTOR3 pos = GetPos();
+	m_apModel[0]->LoadModel("SKELETON");
+	m_apModel[0]->CalculationVtx();
 
-	m_collisionSphere = CCollisionSphere::Create(pos, 10.0f);
+	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 size = GetSize();
+	m_collision = CCollisionBox::Create(pos, size);
+
+	//m_activity.push_back(CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
 
 	return S_OK;
 }
@@ -48,18 +55,18 @@ HRESULT CEnemy::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CEnemy::Uninit(void)
+void CEnemy::Uninit()
 {
 	// 終了処理
 	CCharacter::Uninit();
 
-	m_collisionSphere->Uninit();
+	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CEnemy::Update(void)
+void CEnemy::Update()
 {
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
@@ -67,7 +74,7 @@ void CEnemy::Update(void)
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
-	m_collisionSphere->SetPos(pos);
+	m_collision->SetPos(pos);
 
 	//if (m_collisionSphere->ToMesh(CPlayerManager::GetInstance()->GetPlayerCylinder(), true))
 	//{
@@ -77,17 +84,22 @@ void CEnemy::Update(void)
 	//	m_collisionSphere->SetPos(D3DXVECTOR3(pos.x, m_collisionSphere->GetExtrusionHeight(), pos.z));
 	//}
 
-
 	// 移動処理
-	Move();
+	//Move();
 
 	// 更新処理
 	CCharacter::Update();
+	
+	int size = m_activity.size();
+	for (int i = 0; i < size; i++)
+	{
+		m_activity[i](this);
+	}
 
 #ifdef _DEBUG
 	CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
 	CDebugProc::Print("Enemy：move(%f,%f,%f)\n", move.x, move.y, move.z);
-	CDebugProc::Print("EnemyCollision：pos(%f,%f,%f)\n", m_collisionSphere->GetPos().x, m_collisionSphere->GetPos().y, m_collisionSphere->GetPos().z);
+	CDebugProc::Print("EnemyCollision：pos(%f,%f,%f)\n", m_collision->GetPos().x, m_collision->GetPos().y, m_collision->GetPos().z);
 #endif // _DEBUG
 }
 
@@ -103,11 +115,12 @@ void CEnemy::Draw(void)
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CEnemy* CEnemy::Create(D3DXVECTOR3 pos)
+CEnemy* CEnemy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
 	CEnemy* pEnemy;
 	pEnemy = new CEnemy(CObject::ENEMY);
 	pEnemy->SetPos(pos);
+	pEnemy->SetSize(size);
 	pEnemy->Init();
 
 	return pEnemy;

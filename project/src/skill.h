@@ -1,59 +1,50 @@
 //**************************************************************
 //
-// 敵
-// Author : 梶田大夢
+// スキル
+// Author : 髙野馨將
 //
 //**************************************************************
-#ifndef _ENEMY_H_			// このマクロ定義がされてなかったら
-#define _ENEMY_H_			// 二重インクルード防止のマクロ定義
+#ifndef _SKILL_H_			// このマクロ定義がされてなかったら
+#define _SKILL_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
-#include "character.h"
+#include "task.h"
 
 //==============================================================
 // マクロ宣言
 //==============================================================
-#define MAX_SPEED	(0.3f)
+#define MAX_SKILL		(4)
+#define MAX_SKILL_TYPE	(1)
 
 //==============================================================
 // 前方宣言
 //==============================================================
-class CObjectX;
-class CController;
-class CCollisionBox;
-class CCollisionSphere;
-class CEnemyDataBase;
+class CCharacter;
 
 //==============================================================
-// 敵クラス
+// スキルクラス
 //==============================================================
-class CEnemy : public CCharacter
+class CSkill : public CTask
 {
 public:
-	using ACTIVITY_FUNC = std::function<void(CEnemy*)>;
-public:
 	// コンストラクタとデストラクタ
-	explicit CEnemy(int nPriority = 3);
-	~CEnemy();
+	explicit CSkill(int nPriority = 3);
+	~CSkill();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
 	void	Uninit() override;
 	void	Update() override;
-	void	Draw() override;
 
 	// 静的メンバ関数
-	static CEnemy *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);			// プレイヤーの生成
-	CCollisionBox* GetBox() { return m_collision; }
+	static CSkill *YamatoSkill(std::string tag, CCharacter *chara);				// スキルの生成
 
-private:
-	void Move();		// 移動
-
-private:	// メンバ変数
-	CCollisionBox* m_collision;
-	CCollisionSphere* m_collisionSphere;
-	std::vector<ACTIVITY_FUNC> m_activity;
+private:		// メンバ変数
+	CCharacter*		m_apChara;				// キャラクターのインスタンス
+	int				m_ID;					// スキルID
+	int				m_CT[MAX_SKILL];		// クールタイム
+	std::string		m_Name;					// スキル名
 };
 #endif

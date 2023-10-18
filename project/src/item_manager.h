@@ -11,7 +11,7 @@
 // include
 //==============================================================
 #include "object2d.h"
-#include "item_data.h"
+#include "item_data_base.h"
 
 //==============================================================
 // 前方宣言
@@ -27,7 +27,7 @@ class CItemManager : public CTask
 public:	// シングルトン用のインスタンス
 	static CItemManager* GetInstance();
 private:
-	CItemManager(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	CItemManager(CTaskGroup::EPriority list = CTaskGroup::LEVEL_SYSTEM);
 	static CItemManager* m_itemManager;
 public:
 	~CItemManager();
@@ -39,16 +39,16 @@ public:
 
 	void CreateItem(const D3DXVECTOR3& inPos, ITEM_TYPE inId);
 
+	std::list<CItemModel*>& GetPopItemModel() { return m_itemModel; }
 private:
 	// アイテムのタイプ
 	ITEM_TYPE m_itemType;
+
 	// アイテムのデータ(ステータスアップするよ～とか)
 	CItem* m_itemData;
-	// アイテムのモデルデータ
-	CItemModel* m_itemModel;
+
+	// 出現しているアイテムのモデルデータ
+	std::list<CItemModel*> m_itemModel;
 };
 #endif	// _ITEM_MANAGER_H_
-
-// アイテムマネージャーに 必要だと思うもの。
-//- 出現しているアイテムモデル
 

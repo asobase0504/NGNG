@@ -19,7 +19,7 @@
 class CObjectX;
 class CController;
 class CEnemy;
-class CCollisionSphere;
+class CCollisionBox;
 
 //==============================================================
 // 敵管理クラス
@@ -50,13 +50,13 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	CEnemy* CreateEnemy(D3DXVECTOR3 pos, EType type);			// プレイヤーの生成
+	CEnemy* CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type);			// プレイヤーの生成
 
-	CEnemy* GetEnemy() { return m_pEnemy; }
-	CCollisionSphere* GetEnemySphere() { return m_pEnemy->GetSphere(); }
+	CEnemy* GetEnemy() { return m_pEnemy[0]; }
+	CCollisionBox* GetEnemyBox() { return m_pEnemy[0]->GetBox(); }
 
 private:		// メンバ変数
 	EType m_type;
-	CEnemy *m_pEnemy;
+	std::vector<CEnemy*> m_pEnemy;
 };
 #endif

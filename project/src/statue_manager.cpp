@@ -1,96 +1,84 @@
 //**************************************************************
 //
-// item_manager
-// Author: Buriya Kota
+// 像管理
+// Author : 梶田大夢
 //
 //**************************************************************
 
-//==============================================================
 // include
-//==============================================================
-#include "item_manager.h"
-
-#include "item.h"
-#include "item_model.h"
-
-//==============================================================
-// 静的メンバ変数宣言
-//==============================================================
-CItemManager* CItemManager::m_itemManager = nullptr;
+#include "statue_manager.h"
+#include "collision_box.h"
+#include "application.h"
+#include "objectX.h"
 
 //--------------------------------------------------------------
-// インスタンス
+//静的メンバ変数宣言
 //--------------------------------------------------------------
-CItemManager* CItemManager::GetInstance()
+CStatueManager* CStatueManager::m_statueManager = nullptr;
+
+//--------------------------------------------------------------
+// シングルトンでのインスタンスの取得
+//--------------------------------------------------------------
+CStatueManager* CStatueManager::GetInstance()
 {
-	if (m_itemManager == nullptr)
+	if (m_statueManager == nullptr)
 	{
-		m_itemManager = new CItemManager;
+		m_statueManager = new CStatueManager;
 	}
-	return m_itemManager;
+	return m_statueManager;
 }
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemManager::CItemManager(CTaskGroup::EPriority list) : 
-	m_itemData(nullptr), m_itemType(ITEM_NONE)
+CStatueManager::CStatueManager()
 {
-	m_itemModel.clear();
+
 }
 
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CItemManager::~CItemManager()
+CStatueManager::~CStatueManager()
 {
+
 }
 
 //--------------------------------------------------------------
-// 初期化
+// 初期化処理
 //--------------------------------------------------------------
-HRESULT CItemManager::Init()
+HRESULT CStatueManager::Init()
 {
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// 終了
+// 終了処理
 //--------------------------------------------------------------
-void CItemManager::Uninit()
-{
-	m_itemData = nullptr;
-	m_itemModel.clear();
-}
-
-//--------------------------------------------------------------
-// 更新
-//--------------------------------------------------------------
-void CItemManager::Update()
+void CStatueManager::Uninit(void)
 {
 }
 
 //--------------------------------------------------------------
-// 描画
+// 更新処理
 //--------------------------------------------------------------
-void CItemManager::Draw()
+void CStatueManager::Update(void)
 {
 }
 
 //--------------------------------------------------------------
-// 生成
+// 描画処理
 //--------------------------------------------------------------
-void CItemManager::CreateItem(const D3DXVECTOR3& inPos, ITEM_TYPE inId)
+void CStatueManager::Draw(void)
 {
-	m_itemType = inId;
+}
 
-	switch (m_itemType)
-	{
-	case ITEM_POWER_UP:
-		m_itemData = CItem::Create(inId);
-		m_itemModel.push_back(CItemModel::Create(inPos, inId));
-		break;
-	default:
-		break;
-	}
+//--------------------------------------------------------------
+// 生成処理
+//--------------------------------------------------------------
+CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos)
+{
+	m_pStatue = CStatue::Create(pos);
+
+	return m_pStatue;
 }

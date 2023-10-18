@@ -1,50 +1,47 @@
 //**************************************************************
 //
-// item_model
-// Author: Buriya Kota
+// 像
+// Author: 梶田 大夢
 //
 //**************************************************************
-#ifndef _ITEM_MODEL_H_
-#define _ITEM_MODEL_H_
+#ifndef _STATUE_H_
+#define _STATUE_H_
 
 //==============================================================
 // include
 //==============================================================
 #include "objectX.h"
-#include "item_data_base.h"
 
 //==============================================================
 // 前方宣言
 //==============================================================
-class CCollisionSphere;
+class CCollisionBox;
+class CCollisionCylinder;
+class CPlayer;
 
 //==============================================================
 // クラス
 //==============================================================
-class CItemModel : public CObjectX
+class CStatue : public CObjectX
 {
-private:
-	static const float TAKE_RANGE;
 public:
-	CItemModel(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
-	~CItemModel();
+	CStatue(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	~CStatue();
 
 	HRESULT Init() override;
-	HRESULT Init(int inId);
 	void Uninit() override;
 	void Update() override;
-	void Draw() override;
+	void Draw() override; 
 
-	static CItemModel* Create(const D3DXVECTOR3& inPos, int inId);
-
-	CCollisionSphere* GetCollision() { return m_collision; }
-
-	int GetID() { return m_ID; }
+	static CStatue* Create(const D3DXVECTOR3& inPos);
+	CCollisionBox* GetCollisionBox() { return m_collisionBox; }
+	CCollisionCylinder* GetCollisionCylinder() { return m_collisionCylinder; }
 
 private:
-	// アイテムのモデルデータ
-	int m_ID;
-	std::string m_modelData[ITEM_MAX];
-	CCollisionSphere* m_collision;
+	std::string m_modelData;
+	CCollisionBox* m_collisionBox;
+	CCollisionCylinder* m_collisionCylinder;
+
+	CPlayer* m_player;
 };
 #endif	// _ITEM_MODEL_H_
