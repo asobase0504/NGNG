@@ -19,9 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="enemy_data_base.cpp" />
-    <ClCompile Include="skill_data_base.cpp" />
     <ClCompile Include="src\enemy.cpp" />
+    <ClCompile Include="src\enemy_data_base.cpp" />
     <ClCompile Include="src\enemy_manager.cpp" />
     <ClCompile Include="src\player_manager.cpp" />
     <ClCompile Include="src\application.cpp" />
@@ -72,7 +71,9 @@
     </ClCompile>
     <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="src\skill.cpp" />
+    <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\sound.cpp" />
+    <ClCompile Include="src\status.cpp" />
     <ClCompile Include="src\task.cpp" />
     <ClCompile Include="src\task_group.cpp" />
     <ClCompile Include="src\text.cpp" />
@@ -81,8 +82,7 @@
     <ClCompile Include="src\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="enemy_data_base.h" />
-    <ClInclude Include="skill_data_base.h" />
+    <ClInclude Include="src\enemy_data_base.h" />
     <ClInclude Include="src\enemy_manager.h" />
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\camera.h" />
@@ -131,8 +131,10 @@
     <ClInclude Include="src\player_manager.h" />
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\renderer.h" />
+    <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\sound.h" />
+    <ClInclude Include="src\status.h" />
     <ClInclude Include="src\task.h" />
     <ClInclude Include="src\task_group.h" />
     <ClInclude Include="src\text.h" />

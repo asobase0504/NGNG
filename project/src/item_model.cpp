@@ -10,6 +10,9 @@
 //==============================================================
 #include "item_model.h"
 #include "item_manager.h"
+#include "collision_sphere.h"
+
+const float CItemModel::TAKE_RANGE(10.0f);
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -45,7 +48,7 @@ HRESULT CItemModel::Init(int inId)
 	CObjectX::Init();
 
 	LoadModel(m_modelData[inId]);
-
+	m_ID = inId;
 	return S_OK;
 }
 
@@ -85,6 +88,8 @@ CItemModel* CItemModel::Create(const D3DXVECTOR3& inPos, int inId)
 	{
 		pItemModel->Init(inId);
 		pItemModel->SetPos(inPos);
+		pItemModel->m_collision = CCollisionSphere::Create(inPos, TAKE_RANGE);
+
 	}
 
 	return pItemModel;

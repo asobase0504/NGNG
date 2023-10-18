@@ -30,6 +30,7 @@ public:
 	bool		Skill_2() override;
 	bool		Skill_3() override;
 	bool		Skill_4() override;
+	int			TakeItem() override;
 
 private:
 	int m_nInputIdx;

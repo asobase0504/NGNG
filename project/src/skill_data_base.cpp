@@ -10,11 +10,10 @@
 //==============================================================
 #include "skill_data_base.h"
 
-//--------------------------------------------------------------
-// 静的メンバ変数宣言
-//--------------------------------------------------------------
+//==============================================================
+// 静的メンバー変数の宣言
+//==============================================================
 CSkillDataBase* CSkillDataBase::m_instance = nullptr;
-
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -24,7 +23,7 @@ CSkillDataBase::CSkillDataBase()
 }
 
 //--------------------------------------------------------------
-// シングルトンでのインスタンスの取得
+// instanceの取得
 //--------------------------------------------------------------
 CSkillDataBase * CSkillDataBase::GetInstance()
 {
@@ -48,7 +47,7 @@ CSkillDataBase::~CSkillDataBase()
 }
 
 //--------------------------------------------------------------
-// 終了処理
+// 終了
 //--------------------------------------------------------------
 void CSkillDataBase::Uninit()
 {
@@ -62,47 +61,43 @@ void CSkillDataBase::Uninit()
 }
 
 //--------------------------------------------------------------
-// 初期化処理
+// 初期化
 //--------------------------------------------------------------
 void CSkillDataBase::Init()
 {
-	m_skillDataBase["YAMATO_SKILL_1"] = { 0,1,60,2.0f,6.0f,
-		[this](CCharacter* inusedCharacter)
-	{ // 発動時に発生させるもの
-		
-	},
-		[this](CCharacter* inusedCharacter)
-	{ // Hit時に発生させるもの
-		
-	} };
-
-	m_skillDataBase["YAMATO_SKILL_2"] = { 0,1,60,2.0f,6.0f,
-		[this](CCharacter* inusedCharacter)
-	{ // 発動時に発生させるもの
+	m_dates["YAMATO_SKILL_1"] = { 20,1,
+		[](CCharacter* inusedCharacter)
+	{ // 発動時の効果
 
 	},
-		[this](CCharacter* inusedCharacter)
-	{ // Hit時に発生させるもの
+		[](CCharacter* inusedCharacter)
+	{ // Hit時の効果
 
 	} };
-
-	m_skillDataBase["YAMATO_SKILL_3"] = { 0,1,60,2.0f,6.0f,
-		[this](CCharacter* inusedCharacter)
-	{ // 発動時に発生させるもの
+	m_dates["YAMATO_SKILL_2"] = { 20,1,
+		[](CCharacter* inusedCharacter)
+	{ // 発動時の効果
 
 	},
-		[this](CCharacter* inusedCharacter)
-	{ // Hit時に発生させるもの
+		[](CCharacter* inusedCharacter)
+	{ // Hit時の効果
 
 	} };
+	m_dates["YAMATO_SKILL_3"] = { 20,1,
+		[](CCharacter* inusedCharacter)
+	{ // 発動時の効果
+	},
+		[](CCharacter* inusedCharacter)
+	{ // Hit時の効果
 
-	m_skillDataBase["YAMATO_SKILL_4"] = { 0,1,60,2.0f,6.0f,
-		[this](CCharacter* inusedCharacter)
-	{ // 発動時に発生させるもの
+	} };
+	m_dates["YAMATO_SKILL_4"] = { 20,1,
+		[](CCharacter* inusedCharacter)
+	{ // 発動時の効果
 
 	},
-		[this](CCharacter* inusedCharacter)
-	{ // Hit時に発生させるもの
+		[](CCharacter* inusedCharacter)
+	{ // Hit時の効果
 
 	} };
 }
