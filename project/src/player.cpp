@@ -96,9 +96,9 @@ void CPlayer::Update()
 
 	// ダッシュ
 	Dash();
-
-	m_controller->TakeItem();
 	
+	TakeItem();
+
 	DEBUG_PRINT("pos1 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
 
 	if (m_collisionCyinder->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(), true))
@@ -181,7 +181,7 @@ void CPlayer::Jump()
 	if (GetPos().y > 0.0f)
 	{
 		// 重力
-		move.y -= 0.2f;
+		move.y -= 0.18f;
 	}
 	else
 	{
@@ -215,6 +215,21 @@ void CPlayer::Dash()
 }
 
 //--------------------------------------------------------------
+// アイテムの取得
+//--------------------------------------------------------------
+void CPlayer::TakeItem()
+{
+	int id = m_controller->TakeItem();
+
+	if (id < 0)
+	{
+		return;
+	}
+
+	m_haveItem[id]++;
+}
+
+//--------------------------------------------------------------
 // コントローラーの設定
 //--------------------------------------------------------------
 void CPlayer::SetController(CController * inOperate)
@@ -223,6 +238,9 @@ void CPlayer::SetController(CController * inOperate)
 	m_controller->SetToOrder(this);
 }
 
+//--------------------------------------------------------------
+// 位置の設定
+//--------------------------------------------------------------
 void CPlayer::SetPos(const D3DXVECTOR3 & inPos)
 {
 	if (m_collisionCyinder != nullptr)

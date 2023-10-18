@@ -13,7 +13,7 @@
 #include "enemy.h"
 #include "enemy_manager.h"
 #include "item_manager.h"
-#include "item_data.h"
+#include "item_data_base.h"
 #include "player_manager.h"
 #include "camera.h"
 #include "light.h"

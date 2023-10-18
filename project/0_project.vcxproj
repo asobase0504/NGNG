@@ -105,7 +105,7 @@
     <ClInclude Include="src\input\inputkeydata.h" />
     <ClInclude Include="src\input\inputmouse.h" />
     <ClInclude Include="src\item.h" />
-    <ClInclude Include="src\item_data.h" />
+    <ClInclude Include="src\item_data_base.h" />
     <ClInclude Include="src\item_manager.h" />
     <ClInclude Include="src\item_model.h" />
     <ClInclude Include="src\letter.h" />

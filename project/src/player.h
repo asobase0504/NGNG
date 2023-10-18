@@ -54,6 +54,7 @@ private:
 	void Move();	// 移動
 	void Jump();	// ジャンプ
 	void Dash();	// ダッシュ
+	void TakeItem();	// アイテムを拾う
 
 private:		// メンバ変数
 	bool			m_isjump;		// ジャンプしているかどうか
