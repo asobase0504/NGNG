@@ -24,8 +24,11 @@ public:
 
 	struct BASE
 	{
-		int CT;
-		int stock;
+		int		CT;				// クールタイム
+		int		stock;			// ストック
+		int		duration;		// 効果時間
+		float	damage;			// ダメージ量
+		float	KnockBack;		// ノックバック量
 	};
 
 	struct SKILL_INFO
@@ -37,7 +40,7 @@ public:
 
 	enum SKILL_TYPE
 	{
-		YAMADO_ATTACK
+		YAMATO_ATTACK
 	};
 
 private:
@@ -55,10 +58,12 @@ public:
 	ABILITY GetAbility(std::string tag) { return m_skillDataBase[tag].ability; }
 	ABILITY GetHitAbility(std::string tag) { return m_skillDataBase[tag].abilityHit; }
 	int GetCT(std::string tag) { return m_skillDataBase[tag].baseInfo.CT; }
-	int GetStack(std::string tag) { return m_skillDataBase[tag].baseInfo.stock; }
+	int GetStock(std::string tag) { return m_skillDataBase[tag].baseInfo.stock; }
+	int GetDuration(std::string tag) { return m_skillDataBase[tag].baseInfo.duration; }
+	float GetDamage(std::string tag) { return m_skillDataBase[tag].baseInfo.damage; }
+	float GetKnockBack(std::string tag) { return m_skillDataBase[tag].baseInfo.KnockBack; }
 
 private:	// メンバ変数
-
 	std::unordered_map<std::string, SKILL_INFO> m_skillDataBase;
 };
 #endif

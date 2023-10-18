@@ -15,6 +15,7 @@
 #include "application.h"
 #include "objectX.h"
 #include "collision_cylinder.h"
+#include "skill.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -138,7 +139,11 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 void CPlayer::Attack()
 {
 	// 通常攻撃(左クリック)
-	m_controller->Skill_1();
+	if (m_controller->Skill_1())
+	{
+		// スキルの生成
+		CSkill::YamatoSkill("YAMATO_SKILL_1",this);
+	}
 
 	// スキル1(右クリック)
 	m_controller->Skill_2();

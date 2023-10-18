@@ -38,10 +38,13 @@ public:
 	void	Uninit() override;
 	void	Update() override;
 
+	// 静的メンバ関数
+	static CSkill *YamatoSkill(std::string tag, CCharacter *chara);				// スキルの生成
+
 private:		// メンバ変数
 	CCharacter*		m_apChara;				// キャラクターのインスタンス
 	int				m_ID;					// スキルID
-	int				m_CT[MAX_SKILL];	// クールタイム
-	float			m_AttackBuff;			// 加算される攻撃力
+	int				m_CT[MAX_SKILL];		// クールタイム
+	std::string		m_Name;					// スキル名
 };
 #endif

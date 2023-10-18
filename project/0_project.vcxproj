@@ -72,7 +72,6 @@
     </ClCompile>
     <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="src\skill.cpp" />
-    <ClCompile Include="src\SkillEntity.cpp" />
     <ClCompile Include="src\sound.cpp" />
     <ClCompile Include="src\task.cpp" />
     <ClCompile Include="src\task_group.cpp" />
@@ -133,7 +132,6 @@
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\skill.h" />
-    <ClInclude Include="src\SkillEntity.h" />
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\task.h" />
     <ClInclude Include="src\task_group.h" />

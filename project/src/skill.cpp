@@ -9,6 +9,8 @@
 // include
 //==============================================================
 #include "skill.h"
+#include "skill_data_base.h"
+#include "player_manager.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -31,6 +33,7 @@ CSkill::~CSkill()
 //--------------------------------------------------------------
 HRESULT CSkill::Init()
 {
+	// 初期化
 	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
 	{
 		m_CT[nCnt] = 0;
@@ -52,6 +55,7 @@ void CSkill::Uninit(void)
 //--------------------------------------------------------------
 void CSkill::Update(void)
 {
+	// CTの減少
 	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
 	{
 		if (m_CT[nCnt] > 0)
@@ -59,4 +63,21 @@ void CSkill::Update(void)
 			m_CT[nCnt]--;
 		}
 	}
+	
+	// スキル1のインスタンスを取得
+	CSkillDataBase::GetInstance()->GetAbility(m_Name)(m_apChara);		// 発動時に生成
+}
+
+//--------------------------------------------------------------
+// スキル生成処理
+//--------------------------------------------------------------
+CSkill *CSkill::YamatoSkill(std::string tag, CCharacter *chara)
+{
+	// 生成処理
+	CSkill* pSkill = new CSkill;
+	pSkill->Init();
+	pSkill->m_Name = tag;
+	pSkill->m_apChara = chara;
+
+	return pSkill;
 }
