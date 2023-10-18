@@ -54,6 +54,9 @@
     <Filter Include="ソース ファイル\Mode\Game\00_Object\character\player">
       <UniqueIdentifier>{dc36bac9-aee1-42a3-ac94-366bda9d7950}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\character\skill">
+      <UniqueIdentifier>{72beb232-3206-4cde-a97e-16c6701d3460}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -221,9 +224,6 @@
     <ClCompile Include="src\player_manager.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\player</Filter>
     </ClCompile>
-    <ClCompile Include="src\skill_data_base.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
-    </ClCompile>
     <ClCompile Include="src\Controller.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
@@ -233,8 +233,11 @@
     <ClCompile Include="src\status.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
+    <ClCompile Include="src\skill_data_base.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClCompile>
     <ClCompile Include="src\skill.cpp">
-      <Filter>ソース ファイル\Mode\Game</Filter>
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -397,9 +400,6 @@
     <ClInclude Include="src\player.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\player</Filter>
     </ClInclude>
-    <ClInclude Include="src\skill_data_base.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
-    </ClInclude>
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClInclude>
@@ -412,8 +412,11 @@
     <ClInclude Include="src\item_data_base.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="src\skill_data_base.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClInclude>
     <ClInclude Include="src\skill.h">
-      <Filter>ソース ファイル\Mode\Game</Filter>
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
