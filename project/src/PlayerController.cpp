@@ -229,7 +229,6 @@ bool CPlayerController::Skill_4()
 
 	return isSkill;
 }
-}
 
 int CPlayerController::TakeItem()
 {

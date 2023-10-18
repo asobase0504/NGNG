@@ -100,8 +100,6 @@ void CPlayer::Update()
 	// ƒ_ƒbƒVƒ…
 	Dash();
 
-	m_collisionCyinder->SetPos(pos);
-	bool a = m_collisionCyinder->ToSphere(CEnemyManager::GetInstance()->GetEnemySphere());
 	// UŒ‚
 	Attack();
 

@@ -52,6 +52,6 @@ public:
 
 private:	// ƒƒ“ƒo•Ï”
 
-	std::unordered_map<std::string, SKILL_INFO> m_skillDataBase;
+	std::unordered_map<std::string, SKILL_INFO> m_dates;
 };
 #endif

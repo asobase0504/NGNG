@@ -131,8 +131,8 @@
     <ClInclude Include="src\player_manager.h" />
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\renderer.h" />
-    <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\skill.h" />
+    <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\status.h" />
     <ClInclude Include="src\task.h" />
