@@ -12,6 +12,8 @@
 //==============================================================
 #include "character.h"
 
+#include "collision_cylinder.h"
+
 //==============================================================
 // マクロ宣言
 //==============================================================
@@ -38,7 +40,6 @@ public:
 	HRESULT	Init() override;
 	void	Uninit() override;
 	void	Update() override;
-	void	Draw() override;
 
 	// 静的メンバ関数
 	static CPlayer *Create(D3DXVECTOR3 pos);			// プレイヤーの生成
@@ -47,10 +48,12 @@ public:
 	void SetController(CController* inOperate);
 	CCollisionCyinder* GetCylinder() { return m_collisionCyinder; }
 
+	void SetPos(const D3DXVECTOR3& inPos);
+
 private:
-	void Move();				// 移動
-	void Jump();				// ジャンプ
-	void Dash();				// ダッシュ
+	void Move();	// 移動
+	void Jump();	// ジャンプ
+	void Dash();	// ダッシュ
 
 private:		// メンバ変数
 	bool			m_isjump;		// ジャンプしているかどうか

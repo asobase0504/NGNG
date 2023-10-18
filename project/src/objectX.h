@@ -43,10 +43,6 @@ public:
 	static CObjectX *Create(D3DXVECTOR3 pos, CTaskGroup::EPriority nPriority = CTaskGroup::LEVEL_3D_1);
 	void LoadModel(std::string aFileName);		// モデルの読み込み処理
 
-	/* ワールドマトリックス */
-	void SetMtxWorld(D3DXMATRIX mtxWorld) { m_mtxWorld = mtxWorld; }	// 設定
-	const D3DXMATRIX& GetMtxWorld() { return m_mtxWorld; }				// 取得
-
 	/* 大きさ倍率 */
 	void SetScale(const D3DXVECTOR3& inScale);
 	const D3DXVECTOR3& GetScale() const { return m_scale; }
@@ -102,7 +98,6 @@ private:
 	D3DXVECTOR3 m_minVtx;		// モデルの頂点最小値
 	D3DXVECTOR3 m_maxVtx;		// モデルの頂点最大値
 
-	D3DXMATRIX m_mtxWorld;		// ワールドマトリックス
 	D3DXMATRIX m_mtxRot;		// 回転行列
 
 	LPD3DXMESH m_mesh;			// メッシュ情報へのポインタ

@@ -60,7 +60,6 @@ public:
 
 protected:
 	LPDIRECT3DVERTEXBUFFER9	m_vtxBuff;	// 頂点バッファ
-	D3DXMATRIX m_mtxWorld;				// ワールドマトリックス
 
 private:
 	D3DXVECTOR3 m_normal;

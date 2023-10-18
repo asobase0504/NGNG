@@ -13,12 +13,14 @@
 #include "objectX.h"
 #include "PlayerController.h"
 
+#include "status.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
 CCharacter::CCharacter(int nPriority)
 {
-
+	m_apModel.clear();
 }
 
 //--------------------------------------------------------------
@@ -37,6 +39,31 @@ HRESULT CCharacter::Init()
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
 	m_apModel[0]->LoadModel("BOX");
+
+	m_hp.Init(100);
+	m_hp.SetCurrent(100);
+	m_addHp.Init(100);
+	m_addHp.SetCurrent(100);
+	m_addHpSubTime.Init(100);
+	m_addHpSubTime.SetCurrent(100);
+	m_barrier.Init(100);
+	m_barrier.SetCurrent(100);
+	m_barrierRePopTime.Init(100);
+	m_barrierRePopTime.SetCurrent(100);
+	m_attack.Init(100);
+	m_attack.SetCurrent(100);
+	m_defense.Init(100);
+	m_defense.SetCurrent(100);
+	m_criticalRate.Init(100);
+	m_criticalRate.SetCurrent(100);
+	m_criticalDamage.Init(100);
+	m_criticalDamage.SetCurrent(100);
+	m_movePower.Init(2.0f);
+	m_movePower.SetCurrent(2.0f);
+	m_jumpPower.Init(100);
+	m_jumpPower.SetCurrent(3.0f);
+	m_jumpCount.Init(2);
+	m_jumpCount.SetCurrent(0);
 	return S_OK;
 }
 
@@ -137,5 +164,4 @@ void CCharacter::UpdatePos()
 
 	// 座標の設定
 	SetPos(pos);
-	m_apModel[0]->SetPos(pos);
 }
