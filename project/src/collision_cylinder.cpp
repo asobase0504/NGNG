@@ -70,8 +70,6 @@ bool CCollisionCyinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	float triangleHeight1 = back - cylinderPos.z;
 	float triangleHeight2 = front - cylinderPos.z;
 
-	D3DXVECTOR3 move = GetMove();
-
 	if ((cylinderPos.x > left) && (cylinderPos.x < right) &&
 		(cylinderPos.z > front - radius) && (cylinderPos.z < back + radius))
 	{// Žè‘O@‰œ

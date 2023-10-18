@@ -100,6 +100,10 @@ public:
 	void MulColorAlpha(float inRatio) { SetColorAlpha(m_color.a * inRatio); }
 	float GetColorAlpha() const { return m_color.a; }
 
+	/* ワールドマトリックス */
+	void SetMtxWorld(D3DXMATRIX mtxWorld) { m_mtxWorld = mtxWorld; }	// 設定
+	const D3DXMATRIX& GetMtxWorld() { return m_mtxWorld; }				// 取得
+
 	/* テスクチャ系 */
 	void SetTexture(std::string inKey) { m_textureKey = inKey; }
 	std::string GetTexture() { return m_textureKey; }
@@ -112,6 +116,7 @@ protected:
 	D3DXVECTOR3 m_moveRot;	// 回転量
 	D3DXVECTOR3 m_size;		// 大きさ
 	D3DXCOLOR m_color;		// 色
+	D3DXMATRIX m_mtxWorld;	// ワールドマトリックス
 
 	EType m_type;	// 種別
 	std::string m_textureKey;	// テクスチャにアクセスするキー
