@@ -76,9 +76,9 @@ void CStatueManager::Draw(void)
 //--------------------------------------------------------------
 // ê∂ê¨èàóù
 //--------------------------------------------------------------
-CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos)
+CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
-	m_pStatue = CStatue::Create(pos);
+	m_pStatue = CStatue::Create(pos, rot);
 
 	return m_pStatue;
 }
