@@ -1,7 +1,7 @@
 //**************************************************************
 //
-// ëú
-// Author: äÅìc ëÂñ≤
+// ÂÉè
+// Author: Ê¢∂Áî∞ Â§ßÂ§¢
 //
 //**************************************************************
 
@@ -14,7 +14,7 @@
 #include "player.h"
 
 //--------------------------------------------------------------
-// ÉRÉìÉXÉgÉâÉNÉ^
+// „Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø
 //--------------------------------------------------------------
 CStatue::CStatue(CTaskGroup::EPriority list) :
 	m_modelData{
@@ -23,14 +23,14 @@ CStatue::CStatue(CTaskGroup::EPriority list) :
 }
 
 //--------------------------------------------------------------
-// ÉfÉXÉgÉâÉNÉ^
+// „Éá„Çπ„Éà„É©„ÇØ„Çø
 //--------------------------------------------------------------
 CStatue::~CStatue()
 {
 }
 
 //--------------------------------------------------------------
-// èâä˙âª
+// ÂàùÊúüÂåñ
 //--------------------------------------------------------------
 HRESULT CStatue::Init()
 {
@@ -41,7 +41,7 @@ HRESULT CStatue::Init()
 }
 
 //--------------------------------------------------------------
-// èIóπ
+// ÁµÇ‰∫Ü
 //--------------------------------------------------------------
 void CStatue::Uninit()
 {
@@ -49,7 +49,7 @@ void CStatue::Uninit()
 }
 
 //--------------------------------------------------------------
-// çXêV
+// Êõ¥Êñ∞
 //--------------------------------------------------------------
 void CStatue::Update()
 {
@@ -61,13 +61,13 @@ void CStatue::Update()
 	CObjectX::Update();
 
 #ifdef _DEBUG
-	CDebugProc::Print("StatueCollisionBoxÅFpos(%f,%f,%f)\n", m_collisionBox->GetPos().x, m_collisionBox->GetPos().y, m_collisionBox->GetPos().z);
-	CDebugProc::Print("StatueCollisionCylinderÅFpos(%f,%f,%f)\n", m_collisionCylinder->GetPos().x, m_collisionCylinder->GetPos().y, m_collisionCylinder->GetPos().z);
+	CDebugProc::Print("StatueCollisionBoxÔºöpos(%f,%f,%f)\n", m_collisionBox->GetPos().x, m_collisionBox->GetPos().y, m_collisionBox->GetPos().z);
+	CDebugProc::Print("StatueCollisionCylinderÔºöpos(%f,%f,%f)\n", m_collisionCylinder->GetPos().x, m_collisionCylinder->GetPos().y, m_collisionCylinder->GetPos().z);
 #endif // _DEBUG
 }
 
 //--------------------------------------------------------------
-// ï`âÊ
+// ÊèèÁîª
 //--------------------------------------------------------------
 void CStatue::Draw()
 {
@@ -75,7 +75,7 @@ void CStatue::Draw()
 }
 
 //--------------------------------------------------------------
-// ê∂ê¨
+// ÁîüÊàê
 //--------------------------------------------------------------
 CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot)
 {
