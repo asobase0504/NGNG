@@ -10,7 +10,7 @@
 #include "collision.h"
 
 class CCollisionBox;
-class CCollisionCyinder;
+class CCollisionCylinder;
 class CCollisionMesh;
 
 class CCollisionSphere : public CCollision
@@ -22,7 +22,7 @@ public:
 	HRESULT Init();
 	void Uninit();
 
-	//bool ToCylinder(CCollisionCyinder* inCyinder);
+	//bool ToCylinder(CCollisionCylinder* inCyinder);
 	bool ToMesh(CCollisionMesh* inMesh, bool isExtrusion);
 	bool ToBox(CCollisionBox* inBox);
 	bool ToSphere(CCollisionSphere* inSphere);

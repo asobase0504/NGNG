@@ -11,7 +11,9 @@
 #include "game.h"
 #include "player.h"
 #include "enemy.h"
+#include "statue.h"
 #include "enemy_manager.h"
+#include "statue_manager.h"
 #include "item_manager.h"
 #include "item_data_base.h"
 #include "player_manager.h"
@@ -76,6 +78,8 @@ HRESULT CGame::Init(void)
 
 	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
 	m_camera->SetTargetPos(pPlayer->GetPos());
+
+	CStatue* pStatue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(100.0f, 0.0f, 100.0f));
 
 	return S_OK;
 }

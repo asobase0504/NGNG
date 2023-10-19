@@ -74,6 +74,8 @@
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\sound.cpp" />
+    <ClCompile Include="src\statue.cpp" />
+    <ClCompile Include="src\statue_manager.cpp" />
     <ClCompile Include="src\status.cpp" />
     <ClCompile Include="src\task.cpp" />
     <ClCompile Include="src\task_group.cpp" />
@@ -135,6 +137,8 @@
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\sound.h" />
+    <ClInclude Include="src\statue.h" />
+    <ClInclude Include="src\statue_manager.h" />
     <ClInclude Include="src\status.h" />
     <ClInclude Include="src\task.h" />
     <ClInclude Include="src\task_group.h" />
@@ -142,6 +146,12 @@
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\title.h" />
     <ClInclude Include="src\utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="data\FX\Effect.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7EBBFD2F-1F99-4A13-9899-6C72FA7C556A}</ProjectGuid>
