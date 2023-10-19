@@ -123,7 +123,7 @@ void CObjectPolygon3D::Draw()
 
 	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 
-									//ワールドマトリックスの初期化
+	//ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
 
 	//向きを反映
