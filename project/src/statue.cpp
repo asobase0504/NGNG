@@ -86,7 +86,7 @@ CStatue* CStatue::Create(const D3DXVECTOR3& inPos)
 	{
 		pStatue->Init();
 		pStatue->SetPos(inPos);
-		pStatue->m_collisionBox = CCollisionBox::Create(inPos,D3DXVECTOR3(10.0f,10.0f,10.0f));
+		pStatue->m_collisionBox = CCollisionBox::Create(inPos, D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(10.0f,10.0f,10.0f));
 		pStatue->m_collisionCylinder = CCollisionCylinder::Create(inPos,15.0f, 15.0f);
 	}
 
