@@ -44,13 +44,12 @@ void CItem::Uninit()
 //--------------------------------------------------------------
 void CItem::Update()
 {
-	ItemState_();
 }
 
 //--------------------------------------------------------------
 // ¶¬
 //--------------------------------------------------------------
-CItem* CItem::Create(ITEM_TYPE inId)
+CItem* CItem::Create(CItemDataBase::EItemType inId)
 {
 	CItem* pItemData = nullptr;
 	pItemData = new CItem;
@@ -58,22 +57,7 @@ CItem* CItem::Create(ITEM_TYPE inId)
 	if (pItemData != nullptr)
 	{
 		pItemData->Init();
-		pItemData->SetItemData(inId);
 	}
 
 	return pItemData;
-}
-
-//--------------------------------------------------------------
-// ƒAƒCƒeƒ€‚ÌŒø‰Ê
-//--------------------------------------------------------------
-void CItem::ItemState_()
-{
-	switch (m_itemData)
-	{
-	case ITEM_POWER_UP:
-		break;
-	default:
-		break;
-	}
 }

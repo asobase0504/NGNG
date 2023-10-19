@@ -251,6 +251,9 @@
     <ClCompile Include="src\skill.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
     </ClCompile>
+    <ClCompile Include="src\item_data_base.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -392,9 +395,6 @@
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
     <ClInclude Include="src\item.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="src\item_data.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="src\item_manager.h">

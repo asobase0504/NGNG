@@ -106,19 +106,14 @@ void CPlayer::Update()
 	
 	TakeItem();
 
-	DEBUG_PRINT("pos1 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
-
 	if (m_collisionCyinder->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(), true))
 	{
 		// âüÇµèoÇµÇΩà íu
 		D3DXVECTOR3 extrusion = m_collisionCyinder->GetExtrusion();
 		SetPos(D3DXVECTOR3(extrusion));
 		m_collisionCyinder->SetPos(D3DXVECTOR3(extrusion));
-		DEBUG_PRINT("pos2 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
 		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
-
-	DEBUG_PRINT("pos3 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
 
 #ifdef _DEBUG
 	CDebugProc::Print("PlayerÅFpos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);

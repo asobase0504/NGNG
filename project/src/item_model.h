@@ -44,7 +44,7 @@ public:
 private:
 	// アイテムのモデルデータ
 	int m_ID;
-	std::string m_modelData[ITEM_MAX];
+	std::array<std::string,CItemDataBase::ITEM_MAX> m_modelData;
 	CCollisionSphere* m_collision;
 };
 #endif	// _ITEM_MODEL_H_

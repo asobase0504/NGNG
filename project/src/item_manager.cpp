@@ -34,7 +34,7 @@ CItemManager* CItemManager::GetInstance()
 // コンストラクタ
 //--------------------------------------------------------------
 CItemManager::CItemManager(CTaskGroup::EPriority list) : 
-	m_itemData(nullptr), m_itemType(ITEM_NONE)
+	m_itemData(nullptr), m_itemType(CItemDataBase::ITEM_NONE)
 {
 	m_itemModel.clear();
 }
@@ -80,13 +80,13 @@ void CItemManager::Draw()
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-void CItemManager::CreateItem(const D3DXVECTOR3& inPos, ITEM_TYPE inId)
+void CItemManager::CreateItem(const D3DXVECTOR3& inPos, CItemDataBase::EItemType inId)
 {
 	m_itemType = inId;
 
 	switch (m_itemType)
 	{
-	case ITEM_POWER_UP:
+	case CItemDataBase::ITEM_POWER_UP:
 		m_itemData = CItem::Create(inId);
 		m_itemModel.push_back(CItemModel::Create(inPos, inId));
 		break;

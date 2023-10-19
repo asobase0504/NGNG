@@ -60,20 +60,22 @@ private:		// メンバ変数
 
 protected:		// ステータス
 
+	using item_count = std::array<unsigned int, CItemDataBase::ITEM_MAX>;
+
 	// 持っているアイテムの個数をそれぞれ管理
-	int m_haveItem[ITEM_MAX];
+	item_count m_haveItem;
 
 	CStatus<int> m_hp;					// 体力
 	CStatus<int> m_addHp;				// 追加体力
 	CStatus<int> m_addHpSubTime;		// 追加体力の減少量
 	CStatus<int> m_barrier;				// バリア
-	CStatus<int> m_barrierRePopTime;	// バリアの復活時間
-	CStatus<int> m_attack;				// 攻撃力
+	CStatus<unsigned int> m_barrierRePopTime;	// バリアの復活時間
+	CStatus<unsigned int> m_attack;				// 攻撃力
 	CStatus<int> m_defense;				// 防御力
 	CStatus<float> m_criticalRate;		// クリティカル率
 	CStatus<float> m_criticalDamage;	// クリティカルダメージ
 	CStatus<float> m_movePower;			// 移動力
 	CStatus<float> m_jumpPower;			// ジャンプ力
-	CStatus<int> m_jumpCount;			// ジャンプ回数
+	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 };
 #endif

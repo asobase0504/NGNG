@@ -37,12 +37,12 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void CreateItem(const D3DXVECTOR3& inPos, ITEM_TYPE inId);
+	void CreateItem(const D3DXVECTOR3& inPos, CItemDataBase::EItemType inId);
 
 	std::list<CItemModel*>& GetPopItemModel() { return m_itemModel; }
 private:
 	// アイテムのタイプ
-	ITEM_TYPE m_itemType;
+	CItemDataBase::EItemType m_itemType;
 
 	// アイテムのデータ(ステータスアップするよ～とか)
 	CItem* m_itemData;
