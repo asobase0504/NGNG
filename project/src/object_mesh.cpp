@@ -223,7 +223,7 @@ bool CMesh::Collision(D3DXVECTOR3* pPos)
 			float vecLine = Vec2Cross(&vecPos, &vecWall);
 
 			//ŽOŠp‚Ì’†‚É“ü‚Á‚Ä‚é‚Æ‚«‚Ì”»’èŒü‚«‚É‚æ‚Á‚Ä‰E‘¤‚©¶‘¤‚©ˆá‚¤‚½‚ß”»’è‚ð“ñ‚Â—pˆÓ‚·‚é
-			if ((nCnt % 2 == 0 && vecLine >= 0.0f) || (nCnt % 2 != 0 && vecLine <= 0.0f))
+			if (((nCnt & 1) == 0 && vecLine >= 0.0f) || ((nCnt & 1) != 0 && vecLine <= 0.0f))
 			{
 				LineCout++;
 			}

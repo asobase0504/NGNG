@@ -65,8 +65,10 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	pos[2] = D3DXVECTOR3(right, 0.0f, front);
 	pos[3] = D3DXVECTOR3(left, 0.0f, front);
 
-	D3DXVECTOR3 vecLine(0.0f, 0.0f, 0.0f);
-	D3DXVECTOR3 vec(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 v2(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 v(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 startPos(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 endPos(0.0f, 0.0f, 0.0f);
 
 	float triangleBase1 = left - cylinderPos.x;
 	float triangleBase2 = right - cylinderPos.x;
@@ -78,48 +80,81 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	{// 手前　奥
 		if (boxPos.z < cylinderPos.z)
 		{// 奥
-			m_extrusion = D3DXVECTOR3(cylinderPos.x, cylinderPos.y, back + radius);
+			startPos = pos[0];
+			endPos = pos[1];
+			v2 = endPos - startPos;
+			v = startPos - cylinderPosOld;
 		}
-		else if (boxPos.z > cylinderPos.z)
+		else
 		{// 手前
-			m_extrusion = D3DXVECTOR3(cylinderPos.x, cylinderPos.y, front - radius);
+			startPos = pos[2];
+			endPos = pos[3];
+			v2 = endPos - startPos;
+			v = startPos - cylinderPosOld;
 		}
 
-		return true;
+		isLanding = true;
 	}
 	else if ((cylinderPos.x > left - radius) && (cylinderPos.x < right + radius) &&
 		(cylinderPos.z > front) && (cylinderPos.z < back))
 	{// 左右
 		if (boxPos.x < cylinderPos.x)
 		{// 右
-			//vecLine = 
-			//m_extrusion = D3DXVECTOR3(right + radius, cylinderPos.y, cylinderPos.z);
+			startPos = pos[1];
+			endPos = pos[2];
+			v2 = endPos - startPos;
+			v = startPos - cylinderPosOld;
 		}
-		else if (boxPos.x > cylinderPos.x)
+		else
 		{// 左
-			m_extrusion = D3DXVECTOR3(left - radius, cylinderPos.y, cylinderPos.z);
+			startPos = pos[3];
+			endPos = pos[0];
+			v2 = endPos - startPos;
+			v = startPos - cylinderPosOld;
 		}
 
-		return true;
+		isLanding = true;
 	}
-	else if ((triangleBase1 * triangleBase1) + (triangleHeight1 * triangleHeight1) < radius * radius)
-	{// 左上
-		return true;
-	}
-	else if ((triangleBase2 * triangleBase2) + (triangleHeight1 * triangleHeight1) < radius * radius)
-	{// 右上
-		return true;
-	}
-	else if ((triangleBase2 * triangleBase2) + (triangleHeight2 * triangleHeight2) < radius * radius)
-	{// 右下
-		return true;
-	}
-	else if ((triangleBase1 * triangleBase1) + (triangleHeight2 * triangleHeight2) < radius * radius)
-	{// 左下
-		return true;
+	//else if ((triangleBase1 * triangleBase1) + (triangleHeight1 * triangleHeight1) < radius * radius)
+	//{// 左上
+	//	isLanding = true;
+	//}
+	//else if ((triangleBase2 * triangleBase2) + (triangleHeight1 * triangleHeight1) < radius * radius)
+	//{// 右上
+	//	isLanding = true;
+	//}
+	//else if ((triangleBase2 * triangleBase2) + (triangleHeight2 * triangleHeight2) < radius * radius)
+	//{// 右下
+	//	isLanding = true;
+	//}
+	//else if ((triangleBase1 * triangleBase1) + (triangleHeight2 * triangleHeight2) < radius * radius)
+	//{// 左下
+	//	isLanding = true;
+	//}
+	else
+	{
+		return isLanding;
 	}
 
-	return false;
+	if (isExtrusion && isLanding)
+	{// http://marupeke296.com/COL_2D_No10_SegmentAndSegment.html
+		D3DXVECTOR3 v1 = cylinderPos - cylinderPosOld;
+		float t2 = Vec2Cross(&v, &v1) / Vec2Cross(&v1, &v2);
+
+		D3DXVECTOR3 vecLineNormalize(0.0f, 0.0f, 0.0f);
+
+		// intersection　交点
+		D3DXVECTOR3 intersection = startPos + v2 * t2;
+
+		// 垂直なベクトルをつくる
+		D3DXVECTOR3 vertical(-v2.z, 0.0f, v2.x);
+		// 大きさを正規化
+		D3DXVec3Normalize(&vertical, &vertical);
+		// 押出の位置
+		m_extrusion = intersection + vertical * radius;
+	}
+
+	return isLanding;
 }
 
 bool CCollisionCylinder::ToSphere(CCollisionSphere * inSphere)
