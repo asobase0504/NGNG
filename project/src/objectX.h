@@ -111,17 +111,20 @@ private:
 	bool m_isHasOutLine;			// アウトラインを使うか
 	bool m_isHasShadow;			// アウトラインを使うか
 
+	float m_TimeCnt;
+
 	//=========================================
 	//ハンドル一覧
 	//=========================================
 	IDirect3DTexture9*	tex0;	// テクスチャ保存用
-	D3DXHANDLE			m_hmWVP;		// ワールド～射影行列
-	D3DXHANDLE			m_hmWIT;		// ローカル - ワールド変換行列
+	D3DXHANDLE			m_hView;		// view行列
+	D3DXHANDLE			m_hProj;		// projection行列
+	D3DXHANDLE			m_hWorld;		// ワールド行列
 	D3DXHANDLE			m_hvLightDir;	// ライトの方向
 	D3DXHANDLE			m_hvDiffuse;	// 頂点色
 	D3DXHANDLE			m_hvAmbient;	// 頂点色
-	D3DXHANDLE			m_hvEyePos;		// 視点の位置
 	D3DXHANDLE			m_hTechnique;	// テクニック
 	D3DXHANDLE			m_hTexture;		// テクスチャ
+	D3DXHANDLE			m_hTime;		// 時間を渡す
 };
 #endif

@@ -1,19 +1,18 @@
 // -------------------------------------------------------------
-// 鏡面反射光
-// 
-// Copyright (c) 2003 IMAGIRE Takashi. All rights reserved.
-// -------------------------------------------------------------
-
-// -------------------------------------------------------------
 // グローバル変数
 // -------------------------------------------------------------
 
+float4x4 mWorld;
+float4x4 mProj;
+float4x4 mView;
 float4x4 mWVP;
 
 float4 vLightDir;	// ライトの方向
 float4 vDiffuse;	// ライト＊メッシュの色
 float4 vAmbient;	// 色
 float3 vEyePos;		// カメラの位置（ローカル座標系）
+
+float Test;
 
 // -------------------------------------------------------------
 // 頂点シェーダからピクセルシェーダに渡すデータ
@@ -52,8 +51,11 @@ VS_OUTPUT VS(
 {
 	VS_OUTPUT Out = (VS_OUTPUT)0;		// 出力データ
 
+	float4x4 WVP = mul(mWorld,mView);
+	WVP = mul(WVP, mProj);
+
 	// 座標変換
-	Out.Pos = mul(Pos, mWVP);
+	Out.Pos = mul(Pos, WVP);
 
 	// テクスチャ座標
 	Out.Tex = Tex;
@@ -75,6 +77,26 @@ VS_OUTPUT VS(
 //=========================================
 float4 PS(VS_OUTPUT In) : COLOR
 {
+	return In.Color;		// 拡散光＋環境光(テクスチャの色)
+}
+
+//=========================================
+// 白黒シェーダー
+//=========================================
+float4 Mono_PS(VS_OUTPUT In) : COLOR
+{
+	/* メモ : ピクセルシェーダーはピクセル単位で処理が通るので、
+	もしかしたら徐々に灰色にするのはシェーダーの処理ではないのでは？
+	というか、段々灰色になる処理は難しいのでは？ */
+
+	float ColSimple = (In.Color.r + In.Color.g + In.Color.b) / 3.0f;
+
+	In.Color.r -= (In.Color.r - ColSimple) / 120 * (Test - 120) * -1;
+	In.Color.g -= (In.Color.g - ColSimple) / 120 * (Test - 120) * -1;
+	In.Color.b -= (In.Color.b - ColSimple) / 120 * (Test - 120) * -1;
+	
+	In.Color = float4(In.Color.r, In.Color.g, In.Color.b, 1.0f);
+
 	return In.Color;		// 拡散光＋環境光(テクスチャの色)
 }
 
@@ -132,6 +154,7 @@ float4 ToonPS(VS_OUTPUT In) : COLOR0
 	return Out;
 }
 
+
 // -------------------------------------------------------------
 // テクニック
 // -------------------------------------------------------------
@@ -146,5 +169,10 @@ technique Diffuse
 	{
 		VertexShader = compile vs_2_0 VS();
 		PixelShader = compile ps_2_0 PS();
+	}
+	pass P2
+	{
+		VertexShader = compile vs_2_0 VS();
+		PixelShader = compile ps_2_0 Mono_PS();
 	}
 }
