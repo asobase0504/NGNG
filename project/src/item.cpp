@@ -13,7 +13,12 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItem::CItem(CTaskGroup::EPriority list)
+CItem::CItem(CTaskGroup::EPriority list) : 
+	m_getFunc(nullptr),
+	m_lostFunc(nullptr),
+	m_allwayFunc(nullptr),
+	m_damageFunc(nullptr),
+	m_hitFunc(nullptr)
 {
 }
 
@@ -44,13 +49,12 @@ void CItem::Uninit()
 //--------------------------------------------------------------
 void CItem::Update()
 {
-	ItemState_();
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CItem* CItem::Create(ITEM_TYPE inId)
+CItem* CItem::Create(CItemDataBase::EItemType inId)
 {
 	CItem* pItemData = nullptr;
 	pItemData = new CItem;
@@ -58,22 +62,7 @@ CItem* CItem::Create(ITEM_TYPE inId)
 	if (pItemData != nullptr)
 	{
 		pItemData->Init();
-		pItemData->SetItemData(inId);
 	}
 
 	return pItemData;
-}
-
-//--------------------------------------------------------------
-// アイテムの効果
-//--------------------------------------------------------------
-void CItem::ItemState_()
-{
-	switch (m_itemData)
-	{
-	case ITEM_POWER_UP:
-		break;
-	default:
-		break;
-	}
 }
