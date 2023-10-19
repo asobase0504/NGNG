@@ -36,13 +36,17 @@ public:
 
 	static CItem* Create(CItemDataBase::EItemType inId);
 
+	void SetWhenPickFunc(ITEM_FUNC inFunc) { m_getFunc = inFunc; }
+	void SetWhenLostFunc(ITEM_FUNC inFunc) { m_lostFunc = inFunc; }
+	void SetWhenAllWayFunc(ITEM_FUNC inFunc) { m_allwayFunc = inFunc; }
+	void SetWhenDamageFunc(ITEM_FUNC inFunc) { m_hitFunc = inFunc; }
+	void SetWhenHitFunc(ITEM_FUNC inFunc) { m_hitFunc = inFunc; }
+
 	ITEM_FUNC GetWhenPickFunc() { return m_getFunc; }
 	ITEM_FUNC GetWhenLostFunc() { return m_lostFunc; }
 	ITEM_FUNC GetWhenAllWayFunc() { return m_allwayFunc; }
 	ITEM_FUNC GetWhenDamageFunc() { return m_hitFunc; }
 	ITEM_FUNC GetWhenHitFunc() { return m_hitFunc; }
-
-private:
 
 private:
 	ITEM_FUNC m_getFunc;

@@ -47,6 +47,9 @@ public:
 
 	void Damege(const int inDamage);
 
+	CStatus<unsigned int> GetJumpCount() { return m_jumpCount; }
+	void SetJumpCount(CStatus<unsigned int> hp) { m_jumpCount = hp; }
+
 private:
 	virtual void Attack();
 	virtual void Move();
@@ -59,8 +62,6 @@ private:		// メンバ変数
 	D3DXMATRIX		m_mtxWorld;					// ワールドマトリックス
 
 protected:		// ステータス
-
-	using item_count = std::array<unsigned int, CItemDataBase::ITEM_MAX>;
 
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;

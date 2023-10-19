@@ -13,7 +13,12 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItem::CItem(CTaskGroup::EPriority list)
+CItem::CItem(CTaskGroup::EPriority list) : 
+	m_getFunc(nullptr),
+	m_lostFunc(nullptr),
+	m_allwayFunc(nullptr),
+	m_damageFunc(nullptr),
+	m_hitFunc(nullptr)
 {
 }
 

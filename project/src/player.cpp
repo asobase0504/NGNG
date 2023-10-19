@@ -18,6 +18,8 @@
 #include "collision_cylinder.h"
 #include "utility.h"
 #include "skill.h"
+#include "item_data_base.h"
+#include "item.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -250,6 +252,12 @@ void CPlayer::TakeItem()
 	}
 
 	m_haveItem[id]++;
+	CItem::ITEM_FUNC itemFunc = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)id)->GetWhenPickFunc();
+
+	if (itemFunc != nullptr)
+	{
+		itemFunc(this, m_haveItem[id]);
+	}
 }
 
 //--------------------------------------------------------------

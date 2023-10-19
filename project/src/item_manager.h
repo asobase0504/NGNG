@@ -17,6 +17,7 @@
 // 前方宣言
 //==============================================================
 class CItemModel;
+class CCharacter;
 class CItem;
 
 //==============================================================
@@ -40,6 +41,13 @@ public:
 	void CreateItem(const D3DXVECTOR3& inPos, CItemDataBase::EItemType inId);
 
 	std::list<CItemModel*>& GetPopItemModel() { return m_itemModel; }
+
+	void AllWhenPick(CCharacter*,item_count);
+	void AllWhenLost(CCharacter*, item_count);
+	void AllWhenAllWay(CCharacter*, item_count);
+	void AllWhenDamage(CCharacter*, item_count);
+	void AllWhenHit(CCharacter*, item_count);
+
 private:
 	// アイテムのタイプ
 	CItemDataBase::EItemType m_itemType;

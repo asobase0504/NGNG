@@ -31,12 +31,13 @@ public:
 
 	static void Uninit();
 
-	void AllDamage();
 public:
-	CItem* GetActivityFunc(EItemType inState) { return m_activityFunc[inState]; }
+	CItem* GetItemData(EItemType inState) { return m_item[inState]; }
 private:
 
 private:	// ƒƒ“ƒo•Ï”
-	std::array<CItem*, ITEM_MAX> m_activityFunc;
+	std::array<CItem*, ITEM_MAX> m_item;
 };
+
+using item_count = std::array<unsigned int, CItemDataBase::ITEM_MAX>;
 #endif	// _ITEM_DATA_

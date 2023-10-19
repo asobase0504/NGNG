@@ -1,6 +1,8 @@
 #include "item_data_base.h"
 #include "item.h"
 
+#include "character.h"
+
 //==============================================================
 // Ã“Iƒƒ“ƒo[•Ï”‚ÌéŒ¾
 //==============================================================
@@ -18,6 +20,13 @@ CItemDataBase::CItemDataBase()
 //--------------------------------------------------------------
 void CItemDataBase::Init()
 {
+	m_item[ITEM_POWER_UP] = CItem::Create(ITEM_POWER_UP);
+	m_item[ITEM_POWER_UP]->SetWhenPickFunc([](CCharacter* inCharacter,int cnt)
+	{
+		CStatus<unsigned int> jumpCount = inCharacter->GetJumpCount();
+		jumpCount.AddItemEffect(1);
+		inCharacter->SetJumpCount(jumpCount);
+	});
 }
 
 //--------------------------------------------------------------
