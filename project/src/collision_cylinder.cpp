@@ -75,6 +75,9 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	float triangleHeight1 = back - cylinderPos.z;
 	float triangleHeight2 = front - cylinderPos.z;
 
+	// 単位ベクトル
+	D3DXVECTOR3 unitVec(0.0f, 0.0f, 0.0f);
+
 	if ((cylinderPos.x > left) && (cylinderPos.x < right) &&
 		(cylinderPos.z > front - radius) && (cylinderPos.z < back + radius))
 	{// 手前　奥
@@ -115,22 +118,34 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 
 		isLanding = true;
 	}
-	//else if ((triangleBase1 * triangleBase1) + (triangleHeight1 * triangleHeight1) < radius * radius)
-	//{// 左上
-	//	isLanding = true;
-	//}
-	//else if ((triangleBase2 * triangleBase2) + (triangleHeight1 * triangleHeight1) < radius * radius)
-	//{// 右上
-	//	isLanding = true;
-	//}
-	//else if ((triangleBase2 * triangleBase2) + (triangleHeight2 * triangleHeight2) < radius * radius)
-	//{// 右下
-	//	isLanding = true;
-	//}
-	//else if ((triangleBase1 * triangleBase1) + (triangleHeight2 * triangleHeight2) < radius * radius)
-	//{// 左下
-	//	isLanding = true;
-	//}
+	else if ((triangleBase1 * triangleBase1) + (triangleHeight1 * triangleHeight1) < radius * radius)
+	{// 左上
+		unitVec = D3DXVECTOR3(-1.0f, 0.0f, 1.0f);
+		D3DXVec3Normalize(&unitVec, &unitVec);
+		m_extrusion = pos[0] + unitVec * radius;
+		return true;
+	}
+	else if ((triangleBase2 * triangleBase2) + (triangleHeight1 * triangleHeight1) < radius * radius)
+	{// 右上
+		unitVec = D3DXVECTOR3(1.0f, 0.0f, 1.0f);
+		D3DXVec3Normalize(&unitVec, &unitVec);
+		m_extrusion = pos[1];
+		return true;
+	}
+	else if ((triangleBase2 * triangleBase2) + (triangleHeight2 * triangleHeight2) < radius * radius)
+	{// 右下
+		unitVec = D3DXVECTOR3(1.0f, 0.0f, -1.0f);
+		D3DXVec3Normalize(&unitVec, &unitVec);
+		m_extrusion = pos[2];
+		return true;
+	}
+	else if ((triangleBase1 * triangleBase1) + (triangleHeight2 * triangleHeight2) < radius * radius)
+	{// 左下
+		unitVec = D3DXVECTOR3(-1.0f, 0.0f, -1.0f);
+		D3DXVec3Normalize(&unitVec, &unitVec);
+		m_extrusion = pos[3];
+		return true;
+	}
 	else
 	{
 		return isLanding;
