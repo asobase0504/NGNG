@@ -59,7 +59,6 @@ void CStatueBlood::Update()
 		if (input->Trigger(KEY_BACK, -1))
 		{
 			int a = 0;
-			pPlayer->Damege();
 		}
 	}
 
