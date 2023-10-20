@@ -74,7 +74,10 @@ void CStatueManager::Draw(void)
 {
 }
 
-CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
+//--------------------------------------------------------------
+// ê∂ê¨èàóù
+//--------------------------------------------------------------
+CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
 	switch (type)
 	{

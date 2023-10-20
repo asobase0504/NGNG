@@ -1,7 +1,7 @@
 //**************************************************************
 //
-// ‘œ
-// Author: Š“c ‘å–²
+// åƒ
+// Author: æ¢¶ç”° å¤§å¤¢
 //
 //**************************************************************
 
@@ -14,7 +14,7 @@
 #include "player.h"
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CStatue::CStatue(CTaskGroup::EPriority list) :
 	m_modelData{
@@ -23,14 +23,14 @@ CStatue::CStatue(CTaskGroup::EPriority list) :
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CStatue::~CStatue()
 {
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»
+// åˆæœŸåŒ–
 //--------------------------------------------------------------
 HRESULT CStatue::Init()
 {
@@ -43,7 +43,7 @@ HRESULT CStatue::Init()
 }
 
 //--------------------------------------------------------------
-// I—¹
+// çµ‚äº†
 //--------------------------------------------------------------
 void CStatue::Uninit()
 {
@@ -51,7 +51,7 @@ void CStatue::Uninit()
 }
 
 //--------------------------------------------------------------
-// XV
+// æ›´æ–°
 //--------------------------------------------------------------
 void CStatue::Update()
 {
@@ -62,7 +62,7 @@ void CStatue::Update()
 
 	if (a)
 	{
-		// ‰Ÿ‚µo‚µ‚½ˆÊ’u
+		// æŠ¼ã—å‡ºã—ãŸä½ç½®
 		D3DXVECTOR3 extrusion = CPlayerManager::GetInstance()->GetPlayerCylinder()->GetExtrusion();
 		CPlayerManager::GetInstance()->GetPlayer()->SetPos(D3DXVECTOR3(extrusion));
 		CPlayerManager::GetInstance()->GetPlayerCylinder()->SetPos(D3DXVECTOR3(extrusion));
@@ -73,13 +73,13 @@ void CStatue::Update()
 	CObjectX::Update();
 
 #ifdef _DEBUG
-	CDebugProc::Print("StatueCollisionBoxFpos(%f,%f,%f)\n", m_collisionBox->GetPos().x, m_collisionBox->GetPos().y, m_collisionBox->GetPos().z);
-	CDebugProc::Print("StatueCollisionCylinderFpos(%f,%f,%f)\n", m_collisionCylinder->GetPos().x, m_collisionCylinder->GetPos().y, m_collisionCylinder->GetPos().z);
+	CDebugProc::Print("StatueCollisionBoxï¼špos(%f,%f,%f)\n", m_collisionBox->GetPos().x, m_collisionBox->GetPos().y, m_collisionBox->GetPos().z);
+	CDebugProc::Print("StatueCollisionCylinderï¼špos(%f,%f,%f)\n", m_collisionCylinder->GetPos().x, m_collisionCylinder->GetPos().y, m_collisionCylinder->GetPos().z);
 #endif // _DEBUG
 }
 
 //--------------------------------------------------------------
-// •`‰æ
+// æç”»
 //--------------------------------------------------------------
 void CStatue::Draw()
 {
@@ -87,9 +87,9 @@ void CStatue::Draw()
 }
 
 //--------------------------------------------------------------
-// ¶¬
+// ç”Ÿæˆ
 //--------------------------------------------------------------
-CStatue* CStatue::Create(const D3DXVECTOR3& inPos)
+CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot)
 {
 	CStatue* pStatue = nullptr;
 	pStatue = new CStatue;
@@ -98,6 +98,8 @@ CStatue* CStatue::Create(const D3DXVECTOR3& inPos)
 	{
 		pStatue->Init();
 		pStatue->SetPos(inPos);
+		pStatue->m_collisionBox = CCollisionBox::Create(inPos, inRot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
+		pStatue->m_collisionCylinder = CCollisionCylinder::Create(inPos,15.0f, 15.0f);
 	}
 
 	return pStatue;

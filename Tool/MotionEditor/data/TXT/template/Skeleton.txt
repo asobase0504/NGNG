@@ -9,19 +9,21 @@ SCRIPT			# この行は絶対消さないこと！
 #------------------------------------------------------------------------------
 # モデル数
 #------------------------------------------------------------------------------
-NUM_MODEL = 8
+NUM_MODEL = 10
 
 #------------------------------------------------------------------------------
 # モデルファイル名
 #------------------------------------------------------------------------------
-MODEL_FILENAME = data\MODEL\Skeleton\Body.x			# 背骨
-MODEL_FILENAME = data\MODEL\Skeleton\Head.x			# 頭
-MODEL_FILENAME = data\MODEL\Skeleton\Waist.x		# 骨盤
-MODEL_FILENAME = data\MODEL\Skeleton\HandR.x		# 右手
-MODEL_FILENAME = data\MODEL\Skeleton\HandL.x		# 左手
-MODEL_FILENAME = data\MODEL\Skeleton\LegR.x			# 右足
-MODEL_FILENAME = data\MODEL\Skeleton\LegL.x			# 左足
-MODEL_FILENAME = data\MODEL\Skeleton\Spine.x		# 肋骨
+MODEL_FILENAME = data\MODEL\Skeleton\Sebone.x	# 背骨
+MODEL_FILENAME = data\MODEL\Skeleton\Head.x		# 頭
+MODEL_FILENAME = data\MODEL\Skeleton\Kotuban.x	# 骨盤
+MODEL_FILENAME = data\MODEL\Skeleton\ArmR.x		# 右腕
+MODEL_FILENAME = data\MODEL\Skeleton\ArmL.x		# 左腕
+MODEL_FILENAME = data\MODEL\Skeleton\HandR.x	# 右手
+MODEL_FILENAME = data\MODEL\Skeleton\HandL.x	# 左手
+MODEL_FILENAME = data\MODEL\Skeleton\LegR.x		# 右足
+MODEL_FILENAME = data\MODEL\Skeleton\LegL.x		# 左足
+MODEL_FILENAME = data\MODEL\Skeleton\Rokkotu.x	# 肋骨
 
 #------------------------------------------------------------------------------
 # キャラクター情報
@@ -30,56 +32,70 @@ CHARACTERSET
 	PARTSSET
 		INDEX = 0					# 背骨
 		PARENT = -1					# (親)NULL
-		POS = 0.0 52.5 0.0
+		POS = 0.0 28.5 0.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 
 	PARTSSET
 		INDEX = 1					# 頭
 		PARENT = 0					# (親)背骨
-		POS = 0.0 15.2 0.0
+		POS = 0.0 29.2 -2.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 	
 	PARTSSET
 		INDEX = 2					# 骨盤
 		PARENT = 0					# (親)背骨
-		POS = 0.0 -18.9 0.0
+		POS = 0.0 -3.0 0.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 
 	PARTSSET
-		INDEX = 3					# 右手
+		INDEX = 3					# 右腕
 		PARENT = 0					# (親)背骨
 		POS = -13.1 9.3 0.0
-		ROT = 0.0 0.0 0.0
+		ROT = 0.0 0.0 3.0
 	END_PARTSSET
-
+	
 	PARTSSET
-		INDEX = 4					# 左手
+		INDEX = 4					# 左腕
 		PARENT = 0					# (親)背骨
 		POS = 13.1 9.3 0.0
+		ROT = 0.0 0.0 -3.0
+	END_PARTSSET
+
+	PARTSSET
+		INDEX = 5					# 右手
+		PARENT = 3					# (親)右腕
+		POS = -0.60 -15.0 0.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 
 	PARTSSET
-		INDEX = 5					# 右足
-		PARENT = 0					# (親)背骨
-		POS = -6.0 -5.3 0.0
+		INDEX = 6					# 左手
+		PARENT = 4					# (親)左腕
+		POS = 0.60 -15.0 0.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 
 	PARTSSET
-		INDEX = 6					# 左足
-		PARENT = 0					# (親)背骨
-		POS = 6.0 -5.3 0.0
+		INDEX = 7					# 左足
+		PARENT = 2					# (親)骨盤
+		POS = -6.0 -17.3 1.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 
 	PARTSSET
-		INDEX = 7					# 肋骨
+		INDEX = 8					# 右足
+		PARENT = 2					# (親)骨盤
+		POS = 6.0 -17.3 1.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+	
+	PARTSSET
+		INDEX = 9					# 肋骨
 		PARENT = 0					# (親)背骨
-		POS = 6.0 -5.3 0.0
+		POS = 0.0 3.0 0.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 	

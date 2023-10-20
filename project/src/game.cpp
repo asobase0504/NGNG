@@ -22,7 +22,7 @@
 #include "object_polygon3d.h"
 #include "PlayerController.h"
 
-/* SestemŒn“ */
+/* SystemŒn“ */
 #include "application.h"
 #include "fade.h"
 #include "sound.h"
@@ -32,6 +32,7 @@
 #include "utility.h"
 
 /* 3DŒn“ */
+#include "map.h"
 
 /* ObjectŒn“ */
 #include "object_polygon3d.h"
@@ -74,9 +75,9 @@ HRESULT CGame::Init(void)
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
 	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
 
-	CMesh::Create();
+	CMap::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
 
-	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), ITEM_POWER_UP);
+	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
 	m_camera->SetTargetPos(pPlayer->GetPos());
 
 	CStatue* pStatue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(100.0f, 0.0f, 100.0f),CStatueManager::BLOOD);

@@ -22,6 +22,8 @@
     <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\enemy_data_base.cpp" />
     <ClCompile Include="src\enemy_manager.cpp" />
+    <ClCompile Include="src\item_data_base.cpp" />
+    <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\player_manager.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\camera.cpp" />
@@ -115,6 +117,7 @@
     <ClInclude Include="src\letter.h" />
     <ClInclude Include="src\light.h" />
     <ClInclude Include="src\line.h" />
+    <ClInclude Include="src\map.h" />
     <ClInclude Include="src\mode.h" />
     <ClInclude Include="src\motion.h" />
     <ClInclude Include="src\motion_model3D.h" />
@@ -147,6 +150,12 @@
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\title.h" />
     <ClInclude Include="src\utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="data\FX\Effect.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7EBBFD2F-1F99-4A13-9899-6C72FA7C556A}</ProjectGuid>

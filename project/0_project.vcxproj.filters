@@ -57,6 +57,9 @@
     <Filter Include="ソース ファイル\Mode\Game\00_Object\character\skill">
       <UniqueIdentifier>{72beb232-3206-4cde-a97e-16c6701d3460}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\00_Main\Shader">
+      <UniqueIdentifier>{c70ada01-af2e-491c-accc-46cd316aae73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -260,6 +263,12 @@
     <ClCompile Include="src\statue_manager.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\map.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\item_data_base.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -460,5 +469,13 @@
     <ClInclude Include="src\statue_manager.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
+    <ClInclude Include="src\map.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="data\FX\Effect.fx">
+      <Filter>ソース ファイル\00_Main\Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

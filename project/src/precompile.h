@@ -51,6 +51,7 @@
 #include <functional>
 #include <chrono>
 #include <string>
+#include <array>
 
 // newデバッグ用
 #pragma push_macro("new")

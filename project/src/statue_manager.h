@@ -56,3 +56,4 @@ private:		// ƒƒ“ƒo•Ï”
 	CStatue* m_pStatue;
 };
 #endif
+

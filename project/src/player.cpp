@@ -20,6 +20,8 @@
 #include "collision_cylinder.h"
 #include "utility.h"
 #include "skill.h"
+#include "item_data_base.h"
+#include "item.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -108,15 +110,12 @@ void CPlayer::Update()
 	
 	TakeItem();
 
-	DEBUG_PRINT("pos1 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
-
 	if (m_collisionCyinder->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(), true))
 	{
 		// 押し出した位置
 		D3DXVECTOR3 extrusion = m_collisionCyinder->GetExtrusion();
 		SetPos(D3DXVECTOR3(extrusion));
 		m_collisionCyinder->SetPos(D3DXVECTOR3(extrusion));
-		DEBUG_PRINT("pos2 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
 		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
@@ -267,6 +266,12 @@ void CPlayer::TakeItem()
 	}
 
 	m_haveItem[id]++;
+	CItem::ITEM_FUNC itemFunc = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)id)->GetWhenPickFunc();
+
+	if (itemFunc != nullptr)
+	{
+		itemFunc(this, m_haveItem[id]);
+	}
 }
 
 //--------------------------------------------------------------
