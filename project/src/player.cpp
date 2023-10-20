@@ -13,11 +13,13 @@
 #include "enemy_manager.h"
 #include "player_manager.h"
 #include "Controller.h"
+#include "skill_data_base.h"
 #include "application.h"
 #include "objectX.h"
 #include "collision_cylinder.h"
 #include "utility.h"
 #include "skill.h"
+#include <sstream>
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -42,6 +44,17 @@ HRESULT CPlayer::Init()
 {
 	// 初期化処理
 	CCharacter::Init();
+
+	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
+	{
+		// スキルを生成
+		m_Skill[nCnt] = CSkill::Create();
+		// intをstring型に変換する
+		std::ostringstream  name;
+		name << "YAMATO_SKILL_" << nCnt+1;
+		// スキルの設定
+		m_Skill[nCnt]->SetSkill(name.str(), this);
+	}
 
 	// モデルの読み込み
 	m_apModel[0]->LoadModel("PLAYER01");
@@ -86,7 +99,6 @@ void CPlayer::Update()
 	{
 		return;
 	}
-
 
 	// 移動
 	Move();
@@ -147,8 +159,8 @@ void CPlayer::Attack()
 	// 通常攻撃(左クリック)
 	if (m_controller->Skill_1())
 	{
-		// スキルの生成
-		CSkill::YamatoSkill("YAMATO_SKILL_1",this);
+		// 発動時に生成
+
 	}
 
 	// スキル1(右クリック)
