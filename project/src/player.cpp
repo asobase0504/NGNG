@@ -11,9 +11,9 @@
 #include "player.h"
 #include "enemy.h"
 #include "statue.h"
+#include "statue_manager.h"
 #include "enemy_manager.h"
 #include "player_manager.h"
-#include "statue_manager.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
@@ -120,15 +120,15 @@ void CPlayer::Update()
 		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
-	if (m_collisionCyinder->ToBox(CStatueManager::GetInstance()->GetStatueBox(), true))
-	{
-		// 押し出した位置
-		D3DXVECTOR3 extrusion = m_collisionCyinder->GetExtrusion();
-		SetPos(D3DXVECTOR3(extrusion));
-		m_collisionCyinder->SetPos(D3DXVECTOR3(extrusion));
-		DEBUG_PRINT("pos2 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
-		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	}
+	//if (m_collisionCyinder->ToBox(CStatueManager::GetInstance()->GetStatue(), true))
+	//{
+	//	// 押し出した位置
+	//	D3DXVECTOR3 extrusion = m_collisionCyinder->GetExtrusion();
+	//	SetPos(D3DXVECTOR3(extrusion));
+	//	m_collisionCyinder->SetPos(D3DXVECTOR3(extrusion));
+	//	DEBUG_PRINT("pos2 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
+	//	SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	//}
 
 	DEBUG_PRINT("pos3 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
 

@@ -35,6 +35,8 @@ CStatue::~CStatue()
 HRESULT CStatue::Init()
 {
 	CObjectX::Init();
+	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f));
+	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 15.0f, 15.0f);
 	LoadModel(m_modelData);
 
 	return S_OK;
@@ -53,9 +55,19 @@ void CStatue::Uninit()
 //--------------------------------------------------------------
 void CStatue::Update()
 {
-	if (m_collisionCylinder->ToCylinder(CPlayerManager::GetInstance()->GetPlayerCylinder()))
+	m_collisionBox->SetPos(GetPos());
+	m_collisionCylinder->SetPos(GetPos());
+
+	bool a = CPlayerManager::GetInstance()->GetPlayerCylinder()->ToBox(m_collisionBox, true);
+
+	if (a)
 	{
-		int a = 0;
+		// ‰Ÿ‚µo‚µ‚½ˆÊ’u
+		D3DXVECTOR3 extrusion = CPlayerManager::GetInstance()->GetPlayerCylinder()->GetExtrusion();
+		CPlayerManager::GetInstance()->GetPlayer()->SetPos(D3DXVECTOR3(extrusion));
+		CPlayerManager::GetInstance()->GetPlayerCylinder()->SetPos(D3DXVECTOR3(extrusion));
+
+		CPlayerManager::GetInstance()->GetPlayer()->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
 	CObjectX::Update();
@@ -86,9 +98,17 @@ CStatue* CStatue::Create(const D3DXVECTOR3& inPos)
 	{
 		pStatue->Init();
 		pStatue->SetPos(inPos);
-		pStatue->m_collisionBox = CCollisionBox::Create(inPos,D3DXVECTOR3(10.0f,10.0f,10.0f));
-		pStatue->m_collisionCylinder = CCollisionCylinder::Create(inPos,15.0f, 15.0f);
 	}
 
 	return pStatue;
+}
+
+bool CStatue::Touch(CPlayer* pPlayer)
+{
+	if (m_collisionCylinder->ToCylinder(pPlayer->GetCylinder()))
+	{
+		return true;
+	}
+
+	return false;
 }

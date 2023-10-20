@@ -7,9 +7,10 @@
 
 // include
 #include "statue_manager.h"
+#include "statue_blood.h"
+#include "statue.h"
 #include "collision_box.h"
 #include "application.h"
-#include "objectX.h"
 
 //--------------------------------------------------------------
 //Ã“Iƒƒ“ƒo•Ï”éŒ¾
@@ -73,12 +74,20 @@ void CStatueManager::Draw(void)
 {
 }
 
-//--------------------------------------------------------------
-// ¶¬ˆ—
-//--------------------------------------------------------------
-CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos)
+CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
 {
-	m_pStatue = CStatue::Create(pos);
+	switch (type)
+	{
+	case CStatueManager::NONE:
+		break;
+	case CStatueManager::BLOOD:
+		m_pStatue = CStatueBlood::Create(pos);
+		break;
+	case CStatueManager::MAX:
+		break;
+	default:
+		break;
+	}
 
 	return m_pStatue;
 }

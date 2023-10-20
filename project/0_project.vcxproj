@@ -74,6 +74,7 @@
     <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\sound.cpp" />
     <ClCompile Include="src\statue.cpp" />
+    <ClCompile Include="src\statue_blood.cpp" />
     <ClCompile Include="src\statue_manager.cpp" />
     <ClCompile Include="src\status.cpp" />
     <ClCompile Include="src\task.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\statue.h" />
+    <ClInclude Include="src\statue_blood.h" />
     <ClInclude Include="src\statue_manager.h" />
     <ClInclude Include="src\status.h" />
     <ClInclude Include="src\task.h" />
