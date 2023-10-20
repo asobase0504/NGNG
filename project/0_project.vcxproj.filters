@@ -257,6 +257,9 @@
     <ClCompile Include="src\statue.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\statue_blood.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
     <ClCompile Include="src\statue_manager.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
@@ -459,6 +462,9 @@
     </ClInclude>
     <ClInclude Include="src\statue.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_blood.h">
+      <Filter>ソース ファイル\00_Main</Filter>
     </ClInclude>
     <ClInclude Include="src\statue_manager.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>

@@ -11,6 +11,7 @@
 // 前方宣言
 //--------------------------------------------------------------
 class CCharacter;
+class CCollision;
 
 //==============================================================
 // 敵の行動パターンデータベース
@@ -18,19 +19,25 @@ class CCharacter;
 class CSkillDataBase
 {
 public:
-	using ABILITY = std::function<void(CCharacter*)>;
+	using HIT_ABILITY = std::function<bool(CCharacter*, CCharacter*)>;
+	using ABILITY = std::function<bool(CCharacter*)>;
 
 	struct BASE
 	{
-		int CT;
-		int stock;
+		int				CT;				// クールタイム
+		int				stock;			// ストック数
+		float			damage;			// ダメージ量
+		float			knockback;		// ノックバック量
+		float			duration;		// 持続時間
+		float			interval;		// 多段ヒットの場合次の当たり判定を出現させるまでの時間
+		D3DXVECTOR3		size;			// 当たり判定の大きさ
 	};
 
 	struct SKILL_INFO
 	{
 		BASE baseInfo;
 		ABILITY ability;
-		ABILITY abilityHit;
+		HIT_ABILITY abilityHit;
 	};
 
 private:
@@ -44,14 +51,19 @@ public:
 private:
 	void Init();
 public:
-	SKILL_INFO GetInfo(std::string tag) { return m_dates[tag]; }
-	ABILITY GetAbility(std::string tag) { return m_dates[tag].ability; }
-	ABILITY GetHitAbility(std::string tag) { return m_dates[tag].abilityHit; }
-	int GetCT(std::string tag) { return m_dates[tag].baseInfo.CT; }
-	int GetStack(std::string tag) { return m_dates[tag].baseInfo.stock; }
+	SKILL_INFO	GetInfo(std::string tag) { return m_dates[tag]; }
+	ABILITY		GetAbility(std::string tag) { return m_dates[tag].ability; }
+	HIT_ABILITY		GetHitAbility(std::string tag) { return m_dates[tag].abilityHit; }
+	int			GetCT(std::string tag) { return m_dates[tag].baseInfo.CT; }
+	int			GetStack(std::string tag) { return m_dates[tag].baseInfo.stock; }
+	float		GetDamage(std::string tag) { return m_dates[tag].baseInfo.damage; }
+	float		GetKnockBack(std::string tag) { return m_dates[tag].baseInfo.knockback; }
+	float		GetDuration(std::string tag) { return m_dates[tag].baseInfo.duration; }
+	float		GetInterval(std::string tag) { return m_dates[tag].baseInfo.interval; }
+	D3DXVECTOR3 GetSize(std::string tag) { return m_dates[tag].baseInfo.size; }
 
 private:	// メンバ変数
-
+	CCollision *m_Collision;
 	std::unordered_map<std::string, SKILL_INFO> m_dates;
 };
 #endif

@@ -13,15 +13,10 @@
 #include "task.h"
 
 //==============================================================
-// マクロ宣言
-//==============================================================
-#define MAX_SKILL		(4)
-#define MAX_SKILL_TYPE	(1)
-
-//==============================================================
 // 前方宣言
 //==============================================================
 class CCharacter;
+class CCollision;
 
 //==============================================================
 // スキルクラス
@@ -39,12 +34,22 @@ public:
 	void	Update() override;
 
 	// 静的メンバ関数
-	static CSkill *YamatoSkill(std::string tag, CCharacter *chara);				// スキルの生成
+	static CSkill	*Create();									// スキルの生成
+
+
+	void CollisionSkill();										// スキルの当たり判定
+	// Getter
+	int	GetCT() { return m_CT; }
+
+	// Setter
+	void SetSkill(std::string tag, CCharacter *chara);			// スキルの設定
 
 private:		// メンバ変数
 	CCharacter*		m_apChara;				// キャラクターのインスタンス
+	CCollision*		m_Collision;			// 当たり判定
 	int				m_ID;					// スキルID
-	int				m_CT[MAX_SKILL];		// クールタイム
+	int				m_CT;					// クールタイム
+	bool			m_isCollision;			// 当たっているかどうか	
 	std::string		m_Name;					// スキル名
 };
 #endif
