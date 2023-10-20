@@ -52,12 +52,14 @@ HRESULT CCharacter::Init()
 	m_barrierRePopTime.SetCurrent(100);
 	m_attack.Init(100);
 	m_attack.SetCurrent(100);
+	m_attackSpeed.Init(1.0f);
+	m_attackSpeed.SetCurrent(1.0f);
 	m_defense.Init(100);
 	m_defense.SetCurrent(100);
-	m_criticalRate.Init(100);
-	m_criticalRate.SetCurrent(100);
-	m_criticalDamage.Init(100);
-	m_criticalDamage.SetCurrent(100);
+	m_criticalRate.Init(0.0f);
+	m_criticalRate.SetCurrent(0.0f);
+	m_criticalDamage.Init(2.0f);
+	m_criticalDamage.SetCurrent(2.0f);
 	m_movePower.Init(0.5f);
 	m_movePower.SetCurrent(2.0f);
 	m_jumpPower.Init(100);

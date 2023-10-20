@@ -51,53 +51,44 @@ public:
 	// ゲッターとセッター
 	//==============================================================
 	// ジャンプ回数
-	CStatus<unsigned int> GetJumpCount() { return m_jumpCount; }
-	void SetJumpCount(CStatus<unsigned int> hp) { m_jumpCount = hp; }
-
-	// 攻撃力
-	CStatus<unsigned int> GetAtk() { return m_attack; }
-	void SetAtk(CStatus<unsigned int> atk) { m_attack = atk; }
+	CStatus<unsigned int>* GetJumpCount() { return &m_jumpCount; }
 
 	// バリアの回復時間
-	CStatus<unsigned int> GetBarrierRepopTime() { return m_barrierRePopTime; }
-	void SetBarrierRepopTime(CStatus<unsigned int> barrierRe) { m_barrierRePopTime = barrierRe; }
+	CStatus<unsigned int>* GetBarrierRepopTime() { return &m_barrierRePopTime; }
 
+	// 攻撃力
+	CStatus<unsigned int>* GetAtk() { return &m_attack; }
+
+	// 攻撃速度
+	CStatus<float>* GetAtkSpd() { return &m_attackSpeed; }
+	
 	// HP
-	CStatus<int> GetHp() { return m_hp; }
-	void SetHp(CStatus<int> hp) { m_hp = hp; }
+	CStatus<int>* GetHp() { return &m_hp; }
 
 	// 追加HP
-	CStatus<int> GetAddHp() { return m_addHp; }
-	void SetAddHp(CStatus<int> addHp) { m_addHp = addHp; }
+	CStatus<int>* GetAddHp() { return &m_addHp; }
 
 	// 追加HPの減少時間
-	CStatus<int> GetAddHpSub() { return m_addHpSubTime; }
-	void SetAddHpSub(CStatus<int> addHpsub) { m_addHpSubTime = addHpsub; }
+	CStatus<int>* GetAddHpSub() { return &m_addHpSubTime; }
 
 	// バリア
-	CStatus<int> GetBarrier() { return m_barrier; }
-	void SetBarrier(CStatus<int> barrier) { m_barrier = barrier; }
+	CStatus<int>* GetBarrier() { return &m_barrier; }
 
 	// 防御力
-	CStatus<int> GetDeffence() { return m_defense; }
-	void SetDefence(CStatus<int> def) { m_defense = def; }
+	CStatus<int>* GetDefense() { return &m_defense; }
 
 	// クリティカル率
-	CStatus<float> GetCriticalRate() { return m_criticalRate; }
-	void SetCriticalRate(CStatus<float> crtrate) { m_criticalRate = crtrate; }
+	CStatus<float>* GetCriticalRate() { return &m_criticalRate; }
 
 	// クリティカルダメージ
-	CStatus<float> GetCriticalDamage() { return m_criticalDamage; }
-	void SetCriticalDamage(CStatus<float> cridmg) { m_criticalDamage = cridmg; }
+	CStatus<float>* GetCriticalDamage() { return &m_criticalDamage; }
 
 	// 移動速度
-	CStatus<float> GeSpeed() { return m_movePower; }
-	void SetSpeed(CStatus<float> move) { m_movePower = move; }
-
+	CStatus<float>* GetSpeed() { return &m_movePower; }
+	
 	// ジャンプ力
-	CStatus<float> GetJumpPower() { return m_jumpPower; }
-	void SetJumpPower(CStatus<float> jump) { m_jumpPower = jump; }
-
+	CStatus<float>* GetJumpPower() { return &m_jumpPower; }
+	
 private:
 	virtual void Attack();
 	virtual void Move();
@@ -121,6 +112,7 @@ protected:		// ステータス
 	CStatus<unsigned int> m_barrierRePopTime;	// バリアの復活時間
 	CStatus<unsigned int> m_attack;				// 攻撃力
 	CStatus<int> m_defense;						// 防御力
+	CStatus<float> m_attackSpeed;				// 攻撃速度
 	CStatus<float> m_criticalRate;				// クリティカル率
 	CStatus<float> m_criticalDamage;			// クリティカルダメージ
 	CStatus<float> m_movePower;					// 移動力
