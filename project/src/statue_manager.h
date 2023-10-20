@@ -41,7 +41,7 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	CStatue* CreateStatue(D3DXVECTOR3 pos);			// 像の生成
+	CStatue* CreateStatue(D3DXVECTOR3 pos, D3DXVECTOR3 rot);			// 像の生成
 
 	// ゲッター
 	CStatue* GetPlayer() { return m_pStatue; }

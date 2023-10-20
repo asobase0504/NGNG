@@ -22,6 +22,7 @@
     <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\enemy_data_base.cpp" />
     <ClCompile Include="src\enemy_manager.cpp" />
+    <ClCompile Include="src\item_data_base.cpp" />
     <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\player_manager.cpp" />
     <ClCompile Include="src\application.cpp" />
