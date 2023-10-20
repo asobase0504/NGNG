@@ -38,13 +38,7 @@ CMap::~CMap()
 //--------------------------------------------------------------
 HRESULT CMap::Init(void)
 {
-	m_apModels.resize(1);
-	m_apMesh.resize(1);
-	m_apModels[0] = CObjectX::Create(m_pos);
-	m_apModels[0]->LoadModel("BOX");
-
-	m_apMesh[0] = CMesh::Create();
-	m_apMesh[0]->SetMesh(50);
+	Load("data/FILE/map/map01.json");
 
 	return S_OK;
 }
@@ -80,4 +74,32 @@ CMap* CMap::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	}
 
 	return pMap;
+}
+
+void CMap::Load(std::string path)
+{
+	nlohmann::json map = LoadJson(path);
+
+	int size = map["MODEL"].size();
+	for (int i = 0; i < size; i++)
+	{
+		nlohmann::json model = map["MODEL"][i];
+		D3DXVECTOR3 pos(model["POS"][0], model["POS"][1], model["POS"][2]);
+		CObjectX* object = CObjectX::Create(pos);
+		D3DXVECTOR3 rot(model["ROT"][0], model["ROT"][1], model["ROT"][2]);
+		object->SetRot(rot);
+		object->LoadModel(model["TAG"]);
+		m_apModels.push_back(object);
+	}
+
+	size = map["MESH"].size();
+	for (int i = 0; i < size; i++)
+	{
+		nlohmann::json mesh = map["MODEL"][i];
+		CMesh* object = CMesh::Create();
+		D3DXVECTOR3 pos(mesh["POS"][0], mesh["POS"][1], mesh["POS"][2]);
+		object->SetPos(pos);
+
+		m_apMesh.push_back(object);
+	}
 }

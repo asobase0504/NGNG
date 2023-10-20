@@ -17,8 +17,7 @@
 // コンストラクタ
 //--------------------------------------------------------------
 CStatue::CStatue(CTaskGroup::EPriority list) :
-	m_modelData{
-	"BOX", }
+	m_modelData("BOX")
 {
 }
 
