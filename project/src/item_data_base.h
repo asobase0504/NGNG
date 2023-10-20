@@ -19,6 +19,10 @@ public:
 		ITEM_POWER_UP,
 		ITEM_POWER_ON,
 		ITEM_POWER_TO,
+		ITEM_DANGO,
+		ITEM_SHURIKEN,
+		ITEM_GETA,
+		ITEM_UMBRELLA,
 		ITEM_MAX
 	};
 private:
@@ -33,7 +37,6 @@ public:
 
 public:
 	CItem* GetItemData(EItemType inState) { return m_item[inState]; }
-private:
 
 private:	// ÉÅÉìÉoïœêî
 	std::array<CItem*, ITEM_MAX> m_item;

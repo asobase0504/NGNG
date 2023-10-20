@@ -260,11 +260,11 @@
     <ClCompile Include="src\statue_manager.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\item_data_base.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
-    </ClCompile>
     <ClCompile Include="src\map.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\item_data_base.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
