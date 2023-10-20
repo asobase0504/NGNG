@@ -1,40 +1,44 @@
 //**************************************************************
 //
-// プレイヤー管理
+// 像管理
 // Author : 梶田大夢
 //
 //**************************************************************
-#ifndef _PLAYER_MANAGER_H_			// このマクロ定義がされてなかったら
-#define _PLAYER_MANAGER_H_			// 二重インクルード防止のマクロ定義
+#ifndef _STATUE_MANAGER_H_			// このマクロ定義がされてなかったら
+#define _STATUE_MANAGER_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
 #include "task.h"
-#include "player.h"
+#include "statue.h"
 
 //==============================================================
 // 前方宣言
 //==============================================================
-class CObjectX;
-class CController;
-class CPlayer;
-class CCollisionCylinder;
+class CCollisionBox;
 
 //==============================================================
-// プレイヤー管理クラス
+// 敵管理クラス
 //==============================================================
-class CPlayerManager : public CTask
+class CStatueManager : public CTask
 {
 public:	// シングルトン用のインスタンス
-	static CPlayerManager* GetInstance();
+	static CStatueManager* GetInstance();
 private:
-	CPlayerManager();
-	static CPlayerManager* m_playerManager;
+	CStatueManager();
+	static CStatueManager* m_statueManager;
 
 public:
+	enum EType
+	{
+		NONE = 0,
+		BLOOD,
+		MAX
+	};
+
 	// コンストラクタとデストラクタ
-	~CPlayerManager();
+	~CStatueManager();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
@@ -43,14 +47,13 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	CPlayer* CreatePlayer(D3DXVECTOR3 pos);			// プレイヤーの生成
+	CStatue* CreateStatue(D3DXVECTOR3 pos, EType type);			// 像の生成
 
-	// ゲッター
-	CPlayer* GetPlayer() { return m_pPlayer; }
-	const D3DXVECTOR3& GetPlayerPos() { return m_pPlayer->GetPos(); }
-	CCollisionCylinder* GetPlayerCylinder() { return m_pPlayer->GetCylinder(); }
+	CStatue* GetStatue() { return m_pStatue; }
+	CCollisionBox* GetStatueBox() { return m_pStatue->GetCollisionBox(); }
 
 private:		// メンバ変数
-	CPlayer *m_pPlayer;
+	CStatue* m_pStatue;
 };
 #endif
+

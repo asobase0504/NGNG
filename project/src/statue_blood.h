@@ -1,40 +1,37 @@
 //**************************************************************
 //
-// プレイヤー管理
+// 血の祭壇
 // Author : 梶田大夢
 //
 //**************************************************************
-#ifndef _PLAYER_MANAGER_H_			// このマクロ定義がされてなかったら
-#define _PLAYER_MANAGER_H_			// 二重インクルード防止のマクロ定義
+#ifndef _STATUE_BLOOD_H_			// このマクロ定義がされてなかったら
+#define _STATUE_BLOOD_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
-#include "task.h"
-#include "player.h"
+#include "statue.h"
+
+//==============================================================
+// マクロ宣言
+//==============================================================
 
 //==============================================================
 // 前方宣言
 //==============================================================
-class CObjectX;
-class CController;
 class CPlayer;
+class CCollisionBox;
 class CCollisionCylinder;
 
 //==============================================================
-// プレイヤー管理クラス
+// 敵クラス
 //==============================================================
-class CPlayerManager : public CTask
+class CStatueBlood : public CStatue
 {
-public:	// シングルトン用のインスタンス
-	static CPlayerManager* GetInstance();
-private:
-	CPlayerManager();
-	static CPlayerManager* m_playerManager;
-
 public:
 	// コンストラクタとデストラクタ
-	~CPlayerManager();
+	explicit CStatueBlood(int nPriority = 3);
+	~CStatueBlood();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
@@ -43,14 +40,9 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	CPlayer* CreatePlayer(D3DXVECTOR3 pos);			// プレイヤーの生成
+	static CStatueBlood *Create(D3DXVECTOR3 pos);			// 血の祭壇の生成
 
-	// ゲッター
-	CPlayer* GetPlayer() { return m_pPlayer; }
-	const D3DXVECTOR3& GetPlayerPos() { return m_pPlayer->GetPos(); }
-	CCollisionCylinder* GetPlayerCylinder() { return m_pPlayer->GetCylinder(); }
-
-private:		// メンバ変数
-	CPlayer *m_pPlayer;
+private:	// メンバ変数
+	CPlayer* m_pPlayer;
 };
 #endif
