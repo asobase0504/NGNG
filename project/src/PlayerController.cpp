@@ -242,7 +242,7 @@ int CPlayerController::TakeItem()
 		for (auto it = item.begin(); it != item.end();)
 		{
 			CItemModel* itemModel = *it;
-			if (!((CCollisionCyinder*)(m_toOrder->GetCollision())->ToSphere(itemModel->GetCollision())))
+			if (!((CCollisionCylinder*)(m_toOrder->GetCollision())->ToSphere(itemModel->GetCollision())))
 			{
 				it++;
 				continue;

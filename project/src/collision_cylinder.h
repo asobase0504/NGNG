@@ -13,20 +13,20 @@ class CCollisionMesh;
 class CCollisionBox;
 class CCollisionSphere;
 
-class CCollisionCyinder : public CCollision
+class CCollisionCylinder : public CCollision
 {
 public:
-	CCollisionCyinder();
-	~CCollisionCyinder();
+	CCollisionCylinder();
+	~CCollisionCylinder();
 
 	HRESULT Init();
 	void Uninit();
 
-	bool ToCylinder(CCollisionCyinder* inCyinder) override;
+	bool ToCylinder(CCollisionCylinder* inCyinder) override;
 	bool ToBox(CCollisionBox* inBox, bool isExtrusion) override;
 	bool ToSphere(CCollisionSphere* inSphere) override;
 
-	static CCollisionCyinder* Create(const D3DXVECTOR3& pos, const float length ,const float height);
+	static CCollisionCylinder* Create(const D3DXVECTOR3& pos, const float length ,const float height);
 
 	D3DXVECTOR3 GetExtrusion() { return m_extrusion; }
 	float GetLength() { return m_length; }

@@ -46,7 +46,7 @@ void CCollisionMesh::Uninit()
 // メッシュと円柱
 // 引数：円柱のコリジョン
 //--------------------------------------------------------------
-bool CCollisionMesh::ToCylinder(CCollisionCyinder* inCyinder, bool isExtrusion)
+bool CCollisionMesh::ToCylinder(CCollisionCylinder* inCyinder, bool isExtrusion)
 {
 	int primitive = m_primitive;
 	CObjectPolygon3D::VERTEX_3D* pVtx = nullptr;			// 頂点情報へのポインタ

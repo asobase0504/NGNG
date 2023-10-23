@@ -35,6 +35,7 @@ CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 	m_isCollision(true),
 	m_isHasOutLine(false),
 	m_isHasShadow(false),
+	m_TimeCnt(120),
 	tex0(nullptr)
 {
 	//オブジェクトのタイプセット処理
@@ -63,12 +64,14 @@ HRESULT CObjectX::Init()
 	// ハンドルの初期化
 	m_hTechnique = pEffect->GetTechniqueByName("Diffuse");			// エフェクト
 	m_hTexture = pEffect->GetParameterByName(NULL, "Tex");			// テクスチャ
-	m_hmWVP = pEffect->GetParameterByName(NULL, "mWVP");			// ローカル-射影変換行列
-	m_hmWIT = pEffect->GetParameterByName(NULL, "mWIT");			// ローカル-ワールド変換行列
 	m_hvLightDir = pEffect->GetParameterByName(NULL, "vLightDir");	// ライトの方向
 	m_hvDiffuse = pEffect->GetParameterByName(NULL, "vDiffuse");	// 頂点カラー
 	m_hvAmbient = pEffect->GetParameterByName(NULL, "vAmbient");	// 頂点カラー
-	m_hvEyePos = pEffect->GetParameterByName(NULL, "vEyePos");
+	m_hWorld = pEffect->GetParameterByName(NULL, "mWorld");			// ワールド行列
+	m_hProj = pEffect->GetParameterByName(NULL, "mProj");			// プロジェクション行列
+	m_hView = pEffect->GetParameterByName(NULL, "mView");			// ビュー行列
+	m_hTime = pEffect->GetParameterByName(NULL, "Test");
+
 
 	return S_OK;
 }
@@ -134,6 +137,11 @@ void CObjectX::DrawMaterial()
 		return;
 	}
 
+	if (m_TimeCnt > 0)
+	{
+		m_TimeCnt--;
+	}
+
 	/* pEffectに値が入ってる */
 
 	// タスクグループ情報
@@ -142,14 +150,8 @@ void CObjectX::DrawMaterial()
 	// カメラ情報
 	CCamera* pCamera = (CCamera*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_CAMERA, GetPriority());
 
-	D3DMATRIX viewMatrix = pCamera->GetMtxView();
-	D3DMATRIX projMatrix = pCamera->GetMtxProje();
-
-	// ライト情報
-	CLight* lightClass = (CLight*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_LIGHT, GetPriority());
-	D3DLIGHT9 light = lightClass->GetLight(0);
-
-	D3DXMATRIX m;
+	D3DXMATRIX viewMatrix = pCamera->GetMtxView();
+	D3DXMATRIX projMatrix = pCamera->GetMtxProje();
 
 	//-------------------------------------------------
 	// シェーダの設定
@@ -157,33 +159,23 @@ void CObjectX::DrawMaterial()
 	pEffect->SetTechnique(m_hTechnique);
 	pEffect->Begin(NULL, 0);
 
-	D3DXMatrixTranslation(&m, 1.0f, 0.0f, 0.0f);
-
-	// ローカル-射影変換行列
-	D3DXMatrixInverse(&m, NULL, &m_mtxWorld);
-	D3DXMatrixTranspose(&m, &m);
-	pEffect->SetMatrix(m_hmWIT, &m);
-
 	// ワールド射影変換行列
-	m = m_mtxWorld * viewMatrix * projMatrix;
-	pEffect->SetMatrix(m_hmWVP, &m);
+	// シェーダーに行列を渡す
+	pEffect->SetMatrix(m_hWorld, &m_mtxWorld);
+	pEffect->SetMatrix(m_hProj, &projMatrix);
+	pEffect->SetMatrix(m_hView, &viewMatrix);
+
+	// シェーダーに描画から経過した時間を渡す
+	pEffect->SetFloat(m_hTime, m_TimeCnt);
+
+	// ライト情報
+	CLight* lightClass = (CLight*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_LIGHT, GetPriority());
+	D3DLIGHT9 light = lightClass->GetLight(0);
 
 	// ライトの方向
 	D3DXVECTOR4 lightDir = D3DXVECTOR4(light.Direction.x, light.Direction.y, light.Direction.z, 0);
-	D3DXMatrixInverse(&m, NULL, &m_mtxWorld);
-	D3DXVec4Transform(&lightDir, &lightDir, &m);
-	D3DXVec3Normalize((D3DXVECTOR3*)&lightDir, (D3DXVECTOR3*)&lightDir);
+	// ライトの方向をシェーダーに渡す
 	pEffect->SetVector(m_hvLightDir, &lightDir);
-
-	// 視点行列
-	m = m_mtxWorld * viewMatrix;
-	D3DXMatrixInverse(&m, NULL, &m);
-
-	// 視点
-	D3DXVECTOR4 EyePos(0, 0, 0, 1);
-	D3DXVec4Transform(&EyePos, &EyePos, &m);
-	D3DXVec4Normalize(&EyePos, &EyePos);
-	pEffect->SetVector(m_hvEyePos, &EyePos);	//視点をシェーダーに渡す
 
 	//マテリアルデータのポインタを取得する
 	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();

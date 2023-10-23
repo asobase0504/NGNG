@@ -13,7 +13,7 @@
 #include "object.h"
 
 class CCollisionMesh;
-class CCollisionCyinder;
+class CCollisionCylinder;
 class CCollisionSphere;
 class CCollisionBox;
 
@@ -25,7 +25,7 @@ public:
 
 	void Draw() final {}
 
-	virtual bool ToCylinder(CCollisionCyinder* inCyinder) { return false; }
+	virtual bool ToCylinder(CCollisionCylinder* inCyinder) { return false; }
 	virtual bool ToMesh(CCollisionMesh* inMesh) { return false; }
 	virtual bool ToBox(CCollisionBox* inBox, bool isExtrusion) { return false; }
 	virtual bool ToSphere(CCollisionSphere* inSphere) { return false; }
