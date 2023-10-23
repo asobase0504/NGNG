@@ -67,6 +67,10 @@ HRESULT CCharacter::Init()
 	m_jumpPower.SetCurrent(3.0f);
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
+	m_money.Init(100);
+	m_money.SetCurrent(100);
+	m_addMoney.Init(100);
+	m_addMoney.SetCurrent(100);
 	return S_OK;
 }
 
