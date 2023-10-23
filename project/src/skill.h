@@ -1,55 +1,55 @@
 //**************************************************************
 //
-// プレイヤー管理
-// Author : 梶田大夢
+// スキル
+// Author : 髙野馨將
 //
 //**************************************************************
-#ifndef _PLAYER_MANAGER_H_			// このマクロ定義がされてなかったら
-#define _PLAYER_MANAGER_H_			// 二重インクルード防止のマクロ定義
+#ifndef _SKILL_H_			// このマクロ定義がされてなかったら
+#define _SKILL_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
 #include "task.h"
-#include "player.h"
 
 //==============================================================
 // 前方宣言
 //==============================================================
-class CObjectX;
-class CController;
-class CPlayer;
-class CCollisionCylinder;
+class CCharacter;
+class CCollision;
 
 //==============================================================
-// プレイヤー管理クラス
+// スキルクラス
 //==============================================================
-class CPlayerManager : public CTask
+class CSkill : public CTask
 {
-public:	// シングルトン用のインスタンス
-	static CPlayerManager* GetInstance();
-private:
-	CPlayerManager();
-	static CPlayerManager* m_playerManager;
-
 public:
 	// コンストラクタとデストラクタ
-	~CPlayerManager();
+	explicit CSkill(int nPriority = 3);
+	~CSkill();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
 	void	Uninit() override;
 	void	Update() override;
-	void	Draw() override;
 
 	// 静的メンバ関数
-	CPlayer* CreatePlayer(D3DXVECTOR3 pos);			// プレイヤーの生成
+	static CSkill	*Create();									// スキルの生成
 
-	// ゲッター
-	CPlayer* GetPlayer() { return m_pPlayer; }
-	const D3DXVECTOR3& GetPlayerPos() { return m_pPlayer->GetPos(); }
+
+	void CollisionSkill();										// スキルの当たり判定
+	// Getter
+	int	GetCT() { return m_CT; }
+
+	// Setter
+	void SetSkill(std::string tag, CCharacter *chara);			// スキルの設定
 
 private:		// メンバ変数
-	CPlayer *m_pPlayer;
+	CCharacter*		m_apChara;				// キャラクターのインスタンス
+	CCollision*		m_Collision;			// 当たり判定
+	int				m_ID;					// スキルID
+	int				m_CT;					// クールタイム
+	bool			m_isCollision;			// 当たっているかどうか	
+	std::string		m_Name;					// スキル名
 };
 #endif

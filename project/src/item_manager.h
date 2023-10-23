@@ -11,12 +11,13 @@
 // include
 //==============================================================
 #include "object2d.h"
-#include "item_data.h"
+#include "item_data_base.h"
 
 //==============================================================
 // 前方宣言
 //==============================================================
 class CItemModel;
+class CCharacter;
 class CItem;
 
 //==============================================================
@@ -27,7 +28,7 @@ class CItemManager : public CTask
 public:	// シングルトン用のインスタンス
 	static CItemManager* GetInstance();
 private:
-	CItemManager(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	CItemManager(CTaskGroup::EPriority list = CTaskGroup::LEVEL_SYSTEM);
 	static CItemManager* m_itemManager;
 public:
 	~CItemManager();
@@ -37,12 +38,19 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void CreateItem(const D3DXVECTOR3& inPos, ITEM_TYPE inId);
+	void CreateItem(const D3DXVECTOR3& inPos, CItemDataBase::EItemType inId);
 
 	std::list<CItemModel*>& GetPopItemModel() { return m_itemModel; }
+
+	void AllWhenPick(CCharacter*,item_count);
+	void AllWhenLost(CCharacter*, item_count);
+	void AllWhenAllWay(CCharacter*, item_count);
+	void AllWhenDamage(CCharacter*, item_count);
+	void AllWhenHit(CCharacter*, item_count);
+
 private:
 	// アイテムのタイプ
-	ITEM_TYPE m_itemType;
+	CItemDataBase::EItemType m_itemType;
 
 	// アイテムのデータ(ステータスアップするよ～とか)
 	CItem* m_itemData;

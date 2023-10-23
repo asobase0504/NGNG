@@ -4,8 +4,8 @@
 // Author : Yuda Kaito
 //
 //**************************************************************
-#ifndef _SKILL_DATA_BASE_H_			// このマクロ定義がされてなかったら
-#define _SKILL_DATA_BASE_H_			// 二重インクルード防止のマクロ定義
+#ifndef _STATUS_H_			// このマクロ定義がされてなかったら
+#define _STATUS_H_			// 二重インクルード防止のマクロ定義
 
 //--------------------------------------------------------------
 // include
@@ -70,6 +70,8 @@ public:
 	T GetCurrent() { return m_current; }
 
 	bool MaxCurrentSame() { return m_current >= m_max; }
+
+	void AddItemEffect(T inAdd) { m_max += inAdd; }
 
 private:	// メンバ変数
 	T m_max;			// 最大値

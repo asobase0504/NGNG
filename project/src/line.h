@@ -59,9 +59,6 @@ public:
 	void SetRot(const D3DXVECTOR3 &rot) override;														// 向きのセッター
 	void SetSize(const D3DXVECTOR3 &size) override;														// 大きさのセッター
 
-	void SetMtxWorld(D3DXMATRIX mtxWorld) { m_mtxWorld = mtxWorld; }									// ワールドマトリックスのセッター
-	D3DXMATRIX GetMtxWorld() { return m_mtxWorld; }														// ワールドマトリックスのゲッター
-
 	void SetVtx();																						// 頂点座標などの設定
 	void SetCol(const D3DXCOLOR color);																	// 頂点カラーの設定
 	void SetLine(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 start, D3DXVECTOR3 goal, D3DXCOLOR col);	// ラインの設置
@@ -71,7 +68,6 @@ private:
 	// メンバ変数
 	//--------------------------------------------------------------------
 	LPDIRECT3DVERTEXBUFFER9			m_vtxBuff;			// 頂点バッファ
-	D3DXMATRIX						m_mtxWorld;			// ワールドマトリックス
 	D3DXVECTOR3						m_start;			// 始点
 	D3DXVECTOR3						m_goal;				// 終点
 };

@@ -1,7 +1,18 @@
+//**************************************************************
+//
+// スキルデータベース
+// Author : Yuda Kaito
+//
+//**************************************************************
+
 //==============================================================
 // include
 //==============================================================
 #include "skill_data_base.h"
+#include "collision_box.h"
+#include "character.h"
+#include "enemy_manager.h"
+#include "collision_sphere.h"
 
 //==============================================================
 // 静的メンバー変数の宣言
@@ -51,6 +62,7 @@ void CSkillDataBase::Uninit()
 
 	delete m_instance;
 	m_instance = nullptr;
+
 }
 
 //--------------------------------------------------------------
@@ -58,39 +70,58 @@ void CSkillDataBase::Uninit()
 //--------------------------------------------------------------
 void CSkillDataBase::Init()
 {
-	m_dates["YAMATO_SKILL_1"] = { 20,1,
-		[](CCharacter* inusedCharacter)
+	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,60,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+		[this](CCharacter* inusedCharacter)
 	{ // 発動時の効果
+		
+		if (inusedCharacter != nullptr)
+		{
+			// 当たり判定
+			m_Collision = CCollisionSphere::Create(inusedCharacter->GetPos(),GetSize("YAMATO_SKILL_1").x);
+			std::vector<CEnemy*> Enemy = CEnemyManager::GetInstance()->GetEnemy();
+			// エネミーの数を取得
+			int EnemyCount = Enemy.size();
 
+			for (int nCnt = 0; nCnt < EnemyCount; nCnt++)
+			{// 攻撃範囲に敵がいるか判定する
+				return m_Collision->ToSphere((CCollisionSphere*)Enemy[nCnt]->GetCollision());
+			}
+		}
+
+		return false;
 	},
-		[](CCharacter* inusedCharacter)
+		[this](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
 	{ // Hit時の効果
 
+
+		return false;
 	} };
-	m_dates["YAMATO_SKILL_2"] = { 20,1,
-		[](CCharacter* inusedCharacter)
+
+	m_dates["YAMATO_SKILL_2"] = { 0,1,1,0,5,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+		[this](CCharacter* inusedCharacter)
 	{ // 発動時の効果
-
+		return false;
 	},
-		[](CCharacter* inusedCharacter)
+		[this](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
 	{ // Hit時の効果
-
+		return false;
 	} };
-	m_dates["YAMATO_SKILL_3"] = { 20,1,
+	m_dates["YAMATO_SKILL_3"] = { 0,1,1,0,5,0,D3DXVECTOR3(0.0f,0.0f,0.0f),
 		[](CCharacter* inusedCharacter)
 	{ // 発動時の効果
+		return false;
 	},
-		[](CCharacter* inusedCharacter)
+		[](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
 	{ // Hit時の効果
-
+		return false;
 	} };
-	m_dates["YAMATO_SKILL_4"] = { 20,1,
+	m_dates["YAMATO_SKILL_4"] = { 0,1,1,0,5,0,D3DXVECTOR3(0.0f,0.0f,0.0f),
 		[](CCharacter* inusedCharacter)
 	{ // 発動時の効果
-
+		return false;
 	},
-		[](CCharacter* inusedCharacter)
+		[](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
 	{ // Hit時の効果
-
+		return false;
 	} };
 }

@@ -1,47 +1,44 @@
 //**************************************************************
 //
-// 敵管理
+// 像管理
 // Author : 梶田大夢
 //
 //**************************************************************
-#ifndef _ENEMY_MANAGER_H_			// このマクロ定義がされてなかったら
-#define _ENEMY_MANAGER_H_			// 二重インクルード防止のマクロ定義
+#ifndef _STATUE_MANAGER_H_			// このマクロ定義がされてなかったら
+#define _STATUE_MANAGER_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
 #include "task.h"
-#include "enemy.h"
+#include "statue.h"
 
 //==============================================================
 // 前方宣言
 //==============================================================
-class CObjectX;
-class CController;
-class CEnemy;
 class CCollisionBox;
 
 //==============================================================
 // 敵管理クラス
 //==============================================================
-class CEnemyManager : public CTask
+class CStatueManager : public CTask
 {
 public:	// シングルトン用のインスタンス
-	static CEnemyManager* GetInstance();
+	static CStatueManager* GetInstance();
 private:
-	CEnemyManager();
-	static CEnemyManager* m_enemyManager;
+	CStatueManager();
+	static CStatueManager* m_statueManager;
 
 public:
 	enum EType
 	{
 		NONE = 0,
-		SKELETON,
+		BLOOD,
 		MAX
 	};
 
 	// コンストラクタとデストラクタ
-	~CEnemyManager();
+	~CStatueManager();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
@@ -50,13 +47,13 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	CEnemy* CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type);			// プレイヤーの生成
+	CStatue* CreateStatue(D3DXVECTOR3 pos, EType type);			// 像の生成
 
-	std::vector<CEnemy*> GetEnemy() { return m_pEnemy; }
-	CCollisionBox* GetEnemyBox() { return m_pEnemy[0]->GetBox(); }
+	CStatue* GetStatue() { return m_pStatue; }
+	CCollisionBox* GetStatueBox() { return m_pStatue->GetCollisionBox(); }
 
 private:		// メンバ変数
-	EType m_type;
-	std::vector<CEnemy*> m_pEnemy;
+	CStatue* m_pStatue;
 };
 #endif
+
