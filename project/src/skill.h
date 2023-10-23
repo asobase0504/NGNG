@@ -37,7 +37,8 @@ public:
 	static CSkill	*Create();									// スキルの生成
 
 
-	void CollisionSkill();										// スキルの当たり判定
+	void CollisionSkill(std::string tag);										// スキルの当たり判定
+	void Skill1();												// スキル1
 	// Getter
 	int	GetCT() { return m_CT; }
 
