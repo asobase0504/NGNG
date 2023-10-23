@@ -39,6 +39,8 @@
 #include "objectX.h"
 #include "object_mesh.h"
 
+#include "text.h"
+
 //==============================================================
 // 定数
 //==============================================================
@@ -73,13 +75,18 @@ HRESULT CGame::Init(void)
 
 	// プレイヤーの設定
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
-	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
-
-	CMap::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
-
-	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
 	m_camera->SetTargetPos(pPlayer->GetPos());
 
+	// エネミーの生成
+	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
+
+	// マップの生成
+	CMap::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
+
+	// アイテムのｓ衛星
+	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
+
+	// 像の作成
 	CStatue* pStatue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(100.0f, 0.0f, 100.0f),CStatueManager::BLOOD);
 
 	return S_OK;

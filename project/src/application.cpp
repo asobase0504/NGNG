@@ -14,11 +14,14 @@
 #include "sound.h"
 #include "task_group.h"
 #include "objectX_group.h"
-#include "texture.h"
 #include "fade.h"
 
 #include "skill_data_base.h"
 #include "enemy_data_base.h"
+
+/* 外部読込み */
+#include "font.h"
+#include "texture.h"
 
 /* シーンモード */
 #include "title.h"
@@ -112,6 +115,8 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 
 	CSkillDataBase::GetInstance();
 	CEnemyDataBase::GetInstance();
+
+	CFont::Load(CFont::FONT_MEIRIO);
 
 	return S_OK;
 }

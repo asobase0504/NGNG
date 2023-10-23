@@ -20,6 +20,7 @@ public:
 	void Uninit() override;
 	void Update() override;
 	static CText* Create(D3DXVECTOR3 setPos, D3DXVECTOR3 SetSize, int DeleteTime, int SpeedText, const char * Text, CFont::FONT Type = CFont::FONT_GON, int wordsPopCountX = 0, bool Nottimerdelete = false);
+	static CText* Create(const D3DXVECTOR2& inPos, const D3DXVECTOR2& inSize,const char * Text);
 	void Releasetimer(int nTimar);
 	void CText::Setfunc(std::function<void(void) > func);
 
@@ -31,17 +32,15 @@ private:
 	int m_DesTimarMax;	//消える最大時間
 	int m_DesTimar;		//消える時間
 
-	int m_TextSize;//文字のサイズ
-	int m_Addnumber;//1つの文字が加算されるまでの時間
-	int m_AddCount;//文字が加算されるまでのカウント
-	int m_AddLetter;//何文字目入れるか指定
-	int m_wordsPopCount;//文字を出した最大数
-	int m_wordsPopCountX;//横に文字を出した数
-	int m_newlineCount;//改行の数
+	int m_TextSize;			// 文字のサイズ
+	int m_Addnumber;		// 1つの文字が加算されるまでの時間
+	int m_AddCount;			// 文字が加算されるまでのカウント
+	int m_AddLetter;		// 何文字目入れるか指定
+	int m_wordsPopCount;	// 文字を出した最大数
+	int m_wordsPopCountX;	// 横に文字を出した数
+	int m_newlineCount;		// 改行の数
 	int m_wordsPopCountXfast;
 	bool m_isRelease;
-
-	LPD3DXFONT m_pFont = nullptr;
 
 	std::string m_Text;
 	std::string m_ALLText;
