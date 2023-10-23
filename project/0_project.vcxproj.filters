@@ -60,6 +60,9 @@
     <Filter Include="ソース ファイル\00_Main\Shader">
       <UniqueIdentifier>{c70ada01-af2e-491c-accc-46cd316aae73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\00_Main\text">
+      <UniqueIdentifier>{89f0b8fa-f086-474d-b8e1-47b31e0b64d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -115,9 +118,6 @@
     </ClCompile>
     <ClCompile Include="src\particle_manager.cpp">
       <Filter>ソース ファイル\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\text.cpp">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
     <ClCompile Include="src\letter.cpp">
       <Filter>ソース ファイル\00_Main\File</Filter>
@@ -269,6 +269,15 @@
     <ClCompile Include="src\item_data_base.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="src\font.cpp">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\words.cpp">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text.cpp">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -327,9 +336,6 @@
     </ClInclude>
     <ClInclude Include="src\particle_emitter.h">
       <Filter>ソース ファイル\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="src\text.h">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
     <ClInclude Include="src\letter.h">
       <Filter>ソース ファイル\00_Main\File</Filter>
@@ -471,6 +477,15 @@
     </ClInclude>
     <ClInclude Include="src\map.h">
       <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\font.h">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\words.h">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\text.h">
+      <Filter>ソース ファイル\00_Main\text</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

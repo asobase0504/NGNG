@@ -227,6 +227,11 @@ const D3DXMATRIX InverseMatrixConversion(const D3DXMATRIX & inMtx)
 	return mtx;
 }
 
+bool IsSjisLeadByte(int c)
+{
+	return (((c & 0xffu) ^ 0x20u) - 0xa1) < 94u / 2;
+}
+
 //--------------------------------------------------------------
 // イージング関数
 // Author : Yuda Kaito
