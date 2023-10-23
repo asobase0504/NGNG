@@ -70,6 +70,14 @@ int IntRandom(int nMax, int nMin)
 }
 
 //--------------------------------------------------------------
+// 成功確率
+//--------------------------------------------------------------
+bool IsSuccessRate(float inRate)
+{
+	return ((rand() / (float)RAND_MAX)) < inRate;
+}
+
+//--------------------------------------------------------------
 // sinカーブの値が1.0f～0.0fで帰ってくる
 //--------------------------------------------------------------
 float SinCurve(int nTime, float fCycle)
@@ -225,6 +233,11 @@ const D3DXMATRIX InverseMatrixConversion(const D3DXMATRIX & inMtx)
 	mtx._33 = inMtx._33;
 
 	return mtx;
+}
+
+bool IsSjisLeadByte(int c)
+{
+	return (((c & 0xffu) ^ 0x20u) - 0xa1) < 94u / 2;
 }
 
 //--------------------------------------------------------------
