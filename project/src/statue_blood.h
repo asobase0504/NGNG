@@ -44,5 +44,6 @@ public:
 
 private:	// ƒƒ“ƒo•Ï”
 	CPlayer* m_pPlayer;
+	bool m_bOnce;
 };
 #endif

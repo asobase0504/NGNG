@@ -98,6 +98,15 @@ public:
 	CStatus<float> GetJumpPower() { return m_jumpPower; }
 	void SetJumpPower(CStatus<float> jump) { m_jumpPower = jump; }
 
+	// 所持金
+	CStatus<int> GetMoney() { return m_money; }
+	void SetMoney(CStatus<int> money) { m_money = money; }
+
+	// 追加所持金
+	CStatus<int> GetAddMoney() { return m_addMoney; }
+	void SetAddMoney(CStatus<int> addMoney) { m_addMoney = addMoney; }
+
+
 private:
 	virtual void Attack();
 	virtual void Move();
@@ -126,5 +135,7 @@ protected:		// ステータス
 	CStatus<float> m_movePower;					// 移動力
 	CStatus<float> m_jumpPower;					// ジャンプ力
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
+	CStatus<int> m_money;						// 所持金
+	CStatus<int> m_addMoney;					// 追加所持金
 };
 #endif

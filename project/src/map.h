@@ -38,6 +38,7 @@ public:
 	// 静的メンバ関数
 	static CMap *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);			// マップの生成
 
+	void Load(std::string path);
 private:
 	std::vector<CObjectX*> m_apModels;
 	std::vector<CMesh*> m_apMesh;
