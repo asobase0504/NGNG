@@ -95,10 +95,11 @@ void CMap::Load(std::string path)
 	size = map["MESH"].size();
 	for (int i = 0; i < size; i++)
 	{
-		nlohmann::json mesh = map["MODEL"][i];
+		nlohmann::json mesh = map["MESH"][i];
 		CMesh* object = CMesh::Create();
 		D3DXVECTOR3 pos(mesh["POS"][0], mesh["POS"][1], mesh["POS"][2]);
 		object->SetPos(pos);
+		object->SetOneMeshSize(D3DXVECTOR3(100.0f,100.0f,100.0f));
 
 		m_apMesh.push_back(object);
 	}
