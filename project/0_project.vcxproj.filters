@@ -269,6 +269,9 @@
     <ClCompile Include="src\item_data_base.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="src\statue_chest.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -471,6 +474,9 @@
     </ClInclude>
     <ClInclude Include="src\map.h">
       <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_chest.h">
+      <Filter>ソース ファイル\00_Main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

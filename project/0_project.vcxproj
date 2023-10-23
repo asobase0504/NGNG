@@ -77,6 +77,7 @@
     <ClCompile Include="src\sound.cpp" />
     <ClCompile Include="src\statue.cpp" />
     <ClCompile Include="src\statue_blood.cpp" />
+    <ClCompile Include="src\statue_chest.cpp" />
     <ClCompile Include="src\statue_manager.cpp" />
     <ClCompile Include="src\status.cpp" />
     <ClCompile Include="src\task.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\statue.h" />
     <ClInclude Include="src\statue_blood.h" />
+    <ClInclude Include="src\statue_chest.h" />
     <ClInclude Include="src\statue_manager.h" />
     <ClInclude Include="src\status.h" />
     <ClInclude Include="src\task.h" />
