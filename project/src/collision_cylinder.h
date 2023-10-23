@@ -35,7 +35,6 @@ public:
 private:
 	float m_length;
 	float m_height;
-
 	D3DXVECTOR3 m_extrusion; //	‰Ÿ‚µo‚·’l
 };
 

@@ -143,6 +143,16 @@ CCharacter* CCharacter::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	return pCharacter;
 }
 
+void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
+{
+	if (m_apModel.size() > 0)
+	{
+		GetModel()[0]->SetRot(inRot);
+	}
+
+	CObject::SetRot(inRot);
+}
+
 void CCharacter::Attack()
 {
 }

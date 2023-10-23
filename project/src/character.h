@@ -45,6 +45,8 @@ public:
 
 	std::vector<CObjectX*> GetModel() { return m_apModel; }
 
+	void SetRot(const D3DXVECTOR3& inRot);
+
 	void Damege(const int inDamage);
 
 private:
@@ -56,7 +58,6 @@ protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
 	std::vector<CCollision*>	m_collision;	// 当たり判定
 private:		// メンバ変数
-	D3DXMATRIX		m_mtxWorld;					// ワールドマトリックス
 
 protected:		// ステータス
 

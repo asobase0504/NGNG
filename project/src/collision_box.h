@@ -12,6 +12,7 @@
 class CCollisionMesh;
 class CCollisionCylinder;
 class CCollisionSphere;
+class CLine;
 
 class CCollisionBox : public CCollision
 {
@@ -21,18 +22,21 @@ public:
 
 	HRESULT Init();
 	void Uninit();
+	void Update();
 
 	//bool ToCylinder(CCollisionCylinder* inCyinder,bool isExtrusion);
 	//bool ToMesh(CCollisionMesh* inMesh);
 	//bool ToBox(CCollisionBox* inBox);
 	//bool ToSphere(CCollisionSphere* inSphere);
 
-	static CCollisionBox* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const D3DXVECTOR3& size);
+	static CCollisionBox* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const D3DXVECTOR3& size, const D3DXMATRIX& mtx);
 
 	D3DXVECTOR3 GetSize() { return m_size; }
 
 private:
 	D3DXVECTOR3 m_size;
+	CLine* m_line[4];
+	CLine* m_lineOrigin[4];
 };
 
 #endif

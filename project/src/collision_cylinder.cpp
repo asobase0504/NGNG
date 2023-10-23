@@ -129,21 +129,21 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	{// âEè„
 		unitVec = D3DXVECTOR3(1.0f, 0.0f, 1.0f);
 		D3DXVec3Normalize(&unitVec, &unitVec);
-		m_extrusion = pos[1];
+		m_extrusion = pos[1] + unitVec * radius;
 		return true;
 	}
 	else if ((triangleBase2 * triangleBase2) + (triangleHeight2 * triangleHeight2) < radius * radius)
 	{// âEâ∫
 		unitVec = D3DXVECTOR3(1.0f, 0.0f, -1.0f);
 		D3DXVec3Normalize(&unitVec, &unitVec);
-		m_extrusion = pos[2];
+		m_extrusion = pos[2] + unitVec * radius;
 		return true;
 	}
 	else if ((triangleBase1 * triangleBase1) + (triangleHeight2 * triangleHeight2) < radius * radius)
 	{// ç∂â∫
 		unitVec = D3DXVECTOR3(-1.0f, 0.0f, -1.0f);
 		D3DXVec3Normalize(&unitVec, &unitVec);
-		m_extrusion = pos[3];
+		m_extrusion = pos[3] + unitVec * radius;
 		return true;
 	}
 	else

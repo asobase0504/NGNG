@@ -40,13 +40,15 @@ HRESULT CEnemy::Init()
 	// ‰Šú‰»ˆ—
 	CCharacter::Init();
 
-	m_apModel[0]->LoadModel("SKELETON");
+	m_apModel[0]->LoadModel("BOX");
 	m_apModel[0]->CalculationVtx();
 
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 rot = GetRot();
 	D3DXVECTOR3 size = GetSize();
-	m_collision = CCollisionBox::Create(pos, rot, size);
+	D3DXMATRIX mtx = GetMtxWorld();
+
+	m_collision = CCollisionBox::Create(pos, rot, size, mtx);
 
 	//m_activity.push_back(CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
 
@@ -74,8 +76,15 @@ void CEnemy::Update()
 
 	// À•W‚ÌŽæ“¾
 	D3DXVECTOR3 pos = GetPos();
-
 	m_collision->SetPos(pos);
+
+	D3DXVECTOR3 rot = GetRot();
+	rot.y = D3DXToRadian(30.0f);
+	SetRot(rot);
+	m_collision->SetRot(rot);
+
+	D3DXMATRIX mtx = GetMtxWorld();
+	m_collision->SetMtxWorld(mtx);
 
 	//if (m_collisionSphere->ToMesh(CPlayerManager::GetInstance()->GetPlayerCylinder(), true))
 	//{
