@@ -11,6 +11,9 @@
 #include "skill.h"
 #include "skill_data_base.h"
 #include "player_manager.h"
+#include "enemy_manager.h"
+#include "enemy.h"
+#include "collision_sphere.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -34,10 +37,7 @@ CSkill::~CSkill()
 HRESULT CSkill::Init()
 {
 	// 初期化
-	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
-	{
-		m_CT[nCnt] = 0;
-	}
+	m_CT = 0;
 
 	return S_OK;
 }
@@ -47,7 +47,8 @@ HRESULT CSkill::Init()
 //--------------------------------------------------------------
 void CSkill::Uninit(void)
 {
-	
+	// 破棄処理
+	CTask::Uninit();
 }
 
 //--------------------------------------------------------------
@@ -55,29 +56,62 @@ void CSkill::Uninit(void)
 //--------------------------------------------------------------
 void CSkill::Update(void)
 {
-	// CTの減少
-	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
+	// スキル1のインスタンスを取得
+	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();		// 発動時に生成
+
+	if (m_apChara != nullptr && m_Name != "\0")
 	{
-		if (m_CT[nCnt] > 0)
-		{
-			m_CT[nCnt]--;
-		}
+		bool a = pSkillData->GetAbility(m_Name)(m_apChara);			// 当たったかどうか判定する
+
 	}
 	
-	// スキル1のインスタンスを取得
-	CSkillDataBase::GetInstance()->GetAbility(m_Name)(m_apChara);		// 発動時に生成
+	
 }
 
 //--------------------------------------------------------------
 // スキル生成処理
 //--------------------------------------------------------------
-CSkill *CSkill::YamatoSkill(std::string tag, CCharacter *chara)
+CSkill *CSkill::Create()
 {
 	// 生成処理
 	CSkill* pSkill = new CSkill;
 	pSkill->Init();
-	pSkill->m_Name = tag;
-	pSkill->m_apChara = chara;
 
 	return pSkill;
+}
+
+//--------------------------------------------------------------
+// スキル当たり判定
+//--------------------------------------------------------------
+void CSkill::CollisionSkill()
+{
+	if (m_apChara != nullptr)
+	{
+		// 当たり判定
+		m_Collision = CCollisionSphere::Create(m_apChara->GetPos(), CSkillDataBase::GetInstance()->GetSize("YAMATO_SKILL_1").x);
+		std::vector<CEnemy*> Enemy = CEnemyManager::GetInstance()->GetEnemy();
+		// エネミーの数を取得
+		int EnemyCount = Enemy.size();
+
+		for (int nCnt = 0; nCnt < EnemyCount; nCnt++)
+		{// 攻撃範囲に敵がいるか判定する
+			m_isCollision = false;
+			m_isCollision = m_Collision->ToSphere((CCollisionSphere*)Enemy[nCnt]->GetCollision());
+		}
+
+		if (m_isCollision)
+		{
+
+		}
+	}
+}
+
+//--------------------------------------------------------------
+// スキルの設定
+//--------------------------------------------------------------
+void CSkill::SetSkill(std::string tag, CCharacter *chara)
+{
+	// 生成処理
+	m_Name = tag;
+	m_apChara = chara;
 }

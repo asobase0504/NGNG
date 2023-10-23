@@ -234,7 +234,7 @@ int CPlayerController::TakeItem()
 {
 	CInput* input = CInput::GetKey();
 
-	if (input->Trigger(DIK_E, -1))
+	if (input->Trigger(DIK_F, -1))
 	{
 		std::list<CItemModel*>& item = CItemManager::GetInstance()->GetPopItemModel();
 		int size = item.size();

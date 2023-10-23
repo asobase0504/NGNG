@@ -1,38 +1,19 @@
 //**************************************************************
 //
-// 像管理
+// 血の祭壇
 // Author : 梶田大夢
 //
 //**************************************************************
 
 // include
-#include "statue_manager.h"
 #include "statue_blood.h"
-#include "statue.h"
-#include "collision_box.h"
-#include "application.h"
-
-//--------------------------------------------------------------
-//静的メンバ変数宣言
-//--------------------------------------------------------------
-CStatueManager* CStatueManager::m_statueManager = nullptr;
-
-//--------------------------------------------------------------
-// シングルトンでのインスタンスの取得
-//--------------------------------------------------------------
-CStatueManager* CStatueManager::GetInstance()
-{
-	if (m_statueManager == nullptr)
-	{
-		m_statueManager = new CStatueManager;
-	}
-	return m_statueManager;
-}
+#include "player_manager.h"
+#include "input.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueManager::CStatueManager()
+CStatueBlood::CStatueBlood(int nPriority)
 {
 
 }
@@ -40,7 +21,7 @@ CStatueManager::CStatueManager()
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CStatueManager::~CStatueManager()
+CStatueBlood::~CStatueBlood()
 {
 
 }
@@ -48,49 +29,65 @@ CStatueManager::~CStatueManager()
 //--------------------------------------------------------------
 // 初期化処理
 //--------------------------------------------------------------
-HRESULT CStatueManager::Init()
+HRESULT CStatueBlood::Init()
 {
+	// 初期化処理
+	CStatue::Init();
+
 	return S_OK;
 }
 
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CStatueManager::Uninit(void)
+void CStatueBlood::Uninit()
 {
+	// 終了処理
+	CStatue::Uninit();
 }
 
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CStatueManager::Update(void)
+void CStatueBlood::Update()
 {
+	CInput* input = CInput::GetKey();
+	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
+
+	if (Touch(pPlayer))
+	{
+		if (input->Trigger(KEY_BACK, -1))
+		{
+			int a = 0;
+		}
+	}
+
+	// 更新処理
+	CStatue::Update();
+
+#ifdef _DEBUG
+	//CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
+#endif // _DEBUG
 }
 
 //--------------------------------------------------------------
 // 描画処理
 //--------------------------------------------------------------
-void CStatueManager::Draw(void)
+void CStatueBlood::Draw(void)
 {
+	// 描画処理
+	CStatue::Draw();
 }
 
 //--------------------------------------------------------------
-// 生成処理
+// 生成
 //--------------------------------------------------------------
-CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
+CStatueBlood* CStatueBlood::Create(D3DXVECTOR3 pos)
 {
-	switch (type)
-	{
-	case CStatueManager::NONE:
-		break;
-	case CStatueManager::BLOOD:
-		m_pStatue = CStatueBlood::Create(pos);
-		break;
-	case CStatueManager::MAX:
-		break;
-	default:
-		break;
-	}
+	CStatueBlood* pStatueblood;
+	pStatueblood = new CStatueBlood;
+	pStatueblood->SetPos(pos);
+	pStatueblood->Init();
 
-	return m_pStatue;
+	return pStatueblood;
 }

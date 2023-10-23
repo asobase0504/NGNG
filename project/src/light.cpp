@@ -46,7 +46,7 @@ HRESULT CLight::Init(void)
 	// ÉâÉCÉgÇÃê›íË
 	D3DXCOLOR color(1.0f, 1.0f, 1.0f, 1.0f);
 
-	Set(D3DLIGHT_DIRECTIONAL, color, D3DXVECTOR3(0.32f, 0.49f, 0.93f), 0);
+	Set(D3DLIGHT_DIRECTIONAL, color, D3DXVECTOR3(0.32f, -0.49f, 0.93f), 0);
 
 	return S_OK;
 }

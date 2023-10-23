@@ -21,11 +21,31 @@ CItemDataBase::CItemDataBase()
 void CItemDataBase::Init()
 {
 	m_item[ITEM_POWER_UP] = CItem::Create(ITEM_POWER_UP);
+	
+	// ジャンプ回数上昇アイテムの設定
 	m_item[ITEM_POWER_UP]->SetWhenPickFunc([](CCharacter* inCharacter,int cnt)
 	{
 		CStatus<unsigned int> jumpCount = inCharacter->GetJumpCount();
 		jumpCount.AddItemEffect(1);
 		inCharacter->SetJumpCount(jumpCount);
+	});
+
+	m_item[ITEM_DANGO] = CItem::Create(ITEM_DANGO);
+
+	// だんごの設定
+	m_item[ITEM_DANGO]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	{
+		CStatus<int> HPup = inCharacter->GetHp();
+		HPup.AddItemEffect(50);
+		inCharacter->SetHp(HPup);
+	});
+
+	// 下駄の設定
+	m_item[ITEM_GETA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	{
+		CStatus<float> Spdup = inCharacter->GeSpeed();
+		Spdup.AddItemEffect(1.2f);
+		inCharacter->SetSpeed(Spdup);
 	});
 }
 

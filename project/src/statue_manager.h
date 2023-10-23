@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// ^像管理
+// 像管理
 // Author : 梶田大夢
 //
 //**************************************************************
@@ -16,11 +16,10 @@
 //==============================================================
 // 前方宣言
 //==============================================================
-class CObjectX;
 class CCollisionBox;
 
 //==============================================================
-// 像管理クラス
+// 敵管理クラス
 //==============================================================
 class CStatueManager : public CTask
 {
@@ -31,6 +30,13 @@ private:
 	static CStatueManager* m_statueManager;
 
 public:
+	enum EType
+	{
+		NONE = 0,
+		BLOOD,
+		MAX
+	};
+
 	// コンストラクタとデストラクタ
 	~CStatueManager();
 
@@ -41,15 +47,13 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	CStatue* CreateStatue(D3DXVECTOR3 pos);			// 像の生成
+	CStatue* CreateStatue(D3DXVECTOR3 pos, EType type);			// 像の生成
 
-	// ゲッター
-	CStatue* GetPlayer() { return m_pStatue; }
-	const D3DXVECTOR3& GetPlayerPos() { return m_pStatue->GetPos(); }
+	CStatue* GetStatue() { return m_pStatue; }
 	CCollisionBox* GetStatueBox() { return m_pStatue->GetCollisionBox(); }
 
 private:		// メンバ変数
-	CStatue *m_pStatue;
+	CStatue* m_pStatue;
 };
 #endif
 

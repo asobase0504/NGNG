@@ -23,6 +23,7 @@
     <ClCompile Include="src\enemy_data_base.cpp" />
     <ClCompile Include="src\enemy_manager.cpp" />
     <ClCompile Include="src\item_data_base.cpp" />
+    <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\player_manager.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\camera.cpp" />
@@ -75,6 +76,7 @@
     <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\sound.cpp" />
     <ClCompile Include="src\statue.cpp" />
+    <ClCompile Include="src\statue_blood.cpp" />
     <ClCompile Include="src\statue_manager.cpp" />
     <ClCompile Include="src\status.cpp" />
     <ClCompile Include="src\task.cpp" />
@@ -115,6 +117,7 @@
     <ClInclude Include="src\letter.h" />
     <ClInclude Include="src\light.h" />
     <ClInclude Include="src\line.h" />
+    <ClInclude Include="src\map.h" />
     <ClInclude Include="src\mode.h" />
     <ClInclude Include="src\motion.h" />
     <ClInclude Include="src\motion_model3D.h" />
@@ -138,6 +141,7 @@
     <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\statue.h" />
+    <ClInclude Include="src\statue_blood.h" />
     <ClInclude Include="src\statue_manager.h" />
     <ClInclude Include="src\status.h" />
     <ClInclude Include="src\task.h" />

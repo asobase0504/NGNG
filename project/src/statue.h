@@ -33,10 +33,11 @@ public:
 	void Update() override;
 	void Draw() override; 
 
-	static CStatue* Create(const D3DXVECTOR3& inPos);
+	static CStatue* Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot);
 	CCollisionBox* GetCollisionBox() { return m_collisionBox; }
 	CCollisionCylinder* GetCollisionCylinder() { return m_collisionCylinder; }
 
+	bool Touch(CPlayer* pPlayer);
 private:
 	std::string m_modelData;
 	CCollisionBox* m_collisionBox;
