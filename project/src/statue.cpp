@@ -1,7 +1,7 @@
 //**************************************************************
 //
-// 蜒・
-// Author: 譴ｶ逕ｰ 螟ｧ螟｢
+// 像
+// Author: 梶田 大夢
 //
 //**************************************************************
 
@@ -14,23 +14,22 @@
 #include "player.h"
 
 //--------------------------------------------------------------
-// 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
+// コンストラクタ
 //--------------------------------------------------------------
 CStatue::CStatue(CTaskGroup::EPriority list) :
-	m_modelData{
-	"BOX", }
+	m_modelData("BOX")
 {
 }
 
 //--------------------------------------------------------------
-// 繝・せ繝医Λ繧ｯ繧ｿ
+// デストラクタ
 //--------------------------------------------------------------
 CStatue::~CStatue()
 {
 }
 
 //--------------------------------------------------------------
-// 蛻晄悄蛹・
+// 初期化
 //--------------------------------------------------------------
 HRESULT CStatue::Init()
 {
@@ -43,7 +42,7 @@ HRESULT CStatue::Init()
 }
 
 //--------------------------------------------------------------
-// 邨ゆｺ・
+// 終了
 //--------------------------------------------------------------
 void CStatue::Uninit()
 {
@@ -51,21 +50,21 @@ void CStatue::Uninit()
 }
 
 //--------------------------------------------------------------
-// 譖ｴ譁ｰ
+// 更新
 //--------------------------------------------------------------
 void CStatue::Update()
 {
 	m_collisionBox->SetPos(GetPos());
 	m_collisionCylinder->SetPos(GetPos());
 
-	bool a = CPlayerManager::GetInstance()->GetPlayerCylinder()->ToBox(m_collisionBox, true);
+	bool a = CPlayerManager::GetInstance()->GetPlayer()->GetCollision()->ToBox(m_collisionBox, true);
 
 	if (a)
 	{
-		// 謚ｼ縺怜・縺励◆菴咲ｽｮ
-		D3DXVECTOR3 extrusion = CPlayerManager::GetInstance()->GetPlayerCylinder()->GetExtrusion();
+		// 押し出した位置
+		D3DXVECTOR3 extrusion = ((CCollisionCylinder*)CPlayerManager::GetInstance()->GetPlayer()->GetCollision())->GetExtrusion();
 		CPlayerManager::GetInstance()->GetPlayer()->SetPos(D3DXVECTOR3(extrusion));
-		CPlayerManager::GetInstance()->GetPlayerCylinder()->SetPos(D3DXVECTOR3(extrusion));
+		CPlayerManager::GetInstance()->GetPlayer()->GetCollision()->SetPos(D3DXVECTOR3(extrusion));
 
 		CPlayerManager::GetInstance()->GetPlayer()->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
@@ -73,13 +72,13 @@ void CStatue::Update()
 	CObjectX::Update();
 
 #ifdef _DEBUG
-	CDebugProc::Print("StatueCollisionBox・嗔os(%f,%f,%f)\n", m_collisionBox->GetPos().x, m_collisionBox->GetPos().y, m_collisionBox->GetPos().z);
-	CDebugProc::Print("StatueCollisionCylinder・嗔os(%f,%f,%f)\n", m_collisionCylinder->GetPos().x, m_collisionCylinder->GetPos().y, m_collisionCylinder->GetPos().z);
+	CDebugProc::Print("StatueCollisionBox:pos(%f,%f,%f)\n", m_collisionBox->GetPos().x, m_collisionBox->GetPos().y, m_collisionBox->GetPos().z);
+	CDebugProc::Print("StatueCollisionCylinder:pos(%f,%f,%f)\n", m_collisionCylinder->GetPos().x, m_collisionCylinder->GetPos().y, m_collisionCylinder->GetPos().z);
 #endif // _DEBUG
 }
 
 //--------------------------------------------------------------
-// 謠冗判
+// 描画
 //--------------------------------------------------------------
 void CStatue::Draw()
 {
@@ -87,7 +86,7 @@ void CStatue::Draw()
 }
 
 //--------------------------------------------------------------
-// 逕滓・
+// 生成
 //--------------------------------------------------------------
 CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot)
 {
@@ -107,7 +106,7 @@ CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot)
 
 bool CStatue::Touch(CPlayer* pPlayer)
 {
-	if (m_collisionCylinder->ToCylinder(pPlayer->GetCylinder()))
+	if (m_collisionCylinder->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
 		return true;
 	}

@@ -1,11 +1,11 @@
 //**************************************************************
 //
-// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
-// Author : é«™é‡é¦¨å°‡
+// ƒvƒŒƒCƒ„[
+// Author : ûü–ìŠ]›’
 //
 //**************************************************************
-#ifndef _PLAYER_H_			// ã“ã®ãƒã‚¯ãƒ­å®šç¾©ãŒã•ã‚Œã¦ãªã‹ã£ãŸã‚‰
-#define _PLAYER_H_			// äºŒé‡ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰é˜²æ­¢ã®ãƒã‚¯ãƒ­å®šç¾©
+#ifndef _PLAYER_H_			// ‚±‚Ìƒ}ƒNƒ’è‹`‚ª‚³‚ê‚Ä‚È‚©‚Á‚½‚ç
+#define _PLAYER_H_			// “ñdƒCƒ“ƒNƒ‹[ƒh–h~‚Ìƒ}ƒNƒ’è‹`
 
 //==============================================================
 // include
@@ -14,58 +14,55 @@
 #include "collision_cylinder.h"
 
 //==============================================================
-// ãƒã‚¯ãƒ­å®£è¨€
+// ƒ}ƒNƒéŒ¾
 //==============================================================
 #define DASH_SPEED	(1.5f)
 #define JUMP		(15.0f)
 #define MAX_SKILL		(4)
 
 //==============================================================
-// å‰æ–¹å®£è¨€
+// ‘O•ûéŒ¾
 //==============================================================
 class CController;
 class CCollisionCyinder;
 class CSkill;
 
 //==============================================================
-// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¯ãƒ©ã‚¹
+// ƒvƒŒƒCƒ„[ƒNƒ‰ƒX
 //==============================================================
 class CPlayer : public CCharacter
 {
 public:
-	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÆƒfƒXƒgƒ‰ƒNƒ^
 	explicit CPlayer(int nPriority = 3);
 	~CPlayer();
 	
-	//ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
+	//ƒvƒƒgƒ^ƒCƒvéŒ¾
 	HRESULT	Init() override;
 	void	Uninit() override;
 	void	Update() override;
 
-	// é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
-	static CPlayer *Create(D3DXVECTOR3 pos);			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç”Ÿæˆ
+	// Ã“Iƒƒ“ƒoŠÖ”
+	static CPlayer *Create(D3DXVECTOR3 pos);			// ƒvƒŒƒCƒ„[‚Ì¶¬
 
 	// Setter
 	void SetController(CController* inOperate);
-	CCollisionCylinder* GetCylinder() { return m_collisionCyinder; }
-
 	void SetPos(const D3DXVECTOR3& inPos);
 
 private:
-	void Attack();		// æ”»æ’ƒ
-	void Move();		// ç§»å‹•
-	void Jump();		// ã‚¸ãƒ£ãƒ³ãƒ—
-	void Dash();		// ãƒ€ãƒƒã‚·ãƒ¥
-	void TakeItem();	// ã‚¢ã‚¤ãƒ†ãƒ ã‚’æ‹¾ã†
+	void Attack();		// UŒ‚
+	void Move();		// ˆÚ“®
+	void Jump();		// ƒWƒƒƒ“ƒv
+	void Dash();		// ƒ_ƒbƒVƒ…
+	void TakeItem();	// ƒAƒCƒeƒ€‚ğE‚¤
 
-private:		// ãƒ¡ãƒ³ãƒå¤‰æ•°
-	int				m_SkillStock;	// ã‚¹ã‚­ãƒ«ã‚¹ãƒˆãƒƒã‚¯æ•°
+private:		// ƒƒ“ƒo•Ï”
+	int				m_SkillStock;	// ƒXƒLƒ‹ƒXƒgƒbƒN”
 
-	bool			m_isjump;		// ã‚¸ãƒ£ãƒ³ãƒ—ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹
-	bool			m_isdash;		// ãƒ€ãƒƒã‚·ãƒ¥ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹
+	bool			m_isjump;		// ƒWƒƒƒ“ƒv‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+	bool			m_isdash;		// ƒ_ƒbƒVƒ…‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
 
-	CController*		m_controller;			// å‘½ä»¤ã‚’å‡ºã™äºº
+	CController*		m_controller;			// –½—ß‚ğo‚·l
 	CSkill*				m_Skill[MAX_SKILL];
-	CCollisionCyinder*	m_collisionCyinder;
 };
 #endif
