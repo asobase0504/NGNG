@@ -33,6 +33,7 @@ HRESULT CStatueBlood::Init()
 {
 	// 初期化処理
 	CStatue::Init();
+	m_bOnce = false;
 
 	return S_OK;
 }
@@ -51,14 +52,31 @@ void CStatueBlood::Uninit()
 //--------------------------------------------------------------
 void CStatueBlood::Update()
 {
+	// プレイヤー情報取得
 	CInput* input = CInput::GetKey();
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
+	CStatus<int> playerHp = pPlayer->GetHp();
+	CStatus<int> playerMoney = pPlayer->GetMoney();
 
+	// プレイヤーが触れている時
 	if (Touch(pPlayer))
 	{
 		if (input->Trigger(KEY_BACK, -1))
+		{// プレイヤーが特定のキーを押したとき
+			if (!m_bOnce)
+			{
+				// プレイヤーのHPとお金を調整して設定
+				playerHp.AddCurrent(-10);
+				playerMoney.AddCurrent(10);
+				pPlayer->SetHp(playerHp);
+				pPlayer->SetMoney(playerMoney);
+
+				m_bOnce = true;
+			}
+		}
+		else
 		{
-			int a = 0;
+			m_bOnce = false;
 		}
 	}
 
