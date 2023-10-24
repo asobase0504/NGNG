@@ -54,6 +54,14 @@ bool Homing(D3DXVECTOR3 *pPosOut, const D3DXVECTOR3 &posNow, const D3DXVECTOR3 &
 }
 
 //--------------------------------------------------------------
+// ê¨å˜ämó¶
+//--------------------------------------------------------------
+bool IsSuccessRate(float inRate)
+{
+	return ((rand() / (float)RAND_MAX)) < inRate;
+}
+
+//--------------------------------------------------------------
 // è¨êîì_ÇÃÉâÉìÉ_ÉÄ
 //--------------------------------------------------------------
 float FloatRandom(float fMax, float fMin)

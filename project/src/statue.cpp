@@ -34,9 +34,18 @@ CStatue::~CStatue()
 HRESULT CStatue::Init()
 {
 	CObjectX::Init();
-	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), GetRot(),D3DXVECTOR3(10.0f, 10.0f, 10.0f));
-	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 15.0f, 15.0f);
 	LoadModel(m_modelData);
+
+	return S_OK;
+}
+
+HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
+{
+	CObjectX::Init();
+	LoadModel(m_modelData);
+
+	m_collisionBox = CCollisionBox::Create(inPos, inRot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
+	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 15.0f, 15.0f);
 
 	return S_OK;
 }
@@ -88,17 +97,16 @@ void CStatue::Draw()
 //--------------------------------------------------------------
 // ¶¬
 //--------------------------------------------------------------
-CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot)
+CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot)
 {
 	CStatue* pStatue = nullptr;
 	pStatue = new CStatue;
 
 	if (pStatue != nullptr)
 	{
-		pStatue->Init();
+		pStatue->Init(inPos,inRot);
 		pStatue->SetPos(inPos);
-		pStatue->m_collisionBox = CCollisionBox::Create(inPos, inRot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
-		pStatue->m_collisionCylinder = CCollisionCylinder::Create(inPos,15.0f, 15.0f);
+		pStatue->SetRot(inRot);
 	}
 
 	return pStatue;

@@ -33,7 +33,10 @@ CStatueChest::~CStatueChest()
 HRESULT CStatueChest::Init()
 {
 	// ‰Šú‰»ˆ—
-	CStatue::Init();
+	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 rot = GetRot();
+
+	CStatue::Init(pos, rot);
 	m_bOnce = false;
 
 	return S_OK;

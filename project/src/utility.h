@@ -40,6 +40,13 @@ float NormalizeAngle(float& pAngle);
 bool Homing(D3DXVECTOR3 *pPosOut, const D3DXVECTOR3 &posNow, const D3DXVECTOR3 &posDest, float fSpeed);
 
 //--------------------------------------------------------------
+// 成功確率を渡して成功か否か判断
+// 引数  : float inRate / 成功確率
+// 返値  : bool / 成功
+//--------------------------------------------------------------
+bool IsSuccessRate(float inRate);
+
+//--------------------------------------------------------------
 // 小数点のランダム
 // 引数1  : float fMax / 最大値
 // 引数2  : float fMin / 最小値

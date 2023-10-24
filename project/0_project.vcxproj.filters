@@ -272,6 +272,9 @@
     <ClCompile Include="src\statue_chest.cpp">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClCompile>
+    <ClCompile Include="src\statue_luck.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -477,6 +480,9 @@
     </ClInclude>
     <ClInclude Include="src\statue_chest.h">
       <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_luck.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@
 #include "statue_manager.h"
 #include "statue_blood.h"
 #include "statue_chest.h"
+#include "statue_luck.h"
 #include "statue.h"
 #include "collision_box.h"
 #include "application.h"
@@ -83,12 +84,16 @@ CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
 	switch (type)
 	{
 	case CStatueManager::NONE:
+		m_pStatue = CStatue::Create(pos,D3DXVECTOR3(0.0f,0.0f,0.0f));
 		break;
 	case CStatueManager::BLOOD:
 		m_pStatue = CStatueBlood::Create(pos);
 		break;
 	case CStatueManager::CHEST:
 		m_pStatue = CStatueChest::Create(pos);
+		break;
+	case CStatueManager::LUCK:
+		m_pStatue = CStatueLuck::Create(pos);
 		break;
 	case CStatueManager::MAX:
 		break;
