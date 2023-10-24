@@ -36,7 +36,8 @@ public:
 	enum EAnchor
 	{
 		ANCHOR_CENTER,
-		ANCHOR_left,
+		ANCHOR_LEFT,
+		ANCHOR_MAX,
 	};
 
 	// 頂点データ
@@ -50,7 +51,7 @@ public:
 
 private:
 	//polygonの拡大サイズ
-	static const D3DXVECTOR3 m_Vtx[4];
+	static const D3DXVECTOR3 m_Vtx[ANCHOR_MAX][4];
 
 public:
 	static CObject2d *Create(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_BG);
@@ -67,6 +68,8 @@ public:
 	void SetAnimation(const int U, const int V, const int Speed, const int Drawtimer, const bool loop);
 
 	bool PointAndAABB(const D3DXVECTOR3& inPos);
+
+	void SetAnchor(EAnchor inAnchor) { m_anchor = inAnchor; }
 protected:
 	LPDIRECT3DVERTEXBUFFER9 &GetVtx() { return m_vtxBuff; }
 
@@ -102,5 +105,7 @@ private:
 
 	bool m_isOnAnimation;	// アニメーション使用の有無
 	bool m_isLoop;		// ループアニメーションか否か
+
+	EAnchor m_anchor;
 };
 #endif

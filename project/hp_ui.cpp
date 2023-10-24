@@ -11,13 +11,16 @@ CHPUI::~CHPUI()
 
 HRESULT CHPUI::Init()
 {
-	m_ground = CObject2d::Create();
-	m_ground->SetSize(D3DXVECTOR3(220.0f, 17.0f, 0.0f));
-	m_ground->SetPos(D3DXVECTOR3(512.0f, 50.0f, 0.0f));
+	m_ground = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	m_ground->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
+	m_ground->SetSize(D3DXVECTOR3(200.0f, 15.0f, 0.0f));
+	m_ground->SetPos(D3DXVECTOR3(50.0f, SCREEN_HEIGHT - 70.0f, 0.0f));
+	m_ground->SetColor(D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f));
 
-	m_bar = CObject2d::Create();
+	m_bar = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	m_bar->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
 	m_bar->SetSize(D3DXVECTOR3(200.0f,15.0f,0.0f));
-	m_bar->SetPos(D3DXVECTOR3(512.0f,50.0f,0.0f));
+	m_bar->SetPos(D3DXVECTOR3(50.0f, SCREEN_HEIGHT - 70.0f,0.0f));
 	m_bar->SetColor(D3DXCOLOR(0.0f,1.0f,0.0f,1.0f));
 	return S_OK;
 }
