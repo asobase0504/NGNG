@@ -44,7 +44,7 @@ HRESULT CCharacter::Init()
 	m_collision.push_back(CCollisionSphere::Create(m_pos,100.0f));
 
 	m_hp.Init(100);
-	m_hp.SetCurrent(100);
+	m_hp.SetCurrent(50);
 	m_addHp.Init(100);
 	m_addHp.SetCurrent(100);
 	m_addHpSubTime.Init(100);

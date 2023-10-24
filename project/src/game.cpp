@@ -39,7 +39,7 @@
 #include "objectX.h"
 #include "object_mesh.h"
 
-#include "text.h"
+#include "hp_ui.h"
 
 //==============================================================
 // 定数
@@ -76,6 +76,8 @@ HRESULT CGame::Init(void)
 	// プレイヤーの設定
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
 	m_camera->SetTargetPos(pPlayer->GetPos());
+
+	CHPUI::Create(pPlayer->GetHp());
 
 	// エネミーの生成
 	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);

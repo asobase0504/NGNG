@@ -55,7 +55,7 @@ void CStatueBlood::Update()
 	// プレイヤー情報取得
 	CInput* input = CInput::GetKey();
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int> playerHp = pPlayer->GetHp();
+	CStatus<int> playerHp = *pPlayer->GetHp();
 	CStatus<int> playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時

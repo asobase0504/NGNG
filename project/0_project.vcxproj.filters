@@ -63,6 +63,9 @@
     <Filter Include="ソース ファイル\00_Main\text">
       <UniqueIdentifier>{89f0b8fa-f086-474d-b8e1-47b31e0b64d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\UI">
+      <UniqueIdentifier>{a6fb7bdb-faf6-463e-83e8-6e0915814541}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -278,6 +281,9 @@
     <ClCompile Include="src\text.cpp">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClCompile>
+    <ClCompile Include="hp_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -486,6 +492,9 @@
     </ClInclude>
     <ClInclude Include="src\text.h">
       <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClInclude>
+    <ClInclude Include="hp_ui.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

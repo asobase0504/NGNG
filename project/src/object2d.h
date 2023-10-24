@@ -33,6 +33,12 @@ public:
 	// 頂点フォーマット
 	const DWORD FVF_VERTEX_2D = (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 
+	enum EAnchor
+	{
+		ANCHOR_CENTER,
+		ANCHOR_left,
+	};
+
 	// 頂点データ
 	struct VERTEX_2D
 	{

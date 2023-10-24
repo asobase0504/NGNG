@@ -18,6 +18,7 @@
 
 #include "skill_data_base.h"
 #include "enemy_data_base.h"
+#include "item_data_base.h"
 
 /* äOïîì«çûÇ› */
 #include "font.h"
@@ -115,6 +116,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 
 	CSkillDataBase::GetInstance();
 	CEnemyDataBase::GetInstance();
+	CItemDataBase::GetInstance();
 
 	CFont::Load(CFont::FONT_MEIRIO);
 
@@ -170,6 +172,7 @@ void CApplication::Uninit()
 
 	CSkillDataBase::Uninit();
 	CEnemyDataBase::Uninit();
+	CItemDataBase::Uninit();
 
 }
 
