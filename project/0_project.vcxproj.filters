@@ -274,6 +274,7 @@
     </ClCompile>
     <ClCompile Include="src\statue_luck.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
     <ClCompile Include="src\font.cpp">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClCompile>
@@ -483,11 +484,12 @@
     <ClInclude Include="src\map.h">
       <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
     </ClInclude>
-   <ClInclude Include="src\statue_chest.h">
+    <ClInclude Include="src\statue_chest.h">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClInclude>
     <ClInclude Include="src\statue_luck.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
     <ClInclude Include="src\font.h">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClInclude>
