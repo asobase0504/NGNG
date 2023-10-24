@@ -24,7 +24,7 @@
 // 前方宣言
 //==============================================================
 class CController;
-class CCollisionCyinder;
+class CCollisionCylinder;
 class CSkill;
 
 //==============================================================
@@ -66,6 +66,6 @@ private:		// メンバ変数
 
 	CController*		m_controller;			// 命令を出す人
 	CSkill*				m_Skill[MAX_SKILL];
-	CCollisionCyinder*	m_collisionCyinder;
+	CCollisionCylinder*	m_collisionCyinder;
 };
 #endif

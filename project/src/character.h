@@ -45,6 +45,8 @@ public:
 
 	std::vector<CObjectX*> GetModel() { return m_apModel; }
 
+	void SetPos(const D3DXVECTOR3& inPos);
+
 	void Damege(const int inDamage);
 
 	//==============================================================

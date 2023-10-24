@@ -304,12 +304,5 @@ void CPlayer::SetPos(const D3DXVECTOR3 & inPos)
 	{
 		m_collisionCyinder->SetPos(inPos);
 	}
-
-	std::vector<CObjectX*> objectX = GetModel();
-	if (objectX.size() > 0)
-	{
-		GetModel()[0]->SetPos(inPos);
-	}
-
 	CCharacter::SetPos(inPos);
 }

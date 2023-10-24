@@ -148,6 +148,21 @@ CCharacter* CCharacter::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	return pCharacter;
 }
 
+//--------------------------------------------------------------
+// à íuÇÃê›íË
+//--------------------------------------------------------------
+void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
+{
+	std::vector<CObjectX*> objectX = GetModel();
+	if (objectX.size() > 0)
+	{
+		GetModel()[0]->SetPos(inPos);
+	}
+
+	CObject::SetPos(inPos);
+}
+
+
 void CCharacter::Attack()
 {
 }

@@ -48,7 +48,7 @@ HRESULT CEnemy::Init()
 	D3DXVECTOR3 size = GetSize();
 	m_collision = CCollisionBox::Create(pos, rot, size);
 
-	//m_activity.push_back(CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
+	m_activity.push_back(CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
 
 	return S_OK;
 }
