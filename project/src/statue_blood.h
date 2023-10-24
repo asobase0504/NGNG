@@ -1,47 +1,37 @@
 //**************************************************************
 //
-// 敵管理
+// 血の祭壇
 // Author : 梶田大夢
 //
 //**************************************************************
-#ifndef _ENEMY_MANAGER_H_			// このマクロ定義がされてなかったら
-#define _ENEMY_MANAGER_H_			// 二重インクルード防止のマクロ定義
+#ifndef _STATUE_BLOOD_H_			// このマクロ定義がされてなかったら
+#define _STATUE_BLOOD_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
-#include "task.h"
-#include "enemy.h"
+#include "statue.h"
+
+//==============================================================
+// マクロ宣言
+//==============================================================
 
 //==============================================================
 // 前方宣言
 //==============================================================
-class CObjectX;
-class CController;
-class CEnemy;
+class CPlayer;
 class CCollisionBox;
+class CCollisionCylinder;
 
 //==============================================================
-// 敵管理クラス
+// 敵クラス
 //==============================================================
-class CEnemyManager : public CTask
+class CStatueBlood : public CStatue
 {
-public:	// シングルトン用のインスタンス
-	static CEnemyManager* GetInstance();
-private:
-	CEnemyManager();
-	static CEnemyManager* m_enemyManager;
-
 public:
-	enum EType
-	{
-		NONE = 0,
-		SKELETON,
-		MAX
-	};
-
 	// コンストラクタとデストラクタ
-	~CEnemyManager();
+	explicit CStatueBlood(int nPriority = 3);
+	~CStatueBlood();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
@@ -50,13 +40,10 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	CEnemy* CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type);			// プレイヤーの生成
+	static CStatueBlood *Create(D3DXVECTOR3 pos);			// 血の祭壇の生成
 
-	std::vector<CEnemy*> GetEnemy() { return m_pEnemy; }
-	CCollisionBox* GetEnemyBox() { return m_pEnemy[0]->GetBox(); }
-
-private:		// メンバ変数
-	EType m_type;
-	std::vector<CEnemy*> m_pEnemy;
+private:	// メンバ変数
+	CPlayer* m_pPlayer;
+	bool m_bOnce;
 };
 #endif

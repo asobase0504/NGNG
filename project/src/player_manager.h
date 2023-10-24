@@ -48,7 +48,6 @@ public:
 	// ゲッター
 	CPlayer* GetPlayer() { return m_pPlayer; }
 	const D3DXVECTOR3& GetPlayerPos() { return m_pPlayer->GetPos(); }
-	CCollisionCylinder* GetPlayerCylinder() { return m_pPlayer->GetCylinder(); }
 
 private:		// メンバ変数
 	CPlayer *m_pPlayer;

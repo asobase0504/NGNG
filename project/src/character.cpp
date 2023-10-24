@@ -12,6 +12,7 @@
 #include "application.h"
 #include "objectX.h"
 #include "PlayerController.h"
+#include "collision_sphere.h"
 
 #include "status.h"
 
@@ -42,6 +43,8 @@ HRESULT CCharacter::Init()
 	m_apModel[0] = CObjectX::Create(m_pos);
 	m_apModel[0]->LoadModel("BOX");
 
+	m_collision.push_back(CCollisionSphere::Create(m_pos,100.0f));
+
 	m_hp.Init(100);
 	m_hp.SetCurrent(100);
 	m_addHp.Init(100);
@@ -66,6 +69,10 @@ HRESULT CCharacter::Init()
 	m_jumpPower.SetCurrent(3.0f);
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
+	m_money.Init(100);
+	m_money.SetCurrent(100);
+	m_addMoney.Init(100);
+	m_addMoney.SetCurrent(100);
 	return S_OK;
 }
 
