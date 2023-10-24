@@ -36,6 +36,8 @@ CCharacter::~CCharacter()
 //--------------------------------------------------------------
 HRESULT CCharacter::Init()
 {
+	CObject::Init();
+
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
 	m_apModel[0]->LoadModel("BOX");
@@ -81,9 +83,6 @@ void CCharacter::Uninit(void)
 //--------------------------------------------------------------
 void CCharacter::Update(void)
 {
-	// 座標の更新処理
-	UpdatePos();
-
 	// 更新処理
 	CObject::Update();
 }
@@ -159,19 +158,4 @@ void CCharacter::Attack()
 
 void CCharacter::Move()
 {
-}
-
-//--------------------------------------------------------------
-// 座標の更新
-//--------------------------------------------------------------
-void CCharacter::UpdatePos()
-{
-	// 座標の取得
-	D3DXVECTOR3 pos = GetPos();
-
-	SetPosOld(pos);			// 前回の位置の保存
-	pos += GetMove();		// 位置の更新
-
-	// 座標の設定
-	SetPos(pos);
 }
