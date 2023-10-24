@@ -40,7 +40,7 @@ HRESULT CEnemy::Init()
 	// 初期化処理
 	CCharacter::Init();
 
-	m_apModel[0]->LoadModel("BOX");
+	m_apModel[0]->LoadModel("SKELETON");
 	m_apModel[0]->CalculationVtx();
 
 	D3DXVECTOR3 pos = GetPos();
@@ -48,7 +48,6 @@ HRESULT CEnemy::Init()
 	D3DXVECTOR3 size = GetSize();
 	D3DXMATRIX mtx = GetMtxWorld();
 
-	m_collision = CCollisionBox::Create(pos, rot, size, mtx);
 
 	//m_activity.push_back(CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
 
@@ -62,8 +61,6 @@ void CEnemy::Uninit()
 {
 	// 終了処理
 	CCharacter::Uninit();
-
-	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------
@@ -73,18 +70,6 @@ void CEnemy::Update()
 {
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
-
-	// 座標の取得
-	D3DXVECTOR3 pos = GetPos();
-	m_collision->SetPos(pos);
-
-	D3DXVECTOR3 rot = GetRot();
-	rot.y = D3DXToRadian(30.0f);
-	SetRot(rot);
-	m_collision->SetRot(rot);
-
-	D3DXMATRIX mtx = GetMtxWorld();
-	m_collision->SetMtxWorld(mtx);
 
 	//if (m_collisionSphere->ToMesh(CPlayerManager::GetInstance()->GetPlayerCylinder(), true))
 	//{
@@ -107,9 +92,9 @@ void CEnemy::Update()
 	}
 
 #ifdef _DEBUG
-	CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
-	CDebugProc::Print("Enemy：move(%f,%f,%f)\n", move.x, move.y, move.z);
-	CDebugProc::Print("EnemyCollision：pos(%f,%f,%f)\n", m_collision->GetPos().x, m_collision->GetPos().y, m_collision->GetPos().z);
+	//CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
+	//CDebugProc::Print("Enemy：move(%f,%f,%f)\n", move.x, move.y, move.z);
+	//CDebugProc::Print("EnemyCollision：pos(%f,%f,%f)\n", m_collision->GetPos().x, m_collision->GetPos().y, m_collision->GetPos().z);
 #endif // _DEBUG
 }
 

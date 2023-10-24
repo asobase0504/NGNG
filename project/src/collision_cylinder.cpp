@@ -133,7 +133,7 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 			D3DXVECTOR3 vecPosOld = cylinderPosOld - worldPos[nCnt];
 			float leftPosOld = Vec2Cross(&vecLine[nCnt], &vecPosOld);
 
-			if (leftPosOld <= 0.0f)
+			if (leftPosOld > 0.0f)
 			{// 方向が分かった時
 				isLanding = true;
 
@@ -152,131 +152,30 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 				}
 				else
 				{// 押し出し用法線の格納用の箱
-					//D3DXVECTOR3 nor;
-					//// 上方向のベクトル
-					//D3DXVECTOR3 vecUp(0.0f, 1.0f, 0.0f);
-					//// 正規化
-					//D3DXVec3Normalize(&vecLine[nCnt], &vecLine[nCnt]);
-					//// メッシュの法線を求める
-					//D3DXVec3Cross(&nor, &vecLine[nCnt], &vecUp);
-					//// 大きさを１にする
-					//D3DXVec3Normalize(&nor, &nor);
+					D3DXVECTOR3 nor;
+					// 上方向のベクトル
+					D3DXVECTOR3 vecUp(0.0f, 1.0f, 0.0f);
+					// 正規化
+					D3DXVec3Normalize(&vecLine[nCnt], &vecLine[nCnt]);
+					// 面の法線を求める
+					D3DXVec3Cross(&nor, &vecLine[nCnt], &vecUp);
+					// 大きさを１にする
+					D3DXVec3Normalize(&nor, &nor);
 
-					//// 逆方向
-					//D3DXVECTOR3 reverseVecMove = cylinderPosOld - cylinderPos;
-					//// (a)
-					//float difMove = Vec2Dot(&reverseVecMove, &nor);
+					// 逆方向
+					D3DXVECTOR3 reverseVecMove = cylinderPosOld - cylinderPos;
+					// (a)
+					float difMove = Vec2Dot(&reverseVecMove, &nor);
 
-					//// 押し返し
-					//m_extrusion.x = (cylinderPosOld.x + vecMove.x * t1) + (nor.x * 0.1f) + (vecMove.x + difMove * nor.x);
-					//m_extrusion.z = (cylinderPosOld.z + vecMove.z * t1) + (nor.z * 0.1f) + (vecMove.z + difMove * nor.z);
+					// 押し返し
+					m_extrusion.x = (cylinderPosOld.x + vecMove.x * t1) + (nor.x * 0.1f) + (vecMove.x + difMove * nor.x);
+					m_extrusion.z = (cylinderPosOld.z + vecMove.z * t1) + (nor.z * 0.1f) + (vecMove.z + difMove * nor.z);
 
 					break;
 				}
 			}
 		}
 	}
-	//D3DXVECTOR3 v2(0.0f, 0.0f, 0.0f);
-	//D3DXVECTOR3 v(0.0f, 0.0f, 0.0f);
-	//D3DXVECTOR3 startPos(0.0f, 0.0f, 0.0f);
-	//D3DXVECTOR3 endPos(0.0f, 0.0f, 0.0f);
-
-	//float triangleBase1 = left - cylinderPos.x;
-	//float triangleBase2 = right - cylinderPos.x;
-	//float triangleHeight1 = back - cylinderPos.z;
-	//float triangleHeight2 = front - cylinderPos.z;
-
-	//// 単位ベクトル
-	//D3DXVECTOR3 unitVec(0.0f, 0.0f, 0.0f);
-
-	//if ((cylinderPos.x > left) && (cylinderPos.x < right) &&
-	//	(cylinderPos.z > front - radius) && (cylinderPos.z < back + radius))
-	//{// 手前　奥
-	//	if (boxPos.z < cylinderPos.z)
-	//	{// 奥
-	//		startPos = pos[0];
-	//		endPos = pos[1];
-	//		v2 = endPos - startPos;
-	//		v = startPos - cylinderPosOld;
-	//	}
-	//	else
-	//	{// 手前
-	//		startPos = pos[2];
-	//		endPos = pos[3];
-	//		v2 = endPos - startPos;
-	//		v = startPos - cylinderPosOld;
-	//	}
-
-	//	isLanding = true;
-	//}
-	//else if ((cylinderPos.x > left - radius) && (cylinderPos.x < right + radius) &&
-	//	(cylinderPos.z > front) && (cylinderPos.z < back))
-	//{// 左右
-	//	if (boxPos.x < cylinderPos.x)
-	//	{// 右
-	//		startPos = pos[1];
-	//		endPos = pos[2];
-	//		v2 = endPos - startPos;
-	//		v = startPos - cylinderPosOld;
-	//	}
-	//	else
-	//	{// 左
-	//		startPos = pos[3];
-	//		endPos = pos[0];
-	//		v2 = endPos - startPos;
-	//		v = startPos - cylinderPosOld;
-	//	}
-
-	//	isLanding = true;
-	//}
-	//else if ((triangleBase1 * triangleBase1) + (triangleHeight1 * triangleHeight1) < radius * radius)
-	//{// 左上
-	//	unitVec = D3DXVECTOR3(-1.0f, 0.0f, 1.0f);
-	//	D3DXVec3Normalize(&unitVec, &unitVec);
-	//	m_extrusion = pos[0] + unitVec * radius;
-	//	return true;
-	//}
-	//else if ((triangleBase2 * triangleBase2) + (triangleHeight1 * triangleHeight1) < radius * radius)
-	//{// 右上
-	//	unitVec = D3DXVECTOR3(1.0f, 0.0f, 1.0f);
-	//	D3DXVec3Normalize(&unitVec, &unitVec);
-	//	m_extrusion = pos[1] + unitVec * radius;
-	//	return true;
-	//}
-	//else if ((triangleBase2 * triangleBase2) + (triangleHeight2 * triangleHeight2) < radius * radius)
-	//{// 右下
-	//	unitVec = D3DXVECTOR3(1.0f, 0.0f, -1.0f);
-	//	D3DXVec3Normalize(&unitVec, &unitVec);
-	//	m_extrusion = pos[2] + unitVec * radius;
-	//	return true;
-	//}
-	//else if ((triangleBase1 * triangleBase1) + (triangleHeight2 * triangleHeight2) < radius * radius)
-	//{// 左下
-	//	unitVec = D3DXVECTOR3(-1.0f, 0.0f, -1.0f);
-	//	D3DXVec3Normalize(&unitVec, &unitVec);
-	//	m_extrusion = pos[3] + unitVec * radius;
-	//	return true;
-	//}
-	//else
-	//{
-	//	return isLanding;
-	//}
-
-	//if (isExtrusion && isLanding)
-	//{// http://marupeke296.com/COL_2D_No10_SegmentAndSegment.html
-	//	D3DXVECTOR3 v1 = cylinderPos - cylinderPosOld;
-	//	float t2 = Vec2Cross(&v, &v1) / Vec2Cross(&v1, &v2);
-
-	//	// intersection　交点
-	//	D3DXVECTOR3 intersection = startPos + v2 * t2;
-
-	//	// 垂直なベクトルをつくる
-	//	D3DXVECTOR3 vertical(-v2.z, 0.0f, v2.x);
-	//	// 大きさを正規化
-	//	D3DXVec3Normalize(&vertical, &vertical);
-	//	// 押出の位置
-	//	m_extrusion = intersection + vertical * radius;
-	//}
 
 	return isLanding;
 }

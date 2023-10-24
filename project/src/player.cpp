@@ -24,6 +24,8 @@
 #include <sstream>
 #include "item_data_base.h"
 #include "item.h"
+#include "map.h"
+#include "map_model.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -118,13 +120,24 @@ void CPlayer::Update()
 	
 	TakeItem();
 
-	if (m_collision[0]->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(), true))
+	//if (m_collision[0]->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(), true))
+	//{
+	//	// 押し出した位置
+	//	D3DXVECTOR3 extrusion = ((CCollisionCylinder*)m_collision[0])->GetExtrusion();
+	//	SetPos(D3DXVECTOR3(extrusion));
+	//	m_collision[0]->SetPos(D3DXVECTOR3(extrusion));
+	//	SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	//}
+
+	for (int i = 0; i < CMap::GetMap()->GetAllModel(); i++)
 	{
-		// 押し出した位置
-		D3DXVECTOR3 extrusion = ((CCollisionCylinder*)m_collision[0])->GetExtrusion();
-		SetPos(D3DXVECTOR3(extrusion));
-		m_collision[0]->SetPos(D3DXVECTOR3(extrusion));
-		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		if (m_collision[0]->ToBox(CMap::GetMap()->GetMapModel(i)->GetCollisionBox(), true))
+		{// 押し出した位置
+			D3DXVECTOR3 extrusion = ((CCollisionCylinder*)m_collision[0])->GetExtrusion();
+			SetPos(D3DXVECTOR3(extrusion));
+			m_collision[0]->SetPos(D3DXVECTOR3(extrusion));
+			SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		}
 	}
 
 	//if (m_collisionCyinder->ToBox(CStatueManager::GetInstance()->GetStatue(), true))
@@ -140,9 +153,9 @@ void CPlayer::Update()
 	DEBUG_PRINT("pos3 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
 
 #ifdef _DEBUG
-	CDebugProc::Print("Player：pos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
-	CDebugProc::Print("Player：move(%f,%f,%f)\n", move.x, move.y, move.z);
-	CDebugProc::Print("PlayerCollision：pos(%f,%f,%f)\n", m_collision[0]->GetPos().x, m_collision[0]->GetPos().y, m_collision[0]->GetPos().z);
+	CDebugProc::Print("Player : pos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
+	CDebugProc::Print("Player : move(%f,%f,%f)\n", move.x, move.y, move.z);
+	CDebugProc::Print("PlayerCollision : pos(%f,%f,%f)\n", m_collision[0]->GetPos().x, m_collision[0]->GetPos().y, m_collision[0]->GetPos().z);
 #endif // _DEBUG
 }
 

@@ -121,7 +121,7 @@ bool CCollisionSphere::ToMesh(CCollisionMesh* inMesh, bool isExtrusion)
 	return false;
 }
 
-bool CCollisionSphere::ToBox(CCollisionBox * inBox)
+bool CCollisionSphere::ToBox(CCollisionBox * inBox, bool isExtrusion)
 {
 	return false;
 }

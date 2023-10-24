@@ -43,8 +43,6 @@ HRESULT CCharacter::Init()
 	m_apModel[0] = CObjectX::Create(m_pos);
 	m_apModel[0]->LoadModel("BOX");
 
-	m_collision.push_back(CCollisionSphere::Create(m_pos,100.0f));
-
 	m_hp.Init(100);
 	m_hp.SetCurrent(100);
 	m_addHp.Init(100);
