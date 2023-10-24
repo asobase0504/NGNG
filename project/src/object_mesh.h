@@ -33,7 +33,6 @@ public:
 
 	HRESULT Init() override;		// ‰Šú‰»
 	void Uninit() override;			// ”jŠü
-	void Update() override;			// XV
 	void Draw() override;			// •`‰æ
 
 	static CMesh* Create();

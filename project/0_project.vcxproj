@@ -22,6 +22,7 @@
     <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\enemy_data_base.cpp" />
     <ClCompile Include="src\enemy_manager.cpp" />
+    <ClCompile Include="src\font.cpp" />
     <ClCompile Include="src\item_data_base.cpp" />
     <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\player_manager.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\title.cpp" />
     <ClCompile Include="src\utility.cpp" />
+    <ClCompile Include="src\words.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\enemy_data_base.h" />
@@ -105,6 +107,7 @@
     <ClInclude Include="src\enemy.h" />
     <ClInclude Include="src\fade.h" />
     <ClInclude Include="src\file.h" />
+    <ClInclude Include="src\font.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\input\DirectInput.h" />
@@ -154,6 +157,7 @@
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\title.h" />
     <ClInclude Include="src\utility.h" />
+    <ClInclude Include="src\words.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
