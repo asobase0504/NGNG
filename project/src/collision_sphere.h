@@ -23,7 +23,7 @@ public:
 	void Uninit();
 
 	//bool ToCylinder(CCollisionCylinder* inCyinder);
-	bool ToMesh(CCollisionMesh* inMesh, bool isExtrusion);
+	bool ToMesh(CCollisionMesh* inMesh);
 	bool ToBox(CCollisionBox* inBox, bool isExtrusion) override;
 	bool ToSphere(CCollisionSphere* inSphere);
 
