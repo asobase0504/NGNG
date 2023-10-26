@@ -90,10 +90,11 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 
 	float left = boxPos.x - boxSize.x * 0.5f;	// x1
 	float right = boxPos.x + boxSize.x * 0.5f;	// x2
+	float top = boxPos.y + boxSize.y;	// y1
+	float bottum = boxPos.y - boxSize.y;	// y2
 	float back = boxPos.z + boxSize.z * 0.5f;	// z1
 	float front = boxPos.z - boxSize.z * 0.5f;	// z2
-
-	// ４つの頂点
+												// ４つの頂点
 	D3DXVECTOR3 pos[4];
 	pos[0] = D3DXVECTOR3(left - radius, 0.0f, back + radius);
 	pos[1] = D3DXVECTOR3(right + radius, 0.0f, back + radius);
@@ -124,10 +125,8 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	InOut[2] = Vec2Cross(&vecLine[2], &vec[2]);
 	InOut[3] = Vec2Cross(&vecLine[3], &vec[3]);
 
-	if ((InOut[0] < 0.0f && InOut[1] < 0.0f && InOut[2] < 0.0f && InOut[3] < 0.0f) ||
-		InOut[0] > 0.0f && InOut[1] > 0.0f && InOut[2] > 0.0f && InOut[3] > 0.0f)
-	{
-		// XZの押出
+	if (InOut[0] < 0.0f && InOut[1] < 0.0f && InOut[2] < 0.0f && InOut[3] < 0.0f)
+	{// XZの押出
 		for (int nCnt = 0; nCnt < 4; nCnt++)
 		{// どの方向から来たか判定
 			D3DXVECTOR3 vecPosOld = cylinderPosOld - worldPos[nCnt];
@@ -176,7 +175,6 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 			}
 		}
 	}
-
 	return isLanding;
 }
 
