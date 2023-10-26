@@ -97,7 +97,7 @@ void CSkillDataBase::Init()
 		return false;
 	} };
 
-	m_dates["YAMATO_SKILL_2"] = { 0,1,1,0,5,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{ // ”­“®Žž‚ÌŒø‰Ê
 		return false;

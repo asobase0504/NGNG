@@ -1,19 +1,20 @@
 //**************************************************************
 //
-// 血の祭壇
+// 宝箱の祭壇
 // Author : 梶田大夢
 //
 //**************************************************************
 
 // include
-#include "statue_blood.h"
+#include "statue_chest.h"
 #include "player_manager.h"
+#include "item_manager.h"
 #include "input.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueBlood::CStatueBlood(int nPriority)
+CStatueChest::CStatueChest(int nPriority)
 {
 
 }
@@ -21,7 +22,7 @@ CStatueBlood::CStatueBlood(int nPriority)
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CStatueBlood::~CStatueBlood()
+CStatueChest::~CStatueChest()
 {
 
 }
@@ -29,7 +30,7 @@ CStatueBlood::~CStatueBlood()
 //--------------------------------------------------------------
 // 初期化処理
 //--------------------------------------------------------------
-HRESULT CStatueBlood::Init()
+HRESULT CStatueChest::Init()
 {
 	// 初期化処理
 	D3DXVECTOR3 pos = GetPos();
@@ -44,7 +45,7 @@ HRESULT CStatueBlood::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CStatueBlood::Uninit()
+void CStatueChest::Uninit()
 {
 	// 終了処理
 	CStatue::Uninit();
@@ -53,12 +54,11 @@ void CStatueBlood::Uninit()
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CStatueBlood::Update()
+void CStatueChest::Update()
 {
 	// プレイヤー情報取得
 	CInput* input = CInput::GetKey();
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int> playerHp = pPlayer->GetHp();
 	CStatus<int> playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
@@ -68,11 +68,15 @@ void CStatueBlood::Update()
 		{// プレイヤーが特定のキーを押したとき
 			if (!m_bOnce)
 			{
-				// プレイヤーのHPとお金を調整して設定
-				playerHp.AddCurrent(-10);
-				playerMoney.AddCurrent(10);
-				pPlayer->SetHp(playerHp);
+				// プレイヤーお金を調整して設定
+				playerMoney.AddCurrent(-10);
 				pPlayer->SetMoney(playerMoney);
+
+				//-------------------------------------------------------------------------------
+				// アイテムランダムドロップ関数追加
+				//---------------------------------------------------------------------------------
+				D3DXVECTOR3 pos = GetPos();
+				CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), CItemDataBase::ITEM_POWER_ON);
 
 				m_bOnce = true;
 			}
@@ -94,7 +98,7 @@ void CStatueBlood::Update()
 //--------------------------------------------------------------
 // 描画処理
 //--------------------------------------------------------------
-void CStatueBlood::Draw(void)
+void CStatueChest::Draw(void)
 {
 	// 描画処理
 	CStatue::Draw();
@@ -103,12 +107,12 @@ void CStatueBlood::Draw(void)
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CStatueBlood* CStatueBlood::Create(D3DXVECTOR3 pos)
+CStatueChest* CStatueChest::Create(D3DXVECTOR3 pos)
 {
-	CStatueBlood* pStatueblood;
-	pStatueblood = new CStatueBlood;
-	pStatueblood->SetPos(pos);
-	pStatueblood->Init();
+	CStatueChest* pStatuechest;
+	pStatuechest = new CStatueChest;
+	pStatuechest->SetPos(pos);
+	pStatuechest->Init();
 
-	return pStatueblood;
+	return pStatuechest;
 }

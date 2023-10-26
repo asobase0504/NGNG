@@ -40,6 +40,8 @@ void CItemDataBase::Init()
 		inCharacter->SetHp(HPup);
 	});
 
+	m_item[ITEM_GETA] = CItem::Create(ITEM_GETA);
+
 	// ‰º‘Ê‚ÌÝ’è
 	m_item[ITEM_GETA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{

@@ -1,7 +1,7 @@
 //**************************************************************
 //
-// ‘œ
-// Author: Š“c ‘å–²
+// åƒ
+// Author: æ¢¶ç”° å¤§å¤¢
 //
 //**************************************************************
 
@@ -14,7 +14,7 @@
 #include "player.h"
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CStatue::CStatue(CTaskGroup::EPriority list) :
 	m_modelData("BOX")
@@ -22,27 +22,41 @@ CStatue::CStatue(CTaskGroup::EPriority list) :
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CStatue::~CStatue()
 {
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»
+// åˆæœŸåŒ–
 //--------------------------------------------------------------
 HRESULT CStatue::Init()
 {
 	CObjectX::Init();
-	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), GetRot(),D3DXVECTOR3(10.0f, 10.0f, 10.0f));
+
+	D3DXMATRIX mtx = GetMtxWorld();
+	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), GetRot(),D3DXVECTOR3(10.0f, 10.0f, 10.0f), mtx);
 	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 15.0f, 15.0f);
+
 	LoadModel(m_modelData);
 
 	return S_OK;
 }
 
+HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
+{
+	CObjectX::Init();
+	LoadModel(m_modelData);
+
+	m_collisionBox = CCollisionBox::Create(inPos, inRot, D3DXVECTOR3(10.0f, 10.0f, 10.0f), GetMtxWorld());
+	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 15.0f, 15.0f);
+
+	return S_OK;
+}
+
 //--------------------------------------------------------------
-// I—¹
+// çµ‚äº†
 //--------------------------------------------------------------
 void CStatue::Uninit()
 {
@@ -50,7 +64,7 @@ void CStatue::Uninit()
 }
 
 //--------------------------------------------------------------
-// XV
+// æ›´æ–°
 //--------------------------------------------------------------
 void CStatue::Update()
 {
@@ -61,7 +75,7 @@ void CStatue::Update()
 
 	if (a)
 	{
-		// ‰Ÿ‚µo‚µ‚½ˆÊ’u
+		// æŠ¼ã—å‡ºã—ãŸä½ç½®
 		D3DXVECTOR3 extrusion = ((CCollisionCylinder*)CPlayerManager::GetInstance()->GetPlayer()->GetCollision())->GetExtrusion();
 		CPlayerManager::GetInstance()->GetPlayer()->SetPos(D3DXVECTOR3(extrusion));
 		CPlayerManager::GetInstance()->GetPlayer()->GetCollision()->SetPos(D3DXVECTOR3(extrusion));
@@ -78,7 +92,7 @@ void CStatue::Update()
 }
 
 //--------------------------------------------------------------
-// •`‰æ
+// æç”»
 //--------------------------------------------------------------
 void CStatue::Draw()
 {
@@ -86,19 +100,18 @@ void CStatue::Draw()
 }
 
 //--------------------------------------------------------------
-// ¶¬
+// ç”Ÿæˆ
 //--------------------------------------------------------------
-CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot)
+CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot)
 {
 	CStatue* pStatue = nullptr;
 	pStatue = new CStatue;
 
 	if (pStatue != nullptr)
 	{
-		pStatue->Init();
+		pStatue->Init(inPos,inRot);
 		pStatue->SetPos(inPos);
-		pStatue->m_collisionBox = CCollisionBox::Create(inPos, inRot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
-		pStatue->m_collisionCylinder = CCollisionCylinder::Create(inPos,15.0f, 15.0f);
+		pStatue->SetRot(inRot);
 	}
 
 	return pStatue;

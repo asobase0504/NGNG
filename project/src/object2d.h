@@ -60,16 +60,16 @@ public:
 	void SetColor(const D3DXCOLOR& inColor) override;
 	void SetAnimation(const int U, const int V, const int Speed, const int Drawtimer, const bool loop);
 
+	bool PointAndAABB(const D3DXVECTOR3& inPos);
+protected:
 	LPDIRECT3DVERTEXBUFFER9 &GetVtx() { return m_vtxBuff; }
 
-	bool PointAndAABB(const D3DXVECTOR3& inPos);
 private:
 	void Animation();
 
 protected:
 	int  m_timer;
 	float m_scale;
-	D3DXMATRIX m_mtxWorld;	// マトリックス
 
 private:
 	LPDIRECT3DVERTEXBUFFER9	m_vtxBuff;

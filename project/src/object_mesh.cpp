@@ -59,6 +59,8 @@ HRESULT CMesh::Init()
 	
 	SetMesh(10);
 
+	m_collisionMesh = CCollisionMesh::Create(m_polygonCount, m_vtxBuff, m_idxBuff, m_mtxWorld);
+
 	return S_OK;
 }
 
@@ -81,13 +83,6 @@ void CMesh::Uninit()
 	}
 
 	Release();
-}
-
-//--------------------------------------------------------------
-// 更新処理
-//--------------------------------------------------------------
-void CMesh::Update()
-{
 }
 
 //--------------------------------------------------------------
@@ -511,6 +506,19 @@ void CMesh::SetVtxMeshSize(int Size)
 
 	m_polygonCount = m_index - 2;
 
+	// 頂点バッファーの解放
+	if (m_vtxBuff != nullptr)
+	{
+		m_vtxBuff->Release();
+		m_vtxBuff = nullptr;
+	}
+
+	if (m_idxBuff != nullptr)
+	{
+		m_idxBuff->Release();
+		m_idxBuff = nullptr;
+	}
+
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 
 	// 頂点バッファの生成
@@ -538,8 +546,8 @@ void CMesh::SetVtxMeshSize(int Size)
 	for (int i = 0; i < m_vtx; i++)
 	{
 		pVtx[i].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		float posx = ((i % m_vtxCountX) - 1.0f);
-		float posz = ((i / m_vtxCountZ) - 1.0f) * -1.0f;
+		float posx = ((i % m_vtxCountX));
+		float posz = ((i / m_vtxCountZ)) * -1.0f;
 
 		float texU = 1.0f / m_xsiz * (i % m_vtxCountX);
 		float texV = 1.0f / m_zsiz * (i / m_vtxCountZ);
@@ -548,7 +556,7 @@ void CMesh::SetVtxMeshSize(int Size)
 		//m_pos = (D3DXVECTOR3(-(posx - 1) * m_meshSize.x * 0.5f, 0.0f, -posz * m_meshSize.z * 0.5f)) + m_pos;
 
 		// 座標の補正
-		pVtx[i].pos += D3DXVECTOR3(posx * m_meshSize.x, 0.0f, posz * m_meshSize.z);
+		pVtx[i].pos += D3DXVECTOR3(posx * m_meshSize.x - m_meshSize.x * m_vtxCountX * 0.5f, 0.0f, posz * m_meshSize.z + m_meshSize.z * m_vtxCountZ * 0.5f);
 
 		// 各頂点の法線の設定(※ベクトルの大きさは1にする必要がある)
 		pVtx[i].nor = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
