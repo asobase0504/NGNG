@@ -70,6 +70,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpC
 		hInstance,
 		NULL);
 
+	// ランダムの初期化
+	srand((unsigned int)time(NULL));
+	rand();
+
 	application = CApplication::GetInstance();
 
 	if (FAILED(application->Init(hWnd, hInstance)))	// 画面サイズ

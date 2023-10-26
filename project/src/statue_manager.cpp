@@ -13,6 +13,7 @@
 #include "statue.h"
 #include "collision_box.h"
 #include "application.h"
+#include "utility.h"
 
 //--------------------------------------------------------------
 //Ã“Iƒƒ“ƒo•Ï”éŒ¾
@@ -93,7 +94,7 @@ CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
 		m_pStatue = CStatueChest::Create(pos);
 		break;
 	case CStatueManager::LUCK:
-		m_pStatue = CStatueLuck::Create(pos);
+		RabdomCreate(pos);
 		break;
 	case CStatueManager::MAX:
 		break;
@@ -101,5 +102,21 @@ CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
 		break;
 	}
 
+	return m_pStatue;
+}
+
+//--------------------------------------------------------------
+// ƒ‰ƒ“ƒ_ƒ€¶¬ˆ—
+//--------------------------------------------------------------
+CStatue * CStatueManager::RabdomCreate(D3DXVECTOR3 pos)
+{
+	int randomCount = IntRandom(15, 8);
+
+	for (int nCnt = 0; nCnt < randomCount; nCnt++)
+	{
+		float randomPos = FloatRandom(420.0f, -420.0f);
+		m_pStatue = CStatueLuck::Create(D3DXVECTOR3(randomPos,pos.y, randomPos));
+	}
+	
 	return m_pStatue;
 }
