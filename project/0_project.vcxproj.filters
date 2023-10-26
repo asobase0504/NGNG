@@ -284,6 +284,9 @@
     <ClCompile Include="src\text.cpp">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClCompile>
+    <ClCompile Include="src\statue_combat.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -498,6 +501,9 @@
     </ClInclude>
     <ClInclude Include="src\text.h">
       <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_combat.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

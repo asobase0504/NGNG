@@ -79,6 +79,7 @@
     <ClCompile Include="src\statue.cpp" />
     <ClCompile Include="src\statue_blood.cpp" />
     <ClCompile Include="src\statue_chest.cpp" />
+    <ClCompile Include="src\statue_combat.cpp" />
     <ClCompile Include="src\statue_luck.cpp" />
     <ClCompile Include="src\statue_manager.cpp" />
     <ClCompile Include="src\status.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="src\statue.h" />
     <ClInclude Include="src\statue_blood.h" />
     <ClInclude Include="src\statue_chest.h" />
+    <ClInclude Include="src\statue_combat.h" />
     <ClInclude Include="src\statue_luck.h" />
     <ClInclude Include="src\statue_manager.h" />
     <ClInclude Include="src\status.h" />
