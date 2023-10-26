@@ -44,7 +44,7 @@ HRESULT CCharacter::Init()
 	m_apModel[0]->LoadModel("BOX");
 
 	m_hp.Init(100);
-	m_hp.SetCurrent(100);
+	m_hp.SetCurrent(50);
 	m_addHp.Init(100);
 	m_addHp.SetCurrent(100);
 	m_addHpSubTime.Init(100);

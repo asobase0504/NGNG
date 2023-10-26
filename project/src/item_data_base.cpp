@@ -35,7 +35,7 @@ void CItemDataBase::Init()
 	// ‚¾‚ñ‚²‚ÌÝ’è
 	m_item[ITEM_DANGO]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{
-		CStatus<int> HPup = inCharacter->GetHp();
+		CStatus<int> HPup = *inCharacter->GetHp();
 		HPup.AddItemEffect(50);
 		inCharacter->SetHp(HPup);
 	});

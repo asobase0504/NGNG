@@ -38,7 +38,7 @@ CMesh::CMesh(CTaskGroup::EPriority nPriority) :
 	m_isCollision(true),
 	m_collisionMesh(nullptr)
 {
-	m_meshSize = { 10.0f,0.0f,10.0f };
+	m_meshSize = { 100.0f,0.0f,100.0f };
 }
 
 //--------------------------------------------------------------
@@ -56,8 +56,6 @@ HRESULT CMesh::Init()
 	// 初期化処理
 	m_vtxBuff = nullptr;		// 頂点バッファーへのポインタ
 	m_idxBuff = nullptr;		// インデックスバッファ
-	
-	SetMesh(10);
 
 	m_collisionMesh = CCollisionMesh::Create(m_polygonCount, m_vtxBuff, m_idxBuff, m_mtxWorld);
 
@@ -346,6 +344,33 @@ bool CMesh::CreateMesh(D3DXVECTOR3* pPos)
 	return bIsLanding;
 }
 
+void CMesh::SetY(std::vector<std::vector<float>> inY)
+{
+	m_nowMesh = inY.size();		// 枚数保存
+	SetVtxMeshSize(inY.size());	// サイズ決定
+	SetVtxMeshLight();		// 法線設定
+
+	VERTEX_3D* pVtx = NULL;
+
+	// 頂点座標をロック
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	// 頂点座標の設定
+	for (int i = 0; i < inY.size(); i++)
+	{
+		for (int j = 0; j < inY[i].size(); j++)
+		{
+			// 座標の補正
+			int size = j + i * inY.size();
+			pVtx[size].pos.y += inY[i][j];
+		}
+	}
+
+	// 頂点座標をアンロック
+	m_vtxBuff->Unlock();
+
+}
+
 //--------------------------------------------------------------
 // メッシュの作成
 // Author:hamada ryuuga
@@ -363,129 +388,6 @@ void CMesh::SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx,int nCnt,bool isUp)
 }
 
 //--------------------------------------------------------------
-// 今あるオブジェクトの読み込み
-//--------------------------------------------------------------
-void CMesh::Loadfile(const char* pFileName)
-{
-	Uninit();
-	//NotRelease();
-	std::ifstream ifs(pFileName);
-
-	int nIndex = 0;
-	VERTEX_3D* pVtx = nullptr;
-	// 頂点座標をロック	
-	std::string str;
-	if (ifs)
-	{
-		nlohmann::json JMesh;//リストの生成
-
-		ifs >> JMesh;
-		nIndex = JMesh["INDEX"];
-		D3DXVECTOR3 pos;
-		D3DXVECTOR3 size;
-		D3DXVECTOR3 rot;
-		std::string Type;
-
-		//初期化
-		if (JMesh["MESHSIZE"] == NULL)
-		{
-			CMesh::SetVtxMeshSize(0);
-		}
-		else
-		{
-			CMesh::SetVtxMeshSize(JMesh["MESHSIZE"]);
-		}
-
-		str = JMesh["TEXPASS"];
-		CMesh::SetTexture(str.c_str());
-
-		m_pos = D3DXVECTOR3(JMesh["POSORIGIN"]["X"], JMesh["POSORIGIN"]["Y"], JMesh["POSORIGIN"]["Z"]);
-		m_meshSize = D3DXVECTOR3(JMesh["MESHDATASIZE"]["X"], JMesh["MESHDATASIZE"]["Y"], JMesh["MESHDATASIZE"]["Z"]);
-		
-		m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
-		for (int nCnt = 0; nCnt < m_vtx; nCnt++)
-		{
-			/* 位置を真ん中にする補正 */
-			//float posx = ((nCnt % m_vtxCountX) - 1.0f);
-			//float posz = ((nCnt / m_vtxCountZ) - 1.0f) * -1.0f;
-			//m_pos = D3DXVECTOR3(-(posx - 1)*MAX_SIZEMESH * 0.5f, 0.0f, -posz * MAX_SIZEMESH * 0.5f) + m_pos;
-
-			std::string name = "MESH";
-			std::string Number = std::to_string(nCnt);
-			name += Number;
-
-			pos = D3DXVECTOR3(JMesh[name]["POS"]["X"], JMesh[name]["POS"]["Y"], JMesh[name]["POS"]["Z"]);
-
-			//座標の補正
-			pVtx[nCnt].pos = D3DXVECTOR3(pos.x, pos.y, pos.z);
-
-			// 各頂点の法線の設定(※ベクトルの大きさは1にする必要がある)
-			pVtx[nCnt].nor = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			// 頂点カラーの設定
-			pVtx[nCnt].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		}
-		// 頂点座標をアンロック
-		m_vtxBuff->Unlock();
-		CMesh::SetVtxMeshLight();
-	}
-}
-
-//--------------------------------------------------------------
-// 今あるオブジェクトの保存
-//--------------------------------------------------------------
-void CMesh::Savefile(const char* pFileName)
-{
-	VERTEX_3D* pVtx = nullptr;
-
-	// 頂点座標をロック
-	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-	int nIndex = 0;
-	
-	nlohmann::json JMesh;//リストの生成
-
-	for (int i = 0; i < m_vtx; i++)
-	{
-		std::string name = "MESH";
-		std::string Number = std::to_string(nIndex);
-		name += Number;
-
-		JMesh[name] = {
-			{ "POS",{
-				{ "X", pVtx[i].pos.x } ,
-				{ "Y", pVtx[i].pos.y } ,
-				{ "Z", pVtx[i].pos.z } } } ,};
-
-		nIndex++;
-	}
-
-	// 頂点座標をアンロック
-	m_vtxBuff->Unlock();
-
-	JMesh["INDEX"] = nIndex;
-	JMesh["MESHDATASIZE"] = {
-		{ "X", m_meshSize.x } ,
-		{ "Y", m_meshSize.y } ,
-		{ "Z", m_meshSize.z } };
-	
-	JMesh["TEXPASS"] = m_fileName;
-	JMesh["MESHSIZE"] = m_xsiz;
-	JMesh["POSORIGIN"] = {
-			{ "X", m_pos.x } ,
-			{ "Y", m_pos.y } ,
-			{ "Z", m_pos.z } };
-
-	JMesh["ANIMATION"] = false;
-
-	auto jobj = JMesh.dump();
-	std::ofstream writing_file;
-	const std::string pathToJSON = pFileName;
-	writing_file.open(pathToJSON, std::ios::out);
-	writing_file << jobj << std::endl;
-	writing_file.close();
-}
-
-//--------------------------------------------------------------
 // 面の数を設定
 //--------------------------------------------------------------
 void CMesh::SetVtxMeshSize(int Size)
@@ -493,10 +395,10 @@ void CMesh::SetVtxMeshSize(int Size)
 	//CMesh::Uninit();
 	//NotRelease();
 
-	m_xsiz = Size;				// 面の数
-	m_zsiz = Size;				// 面の数
-	m_vtxCountX = m_xsiz + 1;	// 頂点数
-	m_vtxCountZ = m_zsiz + 1;	// 頂点数
+	m_vtxCountX = Size;	// 頂点数
+	m_vtxCountZ = Size;	// 頂点数
+	m_xsiz = Size - 1;				// 面の数
+	m_zsiz = Size - 1;				// 面の数
 
 	// 頂点数
 	m_vtx = m_vtxCountX * m_vtxCountZ;	// 頂点数を使ってるよ
@@ -545,7 +447,6 @@ void CMesh::SetVtxMeshSize(int Size)
 	// 頂点座標の設定
 	for (int i = 0; i < m_vtx; i++)
 	{
-		pVtx[i].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		float posx = ((i % m_vtxCountX));
 		float posz = ((i / m_vtxCountZ)) * -1.0f;
 
@@ -679,5 +580,4 @@ void CMesh::SetMesh(const int Size)
 void CMesh::SetOneMeshSize(D3DXVECTOR3 IsSize)
 {
 	m_meshSize = IsSize;
-	CMesh::SetMesh(m_nowMesh);
 }

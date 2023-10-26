@@ -39,7 +39,7 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	static CCharacter *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);			// プレイヤーの生成
+	static CCharacter *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);		// プレイヤーの生成
 
 	CCollision* GetCollision() { return m_collision[0]; }
 
@@ -65,7 +65,7 @@ public:
 	void SetBarrierRepopTime(CStatus<unsigned int> barrierRe) { m_barrierRePopTime = barrierRe; }
 
 	// HP
-	CStatus<int> GetHp() { return m_hp; }
+	CStatus<int>* GetHp() { return &m_hp; }
 	void SetHp(CStatus<int> hp) { m_hp = hp; }
 
 	// 追加HP
