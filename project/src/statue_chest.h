@@ -1,42 +1,37 @@
 //**************************************************************
 //
-// 敵
+// 宝箱の祭壇
 // Author : 梶田大夢
 //
 //**************************************************************
-#ifndef _ENEMY_H_			// このマクロ定義がされてなかったら
-#define _ENEMY_H_			// 二重インクルード防止のマクロ定義
+#ifndef _STATUE_CHEST_H_			// このマクロ定義がされてなかったら
+#define _STATUE_CHEST_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
-#include "character.h"
+#include "statue.h"
 
 //==============================================================
 // マクロ宣言
 //==============================================================
-#define MAX_SPEED	(0.3f)
 
 //==============================================================
 // 前方宣言
 //==============================================================
-class CObjectX;
-class CController;
+class CPlayer;
 class CCollisionBox;
-class CCollisionSphere;
-class CEnemyDataBase;
+class CCollisionCylinder;
 
 //==============================================================
 // 敵クラス
 //==============================================================
-class CEnemy : public CCharacter
+class CStatueChest : public CStatue
 {
 public:
-	using ACTIVITY_FUNC = std::function<void(CEnemy*)>;
-public:
 	// コンストラクタとデストラクタ
-	explicit CEnemy(int nPriority = 3);
-	~CEnemy();
+	explicit CStatueChest(int nPriority = 3);
+	~CStatueChest();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
@@ -45,13 +40,11 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	static CEnemy *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);			// プレイヤーの生成
-
-private:
-	void Move();		// 移動
+	static CStatueChest *Create(D3DXVECTOR3 pos);			// 宝箱の祭壇の生成
 
 private:	// メンバ変数
-	CCollisionSphere* m_collisionSphere;
-	std::vector<ACTIVITY_FUNC> m_activity;
+	CPlayer* m_pPlayer;
+	bool m_bOnce;
 };
 #endif
+

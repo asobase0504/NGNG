@@ -79,7 +79,6 @@ private:
 protected:
 	int  m_timer;
 	float m_scale;
-	D3DXMATRIX m_mtxWorld;	// マトリックス
 
 private:
 	LPDIRECT3DVERTEXBUFFER9	m_vtxBuff;

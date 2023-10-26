@@ -57,6 +57,8 @@ HRESULT CMesh::Init()
 	m_vtxBuff = nullptr;		// 頂点バッファーへのポインタ
 	m_idxBuff = nullptr;		// インデックスバッファ
 
+	m_collisionMesh = CCollisionMesh::Create(m_polygonCount, m_vtxBuff, m_idxBuff, m_mtxWorld);
+
 	return S_OK;
 }
 

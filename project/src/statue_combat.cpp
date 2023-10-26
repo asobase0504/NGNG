@@ -1,19 +1,21 @@
 //**************************************************************
 //
-// 血の祭壇
+// 戦いの祭壇
 // Author : 梶田大夢
 //
 //**************************************************************
 
 // include
-#include "statue_blood.h"
+#include "statue_combat.h"
 #include "player_manager.h"
+#include "enemy_manager.h"
 #include "input.h"
+#include "utility.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueBlood::CStatueBlood(int nPriority)
+CStatueCombat::CStatueCombat(int nPriority)
 {
 
 }
@@ -21,7 +23,7 @@ CStatueBlood::CStatueBlood(int nPriority)
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CStatueBlood::~CStatueBlood()
+CStatueCombat::~CStatueCombat()
 {
 
 }
@@ -29,14 +31,13 @@ CStatueBlood::~CStatueBlood()
 //--------------------------------------------------------------
 // 初期化処理
 //--------------------------------------------------------------
-HRESULT CStatueBlood::Init()
+HRESULT CStatueCombat::Init()
 {
 	// 初期化処理
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 rot = GetRot();
 
 	CStatue::Init(pos, rot);
-	m_bOnce = false;
 
 	return S_OK;
 }
@@ -44,7 +45,7 @@ HRESULT CStatueBlood::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CStatueBlood::Uninit()
+void CStatueCombat::Uninit()
 {
 	// 終了処理
 	CStatue::Uninit();
@@ -53,33 +54,25 @@ void CStatueBlood::Uninit()
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CStatueBlood::Update()
+void CStatueCombat::Update()
 {
-	// プレイヤー情報取得
 	CInput* input = CInput::GetKey();
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int> playerHp = *pPlayer->GetHp();
-	CStatus<int> playerMoney = pPlayer->GetMoney();
+	D3DXVECTOR3 pos = GetPos();
 
 	// プレイヤーが触れている時
 	if (Touch(pPlayer))
 	{
 		if (input->Trigger(KEY_BACK, -1))
 		{// プレイヤーが特定のキーを押したとき
-			if (!m_bOnce)
+			for (int nCnt = 0; nCnt < 4; nCnt++)
 			{
-				// プレイヤーのHPとお金を調整して設定
-				playerHp.AddCurrent(-10);
-				playerMoney.AddCurrent(10);
-				pPlayer->SetHp(playerHp);
-				pPlayer->SetMoney(playerMoney);
+				// 敵の生成
+				float randX = FloatRandom(1.5f, 0.5f);
+				float randZ = FloatRandom(1.5f, 0.5f);
 
-				m_bOnce = true;
+				CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX,pos.y,pos.z * randZ),D3DXVECTOR3(50.0f,50.0f,50.0f), CEnemyManager::NONE);
 			}
-		}
-		else
-		{
-			m_bOnce = false;
 		}
 	}
 
@@ -94,7 +87,7 @@ void CStatueBlood::Update()
 //--------------------------------------------------------------
 // 描画処理
 //--------------------------------------------------------------
-void CStatueBlood::Draw(void)
+void CStatueCombat::Draw(void)
 {
 	// 描画処理
 	CStatue::Draw();
@@ -103,12 +96,12 @@ void CStatueBlood::Draw(void)
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CStatueBlood* CStatueBlood::Create(D3DXVECTOR3 pos)
+CStatueCombat* CStatueCombat::Create(D3DXVECTOR3 pos)
 {
-	CStatueBlood* pStatueblood;
-	pStatueblood = new CStatueBlood;
-	pStatueblood->SetPos(pos);
-	pStatueblood->Init();
+	CStatueCombat* pStatuecombat;
+	pStatuecombat = new CStatueCombat;
+	pStatuecombat->SetPos(pos);
+	pStatuecombat->Init();
 
-	return pStatueblood;
+	return pStatuecombat;
 }

@@ -26,6 +26,7 @@
     <ClCompile Include="src\font.cpp" />
     <ClCompile Include="src\item_data_base.cpp" />
     <ClCompile Include="src\map.cpp" />
+    <ClCompile Include="src\map_model.cpp" />
     <ClCompile Include="src\player_manager.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\camera.cpp" />
@@ -79,6 +80,9 @@
     <ClCompile Include="src\sound.cpp" />
     <ClCompile Include="src\statue.cpp" />
     <ClCompile Include="src\statue_blood.cpp" />
+    <ClCompile Include="src\statue_chest.cpp" />
+    <ClCompile Include="src\statue_combat.cpp" />
+    <ClCompile Include="src\statue_luck.cpp" />
     <ClCompile Include="src\statue_manager.cpp" />
     <ClCompile Include="src\status.cpp" />
     <ClCompile Include="src\task.cpp" />
@@ -123,6 +127,7 @@
     <ClInclude Include="src\light.h" />
     <ClInclude Include="src\line.h" />
     <ClInclude Include="src\map.h" />
+    <ClInclude Include="src\map_model.h" />
     <ClInclude Include="src\mode.h" />
     <ClInclude Include="src\motion.h" />
     <ClInclude Include="src\motion_model3D.h" />
@@ -147,6 +152,9 @@
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\statue.h" />
     <ClInclude Include="src\statue_blood.h" />
+    <ClInclude Include="src\statue_chest.h" />
+    <ClInclude Include="src\statue_combat.h" />
+    <ClInclude Include="src\statue_luck.h" />
     <ClInclude Include="src\statue_manager.h" />
     <ClInclude Include="src\status.h" />
     <ClInclude Include="src\task.h" />
@@ -162,6 +170,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\FILE\map\map01.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7EBBFD2F-1F99-4A13-9899-6C72FA7C556A}</ProjectGuid>

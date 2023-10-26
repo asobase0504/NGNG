@@ -66,6 +66,12 @@
     <Filter Include="ソース ファイル\Mode\Game\00_Object\UI">
       <UniqueIdentifier>{a6fb7bdb-faf6-463e-83e8-6e0915814541}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\map_model">
+      <UniqueIdentifier>{57ea62fa-5a66-4212-8bda-6d6dcf449835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\json">
+      <UniqueIdentifier>{9b784e72-5709-4736-87c7-d6250a6c9b2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -272,6 +278,12 @@
     <ClCompile Include="src\item_data_base.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="src\statue_chest.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue_luck.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
     <ClCompile Include="src\font.cpp">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClCompile>
@@ -283,6 +295,12 @@
     </ClCompile>
     <ClCompile Include="hp_ui.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue_combat.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map_model.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\map_model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -484,6 +502,12 @@
     <ClInclude Include="src\map.h">
       <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
     </ClInclude>
+    <ClInclude Include="src\statue_chest.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_luck.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
     <ClInclude Include="src\font.h">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClInclude>
@@ -496,10 +520,21 @@
     <ClInclude Include="hp_ui.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\UI</Filter>
     </ClInclude>
+    <ClInclude Include="src\statue_combat.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map_model.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\map_model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
       <Filter>ソース ファイル\00_Main\Shader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\FILE\map\map01.json">
+      <Filter>ソース ファイル\Mode\Game\00_Object\json</Filter>
+    </None>
   </ItemGroup>
 </Project>

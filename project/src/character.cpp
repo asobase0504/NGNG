@@ -37,11 +37,11 @@ CCharacter::~CCharacter()
 //--------------------------------------------------------------
 HRESULT CCharacter::Init()
 {
+	CObject::Init();
+
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
 	m_apModel[0]->LoadModel("BOX");
-
-	m_collision.push_back(CCollisionSphere::Create(m_pos,100.0f));
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(50);
@@ -88,9 +88,6 @@ void CCharacter::Uninit(void)
 //--------------------------------------------------------------
 void CCharacter::Update(void)
 {
-	// 座標の更新処理
-	UpdatePos();
-
 	// 更新処理
 	CObject::Update();
 }
@@ -150,25 +147,20 @@ CCharacter* CCharacter::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	return pCharacter;
 }
 
+void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
+{
+	if (m_apModel.size() > 0)
+	{
+		GetModel()[0]->SetRot(inRot);
+	}
+
+	CObject::SetRot(inRot);
+}
+
 void CCharacter::Attack()
 {
 }
 
 void CCharacter::Move()
 {
-}
-
-//--------------------------------------------------------------
-// 座標の更新
-//--------------------------------------------------------------
-void CCharacter::UpdatePos()
-{
-	// 座標の取得
-	D3DXVECTOR3 pos = GetPos();
-
-	SetPosOld(pos);			// 前回の位置の保存
-	pos += GetMove();		// 位置の更新
-
-	// 座標の設定
-	SetPos(pos);
 }

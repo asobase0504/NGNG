@@ -59,7 +59,7 @@ public:
 	void SwitchCollision(bool onCollision) { m_isCollision = onCollision; };
 
 	std::string GetDataNeme() { return m_dataName; }
-	CCollisionMesh* GetMesh() { return m_collisionMesh; }
+	CCollisionMesh* GetCollisionMesh() { return m_collisionMesh; }
 
 	void SetY(std::vector<std::vector<float>> inY);
 

@@ -1,11 +1,11 @@
 //**************************************************************
 //
-// 像
-// Author: 梶田 大夢
+// マップのモデル
+// Author: Buriya Kota
 //
 //**************************************************************
-#ifndef _STATUE_H_
-#define _STATUE_H_
+#ifndef _MAP_MODEL_H_
+#define _MAP_MODEL_H_
 
 //==============================================================
 // include
@@ -16,34 +16,26 @@
 // 前方宣言
 //==============================================================
 class CCollisionBox;
-class CCollisionCylinder;
-class CPlayer;
 
 //==============================================================
 // クラス
 //==============================================================
-class CStatue : public CObjectX
+class CMapModel : public CObjectX
 {
 public:
-	CStatue(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
-	~CStatue();
+	CMapModel(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	~CMapModel();
 
 	HRESULT Init() override;
-	HRESULT Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot);
+	HRESULT Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot, const D3DXVECTOR3& inSize);
 	void Uninit() override;
 	void Update() override;
-	void Draw() override; 
+	void Draw() override;
 
-	static CStatue* Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot);
+	static CMapModel* Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot, const D3DXVECTOR3& inSize);
 	CCollisionBox* GetCollisionBox() { return m_collisionBox; }
-	CCollisionCylinder* GetCollisionCylinder() { return m_collisionCylinder; }
 
-	bool Touch(CPlayer* pPlayer);
 private:
-	std::string m_modelData;
 	CCollisionBox* m_collisionBox;
-	CCollisionCylinder* m_collisionCylinder;
-
-	CPlayer* m_player;
 };
-#endif	// _ITEM_MODEL_H_
+#endif	// _MAP_MODEL_H_
