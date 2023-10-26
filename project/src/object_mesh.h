@@ -38,10 +38,7 @@ public:
 	static CMesh* Create();
 
 	bool CreateMesh(D3DXVECTOR3 *pPos);		// メッシュの凸凹つける
-	bool Collision(D3DXVECTOR3 *pPos);	// メッシュの当たり判定つける
-
-	void Loadfile(const char * pFileName);	// メッシュの読み込み
-	void Savefile(const char * pFileName);	// メッシュの書き出し
+	bool Collision(D3DXVECTOR3 *pPos);		// メッシュの当たり判定つける
 	
 	void SetMesh(const int Size);
 
@@ -63,6 +60,8 @@ public:
 
 	std::string GetDataNeme() { return m_dataName; }
 	CCollisionMesh* GetMesh() { return m_collisionMesh; }
+
+	void SetY(std::vector<std::vector<float>> inY);
 
 private:
 	void SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx, int nCnt, bool isUp);
