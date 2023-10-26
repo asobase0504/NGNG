@@ -38,14 +38,12 @@ public:
 	int GetPrimitive() { return m_primitive; }
 	LPDIRECT3DVERTEXBUFFER9 GetVtxBuff() { return m_vtxBuff; }
 	LPDIRECT3DINDEXBUFFER9 GetIdxBuff() { return m_idxBuff; }
-	D3DXMATRIX GetMtxWorld() { return m_mtxWorld; }
 	float GetExtrusionHeight() { return m_extrusionHeight; }
 
 private:
 	int m_primitive;
 	LPDIRECT3DVERTEXBUFFER9 m_vtxBuff;
 	LPDIRECT3DINDEXBUFFER9 m_idxBuff;
-	D3DXMATRIX m_mtxWorld;
 	float m_extrusionHeight;	// âüÇµèoÇ∑çÇÇ≥
 };
 

@@ -38,6 +38,7 @@ public:
 	CObject(CTaskGroup::EPriority inPriority = CTaskGroup::LEVEL_2D_BG, CTaskGroup::EPushMethod inMethod = CTaskGroup::EPushMethod::PUSH_CURRENT);
 	virtual ~CObject() override;
 
+	HRESULT Init() override;
 	void Update() override;
 
 	/* 種類系 */
@@ -107,6 +108,7 @@ public:
 	/* ワールドマトリックス */
 	void SetMtxWorld(D3DXMATRIX mtxWorld) { m_mtxWorld = mtxWorld; }	// 設定
 	const D3DXMATRIX& GetMtxWorld() { return m_mtxWorld; }				// 取得
+	void CalMtxWorld();													// マトリックスの計算
 
 	/* テスクチャ系 */
 	void SetTexture(std::string inKey) { m_textureKey = inKey; }

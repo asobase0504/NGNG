@@ -12,17 +12,22 @@
 #include "renderer.h"
 #include "map.h"
 #include "input.h"
-#include "objectX.h"
+#include "map_model.h"
 #include "object_mesh.h"
 #include "file.h"
+
+//==============================================================
+// 静的メンバ変数宣言
+//==============================================================
+CMap* CMap::m_map = nullptr;
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
 CMap::CMap()
 {
-	m_apModels.clear();
-	m_apMesh.clear();
+	m_mapModel.clear();
+	m_mesh.clear();
 }
 
 //--------------------------------------------------------------
@@ -55,25 +60,25 @@ void CMap::Uninit(void)
 //--------------------------------------------------------------
 void CMap::Update(void)
 {
-
+	m_map;
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CMap* CMap::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+CMap* CMap::Create()
 {
 	//キャラクター生成
-	CMap* pMap = new CMap;
+	m_map = new CMap;
 
-	if (pMap != nullptr)
+	if (m_map != nullptr)
 	{//NULLチェック
 	 //メンバ変数に代入
 	 //初期化
-		pMap->Init();
+		m_map->Init();
 	}
 
-	return pMap;
+	return m_map;
 }
 
 void CMap::Load(std::string path)
@@ -85,11 +90,10 @@ void CMap::Load(std::string path)
 	{
 		nlohmann::json model = map["MODEL"][i];
 		D3DXVECTOR3 pos(model["POS"][0], model["POS"][1], model["POS"][2]);
-		CObjectX* object = CObjectX::Create(pos);
 		D3DXVECTOR3 rot(model["ROT"][0], model["ROT"][1], model["ROT"][2]);
-		object->SetRot(rot);
+		CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
 		object->LoadModel(model["TAG"]);
-		m_apModels.push_back(object);
+		m_mapModel.push_back(object);
 	}
 
 	size = map["MESH"].size();
@@ -101,6 +105,6 @@ void CMap::Load(std::string path)
 		object->SetPos(pos);
 		object->SetOneMeshSize(D3DXVECTOR3(100.0f,100.0f,100.0f));
 
-		m_apMesh.push_back(object);
+		m_mesh.push_back(object);
 	}
 }
