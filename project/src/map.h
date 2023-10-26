@@ -41,12 +41,16 @@ public:
 	void Load(std::string path);
 
 	static CMap* GetMap() { return m_map; }
+
 	CMapModel* GetMapModel(int inNum) { return m_mapModel[inNum]; }
-	int GetAllModel() { return m_mapModel.size(); }
+	int GetNumModel() { return m_mapModel.size(); }
+
+	CMesh* GetMapMesh(int inNum) { return m_mesh[inNum]; }
+	int GetNumMesh() { return m_mesh.size(); }
 
 private:
 	static CMap* m_map;
 	std::vector<CMapModel*> m_mapModel;
-	std::vector<CMesh*> m_apMesh;
+	std::vector<CMesh*> m_mesh;
 };
 #endif

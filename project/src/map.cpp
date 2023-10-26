@@ -27,7 +27,7 @@ CMap* CMap::m_map = nullptr;
 CMap::CMap()
 {
 	m_mapModel.clear();
-	m_apMesh.clear();
+	m_mesh.clear();
 }
 
 //--------------------------------------------------------------
@@ -105,6 +105,6 @@ void CMap::Load(std::string path)
 		object->SetPos(pos);
 		object->SetOneMeshSize(D3DXVECTOR3(100.0f,100.0f,100.0f));
 
-		m_apMesh.push_back(object);
+		m_mesh.push_back(object);
 	}
 }
