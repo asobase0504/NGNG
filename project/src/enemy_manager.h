@@ -53,7 +53,7 @@ public:
 	CEnemy* CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type);			// プレイヤーの生成
 
 	std::vector<CEnemy*> GetEnemy() { return m_pEnemy; }
-	CCollisionBox* GetEnemyBox() { return m_pEnemy[0]->GetBox(); }
+	//CCollisionBox* GetEnemyBox() { return m_pEnemy[0]->GetBox(); }
 
 private:		// メンバ変数
 	EType m_type;

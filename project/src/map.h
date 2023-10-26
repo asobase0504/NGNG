@@ -20,7 +20,7 @@
 // 前方宣言
 //==============================================================
 class CMesh;
-class CObjectX;
+class CMapModel;
 
 //==============================================================
 // マップクラス
@@ -36,14 +36,21 @@ public:
 	void Update() override;
 
 	// 静的メンバ関数
-	static CMap *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);			// マップの生成
+	static CMap *Create();			// マップの生成
 
 	void Load(std::string path);
-private:
-	std::vector<CObjectX*> m_apModels;
-	std::vector<CMesh*> m_apMesh;
 
-	D3DXVECTOR3 m_pos;
-	D3DXVECTOR3 m_rot;
+	static CMap* GetMap() { return m_map; }
+
+	CMapModel* GetMapModel(int inNum) { return m_mapModel[inNum]; }
+	int GetNumModel() { return m_mapModel.size(); }
+
+	CMesh* GetMapMesh(int inNum) { return m_mesh[inNum]; }
+	int GetNumMesh() { return m_mesh.size(); }
+
+private:
+	static CMap* m_map;
+	std::vector<CMapModel*> m_mapModel;
+	std::vector<CMesh*> m_mesh;
 };
 #endif

@@ -59,6 +59,8 @@ HRESULT CMesh::Init()
 	
 	SetMesh(10);
 
+	m_collisionMesh = CCollisionMesh::Create(m_polygonCount, m_vtxBuff, m_idxBuff, m_mtxWorld);
+
 	return S_OK;
 }
 
