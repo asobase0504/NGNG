@@ -261,6 +261,7 @@ void CEnemyDataBase::Init()
 		// エネミーの距離が遠いとき
 		if (distance >= 150.0f)
 		{
+			inEnemy->SetActivity(GetInstance()->GetActivityFunc(PATTERN_GOLEM_LASER));
 			move *= -0.5f;
 		}
 
@@ -288,10 +289,7 @@ void CEnemyDataBase::Init()
 	// ゴーレムのレーザーを打つ処理
 	m_activityFunc[PATTERN_GOLEM_LASER] = [](CEnemy* inEnemy)
 	{
-		// 座標の取得
-		D3DXVECTOR3 pos = inEnemy->GetPos();
-
-		// プレイヤーの位置取得
-		D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
+		// 移動量の取得
+		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	};
 }
