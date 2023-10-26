@@ -4,25 +4,25 @@
 #include "character.h"
 
 //==============================================================
-// Ã“Iƒƒ“ƒo[•Ï”‚ÌéŒ¾
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®å®£è¨€
 //==============================================================
 CItemDataBase* CItemDataBase::m_instance(nullptr);
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CItemDataBase::CItemDataBase()
 {
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»
+// åˆæœŸåŒ–
 //--------------------------------------------------------------
 void CItemDataBase::Init()
 {
 	m_item[ITEM_POWER_UP] = CItem::Create(ITEM_POWER_UP);
 
-	// ƒWƒƒƒ“ƒv‰ñ”ã¸ƒAƒCƒeƒ€‚Ìİ’è-----------------------------
+	// ã‚¸ãƒ£ãƒ³ãƒ—å›æ•°ä¸Šæ˜‡ã‚¢ã‚¤ãƒ†ãƒ ã®è¨­å®š-----------------------------
 	m_item[ITEM_POWER_UP]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetJumpCount()->AddItemEffect(1); });
 	m_item[ITEM_POWER_UP]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
@@ -31,28 +31,28 @@ void CItemDataBase::Init()
 	m_item[ITEM_DANGO] = CItem::Create(ITEM_DANGO);
 	//--------------------------------------------------------------
 
-	// ‚¾‚ñ‚²‚Ìİ’è-------------------------------------------------
+	// ã ã‚“ã”ã®è¨­å®š-------------------------------------------------
 	m_item[ITEM_DANGO]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetHp()->AddItemEffect(50); });
 	m_item[ITEM_DANGO]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetHp()->AddItemEffect(-50); });
 	//--------------------------------------------------------------
 
-	// ‰º‘Ê‚Ìİ’è----------------------------------------------------
+	// ä¸‹é§„ã®è¨­å®š----------------------------------------------------
 	m_item[ITEM_GETA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetSpeed()->AddItemEffect(0.15f); });
 	m_item[ITEM_GETA]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetSpeed()->AddItemEffect(-0.15f); });
 	//--------------------------------------------------------------
 
-	// P‚Ìİ’è-----------------------------------------------------
+	// å‚˜ã®è¨­å®š-----------------------------------------------------
 	m_item[ITEM_UMBRELLA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetDefense()->AddItemEffect(5); });
 	m_item[ITEM_UMBRELLA]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetDefense()->AddItemEffect(-5); });
 	//--------------------------------------------------------------
 
-	// ‚Ğ‚å‚¤‚½‚ñ---------------------------------------------------
+	// ã²ã‚‡ã†ãŸã‚“---------------------------------------------------
 	m_item[ITEM_HYOUTAN]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetAtkSpd()->AddItemEffect(0.075f); 
 		inCharacter->GetSpeed()->AddItemEffect(0.075f); });
@@ -61,7 +61,7 @@ void CItemDataBase::Init()
 	inCharacter->GetSpeed()->AddItemEffect(-0.075f); });
 	//--------------------------------------------------------------
 
-	// ’|‚Ì…“›-----------------------------------------------------
+	// ç«¹ã®æ°´ç­’-----------------------------------------------------
 	m_item[ITEM_BANBOO_WATERBOX]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetAtkSpd()->AddItemEffect(0.15f);});
 	m_item[ITEM_BANBOO_WATERBOX]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
@@ -69,35 +69,42 @@ void CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 
-	// ‚¨ç‚è-------------------------------------------------------
+	// ãŠå®ˆã‚Š-------------------------------------------------------
 	m_item[ITEM_OMAMORI]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetAtkSpd()->AddItemEffect(0.1f); });
 	m_item[ITEM_OMAMORI]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetAtkSpd()->AddItemEffect(-0.1f); });
 	//--------------------------------------------------------------
 
-	// ŒF‚Ì–Ø’¤‚è(•Û—¯)---------------------------------------------
+	// ç†Šã®æœ¨å½«ã‚Š(ä¿ç•™)---------------------------------------------
 	m_item[ITEM_KIBORI]->SetWhenDamageFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		// 15%‚ÌŠm—¦‚ÅƒuƒƒbƒN‚·‚éB
+		// 15%ã®ç¢ºç‡ã§ãƒ–ãƒ­ãƒƒã‚¯ã™ã‚‹ã€‚
+		CStatus<int> HPup = *inCharacter->GetHp();
+		HPup.AddItemEffect(50);
+		inCharacter->SetHp(HPup);
 	});
 	//--------------------------------------------------------------
 
-	// ‚Î‚­‚¿‚­(•Û—¯)-----------------------------------------------
+	// ã°ãã¡ã(ä¿ç•™)-----------------------------------------------
 	m_item[ITEM_BAKUTIKU]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		// UŒ‚‚É5%‚ÌŠm—¦‚ÅƒXƒ^ƒ“‚³‚¹‚éB
+		// æ”»æ’ƒæ™‚ã«5%ã®ç¢ºç‡ã§ã‚¹ã‚¿ãƒ³ã•ã›ã‚‹ã€‚
 	});
 	//--------------------------------------------------------------
 
-	// ‚Ü‚«‚Ñ‚µ-----------------------------------------------------
+	// ã¾ãã³ã—-----------------------------------------------------
 	m_item[ITEM_MAKIBISI]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	m_item[ITEM_GETA] = CItem::Create(ITEM_GETA);
+
+	// ä¸‹é§„ã®è¨­å®š
+	m_item[ITEM_GETA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{
-		// UŒ‚‚É“G‚ÉˆÚ“®‘¬“x-5%‚É‚·‚éó‘ÔˆÙí‚ğ•t—^‚·‚éB
+		// æ”»æ’ƒæ™‚ã«æ•µã«ç§»å‹•é€Ÿåº¦-5%ã«ã™ã‚‹çŠ¶æ…‹ç•°å¸¸ã‚’ä»˜ä¸ã™ã‚‹ã€‚
 	});
 	//--------------------------------------------------------------
 
-	// ñ‹‰---------------------------------------------------------
+	// é¦–ç´š---------------------------------------------------------
 	m_item[ITEM_HEAD]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
 
@@ -105,7 +112,7 @@ void CItemDataBase::Init()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»
+// åˆæœŸåŒ–
 //--------------------------------------------------------------
 CItemDataBase * CItemDataBase::GetInstance()
 {

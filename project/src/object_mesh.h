@@ -33,16 +33,12 @@ public:
 
 	HRESULT Init() override;		// 初期化
 	void Uninit() override;			// 破棄
-	void Update() override;			// 更新
 	void Draw() override;			// 描画
 
 	static CMesh* Create();
 
 	bool CreateMesh(D3DXVECTOR3 *pPos);		// メッシュの凸凹つける
-	bool Collision(D3DXVECTOR3 *pPos);	// メッシュの当たり判定つける
-
-	void Loadfile(const char * pFileName);	// メッシュの読み込み
-	void Savefile(const char * pFileName);	// メッシュの書き出し
+	bool Collision(D3DXVECTOR3 *pPos);		// メッシュの当たり判定つける
 	
 	void SetMesh(const int Size);
 
@@ -63,7 +59,9 @@ public:
 	void SwitchCollision(bool onCollision) { m_isCollision = onCollision; };
 
 	std::string GetDataNeme() { return m_dataName; }
-	CCollisionMesh* GetMesh() { return m_collisionMesh; }
+	CCollisionMesh* GetCollisionMesh() { return m_collisionMesh; }
+
+	void SetY(std::vector<std::vector<float>> inY);
 
 private:
 	void SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx, int nCnt, bool isUp);

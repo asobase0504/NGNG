@@ -56,16 +56,17 @@ void CSkill::Uninit(void)
 //--------------------------------------------------------------
 void CSkill::Update(void)
 {
-	// スキル1のインスタンスを取得
-	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();		// 発動時に生成
+	// スキルデータのインスタンスを取得する
+	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 
-	if (m_apChara != nullptr && m_Name != "\0")
-	{
-		bool a = pSkillData->GetAbility(m_Name)(m_apChara);			// 当たったかどうか判定する
-
+	if (m_CT > 0)
+	{// クールタイムがあれば減少させる
+		m_CT--;
 	}
-	
-	
+
+#ifdef _DEBUG
+	CDebugProc::Print("スキルのクールタイム : %d\n", m_CT);
+#endif // _DEBUG
 }
 
 //--------------------------------------------------------------
@@ -83,12 +84,15 @@ CSkill *CSkill::Create()
 //--------------------------------------------------------------
 // スキル当たり判定
 //--------------------------------------------------------------
-void CSkill::CollisionSkill()
+void CSkill::CollisionSkill(std::string tag)
 {
+	// スキルデータのインスタンスを取得する
+	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
+
 	if (m_apChara != nullptr)
 	{
 		// 当たり判定
-		m_Collision = CCollisionSphere::Create(m_apChara->GetPos(), CSkillDataBase::GetInstance()->GetSize("YAMATO_SKILL_1").x);
+		m_Collision = CCollisionSphere::Create(m_apChara->GetPos(), pSkillData->GetSize(tag).x);
 		std::vector<CEnemy*> Enemy = CEnemyManager::GetInstance()->GetEnemy();
 		// エネミーの数を取得
 		int EnemyCount = Enemy.size();
@@ -97,13 +101,27 @@ void CSkill::CollisionSkill()
 		{// 攻撃範囲に敵がいるか判定する
 			m_isCollision = false;
 			m_isCollision = m_Collision->ToSphere((CCollisionSphere*)Enemy[nCnt]->GetCollision());
-		}
 
-		if (m_isCollision)
-		{
-
+			if (m_isCollision)
+			{// hit時に生成
+				pSkillData->GetHitAbility(tag);
+			}
 		}
 	}
+}
+
+//--------------------------------------------------------------
+// スキル1
+//--------------------------------------------------------------
+void CSkill::Skill1()
+{
+	if (m_CT == 0)
+	{// クールタイムがなければ当たり判定を生成する
+		CollisionSkill("YAMATO_SKILL_1");
+	}
+
+	// クールタイムの設定
+	m_CT = CSkillDataBase::GetInstance()->GetCT("YAMATO_SKILL_2");
 }
 
 //--------------------------------------------------------------
