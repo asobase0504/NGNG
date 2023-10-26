@@ -290,6 +290,9 @@
     <ClCompile Include="src\text.cpp">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClCompile>
+    <ClCompile Include="src\statue_combat.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
     <ClCompile Include="src\map_model.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\map_model</Filter>
     </ClCompile>
@@ -508,6 +511,9 @@
     <ClInclude Include="src\text.h">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClInclude>
+    <ClInclude Include="src\statue_combat.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>      
     <ClInclude Include="src\map_model.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\map_model</Filter>
     </ClInclude>

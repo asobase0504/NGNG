@@ -10,6 +10,7 @@
 #include "statue_blood.h"
 #include "statue_chest.h"
 #include "statue_luck.h"
+#include "statue_combat.h"
 #include "statue.h"
 #include "collision_box.h"
 #include "application.h"
@@ -95,6 +96,9 @@ CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
 		break;
 	case CStatueManager::LUCK:
 		RabdomCreate(pos);
+		break;
+	case CStatueManager::COMBAT:
+		m_pStatue = CStatueCombat::Create(pos);
 		break;
 	case CStatueManager::MAX:
 		break;
