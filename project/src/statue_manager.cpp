@@ -8,9 +8,12 @@
 // include
 #include "statue_manager.h"
 #include "statue_blood.h"
+#include "statue_chest.h"
+#include "statue_luck.h"
 #include "statue.h"
 #include "collision_box.h"
 #include "application.h"
+#include "utility.h"
 
 //--------------------------------------------------------------
 //Ã“Iƒƒ“ƒo•Ï”éŒ¾
@@ -82,9 +85,16 @@ CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
 	switch (type)
 	{
 	case CStatueManager::NONE:
+		m_pStatue = CStatue::Create(pos,D3DXVECTOR3(0.0f,0.0f,0.0f));
 		break;
 	case CStatueManager::BLOOD:
 		m_pStatue = CStatueBlood::Create(pos);
+		break;
+	case CStatueManager::CHEST:
+		m_pStatue = CStatueChest::Create(pos);
+		break;
+	case CStatueManager::LUCK:
+		RabdomCreate(pos);
 		break;
 	case CStatueManager::MAX:
 		break;
@@ -92,5 +102,21 @@ CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
 		break;
 	}
 
+	return m_pStatue;
+}
+
+//--------------------------------------------------------------
+// ƒ‰ƒ“ƒ_ƒ€¶¬ˆ—
+//--------------------------------------------------------------
+CStatue * CStatueManager::RabdomCreate(D3DXVECTOR3 pos)
+{
+	int randomCount = IntRandom(15, 8);
+
+	for (int nCnt = 0; nCnt < randomCount; nCnt++)
+	{
+		float randomPos = FloatRandom(420.0f, -420.0f);
+		m_pStatue = CStatueLuck::Create(D3DXVECTOR3(randomPos,pos.y, randomPos));
+	}
+	
 	return m_pStatue;
 }

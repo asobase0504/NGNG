@@ -275,6 +275,12 @@
     <ClCompile Include="src\item_data_base.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="src\statue_chest.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue_luck.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
     <ClCompile Include="src\font.cpp">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClCompile>
@@ -486,6 +492,12 @@
     </ClInclude>
     <ClInclude Include="src\map.h">
       <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_chest.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_luck.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
     <ClInclude Include="src\font.h">
       <Filter>ソース ファイル\00_Main\text</Filter>

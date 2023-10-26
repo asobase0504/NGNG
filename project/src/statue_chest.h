@@ -1,46 +1,37 @@
 //**************************************************************
 //
-// 像管理
+// 宝箱の祭壇
 // Author : 梶田大夢
 //
 //**************************************************************
-#ifndef _STATUE_MANAGER_H_			// このマクロ定義がされてなかったら
-#define _STATUE_MANAGER_H_			// 二重インクルード防止のマクロ定義
+#ifndef _STATUE_CHEST_H_			// このマクロ定義がされてなかったら
+#define _STATUE_CHEST_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
 //==============================================================
-#include "task.h"
 #include "statue.h"
+
+//==============================================================
+// マクロ宣言
+//==============================================================
 
 //==============================================================
 // 前方宣言
 //==============================================================
+class CPlayer;
 class CCollisionBox;
+class CCollisionCylinder;
 
 //==============================================================
-// 敵管理クラス
+// 敵クラス
 //==============================================================
-class CStatueManager : public CTask
+class CStatueChest : public CStatue
 {
-public:	// シングルトン用のインスタンス
-	static CStatueManager* GetInstance();
-private:
-	CStatueManager();
-	static CStatueManager* m_statueManager;
-
 public:
-	enum EType
-	{
-		NONE = 0,
-		BLOOD,
-		CHEST,
-		LUCK,
-		MAX
-	};
-
 	// コンストラクタとデストラクタ
-	~CStatueManager();
+	explicit CStatueChest(int nPriority = 3);
+	~CStatueChest();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
@@ -49,14 +40,11 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	CStatue* CreateStatue(D3DXVECTOR3 pos, EType type);			// 像の生成
-	CStatue* RabdomCreate(D3DXVECTOR3 pos);						// ランダム生成
+	static CStatueChest *Create(D3DXVECTOR3 pos);			// 宝箱の祭壇の生成
 
-	CStatue* GetStatue() { return m_pStatue; }
-	CCollisionBox* GetStatueBox() { return m_pStatue->GetCollisionBox(); }
-
-private:		// メンバ変数
-	CStatue* m_pStatue;
+private:	// メンバ変数
+	CPlayer* m_pPlayer;
+	bool m_bOnce;
 };
 #endif
 

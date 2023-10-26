@@ -1,19 +1,21 @@
 //**************************************************************
 //
-// 血の祭壇
+// 運の祭壇
 // Author : 梶田大夢
 //
 //**************************************************************
 
 // include
-#include "statue_blood.h"
+#include "statue_luck.h"
 #include "player_manager.h"
+#include "item_manager.h"
 #include "input.h"
+#include "utility.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueBlood::CStatueBlood(int nPriority)
+CStatueLuck::CStatueLuck(int nPriority)
 {
 
 }
@@ -21,7 +23,7 @@ CStatueBlood::CStatueBlood(int nPriority)
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CStatueBlood::~CStatueBlood()
+CStatueLuck::~CStatueLuck()
 {
 
 }
@@ -29,14 +31,18 @@ CStatueBlood::~CStatueBlood()
 //--------------------------------------------------------------
 // 初期化処理
 //--------------------------------------------------------------
-HRESULT CStatueBlood::Init()
+HRESULT CStatueLuck::Init()
 {
 	// 初期化処理
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 rot = GetRot();
 
-	CStatue::Init(pos, rot);
+	CStatue::Init(pos,rot);
+
 	m_bOnce = false;
+	m_bChance = false;
+	m_nUseMoney = 10;
+	m_nItemCount = 0;
 
 	return S_OK;
 }
@@ -44,7 +50,7 @@ HRESULT CStatueBlood::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CStatueBlood::Uninit()
+void CStatueLuck::Uninit()
 {
 	// 終了処理
 	CStatue::Uninit();
@@ -53,12 +59,11 @@ void CStatueBlood::Uninit()
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CStatueBlood::Update()
+void CStatueLuck::Update()
 {
 	// プレイヤー情報取得
 	CInput* input = CInput::GetKey();
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int> playerHp = pPlayer->GetHp();
 	CStatus<int> playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
@@ -68,18 +73,59 @@ void CStatueBlood::Update()
 		{// プレイヤーが特定のキーを押したとき
 			if (!m_bOnce)
 			{
-				// プレイヤーのHPとお金を調整して設定
-				playerHp.AddCurrent(-10);
-				playerMoney.AddCurrent(10);
-				pPlayer->SetHp(playerHp);
-				pPlayer->SetMoney(playerMoney);
+				if (m_nItemCount < 2)
+				{
+					// プレイヤーお金を調整して設定
+					playerMoney.AddCurrent(-m_nUseMoney);
+					pPlayer->SetMoney(playerMoney);
 
-				m_bOnce = true;
+					// アイテム確率計算
+					int randomCount = IntRandom(100, 1);
+
+					if (randomCount <= 4)
+					{// レア
+
+					//--------------------------
+					//  アイテムドロップ関数
+					//--------------------------
+
+						m_nItemCount++;
+					}
+					else if (randomCount >= 5 && randomCount <= 12)
+					{// アンコモン
+
+					 //--------------------------
+					 //  アイテムドロップ関数
+					 //--------------------------
+
+						m_nItemCount++;
+					}
+					else if (randomCount >= 13 && randomCount <= 39)
+					{// コモン
+
+					 //--------------------------
+					 //  アイテムドロップ関数
+					 //--------------------------
+
+						m_nItemCount++;
+					}
+					else
+					{// ハズレ
+
+					}
+
+					// 次回ガチャする時用に必要お金数を増やして設定しておく
+					int randomNumber = rand() % 10;
+					m_nUseMoney += randomNumber;
+
+					m_bOnce = true;
+				}
 			}
 		}
 		else
 		{
 			m_bOnce = false;
+			m_bChance = false;
 		}
 	}
 
@@ -94,7 +140,7 @@ void CStatueBlood::Update()
 //--------------------------------------------------------------
 // 描画処理
 //--------------------------------------------------------------
-void CStatueBlood::Draw(void)
+void CStatueLuck::Draw(void)
 {
 	// 描画処理
 	CStatue::Draw();
@@ -103,12 +149,12 @@ void CStatueBlood::Draw(void)
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CStatueBlood* CStatueBlood::Create(D3DXVECTOR3 pos)
+CStatueLuck* CStatueLuck::Create(D3DXVECTOR3 pos)
 {
-	CStatueBlood* pStatueblood;
-	pStatueblood = new CStatueBlood;
-	pStatueblood->SetPos(pos);
-	pStatueblood->Init();
+	CStatueLuck* pStatuechest;
+	pStatuechest = new CStatueLuck;
+	pStatuechest->SetPos(pos);
+	pStatuechest->Init();
 
-	return pStatueblood;
+	return pStatuechest;
 }
