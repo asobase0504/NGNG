@@ -80,10 +80,9 @@ void CStatueLuck::Update()
 					pPlayer->SetMoney(playerMoney);
 
 					// アイテム確率計算
-					rand();
-					int d = IntRandom(100, 1);
+					int randomCount = IntRandom(100, 1);
 
-					if (d <= 4)
+					if (randomCount <= 4)
 					{// レア
 
 					//--------------------------
@@ -92,7 +91,7 @@ void CStatueLuck::Update()
 
 						m_nItemCount++;
 					}
-					else if (d >= 5 && d <= 12)
+					else if (randomCount >= 5 && randomCount <= 12)
 					{// アンコモン
 
 					 //--------------------------
@@ -101,7 +100,7 @@ void CStatueLuck::Update()
 
 						m_nItemCount++;
 					}
-					else if (d >= 13 && d <= 39)
+					else if (randomCount >= 13 && randomCount <= 39)
 					{// コモン
 
 					 //--------------------------
@@ -113,11 +112,6 @@ void CStatueLuck::Update()
 					else
 					{// ハズレ
 
-					 //--------------------------
-					 //  アイテムドロップ関数
-					 //--------------------------
-
-						int e = 0;
 					}
 
 					// 次回ガチャする時用に必要お金数を増やして設定しておく
