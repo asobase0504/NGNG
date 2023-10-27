@@ -1,7 +1,7 @@
-//**************************************************************
+ï»¿//**************************************************************
 //
-// ƒLƒƒƒ‰ƒNƒ^[
-// Author : Š“c‘å–²
+// ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼
+// Author : æ¢¶ç”°å¤§å¤¢
 //
 //**************************************************************
 
@@ -17,7 +17,7 @@
 #include "status.h"
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CCharacter::CCharacter(int nPriority) : m_haveItem{}
 {
@@ -25,7 +25,7 @@ CCharacter::CCharacter(int nPriority) : m_haveItem{}
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CCharacter::~CCharacter()
 {
@@ -33,18 +33,18 @@ CCharacter::~CCharacter()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //--------------------------------------------------------------
 HRESULT CCharacter::Init()
 {
+	CObject::Init();
+
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
 	m_apModel[0]->LoadModel("BOX");
 
-	m_collision.push_back(CCollisionSphere::Create(m_pos,100.0f));
-
 	m_hp.Init(100);
-	m_hp.SetCurrent(100);
+	m_hp.SetCurrent(50);
 	m_addHp.Init(100);
 	m_addHp.SetCurrent(100);
 	m_addHpSubTime.Init(100);
@@ -55,12 +55,14 @@ HRESULT CCharacter::Init()
 	m_barrierRePopTime.SetCurrent(100);
 	m_attack.Init(100);
 	m_attack.SetCurrent(100);
+	m_attackSpeed.Init(1.0f);
+	m_attackSpeed.SetCurrent(1.0f);
 	m_defense.Init(100);
 	m_defense.SetCurrent(100);
-	m_criticalRate.Init(100);
-	m_criticalRate.SetCurrent(100);
-	m_criticalDamage.Init(100);
-	m_criticalDamage.SetCurrent(100);
+	m_criticalRate.Init(0.0f);
+	m_criticalRate.SetCurrent(0.0f);
+	m_criticalDamage.Init(2.0f);
+	m_criticalDamage.SetCurrent(2.0f);
 	m_movePower.Init(0.5f);
 	m_movePower.SetCurrent(2.0f);
 	m_jumpPower.Init(100);
@@ -69,58 +71,53 @@ HRESULT CCharacter::Init()
 	m_jumpCount.SetCurrent(0);
 	m_money.Init(100);
 	m_money.SetCurrent(100);
-	m_addMoney.Init(100);
-	m_addMoney.SetCurrent(100);
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //--------------------------------------------------------------
 void CCharacter::Uninit(void)
 {
-	// ”jŠüˆ—
+	// ç ´æ£„å‡¦ç†
 	CObject::Release();
 }
 
 //--------------------------------------------------------------
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //--------------------------------------------------------------
 void CCharacter::Update(void)
 {
-	// À•W‚ÌXVˆ—
-	UpdatePos();
-
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	CObject::Update();
 }
 
 //--------------------------------------------------------------
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //--------------------------------------------------------------
 void CCharacter::Draw(void)
 {
-	//ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	//ãƒ‡ãƒã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 
-	D3DXMATRIX mtxRot, mtxTrans;	//ŒvZ—pƒ}ƒgƒŠƒbƒNƒX
-	D3DMATERIAL9 matDef;			//Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹•Û‘¶—p
+	D3DXMATRIX mtxRot, mtxTrans;	//è¨ˆç®—ç”¨ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
+	D3DMATERIAL9 matDef;			//ç¾åœ¨ã®ãƒãƒ†ãƒªã‚¢ãƒ«ä¿å­˜ç”¨
 
-	//Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹‚ğˆÛ
+	//ç¾åœ¨ã®ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’ç¶­æŒ
 	pDevice->GetMaterial(&matDef);
 
-	//ƒp[ƒc‚Ìƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	//ãƒ‘ãƒ¼ãƒ„ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity(&m_mtxWorld);
 
-	//ƒp[ƒc‚Ìƒ‚ƒfƒ‹‚ÌŒü‚«‚ğ”½‰f
+	//ãƒ‘ãƒ¼ãƒ„ã®ãƒ¢ãƒ‡ãƒ«ã®å‘ãã‚’åæ˜ 
 	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
 
-	//ƒp[ƒc‚Ìƒ‚ƒfƒ‹‚ÌˆÊ’u‚ğ”½‰f
+	//ãƒ‘ãƒ¼ãƒ„ã®ãƒ¢ãƒ‡ãƒ«ã®ä½ç½®ã‚’åæ˜ 
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
-	//ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
 	for (int i = 0; i < (int)m_apModel.size(); i++)
@@ -133,33 +130,49 @@ void CCharacter::Draw(void)
 }
 
 //--------------------------------------------------------------
-// ¶¬
+// ç”Ÿæˆ
 //--------------------------------------------------------------
 CCharacter* CCharacter::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
-	//ƒLƒƒƒ‰ƒNƒ^[¶¬
+	//ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ç”Ÿæˆ
 	CCharacter* pCharacter = new CCharacter;
 
 	if (pCharacter != nullptr)
-	{//NULLƒ`ƒFƒbƒN
-	 //ƒƒ“ƒo•Ï”‚É‘ã“ü
-		//‰Šú‰»
+	{//NULLãƒã‚§ãƒƒã‚¯
+	 //ãƒ¡ãƒ³ãƒå¤‰æ•°ã«ä»£å…¥
+		//åˆæœŸåŒ–
 		pCharacter->Init();
 	}
 
 	return pCharacter;
 }
 
-void CCharacter::Attack()
+//--------------------------------------------------------------
+// ä½ç½®ã®è¨­å®š
+//--------------------------------------------------------------
+void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 {
+	std::vector<CObjectX*> objectX = GetModel();
+	if (objectX.size() > 0)
+	{
+		GetModel()[0]->SetPos(inPos);
+	}
+
+	CObject::SetPos(inPos);
 }
 
-void CCharacter::Move()
+void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 {
+	if (m_apModel.size() > 0)
+	{
+		GetModel()[0]->SetRot(inRot);
+	}
+
+	CObject::SetRot(inRot);
 }
 
 //--------------------------------------------------------------
-// ƒ_ƒ[ƒW—Ê
+// ãƒ€ãƒ¡ãƒ¼ã‚¸
 //--------------------------------------------------------------
 void CCharacter::Damage(const int inDamage)
 {
@@ -170,17 +183,10 @@ void CCharacter::Damage(const int inDamage)
 	SetHp(hp);
 }
 
-//--------------------------------------------------------------
-// À•W‚ÌXV
-//--------------------------------------------------------------
-void CCharacter::UpdatePos()
+void CCharacter::Attack()
 {
-	// À•W‚Ìæ“¾
-	D3DXVECTOR3 pos = GetPos();
+}
 
-	SetPosOld(pos);			// ‘O‰ñ‚ÌˆÊ’u‚Ì•Û‘¶
-	pos += GetMove();		// ˆÊ’u‚ÌXV
-
-	// À•W‚Ìİ’è
-	SetPos(pos);
+void CCharacter::Move()
+{
 }

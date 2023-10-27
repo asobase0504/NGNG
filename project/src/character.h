@@ -1,11 +1,11 @@
-//**************************************************************
+ï»¿//**************************************************************
 //
-// ƒLƒƒƒ‰ƒNƒ^[
-// Author : Š“c‘å–²
+// ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼
+// Author : æ¢¶ç”°å¤§å¤¢
 //
 //**************************************************************
-#ifndef _CHARACTER_H_			// ‚±‚Ìƒ}ƒNƒ’è‹`‚ª‚³‚ê‚Ä‚È‚©‚Á‚½‚ç
-#define _CHARACTER_H_			// “ñdƒCƒ“ƒNƒ‹[ƒh–h~‚Ìƒ}ƒNƒ’è‹`
+#ifndef _CHARACTER_H_			// ã“ã®ãƒã‚¯ãƒ­å®šç¾©ãŒã•ã‚Œã¦ãªã‹ã£ãŸã‚‰
+#define _CHARACTER_H_			// äºŒé‡ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰é˜²æ­¢ã®ãƒã‚¯ãƒ­å®šç¾©
 
 //==============================================================
 // include
@@ -16,126 +16,115 @@
 #include <array>
 
 //==============================================================
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 //==============================================================
 class CObjectX;
 class CCollision;
 
 //==============================================================
-// ƒvƒŒƒCƒ„[ƒNƒ‰ƒX
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¯ãƒ©ã‚¹
 //==============================================================
 class CCharacter : public CObject
 {
-private:		// ƒXƒe[ƒ^ƒX\‘¢‘Ì
+private:		// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æ§‹é€ ä½“
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÆƒfƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	explicit CCharacter(int nPriority = 3);
 	~CCharacter();
 
-	//ƒvƒƒgƒ^ƒCƒvéŒ¾
+	//ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 	HRESULT	Init() override;
 	void	Uninit() override;
 	void	Update() override;
 	void	Draw() override;
 
-	// Ã“Iƒƒ“ƒoŠÖ”
-	static CCharacter *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);			// ƒvƒŒƒCƒ„[‚Ì¶¬
+	// é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
+	static CCharacter *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç”Ÿæˆ
 
 	CCollision* GetCollision() { return m_collision[0]; }
 
 	std::vector<CObjectX*> GetModel() { return m_apModel; }
 
 	void Damage(const int inDamage);
+  
+	void SetPos(const D3DXVECTOR3& inPos);
+	void SetRot(const D3DXVECTOR3& inRot);
 
 	//==============================================================
-	// ƒQƒbƒ^[‚ÆƒZƒbƒ^[
+	// ã‚²ãƒƒã‚¿ãƒ¼ã¨ã‚»ãƒƒã‚¿ãƒ¼
 	//==============================================================
-	// ƒWƒƒƒ“ƒv‰ñ”
-	CStatus<unsigned int> GetJumpCount() { return m_jumpCount; }
-	void SetJumpCount(CStatus<unsigned int> hp) { m_jumpCount = hp; }
+	// ã‚¸ãƒ£ãƒ³ãƒ—å›æ•°
+	CStatus<unsigned int>* GetJumpCount() { return &m_jumpCount; }
 
-	// UŒ‚—Í
-	CStatus<unsigned int> GetAtk() { return m_attack; }
-	void SetAtk(CStatus<unsigned int> atk) { m_attack = atk; }
+	// ãƒãƒªã‚¢ã®å›å¾©æ™‚é–“
+	CStatus<unsigned int>* GetBarrierRepopTime() { return &m_barrierRePopTime; }
 
-	// ƒoƒŠƒA‚Ì‰ñ•œŠÔ
-	CStatus<unsigned int> GetBarrierRepopTime() { return m_barrierRePopTime; }
-	void SetBarrierRepopTime(CStatus<unsigned int> barrierRe) { m_barrierRePopTime = barrierRe; }
+	// æ”»æ’ƒåŠ›
+	CStatus<unsigned int>* GetAtk() { return &m_attack; }
 
+	// æ”»æ’ƒé€Ÿåº¦
+	CStatus<float>* GetAtkSpd() { return &m_attackSpeed; }
+	
 	// HP
-	CStatus<int> GetHp() { return m_hp; }
+	CStatus<int>* GetHp() { return &m_hp; }
 	void SetHp(CStatus<int> hp) { m_hp = hp; }
 
-	// ’Ç‰ÁHP
-	CStatus<int> GetAddHp() { return m_addHp; }
-	void SetAddHp(CStatus<int> addHp) { m_addHp = addHp; }
+	// è¿½åŠ HP
+	CStatus<int>* GetAddHp() { return &m_addHp; }
 
-	// ’Ç‰ÁHP‚ÌŒ¸­ŠÔ
-	CStatus<int> GetAddHpSub() { return m_addHpSubTime; }
-	void SetAddHpSub(CStatus<int> addHpsub) { m_addHpSubTime = addHpsub; }
+	// è¿½åŠ HPã®æ¸›å°‘æ™‚é–“
+	CStatus<int>* GetAddHpSub() { return &m_addHpSubTime; }
 
-	// ƒoƒŠƒA
-	CStatus<int> GetBarrier() { return m_barrier; }
-	void SetBarrier(CStatus<int> barrier) { m_barrier = barrier; }
+	// ãƒãƒªã‚¢
+	CStatus<int>* GetBarrier() { return &m_barrier; }
 
-	// –hŒä—Í
-	CStatus<int> GetDeffence() { return m_defense; }
-	void SetDefence(CStatus<int> def) { m_defense = def; }
+	// é˜²å¾¡åŠ›
+	CStatus<int>* GetDefense() { return &m_defense; }
 
-	// ƒNƒŠƒeƒBƒJƒ‹—¦
-	CStatus<float> GetCriticalRate() { return m_criticalRate; }
-	void SetCriticalRate(CStatus<float> crtrate) { m_criticalRate = crtrate; }
+	// ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ç‡
+	CStatus<float>* GetCriticalRate() { return &m_criticalRate; }
 
-	// ƒNƒŠƒeƒBƒJƒ‹ƒ_ƒ[ƒW
-	CStatus<float> GetCriticalDamage() { return m_criticalDamage; }
-	void SetCriticalDamage(CStatus<float> cridmg) { m_criticalDamage = cridmg; }
+	// ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ãƒ€ãƒ¡ãƒ¼ã‚¸
+	CStatus<float>* GetCriticalDamage() { return &m_criticalDamage; }
 
-	// ˆÚ“®‘¬“x
-	CStatus<float> GeSpeed() { return m_movePower; }
-	void SetSpeed(CStatus<float> move) { m_movePower = move; }
-
-	// ƒWƒƒƒ“ƒv—Í
-	CStatus<float> GetJumpPower() { return m_jumpPower; }
+	// ç§»å‹•é€Ÿåº¦
+	CStatus<float>* GetSpeed() { return &m_movePower; }
+	
+	// ã‚¸ãƒ£ãƒ³ãƒ—åŠ›
+	CStatus<float>* GetJumpPower() { return &m_jumpPower; }
 	void SetJumpPower(CStatus<float> jump) { m_jumpPower = jump; }
 
-	// Š‹à
-	CStatus<int> GetMoney() { return m_money; }
-	void SetMoney(CStatus<int> money) { m_money = money; }
-
-	// ’Ç‰ÁŠ‹à
-	CStatus<int> GetAddMoney() { return m_addMoney; }
-	void SetAddMoney(CStatus<int> addMoney) { m_addMoney = addMoney; }
-
+	// æ‰€æŒé‡‘
+	CStatus<int>* GetMoney() { return &m_money; }
 
 private:
 	virtual void Attack();
 	virtual void Move();
-	void UpdatePos();			// À•W‚ÌXV
+	void UpdatePos();			// åº§æ¨™ã®æ›´æ–°
 
-protected:		// ƒƒ“ƒo•Ï”
-	std::vector<CObjectX*>		m_apModel;		// ƒ‚ƒfƒ‹‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
-	std::vector<CCollision*>	m_collision;	// “–‚½‚è”»’è
-private:		// ƒƒ“ƒo•Ï”
-	D3DXMATRIX		m_mtxWorld;					// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
+protected:		// ãƒ¡ãƒ³ãƒå¤‰æ•°
+	std::vector<CObjectX*>		m_apModel;		// ãƒ¢ãƒ‡ãƒ«ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+	std::vector<CCollision*>	m_collision;	// å½“ãŸã‚Šåˆ¤å®š
+private:		// ãƒ¡ãƒ³ãƒå¤‰æ•°
 
-protected:		// ƒXƒe[ƒ^ƒX
+protected:		// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 
-	// ‚Á‚Ä‚¢‚éƒAƒCƒeƒ€‚ÌŒÂ”‚ğ‚»‚ê‚¼‚êŠÇ—
+	// æŒã£ã¦ã„ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã®å€‹æ•°ã‚’ãã‚Œãã‚Œç®¡ç†
 	item_count m_haveItem;
 
-	CStatus<int> m_hp;							// ‘Ì—Í
-	CStatus<int> m_addHp;						// ’Ç‰Á‘Ì—Í
-	CStatus<int> m_addHpSubTime;				// ’Ç‰Á‘Ì—Í‚ÌŒ¸­—Ê
-	CStatus<int> m_barrier;						// ƒoƒŠƒA
-	CStatus<unsigned int> m_barrierRePopTime;	// ƒoƒŠƒA‚Ì•œŠˆŠÔ
-	CStatus<unsigned int> m_attack;				// UŒ‚—Í
-	CStatus<int> m_defense;						// –hŒä—Í
-	CStatus<float> m_criticalRate;				// ƒNƒŠƒeƒBƒJƒ‹—¦
-	CStatus<float> m_criticalDamage;			// ƒNƒŠƒeƒBƒJƒ‹ƒ_ƒ[ƒW
-	CStatus<float> m_movePower;					// ˆÚ“®—Í
-	CStatus<float> m_jumpPower;					// ƒWƒƒƒ“ƒv—Í
-	CStatus<unsigned int> m_jumpCount;			// ƒWƒƒƒ“ƒv‰ñ”
-	CStatus<int> m_money;						// Š‹à
-	CStatus<int> m_addMoney;					// ’Ç‰ÁŠ‹à
+	CStatus<int> m_hp;							// ä½“åŠ›
+	CStatus<int> m_addHp;						// è¿½åŠ ä½“åŠ›
+	CStatus<int> m_addHpSubTime;				// è¿½åŠ ä½“åŠ›ã®æ¸›å°‘é‡
+	CStatus<int> m_barrier;						// ãƒãƒªã‚¢
+	CStatus<unsigned int> m_barrierRePopTime;	// ãƒãƒªã‚¢ã®å¾©æ´»æ™‚é–“
+	CStatus<unsigned int> m_attack;				// æ”»æ’ƒåŠ›
+	CStatus<int> m_defense;						// é˜²å¾¡åŠ›
+	CStatus<float> m_attackSpeed;				// æ”»æ’ƒé€Ÿåº¦
+	CStatus<float> m_criticalRate;				// ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ç‡
+	CStatus<float> m_criticalDamage;			// ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ãƒ€ãƒ¡ãƒ¼ã‚¸
+	CStatus<float> m_movePower;					// ç§»å‹•åŠ›
+	CStatus<float> m_jumpPower;					// ã‚¸ãƒ£ãƒ³ãƒ—åŠ›
+	CStatus<unsigned int> m_jumpCount;			// ã‚¸ãƒ£ãƒ³ãƒ—å›æ•°
+	CStatus<int> m_money;						// æ‰€æŒé‡‘
 };
 #endif

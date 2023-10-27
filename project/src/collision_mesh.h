@@ -30,22 +30,17 @@ public:
 	HRESULT Init();
 	void Uninit();
 
-	bool ToCylinder(CCollisionCylinder* inCyinder, bool isExtrusion);	// TODO Ç›Ç¡ÇøÇÃÇ‚Ç¬èIÇÌÇ¡ÇΩÇÁÇ±Ç¡ÇøÇ…ìñÇΩÇËîªíËà⁄çsÇ∑ÇÈ
-	bool ToSphere(CCollisionSphere* inSphere);
-
 	static CCollisionMesh* Create(int inPrimitive, LPDIRECT3DVERTEXBUFFER9 inVtxBuff, LPDIRECT3DINDEXBUFFER9 inIdxBuff, D3DXMATRIX inMtxWorld);
 
 	int GetPrimitive() { return m_primitive; }
 	LPDIRECT3DVERTEXBUFFER9 GetVtxBuff() { return m_vtxBuff; }
 	LPDIRECT3DINDEXBUFFER9 GetIdxBuff() { return m_idxBuff; }
-	D3DXMATRIX GetMtxWorld() { return m_mtxWorld; }
 	float GetExtrusionHeight() { return m_extrusionHeight; }
 
 private:
 	int m_primitive;
 	LPDIRECT3DVERTEXBUFFER9 m_vtxBuff;
 	LPDIRECT3DINDEXBUFFER9 m_idxBuff;
-	D3DXMATRIX m_mtxWorld;
 	float m_extrusionHeight;	// âüÇµèoÇ∑çÇÇ≥
 };
 
