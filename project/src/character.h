@@ -45,7 +45,7 @@ public:
 
 	std::vector<CObjectX*> GetModel() { return m_apModel; }
 
-	void Damege(const int inDamage);
+	void Damage(const int inDamage);
 
 	//==============================================================
 	// ゲッターとセッター

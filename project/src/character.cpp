@@ -159,6 +159,18 @@ void CCharacter::Move()
 }
 
 //--------------------------------------------------------------
+// ダメージ量
+//--------------------------------------------------------------
+void CCharacter::Damage(const int inDamage)
+{
+	CStatus<int> hp = GetHp();
+	int nHp = hp.GetCurrent();
+	nHp -= inDamage;
+	hp.SetCurrent(nHp);
+	SetHp(hp);
+}
+
+//--------------------------------------------------------------
 // 座標の更新
 //--------------------------------------------------------------
 void CCharacter::UpdatePos()
