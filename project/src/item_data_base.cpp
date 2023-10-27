@@ -21,21 +21,21 @@ CItemDataBase::CItemDataBase()
 void CItemDataBase::Init()
 {
 	m_item[ITEM_POWER_UP] = CItem::Create(ITEM_POWER_UP);
-
 	// ジャンプ回数上昇アイテムの設定-----------------------------
 	m_item[ITEM_POWER_UP]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetJumpCount()->AddItemEffect(1); });
 	m_item[ITEM_POWER_UP]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetJumpCount()->AddItemEffect(-1); });
 
-	m_item[ITEM_DANGO] = CItem::Create(ITEM_DANGO);
 	//--------------------------------------------------------------
 
+	m_item[ITEM_DANGO] = CItem::Create(ITEM_DANGO);
 	// だんごの設定-------------------------------------------------
 	m_item[ITEM_DANGO]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetHp()->AddItemEffect(50); });
 	m_item[ITEM_DANGO]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetHp()->AddItemEffect(-50); });
+
 	//--------------------------------------------------------------
 
 	// 下駄の設定----------------------------------------------------
@@ -43,6 +43,7 @@ void CItemDataBase::Init()
 	{	inCharacter->GetSpeed()->AddItemEffect(0.15f); });
 	m_item[ITEM_GETA]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetSpeed()->AddItemEffect(-0.15f); });
+
 	//--------------------------------------------------------------
 
 	// 傘の設定-----------------------------------------------------
@@ -95,10 +96,9 @@ void CItemDataBase::Init()
 
 	// まきびし-----------------------------------------------------
 	m_item[ITEM_MAKIBISI]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	m_item[ITEM_GETA] = CItem::Create(ITEM_GETA);
+	{});
 
-	// 下駄の設定
-	m_item[ITEM_GETA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	m_item[ITEM_MAKIBISI]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{
 		// 攻撃時に敵に移動速度-5%にする状態異常を付与する。
 	});
