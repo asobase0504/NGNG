@@ -66,10 +66,10 @@
     <Filter Include="ソース ファイル\Mode\Game\00_Object\UI">
       <UniqueIdentifier>{a6fb7bdb-faf6-463e-83e8-6e0915814541}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Mode\Game\00_Object\map_model">
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\map">
       <UniqueIdentifier>{57ea62fa-5a66-4212-8bda-6d6dcf449835}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Mode\Game\00_Object\json">
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\map\json">
       <UniqueIdentifier>{9b784e72-5709-4736-87c7-d6250a6c9b2a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -242,6 +242,9 @@
     <ClCompile Include="src\enemy_manager.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
+    <ClCompile Include="src\enemy_data_base.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="src\status.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -269,14 +272,8 @@
     <ClCompile Include="src\statue_manager.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\map.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
-    </ClCompile>
     <ClCompile Include="src\item_data_base.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="src\enemy_data_base.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
     <ClCompile Include="src\statue_chest.cpp">
       <Filter>ソース ファイル\00_Main</Filter>
@@ -300,7 +297,10 @@
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
     <ClCompile Include="src\map_model.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\map_model</Filter>
+      <Filter>ソース ファイル\Mode\Game\00_Object\map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -469,6 +469,9 @@
     <ClInclude Include="src\status.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="src\enemy_data_base.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClInclude>
@@ -496,12 +499,6 @@
     <ClInclude Include="src\statue_manager.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\map.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\enemy_data_base.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
-    </ClInclude>
     <ClInclude Include="src\statue_chest.h">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClInclude>
@@ -524,7 +521,10 @@
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
     <ClInclude Include="src\map_model.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\map_model</Filter>
+      <Filter>ソース ファイル\Mode\Game\00_Object\map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -534,7 +534,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="data\FILE\map\map01.json">
-      <Filter>ソース ファイル\Mode\Game\00_Object\json</Filter>
+      <Filter>ソース ファイル\Mode\Game\00_Object\map\json</Filter>
     </None>
   </ItemGroup>
 </Project>
