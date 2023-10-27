@@ -86,17 +86,18 @@ void CObjectX::Draw()
 {
 	// 計算用マトリックス
 	D3DXMATRIX mtxTrans;
+	D3DXMATRIX mtxRot;
 
 	// ワールドマトリックスの初期化
-	// 行列初期化関数(第1引数の行列を単位行列に初期化)
 	D3DXMatrixIdentity(&m_mtxWorld);
 
 	// 大きさを反映
 	D3DXMatrixScaling(&mtxTrans, m_scale.x, m_scale.y, m_scale.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
-	// 行列掛け算関数(第2引数×第3引数第を１引数に格納)
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &m_mtxRot);
+	// 向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
 
 	// 位置を反映
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
@@ -257,7 +258,7 @@ void CObjectX::SetRot(const D3DXVECTOR3 & inRot)
 // 頂点最大小値の計算処理
 // Author : Yuda Kaito
 //--------------------------------------------------------------
-void CObjectX::SetMtxRot(const D3DXVECTOR3 & inRot)
+void CObjectX::SetMtxRot(const D3DXVECTOR3& inRot)
 {
 	D3DXQUATERNION quaternion;
 	D3DXQuaternionRotationYawPitchRoll(&quaternion, inRot.y, inRot.x, inRot.z);
