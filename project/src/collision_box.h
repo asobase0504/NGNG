@@ -36,7 +36,6 @@ public:
 private:
 	D3DXVECTOR3 m_size;
 	CLine* m_line[4];
-	CLine* m_lineOrigin[4];
 };
 
 #endif
