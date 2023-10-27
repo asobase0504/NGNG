@@ -69,7 +69,7 @@ void CText::Update()
 	m_AddCount++;
 	if (m_AddCount >= m_Addnumber)
 	{
-		if (m_AddLetter <= m_TextSize)
+		if (m_AddLetter < m_TextSize)
 		{
 			m_Text += m_ALLText[m_AddLetter];
 			std::string Txt = m_Text;
@@ -82,8 +82,8 @@ void CText::Update()
 					m_Text += m_ALLText[m_AddLetter];
 					m_AddLetter++;
 					m_words[m_wordsPopCount] = CWords::Create(m_Text.c_str(),
-						D3DXVECTOR3((50.0f * (m_wordsPopCountX + 1)), Pos.y + m_newlineCount*100.0f, Pos.z),
-						D3DXVECTOR3(20.0f, 20.0f, 0.0f),
+						D3DXVECTOR3((50.0f * (m_wordsPopCountX + 1)), Pos.y + m_newlineCount * 100.0f, Pos.z),
+						m_size,
 						m_FontType);
 					m_wordsPopCount++;
 					m_wordsPopCountX++;
@@ -94,8 +94,8 @@ void CText::Update()
 					{	//‚¶‚á‚È‚©‚Á‚½‚Æ‚«
 						m_AddLetter++;
 						m_words[m_wordsPopCount] = CWords::Create(m_Text.c_str(),
-							D3DXVECTOR3(50.0f * (m_wordsPopCountX + 1), Pos.y + m_newlineCount*100.0f, Pos.z),
-							D3DXVECTOR3(20.0f, 20.0f, 0.0f),
+							D3DXVECTOR3(50.0f * (m_wordsPopCountX + 1), Pos.y + m_newlineCount * 100.0f, Pos.z),
+							m_size,
 							m_FontType);
 						m_wordsPopCount++;
 						m_wordsPopCountX++;
@@ -155,6 +155,11 @@ CText *CText::Create(D3DXVECTOR3 SetPos, D3DXVECTOR3 SetSize, int DeleteTime, in
 	return pObject;
 }
 
+CText * CText::Create(const D3DXVECTOR2 & inPos, const D3DXVECTOR2 & inSize, const char * Text)
+{
+	return nullptr;
+}
+
 
 //=============================================================================
 // ‚¯‚·‚Ü‚Å‚ÌŠÔİ’èŠÖ”
@@ -176,11 +181,6 @@ void CText::TextLetter(const char * Text, int SpeedText)
 	m_Addnumber = SpeedText;
 	m_AddLetter = 0;
 	m_words.resize(m_TextSize);
-	for (int wordsCount = 0; wordsCount < m_TextSize; wordsCount++)
-	{
-		m_words[wordsCount] = new CWords;
-		m_words[wordsCount] = nullptr;
-	}
 }
 
 //=============================================================================

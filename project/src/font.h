@@ -2,18 +2,11 @@
 // 
 // フォント
 // Author  : HamadaRyuuga
+// Author  : Yuda Kaito
 // 
 //**************************************************
 #ifndef _FONT_H_	//このマクロ定義がされてなかったら
 #define _FONT_H_	//２重インクルード防止のマクロ定義
-
-//==================================================
-// インクルード
-//==================================================
-#pragma push_macro("new")
-#undef new
-#include <d3dx9.h>
-#pragma pop_macro("new")
 
 //==================================================
 // 定義
@@ -38,7 +31,7 @@ public:
 	~CFont();	// デストラクタ
 
 public: /* メンバ関数 */
-	static void Load(FONT inTexture);						// 指定の読み込み
+	static void Load(FONT inTexture);		// 指定の読み込み
 	static void ReleaseAll();				// 全ての破棄
 	static void Release(FONT inTexture);	// 指定の破棄
 	static LPDIRECT3DTEXTURE9 GetFont(std::string words,FONT inTexture);	// 情報の取得

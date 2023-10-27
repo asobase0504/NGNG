@@ -43,33 +43,6 @@ HRESULT CWords::Init(void)
 }
 
 //------------------------------------
-// I—¹
-//------------------------------------
-void CWords::Uninit(void)
-{
-	//if (m_pTex != nullptr)
-	//{
-	//	m_pTex->Release();
-	//	m_pTex = nullptr;
-	//}
-
-	CObject2d::Uninit();
-}
-
-//------------------------------------
-// XV
-//------------------------------------
-void CWords::Update(void)
-{
-	CObject2d::Update();
-
-	m_rot.z += m_moveRot.z;
-
-	//‚±‚±‚Émove‚ð‚¢‚ê‚é
-	m_pos += m_move;
-}
-
-//------------------------------------
 // •`‰æ
 //------------------------------------
 void CWords::Draw()
@@ -123,7 +96,7 @@ void CWords::Setwords(const char*Text, CFont::FONT Type)
 	std::string Txt = Text;
 	if (Txt != "")
 	{
-//		m_pTex = CManager::GetManager()->GetFont()->GetFont(Text, Type);
+		m_pTex = CFont::GetFont(Text, Type);
 	}
 	else
 	{

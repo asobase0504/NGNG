@@ -42,9 +42,6 @@
     <Filter Include="ソース ファイル\Mode\Game\00_Object\Item">
       <UniqueIdentifier>{4963ad8a-ec04-4e0e-b854-ad931565ddc4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\00_Main\Collision">
-      <UniqueIdentifier>{403c4199-35ca-4df9-8caa-fb8ce4c5685a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Mode\Game\00_Object\character">
       <UniqueIdentifier>{8aac6035-1c35-4b27-8404-0ba7fbb53cc3}</UniqueIdentifier>
     </Filter>
@@ -63,11 +60,17 @@
     <Filter Include="ソース ファイル\00_Main\text">
       <UniqueIdentifier>{89f0b8fa-f086-474d-b8e1-47b31e0b64d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Mode\Game\00_Object\map_model">
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\UI">
+      <UniqueIdentifier>{a6fb7bdb-faf6-463e-83e8-6e0915814541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\map">
       <UniqueIdentifier>{57ea62fa-5a66-4212-8bda-6d6dcf449835}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Mode\Game\00_Object\json">
+    <Filter Include="ソース ファイル\Mode\Game\00_Object\map\json">
       <UniqueIdentifier>{9b784e72-5709-4736-87c7-d6250a6c9b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main\02_Collision">
+      <UniqueIdentifier>{403c4199-35ca-4df9-8caa-fb8ce4c5685a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -189,19 +192,19 @@
       <Filter>ソース ファイル\3D</Filter>
     </ClCompile>
     <ClCompile Include="src\collision.cpp">
-      <Filter>ソース ファイル\00_Main\Collision</Filter>
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClCompile>
     <ClCompile Include="src\collision_cylinder.cpp">
-      <Filter>ソース ファイル\00_Main\Collision</Filter>
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClCompile>
     <ClCompile Include="src\collision_mesh.cpp">
-      <Filter>ソース ファイル\00_Main\Collision</Filter>
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClCompile>
     <ClCompile Include="src\collision_box.cpp">
-      <Filter>ソース ファイル\00_Main\Collision</Filter>
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClCompile>
     <ClCompile Include="src\collision_sphere.cpp">
-      <Filter>ソース ファイル\00_Main\Collision</Filter>
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClCompile>
     <ClCompile Include="src\skill.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
@@ -269,9 +272,6 @@
     <ClCompile Include="src\statue_manager.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\map.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
-    </ClCompile>
     <ClCompile Include="src\item_data_base.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
@@ -294,7 +294,13 @@
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
     <ClCompile Include="src\map_model.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\map_model</Filter>
+      <Filter>ソース ファイル\Mode\Game\00_Object\map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hp_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -416,19 +422,19 @@
       <Filter>ソース ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="src\collision.h">
-      <Filter>ソース ファイル\00_Main\Collision</Filter>
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClInclude>
     <ClInclude Include="src\collision_cylinder.h">
-      <Filter>ソース ファイル\00_Main\Collision</Filter>
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClInclude>
     <ClInclude Include="src\collision_mesh.h">
-      <Filter>ソース ファイル\00_Main\Collision</Filter>
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClInclude>
     <ClInclude Include="src\collision_box.h">
-      <Filter>ソース ファイル\00_Main\Collision</Filter>
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClInclude>
     <ClInclude Include="src\collision_sphere.h">
-      <Filter>ソース ファイル\00_Main\Collision</Filter>
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClInclude>
     <ClInclude Include="src\skill.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
@@ -493,9 +499,6 @@
     <ClInclude Include="src\statue_manager.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\map.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
-    </ClInclude>
     <ClInclude Include="src\statue_chest.h">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClInclude>
@@ -513,9 +516,15 @@
     </ClInclude>
     <ClInclude Include="src\statue_combat.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClInclude>      
+    </ClInclude>
     <ClInclude Include="src\map_model.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\map_model</Filter>
+      <Filter>ソース ファイル\Mode\Game\00_Object\map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hp_ui.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -525,7 +534,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="data\FILE\map\map01.json">
-      <Filter>ソース ファイル\Mode\Game\00_Object\json</Filter>
+      <Filter>ソース ファイル\Mode\Game\00_Object\map\json</Filter>
     </None>
   </ItemGroup>
 </Project>

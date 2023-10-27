@@ -16,19 +16,28 @@
 //==============================================================
 // 頂点情報
 //==============================================================
-const D3DXVECTOR3 CObject2d::m_Vtx[4] =
+const D3DXVECTOR3 CObject2d::m_Vtx[ANCHOR_MAX][4] =
 {
+	{
 	D3DXVECTOR3(-1.0f, -1.0f, 0.0f),
 	D3DXVECTOR3(+1.0f, -1.0f, 0.0f),
 	D3DXVECTOR3(-1.0f, +1.0f, 0.0f),
 	D3DXVECTOR3(+1.0f, +1.0f, 0.0f),
+	},
+	{
+	D3DXVECTOR3(0.0f, -1.0f, 0.0f),
+	D3DXVECTOR3(+2.0f, -1.0f, 0.0f),
+	D3DXVECTOR3(0.0f, +1.0f, 0.0f),
+	D3DXVECTOR3(+2.0f, +1.0f, 0.0f),
+	}
 };
 
 //--------------------------------------------------------------
 // コンストラクト関数
 //--------------------------------------------------------------
 CObject2d::CObject2d(CTaskGroup::EPriority list) :
-	CObject(list,CTaskGroup::EPushMethod::PUSH_CURRENT), m_vtxBuff(nullptr)
+	CObject(list,CTaskGroup::EPushMethod::PUSH_CURRENT), m_vtxBuff(nullptr),
+	m_anchor(ANCHOR_CENTER)
 {
 }
 
@@ -148,7 +157,7 @@ void CObject2d::Update()
 	//頂点座標
 	for (int i = 0; i < 4; ++i)
 	{
-		D3DXVec3TransformCoord(&addPos[i], &m_Vtx[i], &mtx);
+		D3DXVec3TransformCoord(&addPos[i], &m_Vtx[m_anchor][i], &mtx);
 
 		pVtx[i].pos.x = m_pos.x + (addPos[i].x * m_size.x);	// サイズ変更
 		pVtx[i].pos.y = m_pos.y + (addPos[i].y * m_size.y);	// サイズ変更

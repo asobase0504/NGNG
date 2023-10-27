@@ -49,7 +49,7 @@ HRESULT CEnemy::Init()
 	D3DXMATRIX mtx = GetMtxWorld();
 
 
-	//m_activity.push_back(CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
+	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
 
 	return S_OK;
 }
@@ -85,11 +85,8 @@ void CEnemy::Update()
 	// 更新処理
 	CCharacter::Update();
 	
-	int size = m_activity.size();
-	for (int i = 0; i < size; i++)
-	{
-		m_activity[i](this);
-	}
+	// 現在のactivityに設定する。
+	m_Activity(this);
 
 #ifdef _DEBUG
 	//CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
