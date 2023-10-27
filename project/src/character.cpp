@@ -1,4 +1,4 @@
-//**************************************************************
+﻿//**************************************************************
 //
 // キャラクター
 // Author : 梶田大夢
@@ -71,8 +71,6 @@ HRESULT CCharacter::Init()
 	m_jumpCount.SetCurrent(0);
 	m_money.Init(100);
 	m_money.SetCurrent(100);
-	m_addMoney.Init(100);
-	m_addMoney.SetCurrent(100);
 	return S_OK;
 }
 

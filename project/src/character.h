@@ -1,4 +1,4 @@
-//**************************************************************
+﻿//**************************************************************
 //
 // キャラクター
 // Author : 梶田大夢
@@ -97,9 +97,6 @@ public:
 	// 所持金
 	CStatus<int>* GetMoney() { return &m_money; }
 
-	// 追加所持金
-	CStatus<int> GetAddMoney() { return m_addMoney; }
-
 private:
 	virtual void Attack();
 	virtual void Move();
@@ -129,6 +126,5 @@ protected:		// ステータス
 	CStatus<float> m_jumpPower;					// ジャンプ力
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 	CStatus<int> m_money;						// 所持金
-	CStatus<int> m_addMoney;					// 追加所持金
 };
 #endif
