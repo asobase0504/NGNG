@@ -176,11 +176,8 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 //--------------------------------------------------------------
 void CCharacter::Damage(const int inDamage)
 {
-	CStatus<int> hp = GetHp();
-	int nHp = hp.GetCurrent();
-	nHp -= inDamage;
-	hp.SetCurrent(nHp);
-	SetHp(hp);
+	CStatus<int>* hp = GetHp();
+	hp->AddCurrent(-inDamage);
 }
 
 void CCharacter::Attack()
