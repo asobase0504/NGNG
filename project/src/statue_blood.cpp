@@ -87,7 +87,7 @@ void CStatueBlood::Update()
 	CStatue::Update();
 
 #ifdef _DEBUG
-	//CDebugProc::Print("EnemyÅFpos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
+	CDebugProc::Print("BloodPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
 #endif // _DEBUG
 }
 

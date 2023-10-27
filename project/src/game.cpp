@@ -80,7 +80,10 @@ HRESULT CGame::Init(void)
 	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
 	m_camera->SetTargetPos(pPlayer->GetPos());
 
-	CStatue* pStatue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(100.0f, 0.0f, 100.0f),CStatueManager::LUCK);
+	CStatue* pStatue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, 10.0f, 0.0f),CStatueManager::BLOOD);
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, 10.0f, 0.0f), CStatueManager::LUCK);
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, 10.0f, 0.0f), CStatueManager::CHEST);
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, 10.0f, 0.0f), CStatueManager::COMBAT);
 
 	return S_OK;
 }
