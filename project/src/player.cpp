@@ -179,7 +179,7 @@ void CPlayer::Attack()
 	if (m_controller->Skill_1())
 	{
 		// 発動時に生成
-    m_Skill[0]->Skill1();
+		m_Skill[0]->Skill1();
 	}
 
 	// スキル1(右クリック)
