@@ -37,24 +37,7 @@ CObject::~CObject()
 
 HRESULT CObject::Init()
 {
-	// 計算用マトリックス
-	D3DXMATRIX mtxTrans;
-	D3DXMATRIX mtxRot;
-
-	// ワールドマトリックスの初期化
-	D3DXMatrixIdentity(&m_mtxWorld);
-
-	// 向きを反映
-	// 行列回転関数(第1引数にヨー(y)ピッチ(x)ロール(z)方向の回転行列を作成)
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
-	// 行列掛け算関数(第2引数×第3引数第を１引数に格納)
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
-
-	// 位置を反映
-	// 行列移動関数(第１引数にX,Y,Z方向の移動行列を作成)
-	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
-	// 行列掛け算関数(第2引数×第3引数第を１引数に格納)
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+	CalMtxWorld();
 
 	return S_OK;
 }
