@@ -36,6 +36,7 @@ HRESULT CStatueBlood::Init()
 	D3DXVECTOR3 rot = GetRot();
 
 	CStatue::Init(pos, rot);
+	LoadModel("STATUE_BLOOD");
 	m_bOnce = false;
 
 	return S_OK;

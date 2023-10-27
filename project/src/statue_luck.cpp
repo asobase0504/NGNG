@@ -38,6 +38,7 @@ HRESULT CStatueLuck::Init()
 	D3DXVECTOR3 rot = GetRot();
 
 	CStatue::Init(pos,rot);
+	LoadModel("STATUE_LUCK");
 
 	m_bOnce = false;
 	m_bChance = false;
