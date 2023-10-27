@@ -1,7 +1,7 @@
 //**************************************************************
 //
-// ƒvƒŒƒCƒ„[
-// Author : ûü–ìŠ]›’
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
+// Author : é«™é‡é¦¨å°‡
 //
 //**************************************************************
 
@@ -26,14 +26,14 @@
 #include "item.h"
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CPlayer::CPlayer(int nPriority)
 {
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CPlayer::~CPlayer()
 {
@@ -41,29 +41,29 @@ CPlayer::~CPlayer()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //--------------------------------------------------------------
 HRESULT CPlayer::Init()
 {
-	// ‰Šú‰»ˆ—
+	// åˆæœŸåŒ–å‡¦ç†
 	CCharacter::Init();
 
 	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
 	{
-		// ƒXƒLƒ‹‚ğ¶¬
+		// ã‚¹ã‚­ãƒ«ã‚’ç”Ÿæˆ
 		m_Skill[nCnt] = CSkill::Create();
-		// int‚ğstringŒ^‚É•ÏŠ·‚·‚é
+		// intã‚’stringå‹ã«å¤‰æ›ã™ã‚‹
 		std::ostringstream  name;
 		name << "YAMATO_SKILL_" << nCnt+1;
-		// ƒXƒLƒ‹‚Ìİ’è
+		// ã‚¹ã‚­ãƒ«ã®è¨­å®š
 		m_Skill[nCnt]->SetSkill(name.str(), this);
 	}
 
-	// ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
+	// ãƒ¢ãƒ‡ãƒ«ã®èª­ã¿è¾¼ã¿
 	m_apModel[0]->LoadModel("PLAYER01");
 	m_apModel[0]->CalculationVtx();
 
-	// À•W‚Ìæ“¾
+	// åº§æ¨™ã®å–å¾—
 	D3DXVECTOR3 pos = GetPos();
 
 	m_collision.push_back(CCollisionCylinder::Create(pos, 10.0f, 10.0f));
@@ -72,27 +72,27 @@ HRESULT CPlayer::Init()
 }
 
 //--------------------------------------------------------------
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //--------------------------------------------------------------
 void CPlayer::Uninit()
 {
-	// ƒRƒ“ƒgƒ[ƒ‰[‚Ì”jŠü
+	// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®ç ´æ£„
 	if (m_controller != nullptr)
 	{
 		delete m_controller;
 		m_controller = nullptr;
 	}
 
-	// I—¹ˆ—
+	// çµ‚äº†å‡¦ç†
 	CCharacter::Uninit();
 }
 
 //--------------------------------------------------------------
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //--------------------------------------------------------------
 void CPlayer::Update()
 {
-	// ˆÚ“®—Ê‚Ìæ“¾
+	// ç§»å‹•é‡ã®å–å¾—
 	D3DXVECTOR3 move = GetMove();
 
 	if (m_controller == nullptr)
@@ -100,19 +100,19 @@ void CPlayer::Update()
 		return;
 	}
 
-	// ˆÚ“®
+	// ç§»å‹•
 	Move();
 
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	CCharacter::Update();
 
-	// ƒWƒƒƒ“ƒv
+	// ã‚¸ãƒ£ãƒ³ãƒ—
 	Jump();
 
-	// ƒ_ƒbƒVƒ…
+	// ãƒ€ãƒƒã‚·ãƒ¥
 	Dash();
 
-	// UŒ‚
+	// æ”»æ’ƒ
 	Attack();
 	
 	
@@ -120,7 +120,7 @@ void CPlayer::Update()
 
 	if (m_collision[0]->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(), true))
 	{
-		// ‰Ÿ‚µo‚µ‚½ˆÊ’u
+		// æŠ¼ã—å‡ºã—ãŸä½ç½®
 		D3DXVECTOR3 extrusion = ((CCollisionCylinder*)m_collision[0])->GetExtrusion();
 		SetPos(D3DXVECTOR3(extrusion));
 		m_collision[0]->SetPos(D3DXVECTOR3(extrusion));
@@ -129,7 +129,7 @@ void CPlayer::Update()
 
 	//if (m_collisionCyinder->ToBox(CStatueManager::GetInstance()->GetStatue(), true))
 	//{
-	//	// ‰Ÿ‚µo‚µ‚½ˆÊ’u
+	//	// æŠ¼ã—å‡ºã—ãŸä½ç½®
 	//	D3DXVECTOR3 extrusion = m_collisionCyinder->GetExtrusion();
 	//	SetPos(D3DXVECTOR3(extrusion));
 	//	m_collisionCyinder->SetPos(D3DXVECTOR3(extrusion));
@@ -140,14 +140,14 @@ void CPlayer::Update()
 	DEBUG_PRINT("pos3 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
 
 #ifdef _DEBUG
-	CDebugProc::Print("PlayerFpos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
-	CDebugProc::Print("PlayerFmove(%f,%f,%f)\n", move.x, move.y, move.z);
-	CDebugProc::Print("PlayerCollisionFpos(%f,%f,%f)\n", m_collision[0]->GetPos().x, m_collision[0]->GetPos().y, m_collision[0]->GetPos().z);
+	CDebugProc::Print("Playerï¼špos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
+	CDebugProc::Print("Playerï¼šmove(%f,%f,%f)\n", move.x, move.y, move.z);
+	CDebugProc::Print("PlayerCollisionï¼špos(%f,%f,%f)\n", m_collision[0]->GetPos().x, m_collision[0]->GetPos().y, m_collision[0]->GetPos().z);
 #endif // _DEBUG
 }
 
 //--------------------------------------------------------------
-// ¶¬
+// ç”Ÿæˆ
 //--------------------------------------------------------------
 CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 {
@@ -159,33 +159,33 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 }
 
 //--------------------------------------------------------------
-// UŒ‚
+// æ”»æ’ƒ
 //--------------------------------------------------------------
 void CPlayer::Attack()
 {
-	// ’ÊíUŒ‚(¶ƒNƒŠƒbƒN)
+	// é€šå¸¸æ”»æ’ƒ(å·¦ã‚¯ãƒªãƒƒã‚¯)
 	if (m_controller->Skill_1())
 	{
-		// ”­“®‚É¶¬
+		// ç™ºå‹•æ™‚ã«ç”Ÿæˆ
 		m_Skill[0]->Skill1();
 	}
 
-	// ƒXƒLƒ‹1(‰EƒNƒŠƒbƒN)
+	// ã‚¹ã‚­ãƒ«1(å³ã‚¯ãƒªãƒƒã‚¯)
 	m_controller->Skill_2();
 	
-	// ƒXƒLƒ‹2(ƒVƒtƒg)
+	// ã‚¹ã‚­ãƒ«2(ã‚·ãƒ•ãƒˆ)
 	m_controller->Skill_3();
 
-	// ƒXƒLƒ‹3(R)
+	// ã‚¹ã‚­ãƒ«3(R)
 	m_controller->Skill_4();
 }
 
 //--------------------------------------------------------------
-// ˆÚ“®
+// ç§»å‹•
 //--------------------------------------------------------------
 void CPlayer::Move()
 {
-	// ˆÚ“®—Ê
+	// ç§»å‹•é‡
 	D3DXVECTOR3 move = m_controller->Move() * m_movePower.GetCurrent();
 
 	if (D3DXVec3Length(&move) != 0.0f)
@@ -200,21 +200,21 @@ void CPlayer::Move()
 }
 
 //--------------------------------------------------------------
-// ƒWƒƒƒ“ƒv
+// ã‚¸ãƒ£ãƒ³ãƒ—
 //--------------------------------------------------------------
 void CPlayer::Jump()
 {
-	// ˆÚ“®—Ê‚Ìæ“¾
+	// ç§»å‹•é‡ã®å–å¾—
 	D3DXVECTOR3 move(0.0f,0.0f,0.0f);
 
-	// ƒWƒƒƒ“ƒv
+	// ã‚¸ãƒ£ãƒ³ãƒ—
 	bool jump = m_controller->Jump();
 
 	if (jump && !m_jumpCount.MaxCurrentSame())
 	{
  		m_jumpCount.AddCurrent(1);
 
-		// ƒWƒƒƒ“ƒv—Í
+		// ã‚¸ãƒ£ãƒ³ãƒ—åŠ›
 		move.y += m_jumpPower.GetCurrent();
 	}
 	else
@@ -227,7 +227,7 @@ void CPlayer::Jump()
 
 	if (GetPos().y > 0.0f)
 	{
-		// d—Í
+		// é‡åŠ›
 		move.y -= 0.18f;
 	}
 	else
@@ -235,34 +235,34 @@ void CPlayer::Jump()
 		SetMoveY(0.0f);
 	}
 
-	// ˆÚ“®—Ê‚Ìİ’è
+	// ç§»å‹•é‡ã®è¨­å®š
 	AddMove(move);
 }
 
 //--------------------------------------------------------------
-// ƒ_ƒbƒVƒ…
+// ãƒ€ãƒƒã‚·ãƒ¥
 //--------------------------------------------------------------
 void CPlayer::Dash()
 {
-	// ˆÚ“®—Ê‚Ìæ“¾
+	// ç§»å‹•é‡ã®å–å¾—
 	D3DXVECTOR3 move = GetMove();
 
-	// ƒ_ƒbƒVƒ…
+	// ãƒ€ãƒƒã‚·ãƒ¥
 	m_isdash = m_controller->Dash();
 
 	if (m_isdash)
 	{
-		// ƒ_ƒbƒVƒ…‘¬“x
+		// ãƒ€ãƒƒã‚·ãƒ¥é€Ÿåº¦
 		move.x *= DASH_SPEED;
 		move.z *= DASH_SPEED;
 	}
 
-	// ˆÚ“®—Ê‚Ìİ’è
+	// ç§»å‹•é‡ã®è¨­å®š
 	SetMove(move);
 }
 
 //--------------------------------------------------------------
-// ƒAƒCƒeƒ€‚Ìæ“¾
+// ã‚¢ã‚¤ãƒ†ãƒ ã®å–å¾—
 //--------------------------------------------------------------
 void CPlayer::TakeItem()
 {
@@ -283,7 +283,7 @@ void CPlayer::TakeItem()
 }
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒgƒ[ƒ‰[‚Ìİ’è
+// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®è¨­å®š
 //--------------------------------------------------------------
 void CPlayer::SetController(CController * inOperate)
 {
@@ -292,7 +292,7 @@ void CPlayer::SetController(CController * inOperate)
 }
 
 //--------------------------------------------------------------
-// ˆÊ’u‚Ìİ’è
+// ä½ç½®ã®è¨­å®š
 //--------------------------------------------------------------
 void CPlayer::SetPos(const D3DXVECTOR3 & inPos)
 {
