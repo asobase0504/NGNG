@@ -1,6 +1,6 @@
-//**************************************************************
+Ôªø//**************************************************************
 //
-// ÉQÅ[ÉÄâÊñ 
+// „Ç≤„Éº„É†ÁîªÈù¢
 // Author : Yuda Kaito
 //
 //**************************************************************
@@ -22,7 +22,7 @@
 #include "object_polygon3d.h"
 #include "PlayerController.h"
 
-/* Systemånìù */
+/* SystemÁ≥ªÁµ± */
 #include "application.h"
 #include "fade.h"
 #include "sound.h"
@@ -31,20 +31,22 @@
 #include "light.h"
 #include "utility.h"
 
-/* 3Dånìù */
+/* 3DÁ≥ªÁµ± */
 #include "map.h"
 
-/* Objectånìù */
+/* ObjectÁ≥ªÁµ± */
 #include "object_polygon3d.h"
 #include "objectX.h"
 #include "object_mesh.h"
 
+#include "hp_ui.h"
+
 //==============================================================
-// íËêî
+// ÂÆöÊï∞
 //==============================================================
 
 //--------------------------------------------------------------
-// ÉRÉìÉXÉgÉâÉNÉ^
+// „Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 CGame::CGame()
@@ -52,7 +54,7 @@ CGame::CGame()
 }
 
 //--------------------------------------------------------------
-// ÉfÉXÉgÉâÉNÉ^
+// „Éá„Çπ„Éà„É©„ÇØ„Çø
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 CGame::~CGame()
@@ -60,7 +62,7 @@ CGame::~CGame()
 }
 
 //--------------------------------------------------------------
-// èâä˙âª
+// ÂàùÊúüÂåñ
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 HRESULT CGame::Init(void)
@@ -71,22 +73,29 @@ HRESULT CGame::Init(void)
 	m_light = new CLight;
 	m_light->Init();
 
-	// ÉvÉåÉCÉÑÅ[ÇÃê›íË
+	// „Éó„É¨„Ç§„É§„Éº„ÅÆË®≠ÂÆö
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
-	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
-
-	CMap::Create();
-
-	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
 	m_camera->SetTargetPos(pPlayer->GetPos());
 
+	CHPUI::Create(pPlayer->GetHp());
+
+	// „Ç®„Éç„Éü„Éº„ÅÆÁîüÊàê
+	CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
+
+	// „Éû„ÉÉ„Éó„ÅÆÁîüÊàê
+	CMap::Create();
+
+	// „Ç¢„Ç§„ÉÜ„É†„ÅÆÔΩìË°õÊòü
+	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
+
 //	CStatue* pStatue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(100.0f, 0.0f, 100.0f),CStatueManager::LUCK);
+
 
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// èIóπ
+// ÁµÇ‰∫Ü
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CGame::Uninit(void)
@@ -95,7 +104,7 @@ void CGame::Uninit(void)
 }
 
 //--------------------------------------------------------------
-// çXêV
+// Êõ¥Êñ∞
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CGame::Update(void)

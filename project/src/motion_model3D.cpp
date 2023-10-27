@@ -47,7 +47,6 @@ CMotionModel3D * CMotionModel3D::Create()
 CMotionModel3D::CMotionModel3D(CTaskGroup::EPriority nPriority) :
 	CObjectX(nPriority),
 	m_motion(nullptr),			// ƒ‚[ƒVƒ‡ƒ“î•ñ
-	m_posOld(D3DXVECTOR3()),	// ‰ß‹ˆÊ’u
 	m_isUpdateStop(false)
 {
 }

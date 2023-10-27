@@ -101,6 +101,7 @@ void CMap::Load(std::string path)
 	{
 		nlohmann::json mesh = map["MESH"][i];
 		CMesh* object = CMesh::Create();
+		object->SetY(mesh["VTX_HEIGHT"]);
 		D3DXVECTOR3 pos(mesh["POS"][0], mesh["POS"][1], mesh["POS"][2]);
 		object->SetPos(pos);
 		object->SetOneMeshSize(D3DXVECTOR3(100.0f,100.0f,100.0f));

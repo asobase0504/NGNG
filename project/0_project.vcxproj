@@ -23,6 +23,7 @@
     <ClCompile Include="src\enemy_data_base.cpp" />
     <ClCompile Include="src\enemy_manager.cpp" />
     <ClCompile Include="src\font.cpp" />
+    <ClCompile Include="src\hp_ui.cpp" />
     <ClCompile Include="src\item_data_base.cpp" />
     <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\map_model.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="src\file.h" />
     <ClInclude Include="src\font.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\hp_ui.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\input\DirectInput.h" />
     <ClInclude Include="src\input\inputjoypad.h" />
@@ -227,6 +229,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;/.;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>

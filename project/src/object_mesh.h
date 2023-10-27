@@ -38,18 +38,9 @@ public:
 	static CMesh* Create();
 
 	bool CreateMesh(D3DXVECTOR3 *pPos);		// メッシュの凸凹つける
-	bool Collision(D3DXVECTOR3 *pPos);	// メッシュの当たり判定つける
-
-	void Loadfile(const char * pFileName);	// メッシュの読み込み
-	void Savefile(const char * pFileName);	// メッシュの書き出し
+	bool Collision(D3DXVECTOR3 *pPos);		// メッシュの当たり判定つける
 	
 	void SetMesh(const int Size);
-
-	void SetNumber(int IsNumber) { m_number = IsNumber; }
-	int GetNumber() { return m_number; }
-
-	void SetType(int IsType) { m_type = IsType; }
-	int GetMeshType() { return m_type; }
 
 	D3DXVECTOR3 GetMeshSize() { return D3DXVECTOR3(m_vtxCountX * m_meshSize.x, 0.0f, m_vtxCountZ * m_meshSize.z); }
 
@@ -61,8 +52,9 @@ public:
 
 	void SwitchCollision(bool onCollision) { m_isCollision = onCollision; };
 
-	std::string GetDataNeme() { return m_dataName; }
 	CCollisionMesh* GetCollisionMesh() { return m_collisionMesh; }
+
+	void SetY(std::vector<std::vector<float>> inY);
 
 private:
 	void SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx, int nCnt, bool isUp);
@@ -78,13 +70,8 @@ private:
 	int m_vtx;				// 頂点数
 	int m_index;			// インデックス
 	int m_polygonCount;		// ポリゴン数
-	int m_nowMesh;
-	int m_number;
-	int m_type;
+
 	D3DXVECTOR3 m_meshSize;
-	D3DXVECTOR3* m_posMesh;
-	std::string m_fileName;
-	std::string m_dataName;
 	bool m_isCollision;
 	CCollisionMesh* m_collisionMesh;
 };
