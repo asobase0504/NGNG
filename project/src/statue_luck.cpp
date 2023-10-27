@@ -64,7 +64,7 @@ void CStatueLuck::Update()
 	// プレイヤー情報取得
 	CInput* input = CInput::GetKey();
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int> playerMoney = pPlayer->GetMoney();
+	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
 	if (Touch(pPlayer))
@@ -76,8 +76,7 @@ void CStatueLuck::Update()
 				if (m_nItemCount < 2)
 				{
 					// プレイヤーお金を調整して設定
-					playerMoney.AddCurrent(-m_nUseMoney);
-					pPlayer->SetMoney(playerMoney);
+					playerMoney->AddCurrent(-m_nUseMoney);
 
 					// アイテム確率計算
 					int randomCount = IntRandom(100, 1);

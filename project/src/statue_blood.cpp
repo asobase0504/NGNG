@@ -58,8 +58,8 @@ void CStatueBlood::Update()
 	// プレイヤー情報取得
 	CInput* input = CInput::GetKey();
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int> playerHp = *pPlayer->GetHp();
-	CStatus<int> playerMoney = pPlayer->GetMoney();
+	CStatus<int>* playerHp = pPlayer->GetHp();
+	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
 	if (Touch(pPlayer))
@@ -69,10 +69,8 @@ void CStatueBlood::Update()
 			if (!m_bOnce)
 			{
 				// プレイヤーのHPとお金を調整して設定
-				playerHp.AddCurrent(-10);
-				playerMoney.AddCurrent(10);
-				pPlayer->SetHp(playerHp);
-				pPlayer->SetMoney(playerMoney);
+				playerHp->AddCurrent(-10);
+				playerMoney->AddCurrent(10);
 
 				m_bOnce = true;
 			}

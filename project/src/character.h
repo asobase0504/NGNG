@@ -95,12 +95,10 @@ public:
 	void SetJumpPower(CStatus<float> jump) { m_jumpPower = jump; }
 
 	// 所持金
-	CStatus<int> GetMoney() { return m_money; }
-	void SetMoney(CStatus<int> money) { m_money = money; }
+	CStatus<int>* GetMoney() { return &m_money; }
 
 	// 追加所持金
 	CStatus<int> GetAddMoney() { return m_addMoney; }
-	void SetAddMoney(CStatus<int> addMoney) { m_addMoney = addMoney; }
 
 private:
 	virtual void Attack();

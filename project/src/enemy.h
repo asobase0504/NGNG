@@ -46,7 +46,6 @@ public:
 
 	// 静的メンバ関数
 	static CEnemy *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);			// プレイヤーの生成
-	CCollisionBox* GetBox() { return m_collision; }
 	void SetActivity(ACTIVITY_FUNC NowAct) { m_Activity = NowAct; }
 	ACTIVITY_FUNC GetActivity() { return m_Activity; }
 
@@ -54,7 +53,6 @@ private:
 	void Move();		// 移動
 
 private:	// メンバ変数
-	CCollisionSphere* m_collisionSphere;
 	ACTIVITY_FUNC	m_Activity;
 };
 #endif
