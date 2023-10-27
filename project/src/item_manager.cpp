@@ -176,7 +176,7 @@ void CItemManager::AllWhenAllWay(CCharacter* inCharacter, item_count inItem)
 //--------------------------------------------------------------
 // ダメージを受けた時全アイテム
 //--------------------------------------------------------------
-void CItemManager::AllWhenDamage(CCharacter* inCharacter, item_count inItem)
+void CItemManager::AllWhenDamage(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
 {
 	CItemDataBase* dataBase = CItemDataBase::GetInstance();
 
@@ -188,18 +188,18 @@ void CItemManager::AllWhenDamage(CCharacter* inCharacter, item_count inItem)
 		}
 
 		CItem* item = dataBase->GetItemData((CItemDataBase::EItemType)i);
-		CItem::ITEM_FUNC func = item->GetWhenDamageFunc();
+		CItem::ITEM_ACTION_FUNC func = item->GetWhenDamageFunc();
 
 		if (func == nullptr)
 		{
 			continue;
 		}
 
-		func(inCharacter, inItem[i]);
+		func(inCharacter, inItem[i],outCharacter);
 	}
 }
 
-void CItemManager::AllWhenHit(CCharacter* inCharacter, item_count inItem)
+void CItemManager::AllWhenHit(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
 {
 	CItemDataBase* dataBase = CItemDataBase::GetInstance();
 
@@ -211,13 +211,13 @@ void CItemManager::AllWhenHit(CCharacter* inCharacter, item_count inItem)
 		}
 
 		CItem* item = dataBase->GetItemData((CItemDataBase::EItemType)i);
-		CItem::ITEM_FUNC func = item->GetWhenHitFunc();
+		CItem::ITEM_ACTION_FUNC func = item->GetWhenHitFunc();
 
 		if (func == nullptr)
 		{
 			continue;
 		}
 
-		func(inCharacter, inItem[i]);
+		func(inCharacter, inItem[i], outCharacter);
 	}
 }

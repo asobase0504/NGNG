@@ -1,11 +1,11 @@
 //**************************************************************
 //
-// “G
-// Author : Š“c‘å–²
+// æ•µ
+// Author : æ¢¶ç”°å¤§å¤¢
 //
 //**************************************************************
-#ifndef _ENEMY_H_			// ‚±‚Ìƒ}ƒNƒ’è‹`‚ª‚³‚ê‚Ä‚È‚©‚Á‚½‚ç
-#define _ENEMY_H_			// “ñdƒCƒ“ƒNƒ‹[ƒh–h~‚Ìƒ}ƒNƒ’è‹`
+#ifndef _ENEMY_H_			// ã“ã®ãƒã‚¯ãƒ­å®šç¾©ãŒã•ã‚Œã¦ãªã‹ã£ãŸã‚‰
+#define _ENEMY_H_			// äºŒé‡ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰é˜²æ­¢ã®ãƒã‚¯ãƒ­å®šç¾©
 
 //==============================================================
 // include
@@ -13,12 +13,12 @@
 #include "character.h"
 
 //==============================================================
-// ƒ}ƒNƒéŒ¾
+// ãƒã‚¯ãƒ­å®£è¨€
 //==============================================================
 #define MAX_SPEED	(0.3f)
 
 //==============================================================
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 //==============================================================
 class CObjectX;
 class CController;
@@ -27,31 +27,34 @@ class CCollisionSphere;
 class CEnemyDataBase;
 
 //==============================================================
-// “GƒNƒ‰ƒX
+// æ•µã‚¯ãƒ©ã‚¹
 //==============================================================
 class CEnemy : public CCharacter
 {
 public:
 	using ACTIVITY_FUNC = std::function<void(CEnemy*)>;
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÆƒfƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	explicit CEnemy(int nPriority = 3);
 	~CEnemy();
 
-	//ƒvƒƒgƒ^ƒCƒvéŒ¾
+	//ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 	HRESULT	Init() override;
 	void	Uninit() override;
 	void	Update() override;
 	void	Draw() override;
 
-	// Ã“Iƒƒ“ƒoŠÖ”
-	static CEnemy *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);			// ƒvƒŒƒCƒ„[‚Ì¶¬
+	// é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
+	static CEnemy *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç”Ÿæˆ
+	CCollisionBox* GetBox() { return m_collision; }
+	void SetActivity(ACTIVITY_FUNC NowAct) { m_Activity = NowAct; }
+	ACTIVITY_FUNC GetActivity() { return m_Activity; }
 
 private:
-	void Move();		// ˆÚ“®
+	void Move();		// ç§»å‹•
 
-private:	// ƒƒ“ƒo•Ï”
+private:	// ãƒ¡ãƒ³ãƒå¤‰æ•°
 	CCollisionSphere* m_collisionSphere;
-	std::vector<ACTIVITY_FUNC> m_activity;
+	ACTIVITY_FUNC	m_Activity;
 };
 #endif

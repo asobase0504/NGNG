@@ -1,7 +1,7 @@
 //**************************************************************
 //
-// ÉLÉÉÉâÉNÉ^Å[
-// Author : äÅìcëÂñ≤
+// „Ç≠„É£„É©„ÇØ„Çø„Éº
+// Author : Ê¢∂Áî∞Â§ßÂ§¢
 //
 //**************************************************************
 
@@ -17,7 +17,7 @@
 #include "status.h"
 
 //--------------------------------------------------------------
-// ÉRÉìÉXÉgÉâÉNÉ^
+// „Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø
 //--------------------------------------------------------------
 CCharacter::CCharacter(int nPriority) : m_haveItem{}
 {
@@ -25,7 +25,7 @@ CCharacter::CCharacter(int nPriority) : m_haveItem{}
 }
 
 //--------------------------------------------------------------
-// ÉfÉXÉgÉâÉNÉ^
+// „Éá„Çπ„Éà„É©„ÇØ„Çø
 //--------------------------------------------------------------
 CCharacter::~CCharacter()
 {
@@ -33,7 +33,7 @@ CCharacter::~CCharacter()
 }
 
 //--------------------------------------------------------------
-// èâä˙âªèàóù
+// ÂàùÊúüÂåñÂá¶ÁêÜ
 //--------------------------------------------------------------
 HRESULT CCharacter::Init()
 {
@@ -55,12 +55,14 @@ HRESULT CCharacter::Init()
 	m_barrierRePopTime.SetCurrent(100);
 	m_attack.Init(100);
 	m_attack.SetCurrent(100);
+	m_attackSpeed.Init(1.0f);
+	m_attackSpeed.SetCurrent(1.0f);
 	m_defense.Init(100);
 	m_defense.SetCurrent(100);
-	m_criticalRate.Init(100);
-	m_criticalRate.SetCurrent(100);
-	m_criticalDamage.Init(100);
-	m_criticalDamage.SetCurrent(100);
+	m_criticalRate.Init(0.0f);
+	m_criticalRate.SetCurrent(0.0f);
+	m_criticalDamage.Init(2.0f);
+	m_criticalDamage.SetCurrent(2.0f);
 	m_movePower.Init(0.5f);
 	m_movePower.SetCurrent(2.0f);
 	m_jumpPower.Init(100);
@@ -75,49 +77,49 @@ HRESULT CCharacter::Init()
 }
 
 //--------------------------------------------------------------
-// èIóπèàóù
+// ÁµÇ‰∫ÜÂá¶ÁêÜ
 //--------------------------------------------------------------
 void CCharacter::Uninit(void)
 {
-	// îjä¸èàóù
+	// Á†¥Ê£ÑÂá¶ÁêÜ
 	CObject::Release();
 }
 
 //--------------------------------------------------------------
-// çXêVèàóù
+// Êõ¥Êñ∞Âá¶ÁêÜ
 //--------------------------------------------------------------
 void CCharacter::Update(void)
 {
-	// çXêVèàóù
+	// Êõ¥Êñ∞Âá¶ÁêÜ
 	CObject::Update();
 }
 
 //--------------------------------------------------------------
-// ï`âÊèàóù
+// ÊèèÁîªÂá¶ÁêÜ
 //--------------------------------------------------------------
 void CCharacter::Draw(void)
 {
-	//ÉfÉoÉCÉXÇ÷ÇÃÉ|ÉCÉìÉ^
+	//„Éá„Éê„Ç§„Çπ„Å∏„ÅÆ„Éù„Ç§„É≥„Çø
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 
-	D3DXMATRIX mtxRot, mtxTrans;	//åvéZópÉ}ÉgÉäÉbÉNÉX
-	D3DMATERIAL9 matDef;			//åªç›ÇÃÉ}ÉeÉäÉAÉãï€ë∂óp
+	D3DXMATRIX mtxRot, mtxTrans;	//Ë®àÁÆóÁî®„Éû„Éà„É™„ÉÉ„ÇØ„Çπ
+	D3DMATERIAL9 matDef;			//ÁèæÂú®„ÅÆ„Éû„ÉÜ„É™„Ç¢„É´‰øùÂ≠òÁî®
 
-	//åªç›ÇÃÉ}ÉeÉäÉAÉãÇà€éù
+	//ÁèæÂú®„ÅÆ„Éû„ÉÜ„É™„Ç¢„É´„ÇíÁ∂≠ÊåÅ
 	pDevice->GetMaterial(&matDef);
 
-	//ÉpÅ[ÉcÇÃÉèÅ[ÉãÉhÉ}ÉgÉäÉbÉNÉXÇÃèâä˙âª
+	//„Éë„Éº„ÉÑ„ÅÆ„ÉØ„Éº„É´„Éâ„Éû„Éà„É™„ÉÉ„ÇØ„Çπ„ÅÆÂàùÊúüÂåñ
 	D3DXMatrixIdentity(&m_mtxWorld);
 
-	//ÉpÅ[ÉcÇÃÉÇÉfÉãÇÃå¸Ç´ÇîΩâf
+	//„Éë„Éº„ÉÑ„ÅÆ„É¢„Éá„É´„ÅÆÂêë„Åç„ÇíÂèçÊò†
 	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
 
-	//ÉpÅ[ÉcÇÃÉÇÉfÉãÇÃà íuÇîΩâf
+	//„Éë„Éº„ÉÑ„ÅÆ„É¢„Éá„É´„ÅÆ‰ΩçÁΩÆ„ÇíÂèçÊò†
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
-	//ÉèÅ[ÉãÉhÉ}ÉgÉäÉbÉNÉXÇÃê›íË
+	//„ÉØ„Éº„É´„Éâ„Éû„Éà„É™„ÉÉ„ÇØ„Çπ„ÅÆË®≠ÂÆö
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
 	for (int i = 0; i < (int)m_apModel.size(); i++)
@@ -130,21 +132,35 @@ void CCharacter::Draw(void)
 }
 
 //--------------------------------------------------------------
-// ê∂ê¨
+// ÁîüÊàê
 //--------------------------------------------------------------
 CCharacter* CCharacter::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
-	//ÉLÉÉÉâÉNÉ^Å[ê∂ê¨
+	//„Ç≠„É£„É©„ÇØ„Çø„ÉºÁîüÊàê
 	CCharacter* pCharacter = new CCharacter;
 
 	if (pCharacter != nullptr)
-	{//NULLÉ`ÉFÉbÉN
-	 //ÉÅÉìÉoïœêîÇ…ë„ì¸
-		//èâä˙âª
+	{//NULL„ÉÅ„Çß„ÉÉ„ÇØ
+	 //„É°„É≥„ÉêÂ§âÊï∞„Å´‰ª£ÂÖ•
+		//ÂàùÊúüÂåñ
 		pCharacter->Init();
 	}
 
 	return pCharacter;
+}
+
+//--------------------------------------------------------------
+// ‰ΩçÁΩÆ„ÅÆË®≠ÂÆö
+//--------------------------------------------------------------
+void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
+{
+	std::vector<CObjectX*> objectX = GetModel();
+	if (objectX.size() > 0)
+	{
+		GetModel()[0]->SetPos(inPos);
+	}
+
+	CObject::SetPos(inPos);
 }
 
 void CCharacter::SetRot(const D3DXVECTOR3 & inRot)

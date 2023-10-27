@@ -242,9 +242,6 @@
     <ClCompile Include="src\enemy_manager.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
-    <ClCompile Include="src\enemy_data_base.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\status.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -277,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="src\item_data_base.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy_data_base.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
     <ClCompile Include="src\statue_chest.cpp">
       <Filter>ソース ファイル\00_Main</Filter>
@@ -469,9 +469,6 @@
     <ClInclude Include="src\status.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\enemy_data_base.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClInclude>
@@ -501,6 +498,9 @@
     </ClInclude>
     <ClInclude Include="src\map.h">
       <Filter>ソース ファイル\Mode\Game\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy_data_base.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClInclude>
     <ClInclude Include="src\statue_chest.h">
       <Filter>ソース ファイル\00_Main</Filter>
