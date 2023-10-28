@@ -291,5 +291,9 @@ void CEnemyDataBase::Init()
 	{
 		// 移動量の取得
 		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+		// カウント開始
+
+		// レーザー発射状態
 	};
 }
