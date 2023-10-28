@@ -86,7 +86,7 @@ void CSkillDataBase::Init()
 				bool a = m_Collision->ToSphere((CCollisionSphere*)Enemy[nCnt]->GetCollision());
 				if (a)
 				{// ƒ_ƒ[ƒW‚Ì”»’è
-					GetHitAbility("YAMATO_SKILL_1")(inusedCharacter, inusedCharacter);
+					GetHitAbility("YAMATO_SKILL_1")(inusedCharacter, Enemy[nCnt]);
 				}
 			}
 		}

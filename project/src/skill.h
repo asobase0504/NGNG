@@ -46,7 +46,6 @@ public:
 private:		// メンバ変数
 	CCharacter*		m_apChara;			// キャラクターのインスタンス
 	CCollision*		m_Collision;		// 当たり判定
-	int				m_ID;				// スキルID
 	int				m_CT;				// クールタイム
 	float			m_Duration;			// 効果時間
 	bool			m_isCollision;		// 当たっているかどうか	
