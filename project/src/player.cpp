@@ -121,7 +121,7 @@ void CPlayer::Update()
 	Dash();
 
 	// 攻撃
-//	Attack();
+	Attack();
 	
 	TakeItem();
 
@@ -140,7 +140,8 @@ void CPlayer::Update()
 
 	for (int i = 0; i < map->GetNumMesh(); i++)
 	{
-		if (m_collision[0]->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
+		bool hit = m_collision[0]->ToMesh(map->GetMapMesh(i)->GetCollisionMesh());
+		if (hit)
 		{// 押し出した位置
 			float extrusion = ((CCollisionCylinder*)m_collision[0])->GetExtrusionHeight();
 			SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));

@@ -64,8 +64,8 @@ HRESULT CCharacter::Init()
 	m_criticalDamage.Init(2.0f);
 	m_criticalDamage.SetCurrent(2.0f);
 	m_movePower.Init(2.0f);
-	m_movePower.SetCurrent(2.0f);
-	m_jumpPower.Init(100);
+	m_movePower.SetCurrent(1.0f);
+	m_jumpPower.Init(3.0f);
 	m_jumpPower.SetCurrent(3.0f);
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
@@ -90,6 +90,11 @@ void CCharacter::Update(void)
 {
 	// 更新処理
 	CObject::Update();
+
+	if (m_hp.GetCurrent() <= 0)
+	{
+		// 死亡処理
+	}
 }
 
 //--------------------------------------------------------------

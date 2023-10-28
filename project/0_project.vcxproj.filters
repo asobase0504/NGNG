@@ -203,9 +203,6 @@
     <ClCompile Include="src\collision_sphere.cpp">
       <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClCompile>
-    <ClCompile Include="src\skill.cpp">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClCompile>
     <ClCompile Include="src\item.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClCompile>
@@ -304,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="src\enemy_data_base.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -430,12 +430,6 @@
     <ClInclude Include="src\collision_box.h">
       <Filter>ソース ファイル\00_Main\02_Collision</Filter>
     </ClInclude>
-    <ClInclude Include="src\collision_sphere.h">
-      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="src\skill.h">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClInclude>
     <ClInclude Include="src\item.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\Item</Filter>
     </ClInclude>
@@ -528,6 +522,12 @@
     </ClInclude>
     <ClInclude Include="src\enemy_data_base.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision_sphere.h">
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

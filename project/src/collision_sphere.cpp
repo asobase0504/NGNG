@@ -2,6 +2,7 @@
 #include "collision_mesh.h"
 #include "object_polygon3d.h"
 #include "utility.h"
+#include "line.h"
 
 CCollisionSphere::CCollisionSphere()
 {
@@ -13,11 +14,41 @@ CCollisionSphere::~CCollisionSphere()
 
 HRESULT CCollisionSphere::Init()
 {
+	for (int i = 0; i < 8; i++)
+	{
+		m_line[i] = CLine::Create();
+	}
+
 	return E_NOTIMPL;
+}
+
+void CCollisionSphere::Update()
+{
+	// ‚S‚Â‚Ì’¸“_
+	D3DXVECTOR3 posLine[6];
+	posLine[0] = D3DXVECTOR3(m_length, 0.0f, 0.0f);
+	posLine[1] = D3DXVECTOR3(-m_length, 0.0f, 0.0f);
+	posLine[2] = D3DXVECTOR3(0.0f, m_length, 0.0f);
+	posLine[3] = D3DXVECTOR3(0.0f, -m_length, 0.0f);
+	posLine[4] = D3DXVECTOR3(0.0f, 0.0f, m_length);
+	posLine[5] = D3DXVECTOR3(0.0f, 0.0f, -m_length);
+
+	m_line[0]->SetLine(GetPos(), GetRot(), posLine[2], posLine[0], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[1]->SetLine(GetPos(), GetRot(), posLine[2], posLine[1], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[2]->SetLine(GetPos(), GetRot(), posLine[2], posLine[4], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[3]->SetLine(GetPos(), GetRot(), posLine[2], posLine[5], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[4]->SetLine(GetPos(), GetRot(), posLine[3], posLine[0], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[5]->SetLine(GetPos(), GetRot(), posLine[3], posLine[1], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[6]->SetLine(GetPos(), GetRot(), posLine[3], posLine[4], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[7]->SetLine(GetPos(), GetRot(), posLine[3], posLine[5], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void CCollisionSphere::Uninit()
 {
+	for (int i = 0; i < 8; i++)
+	{
+		m_line[i]->Uninit();
+	}
 }
 
 bool CCollisionSphere::ToMesh(CCollisionMesh* inMesh)

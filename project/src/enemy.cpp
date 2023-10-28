@@ -51,6 +51,8 @@ HRESULT CEnemy::Init()
 
 	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
 
+	m_collision.push_back(CCollisionCylinder::Create(pos, 10.0f, 10.0f));
+
 	return S_OK;
 }
 
