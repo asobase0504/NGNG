@@ -36,6 +36,7 @@ HRESULT CStatueBlood::Init()
 	D3DXVECTOR3 rot = GetRot();
 
 	CStatue::Init(pos, rot);
+	LoadModel("STATUE_BLOOD");
 	m_bOnce = false;
 
 	return S_OK;
@@ -58,8 +59,8 @@ void CStatueBlood::Update()
 	// プレイヤー情報取得
 	CInput* input = CInput::GetKey();
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int> playerHp = *pPlayer->GetHp();
-	CStatus<int> playerMoney = pPlayer->GetMoney();
+	CStatus<int>* playerHp = pPlayer->GetHp();
+	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
 	if (Touch(pPlayer))
@@ -69,10 +70,8 @@ void CStatueBlood::Update()
 			if (!m_bOnce)
 			{
 				// プレイヤーのHPとお金を調整して設定
-				playerHp.AddCurrent(-10);
-				playerMoney.AddCurrent(10);
-				pPlayer->SetHp(playerHp);
-				pPlayer->SetMoney(playerMoney);
+				playerHp->AddCurrent(-10);
+				playerMoney->AddCurrent(10);
 
 				m_bOnce = true;
 			}
@@ -87,7 +86,7 @@ void CStatueBlood::Update()
 	CStatue::Update();
 
 #ifdef _DEBUG
-	//CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
+	CDebugProc::Print("BloodPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
 #endif // _DEBUG
 }
 

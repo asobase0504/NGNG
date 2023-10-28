@@ -16,6 +16,8 @@
 #include "object_mesh.h"
 #include "file.h"
 
+#include "statue_manager.h"
+
 //==============================================================
 // Ã“Iƒƒ“ƒo•Ï”éŒ¾
 //==============================================================
@@ -44,6 +46,11 @@ CMap::~CMap()
 HRESULT CMap::Init(void)
 {
 	Load("data/FILE/map/map01.json");
+
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, 10.0f, 0.0f), CStatueManager::BLOOD);
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, 10.0f, 0.0f), CStatueManager::LUCK);
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, 10.0f, 0.0f), CStatueManager::CHEST);
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, 10.0f, 0.0f), CStatueManager::COMBAT);
 
 	return S_OK;
 }

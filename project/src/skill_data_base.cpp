@@ -72,8 +72,7 @@ void CSkillDataBase::Init()
 {
 	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,60,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
-	{ // ”­“®‚ÌŒø‰Ê
-		
+	{// ”­“®‚ÌŒø‰Ê
 		if (inusedCharacter != nullptr)
 		{
 			// “–‚½‚è”»’è
@@ -84,15 +83,22 @@ void CSkillDataBase::Init()
 
 			for (int nCnt = 0; nCnt < EnemyCount; nCnt++)
 			{// UŒ‚”ÍˆÍ‚É“G‚ª‚¢‚é‚©”»’è‚·‚é
-				return m_Collision->ToSphere((CCollisionSphere*)Enemy[nCnt]->GetCollision());
+				bool a = m_Collision->ToSphere((CCollisionSphere*)Enemy[nCnt]->GetCollision());
+				if (a)
+				{// ƒ_ƒ[ƒW‚Ì”»’è
+					GetHitAbility("YAMATO_SKILL_1")(inusedCharacter, Enemy[nCnt]);
+				}
 			}
 		}
 
 		return false;
 	},
 		[this](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
-	{ // Hit‚ÌŒø‰Ê
+	{// Hit‚ÌŒø‰Ê
+		//CStatus<unsigned int> atk = inusedCharacter->GetAtk();
+		//int nAtk = atk.GetCurrent();
 
+		inusedInTarget->Damage(50);
 
 		return false;
 	} };

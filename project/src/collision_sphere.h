@@ -12,6 +12,7 @@
 class CCollisionBox;
 class CCollisionCylinder;
 class CCollisionMesh;
+class CLine;
 
 class CCollisionSphere : public CCollision
 {
@@ -20,6 +21,7 @@ public:
 	~CCollisionSphere();
 
 	HRESULT Init();
+	void Update();
 	void Uninit();
 
 	//bool ToCylinder(CCollisionCylinder* inCyinder);
@@ -35,6 +37,7 @@ public:
 private:
 	float m_length;
 	float m_extrusionHeight;	// âüÇµèoÇ∑çÇÇ≥
+	CLine* m_line[8];
 };
 
 #endif

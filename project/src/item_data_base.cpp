@@ -21,30 +21,33 @@ CItemDataBase::CItemDataBase()
 void CItemDataBase::Init()
 {
 	m_item[ITEM_POWER_UP] = CItem::Create(ITEM_POWER_UP);
-
 	// ジャンプ回数上昇アイテムの設定-----------------------------
 	m_item[ITEM_POWER_UP]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetJumpCount()->AddItemEffect(1); });
 	m_item[ITEM_POWER_UP]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetJumpCount()->AddItemEffect(-1); });
 
-	m_item[ITEM_DANGO] = CItem::Create(ITEM_DANGO);
 	//--------------------------------------------------------------
 
+	m_item[ITEM_DANGO] = CItem::Create(ITEM_DANGO);
 	// だんごの設定-------------------------------------------------
 	m_item[ITEM_DANGO]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetHp()->AddItemEffect(50); });
 	m_item[ITEM_DANGO]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetHp()->AddItemEffect(-50); });
+
 	//--------------------------------------------------------------
 
+	m_item[ITEM_GETA] = CItem::Create(ITEM_GETA);
 	// 下駄の設定----------------------------------------------------
 	m_item[ITEM_GETA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetSpeed()->AddItemEffect(0.15f); });
 	m_item[ITEM_GETA]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetSpeed()->AddItemEffect(-0.15f); });
+
 	//--------------------------------------------------------------
 
+	m_item[ITEM_UMBRELLA] = CItem::Create(ITEM_UMBRELLA);
 	// 傘の設定-----------------------------------------------------
 	m_item[ITEM_UMBRELLA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetDefense()->AddItemEffect(5); });
@@ -52,6 +55,7 @@ void CItemDataBase::Init()
 	{	inCharacter->GetDefense()->AddItemEffect(-5); });
 	//--------------------------------------------------------------
 
+	m_item[ITEM_HYOUTAN] = CItem::Create(ITEM_HYOUTAN);
 	// ひょうたん---------------------------------------------------
 	m_item[ITEM_HYOUTAN]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetAtkSpd()->AddItemEffect(0.075f); 
@@ -61,6 +65,7 @@ void CItemDataBase::Init()
 	inCharacter->GetSpeed()->AddItemEffect(-0.075f); });
 	//--------------------------------------------------------------
 
+	m_item[ITEM_BANBOO_WATERBOX] = CItem::Create(ITEM_BANBOO_WATERBOX);
 	// 竹の水筒-----------------------------------------------------
 	m_item[ITEM_BANBOO_WATERBOX]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetAtkSpd()->AddItemEffect(0.15f);});
@@ -68,7 +73,7 @@ void CItemDataBase::Init()
 	{	inCharacter->GetAtkSpd()->AddItemEffect(-0.15f); });
 	//--------------------------------------------------------------
 
-
+	m_item[ITEM_OMAMORI] = CItem::Create(ITEM_OMAMORI);
 	// お守り-------------------------------------------------------
 	m_item[ITEM_OMAMORI]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetAtkSpd()->AddItemEffect(0.1f); });
@@ -76,6 +81,7 @@ void CItemDataBase::Init()
 	{	inCharacter->GetAtkSpd()->AddItemEffect(-0.1f); });
 	//--------------------------------------------------------------
 
+	m_item[ITEM_KIBORI] = CItem::Create(ITEM_KIBORI);
 	// 熊の木彫り(保留)---------------------------------------------
 	m_item[ITEM_KIBORI]->SetWhenDamageFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
@@ -86,6 +92,7 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
+	m_item[ITEM_BAKUTIKU] = CItem::Create(ITEM_BAKUTIKU);
 	// ばくちく(保留)-----------------------------------------------
 	m_item[ITEM_BAKUTIKU]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
@@ -93,17 +100,18 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
+	m_item[ITEM_MAKIBISI] = CItem::Create(ITEM_MAKIBISI);
 	// まきびし-----------------------------------------------------
 	m_item[ITEM_MAKIBISI]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	m_item[ITEM_GETA] = CItem::Create(ITEM_GETA);
+	{});
 
-	// 下駄の設定
-	m_item[ITEM_GETA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	m_item[ITEM_MAKIBISI]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{
 		// 攻撃時に敵に移動速度-5%にする状態異常を付与する。
 	});
 	//--------------------------------------------------------------
 
+	m_item[ITEM_HEAD] = CItem::Create(ITEM_HEAD);
 	// 首級---------------------------------------------------------
 	m_item[ITEM_HEAD]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{

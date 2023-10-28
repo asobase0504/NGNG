@@ -36,8 +36,6 @@ public:
 	// 静的メンバ関数
 	static CSkill	*Create();									// スキルの生成
 
-
-	void CollisionSkill(std::string tag);										// スキルの当たり判定
 	void Skill1();												// スキル1
 	// Getter
 	int	GetCT() { return m_CT; }
@@ -46,11 +44,11 @@ public:
 	void SetSkill(std::string tag, CCharacter *chara);			// スキルの設定
 
 private:		// メンバ変数
-	CCharacter*		m_apChara;				// キャラクターのインスタンス
-	CCollision*		m_Collision;			// 当たり判定
-	int				m_ID;					// スキルID
-	int				m_CT;					// クールタイム
-	bool			m_isCollision;			// 当たっているかどうか	
-	std::string		m_Name;					// スキル名
+	CCharacter*		m_apChara;			// キャラクターのインスタンス
+	CCollision*		m_Collision;		// 当たり判定
+	int				m_CT;				// クールタイム
+	float			m_Duration;			// 効果時間
+	bool			m_isCollision;		// 当たっているかどうか	
+	std::string		m_Name;				// スキル名
 };
 #endif

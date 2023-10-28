@@ -32,9 +32,6 @@ CMesh::CMesh(CTaskGroup::EPriority nPriority) :
 	m_vtx(0),			// 頂点数
 	m_index(0),			// インデックス
 	m_polygonCount(0),
-	m_nowMesh(0),
-	m_number(0),
-	m_type(0),
 	m_isCollision(true),
 	m_collisionMesh(nullptr)
 {
@@ -346,7 +343,6 @@ bool CMesh::CreateMesh(D3DXVECTOR3* pPos)
 
 void CMesh::SetY(std::vector<std::vector<float>> inY)
 {
-	m_nowMesh = inY.size();		// 枚数保存
 	SetVtxMeshSize(inY.size());	// サイズ決定
 	SetVtxMeshLight();		// 法線設定
 
@@ -368,6 +364,8 @@ void CMesh::SetY(std::vector<std::vector<float>> inY)
 
 	// 頂点座標をアンロック
 	m_vtxBuff->Unlock();
+
+	SetVtxMeshLight();		// 法線設定
 
 }
 
@@ -569,7 +567,6 @@ void CMesh::SetVtxMeshLight()
 //--------------------------------------------------------------
 void CMesh::SetMesh(const int Size)
 {
-	m_nowMesh = Size;		// 枚数保存
 	SetVtxMeshSize(Size);	// サイズ決定
 	SetVtxMeshLight();		// 法線設定
 }

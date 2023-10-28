@@ -1,4 +1,4 @@
-//**************************************************************
+﻿//**************************************************************
 //
 // ゲーム画面
 // Author : Yuda Kaito
@@ -12,7 +12,6 @@
 #include "player.h"
 #include "enemy.h"
 #include "statue.h"
-#include "statue_manager.h"
 #include "enemy_manager.h"
 #include "item_manager.h"
 #include "item_data_base.h"
@@ -87,9 +86,6 @@ HRESULT CGame::Init(void)
 
 	// アイテムのｓ衛星
 	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
-
-	CStatue* pStatue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(100.0f, 0.0f, 100.0f),CStatueManager::LUCK);
-
 
 	return S_OK;
 }

@@ -59,7 +59,7 @@ void CStatueChest::Update()
 	// プレイヤー情報取得
 	CInput* input = CInput::GetKey();
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int> playerMoney = pPlayer->GetMoney();
+	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
 	if (Touch(pPlayer))
@@ -69,8 +69,7 @@ void CStatueChest::Update()
 			if (!m_bOnce)
 			{
 				// プレイヤーお金を調整して設定
-				playerMoney.AddCurrent(-10);
-				pPlayer->SetMoney(playerMoney);
+				playerMoney->AddCurrent(-10);
 
 				//-------------------------------------------------------------------------------
 				// アイテムランダムドロップ関数追加
@@ -91,7 +90,7 @@ void CStatueChest::Update()
 	CStatue::Update();
 
 #ifdef _DEBUG
-	//CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
+	CDebugProc::Print("ChestPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
 #endif // _DEBUG
 }
 

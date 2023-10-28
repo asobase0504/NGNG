@@ -82,46 +82,24 @@ CSkill *CSkill::Create()
 }
 
 //--------------------------------------------------------------
-// スキル当たり判定
-//--------------------------------------------------------------
-void CSkill::CollisionSkill(std::string tag)
-{
-	// スキルデータのインスタンスを取得する
-	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
-
-	if (m_apChara != nullptr)
-	{
-		// 当たり判定
-		m_Collision = CCollisionSphere::Create(m_apChara->GetPos(), pSkillData->GetSize(tag).x);
-		std::vector<CEnemy*> Enemy = CEnemyManager::GetInstance()->GetEnemy();
-		// エネミーの数を取得
-		int EnemyCount = Enemy.size();
-
-		for (int nCnt = 0; nCnt < EnemyCount; nCnt++)
-		{// 攻撃範囲に敵がいるか判定する
-			m_isCollision = false;
-			m_isCollision = m_Collision->ToSphere((CCollisionSphere*)Enemy[nCnt]->GetCollision());
-
-			if (m_isCollision)
-			{// hit時に生成
-				pSkillData->GetHitAbility(tag);
-			}
-		}
-	}
-}
-
-//--------------------------------------------------------------
 // スキル1
 //--------------------------------------------------------------
 void CSkill::Skill1()
 {
 	if (m_CT == 0)
 	{// クールタイムがなければ当たり判定を生成する
-		CollisionSkill("YAMATO_SKILL_1");
-	}
+		// 当たり判定の持続時間の管理
+		CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
+		pSkillData->GetDuration(m_Name);
+		
+		if (pSkillData->GetAbility(m_Name)(m_apChara))
+		{// ヒットした時の効果
+			pSkillData->GetHitAbility(m_Name)(m_apChara,m_apChara);
+		}
 
-	// クールタイムの設定
-	m_CT = CSkillDataBase::GetInstance()->GetCT("YAMATO_SKILL_2");
+		// クールタイムの設定
+		m_CT = pSkillData->GetCT(m_Name);
+	}
 }
 
 //--------------------------------------------------------------

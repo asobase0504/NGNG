@@ -38,6 +38,7 @@ HRESULT CStatueLuck::Init()
 	D3DXVECTOR3 rot = GetRot();
 
 	CStatue::Init(pos,rot);
+	LoadModel("STATUE_LUCK");
 
 	m_bOnce = false;
 	m_bChance = false;
@@ -64,7 +65,7 @@ void CStatueLuck::Update()
 	// プレイヤー情報取得
 	CInput* input = CInput::GetKey();
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int> playerMoney = pPlayer->GetMoney();
+	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
 	if (Touch(pPlayer))
@@ -76,8 +77,7 @@ void CStatueLuck::Update()
 				if (m_nItemCount < 2)
 				{
 					// プレイヤーお金を調整して設定
-					playerMoney.AddCurrent(-m_nUseMoney);
-					pPlayer->SetMoney(playerMoney);
+					playerMoney->AddCurrent(-m_nUseMoney);
 
 					// アイテム確率計算
 					int randomCount = IntRandom(100, 1);
@@ -133,7 +133,7 @@ void CStatueLuck::Update()
 	CStatue::Update();
 
 #ifdef _DEBUG
-	//CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
+	CDebugProc::Print("LuckPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
 #endif // _DEBUG
 }
 

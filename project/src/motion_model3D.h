@@ -3,7 +3,7 @@
 // 3Dモーションキャラクタークラス(motion_model3D.h)
 // Author : 唐﨑結斗
 // Author : Yuda Kaito
-// 概要 : 3Dプレイヤー生成を行う
+// 概要 : モデルにモーション機能の追加。
 //
 //**************************************************************
 #ifndef _MOTION_MODEL3D_H_			// このマクロ定義がされてなかったら
@@ -46,9 +46,6 @@ public:
 	void Update() override;		// 更新
 	void Draw() override;		// 描画
 
-	void SetPosOld(D3DXVECTOR3 posOld) { m_posOld = posOld; }	// 過去位置
-	D3DXVECTOR3 GetPosOld() { return m_posOld; }				// 過去位置
-
 	void SetMotion(const char *pName);							// モーション情報の設定
 	CMotion *GetMotion() { return m_motion; }					// モーション情報の取得
 
@@ -63,7 +60,6 @@ private:
 	// メンバ変数
 	//--------------------------------------------------------------
 	CMotion*		m_motion;			// モーションインスタンス
-	D3DXVECTOR3		m_posOld;			// 過去位置
 	bool			m_isUpdateStop;		// 更新を停止させる。
 };
 
