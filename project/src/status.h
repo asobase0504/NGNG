@@ -71,6 +71,8 @@ public:
 
 	bool MaxCurrentSame() { return m_current >= m_max; }
 
+	T GetMax() { return m_max; }
+
 	void AddItemEffect(T inAdd) { m_max += inAdd; }
 
 private:	// ƒƒ“ƒo•Ï”

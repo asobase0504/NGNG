@@ -9,28 +9,33 @@
 // include
 //==============================================================
 #include "player.h"
+
+#include "application.h"
+#include "objectX.h"
+#include "object_mesh.h"
+
+#include "collision_cylinder.h"
+#include "collision_mesh.h"
+#include "utility.h"
+
 #include "enemy.h"
+#include "Controller.h"
+#include "skill.h"
+#include "skill_data_base.h"
+#include "item.h"
+#include "item_data_base.h"
+#include "map.h"
+#include "map_model.h"
 #include "statue.h"
 #include "statue_manager.h"
 #include "enemy_manager.h"
 #include "player_manager.h"
-#include "Controller.h"
-#include "skill_data_base.h"
-#include "application.h"
-#include "objectX.h"
-#include "collision_cylinder.h"
-#include "utility.h"
-#include "skill.h"
-#include <sstream>
-#include "item_data_base.h"
-#include "item.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
 CPlayer::CPlayer(int nPriority)
 {
-	m_collisionCyinder = nullptr;
 }
 
 //--------------------------------------------------------------
@@ -67,8 +72,7 @@ HRESULT CPlayer::Init()
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
-	m_collisionCyinder = CCollisionCylinder::Create(pos, 10.0f, 10.0f);
-	m_collision.push_back(m_collisionCyinder);
+	m_collision.push_back(CCollisionCylinder::Create(pos, 10.0f, 10.0f));
 
 	return S_OK;
 }
@@ -84,8 +88,6 @@ void CPlayer::Uninit()
 		delete m_controller;
 		m_controller = nullptr;
 	}
-
-	m_collisionCyinder->Uninit();
 
 	// 終了処理
 	CCharacter::Uninit();
@@ -119,34 +121,39 @@ void CPlayer::Update()
 	// 攻撃
 	Attack();
 	
-	
 	TakeItem();
 
-	if (m_collisionCyinder->ToBox(CEnemyManager::GetInstance()->GetEnemyBox(), true))
+	CMap* map = CMap::GetMap();
+	D3DXVECTOR3 pos = GetPos();
+
+	for (int i = 0; i < map->GetNumModel(); i++)
 	{
-		// 押し出した位置
-		D3DXVECTOR3 extrusion = m_collisionCyinder->GetExtrusion();
-		SetPos(D3DXVECTOR3(extrusion));
-		m_collisionCyinder->SetPos(D3DXVECTOR3(extrusion));
-		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		if (m_collision[0]->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
+		{// 押し出した位置
+			D3DXVECTOR3 extrusion = ((CCollisionCylinder*)m_collision[0])->GetExtrusion();
+			SetPos(D3DXVECTOR3(extrusion));
+			m_collision[0]->SetPos(D3DXVECTOR3(extrusion));
+		//	SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		}
 	}
 
-	//if (m_collisionCyinder->ToBox(CStatueManager::GetInstance()->GetStatue(), true))
-	//{
-	//	// 押し出した位置
-	//	D3DXVECTOR3 extrusion = m_collisionCyinder->GetExtrusion();
-	//	SetPos(D3DXVECTOR3(extrusion));
-	//	m_collisionCyinder->SetPos(D3DXVECTOR3(extrusion));
-	//	DEBUG_PRINT("pos2 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
-	//	SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	//}
+	for (int i = 0; i < map->GetNumMesh(); i++)
+	{
+		if (m_collision[0]->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
+		{// 押し出した位置
+			float extrusion = ((CCollisionCylinder*)m_collision[0])->GetExtrusionHeight();
+			SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
+			m_collision[0]->SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
+		//	SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		}
+	}
 
-	DEBUG_PRINT("pos3 : %f, %f, %f\n", GetPos().x, GetPos().y, GetPos().z);
+	DEBUG_PRINT("pos3 : %f, %f, %f\n", pos.x, pos.y, pos.z);
 
 #ifdef _DEBUG
-	CDebugProc::Print("Player：pos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
-	CDebugProc::Print("Player：move(%f,%f,%f)\n", move.x, move.y, move.z);
-	CDebugProc::Print("PlayerCollision：pos(%f,%f,%f)\n", m_collisionCyinder->GetPos().x, m_collisionCyinder->GetPos().y, m_collisionCyinder->GetPos().z);
+	CDebugProc::Print("Player : pos(%f, %f, %f)\n", GetPos().x, GetPos().y, GetPos().z);
+	CDebugProc::Print("Player : move(%f, %f, %f)\n", move.x, move.y, move.z);
+	CDebugProc::Print("PlayerCollision : pos(%f, %f, %f)\n", m_collision[0]->GetPos().x, m_collision[0]->GetPos().y, m_collision[0]->GetPos().z);
 #endif // _DEBUG
 }
 
@@ -171,7 +178,7 @@ void CPlayer::Attack()
 	if (m_controller->Skill_1())
 	{
 		// 発動時に生成
-
+    m_Skill[0]->Skill1();
 	}
 
 	// スキル1(右クリック)
@@ -298,11 +305,14 @@ void CPlayer::SetController(CController * inOperate)
 //--------------------------------------------------------------
 // 位置の設定
 //--------------------------------------------------------------
-void CPlayer::SetPos(const D3DXVECTOR3 & inPos)
+void CPlayer::SetPos(const D3DXVECTOR3& inPos)
 {
-	if (m_collisionCyinder != nullptr)
+	if (m_collision.size() > 0)
 	{
-		m_collisionCyinder->SetPos(inPos);
+		if (m_collision[0] != nullptr)
+		{
+			m_collision[0]->SetPos(inPos);
+		}
 	}
 	CCharacter::SetPos(inPos);
 }

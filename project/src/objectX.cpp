@@ -72,6 +72,7 @@ HRESULT CObjectX::Init()
 	m_hView = pEffect->GetParameterByName(NULL, "mView");			// ƒrƒ…[s—ñ
 	m_hTime = pEffect->GetParameterByName(NULL, "Test");
 
+	CObject::Init();
 
 	return S_OK;
 }

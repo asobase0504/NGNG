@@ -40,6 +40,13 @@ float NormalizeAngle(float& pAngle);
 bool Homing(D3DXVECTOR3 *pPosOut, const D3DXVECTOR3 &posNow, const D3DXVECTOR3 &posDest, float fSpeed);
 
 //--------------------------------------------------------------
+// 成功確率を渡して成功か否か判断
+// 引数  : float inRate / 成功確率
+// 返値  : bool / 成功
+//--------------------------------------------------------------
+bool IsSuccessRate(float inRate);
+
+//--------------------------------------------------------------
 // 小数点のランダム
 // 引数1  : float fMax / 最大値
 // 引数2  : float fMin / 最小値
@@ -54,6 +61,13 @@ float FloatRandom(float fMax, float fMin);
 // 返値  : int / ランダム値
 //--------------------------------------------------------------
 int IntRandom(int nMax, int nMin);
+
+//--------------------------------------------------------------
+// 成功確率を渡して成功か否か判断
+// 引数  : float inRate / 成功確率
+// 返値  : bool / 成功
+//--------------------------------------------------------------
+bool IsSuccessRate(float inRate);
 
 //--------------------------------------------------------------
 // sinカーブの値が1.0f～0.0fで帰ってくる
@@ -132,6 +146,12 @@ float Vec2Dot(D3DXVECTOR3* v1, D3DXVECTOR3* v2);
 D3DXVECTOR3 ConvertQuaternionfromRadian(const D3DXQUATERNION& inQuaternion);
 
 const D3DXMATRIX InverseMatrixConversion(const D3DXMATRIX& inMtx);
+
+//=============================================================================
+//1バイト文字をシフトJISかどうか判定する関数
+//=============================================================================
+bool IsSjisLeadByte(int c);
+
 //--------------------------------------------------------------
 // Author : Hamada Ryuuga
 // Author : Yuda Kaito

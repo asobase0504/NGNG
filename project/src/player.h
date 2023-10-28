@@ -47,8 +47,6 @@ public:
 
 	// Setter
 	void SetController(CController* inOperate);
-	CCollisionCylinder* GetCylinder() { return m_collisionCyinder; }
-
 	void SetPos(const D3DXVECTOR3& inPos);
 
 private:

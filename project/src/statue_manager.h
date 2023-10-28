@@ -34,6 +34,9 @@ public:
 	{
 		NONE = 0,
 		BLOOD,
+		CHEST,
+		LUCK,
+		COMBAT,
 		MAX
 	};
 
@@ -48,6 +51,7 @@ public:
 
 	// Ã“Iƒƒ“ƒoŠÖ”
 	CStatue* CreateStatue(D3DXVECTOR3 pos, EType type);			// ‘œ‚Ì¶¬
+	CStatue* RabdomCreate(D3DXVECTOR3 pos);						// ƒ‰ƒ“ƒ_ƒ€¶¬
 
 	CStatue* GetStatue() { return m_pStatue; }
 	CCollisionBox* GetStatueBox() { return m_pStatue->GetCollisionBox(); }
