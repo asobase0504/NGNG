@@ -153,16 +153,16 @@ bool CCollisionSphere::ToMesh(CCollisionMesh* inMesh)
 	return isLanding;
 }
 
-bool CCollisionSphere::ToBox(CCollisionBox * inBox, bool isExtrusion)
+bool CCollisionSphere::ToBox(CCollisionBox* inBox, bool isExtrusion)
 {
 	return false;
 }
 
-bool CCollisionSphere::ToSphere(CCollisionSphere * inSphere)
+bool CCollisionSphere::ToSphere(CCollisionSphere* inSphere)
 {
 	float addLength = m_length + inSphere->GetLength();
 
-	D3DXVECTOR3 difference = m_pos - inSphere->m_pos;
+	D3DXVECTOR3 difference = GetPos() - inSphere->GetPos();
 
 	float differenceLength = D3DXVec3Length(&difference);
 

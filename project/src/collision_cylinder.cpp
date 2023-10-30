@@ -24,7 +24,6 @@
 // コンストラクタ
 //--------------------------------------------------------------
 CCollisionCylinder::CCollisionCylinder() : 
-	m_extrusion(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_length(0.0f),
 	m_height(0.0f)
 {
@@ -92,13 +91,13 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	D3DXVECTOR3 cylinderPosOld = GetPosOld();
 	float radius = GetLength();
 
-	float left = boxPos.x - boxSize.x * 0.5f;	// 左
-	float right = boxPos.x + boxSize.x * 0.5f;	// 右
-	float top = boxPos.y + boxSize.y * 0.5f;	// 上
-	float bottum = boxPos.y - boxSize.y * 0.5f;	// 下
-	float back = boxPos.z + boxSize.z * 0.5f;	// 奥
-	float front = boxPos.z - boxSize.z * 0.5f;	// 前
-	
+	float left = -boxSize.x * 0.5f;		// 左
+	float right = boxSize.x * 0.5f;		// 右
+	float top = boxSize.y * 0.5f;		// 上
+	float bottum = -boxSize.y * 0.5f;	// 下
+	float back = boxSize.z * 0.5f;		// 奥
+	float front = -boxSize.z * 0.5f;	// 前
+
 	// ４つの頂点
 	D3DXVECTOR3 pos[4];
 	pos[0] = D3DXVECTOR3(left - radius, 0.0f, back + radius);
@@ -130,64 +129,77 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	InOut[2] = Vec2Cross(&vecLine[2], &vec[2]);
 	InOut[3] = Vec2Cross(&vecLine[3], &vec[3]);
 
-#ifdef _DEBUG
-	CDebugProc::Print(" InOut[0] : %f \n", InOut[0]);
-	CDebugProc::Print(" InOut[1] : %f \n", InOut[1]);
-	CDebugProc::Print(" InOut[2] : %f \n", InOut[2]);
-	CDebugProc::Print(" InOut[3] : %f \n", InOut[3]);
-#endif // _DEBUG
+	// 押出位置
+	D3DXVECTOR3 extrusion(0.0f, 0.0f, 0.0f);
 
-	// Yの押出
+	SetIsTop(false);
+
 	if (InOut[0] < 0.0f && InOut[1] < 0.0f && InOut[2] < 0.0f && InOut[3] < 0.0f)
-	{// XZの押出
-		for (int nCnt = 0; nCnt < 4; nCnt++)
-		{// どの方向から来たか判定
-			D3DXVECTOR3 vecPosOld = cylinderPosOld - worldPos[nCnt];
-			float leftPosOld = Vec2Cross(&vecLine[nCnt], &vecPosOld);
+	{// Yの押出
+		if (cylinderPosOld.y >= boxPos.y + boxSize.y && cylinderPos.y < boxPos.y + boxSize.y)
+		{// 上
+			extrusion.x = cylinderPos.x;
+			extrusion.y = boxPos.y + boxSize.y;
+			extrusion.z = cylinderPos.z;
 
-			if (leftPosOld > 0.0f)
-			{// 方向が分かった時
-				isLanding = true;
+			SetPos(extrusion);
+			SetIsTop(true);
+			isLanding = true;
+		}
 
-				// posOldから始点までの距離（V）
-				D3DXVECTOR3 V = worldPos[nCnt] - cylinderPosOld;
-				// プレイヤーのMOVE（V1）
-				D3DXVECTOR3 vecMove = cylinderPos - cylinderPosOld;
+		if (cylinderPos.y < boxPos.y + boxSize.y && cylinderPos.y + m_height > boxPos.y)
+		{// XZの押出
+			for (int nCnt = 0; nCnt < 4; nCnt++)
+			{// どの方向から来たか判定
+				D3DXVECTOR3 vecPosOld = cylinderPosOld - worldPos[nCnt];
+				float leftPosOld = Vec2Cross(&vecLine[nCnt], &vecPosOld);
 
-				float t1 = Vec2Cross(&V, &vecLine[nCnt]) / Vec2Cross(&vecMove, &vecLine[nCnt]);
-				float t2 = Vec2Cross(&V, &vecMove) / Vec2Cross(&vecMove, &vecLine[nCnt]);
+				if (leftPosOld > 0.0f)
+				{// 方向が分かった時
+					isLanding = true;
 
-				const float eps = 0.00001f;
-				if (t1 + eps < 0 || t1 - eps > 1 || t2 + eps < 0 || t2 - eps > 1)
-				{// 交差していない
-					continue;
-				}
-				else
-				{// 押し出し用法線の格納用の箱
-					D3DXVECTOR3 nor;
-					// 上方向のベクトル
-					D3DXVECTOR3 vecUp(0.0f, 1.0f, 0.0f);
-					// 正規化
-					D3DXVec3Normalize(&vecLine[nCnt], &vecLine[nCnt]);
-					// 面の法線を求める
-					D3DXVec3Cross(&nor, &vecLine[nCnt], &vecUp);
-					// 大きさを１にする
-					D3DXVec3Normalize(&nor, &nor);
+					// posOldから始点までの距離（V）
+					D3DXVECTOR3 V = worldPos[nCnt] - cylinderPosOld;
+					// プレイヤーのMOVE（V1）
+					D3DXVECTOR3 vecMove = cylinderPos - cylinderPosOld;
 
-					// 逆方向
-					D3DXVECTOR3 reverseVecMove = cylinderPosOld - cylinderPos;
-					// (a)
-					float difMove = Vec2Dot(&reverseVecMove, &nor);
+					float t1 = Vec2Cross(&V, &vecLine[nCnt]) / Vec2Cross(&vecMove, &vecLine[nCnt]);
+					float t2 = Vec2Cross(&V, &vecMove) / Vec2Cross(&vecMove, &vecLine[nCnt]);
 
-					// 押し返し
-					m_extrusion.x = (cylinderPosOld.x + vecMove.x * t1) + (nor.x * 0.1f) + (vecMove.x + difMove * nor.x);
-					m_extrusion.z = (cylinderPosOld.z + vecMove.z * t1) + (nor.z * 0.1f) + (vecMove.z + difMove * nor.z);
+					const float eps = 0.00001f;
+					if (t1 + eps < 0 || t1 - eps > 1 || t2 + eps < 0 || t2 - eps > 1)
+					{// 交差していない
+						continue;
+					}
+					else
+					{// 押し出し用法線の格納用の箱
+						D3DXVECTOR3 nor;
+						// 上方向のベクトル
+						D3DXVECTOR3 vecUp(0.0f, 1.0f, 0.0f);
+						// 正規化
+						D3DXVec3Normalize(&vecLine[nCnt], &vecLine[nCnt]);
+						// 面の法線を求める
+						D3DXVec3Cross(&nor, &vecLine[nCnt], &vecUp);
+						// 大きさを１にする
+						D3DXVec3Normalize(&nor, &nor);
 
-					break;
+						// 逆方向
+						D3DXVECTOR3 reverseVecMove = cylinderPosOld - cylinderPos;
+						// (a)
+						float difMove = Vec2Dot(&reverseVecMove, &nor);
+
+						// 押し返し
+						extrusion.x = (cylinderPosOld.x + vecMove.x * t1) + (nor.x * 0.1f) + (vecMove.x + difMove * nor.x);
+						extrusion.y = cylinderPos.y;
+						extrusion.z = (cylinderPosOld.z + vecMove.z * t1) + (nor.z * 0.1f) + (vecMove.z + difMove * nor.z);
+
+						SetPos(extrusion);
+
+						break;
+					}
 				}
 			}
 		}
-
 	}
 	return isLanding;
 }
@@ -359,7 +371,11 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 
 			if (pos.y < meshHeight)
 			{// メッシュの高さよりプレイヤーの高さのほうが下のとき
-				m_extrusionHeight = meshHeight;
+				float extrusion = 0.0f;
+				// 押し返し
+				extrusion = meshHeight;
+
+				SetPos(D3DXVECTOR3(pos.x, meshHeight, pos.z));
 			}
 			else
 			{

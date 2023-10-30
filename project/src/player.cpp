@@ -128,26 +128,45 @@ void CPlayer::Update()
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
 
+	bool isGround = false;
+
 	for (int i = 0; i < map->GetNumModel(); i++)
 	{
 		if (m_collision[0]->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
 		{// 押し出した位置
-			D3DXVECTOR3 extrusion = ((CCollisionCylinder*)m_collision[0])->GetExtrusion();
-			SetPos(D3DXVECTOR3(extrusion));
-			m_collision[0]->SetPos(D3DXVECTOR3(extrusion));
+			SetPos(m_collision[0]->GetPos());
+			if (m_collision[0]->GetIsTop())
+			{
+				isGround = true;
+			}
 		}
 	}
 
 	for (int i = 0; i < map->GetNumMesh(); i++)
 	{
-		bool hit = m_collision[0]->ToMesh(map->GetMapMesh(i)->GetCollisionMesh());
-		if (hit)
+		if (m_collision[0]->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
 		{// 押し出した位置
-			float extrusion = ((CCollisionCylinder*)m_collision[0])->GetExtrusionHeight();
-			SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
-			m_collision[0]->SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
-			m_state = GROUND;
+			SetPos(m_collision[0]->GetPos());
+			isGround = true;
 		}
+	}
+
+	static STATE state;
+	state = m_state;
+
+	if (isGround)
+	{
+		m_state = GROUND;
+	}
+	else
+	{
+		m_state = SKY;
+	}
+
+	if (state == GROUND && m_state == GROUND)
+	{
+		SetMoveY(0.0f);
+		m_jumpCount.SetCurrent(0);
 	}
 
 	DEBUG_PRINT("pos3 : %f, %f, %f\n", pos.x, pos.y, pos.z);
@@ -199,7 +218,7 @@ void CPlayer::Attack()
 void CPlayer::Move()
 {
 	// 移動量
-	D3DXVECTOR3 move = m_controller->Move() * m_movePower.GetCurrent() * 3.0f;
+	D3DXVECTOR3 move = m_controller->Move() * m_movePower.GetCurrent();
 
 	if (D3DXVec3Length(&move) != 0.0f)
 	{
@@ -231,23 +250,9 @@ void CPlayer::Jump()
 		SetMoveY(m_jumpPower.GetCurrent());
 		m_state = SKY;
 	}
-	else
-	{
-		if (!(GetPos().y > 0.0f))
-		{
-			m_jumpCount.SetCurrent(0);
-		}
-	}
 
-	if (m_state == SKY)
-	{
-		// 重力
-		AddMoveY(-0.18f);
-	}
-	else if(m_state == GROUND)
-	{
-		SetMoveY(0.0f);
-	}
+	// 重力
+	AddMoveY(-0.18f);
 
 	// 移動量の設定
 	AddMove(move);

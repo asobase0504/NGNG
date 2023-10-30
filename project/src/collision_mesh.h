@@ -35,13 +35,11 @@ public:
 	int GetPrimitive() { return m_primitive; }
 	LPDIRECT3DVERTEXBUFFER9 GetVtxBuff() { return m_vtxBuff; }
 	LPDIRECT3DINDEXBUFFER9 GetIdxBuff() { return m_idxBuff; }
-	float GetExtrusionHeight() { return m_extrusionHeight; }
 
 private:
 	int m_primitive;
 	LPDIRECT3DVERTEXBUFFER9 m_vtxBuff;
 	LPDIRECT3DINDEXBUFFER9 m_idxBuff;
-	float m_extrusionHeight;	// âüÇµèoÇ∑çÇÇ≥
 };
 
 #endif	// _COLLISION_MESH_H_
