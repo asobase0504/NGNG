@@ -30,7 +30,7 @@ CYamatoSkill_1::CYamatoSkill_1(int nPriority)
 //--------------------------------------------------------------
 CYamatoSkill_1::~CYamatoSkill_1()
 {
-
+	
 }
 
 //--------------------------------------------------------------
@@ -42,6 +42,7 @@ void CYamatoSkill_1::InitAbility()
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	if (m_apChara != nullptr)
 	{
+		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_1");
 		m_Collision = CCollisionSphere::Create(m_apChara->GetPos(), pSkillData->GetSize("YAMATO_SKILL_1").x);
 	}
 }
@@ -53,6 +54,7 @@ void CYamatoSkill_1::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
 	Target->Damage(50);
+
 }
 
 //--------------------------------------------------------------

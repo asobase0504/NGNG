@@ -49,6 +49,7 @@ void CCollisionSphere::Uninit()
 	{
 		m_line[i]->Uninit();
 	}
+	CCollision::Uninit();
 }
 
 bool CCollisionSphere::ToMesh(CCollisionMesh* inMesh)

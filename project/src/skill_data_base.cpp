@@ -71,7 +71,7 @@ void CSkillDataBase::Uninit()
 //--------------------------------------------------------------
 void CSkillDataBase::Init()
 {
-	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,60,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,300,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{// ”­“®Žž‚ÌŒø‰Ê
 		if (inusedCharacter != nullptr)

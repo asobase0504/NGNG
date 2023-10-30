@@ -51,7 +51,7 @@ void CSkillEntity::Uninit(void)
 	// 当たり判定の削除
 	if (m_Collision != nullptr)
 	{
-		delete m_Collision;
+		m_Collision->Uninit();
 		m_Collision = nullptr;
 	}
 
@@ -69,6 +69,11 @@ void CSkillEntity::Update(void)
 
 	if (m_Duration > 0)
 	{
+		bool collision = false;
+
+		// 効果時間の減少
+		m_Duration--;
+
 		// 当たり判定
 		std::vector<CEnemy*> Enemy = CEnemyManager::GetInstance()->GetEnemy();
 		// エネミーの数を取得
@@ -80,11 +85,21 @@ void CSkillEntity::Update(void)
 			if (a)
 			{// ダメージの判定
 				HitAbility(Enemy[nCnt]);
+				collision = true;
 			}
 		}
+
+		if (collision)
+		{// 敵に当たっていたら
+			Uninit();
+		}
 	}
-	else
-	{
+	else if(m_Duration <= 0)
+	{// 効果時間が0以下になったら消す
 		Uninit();
 	}
+
+#ifdef _DEBUG
+	CDebugProc::Print("Duration : %\n", m_Duration);
+#endif // _DEBUG
 }
