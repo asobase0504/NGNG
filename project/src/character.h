@@ -97,6 +97,8 @@ public:
 	// 所持金
 	CStatus<int>* GetMoney() { return &m_money; }
 
+	bool IsDied() { return m_isDied; }
+	void Died() { m_isDied = true; }
 private:
 	virtual void Attack();
 	virtual void Move();
@@ -111,6 +113,8 @@ protected:		// ステータス
 
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;
+
+	bool m_isDied;	// 死亡状態か否か。
 
 	CStatus<int> m_hp;							// 体力
 	CStatus<int> m_addHp;						// 追加体力
