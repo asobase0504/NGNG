@@ -10,6 +10,7 @@
 //==============================================================
 #include "skill.h"
 #include "skill_data_base.h"
+#include "skill_entity.h"
 #include "player_manager.h"
 #include "enemy_manager.h"
 #include "enemy.h"
@@ -18,7 +19,7 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CSkill::CSkill(int nPriority)
+CSkillEntity::CSkillEntity(int nPriority)
 {
 
 }
@@ -26,7 +27,7 @@ CSkill::CSkill(int nPriority)
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CSkill::~CSkill()
+CSkillEntity::~CSkillEntity()
 {
 
 }
@@ -34,10 +35,10 @@ CSkill::~CSkill()
 //--------------------------------------------------------------
 // 初期化処理
 //--------------------------------------------------------------
-HRESULT CSkill::Init()
+HRESULT CSkillEntity::Init()
 {
 	// 初期化
-	m_CT = 0;
+	InitAbility();
 
 	return S_OK;
 }
@@ -45,8 +46,15 @@ HRESULT CSkill::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CSkill::Uninit(void)
+void CSkillEntity::Uninit(void)
 {
+	// 当たり判定の削除
+	if (m_Collision != nullptr)
+	{
+		delete m_Collision;
+		m_Collision = nullptr;
+	}
+
 	// 破棄処理
 	CTask::Uninit();
 }
@@ -54,58 +62,29 @@ void CSkill::Uninit(void)
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CSkill::Update(void)
+void CSkillEntity::Update(void)
 {
 	// スキルデータのインスタンスを取得する
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 
-	if (m_CT > 0)
-	{// クールタイムがあれば減少させる
-		m_CT--;
+	if (m_Duration > 0)
+	{
+		// 当たり判定
+		std::vector<CEnemy*> Enemy = CEnemyManager::GetInstance()->GetEnemy();
+		// エネミーの数を取得
+		int EnemyCount = Enemy.size();
+
+		for (int nCnt = 0; nCnt < EnemyCount; nCnt++)
+		{// 攻撃範囲に敵がいるか判定する
+			bool a = m_Collision->ToSphere((CCollisionSphere*)Enemy[nCnt]->GetCollision());
+			if (a)
+			{// ダメージの判定
+				HitAbility(Enemy[nCnt]);
+			}
+		}
 	}
-
-#ifdef _DEBUG
-	CDebugProc::Print("スキルのクールタイム : %d\n", m_CT);
-#endif // _DEBUG
-}
-
-//--------------------------------------------------------------
-// スキル生成処理
-//--------------------------------------------------------------
-CSkill *CSkill::Create()
-{
-	// 生成処理
-	CSkill* pSkill = new CSkill;
-	pSkill->Init();
-
-	return pSkill;
-}
-
-//--------------------------------------------------------------
-// スキル1
-//--------------------------------------------------------------
-void CSkill::Skill1()
-{
-	if (m_CT == 0)
-	{// クールタイムがなければ当たり判定を生成する
-		// 当たり判定の持続時間の管理
-		CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
-		pSkillData->GetDuration(m_Name);
-		
-		pSkillData->GetAbility(m_Name)(m_apChara);
-
-
-		// クールタイムの設定
-		m_CT = pSkillData->GetCT(m_Name);
+	else
+	{
+		Uninit();
 	}
-}
-
-//--------------------------------------------------------------
-// スキルの設定
-//--------------------------------------------------------------
-void CSkill::SetSkill(std::string tag, CCharacter *chara)
-{
-	// 生成処理
-	m_Name = tag;
-	m_apChara = chara;
 }
