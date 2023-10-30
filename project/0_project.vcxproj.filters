@@ -305,6 +305,9 @@
     <ClCompile Include="src\skill.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
     </ClCompile>
+    <ClCompile Include="src\statue_teleporter.cpp">
+      <Filter>ソース ファイル\Statue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -528,6 +531,9 @@
     </ClInclude>
     <ClInclude Include="src\skill.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_teleporter.h">
+      <Filter>ソース ファイル\Statue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
