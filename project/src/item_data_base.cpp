@@ -1,4 +1,4 @@
-#include "item_data_base.h"
+﻿#include "item_data_base.h"
 #include "item.h"
 
 #include "character.h"

@@ -85,6 +85,7 @@ HRESULT CObjectX::Init()
 void CObjectX::Draw()
 {
 	// 計算用マトリックス
+	D3DXMATRIX mtxScale;
 	D3DXMATRIX mtxTrans;
 	D3DXMATRIX mtxRot;
 
@@ -92,8 +93,8 @@ void CObjectX::Draw()
 	D3DXMatrixIdentity(&m_mtxWorld);
 
 	// 大きさを反映
-	D3DXMatrixScaling(&mtxTrans, m_scale.x, m_scale.y, m_scale.z);
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+	D3DXMatrixScaling(&mtxScale, m_scale.x, m_scale.y, m_scale.z);
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
 
 	// 向きを反映
 	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);

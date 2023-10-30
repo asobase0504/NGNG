@@ -1,4 +1,4 @@
-//**************************************************************
+﻿//**************************************************************
 //
 // 像
 // Author: 梶田 大夢
@@ -12,6 +12,9 @@
 #include "collision_box.h"
 #include "player_manager.h"
 #include "player.h"
+#include "map.h"
+#include "object_mesh.h"
+#include "statue_manager.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -83,6 +86,23 @@ void CStatue::Update()
 		CPlayerManager::GetInstance()->GetPlayer()->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
+	CMap* map = CMap::GetMap();
+	D3DXVECTOR3 pos = GetPos();
+
+	CCollisionCylinder* pCylinder = CCollisionCylinder::Create(GetPos(), 30.0f, 30.0f);
+
+	for (int i = 0; i < map->GetNumMesh(); i++)
+	{
+		bool hit = pCylinder->ToMesh(map->GetMapMesh(i)->GetCollisionMesh());
+
+		if (hit)
+		{// 押し出した位置
+			float extrusion = ((CCollisionCylinder*)pCylinder)->GetExtrusionHeight();
+			SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
+			CStatueManager::GetInstance()->GetStatueBox()->SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
+			pCylinder->Uninit();
+		}
+	}
 	CObjectX::Update();
 
 #ifdef _DEBUG
