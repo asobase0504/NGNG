@@ -85,6 +85,7 @@
     <ClCompile Include="src\statue_combat.cpp" />
     <ClCompile Include="src\statue_luck.cpp" />
     <ClCompile Include="src\statue_manager.cpp" />
+    <ClCompile Include="src\statue_teleporter.cpp" />
     <ClCompile Include="src\status.cpp" />
     <ClCompile Include="src\task.cpp" />
     <ClCompile Include="src\task_group.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="src\statue_combat.h" />
     <ClInclude Include="src\statue_luck.h" />
     <ClInclude Include="src\statue_manager.h" />
+    <ClInclude Include="src\statue_teleporter.h" />
     <ClInclude Include="src\status.h" />
     <ClInclude Include="src\task.h" />
     <ClInclude Include="src\task_group.h" />

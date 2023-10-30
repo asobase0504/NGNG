@@ -308,6 +308,9 @@
     <ClCompile Include="src\yamato_skill_1.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
     </ClCompile>
+    <ClCompile Include="src\statue_teleporter.cpp">
+      <Filter>ソース ファイル\Statue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -525,6 +528,9 @@
     </ClInclude>
     <ClInclude Include="src\yamato_skill_1.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_teleporter.h">
+      <Filter>ソース ファイル\Statue</Filter>
     </ClInclude>
     <ClInclude Include="src\Controller.h" />
     <ClInclude Include="src\PlayerController.h" />
