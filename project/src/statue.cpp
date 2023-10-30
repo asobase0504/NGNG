@@ -71,18 +71,6 @@ void CStatue::Update()
 	m_collisionBox->SetPos(GetPos());
 	m_collisionCylinder->SetPos(GetPos());
 
-	bool a = CPlayerManager::GetInstance()->GetPlayer()->GetCollision()->ToBox(m_collisionBox, true);
-
-	if (a)
-	{
-		// 押し出した位置
-		D3DXVECTOR3 extrusion = ((CCollisionCylinder*)CPlayerManager::GetInstance()->GetPlayer()->GetCollision())->GetExtrusion();
-		CPlayerManager::GetInstance()->GetPlayer()->SetPos(D3DXVECTOR3(extrusion));
-		CPlayerManager::GetInstance()->GetPlayer()->GetCollision()->SetPos(D3DXVECTOR3(extrusion));
-
-		CPlayerManager::GetInstance()->GetPlayer()->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	}
-
 	CObjectX::Update();
 
 #ifdef _DEBUG

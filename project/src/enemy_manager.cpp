@@ -66,6 +66,14 @@ void CEnemyManager::Uninit(void)
 //--------------------------------------------------------------
 void CEnemyManager::Update(void)
 {
+	for (int i = 0; i < (int)m_pEnemy.size(); i++)
+	{
+		if (m_pEnemy[i]->IsDied())
+		{
+			m_pEnemy[i]->Uninit();
+			m_pEnemy.erase(m_pEnemy.begin() + i);
+		}
+	}
 }
 
 //--------------------------------------------------------------
