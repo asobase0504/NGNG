@@ -79,7 +79,7 @@ void CStatue::Update()
 	if (a)
 	{
 		// 押し出した位置
-		D3DXVECTOR3 extrusion = ((CCollisionCylinder*)CPlayerManager::GetInstance()->GetPlayer()->GetCollision())->GetExtrusion();
+		D3DXVECTOR3 extrusion = ((CCollisionCylinder*)CPlayerManager::GetInstance()->GetPlayer()->GetCollision())->GetPos();
 		CPlayerManager::GetInstance()->GetPlayer()->SetPos(D3DXVECTOR3(extrusion));
 		CPlayerManager::GetInstance()->GetPlayer()->GetCollision()->SetPos(D3DXVECTOR3(extrusion));
 
@@ -97,7 +97,7 @@ void CStatue::Update()
 
 		if (hit)
 		{// 押し出した位置
-			float extrusion = ((CCollisionCylinder*)pCylinder)->GetExtrusionHeight();
+			float extrusion = ((CCollisionCylinder*)pCylinder)->GetPos().y;
 			SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
 			CStatueManager::GetInstance()->GetStatueBox()->SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
 			pCylinder->Uninit();
