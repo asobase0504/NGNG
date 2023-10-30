@@ -29,16 +29,12 @@ public:
 
 	static CCollisionCylinder* Create(const D3DXVECTOR3& pos, const float length ,const float height);
 
-	D3DXVECTOR3 GetExtrusion() { return m_extrusion; }
-	float GetExtrusionHeight() { return m_extrusionHeight; }
 	float GetLength() { return m_length; }
 	float GetHeight() { return m_height; }
 
 private:
 	float m_length;
 	float m_height;
-	D3DXVECTOR3 m_extrusion; //	押し出す値
-	float m_extrusionHeight; //	押し出す値
 };
 
 #endif

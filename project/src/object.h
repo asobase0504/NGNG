@@ -108,7 +108,6 @@ public:
 	/* ワールドマトリックス */
 	void SetMtxWorld(D3DXMATRIX mtxWorld) { m_mtxWorld = mtxWorld; }	// 設定
 	const D3DXMATRIX& GetMtxWorld() { return m_mtxWorld; }				// 取得
-	void CalMtxWorld();													// マトリックスの計算
 
 	/* テスクチャ系 */
 	void SetTexture(std::string inKey) { m_textureKey = inKey; }

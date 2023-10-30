@@ -77,6 +77,7 @@
     <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\skill_data_base.cpp" />
+    <ClCompile Include="src\skill_entity.cpp" />
     <ClCompile Include="src\sound.cpp" />
     <ClCompile Include="src\statue.cpp" />
     <ClCompile Include="src\statue_blood.cpp" />
@@ -93,6 +94,7 @@
     <ClCompile Include="src\title.cpp" />
     <ClCompile Include="src\utility.cpp" />
     <ClCompile Include="src\words.cpp" />
+    <ClCompile Include="src\yamato_skill_1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\enemy_data_base.h" />
@@ -150,6 +152,7 @@
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\skill_data_base.h" />
+    <ClInclude Include="src\skill_entity.h" />
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\statue.h" />
     <ClInclude Include="src\statue_blood.h" />
@@ -166,6 +169,7 @@
     <ClInclude Include="src\title.h" />
     <ClInclude Include="src\utility.h" />
     <ClInclude Include="src\words.h" />
+    <ClInclude Include="src\yamato_skill_1.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">

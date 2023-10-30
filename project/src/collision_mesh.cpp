@@ -56,7 +56,7 @@ CCollisionMesh* CCollisionMesh::Create(int inPrimitive, LPDIRECT3DVERTEXBUFFER9 
 	collision->m_primitive = inPrimitive;
 	collision->m_vtxBuff = inVtxBuff;
 	collision->m_idxBuff = inIdxBuff;
-	collision->m_mtxWorld = inMtxWorld;
+	collision->SetMtxWorld(inMtxWorld);
 
 	return collision;
 }
