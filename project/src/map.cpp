@@ -47,12 +47,15 @@ HRESULT CMap::Init(void)
 {
 	Load("data/FILE/map/map01.json");
 
-	//CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, 10.0f, 0.0f));
-	//CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -50.0f, 0.0f), CStatueManager::BLOOD);
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -50.0f, 0.0f), CStatueManager::TELEPORTER);
-	//CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, 10.0f, 0.0f), CStatueManager::LUCK);
-	//CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, 10.0f, 0.0f), CStatueManager::CHEST);
-	//CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, 10.0f, 0.0f), CStatueManager::COMBAT);
+	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
+	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
+	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
+	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::BLOOD);
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::TELEPORTER);
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::LUCK);
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::CHEST);
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::COMBAT);
 
 	return S_OK;
 }

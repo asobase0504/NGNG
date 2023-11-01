@@ -19,11 +19,23 @@ HRESULT CCollisionSphere::Init()
 		m_line[i] = CLine::Create();
 	}
 
-	return E_NOTIMPL;
+	return S_OK;
+}
+
+void CCollisionSphere::Uninit()
+{
+	CCollision::Uninit();
+
+	for (int i = 0; i < 8; i++)
+	{
+		m_line[i]->Uninit();
+	}
 }
 
 void CCollisionSphere::Update()
 {
+	CCollision::Update();
+
 	// ‚S‚Â‚Ì’¸“_
 	D3DXVECTOR3 posLine[6];
 	posLine[0] = D3DXVECTOR3(m_length, 0.0f, 0.0f);
@@ -41,14 +53,6 @@ void CCollisionSphere::Update()
 	m_line[5]->SetLine(GetPos(), GetRot(), posLine[3], posLine[1], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
 	m_line[6]->SetLine(GetPos(), GetRot(), posLine[3], posLine[4], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
 	m_line[7]->SetLine(GetPos(), GetRot(), posLine[3], posLine[5], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-}
-
-void CCollisionSphere::Uninit()
-{
-	for (int i = 0; i < 8; i++)
-	{
-		m_line[i]->Uninit();
-	}
 }
 
 bool CCollisionSphere::ToMesh(CCollisionMesh* inMesh)
