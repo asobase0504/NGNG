@@ -55,6 +55,25 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 	m_collisionBox = CCollisionBox::Create(inPos, inRot, D3DXVECTOR3(10.0f, 10.0f, 10.0f), GetMtxWorld());
 	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 15.0f, 15.0f);
 
+	CMap* map = CMap::GetMap();
+	D3DXVECTOR3 pos = GetPos();
+
+	// 上に上げる処理
+	CCollisionCylinder* pCylinder = CCollisionCylinder::Create(GetPos(), 30.0f, 30.0f);
+
+	for (int i = 0; i < map->GetNumMesh(); i++)
+	{
+		bool hit = pCylinder->ToMesh(map->GetMapMesh(i)->GetCollisionMesh());
+
+		if (hit)
+		{// 押し出した位置
+			float extrusion = ((CCollisionCylinder*)pCylinder)->GetPos().y;
+			SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
+			m_collisionBox->SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
+		}
+	}
+	pCylinder->Uninit();
+
 	return S_OK;
 }
 
@@ -84,25 +103,6 @@ void CStatue::Update()
 		CPlayerManager::GetInstance()->GetPlayer()->GetCollision()->SetPos(D3DXVECTOR3(extrusion));
 
 		CPlayerManager::GetInstance()->GetPlayer()->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	}
-
-	CMap* map = CMap::GetMap();
-	D3DXVECTOR3 pos = GetPos();
-
-	// 上に上げる処理
-	CCollisionCylinder* pCylinder = CCollisionCylinder::Create(GetPos(), 30.0f, 30.0f);
-
-	for (int i = 0; i < map->GetNumMesh(); i++)
-	{
-		bool hit = pCylinder->ToMesh(map->GetMapMesh(i)->GetCollisionMesh());
-
-		if (hit)
-		{// 押し出した位置
-			float extrusion = ((CCollisionCylinder*)pCylinder)->GetPos().y;
-			SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
-			CStatueManager::GetInstance()->GetStatueBox()->SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
-			pCylinder->Uninit();
-		}
 	}
 
 	CObjectX::Update();
