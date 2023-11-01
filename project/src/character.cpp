@@ -38,6 +38,7 @@ CCharacter::~CCharacter()
 HRESULT CCharacter::Init()
 {
 	CObject::Init();
+	m_isDied = false;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
@@ -81,6 +82,9 @@ void CCharacter::Uninit(void)
 {
 	// 破棄処理
 	CObject::Release();
+
+	m_apModel[0]->Uninit();
+	m_collision[0]->Uninit();
 }
 
 //--------------------------------------------------------------
@@ -94,6 +98,7 @@ void CCharacter::Update(void)
 	if (m_hp.GetCurrent() <= 0)
 	{
 		// 死亡処理
+		m_isDied = true;
 	}
 }
 
@@ -166,6 +171,9 @@ void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 	CObject::SetPos(inPos);
 }
 
+//--------------------------------------------------------------
+// 向きの設定
+//--------------------------------------------------------------
 void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 {
 	if (m_apModel.size() > 0)

@@ -37,6 +37,7 @@ public:
 		CHEST,
 		LUCK,
 		COMBAT,
+		TELEPORTER,
 		MAX
 	};
 
@@ -50,7 +51,8 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	CStatue* CreateStatue(D3DXVECTOR3 pos, EType type);			// 像の生成
+	CStatue* CreateStatue(D3DXVECTOR3 pos, int type);			// 像の生成
+	CStatue* RandomCreate(D3DXVECTOR3 pos);						// ランダムな像生成
 	CStatue* RandomCreateBlood(D3DXVECTOR3 pos);				// 血の祭壇ランダム生成
 	CStatue* RandomCreateChest(D3DXVECTOR3 pos);				// 宝箱ランダム生成
 	CStatue* RandomCreateLuck(D3DXVECTOR3 pos);					// 運の祭壇ランダム生成
