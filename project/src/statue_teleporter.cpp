@@ -86,13 +86,17 @@ void CStatueTeleporter::Update()
 				m_bOnce = true;
 			}
 
-			if ((m_pEnemy->GetHp() <= 0) && (m_time >= MAX_TIME))
-			{
-				// マップ移動
-				int a = 0;
-			}
-
 			m_btimeAdd = true;
+		}
+	}
+
+	if (m_bOnce)
+	{
+		if ((m_pEnemy->IsDied()) && (m_time >= MAX_TIME))
+		{
+			//-------------------------
+			// マップ移動処理追加
+			//-------------------------
 		}
 	}
 
