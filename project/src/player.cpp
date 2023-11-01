@@ -74,7 +74,7 @@ HRESULT CPlayer::Init()
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
-	m_collision.push_back(CCollisionCylinder::Create(pos, 10.0f, 10.0f));
+	m_collision.push_back(CCollisionCylinder::Create(pos, 10.0f, 55.0f));
 
 	return S_OK;
 }
@@ -236,9 +236,6 @@ void CPlayer::Move()
 //--------------------------------------------------------------
 void CPlayer::Jump()
 {
-	// 移動量の取得
-	D3DXVECTOR3 move(0.0f,0.0f,0.0f);
-
 	// ジャンプ
 	bool jump = m_controller->Jump();
 
@@ -253,9 +250,6 @@ void CPlayer::Jump()
 
 	// 重力
 	AddMoveY(-0.18f);
-
-	// 移動量の設定
-	AddMove(move);
 }
 
 //--------------------------------------------------------------
