@@ -139,6 +139,10 @@ void CPlayer::Update()
 			{
 				isGround = true;
 			}
+			if (m_collision[0]->GetIsUnder())
+			{
+				SetMoveY(0.0f);
+			}
 		}
 	}
 

@@ -51,8 +51,13 @@ public:
 	void SetMtxWorld(D3DXMATRIX mtxWorld) { m_mtx = mtxWorld; }
 	const D3DXMATRIX& GetMtxWorld() { return m_mtx; }
 
+	/* è„Ç…ìñÇΩÇ¡ÇΩ */
 	void SetIsTop(bool isTop) { m_isTop = isTop; }
 	bool GetIsTop() { return m_isTop; }
+
+	/* â∫Ç…ìñÇΩÇ¡ÇΩ */
+	void SetIsUnder(bool isUnder) { m_isUnder = isUnder; }
+	bool GetIsUnder() { return m_isUnder; }
 
 private:
 	D3DXVECTOR3 m_pos;
@@ -60,6 +65,7 @@ private:
 	D3DXVECTOR3 m_rot;
 	D3DXVECTOR3 m_size;
 	D3DXMATRIX m_mtx;
-	bool m_isTop;	// è„Ç…ìñÇΩÇ¡ÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
+	bool m_isTop;
+	bool m_isUnder;
 };
 #endif
