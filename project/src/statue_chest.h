@@ -43,7 +43,6 @@ public:
 	static CStatueChest *Create(D3DXVECTOR3 pos);			// •ó” ‚ÌÕ’d‚Ì¶¬
 
 private:	// ƒƒ“ƒo•Ï”
-	CPlayer* m_pPlayer;
 	bool m_bOnce;
 };
 #endif

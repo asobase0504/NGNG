@@ -38,7 +38,7 @@ void CCollisionBox::Update()
 {
 	CCollision::Update();
 
-	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 pos = GetPosWorld();
 	D3DXVECTOR3 size = GetSize();
 	D3DXVECTOR3 rot = GetRot();
 

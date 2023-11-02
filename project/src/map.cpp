@@ -52,8 +52,8 @@ HRESULT CMap::Init(void)
 	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
 	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
 	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::BLOOD);
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::TELEPORTER);
 	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::LUCK);
+	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::TELEPORTER);
 	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::CHEST);
 	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::COMBAT);
 

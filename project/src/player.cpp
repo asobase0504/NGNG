@@ -134,7 +134,7 @@ void CPlayer::Update()
 	{
 		if (m_collision[0]->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
 		{// 押し出した位置
-			SetPos(m_collision[0]->GetPos());
+			SetPos(m_collision[0]->GetPosWorld());
 			if (m_collision[0]->GetIsTop())
 			{
 				isGround = true;
@@ -150,7 +150,7 @@ void CPlayer::Update()
 	{
 		if (m_collision[0]->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
 		{// 押し出した位置
-			SetPos(m_collision[0]->GetPos());
+			SetPos(m_collision[0]->GetPosWorld());
 			isGround = true;
 		}
 	}
@@ -178,7 +178,7 @@ void CPlayer::Update()
 #ifdef _DEBUG
 	CDebugProc::Print("Player : pos(%f, %f, %f)\n", GetPos().x, GetPos().y, GetPos().z);
 	CDebugProc::Print("Player : move(%f, %f, %f)\n", move.x, move.y, move.z);
-	CDebugProc::Print("PlayerCollision : pos(%f, %f, %f)\n", m_collision[0]->GetPos().x, m_collision[0]->GetPos().y, m_collision[0]->GetPos().z);
+	CDebugProc::Print("PlayerCollision : pos(%f, %f, %f)\n", m_collision[0]->GetPosWorld().x, m_collision[0]->GetPosWorld().y, m_collision[0]->GetPosWorld().z);
 #endif // _DEBUG
 }
 

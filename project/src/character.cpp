@@ -13,6 +13,7 @@
 #include "objectX.h"
 #include "PlayerController.h"
 #include "collision_sphere.h"
+#include "statue_manager.h"
 
 #include "status.h"
 
@@ -94,6 +95,16 @@ void CCharacter::Update(void)
 {
 	// 更新処理
 	CObject::Update();
+
+	CStatueManager::GetInstance()->AllFuncStatue([this](CStatue* inSattue)
+	{
+		if (m_collision[0]->ToBox(inSattue->GetCollisionBox(), true))
+		{
+			D3DXVECTOR3 extrusion = m_collision[0]->GetPosWorld();
+			SetPos(extrusion);
+			SetMoveXZ(0.0f,0.0f);
+		}
+	});
 
 	if (m_hp.GetCurrent() <= 0)
 	{

@@ -43,7 +43,6 @@ public:
 	static CStatueLuck *Create(D3DXVECTOR3 pos);			// 血の祭壇の生成
 
 private:	// メンバ変数
-	CPlayer* m_pPlayer;
 	int m_nUseMoney;		// 初期必要お金数
 	int m_nItemCount;		// アイテム数
 	bool m_bChance;			// 成功確率

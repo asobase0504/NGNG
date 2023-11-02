@@ -43,7 +43,6 @@ public:
 	static CStatueBlood *Create(D3DXVECTOR3 pos);			// ŒŒ‚ÌÕ’d‚Ì¶¬
 
 private:	// ƒƒ“ƒo•Ï”
-	CPlayer* m_pPlayer;
 	bool m_bOnce;
 };
 #endif
