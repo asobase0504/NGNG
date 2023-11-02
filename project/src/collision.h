@@ -31,9 +31,20 @@ public:
 	virtual bool ToBox(CCollisionBox* inBox, bool isExtrusion) { return false; }
 	virtual bool ToSphere(CCollisionSphere* inSphere) { return false; }
 
+	void SetParent(D3DXVECTOR3* inPos) { m_posParent = inPos; }
+
 	/* à íuån */
-	void SetPos(const D3DXVECTOR3& inPos) { m_pos = inPos; }
-	const D3DXVECTOR3 &GetPos() const { return m_pos; }
+	void SetPos(const D3DXVECTOR3& inPos) { m_posLocal = inPos; }
+	const D3DXVECTOR3 &GetPosWorld()
+	{
+		m_posWorld = m_posLocal;
+		if (m_posParent != nullptr)
+		{
+			m_posWorld += *m_posParent;
+		}
+
+		return m_posWorld;
+	}
 
 	/* à íuån */
 	void SetPosOld(const D3DXVECTOR3& inPosOld) { m_posOld = inPosOld; }
@@ -55,7 +66,9 @@ public:
 	bool GetIsTop() { return m_isTop; }
 
 private:
-	D3DXVECTOR3 m_pos;
+	D3DXVECTOR3* m_posParent;
+	D3DXVECTOR3 m_posWorld;
+	D3DXVECTOR3 m_posLocal;
 	D3DXVECTOR3 m_posOld;
 	D3DXVECTOR3 m_rot;
 	D3DXVECTOR3 m_size;
