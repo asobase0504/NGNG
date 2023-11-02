@@ -68,6 +68,12 @@ public:
 	void AddCurrent(T inNumber) { SetCurrent(m_current + inNumber); }
 	void MulCurrent(float inNumber) { SetCurrent(m_current * inNumber); }
 	T GetCurrent() { return m_current; }
+	T GetMax() { return m_max; }
+	T GetBase() { return m_base; }
+	T GetAddItem() { return m_addItem; }
+	T GetBuffItem() { return m_addBuff; }
+	float GetMulItem() { return m_mulItem; }
+	float GetMulBuff() { return m_mulBuff; }
 
 	bool MaxCurrentSame() { return m_current >= m_max; }
 

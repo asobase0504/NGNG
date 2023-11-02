@@ -9,6 +9,7 @@
 //==============================================================
 #include "enemy_data_base.h"
 #include "enemy.h"
+#include "bullet.h"
 
 //行動パターンに必要なinclude
 #include "player_manager.h"
@@ -258,11 +259,19 @@ void CEnemyDataBase::Init()
 		D3DXVECTOR3 distancePos = (PlayerPos - pos);
 		float distance = D3DXVec3Length(&distancePos);
 
+		// カウント開始
+		inEnemy->AddAttackCnt(1);
+
 		// エネミーの距離が遠いとき
-		if (distance >= 150.0f)
+		if (distance >= 150.0f )
 		{
-			inEnemy->SetActivity(GetInstance()->GetActivityFunc(PATTERN_GOLEM_LASER));
-			move *= -0.5f;
+			if (inEnemy->GetAttackCnt() >= 180)
+			{
+				// カウント開始
+				inEnemy->SetAttackCnt(0);
+				inEnemy->SetActivity(GetInstance()->GetActivityFunc(PATTERN_GOLEM_LASER));
+				move *= -0.5f;
+			}
 		}
 
 		// 敵の追従
@@ -289,11 +298,42 @@ void CEnemyDataBase::Init()
 	// ゴーレムのレーザーを打つ処理
 	m_activityFunc[PATTERN_GOLEM_LASER] = [](CEnemy* inEnemy)
 	{
-		// 移動量の取得
-		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		// プレイヤーの獲得
+		CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
+
+		// 目標の設定
+		inEnemy->GetRoad()->SetShooter(inEnemy);
+		inEnemy->GetRoad()->SetTarget(pPlayer);
+		inEnemy->GetRoad()->SetUse(true);
 
 		// カウント開始
+		inEnemy->AddAttackCnt(1);
 
-		// レーザー発射状態
+		//--------------------------------------------------------------------
+		// プレイヤーの位置取得
+		D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
+		// 座標の取得
+		D3DXVECTOR3 pos = inEnemy->GetPos();
+
+		D3DXVECTOR3 move = PlayerPos - pos;
+
+		//--------------------------------------------------------------------
+
+		if (inEnemy->GetAttackCnt() >= 180)
+		{
+			CBullet::Create(inEnemy->GetPos(), move * 0.01f, 10.0f);
+			// 一定以上の時間が経過したらレーザー発射
+			inEnemy->SetActivity(GetInstance()->GetActivityFunc(PATTERN_GOLEM));
+			inEnemy->SetAttackCnt(0);
+
+			inEnemy->GetRoad()->SetUse(false);
+		}
+		// 狙いを定めている状態
+		//if (inEnemy->GetAttackCnt() >= inEnemy->GetAttackTime())
+		//{
+			// 一定以上の時間が経過したらレーザー発射
+			// inEnemy->SetActivity(GetInstance()->GetActivityFunc(PATTERN_GOLEM));
+		//}
+
 	};
 }

@@ -40,6 +40,7 @@ HRESULT CEnemy::Init()
 	// ‰Šú‰»ˆ—
 	CCharacter::Init();
 
+	m_AttackCnt = 0;
 	m_apModel[0]->LoadModel("SKELETON");
 	m_apModel[0]->CalculationVtx();
 
@@ -48,8 +49,7 @@ HRESULT CEnemy::Init()
 	D3DXVECTOR3 size = GetSize();
 	D3DXMATRIX mtx = GetMtxWorld();
 
-
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
+	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM_LASER));
 
 	m_collision.push_back(CCollisionCylinder::Create(pos, 10.0f, 10.0f));
 

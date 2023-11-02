@@ -13,6 +13,7 @@
 #include "objectX.h"
 #include "PlayerController.h"
 #include "collision_sphere.h"
+#include "road.h"
 
 #include "status.h"
 
@@ -42,6 +43,7 @@ HRESULT CCharacter::Init()
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
 	m_apModel[0]->LoadModel("BOX");
+	m_road = CRoad::Create(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(50);
@@ -191,4 +193,17 @@ void CCharacter::Attack()
 
 void CCharacter::Move()
 {
+}
+
+//--------------------------------------------------------------
+// ダメージ計算関数
+//--------------------------------------------------------------
+CStatus <int>* CCharacter::CalDamage(float SkillAtkMul)
+{// 攻撃力 * 
+
+	CStatus <int>* CalDamage =
+		(CStatus <int>*)((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
+		(m_attack.GetMulBuff + m_attack.GetMulItem + SkillAtkMul));
+
+	return CalDamage;
 }
