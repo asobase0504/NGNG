@@ -172,6 +172,7 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	D3DXVECTOR3 extrusion(0.0f, 0.0f, 0.0f);
 
 	SetIsTop(false);
+	SetIsUnder(false);
 
 	if (InOut[0] < 0.0f && InOut[1] < 0.0f && InOut[2] < 0.0f && InOut[3] < 0.0f)
 	{// Y‚Ì‰Ÿo
@@ -193,6 +194,7 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 			extrusion.z = cylinderPos.z; 
 
 			SetPos(extrusion);
+			SetIsUnder(true);
 			isLanding = true;
 		}
 
