@@ -37,6 +37,7 @@ public:
 	void Uninit() override;
 	void Update() override;
 
+	CCameraGame* GetCamera() { return m_camera; }
 private:
 	CPlayerManager* m_player;	// ƒvƒŒƒCƒ„[
 	CEnemyManager* m_enemy;		// “G

@@ -51,7 +51,7 @@ void CSkillEntity::Uninit(void)
 	// “–‚½‚è”»’è‚Ìíœ
 	if (m_Collision != nullptr)
 	{
-		delete m_Collision;
+		m_Collision->Uninit();
 		m_Collision = nullptr;
 	}
 

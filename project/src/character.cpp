@@ -66,7 +66,7 @@ HRESULT CCharacter::Init()
 	m_criticalDamage.Init(2.0f);
 	m_criticalDamage.SetCurrent(2.0f);
 	m_movePower.Init(2.0f);
-	m_movePower.SetCurrent(1.0f);
+	m_movePower.SetCurrent(2.0f);
 	m_jumpPower.Init(FLT_MAX);
 	m_jumpPower.SetCurrent(3.0f);
 	m_jumpCount.Init(1);

@@ -94,7 +94,6 @@ void CSkill::Skill1()
 		
 		pSkillData->GetAbility(m_Name)(m_apChara);
 
-
 		// クールタイムの設定
 		m_CT = pSkillData->GetCT(m_Name);
 	}

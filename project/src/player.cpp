@@ -31,6 +31,9 @@
 #include "player_manager.h"
 #include "Controller.h"
 
+#include "game.h"
+#include "camera_game.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -218,17 +221,27 @@ void CPlayer::Attack()
 void CPlayer::Move()
 {
 	// 移動量
-	D3DXVECTOR3 move = m_controller->Move() * m_movePower.GetCurrent();
+	D3DXVECTOR3 move = m_controller->Move();
 
 	if (D3DXVec3Length(&move) != 0.0f)
 	{
 		SetMoveXZ(move.x, move.z);
+
+		// カメラの方向に合わせる
+		D3DXVECTOR3 cameraVec = GetMove();
+		cameraVec.y = 0.0f;
+		cameraVec = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->VectorCombinedRot(cameraVec);
+		cameraVec *= m_movePower.GetCurrent();
+		CDebugProc::Print("Player : cameraVec(%f, %f, %f)\n", cameraVec.x, cameraVec.y, cameraVec.z);
+		SetMoveXZ(cameraVec.x, cameraVec.z);
 	}
 	else
 	{
 		D3DXVECTOR3 nowMove = GetMove();
 		AddMoveXZ(nowMove.x * -0.15f, nowMove.z * -0.15f);
 	}
+
+	
 }
 
 //--------------------------------------------------------------
