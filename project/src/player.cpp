@@ -22,8 +22,6 @@
 #include "skill_data_base.h"
 #include "item.h"
 #include "item_data_base.h"
-#include "map.h"
-#include "map_model.h"
 #include "statue.h"
 #include "statue_manager.h"
 #include "enemy.h"
@@ -37,7 +35,7 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CPlayer::CPlayer(int nPriority) : m_state(NONE)
+CPlayer::CPlayer(int nPriority)
 {
 }
 
@@ -68,8 +66,6 @@ HRESULT CPlayer::Init()
 		m_Skill[nCnt]->SetSkill(name.str(), this);
 	}
 
-	m_state = GROUND;
-
 	// モデルの読み込み
 	m_apModel[0]->LoadModel("PLAYER01");
 	m_apModel[0]->CalculationVtx();
@@ -77,8 +73,8 @@ HRESULT CPlayer::Init()
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
-	m_collision.push_back(CCollisionCylinder::Create(pos, 10.0f, 55.0f));
-
+	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 55.0f);
+	m_collision->SetParent(&m_pos);
 	return S_OK;
 }
 
@@ -128,56 +124,10 @@ void CPlayer::Update()
 	
 	TakeItem();
 
-	CMap* map = CMap::GetMap();
-	D3DXVECTOR3 pos = GetPos();
-
-	bool isGround = false;
-
-	for (int i = 0; i < map->GetNumModel(); i++)
-	{
-		if (m_collision[0]->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
-		{// 押し出した位置
-			SetPos(m_collision[0]->GetPosWorld());
-			if (m_collision[0]->GetIsTop())
-			{
-				isGround = true;
-			}
-		}
-	}
-
-	for (int i = 0; i < map->GetNumMesh(); i++)
-	{
-		if (m_collision[0]->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
-		{// 押し出した位置
-			SetPos(m_collision[0]->GetPosWorld());
-			isGround = true;
-		}
-	}
-
-	static STATE state;
-	state = m_state;
-
-	if (isGround)
-	{
-		m_state = GROUND;
-	}
-	else
-	{
-		m_state = SKY;
-	}
-
-	if (state == GROUND && m_state == GROUND)
-	{
-		SetMoveY(0.0f);
-		m_jumpCount.SetCurrent(0);
-	}
-
-	DEBUG_PRINT("pos3 : %f, %f, %f\n", pos.x, pos.y, pos.z);
-
 #ifdef _DEBUG
 	CDebugProc::Print("Player : pos(%f, %f, %f)\n", GetPos().x, GetPos().y, GetPos().z);
 	CDebugProc::Print("Player : move(%f, %f, %f)\n", move.x, move.y, move.z);
-	CDebugProc::Print("PlayerCollision : pos(%f, %f, %f)\n", m_collision[0]->GetPosWorld().x, m_collision[0]->GetPosWorld().y, m_collision[0]->GetPosWorld().z);
+	CDebugProc::Print("PlayerCollision : pos(%f, %f, %f)\n", m_collision->GetPosWorld().x, m_collision->GetPosWorld().y, m_collision->GetPosWorld().z);
 #endif // _DEBUG
 }
 
@@ -187,8 +137,8 @@ void CPlayer::Update()
 CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 {
 	CPlayer* pPlayer = new CPlayer;
-	pPlayer->SetPos(pos);
 	pPlayer->Init();
+	pPlayer->SetPos(pos);
 
 	return pPlayer;
 }
@@ -260,9 +210,6 @@ void CPlayer::Jump()
 		SetMoveY(m_jumpPower.GetCurrent());
 		m_state = SKY;
 	}
-
-	// 重力
-	AddMoveY(-0.18f);
 }
 
 //--------------------------------------------------------------
@@ -322,12 +269,5 @@ void CPlayer::SetController(CController * inOperate)
 //--------------------------------------------------------------
 void CPlayer::SetPos(const D3DXVECTOR3& inPos)
 {
-	if (m_collision.size() > 0)
-	{
-		if (m_collision[0] != nullptr)
-		{
-			m_collision[0]->SetPos(inPos);
-		}
-	}
 	CCharacter::SetPos(inPos);
 }

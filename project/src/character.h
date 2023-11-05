@@ -26,7 +26,14 @@ class CCollision;
 //==============================================================
 class CCharacter : public CObject
 {
-private:		// ステータス構造体
+public:
+	enum STATE
+	{
+		NONE = -1,
+		GROUND,
+		SKY,
+		MAX
+	};
 public:
 	// コンストラクタとデストラクタ
 	explicit CCharacter(int nPriority = 3);
@@ -41,7 +48,7 @@ public:
 	// 静的メンバ関数
 	static CCharacter *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);		// プレイヤーの生成
 
-	CCollision* GetCollision() { return m_collision[0]; }
+	CCollision* GetCollision() { return m_collision; }
 
 	std::vector<CObjectX*> GetModel() { return m_apModel; }
 
@@ -106,7 +113,7 @@ private:
 
 protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
-	std::vector<CCollision*>	m_collision;	// 当たり判定
+	CCollision*	m_collision;	// 当たり判定
 private:		// メンバ変数
 
 protected:		// ステータス
@@ -115,6 +122,7 @@ protected:		// ステータス
 	item_count m_haveItem;
 
 	bool m_isDied;	// 死亡状態か否か。
+	STATE m_state;
 
 	CStatus<int> m_hp;							// 体力
 	CStatus<int> m_addHp;						// 追加体力

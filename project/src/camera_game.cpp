@@ -58,8 +58,8 @@ void CCameraGame::Update()
 
 	D3DXVECTOR3 mouseMove = CInput::GetKey()->GetMouseMove();
 
-	m_rot.x += mouseMove.y * 0.01f;
-	m_rot.y += mouseMove.x * 0.01f;
+	m_rot.x += mouseMove.y * 0.0025f;
+	m_rot.y += mouseMove.x * 0.0025f;
 
 	if (m_rot.x >= (D3DX_PI * 0.5f))
 	{

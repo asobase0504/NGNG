@@ -181,7 +181,7 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 			extrusion.y = boxPos.y + boxSize.y;
 			extrusion.z = cylinderPos.z;
 
-			SetPos(extrusion);
+			SetPosParent(extrusion);
 			SetIsTop(true);
 			isLanding = true;
 		}
@@ -192,7 +192,7 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 			extrusion.y = boxPos.y - m_height;
 			extrusion.z = cylinderPos.z; 
 
-			SetPos(extrusion);
+			SetPosParent(extrusion);
 			isLanding = true;
 		}
 
@@ -242,7 +242,7 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 						extrusion.y = cylinderPos.y;
 						extrusion.z = (cylinderPosOld.z + vecMove.z * t1) + (nor.z * 0.1f) + (vecMove.z + difMove * nor.z);
 
-						SetPos(extrusion);
+						SetPosParent(extrusion);
 
 						break;
 					}
@@ -424,7 +424,7 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 				// ‰Ÿ‚µ•Ô‚µ
 				extrusion = meshHeight;
 
-				SetPos(D3DXVECTOR3(pos.x, meshHeight, pos.z));
+				SetPosParent(D3DXVECTOR3(pos.x, meshHeight, pos.z));
 			}
 			else
 			{

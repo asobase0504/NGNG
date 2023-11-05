@@ -33,15 +33,6 @@ class CSkill;
 class CPlayer : public CCharacter
 {
 public:
-	enum STATE
-	{
-		NONE = -1,
-		GROUND,
-		SKY,
-		MAX
-	};
-
-public:
 	// コンストラクタとデストラクタ
 	explicit CPlayer(int nPriority = 3);
 	~CPlayer();
@@ -74,6 +65,5 @@ private:		// メンバ変数
 	CController*		m_controller;			// 命令を出す人
 	CSkill*				m_Skill[MAX_SKILL];
 	CCollisionCylinder*	m_collisionCyinder;
-	STATE m_state;
 };
 #endif
