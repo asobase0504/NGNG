@@ -183,12 +183,22 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 //--------------------------------------------------------------
 void CCharacter::Damage(const int inDamage)
 {
+	int dmg = inDamage;
+
+
 	CStatus<int>* hp = GetHp();
-	hp->AddCurrent(-inDamage);
+	hp->AddCurrent(-dmg);
 }
 
-void CCharacter::Attack()
+//--------------------------------------------------------------
+// 攻撃
+//--------------------------------------------------------------
+void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 {
+	// プレイヤーのダメージを計算
+	int Damage = CalDamage(SkillMul);
+	// エネミーにダメージを与える。
+	pEnemy->Damage(Damage);
 }
 
 void CCharacter::Move()
@@ -198,12 +208,22 @@ void CCharacter::Move()
 //--------------------------------------------------------------
 // ダメージ計算関数
 //--------------------------------------------------------------
-CStatus <int>* CCharacter::CalDamage(float SkillAtkMul)
+int CCharacter::CalDamage(float SkillAtkMul)
 {// 攻撃力 * 
 
-	CStatus <int>* CalDamage =
-		(CStatus <int>*)((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
-		(m_attack.GetMulBuff + m_attack.GetMulItem + SkillAtkMul));
+	int CalDamage =
+		((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
+		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillAtkMul));
 
 	return CalDamage;
 }
+
+////--------------------------------------------------------------
+//// 防御力計算関数
+////--------------------------------------------------------------
+//int CCharacter::DefDamage(float SkillDefMul)
+//{// 防御力
+//	int Def =
+//		((m_def.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
+//		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillDefMul));
+//}

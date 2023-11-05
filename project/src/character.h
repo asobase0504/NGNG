@@ -52,7 +52,8 @@ public:
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
 
-	CStatus <int>* CalDamage(float SkillAtkMul);
+	int CalDamage(float SkillAtkMul);
+	int DefDamage(float SkillDefMul);
 
 	//==============================================================
 	// ゲッターとセッター
@@ -104,8 +105,10 @@ public:
 	// 攻撃の道
 	CRoad* GetRoad() { return m_road; }
 
+	// 攻撃
+	void Attack(CCharacter* pEnemy, float SkillMul);
+
 private:
-	virtual void Attack();
 	virtual void Move();
 	void UpdatePos();			// 座標の更新
 
