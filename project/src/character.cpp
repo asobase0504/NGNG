@@ -14,6 +14,7 @@
 #include "PlayerController.h"
 #include "collision_sphere.h"
 #include "road.h"
+#include "statue_manager.h"
 
 #include "status.h"
 
@@ -39,6 +40,7 @@ CCharacter::~CCharacter()
 HRESULT CCharacter::Init()
 {
 	CObject::Init();
+	m_isDied = false;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
@@ -67,7 +69,7 @@ HRESULT CCharacter::Init()
 	m_criticalDamage.SetCurrent(2.0f);
 	m_movePower.Init(2.0f);
 	m_movePower.SetCurrent(1.0f);
-	m_jumpPower.Init(3.0f);
+	m_jumpPower.Init(FLT_MAX);
 	m_jumpPower.SetCurrent(3.0f);
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
@@ -83,6 +85,9 @@ void CCharacter::Uninit(void)
 {
 	// 破棄処理
 	CObject::Release();
+
+	m_apModel[0]->Uninit();
+	m_collision[0]->Uninit();
 }
 
 //--------------------------------------------------------------
@@ -93,9 +98,20 @@ void CCharacter::Update(void)
 	// 更新処理
 	CObject::Update();
 
+	CStatueManager::GetInstance()->AllFuncStatue([this](CStatue* inSattue)
+	{
+		if (m_collision[0]->ToBox(inSattue->GetCollisionBox(), true))
+		{
+			D3DXVECTOR3 extrusion = m_collision[0]->GetPosWorld();
+			SetPos(extrusion);
+			SetMoveXZ(0.0f,0.0f);
+		}
+	});
+
 	if (m_hp.GetCurrent() <= 0)
 	{
 		// 死亡処理
+		m_isDied = true;
 	}
 }
 
@@ -168,6 +184,9 @@ void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 	CObject::SetPos(inPos);
 }
 
+//--------------------------------------------------------------
+// 向きの設定
+//--------------------------------------------------------------
 void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 {
 	if (m_apModel.size() > 0)

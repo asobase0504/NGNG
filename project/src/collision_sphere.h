@@ -29,7 +29,7 @@ public:
 	bool ToBox(CCollisionBox* inBox, bool isExtrusion) override;
 	bool ToSphere(CCollisionSphere* inSphere);
 
-	static CCollisionSphere* Create(const D3DXVECTOR3& pos,const float length);
+	static CCollisionSphere* Create(const D3DXVECTOR3& pos, const float length);
 
 	float GetLength() { return m_length; }
 	float GetExtrusionHeight() { return m_extrusionHeight; }

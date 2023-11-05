@@ -13,6 +13,7 @@
 #include "collision_sphere.h"
 #include "collision_box.h"
 #include "collision_mesh.h"
+#include "line.h"
 
 #include "object_polygon3d.h"
 #include "enemy_manager.h"
@@ -24,7 +25,6 @@
 // コンストラクタ
 //--------------------------------------------------------------
 CCollisionCylinder::CCollisionCylinder() : 
-	m_extrusion(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_length(0.0f),
 	m_height(0.0f)
 {
@@ -35,6 +35,10 @@ CCollisionCylinder::CCollisionCylinder() :
 //--------------------------------------------------------------
 CCollisionCylinder::~CCollisionCylinder()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		m_line[i] = nullptr;
+	}
 }
 
 //--------------------------------------------------------------
@@ -42,6 +46,10 @@ CCollisionCylinder::~CCollisionCylinder()
 //--------------------------------------------------------------
 HRESULT CCollisionCylinder::Init()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		m_line[i] = CLine::Create();
+	}
 	return S_OK;
 }
 
@@ -50,6 +58,36 @@ HRESULT CCollisionCylinder::Init()
 //--------------------------------------------------------------
 void CCollisionCylinder::Uninit()
 {
+	CCollision::Uninit();
+}
+
+//--------------------------------------------------------------
+// 更新
+//--------------------------------------------------------------
+void CCollisionCylinder::Update()
+{
+	CCollision::Update();
+
+	D3DXVECTOR3 pos = GetPosWorld();
+	D3DXVECTOR3 size = GetSize();
+	D3DXVECTOR3 rot = GetRot();
+
+	float left = -size.x * 0.5f;	// x1
+	float right = size.x * 0.5f;	// x2
+	float back = size.z * 0.5f;		// z1
+	float front = -size.z * 0.5f;	// z2
+
+	// ４つの頂点
+	D3DXVECTOR3 posLine[4];
+	posLine[0] = D3DXVECTOR3(left - 10.0f, 0.0f, back + 10.0f);
+	posLine[1] = D3DXVECTOR3(right + 10.0f, 0.0f, back + 10.0f);
+	posLine[2] = D3DXVECTOR3(right + 10.0f, 0.0f, front - 10.0f);
+	posLine[3] = D3DXVECTOR3(left - 10.0f, 0.0f, front - 10.0f);
+
+	m_line[0]->SetLine(pos, rot, posLine[0], posLine[1], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[1]->SetLine(pos, rot, posLine[1], posLine[2], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[2]->SetLine(pos, rot, posLine[2], posLine[3], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[3]->SetLine(pos, rot, posLine[3], posLine[0], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 //--------------------------------------------------------------
@@ -57,10 +95,10 @@ void CCollisionCylinder::Uninit()
 //--------------------------------------------------------------
 bool CCollisionCylinder::ToCylinder(CCollisionCylinder * inCyinder)
 {
-	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 pos = GetPosWorld();
 	float radius = GetLength();
 
-	D3DXVECTOR3 pos2 = inCyinder->GetPos();
+	D3DXVECTOR3 pos2 = inCyinder->GetPosWorld();
 	float radius2 = inCyinder->GetLength();
 
 	float pos3 = pos.x - pos2.x;
@@ -84,21 +122,21 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 {
 	bool isLanding = false;
 
-	D3DXVECTOR3 boxPos = inBox->GetPos();
+	D3DXVECTOR3 boxPos = inBox->GetPosWorld();
 	D3DXVECTOR3 boxSize = inBox->GetSize();
 	D3DXMATRIX boxMtxWorld = inBox->GetMtxWorld();
 
-	D3DXVECTOR3 cylinderPos = GetPos();
+	D3DXVECTOR3 cylinderPos = GetPosWorld();
 	D3DXVECTOR3 cylinderPosOld = GetPosOld();
 	float radius = GetLength();
 
-	float left = boxPos.x - boxSize.x * 0.5f;	// 左
-	float right = boxPos.x + boxSize.x * 0.5f;	// 右
-	float top = boxPos.y + boxSize.y * 0.5f;	// 上
-	float bottum = boxPos.y - boxSize.y * 0.5f;	// 下
-	float back = boxPos.z + boxSize.z * 0.5f;	// 奥
-	float front = boxPos.z - boxSize.z * 0.5f;	// 前
-	
+	float left = -boxSize.x * 0.5f;		// 左
+	float right = boxSize.x * 0.5f;		// 右
+	float top = boxSize.y * 0.5f;		// 上
+	float bottum = -boxSize.y * 0.5f;	// 下
+	float back = boxSize.z * 0.5f;		// 奥
+	float front = -boxSize.z * 0.5f;	// 前
+
 	// ４つの頂点
 	D3DXVECTOR3 pos[4];
 	pos[0] = D3DXVECTOR3(left - radius, 0.0f, back + radius);
@@ -130,64 +168,89 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	InOut[2] = Vec2Cross(&vecLine[2], &vec[2]);
 	InOut[3] = Vec2Cross(&vecLine[3], &vec[3]);
 
-#ifdef _DEBUG
-	CDebugProc::Print(" InOut[0] : %f \n", InOut[0]);
-	CDebugProc::Print(" InOut[1] : %f \n", InOut[1]);
-	CDebugProc::Print(" InOut[2] : %f \n", InOut[2]);
-	CDebugProc::Print(" InOut[3] : %f \n", InOut[3]);
-#endif // _DEBUG
+	// 押出位置
+	D3DXVECTOR3 extrusion(0.0f, 0.0f, 0.0f);
 
-	// Yの押出
+	SetIsTop(false);
+	SetIsUnder(false);
+
 	if (InOut[0] < 0.0f && InOut[1] < 0.0f && InOut[2] < 0.0f && InOut[3] < 0.0f)
-	{// XZの押出
-		for (int nCnt = 0; nCnt < 4; nCnt++)
-		{// どの方向から来たか判定
-			D3DXVECTOR3 vecPosOld = cylinderPosOld - worldPos[nCnt];
-			float leftPosOld = Vec2Cross(&vecLine[nCnt], &vecPosOld);
+	{// Yの押出
+		if (cylinderPosOld.y >= boxPos.y + boxSize.y && cylinderPos.y < boxPos.y + boxSize.y)
+		{// 上
+			extrusion.x = cylinderPos.x;
+			extrusion.y = boxPos.y + boxSize.y;
+			extrusion.z = cylinderPos.z;
 
-			if (leftPosOld > 0.0f)
-			{// 方向が分かった時
-				isLanding = true;
+			SetPos(extrusion);
+			SetIsTop(true);
+			isLanding = true;
+		}
 
-				// posOldから始点までの距離（V）
-				D3DXVECTOR3 V = worldPos[nCnt] - cylinderPosOld;
-				// プレイヤーのMOVE（V1）
-				D3DXVECTOR3 vecMove = cylinderPos - cylinderPosOld;
+		if (cylinderPosOld.y + m_height <= boxPos.y  && cylinderPos.y + m_height > boxPos.y)
+		{// 下
+			extrusion.x = cylinderPos.x;
+			extrusion.y = boxPos.y - m_height;
+			extrusion.z = cylinderPos.z; 
 
-				float t1 = Vec2Cross(&V, &vecLine[nCnt]) / Vec2Cross(&vecMove, &vecLine[nCnt]);
-				float t2 = Vec2Cross(&V, &vecMove) / Vec2Cross(&vecMove, &vecLine[nCnt]);
+			SetPos(extrusion);
+			SetIsUnder(true);
+			isLanding = true;
+		}
 
-				const float eps = 0.00001f;
-				if (t1 + eps < 0 || t1 - eps > 1 || t2 + eps < 0 || t2 - eps > 1)
-				{// 交差していない
-					continue;
-				}
-				else
-				{// 押し出し用法線の格納用の箱
-					D3DXVECTOR3 nor;
-					// 上方向のベクトル
-					D3DXVECTOR3 vecUp(0.0f, 1.0f, 0.0f);
-					// 正規化
-					D3DXVec3Normalize(&vecLine[nCnt], &vecLine[nCnt]);
-					// 面の法線を求める
-					D3DXVec3Cross(&nor, &vecLine[nCnt], &vecUp);
-					// 大きさを１にする
-					D3DXVec3Normalize(&nor, &nor);
+		if (cylinderPos.y < boxPos.y + boxSize.y && cylinderPos.y + m_height > boxPos.y)
+		{// XZの押出
+			for (int nCnt = 0; nCnt < 4; nCnt++)
+			{// どの方向から来たか判定
+				D3DXVECTOR3 vecPosOld = cylinderPosOld - worldPos[nCnt];
+				float leftPosOld = Vec2Cross(&vecLine[nCnt], &vecPosOld);
 
-					// 逆方向
-					D3DXVECTOR3 reverseVecMove = cylinderPosOld - cylinderPos;
-					// (a)
-					float difMove = Vec2Dot(&reverseVecMove, &nor);
+				if (leftPosOld > 0.0f)
+				{// 方向が分かった時
+					isLanding = true;
 
-					// 押し返し
-					m_extrusion.x = (cylinderPosOld.x + vecMove.x * t1) + (nor.x * 0.1f) + (vecMove.x + difMove * nor.x);
-					m_extrusion.z = (cylinderPosOld.z + vecMove.z * t1) + (nor.z * 0.1f) + (vecMove.z + difMove * nor.z);
+					// posOldから始点までの距離（V）
+					D3DXVECTOR3 V = worldPos[nCnt] - cylinderPosOld;
+					// プレイヤーのMOVE（V1）
+					D3DXVECTOR3 vecMove = cylinderPos - cylinderPosOld;
 
-					break;
+					float t1 = Vec2Cross(&V, &vecLine[nCnt]) / Vec2Cross(&vecMove, &vecLine[nCnt]);
+					float t2 = Vec2Cross(&V, &vecMove) / Vec2Cross(&vecMove, &vecLine[nCnt]);
+
+					const float eps = 0.00001f;
+					if (t1 + eps < 0 || t1 - eps > 1 || t2 + eps < 0 || t2 - eps > 1)
+					{// 交差していない
+						continue;
+					}
+					else
+					{// 押し出し用法線の格納用の箱
+						D3DXVECTOR3 nor;
+						// 上方向のベクトル
+						D3DXVECTOR3 vecUp(0.0f, 1.0f, 0.0f);
+						// 正規化
+						D3DXVec3Normalize(&vecLine[nCnt], &vecLine[nCnt]);
+						// 面の法線を求める
+						D3DXVec3Cross(&nor, &vecLine[nCnt], &vecUp);
+						// 大きさを１にする
+						D3DXVec3Normalize(&nor, &nor);
+
+						// 逆方向
+						D3DXVECTOR3 reverseVecMove = cylinderPosOld - cylinderPos;
+						// (a)
+						float difMove = Vec2Dot(&reverseVecMove, &nor);
+
+						// 押し返し
+						extrusion.x = (cylinderPosOld.x + vecMove.x * t1) + (nor.x * 0.1f) + (vecMove.x + difMove * nor.x);
+						extrusion.y = cylinderPos.y;
+						extrusion.z = (cylinderPosOld.z + vecMove.z * t1) + (nor.z * 0.1f) + (vecMove.z + difMove * nor.z);
+
+						SetPos(extrusion);
+
+						break;
+					}
 				}
 			}
 		}
-
 	}
 	return isLanding;
 }
@@ -203,13 +266,13 @@ bool CCollisionCylinder::ToSphere(CCollisionSphere * inSphere)
 
 	// 円柱の中心値から球の中心値までの距離
 	D3DXVECTOR3 differenceX = D3DXVECTOR3(0.0f,0.0f,0.0f);
-	differenceX.x = GetPos().x - inSphere->GetPos().x;
+	differenceX.x = GetPosWorld().x - inSphere->GetPosWorld().x;
 
 	D3DXVECTOR3 differenceY = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	differenceY.y = GetPos().y - inSphere->GetPos().y;
+	differenceY.y = GetPosWorld().y - inSphere->GetPosWorld().y;
 
 	D3DXVECTOR3 differenceZ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	differenceZ.z = GetPos().z - inSphere->GetPos().z;
+	differenceZ.z = GetPosWorld().z - inSphere->GetPosWorld().z;
 
 	//x,y,zの絶対値の計算
 	float differenceLengthX = D3DXVec3Length(&differenceX);
@@ -220,50 +283,50 @@ bool CCollisionCylinder::ToSphere(CCollisionSphere * inSphere)
 		&& differenceLengthY < addHeight
 		&& differenceLengthZ <= addLength)
 	{
-		if (GetPos().z + (m_length * 0.5f) > inSphere->GetPos().z - inSphere->GetLength()
-			&& GetPos().z - (m_length * 0.5f) < inSphere->GetPos().z + inSphere->GetLength()
-			&& GetPos().y + (m_height * 0.5f) > inSphere->GetPos().y - inSphere->GetLength()
-			&& GetPos().y - (m_height * 0.5f) < inSphere->GetPos().y + inSphere->GetLength())
+		if (GetPosWorld().z + (m_length * 0.5f) > inSphere->GetPosWorld().z - inSphere->GetLength()
+			&& GetPosWorld().z - (m_length * 0.5f) < inSphere->GetPosWorld().z + inSphere->GetLength()
+			&& GetPosWorld().y + (m_height * 0.5f) > inSphere->GetPosWorld().y - inSphere->GetLength()
+			&& GetPosWorld().y - (m_height * 0.5f) < inSphere->GetPosWorld().y + inSphere->GetLength())
 		{
-			if (GetPos().x + (m_length * 0.5f) > inSphere->GetPos().x - inSphere->GetLength())
+			if (GetPosWorld().x + (m_length * 0.5f) > inSphere->GetPosWorld().x - inSphere->GetLength())
 			{// 左の当たり判定
 				return true;
 			}
 
-			if (GetPos().x - (m_length * 0.5f) < inSphere->GetPos().x + inSphere->GetLength())
+			if (GetPosWorld().x - (m_length * 0.5f) < inSphere->GetPosWorld().x + inSphere->GetLength())
 			{// 右の当たり判定
  				return true;
 			}
 		}
 
-		if (GetPos().x + (m_length * 0.5f) > inSphere->GetPos().x - inSphere->GetLength()
-			&& GetPos().x - (m_length * 0.5f) < inSphere->GetPos().x + inSphere->GetLength()
-			&& GetPos().y + (m_height * 0.5f) > inSphere->GetPos().y - inSphere->GetLength()
-			&& GetPos().y - (m_height * 0.5f) < inSphere->GetPos().y + inSphere->GetLength())
+		if (GetPosWorld().x + (m_length * 0.5f) > inSphere->GetPosWorld().x - inSphere->GetLength()
+			&& GetPosWorld().x - (m_length * 0.5f) < inSphere->GetPosWorld().x + inSphere->GetLength()
+			&& GetPosWorld().y + (m_height * 0.5f) > inSphere->GetPosWorld().y - inSphere->GetLength()
+			&& GetPosWorld().y - (m_height * 0.5f) < inSphere->GetPosWorld().y + inSphere->GetLength())
 		{
-			if (GetPos().z + (m_length * 0.5f) > inSphere->GetPos().z - inSphere->GetLength())
+			if (GetPosWorld().z + (m_length * 0.5f) > inSphere->GetPosWorld().z - inSphere->GetLength())
 			{// 前の当たり判定
 				return true;
 			}
 
-			if (GetPos().z - (m_length * 0.5f) < inSphere->GetPos().z + inSphere->GetLength())
+			if (GetPosWorld().z - (m_length * 0.5f) < inSphere->GetPosWorld().z + inSphere->GetLength())
 			{// 奥の当たり判定
 				return true;
 			}
 		}
 
-		if (GetPos().x + (m_length * 0.5f) > inSphere->GetPos().x - inSphere->GetLength()
-			&& GetPos().x - (m_length * 0.5f) < inSphere->GetPos().x + inSphere->GetLength()
-			&& GetPos().z + (m_length * 0.5f) > inSphere->GetPos().z - inSphere->GetLength()
-			&& GetPos().z - (m_length * 0.5f) < inSphere->GetPos().z + inSphere->GetLength())
+		if (GetPosWorld().x + (m_length * 0.5f) > inSphere->GetPosWorld().x - inSphere->GetLength()
+			&& GetPosWorld().x - (m_length * 0.5f) < inSphere->GetPosWorld().x + inSphere->GetLength()
+			&& GetPosWorld().z + (m_length * 0.5f) > inSphere->GetPosWorld().z - inSphere->GetLength()
+			&& GetPosWorld().z - (m_length * 0.5f) < inSphere->GetPosWorld().z + inSphere->GetLength())
 		{
-			if (GetPos().y + (m_height * 0.5f) < inSphere->GetPos().y - inSphere->GetLength()
+			if (GetPosWorld().y + (m_height * 0.5f) < inSphere->GetPosWorld().y - inSphere->GetLength()
 				)
 			{// 上の当たり判定
 				return true;
 			}
 
-			if (GetPos().y - (m_height * 0.5f) > inSphere->GetPos().y + inSphere->GetLength())
+			if (GetPosWorld().y - (m_height * 0.5f) > inSphere->GetPosWorld().y + inSphere->GetLength())
 			{// 下の当たり判定
 				return true;
 			}
@@ -323,7 +386,7 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 
 		D3DXVECTOR3 vecPlayer[nTri];
 
-		D3DXVECTOR3 pos = GetPos();
+		D3DXVECTOR3 pos = GetPosWorld();
 
 		// 頂点座標の取得
 		vecPlayer[0] = pos - posPoly[0];
@@ -359,7 +422,11 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 
 			if (pos.y < meshHeight)
 			{// メッシュの高さよりプレイヤーの高さのほうが下のとき
-				m_extrusionHeight = meshHeight;
+				float extrusion = 0.0f;
+				// 押し返し
+				extrusion = meshHeight;
+
+				SetPos(D3DXVECTOR3(pos.x, meshHeight, pos.z));
 			}
 			else
 			{

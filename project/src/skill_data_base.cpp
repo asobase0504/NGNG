@@ -13,6 +13,7 @@
 #include "character.h"
 #include "enemy_manager.h"
 #include "collision_sphere.h"
+#include "yamato_skill_1.h"
 
 //==============================================================
 // 静的メンバー変数の宣言
@@ -75,20 +76,7 @@ void CSkillDataBase::Init()
 	{// 発動時の効果
 		if (inusedCharacter != nullptr)
 		{
-			// 当たり判定
-			m_Collision = CCollisionSphere::Create(inusedCharacter->GetPos(),GetSize("YAMATO_SKILL_1").x);
-			std::vector<CEnemy*> Enemy = CEnemyManager::GetInstance()->GetEnemy();
-			// エネミーの数を取得
-			int EnemyCount = Enemy.size();
-
-			for (int nCnt = 0; nCnt < EnemyCount; nCnt++)
-			{// 攻撃範囲に敵がいるか判定する
-				bool a = m_Collision->ToSphere((CCollisionSphere*)Enemy[nCnt]->GetCollision());
-				if (a)
-				{// ダメージの判定
-					GetHitAbility("YAMATO_SKILL_1")(inusedCharacter, Enemy[nCnt]);
-				}
-			}
+			CYamatoSkill_1::Create(inusedCharacter);
 		}
 
 		return false;

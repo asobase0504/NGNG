@@ -106,7 +106,9 @@ public:
 
 	// 攻撃
 	void Attack(CCharacter* pEnemy, float SkillMul);
-
+	bool IsDied() { return m_isDied; }
+	void Died() { m_isDied = true; }
+  
 private:
 	virtual void Move();
 	void UpdatePos();			// 座標の更新
@@ -120,6 +122,8 @@ protected:		// ステータス
 
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;
+
+	bool m_isDied;	// 死亡状態か否か。
 
 	CStatus<int> m_hp;							// 体力
 	CStatus<int> m_addHp;						// 追加体力

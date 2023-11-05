@@ -1,4 +1,4 @@
-//**************************************************************
+﻿//**************************************************************
 //
 // 像
 // Author: 梶田 大夢
@@ -12,12 +12,16 @@
 #include "collision_box.h"
 #include "player_manager.h"
 #include "player.h"
+#include "map.h"
+#include "object_mesh.h"
+#include "statue_manager.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
 CStatue::CStatue(CTaskGroup::EPriority list) :
-	m_modelData("BOX")
+	m_modelData("BOX"),
+	m_player(nullptr)
 {
 }
 
@@ -36,7 +40,7 @@ HRESULT CStatue::Init()
 	CObjectX::Init();
 
 	D3DXMATRIX mtx = GetMtxWorld();
-	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), GetRot(),D3DXVECTOR3(10.0f, 10.0f, 10.0f), mtx);
+	m_collisionBox = CCollisionBox::Create(GetPos(), GetRot(),D3DXVECTOR3(10.0f, 10.0f, 10.0f), mtx);
 	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 15.0f, 15.0f);
 
 	LoadModel(m_modelData);
@@ -49,8 +53,27 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 	CObjectX::Init();
 	LoadModel(m_modelData);
 
-	m_collisionBox = CCollisionBox::Create(inPos, inRot, D3DXVECTOR3(10.0f, 10.0f, 10.0f), GetMtxWorld());
+	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 25.0f, 0.0f), inRot, D3DXVECTOR3(10.0f, 25.0f, 10.0f), GetMtxWorld());
+	m_collisionBox->SetParent(&m_pos);
 	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 15.0f, 15.0f);
+
+	CMap* map = CMap::GetMap();
+	D3DXVECTOR3 pos = GetPos();
+
+	// 上に上げる処理
+	CCollisionCylinder* pCylinder = CCollisionCylinder::Create(GetPos(), 30.0f, 30.0f);
+
+	for (int i = 0; i < map->GetNumMesh(); i++)
+	{
+		bool hit = pCylinder->ToMesh(map->GetMapMesh(i)->GetCollisionMesh());
+
+		if (hit)
+		{// 押し出した位置
+			float extrusion = ((CCollisionCylinder*)pCylinder)->GetPosWorld().y;
+			SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
+		}
+	}
+	pCylinder->Uninit();
 
 	return S_OK;
 }
@@ -68,26 +91,13 @@ void CStatue::Uninit()
 //--------------------------------------------------------------
 void CStatue::Update()
 {
-	m_collisionBox->SetPos(GetPos());
-	m_collisionCylinder->SetPos(GetPos());
-
-	bool a = CPlayerManager::GetInstance()->GetPlayer()->GetCollision()->ToBox(m_collisionBox, true);
-
-	if (a)
-	{
-		// 押し出した位置
-		D3DXVECTOR3 extrusion = ((CCollisionCylinder*)CPlayerManager::GetInstance()->GetPlayer()->GetCollision())->GetExtrusion();
-		CPlayerManager::GetInstance()->GetPlayer()->SetPos(D3DXVECTOR3(extrusion));
-		CPlayerManager::GetInstance()->GetPlayer()->GetCollision()->SetPos(D3DXVECTOR3(extrusion));
-
-		CPlayerManager::GetInstance()->GetPlayer()->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	}
-
 	CObjectX::Update();
 
+	m_collisionBox->SetMtxWorld(GetMtxWorld());
+
 #ifdef _DEBUG
-	CDebugProc::Print("StatueCollisionBox:pos(%f,%f,%f)\n", m_collisionBox->GetPos().x, m_collisionBox->GetPos().y, m_collisionBox->GetPos().z);
-	CDebugProc::Print("StatueCollisionCylinder:pos(%f,%f,%f)\n", m_collisionCylinder->GetPos().x, m_collisionCylinder->GetPos().y, m_collisionCylinder->GetPos().z);
+	CDebugProc::Print("StatueCollisionBox:pos(%f,%f,%f)\n", m_collisionBox->GetPosWorld().x, m_collisionBox->GetPosWorld().y, m_collisionBox->GetPosWorld().z);
+	CDebugProc::Print("StatueCollisionCylinder:pos(%f,%f,%f)\n", m_collisionCylinder->GetPosWorld().x, m_collisionCylinder->GetPosWorld().y, m_collisionCylinder->GetPosWorld().z);
 #endif // _DEBUG
 }
 
