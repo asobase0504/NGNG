@@ -13,6 +13,7 @@
 #include "objectX.h"
 #include "PlayerController.h"
 #include "collision_sphere.h"
+#include "road.h"
 #include "statue_manager.h"
 
 #include "status.h"
@@ -47,6 +48,7 @@ HRESULT CCharacter::Init()
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
 	m_apModel[0]->LoadModel("BOX");
+	m_road = CRoad::Create(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(50);
@@ -254,14 +256,47 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 //--------------------------------------------------------------
 void CCharacter::Damage(const int inDamage)
 {
+	int dmg = inDamage;
+
+
 	CStatus<int>* hp = GetHp();
-	hp->AddCurrent(-inDamage);
+	hp->AddCurrent(-dmg);
 }
 
-void CCharacter::Attack()
+//--------------------------------------------------------------
+// 攻撃
+//--------------------------------------------------------------
+void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 {
+	// プレイヤーのダメージを計算
+	int Damage = CalDamage(SkillMul);
+	// エネミーにダメージを与える。
+	pEnemy->Damage(Damage);
 }
 
 void CCharacter::Move()
 {
 }
+
+//--------------------------------------------------------------
+// ダメージ計算関数
+//--------------------------------------------------------------
+int CCharacter::CalDamage(float SkillAtkMul)
+{// 攻撃力 * 
+
+	int CalDamage =
+		((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
+		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillAtkMul));
+
+	return CalDamage;
+}
+
+////--------------------------------------------------------------
+//// 防御力計算関数
+////--------------------------------------------------------------
+//int CCharacter::DefDamage(float SkillDefMul)
+//{// 防御力
+//	int Def =
+//		((m_def.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
+//		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillDefMul));
+//}

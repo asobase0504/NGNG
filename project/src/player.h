@@ -50,7 +50,7 @@ public:
 	void SetPos(const D3DXVECTOR3& inPos);
 
 private:
-	void Attack();		// 攻撃
+	void PAttack();		// 攻撃
 	void Move();		// 移動
 	void Jump();		// ジャンプ
 	void Dash();		// ダッシュ

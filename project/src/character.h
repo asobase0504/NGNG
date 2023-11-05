@@ -13,6 +13,7 @@
 #include "object.h"
 #include "status.h"
 #include "item_data_base.h"
+#include "road.h"
 #include <array>
 
 //==============================================================
@@ -20,6 +21,7 @@
 //==============================================================
 class CObjectX;
 class CCollision;
+class CRoad;
 
 //==============================================================
 // プレイヤークラス
@@ -56,6 +58,9 @@ public:
   
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
+
+	int CalDamage(float SkillAtkMul);
+	int DefDamage(float SkillDefMul);
 
 	//==============================================================
 	// ゲッターとセッター
@@ -104,10 +109,15 @@ public:
 	// 所持金
 	CStatus<int>* GetMoney() { return &m_money; }
 
+	// 攻撃の道
+	CRoad* GetRoad() { return m_road; }
+
+	// 攻撃
+	void Attack(CCharacter* pEnemy, float SkillMul);
 	bool IsDied() { return m_isDied; }
 	void Died() { m_isDied = true; }
+  
 private:
-	virtual void Attack();
 	virtual void Move();
 	void UpdatePos();			// 座標の更新
 
@@ -138,5 +148,7 @@ protected:		// ステータス
 	CStatus<float> m_jumpPower;					// ジャンプ力
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 	CStatus<int> m_money;						// 所持金
+
+	CRoad* m_road;								// 攻撃の道みたいな
 };
 #endif

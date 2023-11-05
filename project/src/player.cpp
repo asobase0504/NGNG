@@ -120,7 +120,7 @@ void CPlayer::Update()
 	Dash();
 
 	// 攻撃
-	Attack();
+	PAttack();
 	
 	TakeItem();
 
@@ -146,7 +146,7 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 //--------------------------------------------------------------
 // 攻撃
 //--------------------------------------------------------------
-void CPlayer::Attack()
+void CPlayer::PAttack()
 {
 	// 通常攻撃(左クリック)
 	if (m_controller->Skill_1())
