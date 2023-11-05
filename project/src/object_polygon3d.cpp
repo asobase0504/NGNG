@@ -18,14 +18,22 @@
 #include "texture.h"
 
 //==============================================================
-// 静的メンバ変数
+// 頂点情報
 //==============================================================
-const D3DXVECTOR3 CObjectPolygon3D::m_Vtx[4] =
+const D3DXVECTOR3 CObjectPolygon3D::m_Vtx[ANCHOR_MAX][4] =
 {
-	D3DXVECTOR3(-1.0f, +1.0f, 0.0f),
-	D3DXVECTOR3(+1.0f, +1.0f, 0.0f),
-	D3DXVECTOR3(-1.0f, -1.0f, 0.0f),
-	D3DXVECTOR3(+1.0f, -1.0f, 0.0f),
+	{
+		D3DXVECTOR3(-1.0f, -1.0f, 0.0f),
+		D3DXVECTOR3(+1.0f, -1.0f, 0.0f),
+		D3DXVECTOR3(-1.0f, +1.0f, 0.0f),
+		D3DXVECTOR3(+1.0f, +1.0f, 0.0f),
+	},
+	{
+		D3DXVECTOR3(0.0f, -1.0f, 0.0f),
+		D3DXVECTOR3(+2.0f, -1.0f, 0.0f),
+		D3DXVECTOR3(0.0f, +1.0f, 0.0f),
+		D3DXVECTOR3(+2.0f, +1.0f, 0.0f),
+	}
 };
 
 //--------------------------------------------------------------
@@ -51,6 +59,7 @@ CObjectPolygon3D::~CObjectPolygon3D()
 HRESULT CObjectPolygon3D::Init()
 {
 	SetType(CObject::EType::POLYGON);
+	SetBillboard(false);
 
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetInstance()->GetDevice();	// デバイスの取得
 
@@ -121,14 +130,32 @@ void CObjectPolygon3D::Draw()
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CRenderer::GetInstance()->GetDevice();	//デバイスの取得
 
-	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
+	D3DXMATRIX mtxRot, mtxTrans, mtxView;	;	//計算用マトリックス
 
 	//ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
 
-	//向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
+	if (m_bBill)
+	{// ビルボードの使用
+		pDevice->GetTransform(D3DTS_VIEW, &mtxView);
+
+		// カメラの逆行列を設定
+		m_mtxWorld._11 = mtxView._11;
+		m_mtxWorld._12 = mtxView._21;
+		m_mtxWorld._13 = mtxView._31;
+		m_mtxWorld._21 = mtxView._12;
+		m_mtxWorld._22 = mtxView._22;
+		m_mtxWorld._23 = mtxView._32;
+		m_mtxWorld._31 = mtxView._13;
+		m_mtxWorld._32 = mtxView._23;
+		m_mtxWorld._33 = mtxView._33;
+	}
+	else
+	{
+		// 向きを反映							↓rotの情報を使って回転行列を作る
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);		// 行列掛け算関数		第二引数 * 第三引数 を　第一引数に格納
+	}
 
 	//位置を反映
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
@@ -252,9 +279,9 @@ void CObjectPolygon3D::SetSize(const D3DXVECTOR3 &size)
 	//------------------------
 	for (int i = 0; i < 4; ++i)
 	{
-		pVtx[i].pos.x = m_Vtx[i].x * GetSize().x;
-		pVtx[i].pos.y = m_Vtx[i].y * GetSize().y;
-		pVtx[i].pos.z = m_Vtx[i].z * GetSize().z;
+		pVtx[i].pos.x = m_Vtx[m_anchor][i].x * GetSize().x;
+		pVtx[i].pos.y = m_Vtx[m_anchor][i].y * GetSize().y;
+		pVtx[i].pos.z = m_Vtx[m_anchor][i].z * GetSize().z;
 	}
 
 	//頂点バッファをアンロックする

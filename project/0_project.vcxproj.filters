@@ -209,6 +209,8 @@
     <ClCompile Include="src\item_model.cpp">
       <Filter>ソース ファイル\Mode\Game\Item</Filter>
     </ClCompile>
+    <ClCompile Include="src\character.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     <ClCompile Include="src\enemy.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
@@ -305,6 +307,14 @@
     <ClCompile Include="src\skill_entity.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
     </ClCompile>
+    <ClCompile Include="road.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character\enemy</Filter>
     <ClCompile Include="src\yamato_skill_1.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
     </ClCompile>
@@ -528,6 +538,12 @@
     </ClInclude>
     <ClInclude Include="src\yamato_skill_1.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="road.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClInclude>
     <ClInclude Include="src\statue_teleporter.h">
       <Filter>ソース ファイル\Statue</Filter>

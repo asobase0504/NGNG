@@ -46,5 +46,6 @@ private:
 	
 private:	// ƒƒ“ƒo•Ï”
 	std::vector<ACTIVITY_FUNC> m_activityFunc;
+
 };
 #endif
