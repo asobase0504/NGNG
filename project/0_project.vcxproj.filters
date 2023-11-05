@@ -302,14 +302,14 @@
     <ClCompile Include="src\skill.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
     </ClCompile>
-    <ClCompile Include="road.cpp">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClCompile>
     <ClCompile Include="bullet.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
     </ClCompile>
     <ClCompile Include="src\enemy.cpp">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\road.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -535,11 +535,11 @@
     <ClInclude Include="src\skill.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
     </ClInclude>
-    <ClInclude Include="road.h">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="bullet.h">
+    <ClInclude Include="src\bullet.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\road.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -185,8 +185,19 @@ void CCharacter::Damage(const int inDamage)
 {
 	int dmg = inDamage;
 
-
+	// ダメージ計算
 	CStatus<int>* hp = GetHp();
+
+	// 防御力算出
+	int def = m_defense.CalStatus();
+
+	dmg -= def;
+
+	if (dmg <= 0)
+	{
+		dmg = 0;
+	}
+
 	hp->AddCurrent(-dmg);
 }
 
@@ -211,19 +222,7 @@ void CCharacter::Move()
 int CCharacter::CalDamage(float SkillAtkMul)
 {// 攻撃力 * 
 
-	int CalDamage =
-		((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
-		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillAtkMul));
+	int CalDamage = m_attack.CalStatus() * SkillAtkMul;
 
 	return CalDamage;
 }
-
-////--------------------------------------------------------------
-//// 防御力計算関数
-////--------------------------------------------------------------
-//int CCharacter::DefDamage(float SkillDefMul)
-//{// 防御力
-//	int Def =
-//		((m_def.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
-//		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillDefMul));
-//}

@@ -53,7 +53,6 @@ public:
 	void SetRot(const D3DXVECTOR3& inRot);
 
 	int CalDamage(float SkillAtkMul);
-	int DefDamage(float SkillDefMul);
 
 	//==============================================================
 	// ゲッターとセッター
