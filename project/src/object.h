@@ -54,7 +54,7 @@ public:
 	virtual void SetPos(const D3DXVECTOR3 &inPos) { m_pos = inPos; }
 	void AddPos(const D3DXVECTOR3 &inPos) { SetPos(m_pos + inPos); }
 	void MulPos(const float inRatio) { SetPos(m_pos * inRatio); }
-	const D3DXVECTOR3 &GetPos() const { return m_pos; }
+	D3DXVECTOR3 &GetPos() { return m_pos; }
 
 	/* à íuån */
 	virtual void SetPosOld(const D3DXVECTOR3 &inPos) { m_posOld = inPos; }
