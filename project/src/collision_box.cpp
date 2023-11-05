@@ -26,11 +26,19 @@ HRESULT CCollisionBox::Init()
 
 void CCollisionBox::Uninit()
 {
+	CCollision::Uninit();
+
+	for (int i = 0; i < 4; i++)
+	{
+		m_line[i]->Uninit();
+	}
 }
 
 void CCollisionBox::Update()
 {
-	D3DXVECTOR3 pos = GetPos();
+	CCollision::Update();
+
+	D3DXVECTOR3 pos = GetPosWorld();
 	D3DXVECTOR3 size = GetSize();
 	D3DXVECTOR3 rot = GetRot();
 

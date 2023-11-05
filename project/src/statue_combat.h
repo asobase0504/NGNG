@@ -43,7 +43,6 @@ public:
 	static CStatueCombat *Create(D3DXVECTOR3 pos);			// ¶¬
 
 private:	// ƒƒ“ƒo•Ï”
-	CPlayer* m_pPlayer;
 };
 #endif
 

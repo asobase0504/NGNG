@@ -1,12 +1,12 @@
 //**************************************************************
 //
-// 血の祭壇
+// テレポーターの祭壇
 // Author : 梶田大夢
 //
 //**************************************************************
 
 // include
-#include "statue_blood.h"
+#include "statue_teleporter.h"
 #include "statue_manager.h"
 #include "player_manager.h"
 #include "input.h"
@@ -14,11 +14,14 @@
 #include "collision_mesh.h"
 #include "collision_box.h"
 #include "object_mesh.h"
+#include "enemy_manager.h"
+#include "enemy.h"
+#include "utility.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueBlood::CStatueBlood(int nPriority)
+CStatueTeleporter::CStatueTeleporter(int nPriority)
 {
 
 }
@@ -26,7 +29,7 @@ CStatueBlood::CStatueBlood(int nPriority)
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CStatueBlood::~CStatueBlood()
+CStatueTeleporter::~CStatueTeleporter()
 {
 
 }
@@ -34,15 +37,16 @@ CStatueBlood::~CStatueBlood()
 //--------------------------------------------------------------
 // 初期化処理
 //--------------------------------------------------------------
-HRESULT CStatueBlood::Init()
+HRESULT CStatueTeleporter::Init()
 {
 	// 初期化処理
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 rot = GetRot();
+	m_time = 0;
 
 	CStatue::Init(pos, rot);
-	LoadModel("STATUE_BLOOD");
 	m_bOnce = false;
+	m_btimeAdd = false;
 
 	return S_OK;
 }
@@ -50,7 +54,7 @@ HRESULT CStatueBlood::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CStatueBlood::Uninit()
+void CStatueTeleporter::Uninit()
 {
 	// 終了処理
 	CStatue::Uninit();
@@ -59,13 +63,11 @@ void CStatueBlood::Uninit()
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CStatueBlood::Update()
+void CStatueTeleporter::Update()
 {
-	// プレイヤー情報取得
+	// 情報取得
 	CInput* input = CInput::GetKey();
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int>* playerHp = pPlayer->GetHp();
-	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
 	if (Touch(pPlayer))
@@ -74,17 +76,34 @@ void CStatueBlood::Update()
 		{// プレイヤーが特定のキーを押したとき
 			if (!m_bOnce)
 			{
-				// プレイヤーのHPとお金を調整して設定
-				playerHp->AddCurrent(-10);
-				playerMoney->AddCurrent(10);
+				float randX = FloatRandom(1.5f, 0.5f);
+				float randZ = FloatRandom(1.5f, 0.5f);
 
+				m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(randX, 0.0f, randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
+
+				CStatus<int>* enemyHp = m_pEnemy->GetHp();
+				enemyHp->SetCurrent(0);
 				m_bOnce = true;
 			}
+
+			m_btimeAdd = true;
 		}
-		else
+	}
+
+	if (m_bOnce)
+	{
+		if ((m_pEnemy->IsDied()) && (m_time >= MAX_TIME))
 		{
-			m_bOnce = false;
+			//-------------------------
+			// マップ移動処理追加
+			//-------------------------
 		}
+	}
+
+	if (m_btimeAdd)
+	{
+		// 時間追加
+		m_time++;
 	}
 
 	// 更新処理
@@ -98,7 +117,7 @@ void CStatueBlood::Update()
 //--------------------------------------------------------------
 // 描画処理
 //--------------------------------------------------------------
-void CStatueBlood::Draw(void)
+void CStatueTeleporter::Draw(void)
 {
 	// 描画処理
 	CStatue::Draw();
@@ -107,12 +126,12 @@ void CStatueBlood::Draw(void)
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CStatueBlood* CStatueBlood::Create(D3DXVECTOR3 pos)
+CStatueTeleporter* CStatueTeleporter::Create(D3DXVECTOR3 pos)
 {
-	CStatueBlood* pStatueblood;
-	pStatueblood = new CStatueBlood;
-	pStatueblood->SetPos(pos);
-	pStatueblood->Init();
+	CStatueTeleporter* pStatueteleporter;
+	pStatueteleporter = new CStatueTeleporter;
+	pStatueteleporter->SetPos(pos);
+	pStatueteleporter->Init();
 
-	return pStatueblood;
+	return pStatueteleporter;
 }

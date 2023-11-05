@@ -11,6 +11,7 @@
 #include "statue_chest.h"
 #include "statue_luck.h"
 #include "statue_combat.h"
+#include "statue_teleporter.h"
 #include "statue.h"
 #include "collision_box.h"
 #include "application.h"
@@ -18,6 +19,7 @@
 
 #include "map.h"
 #include "object_mesh.h"
+#include "collision_mesh.h"
 
 //--------------------------------------------------------------
 //Ã“Iƒƒ“ƒo•Ï”éŒ¾
@@ -84,37 +86,75 @@ void CStatueManager::Draw(void)
 //--------------------------------------------------------------
 // ¶¬ˆ—
 //--------------------------------------------------------------
-CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
+CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, int type)
 {
-	CMap* pMap = CMap::GetMap();
-	CMesh* pMesh = pMap->GetMapMesh(0);
-
-	D3DXVECTOR3 Meshpos = pMesh->GetPos();
-
+	CStatue* statue = nullptr;
 	switch (type)
 	{
-	case CStatueManager::NONE:
-		m_pStatue = CStatue::Create(pos,D3DXVECTOR3(0.0f,0.0f,0.0f));
-		break;
 	case CStatueManager::BLOOD:
-		RandomCreateBlood(D3DXVECTOR3(pos.x, Meshpos.y, pos.z));
+		statue = RandomCreateBlood(pos);
 		break;
 	case CStatueManager::CHEST:
-		RandomCreateChest(D3DXVECTOR3(pos.x, Meshpos.y, pos.z));
+		statue = RandomCreateChest(pos);
 		break;
 	case CStatueManager::LUCK:
-		RandomCreateLuck(D3DXVECTOR3(pos.x, Meshpos.y, pos.z));
+		statue = RandomCreateLuck(pos);
 		break;
 	case CStatueManager::COMBAT:
-		RandomCreateCombat(D3DXVECTOR3(pos.x, Meshpos.y, pos.z));
+		statue = RandomCreateCombat(pos);
+		break;
+	case CStatueManager::TELEPORTER:
+		statue = CStatueTeleporter::Create(pos);
 		break;
 	case CStatueManager::MAX:
 		break;
 	default:
 		break;
 	}
+	m_pStatue.push_back(statue);
 
-	return m_pStatue;
+	return statue;
+}
+
+//--------------------------------------------------------------
+// ƒ‰ƒ“ƒ_ƒ€‚È‘œ¶¬ˆ—
+//--------------------------------------------------------------
+CStatue * CStatueManager::RandomCreate(D3DXVECTOR3 pos)
+{
+	// ¶¬
+	int randomCount = IntRandom(5, 1);
+	float randomPosX = FloatRandom(400.0f, -500.0f);
+	float randomPosZ = FloatRandom(500.0f, -415.0f);
+
+	CStatue* statue;
+
+	if (randomCount != 2)
+	{
+		statue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(randomPosX, pos.y, randomPosZ), randomCount);
+		m_pStatue.push_back(statue);
+	}
+	else
+	{
+		int rand = IntRandom(4, 1);
+
+		if (rand == 1)
+		{
+			statue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(randomPosX, pos.y, randomPosZ), 1);
+			m_pStatue.push_back(statue);
+		}
+		else if (rand == 2)
+		{
+			statue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(randomPosX, pos.y, randomPosZ), 3);
+			m_pStatue.push_back(statue);
+		}
+		else
+		{
+			statue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(randomPosX, pos.y, randomPosZ), 4);
+			m_pStatue.push_back(statue);
+		}
+	}
+
+	return statue;
 }
 
 //--------------------------------------------------------------
@@ -125,9 +165,10 @@ CStatue * CStatueManager::RandomCreateBlood(D3DXVECTOR3 pos)
 	float randomPosX = FloatRandom(400.0f, -500.0f);
 	float randomPosZ = FloatRandom(500.0f, -415.0f);
 
-	m_pStatue = CStatueBlood::Create(D3DXVECTOR3(randomPosX, pos.y, randomPosZ));
+	CStatue* statue = CStatueBlood::Create(D3DXVECTOR3(randomPosX, pos.y, randomPosZ));
+	m_pStatue.push_back(statue);
 
-	return m_pStatue;
+	return statue;
 }
 
 //--------------------------------------------------------------
@@ -142,14 +183,16 @@ CStatue * CStatueManager::RandomCreateChest(D3DXVECTOR3 pos)
 	randomCount = IntRandom(3, 1);
 #endif // DEBUG
 
+	CStatue* statue;
 	for (int nCnt = 0; nCnt < randomCount; nCnt++)
 	{
 		float randomPosX = FloatRandom(400.0f, -500.0f);
 		float randomPosZ = FloatRandom(500.0f,-415.0f);
-		m_pStatue = CStatueChest::Create(D3DXVECTOR3(randomPosX,pos.y, randomPosZ));
+		statue = CStatueChest::Create(D3DXVECTOR3(randomPosX, pos.y, randomPosZ));
+		m_pStatue.push_back(statue);
 	}
-	
-	return m_pStatue;
+
+	return statue;
 }
 
 //--------------------------------------------------------------
@@ -160,9 +203,10 @@ CStatue * CStatueManager::RandomCreateLuck(D3DXVECTOR3 pos)
 	float randomPosX = FloatRandom(400.0f, -500.0f);
 	float randomPosZ = FloatRandom(500.0f, -415.0f);
 
-	m_pStatue = CStatueLuck::Create(D3DXVECTOR3(randomPosX, pos.y, randomPosZ));
+	CStatue* statue = CStatueLuck::Create(D3DXVECTOR3(randomPosX, pos.y, randomPosZ));
+	m_pStatue.push_back(statue);
 
-	return m_pStatue;
+	return statue;
 }
 
 //--------------------------------------------------------------
@@ -173,9 +217,15 @@ CStatue * CStatueManager::RandomCreateCombat(D3DXVECTOR3 pos)
 	float randomPosX = FloatRandom(400.0f, -500.0f);
 	float randomPosZ = FloatRandom(500.0f, -415.0f);
 
-	m_pStatue = CStatueCombat::Create(D3DXVECTOR3(randomPosX, pos.y, randomPosZ));
+	CStatue* statue = CStatueCombat::Create(D3DXVECTOR3(randomPosX, pos.y, randomPosZ));
+	m_pStatue.push_back(statue);
 
-	return m_pStatue;
+	return statue;
+}
+
+void CStatueManager::AllFuncStatue(std::function<void(CStatue*inStatue)> inFunc)
+{
+	std::for_each(m_pStatue.cbegin(), m_pStatue.cend(), inFunc);
 }
 
 
