@@ -32,19 +32,17 @@ public:
 	virtual bool ToSphere(CCollisionSphere* inSphere) { return false; }
 
 	void SetParent(D3DXVECTOR3* inPos) { m_posParent = inPos; }
+	void SetPosParent(D3DXVECTOR3 inPos) {
+		if (m_posParent == nullptr)
+		{
+			return;
+		}
+		*m_posParent = inPos;
+	}
 
 	/* à íuån */
 	void SetPos(const D3DXVECTOR3& inPos) { m_posLocal = inPos; }
-	const D3DXVECTOR3 &GetPosWorld()
-	{
-		m_posWorld = m_posLocal;
-		if (m_posParent != nullptr)
-		{
-			m_posWorld += *m_posParent;
-		}
-
-		return m_posWorld;
-	}
+	const D3DXVECTOR3 &GetPosWorld();
 
 	/* à íuån */
 	void SetPosOld(const D3DXVECTOR3& inPosOld) { m_posOld = inPosOld; }

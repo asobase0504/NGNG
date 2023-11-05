@@ -17,6 +17,9 @@
 #include "statue_manager.h"
 
 #include "status.h"
+#include "map.h"
+#include "map_model.h"
+#include "object_mesh.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -68,13 +71,16 @@ HRESULT CCharacter::Init()
 	m_criticalDamage.Init(2.0f);
 	m_criticalDamage.SetCurrent(2.0f);
 	m_movePower.Init(2.0f);
-	m_movePower.SetCurrent(1.0f);
+	m_movePower.SetCurrent(2.0f);
 	m_jumpPower.Init(FLT_MAX);
 	m_jumpPower.SetCurrent(3.0f);
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
 	m_money.Init(100);
 	m_money.SetCurrent(100);
+
+	m_state = GROUND;
+
 	return S_OK;
 }
 
@@ -87,7 +93,7 @@ void CCharacter::Uninit(void)
 	CObject::Release();
 
 	m_apModel[0]->Uninit();
-	m_collision[0]->Uninit();
+	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------
@@ -100,19 +106,67 @@ void CCharacter::Update(void)
 
 	CStatueManager::GetInstance()->AllFuncStatue([this](CStatue* inSattue)
 	{
-		if (m_collision[0]->ToBox(inSattue->GetCollisionBox(), true))
+		if (m_collision->ToBox(inSattue->GetCollisionBox(), true))
 		{
-			D3DXVECTOR3 extrusion = m_collision[0]->GetPosWorld();
+			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
 			SetPos(extrusion);
 			SetMoveXZ(0.0f,0.0f);
 		}
 	});
+
+	CMap* map = CMap::GetMap();
+	D3DXVECTOR3 pos = GetPos();
+
+	bool isGround = false;
+
+	for (int i = 0; i < map->GetNumModel(); i++)
+	{
+		if (m_collision->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
+		{// 押し出した位置
+			SetPos(m_collision->GetPosWorld());
+			if (m_collision->GetIsTop())
+			{
+				isGround = true;
+			}
+		}
+	}
+
+	for (int i = 0; i < map->GetNumMesh(); i++)
+	{
+		if (m_collision->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
+		{// 押し出した位置
+			SetPos(m_collision->GetPosWorld());
+			isGround = true;
+		}
+	}
+
+	static STATE state;
+	state = m_state;
+
+	if (isGround)
+	{
+		m_state = GROUND;
+	}
+	else
+	{
+		m_state = SKY;
+	}
+
+	if (state == GROUND && m_state == GROUND)
+	{
+		SetMoveY(0.0f);
+		m_jumpCount.SetCurrent(0);
+	}
 
 	if (m_hp.GetCurrent() <= 0)
 	{
 		// 死亡処理
 		m_isDied = true;
 	}
+
+
+	// 重力
+	AddMoveY(-0.18f);
 }
 
 //--------------------------------------------------------------

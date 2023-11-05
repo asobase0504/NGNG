@@ -55,13 +55,15 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 
 	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 25.0f, 0.0f), inRot, D3DXVECTOR3(10.0f, 25.0f, 10.0f), GetMtxWorld());
 	m_collisionBox->SetParent(&m_pos);
-	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 15.0f, 15.0f);
+	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 20.0f, 20.0f);
+	m_collisionCylinder->SetParent(&m_pos);
 
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
 
 	// 上に上げる処理
-	CCollisionCylinder* pCylinder = CCollisionCylinder::Create(GetPos(), 30.0f, 30.0f);
+	CCollisionCylinder* pCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f, 30.0f);
+	pCylinder->SetParent(&m_pos);
 
 	for (int i = 0; i < map->GetNumMesh(); i++)
 	{

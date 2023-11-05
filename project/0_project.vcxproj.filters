@@ -45,6 +45,12 @@
     <Filter Include="ソース ファイル\Statue">
       <UniqueIdentifier>{b19ee9a4-4726-43d0-b635-0347101f5d10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\Item">
+      <UniqueIdentifier>{4963ad8a-ec04-4e0e-b854-ad931565ddc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D\Shader">
+      <UniqueIdentifier>{c70ada01-af2e-491c-accc-46cd316aae73}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ソース ファイル\Mode\Game\UI">
       <UniqueIdentifier>{a6fb7bdb-faf6-463e-83e8-6e0915814541}</UniqueIdentifier>
     </Filter>
@@ -60,17 +66,14 @@
     <Filter Include="ソース ファイル\Mode\Game\character\skill">
       <UniqueIdentifier>{72beb232-3206-4cde-a97e-16c6701d3460}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Mode\Game\Item">
-      <UniqueIdentifier>{4963ad8a-ec04-4e0e-b854-ad931565ddc4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Mode\Game\map">
       <UniqueIdentifier>{57ea62fa-5a66-4212-8bda-6d6dcf449835}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Mode\Game\map\json">
       <UniqueIdentifier>{9b784e72-5709-4736-87c7-d6250a6c9b2a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\3D\Shader">
-      <UniqueIdentifier>{c70ada01-af2e-491c-accc-46cd316aae73}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\3D\camera">
+      <UniqueIdentifier>{a8d215c4-205c-4cc3-b1a4-7f24bc93701d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -164,16 +167,10 @@
     <ClCompile Include="src\parts.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\number.cpp">
-      <Filter>ソース ファイル\00_Main</Filter>
-    </ClCompile>
     <ClCompile Include="src\renderer.cpp">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClCompile>
     <ClCompile Include="src\light.cpp">
-      <Filter>ソース ファイル\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\camera.cpp">
       <Filter>ソース ファイル\3D</Filter>
     </ClCompile>
     <ClCompile Include="src\title.cpp">
@@ -181,9 +178,6 @@
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>ソース ファイル\00_Main</Filter>
-    </ClCompile>
-    <ClCompile Include="src\camera_game.cpp">
-      <Filter>ソース ファイル\3D</Filter>
     </ClCompile>
     <ClCompile Include="src\collision.cpp">
       <Filter>ソース ファイル\00_Main\02_Collision</Filter>
@@ -208,11 +202,6 @@
     </ClCompile>
     <ClCompile Include="src\item_model.cpp">
       <Filter>ソース ファイル\Mode\Game\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="src\character.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
-    <ClCompile Include="src\enemy.cpp">
-      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
     <ClCompile Include="src\game.cpp">
       <Filter>ソース ファイル\Mode\Game</Filter>
@@ -304,19 +293,32 @@
     <ClCompile Include="src\status.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\skill_entity.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
-    </ClCompile>
-    <ClCompile Include="bullet.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
-    </ClCompile>
-    <ClCompile Include="src\enemy.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\enemy</Filter>
-    <ClCompile Include="src\yamato_skill_1.cpp">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
-    </ClCompile>
     <ClCompile Include="src\statue_teleporter.cpp">
       <Filter>ソース ファイル\Statue</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yamato_skill_1.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\number.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera.cpp">
+      <Filter>ソース ファイル\3D\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera_game.cpp">
+      <Filter>ソース ファイル\3D\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_entity.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="road.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\road.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
@@ -422,17 +424,8 @@
     <ClInclude Include="src\light.h">
       <Filter>ソース ファイル\3D</Filter>
     </ClInclude>
-    <ClInclude Include="src\camera.h">
-      <Filter>ソース ファイル\3D</Filter>
-    </ClInclude>
     <ClInclude Include="src\title.h">
       <Filter>ソース ファイル\Mode\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="src\number.h">
-      <Filter>ソース ファイル\00_Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\camera_game.h">
-      <Filter>ソース ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="src\collision.h">
       <Filter>ソース ファイル\00_Main\02_Collision</Filter>
@@ -533,11 +526,27 @@
     <ClInclude Include="src\status.h">
       <Filter>ソース ファイル\Mode\Game\character</Filter>
     </ClInclude>
-    <ClInclude Include="src\skill_entity.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+    <ClInclude Include="src\statue_teleporter.h">
+      <Filter>ソース ファイル\Statue</Filter>
     </ClInclude>
+    <ClInclude Include="src\Controller.h" />
+    <ClInclude Include="src\PlayerController.h" />
+    <ClInclude Include="src\skill.h" />
+    <ClInclude Include="src\status.h" />
     <ClInclude Include="src\yamato_skill_1.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character\skill</Filter>
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_entity.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\number.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camera_game.h">
+      <Filter>ソース ファイル\3D\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camera.h">
+      <Filter>ソース ファイル\3D\camera</Filter>
     </ClInclude>
     <ClInclude Include="src\bullet.h">
       <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
@@ -546,15 +555,8 @@
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
     <ClInclude Include="bullet.h">
-      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\statue_teleporter.h">
-      <Filter>ソース ファイル\Statue</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Controller.h" />
-    <ClInclude Include="src\PlayerController.h" />
-    <ClInclude Include="src\skill.h" />
-    <ClInclude Include="src\status.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">

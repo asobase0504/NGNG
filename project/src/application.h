@@ -76,6 +76,8 @@ public:	// ƒƒ“ƒo[ŠÖ”
 	void SetMode(CApplication::MODE inMode);
 	MODE* GetMode() { return &m_modeType; }
 
+
+	CMode* GetModeClass() { return m_mode; }
 	CSound* GetSound() { return m_sound; }
 	CColor* GetColor() { return m_color; }
 

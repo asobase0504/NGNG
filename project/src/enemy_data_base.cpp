@@ -240,7 +240,7 @@ void CEnemyDataBase::Init()
 			move *= -0.5f;
 		}
 
-		inEnemy->SetMove(move);
+		inEnemy->SetMoveXZ(move.x, move.z);
 	};
 
 	// ゴーレムの動き
@@ -292,7 +292,7 @@ void CEnemyDataBase::Init()
 			move.z -= MAX_SPEED;
 		}
 
-		inEnemy->SetMove(move);
+		inEnemy->SetMoveXZ(move.x,move.z);
 	};
 
 	// ゴーレムのレーザーを打つ処理

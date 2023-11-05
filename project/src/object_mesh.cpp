@@ -88,6 +88,9 @@ void CMesh::Draw()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 	D3DXMATRIX mtxRot, mtxTrans;	// 計算用マトリックス
 
+	// ワイヤーフレーム
+	//pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	
 	//ライト設定falseにするとライトと食らわない
 	//pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
@@ -132,6 +135,8 @@ void CMesh::Draw()
 	pDevice->SetTexture(0, nullptr);
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+	pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 //--------------------------------------------------------------

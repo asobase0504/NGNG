@@ -37,6 +37,7 @@ CSkillEntity::~CSkillEntity()
 //--------------------------------------------------------------
 HRESULT CSkillEntity::Init()
 {
+	m_Duration = 1;
 	// 初期化
 	InitAbility();
 
@@ -51,7 +52,7 @@ void CSkillEntity::Uninit(void)
 	// 当たり判定の削除
 	if (m_Collision != nullptr)
 	{
-		delete m_Collision;
+		m_Collision->Uninit();
 		m_Collision = nullptr;
 	}
 
@@ -69,6 +70,8 @@ void CSkillEntity::Update(void)
 
 	if (m_Duration > 0)
 	{
+		m_Duration--;
+
 		// 当たり判定
 		std::vector<CEnemy*> Enemy = CEnemyManager::GetInstance()->GetEnemy();
 		// エネミーの数を取得
