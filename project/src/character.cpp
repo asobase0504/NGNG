@@ -266,9 +266,9 @@ void CCharacter::Damage(const int inDamage)
 
 	dmg -= def;
 
-	if (dmg <= 0)
-	{
-		dmg = 0;
+	if (dmg <= 1)
+	{// ダメージが1以下だった時1にする
+		dmg = 1;
 	}
 
 	hp->AddCurrent(-dmg);

@@ -6,6 +6,7 @@
 		[ "SKELETON", "data\/MODEL\/skeleton.x" ],
 		[ "STATUE_BLOOD", "data\/MODEL\/statue\/statue_blood.x" ],
 		[ "STATUE_LUCK", "data\/MODEL\/statue\/statue_luck.x" ],
-		[ "PLAYER01", "data\/MODEL\/kengou.x" ]
+		[ "PLAYER01", "data\/MODEL\/kengou.x" ],
+		[ "ITEM_POWER_UP", "data\/MODEL\/box.x"]
 	]
 }
