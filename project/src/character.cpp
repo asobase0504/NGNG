@@ -128,7 +128,8 @@ void CCharacter::Update(void)
 	{
 		if (m_collision->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
 		{// 押し出した位置
-			SetPos(m_collision->GetPosWorld());
+			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+			SetPos(extrusion);
 			if (m_collision->GetIsTop())
 			{
 				isGround = true;
@@ -140,7 +141,8 @@ void CCharacter::Update(void)
 	{
 		if (m_collision->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
 		{// 押し出した位置
-			SetPos(m_collision->GetPosWorld());
+			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+			SetPos(extrusion);
 			isGround = true;
 		}
 	}
@@ -168,7 +170,6 @@ void CCharacter::Update(void)
 		// 死亡処理
 		m_isDied = true;
 	}
-
 
 	// 重力
 	AddMoveY(-0.18f);
