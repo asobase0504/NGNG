@@ -104,26 +104,32 @@ void CCharacter::Update(void)
 	// 更新処理
 	CObject::Update();
 
-	CStatueManager::GetInstance()->AllFuncStatue([this](CStatue* inSattue)
+	bool isGround = false;
+
+	CStatueManager::GetInstance()->AllFuncStatue([this, &isGround](CStatue* inSattue)
 	{
 		if (m_collision->ToBox(inSattue->GetCollisionBox(), true))
 		{
 			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
 			SetPos(extrusion);
 			SetMoveXZ(0.0f,0.0f);
+
+			if (m_collision->GetIsTop())
+			{
+				isGround = true;
+			}
 		}
 	});
 
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
 
-	bool isGround = false;
-
 	for (int i = 0; i < map->GetNumModel(); i++)
 	{
 		if (m_collision->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
 		{// 押し出した位置
-			SetPos(m_collision->GetPosWorld());
+			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+			SetPos(extrusion);
 			if (m_collision->GetIsTop())
 			{
 				isGround = true;
@@ -135,7 +141,8 @@ void CCharacter::Update(void)
 	{
 		if (m_collision->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
 		{// 押し出した位置
-			SetPos(m_collision->GetPosWorld());
+			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+			SetPos(extrusion);
 			isGround = true;
 		}
 	}
@@ -163,7 +170,6 @@ void CCharacter::Update(void)
 		// 死亡処理
 		m_isDied = true;
 	}
-
 
 	// 重力
 	AddMoveY(-0.18f);
@@ -295,7 +301,10 @@ void CCharacter::Move()
 int CCharacter::CalDamage(float SkillAtkMul)
 {// 攻撃力 * 
 
-	int CalDamage = m_attack.CalStatus() * SkillAtkMul;
+	int CalDamage =
+		(int)(((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
+		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillAtkMul)));
+
 
 	return CalDamage;
 }
