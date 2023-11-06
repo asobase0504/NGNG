@@ -183,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="data\FILE\map\map01.json" />
+    <None Include="data\FILE\model.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7EBBFD2F-1F99-4A13-9899-6C72FA7C556A}</ProjectGuid>
