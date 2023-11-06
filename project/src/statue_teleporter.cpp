@@ -45,6 +45,7 @@ HRESULT CStatueTeleporter::Init()
 	m_time = 0;
 
 	CStatue::Init(pos, rot);
+	LoadModel("STATUE_SHRINE");
 	m_bOnce = false;
 	m_btimeAdd = false;
 
