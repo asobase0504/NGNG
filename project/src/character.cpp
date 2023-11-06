@@ -104,20 +104,25 @@ void CCharacter::Update(void)
 	// 更新処理
 	CObject::Update();
 
-	CStatueManager::GetInstance()->AllFuncStatue([this](CStatue* inSattue)
+	bool isGround = false;
+
+	CStatueManager::GetInstance()->AllFuncStatue([this, &isGround](CStatue* inSattue)
 	{
 		if (m_collision->ToBox(inSattue->GetCollisionBox(), true))
 		{
 			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
 			SetPos(extrusion);
 			SetMoveXZ(0.0f,0.0f);
+
+			if (m_collision->GetIsTop())
+			{
+				isGround = true;
+			}
 		}
 	});
 
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
-
-	bool isGround = false;
 
 	for (int i = 0; i < map->GetNumModel(); i++)
 	{
