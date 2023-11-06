@@ -357,9 +357,9 @@ void CMesh::SetY(std::vector<std::vector<float>> inY)
 	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点座標の設定
-	for (int i = 0; i < inY.size(); i++)
+	for (int i = 0; i < (int)inY.size(); i++)
 	{
-		for (int j = 0; j < inY[i].size(); j++)
+		for (int j = 0; j < (int)inY[i].size(); j++)
 		{
 			// 座標の補正
 			int size = j + i * inY.size();
@@ -450,7 +450,7 @@ void CMesh::SetVtxMeshSize(int Size)
 	// 頂点座標の設定
 	for (int i = 0; i < m_vtx; i++)
 	{
-		float posx = ((i % m_vtxCountX));
+		float posx = (float)((i % m_vtxCountX));
 		float posz = ((i / m_vtxCountZ)) * -1.0f;
 
 		float texU = 1.0f / m_xsiz * (i % m_vtxCountX);
