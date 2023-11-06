@@ -36,6 +36,7 @@ CItemModel::~CItemModel()
 HRESULT CItemModel::Init()
 {
 	CObjectX::Init();
+	SetMove(D3DXVECTOR3(0.0f,0.0f,m_rot.z * 10.0f));
 
 	return S_OK;
 }
