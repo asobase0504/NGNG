@@ -38,6 +38,7 @@ HRESULT CStatueCombat::Init()
 	D3DXVECTOR3 rot = GetRot();
 
 	CStatue::Init(pos, rot);
+	LoadModel("STATUE_COMBAT");
 
 	return S_OK;
 }

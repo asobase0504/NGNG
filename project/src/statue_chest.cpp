@@ -37,6 +37,7 @@ HRESULT CStatueChest::Init()
 	D3DXVECTOR3 rot = GetRot();
 
 	CStatue::Init(pos, rot);
+	LoadModel("STATUE_CHEST");
 	m_bOnce = false;
 
 	return S_OK;
