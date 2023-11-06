@@ -320,6 +320,9 @@
     <ClCompile Include="bullet.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
     </ClCompile>
+    <ClCompile Include="src\road.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -547,6 +550,12 @@
     </ClInclude>
     <ClInclude Include="road.h">
       <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
+	</ClInclude>
+    <ClInclude Include="src\bullet.h">
+      <Filter>ソース ファイル\Mode\Game\00_Object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\road.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
     <ClInclude Include="bullet.h">
       <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>

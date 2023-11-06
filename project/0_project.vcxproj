@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
-    <ClCompile Include="road.cpp" />
     <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\enemy_data_base.cpp" />
     <ClCompile Include="src\enemy_manager.cpp" />
@@ -77,6 +76,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\road.cpp" />
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\skill_entity.cpp" />
@@ -99,8 +99,7 @@
     <ClCompile Include="src\yamato_skill_1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bullet.h" />
-    <ClInclude Include="road.h" />
+    <ClInclude Include="src\bullet.h" />
     <ClInclude Include="src\enemy_data_base.h" />
     <ClInclude Include="src\enemy_manager.h" />
     <ClInclude Include="src\application.h" />
@@ -154,6 +153,7 @@
     <ClInclude Include="src\player_manager.h" />
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\renderer.h" />
+    <ClInclude Include="src\road.h" />
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\skill_entity.h" />
