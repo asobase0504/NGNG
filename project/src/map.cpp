@@ -17,6 +17,7 @@
 #include "file.h"
 
 #include "statue_manager.h"
+#include "enemy_manager.h"
 
 //==============================================================
 // 静的メンバ変数宣言
@@ -28,6 +29,7 @@ CMap* CMap::m_map = nullptr;
 //--------------------------------------------------------------
 CMap::CMap()
 {
+	m_SpawnCnt = 0;
 	m_mapModel.clear();
 	m_mesh.clear();
 }
@@ -72,7 +74,14 @@ void CMap::Uninit(void)
 //--------------------------------------------------------------
 void CMap::Update(void)
 {
-	m_map;
+	m_SpawnCnt++;
+
+	// 一定時間ごとにランダムな敵をスポーンさせる。
+	if (m_SpawnCnt >= 600)
+	{
+		m_SpawnCnt = 0;
+		CEnemyManager::GetInstance()->RandomSpawn();
+	}
 }
 
 //--------------------------------------------------------------
