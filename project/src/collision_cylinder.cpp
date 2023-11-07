@@ -422,10 +422,6 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 
 			if (pos.y < meshHeight)
 			{// メッシュの高さよりプレイヤーの高さのほうが下のとき
-				float extrusion = 0.0f;
-				// 押し返し
-				extrusion = meshHeight;
-
 				SetPosParent(D3DXVECTOR3(pos.x, meshHeight, pos.z));
 			}
 			else

@@ -190,8 +190,6 @@ void CPlayer::Move()
 		D3DXVECTOR3 nowMove = GetMove();
 		AddMoveXZ(nowMove.x * -0.15f, nowMove.z * -0.15f);
 	}
-
-	
 }
 
 //--------------------------------------------------------------
