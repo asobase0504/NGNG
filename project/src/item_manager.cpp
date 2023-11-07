@@ -80,19 +80,12 @@ void CItemManager::Draw()
 //--------------------------------------------------------------
 // ê∂ê¨
 //--------------------------------------------------------------
-void CItemManager::CreateItem(const D3DXVECTOR3& inPos, CItemDataBase::EItemType inId)
+void CItemManager::CreateItem(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx, CItemDataBase::EItemType inId)
 {
 	m_itemType = inId;
 
-	switch (m_itemType)
-	{
-	case CItemDataBase::ITEM_POWER_UP:
-		m_itemData = CItem::Create(inId);
-		m_itemModel.push_back(CItemModel::Create(inPos, inId));
-		break;
-	default:
-		break;
-	}
+	m_itemData = CItem::Create(m_itemType);
+	m_itemModel.push_back(CItemModel::Create(inPos, boxmtx, inId));
 }
 
 //--------------------------------------------------------------

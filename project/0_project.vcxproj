@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="abnormal.cpp" />
+    <ClCompile Include="abnormal_data_base.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="src\road.cpp" />
     <ClCompile Include="src\character_select.cpp" />
@@ -103,6 +105,8 @@
     <ClCompile Include="src\yamato_skill_1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="abnormal.h" />
+    <ClInclude Include="abnormal_data_base.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="src\character_select.h" />
     <ClInclude Include="src\debug_mode.h" />
