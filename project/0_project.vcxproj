@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
-    <ClCompile Include="road.cpp" />
+    <ClCompile Include="src\road.cpp" />
     <ClCompile Include="src\character_select.cpp" />
     <ClCompile Include="src\debug_mode.cpp" />
     <ClCompile Include="src\enemy.cpp" />
@@ -81,7 +81,6 @@
     </ClCompile>
     <ClCompile Include="src\procedure.cpp" />
     <ClCompile Include="src\renderer.cpp" />
-    <ClCompile Include="src\road.cpp" />
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\skill_entity.cpp" />
@@ -105,7 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h" />
-    <ClInclude Include="road.h" />
     <ClInclude Include="src\character_select.h" />
     <ClInclude Include="src\debug_mode.h" />
     <ClInclude Include="src\bullet.h" />

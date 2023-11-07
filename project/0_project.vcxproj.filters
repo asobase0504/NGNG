@@ -327,6 +327,7 @@
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClCompile>
     <ClCompile Include="src\procedure.cpp">
+    </ClCompile>
     <ClCompile Include="src\road.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
