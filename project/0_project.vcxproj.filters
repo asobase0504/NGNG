@@ -320,6 +320,18 @@
     <ClCompile Include="bullet.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
     </ClCompile>
+    <ClCompile Include="src\character_select.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\debug_mode.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\money_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\procedure.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -550,6 +562,18 @@
     </ClInclude>
     <ClInclude Include="bullet.h">
       <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\character_select.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\debug_mode.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\money_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\procedure.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -43,6 +43,8 @@ public:
 		MODE_EDIT,			// エディタ画面
 		MODE_FADE,			// フェード画面
 		MODE_TUTORIAL,		// チュートリアル画面
+		MODE_SELECT,		// キャラクター選択画面
+		MODE_DEBUG,			// デバッグゲーム画面
 		MODE_MAX
 	};
 
