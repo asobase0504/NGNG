@@ -82,7 +82,7 @@ void CBullet::Update()
 	
 	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
-		pPlayer->Damage(50.0f);
+		pPlayer->Damage(50);
 		Uninit();
 	}
 }

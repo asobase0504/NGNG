@@ -562,5 +562,8 @@
     <None Include="data\FILE\model.json">
       <Filter>ソース ファイル\Statue</Filter>
     </None>
+    <None Include="data\FILE\map\map02.json">
+      <Filter>ソース ファイル\Mode\Game\map\json</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -21,6 +21,8 @@
 #include "map_model.h"
 #include "object_mesh.h"
 
+#include <thread>
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -87,7 +89,7 @@ HRESULT CCharacter::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CCharacter::Uninit(void)
+void CCharacter::Uninit()
 {
 	// 破棄処理
 	CObject::Release();
@@ -99,7 +101,7 @@ void CCharacter::Uninit(void)
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CCharacter::Update(void)
+void CCharacter::Update()
 {
 	// 更新処理
 	CObject::Update();
@@ -112,7 +114,7 @@ void CCharacter::Update(void)
 		{
 			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
 			SetPos(extrusion);
-			SetMoveXZ(0.0f,0.0f);
+			SetMoveXZ(0.0f, 0.0f);
 
 			if (m_collision->GetIsTop())
 			{
@@ -178,7 +180,7 @@ void CCharacter::Update(void)
 //--------------------------------------------------------------
 // 描画処理
 //--------------------------------------------------------------
-void CCharacter::Draw(void)
+void CCharacter::Draw()
 {
 	//デバイスへのポインタ
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();

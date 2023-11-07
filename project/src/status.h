@@ -72,7 +72,7 @@ public:
 	T GetBase() { return m_base; }
 	T GetAddItem() { return m_addItem; }
 	T GetBuffItem() { return m_addBuff; }
-	int CalStatus() { return ((m_current + m_addBuff + m_addItem) * (m_mulBuff * m_mulItem)); }
+	T CalStatus() { return ((m_current + m_addBuff + m_addItem) * (T)(m_mulBuff * m_mulItem)); }
 
 	float GetMulItem() { return m_mulItem; }
 	float GetMulBuff() { return m_mulBuff; }

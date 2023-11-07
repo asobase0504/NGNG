@@ -59,6 +59,8 @@ HRESULT CItemModel::Init(int inId)
 void CItemModel::Uninit()
 {
 	CObjectX::Uninit();
+
+	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------
