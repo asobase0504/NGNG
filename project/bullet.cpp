@@ -14,6 +14,7 @@
 #include "application.h"
 #include "collision.h"
 #include "collision_cylinder.h"
+#include "abnormal.h"
 #include "player_manager.h"
 
 //--------------------------------------------------------------
@@ -52,6 +53,7 @@ HRESULT CBullet::Init()
 void CBullet::Uninit()
 {
 	CObjectPolygon3D::Uninit();
+	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------
@@ -82,7 +84,9 @@ void CBullet::Update()
 	
 	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
-		pPlayer->Damage(50.0f);
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData(CAbnormalDataBase::ABNORMAL_FIRE)->GetWhenAddFunc();
+
+		abnormalFunc(pPlayer, CAbnormalDataBase::ABNORMAL_FIRE);
 		Uninit();
 	}
 }

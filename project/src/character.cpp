@@ -15,6 +15,9 @@
 #include "collision_sphere.h"
 #include "road.h"
 #include "statue_manager.h"
+#include "item.h"
+#include "abnormal.h"
+#include "abnormal_data_base.h"
 
 #include "status.h"
 #include "map.h"
@@ -78,6 +81,12 @@ HRESULT CCharacter::Init()
 	m_jumpCount.SetCurrent(0);
 	m_money.Init(100);
 	m_money.SetCurrent(100);
+
+	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
+	{
+		m_haveAbnormal[i].s_effectTime = 0;
+		m_haveAbnormal[i].s_stack = 0;
+	}
 
 	m_state = GROUND;
 
@@ -173,6 +182,22 @@ void CCharacter::Update(void)
 
 	// 重力
 	AddMoveY(-0.18f);
+
+	// 付与されている状態異常を作動させる
+	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	{
+		if(m_haveAbnormal[i].s_stack <= 0)
+		{
+			return;
+		}
+
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData(CAbnormalDataBase::ABNORMAL_FIRE)->GetWhenAllWayFunc();
+
+		if (abnormalFunc != nullptr)
+		{
+			abnormalFunc(this, i);
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -275,6 +300,12 @@ void CCharacter::Damage(const int inDamage)
 	if (dmg <= 1)
 	{// ダメージが1以下だった時1にする
 		dmg = 1;
+	}
+
+	if (m_isBlock)
+	{// ブロックがtrueの時にダメージを0にする
+		dmg = 0;
+		DamageBlock(false);
 	}
 
 	hp->AddCurrent(-dmg);

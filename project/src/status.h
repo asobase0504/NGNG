@@ -72,14 +72,15 @@ public:
 	T GetBase() { return m_base; }
 	T GetAddItem() { return m_addItem; }
 	T GetBuffItem() { return m_addBuff; }
-	int CalStatus() { return ((m_current + m_addBuff + m_addItem) * (m_mulBuff * m_mulItem)); }
+	int CalStatus() { return ((m_base + m_addBuff + m_addItem) * (m_mulBuff * m_mulItem)); }
 
 	float GetMulItem() { return m_mulItem; }
 	float GetMulBuff() { return m_mulBuff; }
 
 	bool MaxCurrentSame() { return m_current >= m_max; }
 
-	void AddItemEffect(T inAdd) { m_max += inAdd; }
+	void AddItemEffect(T inAdd) { m_addItem += inAdd; }
+	void AddBuffEffect(T inAdd) { m_addBuff += inAdd; }
 
 private:	// ƒƒ“ƒo•Ï”
 	T m_max;			// Å‘å’l

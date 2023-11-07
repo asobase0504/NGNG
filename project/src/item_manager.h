@@ -38,7 +38,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void CreateItem(const D3DXVECTOR3& inPos, CItemDataBase::EItemType inId);
+	void CreateItem(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx, CItemDataBase::EItemType inId);
 
 	std::list<CItemModel*>& GetPopItemModel() { return m_itemModel; }
 

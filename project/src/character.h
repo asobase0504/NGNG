@@ -14,6 +14,7 @@
 #include "status.h"
 #include "item_data_base.h"
 #include "road.h"
+#include "abnormal_data_base.h"
 #include <array>
 
 //==============================================================
@@ -22,6 +23,7 @@
 class CObjectX;
 class CCollision;
 class CRoad;
+class CAbnormal;
 
 //==============================================================
 // プレイヤークラス
@@ -58,6 +60,9 @@ public:
   
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
+	void AddUbnormalStack(const int id) { m_haveAbnormal[id].s_stack++; }
+	void SetUbnormalTime(const int id, const int Time) { m_haveAbnormal[id].s_effectTime = Time; }
+	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
 
 	int CalDamage(float SkillAtkMul);
 
@@ -129,7 +134,10 @@ protected:		// ステータス
 
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;
+	// 持っている状態異常の個数をそれぞれ管理
+	abnormal_count m_haveAbnormal;
 
+	bool m_isBlock;	// 防御できたかできてないか
 	bool m_isDied;	// 死亡状態か否か。
 	STATE m_state;
 
