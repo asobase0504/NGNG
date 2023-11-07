@@ -67,6 +67,10 @@ HRESULT CStatueManager::Init()
 //--------------------------------------------------------------
 void CStatueManager::Uninit(void)
 {
+	if (m_statueManager != nullptr)
+	{
+		m_statueManager = nullptr;
+	}
 }
 
 //--------------------------------------------------------------
@@ -227,5 +231,3 @@ void CStatueManager::AllFuncStatue(std::function<void(CStatue*inStatue)> inFunc)
 {
 	std::for_each(m_pStatue.cbegin(), m_pStatue.cend(), inFunc);
 }
-
-

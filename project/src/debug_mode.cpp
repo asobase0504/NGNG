@@ -1,14 +1,14 @@
-ï»¿//**************************************************************
+//**************************************************************
 //
-// ã‚²ãƒ¼ãƒ ç”»é¢
-// Author : Yuda Kaito
+// ƒfƒoƒbƒOƒ‚[ƒh
+// Author : Š“c‘å–²
 //
 //**************************************************************
 
 //==============================================================
 // include
 //==============================================================
-#include "game.h"
+#include "debug_mode.h"
 #include "player.h"
 #include "enemy.h"
 #include "statue.h"
@@ -21,7 +21,7 @@
 #include "object_polygon3d.h"
 #include "PlayerController.h"
 
-/* Systemç³»çµ± */
+/* SystemŒn“ */
 #include "application.h"
 #include "fade.h"
 #include "sound.h"
@@ -30,10 +30,10 @@
 #include "light.h"
 #include "utility.h"
 
-/* 3Dç³»çµ± */
+/* 3DŒn“ */
 #include "map.h"
 
-/* Objectç³»çµ± */
+/* ObjectŒn“ */
 #include "object_polygon3d.h"
 #include "objectX.h"
 #include "object_mesh.h"
@@ -42,30 +42,30 @@
 #include "money_ui.h"
 
 //==============================================================
-// å®šæ•°
+// ’è”
 //==============================================================
 
 //--------------------------------------------------------------
-// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
-// Author : Yuda Kaito
+// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// Author : Š“c‘å–²
 //--------------------------------------------------------------
-CGame::CGame()
+CDebugMode::CDebugMode()
 {
 }
 
 //--------------------------------------------------------------
-// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
-// Author : Yuda Kaito
+// ƒfƒXƒgƒ‰ƒNƒ^
+// Author : Š“c‘å–²
 //--------------------------------------------------------------
-CGame::~CGame()
+CDebugMode::~CDebugMode()
 {
 }
 
 //--------------------------------------------------------------
-// åˆæœŸåŒ–
-// Author : Yuda Kaito
+// ‰Šú‰»
+// Author : Š“c‘å–²
 //--------------------------------------------------------------
-HRESULT CGame::Init(void)
+HRESULT CDebugMode::Init(void)
 {
 	m_camera = new CCameraGame;
 	m_camera->Init();
@@ -73,38 +73,54 @@ HRESULT CGame::Init(void)
 	m_light = new CLight;
 	m_light->Init();
 
-	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¨­å®š
+	// ƒvƒŒƒCƒ„[‚ÌÝ’è
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
 	m_camera->SetTargetPos(pPlayer->GetPos());
 
 	CHPUI::Create(pPlayer->GetHp());
 	CMONEYUI::Create(pPlayer->GetMoney());
 
-	// ã‚¨ãƒãƒŸãƒ¼ã®ç”Ÿæˆ
+	// ƒGƒlƒ~[‚Ì¶¬
 	//CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
 
-	// ãƒžãƒƒãƒ—ã®ç”Ÿæˆ
+	// ƒ}ƒbƒv‚Ì¶¬
 	CMap::Create();
 
-	// ã‚¢ã‚¤ãƒ†ãƒ ã®ï½“è¡›æ˜Ÿ
-//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
+	// ƒAƒCƒeƒ€‚Ì‚“‰q¯
+	//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
 
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// çµ‚äº†
-// Author : Yuda Kaito
+// I—¹
+// Author : Š“c‘å–²
 //--------------------------------------------------------------
-void CGame::Uninit(void)
+void CDebugMode::Uninit(void)
 {
 
 }
 
 //--------------------------------------------------------------
-// æ›´æ–°
-// Author : Yuda Kaito
+// XV
+// Author : Š“c‘å–²
 //--------------------------------------------------------------
-void CGame::Update(void)
+void CDebugMode::Update(void)
 {
+	CInput* pInput;
+	pInput = CInput::GetKey();
+
+	CFade* pFade = CApplication::GetInstance()->GetFade();
+
+	// TƒL[‚Åƒ^ƒCƒgƒ‹
+	if (pInput->Trigger(DIK_T))
+	{
+		pFade->NextMode(CApplication::MODE_TITLE);
+	}
+
+	// SƒL[‚Å‘I‘ð‰æ–Ê
+	if (pInput->Trigger(DIK_C))
+	{
+		pFade->NextMode(CApplication::MODE_SELECT);
+	}
 }

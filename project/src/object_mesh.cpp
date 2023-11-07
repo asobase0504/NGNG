@@ -136,7 +136,7 @@ void CMesh::Draw()
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-	pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 //--------------------------------------------------------------
