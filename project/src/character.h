@@ -20,7 +20,7 @@
 // 前方宣言
 //==============================================================
 class CObjectX;
-class CCollision;
+class CCollisionCylinder;
 class CRoad;
 
 //==============================================================
@@ -50,7 +50,7 @@ public:
 	// 静的メンバ関数
 	static CCharacter *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);		// プレイヤーの生成
 
-	CCollision* GetCollision() { return m_collision; }
+	CCollisionCylinder* GetCollision() { return m_collision; }
 
 	std::vector<CObjectX*> GetModel() { return m_apModel; }
 
@@ -122,7 +122,7 @@ private:
 
 protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
-	CCollision*	m_collision;	// 当たり判定
+	CCollisionCylinder*	m_collision;			// 当たり判定
 private:		// メンバ変数
 
 protected:		// ステータス

@@ -64,6 +64,5 @@ private:		// メンバ変数
 
 	CController*		m_controller;			// 命令を出す人
 	CSkill*				m_Skill[MAX_SKILL];
-	CCollisionCylinder*	m_collisionCyinder;
 };
 #endif
