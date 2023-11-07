@@ -64,6 +64,7 @@ public:
 	void Draw() override;
 
 	void SetTex(PositionVec4 Tex);
+	void SetTexPos(float BesideSplit, float nNumIndex);
 	void SetColor(const D3DXCOLOR& inColor) override;
 	void SetAnimation(const int U, const int V, const int Speed, const int Drawtimer, const bool loop);
 

@@ -78,6 +78,8 @@ void CItemModel::Uninit()
 	m_collisionTake->Uninit();
 
 	CObjectX::Uninit();
+
+	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------

@@ -68,6 +68,7 @@ void CStatueLuck::Update()
 	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// ƒvƒŒƒCƒ„[‚ªG‚ê‚Ä‚¢‚éŽž
+	
 	if (Touch(pPlayer))
 	{
 		if (input->Trigger(KEY_BACK, -1))

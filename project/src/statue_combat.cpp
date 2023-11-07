@@ -72,11 +72,11 @@ void CStatueCombat::Update()
 				float randX = FloatRandom(1.5f, 0.5f);
 				float randZ = FloatRandom(1.5f, 0.5f);
 
-				CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX,pos.y,pos.z * randZ),D3DXVECTOR3(50.0f,50.0f,50.0f), CEnemyManager::NONE);
+				CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
 			}
 		}
 	}
-
+	
 	// XVˆ—
 	CStatue::Update();
 

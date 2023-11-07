@@ -320,6 +320,17 @@
     <ClCompile Include="bullet.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
     </ClCompile>
+    <ClCompile Include="src\character_select.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\debug_mode.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\money_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\procedure.cpp">
+    </ClCompile>
     <ClCompile Include="src\road.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
@@ -566,6 +577,19 @@
     <ClInclude Include="abnormal.h">
       <Filter>ソース ファイル\Mode\Game\character\abnormality</Filter>
     </ClInclude>
+    <ClInclude Include="src\character_select.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\debug_mode.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\money_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\procedure.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bullet.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
@@ -578,6 +602,9 @@
     </None>
     <None Include="data\FILE\model.json">
       <Filter>ソース ファイル\Statue</Filter>
+    </None>
+    <None Include="data\FILE\map\map02.json">
+      <Filter>ソース ファイル\Mode\Game\map\json</Filter>
     </None>
   </ItemGroup>
 </Project>

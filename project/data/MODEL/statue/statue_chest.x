@@ -2003,7 +2003,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\NGNG\\project\\data\\TEXTURE\\STATUE\\luck.png";
+    "data\\TEXTURE\\STATUE\\luck.png";
    }
   }
   Material {
