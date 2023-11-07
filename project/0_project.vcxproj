@@ -81,6 +81,7 @@
     </ClCompile>
     <ClCompile Include="src\procedure.cpp" />
     <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\road.cpp" />
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\skill_entity.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="road.h" />
     <ClInclude Include="src\character_select.h" />
     <ClInclude Include="src\debug_mode.h" />
+    <ClInclude Include="src\bullet.h" />
     <ClInclude Include="src\enemy_data_base.h" />
     <ClInclude Include="src\enemy_manager.h" />
     <ClInclude Include="src\application.h" />
@@ -162,6 +164,7 @@
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\procedure.h" />
     <ClInclude Include="src\renderer.h" />
+    <ClInclude Include="src\road.h" />
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\skill_entity.h" />
@@ -191,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="data\FILE\map\map01.json" />
+    <None Include="data\FILE\model.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7EBBFD2F-1F99-4A13-9899-6C72FA7C556A}</ProjectGuid>

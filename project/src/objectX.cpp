@@ -116,7 +116,6 @@ void CObjectX::Draw()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	D3DMATERIAL9 matDef;			// 現在のマテリアル保存用
 	D3DXMATERIAL *pMat;				// マテリアルの情報
 
 	//マテリアルデータへのポインタを取得

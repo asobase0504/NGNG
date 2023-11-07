@@ -50,7 +50,9 @@ public:
 	void	Draw() override;
 
 	// 静的メンバ関数
-	CEnemy* CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type);			// プレイヤーの生成
+	CEnemy* CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type);			// エネミーの生成
+	// ランダムスポーン
+	void RandomSpawn();
 
 	std::vector<CEnemy*> GetEnemy() { return m_pEnemy; }
 	//CCollisionBox* GetEnemyBox() { return m_pEnemy[0]->GetBox(); }

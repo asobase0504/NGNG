@@ -40,9 +40,7 @@ public:
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Uninit() override;
 	void	Update() override;
-	void	Draw() override;
 
 	// 静的メンバ関数
 	static CEnemy *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);			// プレイヤーの生成

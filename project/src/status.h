@@ -30,9 +30,9 @@ public:
 		m_current(0),
 		m_base(0),
 		m_addItem(0),
-		m_mulItem(0.0f),
+		m_mulItem(1.0f),
 		m_addBuff(0),
-		m_mulBuff(0.0f)
+		m_mulBuff(1.0f)
 	{
 	}
 
@@ -72,6 +72,8 @@ public:
 	T GetBase() { return m_base; }
 	T GetAddItem() { return m_addItem; }
 	T GetBuffItem() { return m_addBuff; }
+	int CalStatus() { return ((m_current + m_addBuff + m_addItem) * (m_mulBuff * m_mulItem)); }
+
 	float GetMulItem() { return m_mulItem; }
 	float GetMulBuff() { return m_mulBuff; }
 
