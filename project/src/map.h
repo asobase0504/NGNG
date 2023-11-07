@@ -52,5 +52,6 @@ private:
 	static CMap* m_map;
 	std::vector<CMapModel*> m_mapModel;
 	std::vector<CMesh*> m_mesh;
+	int m_SpawnCnt;
 };
 #endif

@@ -1,0 +1,40 @@
+//==================================================
+// moneyUI.h
+// Author: 梶田大夢
+//==================================================
+#ifndef _SEQUENCE_H_
+#define _SEQUENCE_H_
+
+//**************************************************
+// インクルード
+//**************************************************
+#include "object.h"
+#include "status.h"
+
+//**************************************************
+// 前方前言　実態はNG　ポインタだけならOK
+//**************************************************
+class CNumber;
+class CProcedure;
+
+//**************************************************
+// クラス
+//**************************************************
+class CMONEYUI: public CObject
+{
+public:
+	CMONEYUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	~CMONEYUI();
+
+	HRESULT Init() override;
+	void Uninit() override;
+	void Update() override;
+
+	static CMONEYUI* Create(CStatus<int>* inMoney);
+
+private:
+	CStatus<int>* m_money;
+	CProcedure* m_procedure;
+};
+
+#endif // _TIMER_H_

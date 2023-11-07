@@ -314,11 +314,21 @@
     <ClCompile Include="src\skill_entity.cpp">
       <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
     </ClCompile>
-    <ClCompile Include="road.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="bullet.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\character_select.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\debug_mode.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\money_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\procedure.cpp">
+    <ClCompile Include="src\road.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -545,12 +555,22 @@
     <ClInclude Include="src\camera.h">
       <Filter>ソース ファイル\3D\camera</Filter>
     </ClInclude>
-    <ClInclude Include="road.h">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
+    <ClInclude Include="src\road.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
-    <ClInclude Include="bullet.h">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
+    <ClInclude Include="src\character_select.h">
+      <Filter>ソース ファイル\Mode</Filter>
     </ClInclude>
+    <ClInclude Include="src\debug_mode.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\money_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\procedure.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bullet.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
@@ -560,6 +580,9 @@
   <ItemGroup>
     <None Include="data\FILE\map\map01.json">
       <Filter>ソース ファイル\Mode\Game\map\json</Filter>
+    </None>
+    <None Include="data\FILE\model.json">
+      <Filter>ソース ファイル\Statue</Filter>
     </None>
   </ItemGroup>
 </Project>

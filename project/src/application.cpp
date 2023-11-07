@@ -27,6 +27,8 @@
 /* シーンモード */
 #include "title.h"
 #include "game.h"
+#include "character_select.h"
+#include "debug_mode.h"
 
 //==============================================================
 // 静的メンバー変数の初期化
@@ -107,7 +109,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	m_texture = CTexture::GetInstance();
 	m_texture->LoadAll();
 
-	m_modeType = CApplication::MODE_GAME;	//現在のモード
+	m_modeType = CApplication::MODE_DEBUG;	//現在のモード
 
 	//モードの設定
 	SetMode(m_modeType);
@@ -221,6 +223,11 @@ void CApplication::SetMode(MODE mode)
 	case CApplication::MODE_GAME:
 		m_mode = new CGame;
 		break;
+	case CApplication::MODE_SELECT:
+		m_mode = new CCharacterSelect;
+		break;
+	case CApplication::MODE_DEBUG:
+		m_mode = new CDebugMode;
 	default:
 		break;
 	}

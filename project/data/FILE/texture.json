@@ -1,6 +1,16 @@
 {
   "TEXTURE": [
-    [ "TITLE_LOGO", "data\/TEXTURE\/TEXT\/title.png" ],
-    [ "TEST", "data\/TEXTURE\/test.jpg" ]
+    [
+      "TITLE_LOGO",
+      "data\/TEXTURE\/TEXT\/title.png"
+    ],
+    [
+      "TEST",
+      "data\/TEXTURE\/test.jpg"
+    ],
+    [
+      "NUMBER",
+      "data\/TEXTURE\/number.png"
+    ]
   ]
 }

@@ -6,7 +6,7 @@
 //**************************************************************
 
 #ifdef _DEBUG
-#if 1
+#if 0
 #define ENEMY_DEBUG
 #endif
 #endif
@@ -63,29 +63,12 @@ HRESULT CEnemy::Init()
 }
 
 //--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CEnemy::Uninit()
-{
-	// 終了処理
-	CCharacter::Uninit();
-}
-
-//--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
 void CEnemy::Update()
 {
-#ifdef ENEMY_DEBUG
-	CDebugProc::Print("Enemy：move1(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
-#endif // _DEBUG
-
 	// 現在のactivityに設定する。
 	m_Activity(this);
-
-#ifdef ENEMY_DEBUG
-	CDebugProc::Print("Enemy：move2(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
-#endif // _DEBUG
 
 	// 更新処理
 	CCharacter::Update();
@@ -93,15 +76,6 @@ void CEnemy::Update()
 #ifdef ENEMY_DEBUG
 	CDebugProc::Print("Enemy：move3(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
 #endif // _DEBUG
-}
-
-//--------------------------------------------------------------
-// 描画処理
-//--------------------------------------------------------------
-void CEnemy::Draw(void)
-{
-	// 描画処理
-	CCharacter::Draw();
 }
 
 //--------------------------------------------------------------

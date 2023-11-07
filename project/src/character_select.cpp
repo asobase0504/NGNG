@@ -1,14 +1,14 @@
 //**************************************************************
 //
-// 制作 ( タイトル )
-// Author : Yuda Kaito
+// キャラクター選択画面
+// Author : 梶田大夢
 //
 //**************************************************************
 
 //==============================================================
 // include
 //==============================================================
-#include "title.h"
+#include "character_select.h"
 #include "application.h"
 #include "input.h"
 #include "sound.h"
@@ -22,21 +22,21 @@
 //=============================================================================
 // コンストラクタ
 //--------------------------------------------------------------
-CTitle::CTitle()
+CCharacterSelect::CCharacterSelect()
 {
 }
 
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CTitle::~CTitle()
+CCharacterSelect::~CCharacterSelect()
 {
 }
 
 //--------------------------------------------------------------
 // 初期化処理
 //--------------------------------------------------------------
-HRESULT CTitle::Init(void)
+HRESULT CCharacterSelect::Init(void)
 {
 	// ライト
 	CLight* light = new CLight;
@@ -71,7 +71,7 @@ HRESULT CTitle::Init(void)
 //--------------------------------------------------------------
 // 破棄
 //--------------------------------------------------------------
-void CTitle::Uninit(void)
+void CCharacterSelect::Uninit(void)
 {
 	CApplication::GetInstance()->GetSound()->Stop();
 }
@@ -79,7 +79,7 @@ void CTitle::Uninit(void)
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CTitle::Update(void)
+void CCharacterSelect::Update(void)
 {
 	CInput* pInput;
 	pInput = CInput::GetKey();
@@ -88,6 +88,6 @@ void CTitle::Update(void)
 
 	if (pInput->Trigger(DIK_K))
 	{
-		pFade->NextMode(CApplication::MODE_SELECT);
+		pFade->NextMode(CApplication::MODE_DEBUG);
 	}
 }
