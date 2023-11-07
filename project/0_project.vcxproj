@@ -20,6 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="road.cpp" />
+    <ClCompile Include="src\character_select.cpp" />
+    <ClCompile Include="src\debug_mode.cpp" />
     <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\enemy_data_base.cpp" />
     <ClCompile Include="src\enemy_manager.cpp" />
@@ -28,6 +31,7 @@
     <ClCompile Include="src\item_data_base.cpp" />
     <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\map_model.cpp" />
+    <ClCompile Include="src\money_ui.cpp" />
     <ClCompile Include="src\player_manager.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\camera.cpp" />
@@ -75,6 +79,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\procedure.cpp" />
     <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="src\road.cpp" />
     <ClCompile Include="src\skill.cpp" />
@@ -99,6 +104,10 @@
     <ClCompile Include="src\yamato_skill_1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bullet.h" />
+    <ClInclude Include="road.h" />
+    <ClInclude Include="src\character_select.h" />
+    <ClInclude Include="src\debug_mode.h" />
     <ClInclude Include="src\bullet.h" />
     <ClInclude Include="src\enemy_data_base.h" />
     <ClInclude Include="src\enemy_manager.h" />
@@ -135,6 +144,7 @@
     <ClInclude Include="src\map.h" />
     <ClInclude Include="src\map_model.h" />
     <ClInclude Include="src\mode.h" />
+    <ClInclude Include="src\money_ui.h" />
     <ClInclude Include="src\motion.h" />
     <ClInclude Include="src\motion_model3D.h" />
     <ClInclude Include="src\number.h" />
@@ -152,6 +162,7 @@
     <ClInclude Include="src\PlayerController.h" />
     <ClInclude Include="src\player_manager.h" />
     <ClInclude Include="src\precompile.h" />
+    <ClInclude Include="src\procedure.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\road.h" />
     <ClInclude Include="src\skill.h" />

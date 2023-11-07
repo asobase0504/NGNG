@@ -77,7 +77,7 @@ HRESULT CCharacter::Init()
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
 	m_money.Init(100);
-	m_money.SetCurrent(100);
+	m_money.SetCurrent(50);
 
 	m_state = GROUND;
 

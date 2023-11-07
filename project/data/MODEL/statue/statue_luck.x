@@ -499,7 +499,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\NGNG\\project\\data\\TEXTURE\\STATUE\\dice1.png";
+    "data\\TEXTURE\\STATUE\\dice1.png";
    }
   }
   Material {
@@ -508,7 +508,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\NGNG\\project\\data\\TEXTURE\\STATUE\\dice2.png";
+    "data\\TEXTURE\\STATUE\\dice2.png";
    }
   }
   Material {
@@ -517,7 +517,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\NGNG\\project\\data\\TEXTURE\\STATUE\\dice3.png";
+    "data\\TEXTURE\\STATUE\\dice3.png";
    }
   }
   Material {
@@ -526,7 +526,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\NGNG\\project\\data\\TEXTURE\\STATUE\\dice5.png";
+    "data\\TEXTURE\\STATUE\\dice5.png";
    }
   }
   Material {
@@ -535,7 +535,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\NGNG\\project\\data\\TEXTURE\\STATUE\\dice4.png";
+    "data\\TEXTURE\\STATUE\\dice4.png";
    }
   }
   Material {
@@ -544,7 +544,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\NGNG\\project\\data\\TEXTURE\\STATUE\\dice6.png";
+    "data\\TEXTURE\\STATUE\\dice6.png";
    }
   }
  }
