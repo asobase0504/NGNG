@@ -76,7 +76,7 @@ void CStatueChest::Update()
 				// アイテムランダムドロップ関数追加
 				//---------------------------------------------------------------------------------
 				D3DXVECTOR3 pos = GetPos();
-				CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), CItemDataBase::ITEM_POWER_ON);
+				CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), CItemDataBase::ITEM_POWER_UP);
 
 				m_bOnce = true;
 			}
