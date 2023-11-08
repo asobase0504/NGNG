@@ -14,14 +14,16 @@
 #include "status.h"
 #include "item_data_base.h"
 #include "road.h"
+#include "abnormal_data_base.h"
 #include <array>
 
 //==============================================================
 // 前方宣言
 //==============================================================
 class CObjectX;
-class CCollision;
+class CCollisionCylinder;
 class CRoad;
+class CAbnormal;
 
 //==============================================================
 // プレイヤークラス
@@ -50,7 +52,7 @@ public:
 	// 静的メンバ関数
 	static CCharacter *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);		// プレイヤーの生成
 
-	CCollision* GetCollision() { return m_collision; }
+	CCollisionCylinder* GetCollision() { return m_collision; }
 
 	std::vector<CObjectX*> GetModel() { return m_apModel; }
 
@@ -58,6 +60,9 @@ public:
   
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
+	void AddUbnormalStack(const int id) { m_haveAbnormal[id].s_stack++; }
+	void SetUbnormalTime(const int id, const int Time) { m_haveAbnormal[id].s_effectTime = Time; }
+	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
 
 	int CalDamage(float SkillAtkMul);
 
@@ -122,14 +127,17 @@ private:
 
 protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
-	CCollision*	m_collision;	// 当たり判定
+	CCollisionCylinder*	m_collision;			// 当たり判定
 private:		// メンバ変数
 
 protected:		// ステータス
 
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;
+	// 持っている状態異常の個数をそれぞれ管理
+	abnormal_count m_haveAbnormal;
 
+	bool m_isBlock;	// 防御できたかできてないか
 	bool m_isDied;	// 死亡状態か否か。
 	STATE m_state;
 

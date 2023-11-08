@@ -1,7 +1,7 @@
-//**************************************************************
+Ôªø//**************************************************************
 //
-// É|ÉäÉSÉìÉoÉåÉbÉg
-// Author : ïyèäímê∂
+// „Éù„É™„Ç¥„É≥„Éê„É¨„ÉÉ„Éà
+// Author : ÂÜ®ÊâÄÁü•Áîü
 //
 //**************************************************************
 
@@ -14,24 +14,25 @@
 #include "application.h"
 #include "collision.h"
 #include "collision_cylinder.h"
+#include "abnormal.h"
 #include "player_manager.h"
 
 //--------------------------------------------------------------
-// ÉRÉìÉXÉgÉâÉNÉ^
+// „Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø
 //--------------------------------------------------------------
 CBullet::CBullet() : m_life(100)
 {
 }
 
 //--------------------------------------------------------------
-// ÉfÉXÉgÉâÉNÉ^
+// „Éá„Çπ„Éà„É©„ÇØ„Çø
 //--------------------------------------------------------------
 CBullet::~CBullet()
 {
 }
 
 //--------------------------------------------------------------
-// èâä˙âª
+// ÂàùÊúüÂåñ
 //--------------------------------------------------------------
 HRESULT CBullet::Init()
 {
@@ -47,15 +48,16 @@ HRESULT CBullet::Init()
 }
 
 //--------------------------------------------------------------
-// èIóπ
+// ÁµÇ‰∫Ü
 //--------------------------------------------------------------
 void CBullet::Uninit()
 {
 	CObjectPolygon3D::Uninit();
+	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------
-// çXêV
+// Êõ¥Êñ∞
 //--------------------------------------------------------------
 void CBullet::Update()
 {
@@ -67,7 +69,7 @@ void CBullet::Update()
 	D3DXVec3Normalize(&move,&GetMove());
 	move *= m_speed;
 
-	// à⁄ìÆ
+	// ÁßªÂãï
 	AddPos(move);
 
 	m_life--;
@@ -77,18 +79,20 @@ void CBullet::Update()
 		Uninit();
 	}
 
-	// ÉvÉåÉCÉÑÅ[ÇÃälìæ
+	// „Éó„É¨„Ç§„É§„Éº„ÅÆÁç≤Âæó
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
 	
 	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
-		pPlayer->Damage(50.0f);
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData(CAbnormalDataBase::ABNORMAL_FIRE)->GetWhenAddFunc();
+
+		abnormalFunc(pPlayer, CAbnormalDataBase::ABNORMAL_FIRE);
 		Uninit();
 	}
 }
 
 //--------------------------------------------------------------
-// ï`âÊ
+// ÊèèÁîª
 //--------------------------------------------------------------
 void CBullet::Draw()
 {
@@ -96,7 +100,7 @@ void CBullet::Draw()
 }
 
 //--------------------------------------------------------------
-// ê∂ê¨
+// ÁîüÊàê
 //--------------------------------------------------------------
 CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move,float speed)
 {

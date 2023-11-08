@@ -19,6 +19,7 @@
 #include "skill_data_base.h"
 #include "enemy_data_base.h"
 #include "item_data_base.h"
+#include "abnormal_data_base.h"
 
 /* ŠO•”“Ç‚İ */
 #include "font.h"
@@ -175,6 +176,7 @@ void CApplication::Uninit()
 	CSkillDataBase::Uninit();
 	CEnemyDataBase::Uninit();
 	CItemDataBase::Uninit();
+	CAbnormalDataBase::Uninit();
 
 }
 

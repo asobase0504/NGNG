@@ -2,6 +2,7 @@
 #include "item.h"
 
 #include "character.h"
+#include "utility.h"
 
 //==============================================================
 // 静的メンバー変数の宣言
@@ -21,16 +22,18 @@ CItemDataBase::CItemDataBase()
 void CItemDataBase::Init()
 {
 	m_item[ITEM_POWER_UP] = CItem::Create(ITEM_POWER_UP);
+	m_item[ITEM_POWER_UP]->SetModel("BOX");
 	// ジャンプ回数上昇アイテムの設定-----------------------------
+	// * ジャンプ回数 +1(+1) *
 	m_item[ITEM_POWER_UP]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetJumpCount()->AddItemEffect(1); });
 	m_item[ITEM_POWER_UP]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetJumpCount()->AddItemEffect(-1); });
-
 	//--------------------------------------------------------------
 
 	m_item[ITEM_DANGO] = CItem::Create(ITEM_DANGO);
 	// だんごの設定-------------------------------------------------
+	/* HP+50(+50)増加 */
 	m_item[ITEM_DANGO]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetHp()->AddItemEffect(50); });
 	m_item[ITEM_DANGO]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
@@ -40,6 +43,7 @@ void CItemDataBase::Init()
 
 	m_item[ITEM_GETA] = CItem::Create(ITEM_GETA);
 	// 下駄の設定----------------------------------------------------
+	/* 移動速度増加+0.15(0.15) */
 	m_item[ITEM_GETA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetSpeed()->AddItemEffect(0.15f); });
 	m_item[ITEM_GETA]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
@@ -49,6 +53,7 @@ void CItemDataBase::Init()
 
 	m_item[ITEM_UMBRELLA] = CItem::Create(ITEM_UMBRELLA);
 	// 傘の設定-----------------------------------------------------
+	/* 防御力を+5(+5)する */
 	m_item[ITEM_UMBRELLA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetDefense()->AddItemEffect(5); });
 	m_item[ITEM_UMBRELLA]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
@@ -57,6 +62,7 @@ void CItemDataBase::Init()
 
 	m_item[ITEM_HYOUTAN] = CItem::Create(ITEM_HYOUTAN);
 	// ひょうたん---------------------------------------------------
+	/* 攻撃速度と移動速度を +0.075%(0.075)ずつする */
 	m_item[ITEM_HYOUTAN]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetAtkSpd()->AddItemEffect(0.075f); 
 		inCharacter->GetSpeed()->AddItemEffect(0.075f); });
@@ -67,6 +73,7 @@ void CItemDataBase::Init()
 
 	m_item[ITEM_BANBOO_WATERBOX] = CItem::Create(ITEM_BANBOO_WATERBOX);
 	// 竹の水筒-----------------------------------------------------
+	/* 攻撃速度を+0.15%(0.15)ずつする */
 	m_item[ITEM_BANBOO_WATERBOX]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetAtkSpd()->AddItemEffect(0.15f);});
 	m_item[ITEM_BANBOO_WATERBOX]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
@@ -75,6 +82,7 @@ void CItemDataBase::Init()
 
 	m_item[ITEM_OMAMORI] = CItem::Create(ITEM_OMAMORI);
 	// お守り-------------------------------------------------------
+	/* 攻撃速度を+0.1%(0.1%)する */
 	m_item[ITEM_OMAMORI]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetAtkSpd()->AddItemEffect(0.1f); });
 	m_item[ITEM_OMAMORI]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
@@ -82,19 +90,25 @@ void CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	m_item[ITEM_KIBORI] = CItem::Create(ITEM_KIBORI);
+	m_item[ITEM_KIBORI]->SetModel("BOX");
 	// 熊の木彫り(保留)---------------------------------------------
-	m_item[ITEM_KIBORI]->SetWhenDamageFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	m_item[ITEM_KIBORI]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		// 15%の確率でブロックする。
-		CStatus<int> HPup = *inCharacter->GetHp();
-		HPup.AddItemEffect(50);
-		inCharacter->SetHp(HPup);
+		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+		{
+			// 15%の確率でブロックする。
+			if (IsSuccessRate(0.15f))
+			{
+				inCharacter->DamageBlock(true);
+				break;
+			}
+		}
 	});
 	//--------------------------------------------------------------
 
 	m_item[ITEM_BAKUTIKU] = CItem::Create(ITEM_BAKUTIKU);
 	// ばくちく(保留)-----------------------------------------------
-	m_item[ITEM_BAKUTIKU]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	m_item[ITEM_BAKUTIKU]->SetWhenDamageFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
 		// 攻撃時に5%の確率でスタンさせる。
 	});

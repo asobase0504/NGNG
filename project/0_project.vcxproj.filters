@@ -75,6 +75,9 @@
     <Filter Include="ソース ファイル\3D\camera">
       <UniqueIdentifier>{a8d215c4-205c-4cc3-b1a4-7f24bc93701d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\character\abnormality">
+      <UniqueIdentifier>{3476f976-0f28-4fc6-b760-8f0d95b60701}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -327,8 +330,15 @@
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClCompile>
     <ClCompile Include="src\procedure.cpp">
+    </ClCompile>
     <ClCompile Include="src\road.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="abnormal_data_base.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\abnormality</Filter>
+    </ClCompile>
+    <ClCompile Include="abnormal.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\abnormality</Filter>
     </ClCompile>
     <ClCompile Include="src\skill_ui.cpp">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
@@ -564,6 +574,15 @@
     <ClInclude Include="src\road.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
+    <ClInclude Include="src\bullet.h">
+      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="abnormal_data_base.h">
+      <Filter>ソース ファイル\Mode\Game\character\abnormality</Filter>
+    </ClInclude>
+    <ClInclude Include="abnormal.h">
+      <Filter>ソース ファイル\Mode\Game\character\abnormality</Filter>
+    </ClInclude>
     <ClInclude Include="src\character_select.h">
       <Filter>ソース ファイル\Mode</Filter>
     </ClInclude>
@@ -595,6 +614,9 @@
     </None>
     <None Include="data\FILE\model.json">
       <Filter>ソース ファイル\Statue</Filter>
+    </None>
+    <None Include="data\FILE\map\map02.json">
+      <Filter>ソース ファイル\Mode\Game\map\json</Filter>
     </None>
   </ItemGroup>
 </Project>

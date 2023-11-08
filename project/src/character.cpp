@@ -15,11 +15,16 @@
 #include "collision_sphere.h"
 #include "road.h"
 #include "statue_manager.h"
+#include "item.h"
+#include "abnormal.h"
+#include "abnormal_data_base.h"
 
 #include "status.h"
 #include "map.h"
 #include "map_model.h"
 #include "object_mesh.h"
+
+#include <thread>
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -79,6 +84,12 @@ HRESULT CCharacter::Init()
 	m_money.Init(100);
 	m_money.SetCurrent(50);
 
+	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
+	{
+		m_haveAbnormal[i].s_effectTime = 0;
+		m_haveAbnormal[i].s_stack = 0;
+	}
+
 	m_state = GROUND;
 
 	return S_OK;
@@ -87,7 +98,7 @@ HRESULT CCharacter::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CCharacter::Uninit(void)
+void CCharacter::Uninit()
 {
 	// 破棄処理
 	CObject::Release();
@@ -99,7 +110,7 @@ void CCharacter::Uninit(void)
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CCharacter::Update(void)
+void CCharacter::Update()
 {
 	// 更新処理
 	CObject::Update();
@@ -112,7 +123,7 @@ void CCharacter::Update(void)
 		{
 			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
 			SetPos(extrusion);
-			SetMoveXZ(0.0f,0.0f);
+			SetMoveXZ(0.0f, 0.0f);
 
 			if (m_collision->GetIsTop())
 			{
@@ -173,12 +184,28 @@ void CCharacter::Update(void)
 
 	// 重力
 	AddMoveY(-0.18f);
+
+	// 付与されている状態異常を作動させる
+	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	{
+		if(m_haveAbnormal[i].s_stack <= 0)
+		{
+			return;
+		}
+
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData(CAbnormalDataBase::ABNORMAL_FIRE)->GetWhenAllWayFunc();
+
+		if (abnormalFunc != nullptr)
+		{
+			abnormalFunc(this, i);
+		}
+	}
 }
 
 //--------------------------------------------------------------
 // 描画処理
 //--------------------------------------------------------------
-void CCharacter::Draw(void)
+void CCharacter::Draw()
 {
 	//デバイスへのポインタ
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
@@ -275,6 +302,12 @@ void CCharacter::Damage(const int inDamage)
 	if (dmg <= 1)
 	{// ダメージが1以下だった時1にする
 		dmg = 1;
+	}
+
+	if (m_isBlock)
+	{// ブロックがtrueの時にダメージを0にする
+		dmg = 0;
+		DamageBlock(false);
 	}
 
 	hp->AddCurrent(-dmg);
