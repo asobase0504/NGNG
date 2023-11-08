@@ -28,7 +28,7 @@ void CAbnormalDataBase::Init()
 		inCharacter->AddUbnormalStack(ABNORMAL_FIRE);
 		inCharacter->SetUbnormalTime(ABNORMAL_FIRE, 60);
 	});
-	m_abnormal[ABNORMAL_FIRE]->SetWhenAllWayFunc([](CCharacter* inCharacter, int cnt)
+	m_abnormal[ABNORMAL_FIRE]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
 	{
 		inCharacter->GetHp()->AddCurrent(-1);
 	});

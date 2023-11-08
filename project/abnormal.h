@@ -40,7 +40,7 @@ public:
 
 	void SetWhenAddFunc(ABNORMAL_FUNC inFunc) { m_getFunc = inFunc; }				// ó‘ÔˆÙí‚ğó‚¯‚½‚Æ‚«‚Ìˆ—
 	void SetWhenClearFunc(ABNORMAL_FUNC inFunc) { m_lostFunc = inFunc; }			// ‰ñ•œ‚µ‚½‚Ìˆ—
-	void SetWhenAllWayFunc(ABNORMAL_FUNC inFunc) { m_allwayFunc = inFunc; }			// í”­“®‚µ‚Ä‚¢‚éˆ—
+	void SetWhenAlwaysFunc(ABNORMAL_FUNC inFunc) { m_allwayFunc = inFunc; }			// í”­“®‚µ‚Ä‚¢‚éˆ—
 
 	void SetEffectTime(int eTime) { m_effectTime = eTime; }
 

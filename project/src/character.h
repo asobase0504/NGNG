@@ -118,9 +118,15 @@ public:
 
 	// 攻撃
 	void Attack(CCharacter* pEnemy, float SkillMul);
+
+	// 死亡状態か否か。
 	bool IsDied() { return m_isDied; }
 	void Died() { m_isDied = true; }
-  
+
+	// シールド回復するかどうか
+	void SetShield() { m_isShield = true; }
+	bool GetIsShield() { return m_isShield; }
+
 private:
 	virtual void Move();
 	void UpdatePos();			// 座標の更新
@@ -139,6 +145,7 @@ protected:		// ステータス
 
 	bool m_isBlock;	// 防御できたかできてないか
 	bool m_isDied;	// 死亡状態か否か。
+	bool m_isShield;	// シールドを回復するかどうか
 	STATE m_state;
 
 	CStatus<int> m_hp;							// 体力

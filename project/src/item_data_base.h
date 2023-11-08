@@ -30,7 +30,8 @@ public:
 		ITEM_BAKUTIKU,
 		ITEM_MAKIBISI,
 		ITEM_HEAD,
-		ITEM__KUNAI,
+		ITEM_KUNAI,
+		ITEM_FUR,
 		ITEM_MAX
 	};
 private:

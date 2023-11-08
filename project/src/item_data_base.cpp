@@ -92,7 +92,7 @@ void CItemDataBase::Init()
 	m_item[ITEM_KIBORI] = CItem::Create(ITEM_KIBORI);
 	m_item[ITEM_KIBORI]->SetModel("BOX");
 	// 熊の木彫り(保留)---------------------------------------------
-	m_item[ITEM_KIBORI]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	m_item[ITEM_KIBORI]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
 		for (int Cnt = 0; Cnt <= cnt; Cnt++)
 		{
@@ -108,29 +108,95 @@ void CItemDataBase::Init()
 
 	m_item[ITEM_BAKUTIKU] = CItem::Create(ITEM_BAKUTIKU);
 	// ばくちく(保留)-----------------------------------------------
-	m_item[ITEM_BAKUTIKU]->SetWhenDamageFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	m_item[ITEM_BAKUTIKU]->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		// 攻撃時に5%の確率でスタンさせる。
+		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+		{
+			// 攻撃時に5%の確率でスタンさせる。
+			if (IsSuccessRate(0.05f))
+			{
+				//outCharacter->DamageBlock(true);
+				break;
+			}
+		}
 	});
 	//--------------------------------------------------------------
 
 	m_item[ITEM_MAKIBISI] = CItem::Create(ITEM_MAKIBISI);
 	// まきびし-----------------------------------------------------
-	m_item[ITEM_MAKIBISI]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{});
-
-	m_item[ITEM_MAKIBISI]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
-	{
-		// 攻撃時に敵に移動速度-5%にする状態異常を付与する。
+	m_item[ITEM_MAKIBISI]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 攻撃時に敵に移動速度-5%にする状態異常を付与する。
+		//outCharacter->DamageBlock(true);
 	});
+
 	//--------------------------------------------------------------
 
 	m_item[ITEM_HEAD] = CItem::Create(ITEM_HEAD);
 	// 首級---------------------------------------------------------
-	m_item[ITEM_HEAD]->SetWhenHitFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{
+	m_item[ITEM_HEAD]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 敵を倒した時、HPの1%(+1%)を回復する。
+		int percent = 1;
+		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+		{// 持ってる数、割合を増やす
+			percent += 1;
+		}
 
+		// 最大体力を取得
+		int hpMax = inCharacter->GetHp()->GetMax();
+		// 回復する値
+		int recovery = (int)(hpMax * (percent / 100));
+		inCharacter->GetHp()->AddItemEffect(recovery);
 	});
+
+	m_item[ITEM_KUNAI] = CItem::Create(ITEM_KUNAI);
+	// 首級---------------------------------------------------------
+	m_item[ITEM_KUNAI]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 体力が90%以上の敵に対して70%(+70%)ダメージが増加する。
+		// 最大体力を取得
+		int hpMax = outCharacter->GetHp()->GetMax();
+		// 現在の体力
+		int hpCurrent = outCharacter->GetHp()->GetCurrent();
+
+		// 体力の割合を計算
+		int percent = (int)(hpCurrent / hpMax * 100);
+
+		if (percent >= 90)
+		{// 相手の体力が90%以上だった時
+			int addParcent = 70;
+
+			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			{// 持ってる数、割合を増やす
+				addParcent += 70;
+			}
+
+			// TODO　ダメージ計算
+		}
+	});
+
+	m_item[ITEM_FUR] = CItem::Create(ITEM_FUR);
+	// 毛皮---------------------------------------------------------
+	m_item[ITEM_FUR]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
+	{// 最大体力の8%のシールドを得る。
+		if (inCharacter->GetIsShield())
+		{// シールドを回復する状態の時
+			// 最大体力を取得
+			int hpMax = inCharacter->GetHp()->GetMax();
+
+			// 増やす割合
+			int percent = 8;
+
+			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			{// 持ってる数、割合を増やす
+				percent += 8;
+			}
+
+			int addShield = (int)(hpMax * (percent / 100));
+
+			// プレイヤーのシールドに加算する処理
+			inCharacter->GetBarrier()->SetCurrent(addShield);
+		}
+	});
+
 }
 
 //--------------------------------------------------------------
