@@ -102,6 +102,9 @@ CMap* CMap::Create()
 	return m_map;
 }
 
+//--------------------------------------------------------------
+// ì«çûÇ›
+//--------------------------------------------------------------
 void CMap::Load(std::string path)
 {
 	nlohmann::json map = LoadJson(path);
@@ -129,4 +132,14 @@ void CMap::Load(std::string path)
 
 		m_mesh.push_back(object);
 	}
+
+	m_nextMapPath = map["NEXT_MAP"];
+}
+
+//--------------------------------------------------------------
+// êÿÇËë÷Ç¶
+//--------------------------------------------------------------
+void CMap::Change()
+{
+	Uninit();
 }

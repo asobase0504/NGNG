@@ -48,10 +48,12 @@ public:
 	CMesh* GetMapMesh(int inNum) { return m_mesh[inNum]; }
 	int GetNumMesh() { return m_mesh.size(); }
 
+	void Change();
 private:
 	static CMap* m_map;
 	std::vector<CMapModel*> m_mapModel;
 	std::vector<CMesh*> m_mesh;
+	std::string m_nextMapPath;	//ŽŸ‚Ìƒ}ƒbƒv
 	int m_SpawnCnt;
 };
 #endif

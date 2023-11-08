@@ -14,7 +14,7 @@
 #include "sound.h"
 #include "task_group.h"
 #include "objectX_group.h"
-#include "fade.h"
+#include "mode_fade.h"
 
 #include "skill_data_base.h"
 #include "enemy_data_base.h"
@@ -115,7 +115,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	//ÉÇÅ[ÉhÇÃê›íË
 	SetMode(m_modeType);
 
-	m_fade = CFade::Create();
+	m_fade = CModeFade::Create();
 
 	CSkillDataBase::GetInstance();
 	CEnemyDataBase::GetInstance();

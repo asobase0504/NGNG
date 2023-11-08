@@ -98,8 +98,10 @@ void CStatue::Update()
 	m_collisionBox->SetMtxWorld(GetMtxWorld());
 
 #ifdef _DEBUG
+#if 0
 	CDebugProc::Print("StatueCollisionBox:pos(%f,%f,%f)\n", m_collisionBox->GetPosWorld().x, m_collisionBox->GetPosWorld().y, m_collisionBox->GetPosWorld().z);
 	CDebugProc::Print("StatueCollisionCylinder:pos(%f,%f,%f)\n", m_collisionCylinder->GetPosWorld().x, m_collisionCylinder->GetPosWorld().y, m_collisionCylinder->GetPosWorld().z);
+#endif
 #endif // _DEBUG
 }
 
