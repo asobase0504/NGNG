@@ -40,6 +40,7 @@
 
 #include "hp_ui.h"
 #include "money_ui.h"
+#include "skill_ui.h"
 
 //==============================================================
 // 定数
@@ -79,6 +80,7 @@ HRESULT CDebugMode::Init(void)
 
 	CHPUI::Create(pPlayer->GetHp());
 	CMONEYUI::Create(pPlayer->GetMoney());
+	CSKILLUI::Create(pPlayer->GetSkill(0));
 
 	// エネミーの生成
 	//CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);

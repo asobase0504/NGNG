@@ -49,6 +49,9 @@ public:
 	void SetController(CController* inOperate);
 	void SetPos(const D3DXVECTOR3& inPos);
 
+	// Getter
+	CSkill* GetSkill(int nCnt) { return m_Skill[nCnt]; }
+
 private:
 	void PAttack();		// 攻撃
 	void Move();		// 移動
