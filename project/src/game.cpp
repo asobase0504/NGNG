@@ -20,6 +20,7 @@
 #include "light.h"
 #include "utility.h"
 #include "mode_fade.h"
+#include "map_fade.h"
 
 /* Object系統 */
 #include "object_polygon3d.h"
@@ -50,7 +51,8 @@
 // コンストラクタ
 // Author : Yuda Kaito
 //--------------------------------------------------------------
-CGame::CGame()
+CGame::CGame() :
+	m_map(nullptr)
 {
 }
 
@@ -66,8 +68,11 @@ CGame::~CGame()
 // 初期化
 // Author : Yuda Kaito
 //--------------------------------------------------------------
-HRESULT CGame::Init(void)
+HRESULT CGame::Init()
 {
+	m_mapFade = CMapFade::Create();
+	m_mapFade->NextMap("data/FILE/map/map01.json");
+
 	m_camera = new CCameraGame;
 	m_camera->Init();
 
@@ -76,6 +81,7 @@ HRESULT CGame::Init(void)
 
 	// プレイヤーの設定
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
+	pPlayer->OffUpdate();
 	m_camera->SetTargetPos(pPlayer->GetPos());
 
 	CHPUI::Create(pPlayer->GetHp());
@@ -83,9 +89,6 @@ HRESULT CGame::Init(void)
 
 	// エネミーの生成
 	//CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
-
-	// マップの生成
-	CMap::Create();
 
 //	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
 
@@ -96,7 +99,7 @@ HRESULT CGame::Init(void)
 // 終了
 // Author : Yuda Kaito
 //--------------------------------------------------------------
-void CGame::Uninit(void)
+void CGame::Uninit()
 {
 
 }
@@ -105,7 +108,7 @@ void CGame::Uninit(void)
 // 更新
 // Author : Yuda Kaito
 //--------------------------------------------------------------
-void CGame::Update(void)
+void CGame::Update()
 {
 	CInput* pInput;
 	pInput = CInput::GetKey();
@@ -115,4 +118,34 @@ void CGame::Update(void)
 	{
 		pFade->NextMode(CApplication::MODE_DEBUG);
 	}
+	if (pInput->Trigger(DIK_F5))
+	{
+		pFade->NextMode(CApplication::MODE_DEBUG);
+	}
+	if (pInput->Trigger(DIK_6))
+	{
+		SetChangeMap();
+	}
+}
+
+void CGame::SetChangeMap()
+{
+	CPlayerManager::GetInstance()->GetPlayer()->OffUpdate();
+	m_mapFade->NextMap(m_map->GetNextMapPath());
+}
+
+//--------------------------------------------------------------
+// マップの作成
+// Author : Yuda Kaito
+//--------------------------------------------------------------
+void CGame::ChangeMap(std::string inPath)
+{
+	if (m_map != nullptr)
+	{
+		m_map->Uninit();
+		m_map = nullptr;
+	}
+
+	CPlayerManager::GetInstance()->GetPlayer()->OnUpdate();
+	m_map = CMap::Create(inPath);
 }

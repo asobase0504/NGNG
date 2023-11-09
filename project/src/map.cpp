@@ -15,6 +15,8 @@
 #include "map_model.h"
 #include "object_mesh.h"
 #include "file.h"
+#include "statue.h"
+#include "utility.h"
 
 #include "statue_manager.h"
 #include "enemy_manager.h"
@@ -27,10 +29,11 @@ CMap* CMap::m_map = nullptr;
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CMap::CMap()
+CMap::CMap() :
+	CTask(CTaskGroup::EPriority::LEVEL_SYSTEM)
 {
 	m_SpawnCnt = 0;
-	m_mapModel.clear();
+	m_model.clear();
 	m_mesh.clear();
 }
 
@@ -45,19 +48,18 @@ CMap::~CMap()
 //--------------------------------------------------------------
 // 初期化
 //--------------------------------------------------------------
-HRESULT CMap::Init(void)
+HRESULT CMap::Init()
 {
-	Load("data/FILE/map/map01.json");
-
-	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
-	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
-	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
-	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::BLOOD);
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::LUCK);
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::TELEPORTER);
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::CHEST);
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::COMBAT);
+	CStatueManager* manager = CStatueManager::GetInstance();
+	m_statue.push_back(manager->RandomCreate());
+	m_statue.push_back(manager->RandomCreate());
+	m_statue.push_back(manager->RandomCreate());
+	m_statue.push_back(manager->RandomCreate());
+	m_statue.push_back(manager->CreateStatue(CStatueManager::BLOOD));
+	m_statue.push_back(manager->CreateStatue(CStatueManager::LUCK));
+	m_statue.push_back(manager->CreateStatue(CStatueManager::TELEPORTER));
+	m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
+	m_statue.push_back(manager->CreateStatue(CStatueManager::COMBAT));
 
 	return S_OK;
 }
@@ -65,14 +67,40 @@ HRESULT CMap::Init(void)
 //--------------------------------------------------------------
 // 終了
 //--------------------------------------------------------------
-void CMap::Uninit(void)
+void CMap::Uninit()
 {
+	for (CStatue* statue : m_statue)
+	{
+		statue->Uninit();
+		statue = nullptr;
+	}
+	for (CMesh* mesh : m_mesh)
+	{
+		mesh->Uninit();
+		mesh = nullptr;
+	}
+	for (CMapModel* model : m_model)
+	{
+		model->Uninit();
+		model = nullptr;
+	}
+	for (CEnemy* enemy : m_enemy)
+	{
+		enemy->Uninit();
+		enemy = nullptr;
+	}
+	m_statue.clear();
+	m_mesh.clear();
+	m_model.clear();
+	m_enemy.clear();
+
+	CTask::Uninit();
 }
 
 //--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
-void CMap::Update(void)
+void CMap::Update()
 {
 	m_SpawnCnt++;
 
@@ -80,14 +108,14 @@ void CMap::Update(void)
 	if (m_SpawnCnt >= 600)
 	{
 		m_SpawnCnt = 0;
-		CEnemyManager::GetInstance()->RandomSpawn();
+		InEnemyList(CEnemyManager::GetInstance()->RandomSpawn());
 	}
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CMap* CMap::Create()
+CMap* CMap::Create(std::string path)
 {
 	//キャラクター生成
 	m_map = new CMap;
@@ -96,6 +124,7 @@ CMap* CMap::Create()
 	{//NULLチェック
 	 //メンバ変数に代入
 	 //初期化
+		m_map->Load(path);
 		m_map->Init();
 	}
 
@@ -117,7 +146,7 @@ void CMap::Load(std::string path)
 		D3DXVECTOR3 rot(model["ROT"][0], model["ROT"][1], model["ROT"][2]);
 		CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
 		object->LoadModel(model["TAG"]);
-		m_mapModel.push_back(object);
+		m_model.push_back(object);
 	}
 
 	size = map["MESH"].size();
@@ -136,10 +165,10 @@ void CMap::Load(std::string path)
 	m_nextMapPath = map["NEXT_MAP"];
 }
 
-//--------------------------------------------------------------
-// 切り替え
-//--------------------------------------------------------------
-void CMap::Change()
+void CMap::InEnemyList(D3DXVECTOR3, int)
 {
-	Uninit();
+}
+
+void CMap::InEnemyList(int)
+{
 }

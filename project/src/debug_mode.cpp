@@ -81,7 +81,7 @@ HRESULT CDebugMode::Init(void)
 	CMONEYUI::Create(pPlayer->GetMoney());
 
 	// マップの生成
-	CMap::Create();
+	CMap::Create("data/FILE/map/map01.json");
 
 	return S_OK;
 }
@@ -112,14 +112,20 @@ void CDebugMode::Update(void)
 	}
 
 	// Tキーでタイトル
-	if (pInput->Trigger(DIK_T))
+	if (pInput->Trigger(DIK_1))
 	{
 		pFade->NextMode(CApplication::MODE_TITLE);
 	}
 
 	// Sキーで選択画面
-	if (pInput->Trigger(DIK_C))
+	if (pInput->Trigger(DIK_2))
 	{
 		pFade->NextMode(CApplication::MODE_SELECT);
+	}
+
+	// Sキーで選択画面
+	if (pInput->Trigger(DIK_3))
+	{
+		pFade->NextMode(CApplication::MODE_GAME);
 	}
 }

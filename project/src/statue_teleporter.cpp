@@ -17,6 +17,8 @@
 #include "enemy_manager.h"
 #include "enemy.h"
 #include "utility.h"
+#include "application.h"
+#include "game.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -98,6 +100,8 @@ void CStatueTeleporter::Update()
 			//-------------------------
 			// マップ移動処理追加
 			//-------------------------
+			CGame* game = (CGame*)(CApplication::GetInstance()->GetMode());
+			//game-
 		}
 	}
 

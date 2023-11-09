@@ -8,6 +8,8 @@
 // include
 //==============================================================
 #include "map_fade.h"
+#include "map.h"
+#include "game.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -16,19 +18,51 @@ CMapFade::CMapFade()
 {
 }
 
+//--------------------------------------------------------------
+// デストラクタ
+//--------------------------------------------------------------
 CMapFade::~CMapFade()
 {
 }
 
+//--------------------------------------------------------------
+// 作成
+//--------------------------------------------------------------
 CMapFade * CMapFade::Create()
 {
-	return nullptr;
+	CMapFade * pObject = new CMapFade;
+
+	if (pObject != nullptr)
+	{
+		pObject->Init();
+		pObject->m_nextMap = "data/FILE/map/map01.json";
+	}
+	return pObject;
 }
 
+//--------------------------------------------------------------
+// 次のマップ
+//--------------------------------------------------------------
 void CMapFade::NextMap(std::string nextMap)
 {
+	if (m_fade != FADENON)
+	{
+		return;
+	}
+
+	/* ↓フェードを移行する場合↓ */
+
+	Init();
+	m_nextMap = nextMap;
+	SetColor(D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+	m_fade = FADEIN;
 }
 
+//--------------------------------------------------------------
+// 切り替え
+//--------------------------------------------------------------
 void CMapFade::Change()
 {
+	CGame* game = (CGame*)(CApplication::GetInstance()->GetModeClass());
+	game->ChangeMap(m_nextMap);
 }

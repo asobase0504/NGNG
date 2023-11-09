@@ -229,7 +229,8 @@ void CApplication::SetMode(MODE mode)
 		m_mode = new CCharacterSelect;
 		break;
 	case CApplication::MODE_DEBUG:
-		m_mode = new CDebugMode;
+		m_mode = new CGame;
+		//m_mode = new CDebugMode;
 	default:
 		break;
 	}

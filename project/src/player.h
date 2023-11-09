@@ -49,6 +49,9 @@ public:
 	void SetController(CController* inOperate);
 	void SetPos(const D3DXVECTOR3& inPos);
 
+	void OnUpdate() { m_isUpdate = true; }
+	void OffUpdate() { m_isUpdate = false; }
+
 private:
 	void PAttack();		// 攻撃
 	void Move();		// 移動
@@ -61,6 +64,8 @@ private:		// メンバ変数
 
 	bool			m_isjump;		// ジャンプしているかどうか
 	bool			m_isdash;		// ダッシュしているかどうか
+
+	bool			m_isUpdate;		// 更新を止めるか否か。
 
 	CController*		m_controller;			// 命令を出す人
 	CSkill*				m_Skill[MAX_SKILL];

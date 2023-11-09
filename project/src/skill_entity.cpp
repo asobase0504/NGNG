@@ -15,6 +15,7 @@
 #include "enemy_manager.h"
 #include "enemy.h"
 #include "collision_sphere.h"
+#include "map.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -73,16 +74,14 @@ void CSkillEntity::Update(void)
 		m_Duration--;
 
 		// 当たり判定
-		std::vector<CEnemy*> Enemy = CEnemyManager::GetInstance()->GetEnemy();
-		// エネミーの数を取得
-		int EnemyCount = Enemy.size();
+		std::list<CEnemy*> enemyList = CMap::GetMap()->GetEnemyList();
 
-		for (int nCnt = 0; nCnt < EnemyCount; nCnt++)
+		for (CEnemy* enemy : enemyList)
 		{// 攻撃範囲に敵がいるか判定する
-			bool a = m_Collision->ToSphere((CCollisionSphere*)Enemy[nCnt]->GetCollision());
+			bool a = m_Collision->ToSphere((CCollisionSphere*)enemy->GetCollision());
 			if (a)
 			{// ダメージの判定
-				HitAbility(Enemy[nCnt]);
+				HitAbility(enemy);
 			}
 		}
 	}
