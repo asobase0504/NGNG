@@ -25,7 +25,7 @@ class CPlayer;
 class CStatue : public CObjectX
 {
 public:
-	CStatue(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	CStatue();
 	~CStatue();
 
 	HRESULT Init() override;
