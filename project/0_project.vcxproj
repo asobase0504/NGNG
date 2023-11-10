@@ -109,7 +109,6 @@
   <ItemGroup>
     <ClInclude Include="abnormal.h" />
     <ClInclude Include="abnormal_data_base.h" />
-    <ClInclude Include="bullet.h" />
     <ClInclude Include="src\character_select.h" />
     <ClInclude Include="src\debug_mode.h" />
     <ClInclude Include="src\bullet.h" />

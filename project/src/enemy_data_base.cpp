@@ -277,15 +277,15 @@ void CEnemyDataBase::Init()
 		D3DXVECTOR3 distancePos = (PlayerPos - pos);
 		float distance = D3DXVec3Length(&distancePos);
 
-		inEnemy->SetAttackCnt(1);
+		inEnemy->AddAttackCnt(1);
 
 		// ‹ß‚Ã‚¢‚½Žž
-		if (distance <= 150.0f)
+		if (distance <= 50.0f)
 		{
 			if (inEnemy->GetAttackCnt() >= 120)
 			{
 				// ‹ßÚUŒ‚
-				CMeleeAttack::Create(inEnemy->GetPos());
+				CMeleeAttack::Create(D3DXVECTOR3(inEnemy->GetPos().x, inEnemy->GetPos().y, inEnemy->GetPos().z));
 				inEnemy->SetAttackCnt(0);
 				move *= -0.5f;
 			}
