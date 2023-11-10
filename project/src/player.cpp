@@ -52,6 +52,7 @@ CPlayer::~CPlayer()
 //--------------------------------------------------------------
 HRESULT CPlayer::Init()
 {
+	m_isUpdate = true;
 	// 初期化処理
 	CCharacter::Init();
 
@@ -99,6 +100,11 @@ void CPlayer::Uninit()
 //--------------------------------------------------------------
 void CPlayer::Update()
 {
+	if (!m_isUpdate)
+	{
+		return;
+	}
+
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 

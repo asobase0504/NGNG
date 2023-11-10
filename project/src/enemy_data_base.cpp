@@ -12,6 +12,7 @@
 #include "abnormal.h"
 #include "enemy.h"
 #include "bullet.h"
+#include "melee_attack.h"
 
 //行動パターンに必要なinclude
 #include "player_manager.h"
@@ -170,7 +171,7 @@ void CEnemyDataBase::Init()
 		inEnemy->SetMove(move);
 	};
 
-	// 空中から近寄る
+	// 地上から近寄る
 	m_activityFunc[PATTERN_GROUND_GO] = [](CEnemy* inEnemy)
 	{
 		// 移動量の取得
@@ -203,7 +204,7 @@ void CEnemyDataBase::Init()
 		inEnemy->SetMove(move);
 	};
 
-	// 空中から一定の距離を稼ぐ
+	// 地上から一定の距離を稼ぐ
 	m_activityFunc[PATTERN_GROUND_KEEP_DISTANCE] = [](CEnemy* inEnemy)
 	{
 		// 移動量の取得
@@ -240,6 +241,56 @@ void CEnemyDataBase::Init()
 		if (distance <= 150.0f)
 		{
 			move *= -0.5f;
+		}
+
+		inEnemy->SetMoveXZ(move.x, move.z);
+	};
+
+	// 地上から近寄って攻撃
+	m_activityFunc[PATTERN_GROUND_GO_ATTACK] = [](CEnemy* inEnemy)
+	{
+		// 移動量の取得
+		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+		// 座標の取得
+		D3DXVECTOR3 pos = inEnemy->GetPos();
+
+		// プレイヤーの位置取得
+		D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
+
+		// 敵の追従
+		if (pos.x <= PlayerPos.x)
+		{
+			move.x += MAX_SPEED;
+		}
+		else
+		{
+			move.x -= MAX_SPEED;
+		}
+		if (pos.z <= PlayerPos.z)
+		{
+			move.z += MAX_SPEED;
+		}
+		else
+		{
+			move.z -= MAX_SPEED;
+		}
+
+		D3DXVECTOR3 distancePos = (PlayerPos - pos);
+		float distance = D3DXVec3Length(&distancePos);
+
+		inEnemy->SetAttackCnt(1);
+
+		// 近づいた時
+		if (distance <= 150.0f)
+		{
+			if (inEnemy->GetAttackCnt() >= 120)
+			{
+				// 近接攻撃
+				CMeleeAttack::Create(inEnemy->GetPos());
+				inEnemy->SetAttackCnt(0);
+				move *= -0.5f;
+			}
 		}
 
 		inEnemy->SetMoveXZ(move.x, move.z);

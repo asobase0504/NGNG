@@ -126,23 +126,28 @@ void CCharacter::Update()
 
 	bool isGround = false;
 
-	CStatueManager::GetInstance()->AllFuncStatue([this, &isGround](CStatue* inSattue)
-	{
-		if (m_collision->ToBox(inSattue->GetCollisionBox(), true))
-		{
-			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
-			SetPos(extrusion);
-			SetMoveXZ(0.0f, 0.0f);
-
-			if (m_collision->GetIsTop())
-			{
-				isGround = true;
-			}
-		}
-	});
 
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
+
+	// 像との押し出し当たり判定
+	std::list<CStatue*> list = map->GetStatueList();
+	for (CStatue* inStatue : list)
+	{
+		if (!(m_collision->ToBox(inStatue->GetCollisionBox(), true)))
+		{
+			continue;
+		}
+
+		if (m_collision->GetIsTop())
+		{
+			isGround = true;
+		}
+
+		D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+		SetPos(extrusion);
+		SetMoveXZ(0.0f, 0.0f);
+	}
 
 	for (int i = 0; i < map->GetNumModel(); i++)
 	{

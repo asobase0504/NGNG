@@ -9,6 +9,7 @@
 #include "statue_chest.h"
 #include "player_manager.h"
 #include "item_manager.h"
+#include "collision_box.h"
 #include "input.h"
 
 //--------------------------------------------------------------
@@ -37,6 +38,8 @@ HRESULT CStatueChest::Init()
 	D3DXVECTOR3 rot = GetRot();
 
 	CStatue::Init(pos, rot);
+	m_collisionBox->SetPos(D3DXVECTOR3(0.0f, 5.0f, 0.0f));
+	m_collisionBox->SetSize(D3DXVECTOR3(2.5f, 5.0f, 2.5f));
 	LoadModel("STATUE_CHEST");
 	m_bOnce = false;
 

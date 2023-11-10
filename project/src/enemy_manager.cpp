@@ -67,14 +67,6 @@ void CEnemyManager::Uninit(void)
 //--------------------------------------------------------------
 void CEnemyManager::Update(void)
 {
-	for (int i = 0; i < (int)m_pEnemy.size(); i++)
-	{
-		if (m_pEnemy[i]->IsDied())
-		{
-			m_pEnemy[i]->Uninit();
-			m_pEnemy.erase(m_pEnemy.begin() + i);
-		}
-	}
 }
 
 //--------------------------------------------------------------
@@ -86,14 +78,14 @@ void CEnemyManager::Draw(void)
 
 CEnemy* CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type)
 {
-	CEnemy* enemy;
+	CEnemy* enemy = nullptr;
 
+	enemy = CEnemy::Create(pos, size);
 	switch (type)
 	{
 	case CEnemyManager::NONE:
 		break;
 	case CEnemyManager::SKELETON:
-		enemy = CEnemy::Create(pos, size);
 		break;
 	case CEnemyManager::MAX:
 		break;
@@ -101,15 +93,13 @@ CEnemy* CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type
 		break;
 	}
 
-	m_pEnemy.push_back(enemy);
-
 	return enemy;
 }
 
 //--------------------------------------------------------------
 //エネミーのランダム生成
 //--------------------------------------------------------------
-void CEnemyManager::RandomSpawn()
+CEnemy* CEnemyManager::RandomSpawn()
 {
 	// 生成
 	int randomCount = IntRandom(5, 1);
@@ -119,5 +109,5 @@ void CEnemyManager::RandomSpawn()
 	// エネミータイプのランダム化
 	int enemyType = IntRandom(1, 1);
 
- 	CreateEnemy(D3DXVECTOR3(randomPosX, 0.0f, randomPosZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), (EType)enemyType);
+ 	return CreateEnemy(D3DXVECTOR3(randomPosX, 0.0f, randomPosZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), (EType)enemyType);
 }
