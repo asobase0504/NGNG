@@ -23,6 +23,7 @@
 #include "map.h"
 #include "map_model.h"
 #include "object_mesh.h"
+#include "utility.h"
 
 #include <thread>
 
@@ -321,13 +322,19 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 {
 	// プレイヤーのダメージを計算
 	int Damage = CalDamage(SkillMul);
+
+	if (IsSuccessRate(m_criticalRate.GetMax()))
+	{
+ 		Damage *= m_criticalDamage.GetMax();
+	}
+
 	// エネミーにダメージを与える。
 	pEnemy->Damage(Damage);
 
 	// 付与されている状態異常を作動させる
 	for (int i = 0; i < m_attackAbnormal.size(); i++)
 	{
-		if (m_attackAbnormal[i] != false)
+		if (!m_attackAbnormal[i])
 		{
 			return;
 		}
