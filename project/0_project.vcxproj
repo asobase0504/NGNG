@@ -35,6 +35,7 @@
     <ClCompile Include="src\item_data_base.cpp" />
     <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\map_model.cpp" />
+    <ClCompile Include="src\melee_attack.cpp" />
     <ClCompile Include="src\money_ui.cpp" />
     <ClCompile Include="src\player_manager.cpp" />
     <ClCompile Include="src\application.cpp" />
@@ -88,6 +89,7 @@
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\skill_entity.cpp" />
+    <ClCompile Include="src\skill_ui.cpp" />
     <ClCompile Include="src\sound.cpp" />
     <ClCompile Include="src\statue.cpp" />
     <ClCompile Include="src\statue_blood.cpp" />
@@ -147,6 +149,7 @@
     <ClInclude Include="src\map.h" />
     <ClInclude Include="src\map_fade.h" />
     <ClInclude Include="src\map_model.h" />
+    <ClInclude Include="src\melee_attack.h" />
     <ClInclude Include="src\mode.h" />
     <ClInclude Include="src\mode_fade.h" />
     <ClInclude Include="src\money_ui.h" />
@@ -173,6 +176,7 @@
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\skill_entity.h" />
+    <ClInclude Include="src\skill_ui.h" />
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\statue.h" />
     <ClInclude Include="src\statue_blood.h" />

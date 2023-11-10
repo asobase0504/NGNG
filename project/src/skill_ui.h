@@ -1,40 +1,44 @@
 //==================================================
-// moneyUI.h
+// skillUI.h
 // Author: 梶田大夢
 //==================================================
-#ifndef _MONEYUI_H_
-#define _MONEYUI_H_
+#ifndef _SUKILLUI_H_
+#define _SUKILLUI_H_
 
 //**************************************************
 // インクルード
 //**************************************************
 #include "object.h"
 #include "status.h"
+#include "skill.h"
 
 //**************************************************
 // 前方前言　実態はNG　ポインタだけならOK
 //**************************************************
-class CNumber;
 class CProcedure;
+class CObject2d;
 
 //**************************************************
 // クラス
 //**************************************************
-class CMONEYUI: public CObject
+class CSKILLUI : public CObject
 {
 public:
-	CMONEYUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
-	~CMONEYUI();
+	CSKILLUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	~CSKILLUI();
 
 	HRESULT Init() override;
 	void Uninit() override;
 	void Update() override;
 
-	static CMONEYUI* Create(CStatus<int>* inMoney);
+	static CSKILLUI* Create(CSkill* inSkill);
 
 private:
-	CStatus<int>* m_money;
+	CSkill* m_skill;
 	CProcedure* m_procedure;
+	CObject2d* m_ground;
+	CObject2d* m_display;
+	int m_ct;
 };
 
 #endif // _TIMER_H_

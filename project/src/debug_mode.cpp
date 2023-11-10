@@ -40,6 +40,7 @@
 
 #include "hp_ui.h"
 #include "money_ui.h"
+#include "skill_ui.h"
 
 //==============================================================
 // ’è”
@@ -79,6 +80,7 @@ HRESULT CDebugMode::Init(void)
 
 	CHPUI::Create(pPlayer->GetHp());
 	CMONEYUI::Create(pPlayer->GetMoney());
+	CSKILLUI::Create(pPlayer->GetSkill(0));
 
 	// ƒ}ƒbƒv‚Ì¶¬
 	CMap::Create("data/FILE/map/map01.json");

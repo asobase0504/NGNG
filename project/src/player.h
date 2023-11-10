@@ -49,7 +49,10 @@ public:
 	void SetController(CController* inOperate);
 	void SetPos(const D3DXVECTOR3& inPos);
 
-	void OnUpdate() { m_isUpdate = true; }
+	// Getter
+	CSkill* GetSkill(int nCnt) { return m_Skill[nCnt]; }
+
+void OnUpdate() { m_isUpdate = true; }
 	void OffUpdate() { m_isUpdate = false; }
 
 private:

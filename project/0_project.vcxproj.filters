@@ -340,6 +340,12 @@
     <ClCompile Include="abnormal.cpp">
       <Filter>ソース ファイル\Mode\Game\character\abnormality</Filter>
     </ClCompile>
+    <ClCompile Include="src\skill_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\melee_attack.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
+    </ClCompile>
     <ClCompile Include="src\mode_fade.cpp">
       <Filter>ソース ファイル\Mode</Filter>
     </ClCompile>
@@ -596,6 +602,12 @@
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
     <ClInclude Include="src\bullet.h" />
+    <ClInclude Include="src\skill_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\melee_attack.h">
+      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
+    </ClInclude>
     <ClInclude Include="src\mode_fade.h">
       <Filter>ソース ファイル\Mode</Filter>
     </ClInclude>
