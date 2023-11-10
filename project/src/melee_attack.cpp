@@ -67,9 +67,11 @@ void CMeleeAttack::Update()
 
 	// ƒvƒŒƒCƒ„[‚ÌŽæ“¾
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
+	CStatus<int>* playerHp = pPlayer->GetHp();
 
 	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
+		playerHp->AddCurrent(-10);
 		Uninit();
 	}
 }
