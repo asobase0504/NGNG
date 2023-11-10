@@ -14,11 +14,12 @@
 #include "sound.h"
 #include "task_group.h"
 #include "objectX_group.h"
-#include "fade.h"
+#include "mode_fade.h"
 
 #include "skill_data_base.h"
 #include "enemy_data_base.h"
 #include "item_data_base.h"
+#include "abnormal_data_base.h"
 
 /* äOïîì«çûÇ› */
 #include "font.h"
@@ -114,7 +115,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	//ÉÇÅ[ÉhÇÃê›íË
 	SetMode(m_modeType);
 
-	m_fade = CFade::Create();
+	m_fade = CModeFade::Create();
 
 	CSkillDataBase::GetInstance();
 	CEnemyDataBase::GetInstance();
@@ -175,6 +176,7 @@ void CApplication::Uninit()
 	CSkillDataBase::Uninit();
 	CEnemyDataBase::Uninit();
 	CItemDataBase::Uninit();
+	CAbnormalDataBase::Uninit();
 
 }
 
@@ -227,7 +229,8 @@ void CApplication::SetMode(MODE mode)
 		m_mode = new CCharacterSelect;
 		break;
 	case CApplication::MODE_DEBUG:
-		m_mode = new CDebugMode;
+		m_mode = new CGame;
+		//m_mode = new CDebugMode;
 	default:
 		break;
 	}

@@ -25,7 +25,7 @@ class CPlayer;
 class CStatue : public CObjectX
 {
 public:
-	CStatue(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	CStatue();
 	~CStatue();
 
 	HRESULT Init() override;
@@ -39,7 +39,7 @@ public:
 	CCollisionCylinder* GetCollisionCylinder() { return m_collisionCylinder; }
 
 	bool Touch(CPlayer* pPlayer);
-private:
+protected:
 	std::string m_modelData;
 	CCollisionBox* m_collisionBox;
 	CCollisionCylinder* m_collisionCylinder;

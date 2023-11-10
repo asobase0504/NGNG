@@ -15,11 +15,16 @@
 #include "collision_sphere.h"
 #include "road.h"
 #include "statue_manager.h"
+#include "item.h"
+#include "abnormal.h"
+#include "abnormal_data_base.h"
 
 #include "status.h"
 #include "map.h"
 #include "map_model.h"
 #include "object_mesh.h"
+
+#include <thread>
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -78,6 +83,21 @@ HRESULT CCharacter::Init()
 	m_jumpCount.SetCurrent(0);
 	m_money.Init(100);
 	m_money.SetCurrent(50);
+	m_isStun = false;
+
+	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
+	{
+		m_attackAbnormal[i] = false;
+		m_haveAbnormal[i].s_stack = 0;
+		m_haveAbnormal[i].s_effectTime = 0;
+		m_haveAbnormal[i].s_target_interval = 0;
+		m_haveAbnormal[i].s_interval = 0;
+
+		for (int data :m_haveAbnormal[i].s_Time)
+		{
+			data = 0;
+		}
+	}
 
 	m_state = GROUND;
 
@@ -87,7 +107,7 @@ HRESULT CCharacter::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CCharacter::Uninit(void)
+void CCharacter::Uninit()
 {
 	// 破棄処理
 	CObject::Release();
@@ -99,30 +119,35 @@ void CCharacter::Uninit(void)
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CCharacter::Update(void)
+void CCharacter::Update()
 {
 	// 更新処理
 	CObject::Update();
 
 	bool isGround = false;
 
-	CStatueManager::GetInstance()->AllFuncStatue([this, &isGround](CStatue* inSattue)
-	{
-		if (m_collision->ToBox(inSattue->GetCollisionBox(), true))
-		{
-			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
-			SetPos(extrusion);
-			SetMoveXZ(0.0f,0.0f);
-
-			if (m_collision->GetIsTop())
-			{
-				isGround = true;
-			}
-		}
-	});
 
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
+
+	// 像との押し出し当たり判定
+	std::list<CStatue*> list = map->GetStatueList();
+	for (CStatue* inStatue : list)
+	{
+		if (!(m_collision->ToBox(inStatue->GetCollisionBox(), true)))
+		{
+			continue;
+		}
+
+		if (m_collision->GetIsTop())
+		{
+			isGround = true;
+		}
+
+		D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+		SetPos(extrusion);
+		SetMoveXZ(0.0f, 0.0f);
+	}
 
 	for (int i = 0; i < map->GetNumModel(); i++)
 	{
@@ -173,12 +198,61 @@ void CCharacter::Update(void)
 
 	// 重力
 	AddMoveY(-0.18f);
+
+	// 付与されている状態異常を作動させる
+	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	{
+		if(m_haveAbnormal[i].s_stack <= 0)
+		{
+			continue;
+		}
+
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
+
+		if (abnormalFunc != nullptr)
+		{
+
+			for (int &data : m_haveAbnormal[i].s_Time)
+			{
+				data++;
+			}
+
+			m_haveAbnormal[i].s_interval++;
+
+			for (int data : m_haveAbnormal[i].s_Time)
+			{
+				if (data >= m_haveAbnormal[i].s_effectTime)
+				{// 状態異常を削除する
+					CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
+					
+					//if (Los)
+					{// 失った時の処理を呼び出す
+					// スタック数を減らす
+						LostFunc(this, i);
+						m_haveAbnormal[i].s_stack--;
+					}
+				}
+			}
+
+			// 付与されている状態異常の時間を減らす
+			m_haveAbnormal[i].s_Time.remove_if([this, i](int data)
+			{
+				return data >= m_haveAbnormal[i].s_effectTime;
+			});
+
+			if (m_haveAbnormal[i].s_interval >= m_haveAbnormal[i].s_target_interval)
+			{
+				m_haveAbnormal[i].s_interval = 0;
+				abnormalFunc(this, i);
+			}
+		}
+	}
 }
 
 //--------------------------------------------------------------
 // 描画処理
 //--------------------------------------------------------------
-void CCharacter::Draw(void)
+void CCharacter::Draw()
 {
 	//デバイスへのポインタ
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
@@ -277,6 +351,12 @@ void CCharacter::Damage(const int inDamage)
 		dmg = 1;
 	}
 
+	if (m_isBlock)
+	{// ブロックがtrueの時にダメージを0にする
+		dmg = 0;
+		DamageBlock(false);
+	}
+
 	hp->AddCurrent(-dmg);
 }
 
@@ -289,6 +369,22 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	int Damage = CalDamage(SkillMul);
 	// エネミーにダメージを与える。
 	pEnemy->Damage(Damage);
+
+	// 付与されている状態異常を作動させる
+	for (int i = 0; i < m_attackAbnormal.size(); i++)
+	{
+		if (m_attackAbnormal[i] != false)
+		{
+			return;
+		}
+
+		CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
+
+		if (abnormalFunc != nullptr)
+		{
+			abnormalFunc(this, i, pEnemy);
+		}
+	}
 }
 
 void CCharacter::Move()

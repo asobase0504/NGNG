@@ -67,6 +67,12 @@ HRESULT CEnemy::Init()
 //--------------------------------------------------------------
 void CEnemy::Update()
 {
+	if (m_isStun)
+	{
+		SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
+		return;
+	}
+
 	// åªç›ÇÃactivityÇ…ê›íËÇ∑ÇÈÅB
 	m_Activity(this);
 
