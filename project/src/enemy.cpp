@@ -55,7 +55,7 @@ HRESULT CEnemy::Init()
 	D3DXVECTOR3 size = GetSize();
 	D3DXMATRIX mtx = GetMtxWorld();
 
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM_LASER));
+	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_GO_ATTACK));
 
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
