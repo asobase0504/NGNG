@@ -19,19 +19,38 @@ public:
 		ITEM_POWER_UP,
 		ITEM_POWER_ON,
 		ITEM_POWER_TO,
-		ITEM_DANGO,
-		ITEM_SHURIKEN,
-		ITEM_GETA,
-		ITEM_UMBRELLA,
-		ITEM_HYOUTAN,
-		ITEM_BANBOO_WATERBOX,
-		ITEM_OMAMORI,
-		ITEM_KIBORI,
-		ITEM_BAKUTIKU,
-		ITEM_MAKIBISI,
-		ITEM_HEAD,
-		ITEM_KUNAI,
-		ITEM_FUR,
+		ITEM_DANGO,				// ‚¾‚ñ‚²
+		ITEM_SHURIKEN,			// Žè— Œ•
+		ITEM_GETA,				// ‰º‘Ê
+		ITEM_UMBRELLA,			// ŽP
+		ITEM_HYOUTAN,			// ‚Ð‚å‚¤‚½‚ñ
+		ITEM_BANBOO_WATERBOX,	// ’|‚Ì…“›
+		ITEM_OMAMORI,			// ‚¨Žç‚è
+		ITEM_KIBORI,			// ŒF‚Ì–Ø’¤‚è
+		ITEM_BAKUTIKU,			// ”š’|
+		ITEM_MAKIBISI,			// ‚Ü‚«‚Ñ‚µ
+		ITEM_HEAD,				// Žñ‹‰
+		ITEM_KUNAI,				// ‚­‚È‚¢
+		ITEM_FUR,				// –Ñ”ç
+		ITEM_KITUNEMEN,			// ŒÏ–Ê
+		ITEM_KAZAGURUMA,		// •—ŽÔ
+		ITEM_KOBAN,				// ¬”»
+		ITEM_ONIMEN,			// ‹S–Ê
+		ITEM_BROKEN_KABUTO,		// ‰ó‚ê‚½Š•
+		ITEM_CROW_FEATHER,		// ƒJƒ‰ƒX‚Ì‰H
+		ITEM_TOISI,				// “uÎ
+		ITEM_DRIP_BAG,			// “_“H‘Ü
+		ITEM_CHICK,				// ‚Ð‚æ‚±
+		ITEM_ZOURI,				// ‘—š
+		ITEM_ARROW,				// –î
+		ITEM_SEED,				// ŽíŽq
+		ITEM_FETTERS,			// ‘«žg
+		ITEM_SHIELD,			// ‚
+		ITEM_TABI,				// ‚½‚Ñ
+		ITEM_FLINT,				// ‰Î‘ÅÎ
+		ITEM_FLOWER,			// ‰Ô
+		ITEM_IRON_WIRE,			// “Sü
+		ITEM_HANNYA,			// ‚Í‚ñ‚É‚á‚Ì‚ß‚ñ
 		ITEM_MAX
 	};
 private:

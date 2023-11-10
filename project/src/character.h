@@ -127,6 +127,13 @@ public:
 	void SetShield() { m_isShield = true; }
 	bool GetIsShield() { return m_isShield; }
 
+	// クリティカルかどうか
+	void SetCritical() { m_isCritical = true; }
+	bool GetIsCritical() { return m_isCritical; }
+
+	// クリティカルヒットした数
+	bool GetNumCritical() { return m_numCritical; }
+
 private:
 	virtual void Move();
 	void UpdatePos();			// 座標の更新
@@ -143,9 +150,11 @@ protected:		// ステータス
 	// 持っている状態異常の個数をそれぞれ管理
 	abnormal_count m_haveAbnormal;
 
-	bool m_isBlock;	// 防御できたかできてないか
-	bool m_isDied;	// 死亡状態か否か。
+	bool m_isBlock;		// 防御できたかできてないか
+	bool m_isDied;		// 死亡状態か否か。
 	bool m_isShield;	// シールドを回復するかどうか
+	bool m_isCritical;	// クリティカルかどうか
+	int m_numCritical;	// クリティカルヒットした数
 	STATE m_state;
 
 	CStatus<int> m_hp;							// 体力
