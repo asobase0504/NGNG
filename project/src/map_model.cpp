@@ -14,7 +14,8 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CMapModel::CMapModel(CTaskGroup::EPriority list) :
+CMapModel::CMapModel() :
+	CObjectX(CTaskGroup::LEVEL_3D_1),
 	m_collisionBox(nullptr)
 {
 }
@@ -54,6 +55,12 @@ HRESULT CMapModel::Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot, cons
 //--------------------------------------------------------------
 void CMapModel::Uninit()
 {
+	if (m_collisionBox != nullptr)
+	{
+		m_collisionBox->Uninit();
+		m_collisionBox = nullptr;
+	}
+
 	CObjectX::Uninit();
 }
 

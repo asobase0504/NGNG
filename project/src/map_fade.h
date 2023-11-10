@@ -1,18 +1,16 @@
 //**************************************************************
 //
 // フェード
-// Author : Hamada Ryuuga
+// Author : Yuda Kaito
 //
 //**************************************************************
-#ifndef _FADE_H_
-#define _FADE_H_
+#ifndef _MAP_FADE_H_
+#define _MAP_FADE_H_
 
 //==============================================================
 // include
 //==============================================================
-#include "application.h"
-#include "renderer.h"
-#include "object2d.h"
+#include "fade.h"
 
 //==============================================================
 // 前方宣言
@@ -22,35 +20,18 @@ class  CMotion;
 //==============================================================
 // フェードクラス
 //==============================================================
-class CFade : public CObject2d
+class CMapFade : public CFade
 {
+
 public:
-	CFade();
-	~CFade();
+	CMapFade();
+	~CMapFade();
 
-	//画面(モード)の種類
-	enum FADE
-	{
-		FADEIN = 0,
-		FADEOUT,
-		FADENON,
-		FADEMAX
-	};
-
-	HRESULT Init() override;
-	void Uninit() override;
-	void Update() override;
-
-	FADE* GetFade() { return& m_fade; }
-
+	static CMapFade* Create();
+	void NextMap(std::string nextMap);
 private:
-	virtual void Change() = 0;
-protected:
-	FADE m_fade;
+	void Change() override;
 private:
-	float m_fadeSp;
-	float m_fadeSet;
-	bool m_bake;
-	CApplication::MODE m_nextMode;
+	std::string m_nextMap;
 };
 #endif

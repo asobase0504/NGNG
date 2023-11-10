@@ -12,7 +12,7 @@
 #include "application.h"
 #include "input.h"
 #include "sound.h"
-#include "fade.h"
+#include "mode_fade.h"
 
 #include "camera.h"
 #include "light.h"
@@ -84,7 +84,12 @@ void CCharacterSelect::Update(void)
 	CInput* pInput;
 	pInput = CInput::GetKey();
 
-	CFade* pFade = CApplication::GetInstance()->GetFade();
+	CModeFade* pFade = CApplication::GetInstance()->GetFade();
+
+	if (pInput->Trigger(DIK_F1))
+	{
+		pFade->NextMode(CApplication::MODE_DEBUG);
+	}
 
 	if (pInput->Trigger(DIK_K))
 	{

@@ -23,7 +23,7 @@
 
 /* System系統 */
 #include "application.h"
-#include "fade.h"
+#include "mode_fade.h"
 #include "sound.h"
 #include "input.h"
 #include "camera_game.h"
@@ -82,14 +82,8 @@ HRESULT CDebugMode::Init(void)
 	CMONEYUI::Create(pPlayer->GetMoney());
 	CSKILLUI::Create(pPlayer->GetSkill(0));
 
-	// エネミーの生成
-	//CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
-
 	// マップの生成
-	CMap::Create();
-
-	// アイテムのｓ衛星
-	//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
+	CMap::Create("data/FILE/map/map01.json");
 
 	return S_OK;
 }
@@ -112,17 +106,28 @@ void CDebugMode::Update(void)
 	CInput* pInput;
 	pInput = CInput::GetKey();
 
-	CFade* pFade = CApplication::GetInstance()->GetFade();
+	CModeFade* pFade = CApplication::GetInstance()->GetFade();
+
+	if (pInput->Trigger(DIK_F1))
+	{
+		pFade->NextMode(CApplication::MODE_DEBUG);
+	}
 
 	// Tキーでタイトル
-	if (pInput->Trigger(DIK_T))
+	if (pInput->Trigger(DIK_1))
 	{
 		pFade->NextMode(CApplication::MODE_TITLE);
 	}
 
 	// Sキーで選択画面
-	if (pInput->Trigger(DIK_C))
+	if (pInput->Trigger(DIK_2))
 	{
 		pFade->NextMode(CApplication::MODE_SELECT);
+	}
+
+	// Sキーで選択画面
+	if (pInput->Trigger(DIK_3))
+	{
+		pFade->NextMode(CApplication::MODE_GAME);
 	}
 }

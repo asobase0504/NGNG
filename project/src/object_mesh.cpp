@@ -64,20 +64,14 @@ HRESULT CMesh::Init()
 //--------------------------------------------------------------
 void CMesh::Uninit()
 {
-	// 頂点バッファーの解放
-	if (m_vtxBuff != nullptr)
-	{
-		m_vtxBuff->Release();
-		m_vtxBuff = nullptr;
-	}
-
+	// バッファーの解放
 	if (m_idxBuff != nullptr)
 	{
 		m_idxBuff->Release();
 		m_idxBuff = nullptr;
 	}
 
-	Release();
+	CObjectPolygon3D::Uninit();
 }
 
 //--------------------------------------------------------------

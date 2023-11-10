@@ -346,6 +346,12 @@
     <ClCompile Include="src\melee_attack.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
     </ClCompile>
+    <ClCompile Include="src\mode_fade.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map_fade.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -602,6 +608,12 @@
     <ClInclude Include="src\melee_attack.h">
       <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
     </ClInclude>
+    <ClInclude Include="src\mode_fade.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map_fade.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
@@ -612,11 +624,9 @@
     <None Include="data\FILE\map\map01.json">
       <Filter>ソース ファイル\Mode\Game\map\json</Filter>
     </None>
-    <None Include="data\FILE\model.json">
-      <Filter>ソース ファイル\Statue</Filter>
-    </None>
     <None Include="data\FILE\map\map02.json">
       <Filter>ソース ファイル\Mode\Game\map\json</Filter>
     </None>
+    <None Include="data\FILE\model.json" />
   </ItemGroup>
 </Project>

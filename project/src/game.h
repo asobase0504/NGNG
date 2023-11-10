@@ -23,6 +23,8 @@ class CPlayerManager;
 class CEnemyManager;
 class CCameraGame;
 class CLight;
+class CMap;
+class CMapFade;
 
 //==============================================================
 // ゲームクラス
@@ -38,10 +40,15 @@ public:
 	void Update() override;
 
 	CCameraGame* GetCamera() { return m_camera; }
+
+	void SetChangeMap();
+	void ChangeMap(std::string);
 private:
 	CPlayerManager* m_player;	// プレイヤー
 	CEnemyManager* m_enemy;		// 敵
 	CCameraGame* m_camera;
+	CMap* m_map;
 	CLight* m_light;
+	CMapFade* m_mapFade;
 };
 #endif

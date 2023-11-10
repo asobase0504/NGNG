@@ -23,7 +23,7 @@ class CCollisionBox;
 class CMapModel : public CObjectX
 {
 public:
-	CMapModel(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	CMapModel();
 	~CMapModel();
 
 	HRESULT Init() override;
