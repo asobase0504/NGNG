@@ -324,7 +324,7 @@ void CEnemyDataBase::Init()
 		if (inEnemy->GetAttackCnt() >= 180)
 		{
 			//inEnemy->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_FIRE,true);
-			inEnemy->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_STUN, true);
+			inEnemy->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_SLOW, true);
 			//inEnemy->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_BLEED, true);
 
 			CBullet::Create(inEnemy->GetPos(), move * 0.01f, 10.0f,inEnemy->GetAbnormalAttack());

@@ -72,10 +72,10 @@ void CAbnormalDataBase::Init()
 	m_abnormal[ABNORMAL_BLEED]->SetWhenClearFunc([](CCharacter* inCharacter, int cnt)
 	{
 	});
-	//	//==========================================================================================================
+	//==========================================================================================================
 
 	m_abnormal[ABNORMAL_STUN] = CAbnormal::Create(ABNORMAL_STUN);
-	// 出血状態 ================================================================================================
+	// スタン状態 ================================================================================================
 	m_abnormal[ABNORMAL_STUN]->SetWhenAddFunc([](CCharacter* inCharacter, int cnt)
 	{
 		inCharacter->AddUbnormalStack(ABNORMAL_STUN);
@@ -85,20 +85,54 @@ void CAbnormalDataBase::Init()
 	m_abnormal[ABNORMAL_STUN]->SetWhenAttackFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
 		outCharacter->AddUbnormalStack(ABNORMAL_STUN);
-		outCharacter->SetUbnormalTime(ABNORMAL_STUN, 200);
+		outCharacter->SetUbnormalTime(ABNORMAL_STUN, 60);
 		inCharacter->SetStun(true);
 	});
 	m_abnormal[ABNORMAL_STUN]->SetWhenAllWayFunc([](CCharacter* inCharacter, int cnt)
-	{
-		//// 付与されている状態異常のtikを増やす
-		//inCharacter->SetInterval(ABNORMAL_BLEED, 0);
-	});
+	{});
 
 	m_abnormal[ABNORMAL_STUN]->SetWhenClearFunc([](CCharacter* inCharacter, int cnt)
 	{
 		inCharacter->SetStun(false);
 	});
-	//	//==========================================================================================================
+	//==========================================================================================================
+
+	m_abnormal[ABNORMAL_SLOW] = CAbnormal::Create(ABNORMAL_SLOW);
+	// スロウ状態 ================================================================================================
+	m_abnormal[ABNORMAL_SLOW]->SetWhenAddFunc([](CCharacter* inCharacter, int cnt)
+	{
+		inCharacter->AddUbnormalStack(ABNORMAL_SLOW);
+		inCharacter->SetUbnormalTime(ABNORMAL_SLOW, 300);
+		
+		if (inCharacter->GetAbnormalCount()[cnt].s_stack == 1)
+		{
+			inCharacter->GetSpeed()->AddCurrent(-inCharacter->GetSpeed()->GetMax() * 0.5f);
+		}
+	});
+
+	m_abnormal[ABNORMAL_SLOW]->SetWhenAttackFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{
+		inCharacter->AddUbnormalStack(ABNORMAL_SLOW);
+		inCharacter->SetUbnormalTime(ABNORMAL_SLOW, 300);
+	
+		if (inCharacter->GetAbnormalCount()[cnt].s_stack == 1)
+		{
+			inCharacter->GetSpeed()->AddCurrent(-inCharacter->GetSpeed()->GetMax() * 0.5f);
+		}
+
+	});
+	m_abnormal[ABNORMAL_SLOW]->SetWhenAllWayFunc([](CCharacter* inCharacter, int cnt)
+	{
+	});
+
+	m_abnormal[ABNORMAL_SLOW]->SetWhenClearFunc([](CCharacter* inCharacter, int cnt)
+	{
+		if (inCharacter->GetAbnormalCount()[cnt].s_stack == 1)
+		{
+			inCharacter->GetSpeed()->AddCurrent(inCharacter->GetSpeed()->GetMax() * 0.5f);
+		}
+	});
+	//==========================================================================================================
 }
 
 //--------------------------------------------------------------
