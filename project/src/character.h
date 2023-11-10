@@ -127,6 +127,7 @@ public:
 
 	// 攻撃
 	void Attack(CCharacter* pEnemy, float SkillMul);
+	void Abnormal();
 	bool IsDied() { return m_isDied; }
 	void Died() { m_isDied = true; }
   
