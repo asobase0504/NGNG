@@ -195,53 +195,7 @@ void CCharacter::Update()
 	AddMoveY(-0.18f);
 
 	// 付与されている状態異常を作動させる
-	for (int i = 0; i < m_haveAbnormal.size(); i++)
-	{
-		if(m_haveAbnormal[i].s_stack <= 0)
-		{
-			continue;
-		}
-
-		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
-
-		if (abnormalFunc != nullptr)
-		{
-
-			for (int &data : m_haveAbnormal[i].s_Time)
-			{
-				data++;
-			}
-
-			m_haveAbnormal[i].s_interval++;
-
-			for (int data : m_haveAbnormal[i].s_Time)
-			{
-				if (data >= m_haveAbnormal[i].s_effectTime)
-				{// 状態異常を削除する
-					CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
-					
-					//if (Los)
-					{// 失った時の処理を呼び出す
-					// スタック数を減らす
-						LostFunc(this, i);
-						m_haveAbnormal[i].s_stack--;
-					}
-				}
-			}
-
-			// 付与されている状態異常の時間を減らす
-			m_haveAbnormal[i].s_Time.remove_if([this, i](int data)
-			{
-				return data >= m_haveAbnormal[i].s_effectTime;
-			});
-
-			if (m_haveAbnormal[i].s_interval >= m_haveAbnormal[i].s_target_interval)
-			{
-				m_haveAbnormal[i].s_interval = 0;
-				abnormalFunc(this, i);
-			}
-		}
-	}
+	Abnormal();
 }
 
 //--------------------------------------------------------------
@@ -398,4 +352,59 @@ int CCharacter::CalDamage(float SkillAtkMul)
 
 
 	return CalDamage;
+}
+
+//--------------------------------------------------------------
+// 状態異常
+//--------------------------------------------------------------
+void CCharacter::Abnormal()
+{
+	// 付与されている状態異常を作動させる
+	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	{
+		if (m_haveAbnormal[i].s_stack <= 0)
+		{
+			continue;
+		}
+
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
+
+		if (abnormalFunc != nullptr)
+		{
+
+			for (int &data : m_haveAbnormal[i].s_Time)
+			{
+				data++;
+			}
+
+			m_haveAbnormal[i].s_interval++;
+
+			for (int data : m_haveAbnormal[i].s_Time)
+			{
+				if (data >= m_haveAbnormal[i].s_effectTime)
+				{// 状態異常を削除する
+					CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
+
+					//if (Los)
+					{// 失った時の処理を呼び出す
+					 // スタック数を減らす
+						LostFunc(this, i);
+						m_haveAbnormal[i].s_stack--;
+					}
+				}
+			}
+
+			// 付与されている状態異常の時間を減らす
+			m_haveAbnormal[i].s_Time.remove_if([this, i](int data)
+			{
+				return data >= m_haveAbnormal[i].s_effectTime;
+			});
+
+			if (m_haveAbnormal[i].s_interval >= m_haveAbnormal[i].s_target_interval)
+			{
+				m_haveAbnormal[i].s_interval = 0;
+				abnormalFunc(this, i);
+			}
+		}
+	}
 }
