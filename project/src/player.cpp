@@ -52,6 +52,8 @@ CPlayer::~CPlayer()
 //--------------------------------------------------------------
 HRESULT CPlayer::Init()
 {
+	m_Skill.resize(MAX_SKILL);
+
 	m_isUpdate = true;
 	// 初期化処理
 	CCharacter::Init();

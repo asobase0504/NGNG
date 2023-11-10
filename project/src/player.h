@@ -70,7 +70,6 @@ private:		// メンバ変数
 
 	bool			m_isUpdate;		// 更新を止めるか否か。
 
-	CController*		m_controller;			// 命令を出す人
-	CSkill*				m_Skill[MAX_SKILL];
+	CController*	m_controller;			// 命令を出す人
 };
 #endif

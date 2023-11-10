@@ -14,6 +14,8 @@
 #include "bullet.h"
 #include "melee_attack.h"
 
+#include "skill.h"
+
 //行動パターンに必要なinclude
 #include "player_manager.h"
 
@@ -322,7 +324,7 @@ void CEnemyDataBase::Init()
 			{
 				// カウント開始
 				inEnemy->SetAttackCnt(0);
-				inEnemy->SetActivity(GetInstance()->GetActivityFunc(PATTERN_GOLEM_LASER));
+				inEnemy->GetSkill()[0]->Skill1();
 				move *= -0.5f;
 			}
 		}
@@ -386,12 +388,5 @@ void CEnemyDataBase::Init()
 
 			inEnemy->GetRoad()->SetUse(false);
 		}
-		// 狙いを定めている状態
-		//if (inEnemy->GetAttackCnt() >= inEnemy->GetAttackTime())
-		//{
-			// 一定以上の時間が経過したらレーザー発射
-			// inEnemy->SetActivity(GetInstance()->GetActivityFunc(PATTERN_GOLEM));
-		//}
-
 	};
 }

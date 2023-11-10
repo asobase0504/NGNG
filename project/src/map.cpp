@@ -61,6 +61,11 @@ HRESULT CMap::Init()
 	m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
 	m_statue.push_back(manager->CreateStatue(CStatueManager::COMBAT));
 
+	for (int i = 0; i < 10; i++)
+	{
+		m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
+	}
+
 	return S_OK;
 }
 

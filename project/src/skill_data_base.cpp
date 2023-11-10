@@ -13,7 +13,10 @@
 #include "character.h"
 #include "enemy_manager.h"
 #include "collision_sphere.h"
+
+// Skill
 #include "yamato_skill_1.h"
+#include "golem_skill_1.h"
 
 //==============================================================
 // Ã“Iƒƒ“ƒo[•Ï”‚ÌéŒ¾
@@ -90,7 +93,6 @@ void CSkillDataBase::Init()
 
 		return false;
 	} };
-
 	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{ // ”­“®‚ÌŒø‰Ê
@@ -116,6 +118,20 @@ void CSkillDataBase::Init()
 	},
 		[](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
 	{ // Hit‚ÌŒø‰Ê
+		return false;
+	} };
+	m_dates["GOLEM_SKILL_1"] = { 0,1,1,0,60,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+		[this](CCharacter* inusedCharacter)
+	{// ”­“®‚ÌŒø‰Ê
+		if (inusedCharacter != nullptr)
+		{
+			CGolemSkill_1::Create(inusedCharacter);
+		}
+
+		return false;
+	},
+		[this](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
+	{// Hit‚ÌŒø‰Ê
 		return false;
 	} };
 }

@@ -22,7 +22,7 @@
 //==============================================================
 class CObjectX;
 class CCollisionCylinder;
-class CRoad;
+class CSkill;
 class CAbnormal;
 
 //==============================================================
@@ -120,6 +120,8 @@ public:
 	// 攻撃の道
 	CRoad* GetRoad() { return m_road; }
 
+	std::vector<CSkill*> GetSkill() { return m_Skill; }
+
 	// 状態異常
 	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }
 	// 与える状態異常
@@ -170,5 +172,6 @@ protected:		// ステータス
 	CStatus<int> m_money;						// 所持金
 
 	CRoad* m_road;								// 攻撃の道みたいな
+	std::vector<CSkill*> m_Skill;
 };
 #endif

@@ -48,7 +48,7 @@ HRESULT CSkillEntity::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CSkillEntity::Uninit(void)
+void CSkillEntity::Uninit()
 {
 	// 当たり判定の削除
 	if (m_Collision != nullptr)
@@ -64,7 +64,7 @@ void CSkillEntity::Uninit(void)
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CSkillEntity::Update(void)
+void CSkillEntity::Update()
 {
 	// スキルデータのインスタンスを取得する
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
@@ -78,8 +78,8 @@ void CSkillEntity::Update(void)
 
 		for (CEnemy* enemy : enemyList)
 		{// 攻撃範囲に敵がいるか判定する
-			bool a = m_Collision->ToSphere((CCollisionSphere*)enemy->GetCollision());
-			if (a)
+			bool hit = m_Collision->ToSphere((CCollisionSphere*)enemy->GetCollision());
+			if (hit)
 			{// ダメージの判定
 				HitAbility(enemy);
 			}
