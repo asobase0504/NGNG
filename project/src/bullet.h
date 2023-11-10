@@ -11,6 +11,7 @@
 // include
 //==============================================================
 #include "object_polygon3d.h"
+#include "abnormal_data_base.h"
 
 //==============================================================
 // É}ÉNÉçêÈåæ
@@ -28,7 +29,7 @@ class CCollision;
 class  CBullet : public CObjectPolygon3D
 {
 public:
-	static CBullet *Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, float speed);
+	static CBullet *Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, float speed, abnormal_attack abnormal);
 
 	CBullet();
 	~CBullet() override;
@@ -39,11 +40,13 @@ public:
 	void Draw() override;
 
 	void SetSpeed(float speed) { m_speed = speed; }
+	void SetAbnormal(abnormal_attack abnormal) { m_abnormal = abnormal; }
 private:
 	int m_life;
 	bool m_ispenetration;
 	float m_speed;
 	CCollision*		m_collision;
+	abnormal_attack m_abnormal;
 };
 
 #endif

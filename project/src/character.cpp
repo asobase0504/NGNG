@@ -83,11 +83,20 @@ HRESULT CCharacter::Init()
 	m_jumpCount.SetCurrent(0);
 	m_money.Init(100);
 	m_money.SetCurrent(50);
+	m_isStun = false;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
-		m_haveAbnormal[i].s_effectTime = 0;
+		m_attackAbnormal[i] = false;
 		m_haveAbnormal[i].s_stack = 0;
+		m_haveAbnormal[i].s_effectTime = 0;
+		m_haveAbnormal[i].s_target_interval = 0;
+		m_haveAbnormal[i].s_interval = 0;
+
+		for (int data :m_haveAbnormal[i].s_Time)
+		{
+			data = 0;
+		}
 	}
 
 	m_state = GROUND;
@@ -195,14 +204,47 @@ void CCharacter::Update()
 	{
 		if(m_haveAbnormal[i].s_stack <= 0)
 		{
-			return;
+			continue;
 		}
 
-		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData(CAbnormalDataBase::ABNORMAL_FIRE)->GetWhenAllWayFunc();
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
 
 		if (abnormalFunc != nullptr)
 		{
-			abnormalFunc(this, i);
+
+			for (int &data : m_haveAbnormal[i].s_Time)
+			{
+				data++;
+			}
+
+			m_haveAbnormal[i].s_interval++;
+
+			for (int data : m_haveAbnormal[i].s_Time)
+			{
+				if (data >= m_haveAbnormal[i].s_effectTime)
+				{// 状態異常を削除する
+					CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
+					
+					//if (Los)
+					{// 失った時の処理を呼び出す
+					// スタック数を減らす
+						LostFunc(this, i);
+						m_haveAbnormal[i].s_stack--;
+					}
+				}
+			}
+
+			// 付与されている状態異常の時間を減らす
+			m_haveAbnormal[i].s_Time.remove_if([this, i](int data)
+			{
+				return data >= m_haveAbnormal[i].s_effectTime;
+			});
+
+			if (m_haveAbnormal[i].s_interval >= m_haveAbnormal[i].s_target_interval)
+			{
+				m_haveAbnormal[i].s_interval = 0;
+				abnormalFunc(this, i);
+			}
 		}
 	}
 }
@@ -327,6 +369,22 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	int Damage = CalDamage(SkillMul);
 	// エネミーにダメージを与える。
 	pEnemy->Damage(Damage);
+
+	// 付与されている状態異常を作動させる
+	for (int i = 0; i < m_attackAbnormal.size(); i++)
+	{
+		if (m_attackAbnormal[i] != false)
+		{
+			return;
+		}
+
+		CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
+
+		if (abnormalFunc != nullptr)
+		{
+			abnormalFunc(this, i, pEnemy);
+		}
+	}
 }
 
 void CCharacter::Move()

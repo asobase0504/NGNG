@@ -8,6 +8,8 @@
 // include
 //==============================================================
 #include "enemy_data_base.h"
+#include "abnormal_data_base.h"
+#include "abnormal.h"
 #include "enemy.h"
 #include "bullet.h"
 #include "melee_attack.h"
@@ -372,7 +374,12 @@ void CEnemyDataBase::Init()
 
 		if (inEnemy->GetAttackCnt() >= 180)
 		{
-			CBullet::Create(inEnemy->GetPos(), move * 0.01f, 10.0f);
+			//inEnemy->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_FIRE,true);
+			inEnemy->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_STUN, true);
+			//inEnemy->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_BLEED, true);
+
+			CBullet::Create(inEnemy->GetPos(), move * 0.01f, 10.0f,inEnemy->GetAbnormalAttack());
+			
 			// 一定以上の時間が経過したらレーザー発射
 			inEnemy->SetActivity(GetInstance()->GetActivityFunc(PATTERN_GOLEM));
 			inEnemy->SetAttackCnt(0);
