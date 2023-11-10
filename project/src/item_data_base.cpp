@@ -28,7 +28,6 @@ void CItemDataBase::Init()
 	{	inCharacter->GetHp()->AddItemEffect(50); });
 	m_item[ITEM_DANGO]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetHp()->AddItemEffect(-50); });
-
 	//--------------------------------------------------------------
 
 	m_item[ITEM_GETA] = CItem::Create(ITEM_GETA);
@@ -38,7 +37,6 @@ void CItemDataBase::Init()
 	{	inCharacter->GetSpeed()->AddItemEffect(0.15f); });
 	m_item[ITEM_GETA]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	inCharacter->GetSpeed()->AddItemEffect(-0.15f); });
-
 	//--------------------------------------------------------------
 
 	m_item[ITEM_UMBRELLA] = CItem::Create(ITEM_UMBRELLA);
@@ -116,7 +114,6 @@ void CItemDataBase::Init()
 	{// 攻撃時に敵に移動速度-5%にする状態異常を付与する。
 		//outCharacter->DamageBlock(true);
 	});
-
 	//--------------------------------------------------------------
 
 	m_item[ITEM_HEAD] = CItem::Create(ITEM_HEAD);
@@ -135,6 +132,7 @@ void CItemDataBase::Init()
 		int recovery = (int)(hpMax * (percent / 100));
 		inCharacter->GetHp()->AddItemEffect(recovery);
 	});
+	//--------------------------------------------------------------
 
 	m_item[ITEM_KUNAI] = CItem::Create(ITEM_KUNAI);
 	// 首級---------------------------------------------------------
@@ -163,6 +161,7 @@ void CItemDataBase::Init()
 			inCharacter->GetAtk()->SetCurrent(nowAtk);
 		}
 	});
+	//--------------------------------------------------------------
 
 	m_item[ITEM_FUR] = CItem::Create(ITEM_FUR);
 	// 毛皮---------------------------------------------------------
@@ -187,6 +186,7 @@ void CItemDataBase::Init()
 			inCharacter->GetBarrier()->SetCurrent(addShield);
 		}
 	});
+	//--------------------------------------------------------------
 
 	m_item[ITEM_KITUNEMEN] = CItem::Create(ITEM_KITUNEMEN);
 	// 狐面---------------------------------------------------------
@@ -222,6 +222,7 @@ void CItemDataBase::Init()
 			inCharacter->GetAtkSpd()->SetCurrent(currentAtkSpd);
 		}
 	});
+	//--------------------------------------------------------------
 
 	m_item[ITEM_KAZAGURUMA] = CItem::Create(ITEM_KAZAGURUMA);
 	// 風車---------------------------------------------------------
@@ -232,24 +233,28 @@ void CItemDataBase::Init()
 
 		}
 	});
+	//--------------------------------------------------------------
 
 	m_item[ITEM_KOBAN] = CItem::Create(ITEM_KOBAN);
 	// 小判---------------------------------------------------------
 	m_item[ITEM_KOBAN]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒した際4%の確率で金塊が出現する (+4%) TODO
 	});
+	//--------------------------------------------------------------
 
 	m_item[ITEM_ONIMEN] = CItem::Create(ITEM_ONIMEN);
 	// 鬼面---------------------------------------------------------
 	m_item[ITEM_ONIMEN]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 4つ以上のデバフがついた敵に死の印が付き、受けるダメージが7秒間(+7秒)50%増加する TODO
 	});
+	//--------------------------------------------------------------
 
 	m_item[ITEM_BROKEN_KABUTO] = CItem::Create(ITEM_BROKEN_KABUTO);
 	// 壊れた兜---------------------------------------------------------
 	m_item[ITEM_BROKEN_KABUTO]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 体力が13%以下になったエリートモンスターを即死させる (+13%)TODO
 	});
+	//--------------------------------------------------------------
 
 	m_item[ITEM_CROW_FEATHER] = CItem::Create(ITEM_CROW_FEATHER);
 	// カラスの羽---------------------------------------------------------
@@ -267,6 +272,7 @@ void CItemDataBase::Init()
 	{ inCharacter->GetCriticalRate()->AddItemEffect(5); });
 	m_item[ITEM_FLINT]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{ inCharacter->GetCriticalRate()->AddItemEffect(-5); });
+	//--------------------------------------------------------------
 
 	m_item[ITEM_FLINT]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// クリティカル発生時
