@@ -41,17 +41,20 @@ public:
 	void SetWhenAddFunc(ABNORMAL_FUNC inFunc) { m_getFunc = inFunc; }				// ó‘ÔˆÙí‚ğó‚¯‚½‚Æ‚«‚Ìˆ—
 	void SetWhenClearFunc(ABNORMAL_FUNC inFunc) { m_lostFunc = inFunc; }			// ‰ñ•œ‚µ‚½‚Ìˆ—
 	void SetWhenAllWayFunc(ABNORMAL_FUNC inFunc) { m_allwayFunc = inFunc; }			// í”­“®‚µ‚Ä‚¢‚éˆ—
+	void SetWhenAttackFunc(ABNORMAL_ACTION_FUNC inFunc) { m_attackFunc = inFunc; }	// UŒ‚‚Ìˆ—
 
 	void SetEffectTime(int eTime) { m_effectTime = eTime; }
 
 	ABNORMAL_FUNC GetWhenAddFunc() { return m_getFunc; }
-	ABNORMAL_FUNC GetWhenLostFunc() { return m_lostFunc; }
+	ABNORMAL_FUNC GetWhenClearFunc() { return m_lostFunc; }
 	ABNORMAL_FUNC GetWhenAllWayFunc() { return m_allwayFunc; }
+	ABNORMAL_ACTION_FUNC GetWhenAttackFunc() { return m_attackFunc; }
 
 private:
 	ABNORMAL_FUNC m_getFunc;
 	ABNORMAL_FUNC m_lostFunc;
 	ABNORMAL_FUNC m_allwayFunc;
+	ABNORMAL_ACTION_FUNC m_attackFunc;
 
 	int m_effectTime;
 

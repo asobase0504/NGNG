@@ -15,6 +15,7 @@
 #include "collision.h"
 #include "collision_cylinder.h"
 #include "abnormal.h"
+#include "abnormal_data_base.h"
 #include "player_manager.h"
 
 //--------------------------------------------------------------
@@ -43,6 +44,11 @@ HRESULT CBullet::Init()
 	SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	
 	m_collision = CCollisionCylinder::Create(GetPos(),10.0f,10.0f);
+
+	for (int i = 0; i < m_abnormal.size(); i++)
+	{
+		m_abnormal[i] = false;
+	}
 
 	return S_OK;
 }
@@ -84,9 +90,20 @@ void CBullet::Update()
 	
 	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
-		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData(CAbnormalDataBase::ABNORMAL_FIRE)->GetWhenAddFunc();
+		for (int i = 0; i < m_abnormal.size(); i++)
+		{
+			if (!m_abnormal[i])
+			{
+				continue;
+			}
 
-		abnormalFunc(pPlayer, CAbnormalDataBase::ABNORMAL_FIRE);
+			CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
+
+			if (abnormalFunc != nullptr)
+			{
+				abnormalFunc(pPlayer, i,pPlayer);
+			}
+		}
 		Uninit();
 	}
 }
@@ -102,7 +119,7 @@ void CBullet::Draw()
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move,float speed)
+CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, float speed, abnormal_attack abnormal)
 {
 	CBullet* pObject = nullptr;
 	pObject = new CBullet();
@@ -113,6 +130,7 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move,float speed)
 		pObject->SetPos(pos);
 		pObject->SetMove(move);
 		pObject->SetSpeed(speed);
+		pObject->SetAbnormal(abnormal);
 	}
 
 	return pObject;
