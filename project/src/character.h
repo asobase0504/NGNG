@@ -167,7 +167,6 @@ protected:		// ステータス
 	bool m_isCritical;	// クリティカルかどうか
 	int m_numCritical;	// クリティカルヒットした数
 	bool m_isBlock;	// 防御できたかできてないか
-	bool m_isDied;	// 死亡状態か否か。
 	bool m_isStun;	// スタン状態かそうでないか
 	STATE m_state;
 
