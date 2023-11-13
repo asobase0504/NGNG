@@ -91,9 +91,7 @@ void CSkill::Skill1()
 		// 当たり判定の持続時間の管理
 		CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 		pSkillData->GetDuration(m_Name);
-		
 		pSkillData->GetAbility(m_Name)(m_apChara);
-
 
 		// クールタイムの設定
 		m_CT = pSkillData->GetCT(m_Name);
