@@ -45,23 +45,14 @@ void CCollisionSphere::Update()
 	posLine[4] = D3DXVECTOR3(0.0f, 0.0f, m_length);
 	posLine[5] = D3DXVECTOR3(0.0f, 0.0f, -m_length);
 
-	m_line[0]->SetLine(GetPos(), GetRot(), posLine[2], posLine[0], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[1]->SetLine(GetPos(), GetRot(), posLine[2], posLine[1], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[2]->SetLine(GetPos(), GetRot(), posLine[2], posLine[4], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[3]->SetLine(GetPos(), GetRot(), posLine[2], posLine[5], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[4]->SetLine(GetPos(), GetRot(), posLine[3], posLine[0], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[5]->SetLine(GetPos(), GetRot(), posLine[3], posLine[1], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[6]->SetLine(GetPos(), GetRot(), posLine[3], posLine[4], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[7]->SetLine(GetPos(), GetRot(), posLine[3], posLine[5], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-}
-
-void CCollisionSphere::Uninit()
-{
-	for (int i = 0; i < 8; i++)
-	{
-		m_line[i]->Uninit();
-	}
-	CCollision::Uninit();
+	m_line[0]->SetLine(GetPosWorld(), GetRot(), posLine[2], posLine[0], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
+	m_line[1]->SetLine(GetPosWorld(), GetRot(), posLine[2], posLine[1], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
+	m_line[2]->SetLine(GetPosWorld(), GetRot(), posLine[2], posLine[4], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
+	m_line[3]->SetLine(GetPosWorld(), GetRot(), posLine[2], posLine[5], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
+	m_line[4]->SetLine(GetPosWorld(), GetRot(), posLine[3], posLine[0], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
+	m_line[5]->SetLine(GetPosWorld(), GetRot(), posLine[3], posLine[1], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
+	m_line[6]->SetLine(GetPosWorld(), GetRot(), posLine[3], posLine[4], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
+	m_line[7]->SetLine(GetPosWorld(), GetRot(), posLine[3], posLine[5], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
 }
 
 bool CCollisionSphere::ToMesh(CCollisionMesh* inMesh)

@@ -85,7 +85,7 @@ void CSkillEntity::Update()
 		}
 
 		// 自分とは違う関係を持ってるキャラクターに行なう
-		CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this](CCharacter* inChara)
+		CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this, &collision](CCharacter* inChara)
 		{
 			// 当たり判定
 			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
@@ -94,7 +94,7 @@ void CSkillEntity::Update()
 				HitAbility(inChara);
 				collision = true;
 			}
-		}
+		});
 
 		if (collision)
 		{// 敵に当たっていたら
