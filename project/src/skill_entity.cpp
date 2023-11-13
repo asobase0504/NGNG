@@ -74,6 +74,9 @@ void CSkillEntity::Update()
 
 	if (m_Duration > 0)
 	{
+		bool collision = false;
+
+		// Œø‰ÊŠÔ‚ÌŒ¸­
 		m_Duration--;
 
 		if (m_Collision == nullptr)
@@ -89,11 +92,21 @@ void CSkillEntity::Update()
 			if (hit)
 			{// ƒ_ƒ[ƒW‚Ì”»’è
 				HitAbility(inChara);
+				collision = true;
 			}
-		});
+		}
+
+		if (collision)
+		{// “G‚É“–‚½‚Á‚Ä‚¢‚½‚ç
+			Uninit();
+		}
 	}
-	else
-	{
+	else if(m_Duration <= 0)
+	{// Œø‰ÊŠÔ‚ª0ˆÈ‰º‚É‚È‚Á‚½‚çÁ‚·
 		Uninit();
 	}
+
+#ifdef _DEBUG
+	CDebugProc::Print("Duration : %\n", m_Duration);
+#endif // _DEBUG
 }
