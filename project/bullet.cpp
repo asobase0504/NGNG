@@ -16,6 +16,7 @@
 #include "collision_cylinder.h"
 #include "abnormal.h"
 #include "abnormal_data_base.h"
+#include "player.h"
 #include "player_manager.h"
 
 //--------------------------------------------------------------

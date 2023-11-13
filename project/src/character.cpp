@@ -24,6 +24,8 @@
 #include "map_model.h"
 #include "object_mesh.h"
 
+#include "item_manager.h"
+
 #include <thread>
 
 //--------------------------------------------------------------
@@ -319,6 +321,11 @@ void CCharacter::Damage(const int inDamage)
 //--------------------------------------------------------------
 void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 {
+	// ダメージを与えた処理
+	CItemManager::GetInstance()->AllWhenDamage(this, m_haveItem, pEnemy);
+	// ダメージを受けた処理
+	CItemManager::GetInstance()->AllWhenHit(pEnemy, pEnemy->m_haveItem, this);
+
 	// プレイヤーのダメージを計算
 	int Damage = CalDamage(SkillMul);
 	// エネミーにダメージを与える。
