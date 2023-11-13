@@ -52,9 +52,11 @@ HRESULT CCharacter::Init()
 	m_isDied = false;
 	m_isShield = false;
 	m_isCritical = false;
+	m_numCritical = 0;
 	m_isBlock = false;
 	m_isStun = false;
-	m_numCritical = 0;
+	m_nonCombat = false;
+	m_nonCombatTime = 0;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);

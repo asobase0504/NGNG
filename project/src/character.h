@@ -144,6 +144,10 @@ public:
 	// クリティカルヒットした数
 	int GetNumCritical() { return m_numCritical; }
 
+	// 非戦闘時かどうか
+	void SetNonCombat() { m_nonCombat = true; }
+	bool GetIsNonCombat() { return m_nonCombat; }
+
 private:
 	virtual void Move();
 	void UpdatePos();			// 座標の更新
@@ -162,12 +166,14 @@ protected:		// ステータス
 	// 与える状態異常を管理
 	abnormal_attack m_attackAbnormal;
 
-	bool m_isDied;		// 死亡状態か否か。
-	bool m_isShield;	// シールドを回復するかどうか
-	bool m_isCritical;	// クリティカルかどうか
-	int m_numCritical;	// クリティカルヒットした数
-	bool m_isBlock;	// 防御できたかできてないか
-	bool m_isStun;	// スタン状態かそうでないか
+	bool m_isDied;			// 死亡状態か否か。
+	bool m_isShield;		// シールドを回復するかどうか
+	bool m_isCritical;		// クリティカルかどうか
+	int m_numCritical;		// クリティカルヒットした数
+	bool m_isBlock;			// 防御できたかできてないか
+	bool m_isStun;			// スタン状態かそうでないか
+	bool m_nonCombat;		// 非戦闘時
+	int m_nonCombatTime;	// 非戦闘時になる時間
 	STATE m_state;
 
 	CStatus<int> m_hp;							// 体力
