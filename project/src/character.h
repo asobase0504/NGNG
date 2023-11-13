@@ -142,7 +142,7 @@ public:
 	bool GetIsCritical() { return m_isCritical; }
 
 	// クリティカルヒットした数
-	bool GetNumCritical() { return m_numCritical; }
+	int GetNumCritical() { return m_numCritical; }
 
 private:
 	virtual void Move();
