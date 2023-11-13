@@ -47,11 +47,14 @@ HRESULT CEnemy::Init()
 	// ‰Šú‰»ˆ—
 	CCharacter::Init();
 
+	// “G‘Îó‘Ô
+	m_relation = ERelation::HOSTILE;
+
 	m_AttackCnt = 0;
 	m_apModel[0]->LoadModel("SKELETON");
 	m_apModel[0]->CalculationVtx();
 
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_GO_ATTACK));
+	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
 
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);

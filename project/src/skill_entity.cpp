@@ -20,7 +20,8 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CSkillEntity::CSkillEntity(int nPriority)
+CSkillEntity::CSkillEntity(int nPriority) : 
+	m_Collision(nullptr)
 {
 
 }
@@ -38,7 +39,7 @@ CSkillEntity::~CSkillEntity()
 //--------------------------------------------------------------
 HRESULT CSkillEntity::Init()
 {
-	m_Duration = 1;
+	m_Duration = 200;
 	// 初期化
 	InitAbility();
 
@@ -69,19 +70,47 @@ void CSkillEntity::Update()
 	// スキルデータのインスタンスを取得する
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 
+	AllWayAbility();
+
 	if (m_Duration > 0)
 	{
 		m_Duration--;
 
-		// 当たり判定
-		std::list<CEnemy*> enemyList = CMap::GetMap()->GetEnemyList();
+		if (m_Collision == nullptr)
+		{
+			return;
+		}
 
-		for (CEnemy* enemy : enemyList)
+		// 当たり判定
+		std::list<CCharacter*> charaList = CMap::GetMap()->GetCharacterList();
+
+		for (CCharacter* chara : charaList)
 		{// 攻撃範囲に敵がいるか判定する
-			bool hit = m_Collision->ToSphere((CCollisionSphere*)enemy->GetCollision());
+
+			// 同じ関係性だったら攻撃を当てない。
+			switch (m_apChara->GetRelation())
+			{
+			case CCharacter::ERelation::FRIENDLY:
+				if (chara->GetRelation() == CCharacter::ERelation::FRIENDLY)
+				{
+					continue;
+				}
+				break;
+			case CCharacter::ERelation::HOSTILE:
+				if (chara->GetRelation() == CCharacter::ERelation::HOSTILE)
+				{
+					continue;
+				}
+				break;
+			default:
+				assert(false);
+				break;
+			}
+
+			bool hit = m_Collision->ToSphere((CCollisionSphere*)chara->GetCollision());
 			if (hit)
 			{// ダメージの判定
-				HitAbility(enemy);
+				HitAbility(chara);
 			}
 		}
 	}

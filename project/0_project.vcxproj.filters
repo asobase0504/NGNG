@@ -281,9 +281,6 @@
     <ClCompile Include="src\PlayerController.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\skill.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\status.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -295,9 +292,6 @@
     </ClCompile>
     <ClCompile Include="src\number.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="src\enemy.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
     </ClCompile>
     <ClCompile Include="src\camera.cpp">
       <Filter>ソース ファイル\3D\camera</Filter>
@@ -328,9 +322,6 @@
     <ClCompile Include="src\skill_ui.cpp">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClCompile>
-    <ClCompile Include="src\melee_attack.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="src\mode_fade.cpp">
       <Filter>ソース ファイル\Mode</Filter>
     </ClCompile>
@@ -360,6 +351,15 @@
     </ClCompile>
     <ClCompile Include="src\skill_entity.cpp">
       <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\melee_attack.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -554,7 +554,6 @@
     </ClInclude>
     <ClInclude Include="src\Controller.h" />
     <ClInclude Include="src\PlayerController.h" />
-    <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\status.h" />
     <ClInclude Include="src\number.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
@@ -586,12 +585,8 @@
     <ClInclude Include="src\procedure.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\bullet.h" />
     <ClInclude Include="src\skill_ui.h">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="src\melee_attack.h">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="src\mode_fade.h">
       <Filter>ソース ファイル\Mode</Filter>
@@ -625,6 +620,15 @@
     </ClInclude>
     <ClInclude Include="src\skill_entity.h">
       <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bullet.h">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\melee_attack.h">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

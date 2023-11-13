@@ -31,6 +31,10 @@
 //--------------------------------------------------------------
 CCharacter::CCharacter(int nPriority) : m_haveItem{}
 {
+	if (CMap::GetMap() != nullptr)
+	{
+		CMap::GetMap()->InCharacterList(this);
+	}
 	m_apModel.clear();
 }
 
@@ -53,7 +57,6 @@ HRESULT CCharacter::Init()
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
 	m_apModel[0]->LoadModel("BOX");
-	m_road = CRoad::Create(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(50);
@@ -69,8 +72,8 @@ HRESULT CCharacter::Init()
 	m_attack.SetCurrent(100);
 	m_attackSpeed.Init(1.0f);
 	m_attackSpeed.SetCurrent(1.0f);
-	m_defense.Init(100);
-	m_defense.SetCurrent(100);
+	m_defense.Init(0);
+	m_defense.SetCurrent(0);
 	m_criticalRate.Init(0.0f);
 	m_criticalRate.SetCurrent(0.0f);
 	m_criticalDamage.Init(2.0f);
@@ -339,6 +342,13 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 			abnormalFunc(this, i, pEnemy);
 		}
 	}
+}
+
+void CCharacter::Died()
+{
+	m_isDied = true;
+	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
+	list.remove(this);
 }
 
 void CCharacter::Move()

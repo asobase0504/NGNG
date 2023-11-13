@@ -11,6 +11,7 @@
 // include
 //==============================================================
 #include "task.h"
+#include "character.h"
 
 //==============================================================
 // ƒ}ƒNƒéŒ¾
@@ -53,11 +54,8 @@ public:
 
 	const std::list<CStatue*> GetStatueList() const { return m_statue; }
 
-	void InEnemyList(CEnemy* inEnemy) { m_enemy.push_back(inEnemy); }
-	void InEnemyList(D3DXVECTOR3,int);
-	void InEnemyList(int);
-
-	const std::list<CEnemy*> GetEnemyList() const { return m_enemy; }
+	void InCharacterList(CCharacter* inCharacter) { m_characterList.push_back(inCharacter); }
+	const std::list<CCharacter*> GetCharacterList() const { return m_characterList; }
 
 	std::string GetNextMapPath() { return m_nextMapPath; }
 private:
@@ -70,7 +68,7 @@ private:
 	// ‘¶İ‚·‚éObject
 	std::vector<CMapModel*> m_model;
 	std::vector<CMesh*> m_mesh;
-	std::list<CEnemy*> m_enemy;
+	std::list<CCharacter*> m_characterList;
 	std::list<CStatue*> m_statue;
 };
 #endif

@@ -89,15 +89,15 @@ void CMap::Uninit()
 		model->Uninit();
 		model = nullptr;
 	}
-	for (CEnemy* enemy : m_enemy)
+	for (CCharacter* inChara : m_characterList)
 	{
-		enemy->Uninit();
-		enemy = nullptr;
+		inChara->Uninit();
+		inChara = nullptr;
 	}
 	m_statue.clear();
 	m_mesh.clear();
 	m_model.clear();
-	m_enemy.clear();
+	m_characterList.clear();
 
 	CTask::Uninit();
 }
@@ -113,7 +113,7 @@ void CMap::Update()
 	if (m_SpawnCnt >= 600)
 	{
 		m_SpawnCnt = 0;
-		InEnemyList(CEnemyManager::GetInstance()->RandomSpawn());
+		CEnemyManager::GetInstance()->RandomSpawn();
 	}
 }
 
@@ -170,10 +170,3 @@ void CMap::Load(std::string path)
 	m_nextMapPath = map["NEXT_MAP"];
 }
 
-void CMap::InEnemyList(D3DXVECTOR3, int)
-{
-}
-
-void CMap::InEnemyList(int)
-{
-}

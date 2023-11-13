@@ -54,9 +54,12 @@ HRESULT CPlayer::Init()
 {
 	m_Skill.resize(MAX_SKILL);
 
-	m_isUpdate = true;
 	// 初期化処理
 	CCharacter::Init();
+
+	// 友好状態
+	m_relation = ERelation::FRIENDLY;
+	m_isUpdate = true;
 
 	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
 	{
@@ -76,6 +79,7 @@ HRESULT CPlayer::Init()
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
+	// 当たり判定
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 55.0f);
 	m_collision->SetParent(&m_pos);
 	return S_OK;

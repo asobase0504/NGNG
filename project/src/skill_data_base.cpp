@@ -83,55 +83,29 @@ void CSkillDataBase::Init()
 		}
 
 		return false;
-	},
-		[this](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
-	{// HitŽž‚ÌŒø‰Ê
-		//CStatus<unsigned int> atk = inusedCharacter->GetAtk();
-		//int nAtk = atk.GetCurrent();
-
-		inusedCharacter->Attack(inusedInTarget,2.0f);
-
-		return false;
-	} };
+	}};
 	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{ // ”­“®Žž‚ÌŒø‰Ê
 		return false;
-	},
-		[this](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
-	{ // HitŽž‚ÌŒø‰Ê
-		return false;
-	} };
+	}};
 	m_dates["YAMATO_SKILL_3"] = { 0,1,1,0,5,0,D3DXVECTOR3(0.0f,0.0f,0.0f),
 		[](CCharacter* inusedCharacter)
 	{ // ”­“®Žž‚ÌŒø‰Ê
 		return false;
-	},
-		[](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
-	{ // HitŽž‚ÌŒø‰Ê
-		return false;
-	} };
+	}};
 	m_dates["YAMATO_SKILL_4"] = { 0,1,1,0,5,0,D3DXVECTOR3(0.0f,0.0f,0.0f),
 		[](CCharacter* inusedCharacter)
 	{ // ”­“®Žž‚ÌŒø‰Ê
 		return false;
-	},
-		[](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
-	{ // HitŽž‚ÌŒø‰Ê
-		return false;
-	} };
-	m_dates["GOLEM_SKILL_1"] = { 0,1,1,0,60,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	}};
+	m_dates["GOLEM_SKILL_1"] = { 0,1,1,0,600,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{// ”­“®Žž‚ÌŒø‰Ê
 		if (inusedCharacter != nullptr)
 		{
 			CGolemSkill_1::Create(inusedCharacter);
 		}
-
 		return false;
-	},
-		[this](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
-	{// HitŽž‚ÌŒø‰Ê
-		return false;
-	} };
+	}};
 }

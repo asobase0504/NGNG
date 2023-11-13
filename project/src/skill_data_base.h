@@ -20,7 +20,6 @@ class CSkill;
 class CSkillDataBase
 {
 public:
-	using HIT_ABILITY = std::function<bool(CCharacter*, CCharacter*)>;
 	using ABILITY = std::function<bool(CCharacter*)>;
 
 	struct BASE
@@ -38,7 +37,6 @@ public:
 	{
 		BASE baseInfo;
 		ABILITY ability;
-		HIT_ABILITY abilityHit;
 	};
 
 private:
@@ -54,7 +52,6 @@ private:
 public:
 	SKILL_INFO	GetInfo(std::string tag) { return m_dates[tag]; }
 	ABILITY		GetAbility(std::string tag) { return m_dates[tag].ability; }
-	HIT_ABILITY	GetHitAbility(std::string tag) { return m_dates[tag].abilityHit; }
 	int			GetCT(std::string tag) { return m_dates[tag].baseInfo.CT; }
 	int			GetStack(std::string tag) { return m_dates[tag].baseInfo.stock; }
 	float		GetDamage(std::string tag) { return m_dates[tag].baseInfo.damage; }

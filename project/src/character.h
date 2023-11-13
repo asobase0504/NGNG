@@ -13,7 +13,6 @@
 #include "object.h"
 #include "status.h"
 #include "item_data_base.h"
-#include "road.h"
 #include "abnormal_data_base.h"
 #include <array>
 
@@ -31,6 +30,14 @@ class CAbnormal;
 class CCharacter : public CObject
 {
 public:
+
+	enum class ERelation
+	{
+		FRIENDLY,	// 友好的
+		HOSTILE,	// 敵対的
+		MAX
+	};
+
 	enum STATE
 	{
 		NONE = -1,
@@ -117,9 +124,7 @@ public:
 	// 所持金
 	CStatus<int>* GetMoney() { return &m_money; }
 
-	// 攻撃の道
-	CRoad* GetRoad() { return m_road; }
-
+	// スキルの取得
 	std::vector<CSkill*> GetSkill() { return m_Skill; }
 
 	// 状態異常
@@ -129,13 +134,17 @@ public:
 
 	// 攻撃
 	void Attack(CCharacter* pEnemy, float SkillMul);
-	void Abnormal();
+
+	// 死亡状態
 	bool IsDied() { return m_isDied; }
-	void Died() { m_isDied = true; }
+	void Died();
   
+	// 関係
+	ERelation GetRelation() { return m_relation; }
+
 private:
 	virtual void Move();
-	void UpdatePos();			// 座標の更新
+	void Abnormal();
 
 protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
@@ -171,7 +180,8 @@ protected:		// ステータス
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 	CStatus<int> m_money;						// 所持金
 
-	CRoad* m_road;								// 攻撃の道みたいな
+	ERelation m_relation;
+
 	std::vector<CSkill*> m_Skill;
 };
 #endif
