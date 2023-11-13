@@ -52,6 +52,7 @@ CPlayer::~CPlayer()
 //--------------------------------------------------------------
 HRESULT CPlayer::Init()
 {
+	m_isUpdate = true;
 	// 初期化処理
 	CCharacter::Init();
 
@@ -99,6 +100,11 @@ void CPlayer::Uninit()
 //--------------------------------------------------------------
 void CPlayer::Update()
 {
+	if (!m_isUpdate)
+	{
+		return;
+	}
+
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 
@@ -107,22 +113,31 @@ void CPlayer::Update()
 		return;
 	}
 
-	// 移動
-	Move();
+	if (!m_isStun)
+	{
+
+		// 移動
+		Move();
+
+		// ジャンプ
+		Jump();
+
+		// ダッシュ
+		Dash();
+
+		// 攻撃
+		PAttack();
+
+		// アイテムの取得
+		TakeItem();
+	}
+	else
+	{
+		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	}
 
 	// 更新処理
 	CCharacter::Update();
-
-	// ジャンプ
-	Jump();
-
-	// ダッシュ
-	Dash();
-
-	// 攻撃
-	PAttack();
-	
-	TakeItem();
 
 #ifdef _DEBUG
 	CDebugProc::Print("Player : pos(%f, %f, %f)\n", GetPos().x, GetPos().y, GetPos().z);

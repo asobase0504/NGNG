@@ -20,7 +20,7 @@ class CRenderer;
 class CInput;
 class CTexture;
 class CMode;
-class CFade;
+class CModeFade;
 class CSound;
 class CTaskGroup;
 class CObjectXGroup;
@@ -73,7 +73,7 @@ public:	// ÉÅÉìÉoÅ[ä÷êî
 	CTexture* GetTexture() { return m_texture; }
 	CTaskGroup* GetTaskGroup() { return m_taskGroup; }
 	CObjectXGroup* GetObjectXGroup() { return m_objectXGroup; }
-	CFade* GetFade() { return m_fade; }
+	CModeFade* GetFade() { return m_fade; }
 
 	void SetMode(CApplication::MODE inMode);
 	MODE* GetMode() { return &m_modeType; }
@@ -87,7 +87,7 @@ private:
 	CTexture* m_texture;
 	CRenderer* m_renderer;
 	CTaskGroup* m_taskGroup;
-	CFade* m_fade;
+	CModeFade* m_fade;
 	CMode* m_mode;
 	CSound* m_sound;
 	CColor* m_color;

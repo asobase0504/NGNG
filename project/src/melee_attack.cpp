@@ -1,83 +1,62 @@
-ï»¿//**************************************************************
+//**************************************************************
 //
-// ãƒãƒªã‚´ãƒ³ãƒãƒ¬ãƒƒãƒˆ
-// Author : å†¨æ‰€çŸ¥ç”Ÿ
+// ‹ßÚUŒ‚
+// Author : Š“c‘å–²
 //
 //**************************************************************
 
 //==============================================================
 // include
 //==============================================================
-#include "bullet.h"
+#include "melee_attack.h"
 #include "character.h"
 #include "utility.h"
 #include "application.h"
 #include "collision.h"
 #include "collision_cylinder.h"
-#include "abnormal.h"
-#include "abnormal_data_base.h"
-#include "player.h"
 #include "player_manager.h"
 
 //--------------------------------------------------------------
-// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 //--------------------------------------------------------------
-CBullet::CBullet() : m_life(100)
+CMeleeAttack::CMeleeAttack() : m_life(1)
 {
 }
 
 //--------------------------------------------------------------
-// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+// ƒfƒXƒgƒ‰ƒNƒ^
 //--------------------------------------------------------------
-CBullet::~CBullet()
+CMeleeAttack::~CMeleeAttack()
 {
 }
 
 //--------------------------------------------------------------
-// åˆæœŸåŒ–
+// ‰Šú‰»
 //--------------------------------------------------------------
-HRESULT CBullet::Init()
+HRESULT CMeleeAttack::Init()
 {
-	CObjectPolygon3D::Init();
-	SetAnchor(CObjectPolygon3D::ANCHOR_CENTER);
-	SetBillboard(true);
-	SetSize(D3DXVECTOR3(10.0f,10.0f,0.0f));
-	SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-	
-	m_collision = CCollisionCylinder::Create(GetPos(),10.0f,10.0f);
+	CObject::Init();
 
-	for (int i = 0; i < m_abnormal.size(); i++)
-	{
-		m_abnormal[i] = false;
-	}
+	m_collision = CCollisionCylinder::Create(GetPos(), 10.0f, 10.0f);
 
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// çµ‚äº†
+// I—¹
 //--------------------------------------------------------------
-void CBullet::Uninit()
+void CMeleeAttack::Uninit()
 {
-	CObjectPolygon3D::Uninit();
-	m_collision->Uninit();
+	CObject::Uninit();
 }
 
 //--------------------------------------------------------------
-// æ›´æ–°
+// XV
 //--------------------------------------------------------------
-void CBullet::Update()
+void CMeleeAttack::Update()
 {
-
-	CObjectPolygon3D::Update();
+	CObject::Update();
 	m_collision->SetPos(GetPos());
-
-	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	D3DXVec3Normalize(&move,&GetMove());
-	move *= m_speed;
-
-	// ç§»å‹•
-	AddPos(move);
 
 	m_life--;
 
@@ -86,52 +65,37 @@ void CBullet::Update()
 		Uninit();
 	}
 
-	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç²å¾—
+	// ƒvƒŒƒCƒ„[‚Ìæ“¾
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	
+	CStatus<int>* playerHp = pPlayer->GetHp();
+
 	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
-		for (int i = 0; i < m_abnormal.size(); i++)
-		{
-			if (!m_abnormal[i])
-			{
-				continue;
-			}
-
-			CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
-
-			if (abnormalFunc != nullptr)
-			{
-				abnormalFunc(pPlayer, i,pPlayer);
-			}
-		}
+		playerHp->AddCurrent(-10);
 		Uninit();
 	}
 }
 
 //--------------------------------------------------------------
-// æç”»
+// •`‰æ
 //--------------------------------------------------------------
-void CBullet::Draw()
+void CMeleeAttack::Draw()
 {
-	CObjectPolygon3D::Draw();
+	CObject::Draw();
 }
 
 //--------------------------------------------------------------
-// ç”Ÿæˆ
+// ¶¬
 //--------------------------------------------------------------
-CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, float speed, abnormal_attack abnormal)
+CMeleeAttack* CMeleeAttack::Create(D3DXVECTOR3 pos)
 {
-	CBullet* pObject = nullptr;
-	pObject = new CBullet();
+	CMeleeAttack* pObject = nullptr;
+	pObject = new CMeleeAttack();
 
 	if (pObject != nullptr)
 	{
 		pObject->Init();
 		pObject->SetPos(pos);
-		pObject->SetMove(move);
-		pObject->SetSpeed(speed);
-		pObject->SetAbnormal(abnormal);
 	}
 
 	return pObject;

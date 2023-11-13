@@ -60,9 +60,13 @@ public:
   
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
-	void AddUbnormalStack(const int id) { m_haveAbnormal[id].s_stack++; }
+	void AddUbnormalStack(const int id) { m_haveAbnormal[id].s_Time.push_back(0); m_haveAbnormal[id].s_stack++;}
+	void SetInterval(const int id, const int Time) { m_haveAbnormal[id].s_interval = Time; }
 	void SetUbnormalTime(const int id, const int Time) { m_haveAbnormal[id].s_effectTime = Time; }
+	void SetTargetInterval(const int id, const int MAXTIME) { m_haveAbnormal[id].s_target_interval = MAXTIME; }
+	void SetAttackAbnormal(const int id, bool onoff) { m_attackAbnormal[id] = onoff; }
 	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
+	void SetStun(bool isStun) { m_isStun = isStun; }
 
 	int CalDamage(float SkillAtkMul);
 
@@ -116,8 +120,14 @@ public:
 	// 攻撃の道
 	CRoad* GetRoad() { return m_road; }
 
+	// 状態異常
+	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }
+	// 与える状態異常
+	abnormal_attack GetAbnormalAttack() { return m_attackAbnormal; }
+
 	// 攻撃
 	void Attack(CCharacter* pEnemy, float SkillMul);
+	void Abnormal();
 
 	// 死亡状態か否か。
 	bool IsDied() { return m_isDied; }
@@ -149,12 +159,16 @@ protected:		// ステータス
 	item_count m_haveItem;
 	// 持っている状態異常の個数をそれぞれ管理
 	abnormal_count m_haveAbnormal;
+	// 与える状態異常を管理
+	abnormal_attack m_attackAbnormal;
 
-	bool m_isBlock;		// 防御できたかできてないか
 	bool m_isDied;		// 死亡状態か否か。
 	bool m_isShield;	// シールドを回復するかどうか
 	bool m_isCritical;	// クリティカルかどうか
 	int m_numCritical;	// クリティカルヒットした数
+	bool m_isBlock;	// 防御できたかできてないか
+	bool m_isDied;	// 死亡状態か否か。
+	bool m_isStun;	// スタン状態かそうでないか
 	STATE m_state;
 
 	CStatus<int> m_hp;							// 体力
