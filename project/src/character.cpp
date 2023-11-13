@@ -41,7 +41,6 @@ CCharacter::CCharacter(int nPriority) : m_haveItem{}
 //--------------------------------------------------------------
 CCharacter::~CCharacter()
 {
-
 }
 
 //--------------------------------------------------------------
@@ -51,6 +50,11 @@ HRESULT CCharacter::Init()
 {
 	CObject::Init();
 	m_isDied = false;
+	m_isShield = false;
+	m_isCritical = false;
+	m_isBlock = false;
+	m_isStun = false;
+	m_numCritical = 0;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
@@ -85,7 +89,6 @@ HRESULT CCharacter::Init()
 	m_jumpCount.SetCurrent(0);
 	m_money.Init(100);
 	m_money.SetCurrent(50);
-	m_isStun = false;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
