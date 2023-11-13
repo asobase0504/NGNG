@@ -81,38 +81,16 @@ void CSkillEntity::Update()
 			return;
 		}
 
-		// 当たり判定
-		std::list<CCharacter*> charaList = CMap::GetMap()->GetCharacterList();
-
-		for (CCharacter* chara : charaList)
-		{// 攻撃範囲に敵がいるか判定する
-
-			// 同じ関係性だったら攻撃を当てない。
-			switch (m_apChara->GetRelation())
-			{
-			case CCharacter::ERelation::FRIENDLY:
-				if (chara->GetRelation() == CCharacter::ERelation::FRIENDLY)
-				{
-					continue;
-				}
-				break;
-			case CCharacter::ERelation::HOSTILE:
-				if (chara->GetRelation() == CCharacter::ERelation::HOSTILE)
-				{
-					continue;
-				}
-				break;
-			default:
-				assert(false);
-				break;
-			}
-
-			bool hit = m_Collision->ToSphere((CCollisionSphere*)chara->GetCollision());
+		// 自分とは違う関係を持ってるキャラクターに行なう
+		CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this](CCharacter* inChara)
+		{
+			// 当たり判定
+			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
 			if (hit)
 			{// ダメージの判定
-				HitAbility(chara);
+				HitAbility(inChara);
 			}
-		}
+		});
 	}
 	else
 	{

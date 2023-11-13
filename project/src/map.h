@@ -56,6 +56,7 @@ public:
 
 	void InCharacterList(CCharacter* inCharacter) { m_characterList.push_back(inCharacter); }
 	const std::list<CCharacter*> GetCharacterList() const { return m_characterList; }
+	void DoDifferentRelation(CCharacter::ERelation,std::function<void(CCharacter*)>);
 
 	std::string GetNextMapPath() { return m_nextMapPath; }
 private:

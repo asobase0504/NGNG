@@ -99,7 +99,7 @@ void CSkillDataBase::Init()
 	{ // ”­“®Žž‚ÌŒø‰Ê
 		return false;
 	}};
-	m_dates["GOLEM_SKILL_1"] = { 0,1,1,0,600,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	m_dates["GOLEM_SKILL_1"] = { 50,1,1,0,600,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{// ”­“®Žž‚ÌŒø‰Ê
 		if (inusedCharacter != nullptr)

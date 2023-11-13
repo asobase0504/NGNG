@@ -19,6 +19,8 @@
 #include "abnormal.h"
 #include "bullet.h"
 
+#include "map.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -67,15 +69,19 @@ CGolemSkill_1 * CGolemSkill_1::Create(CCharacter * chara)
 //--------------------------------------------------------------
 void CGolemSkill_1::InitAbility()
 {
-	m_aimCharacter = CPlayerManager::GetInstance()->GetPlayer();
-
-	m_road = CRoad::Create(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
+	m_road = CRoad::Create(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	m_road->SetShooter(m_apChara);
-	m_road->SetTarget(m_aimCharacter);
 	m_road->SetUse(true);
 
 	m_chargeTime = 0;
 	m_isCharge = true;
+
+	// 狙う先の決定
+	CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this](CCharacter* inChara)
+	{
+		m_aimCharacter = inChara;
+	});
+	m_road->SetTarget(m_aimCharacter);
 }
 
 //--------------------------------------------------------------
@@ -91,6 +97,7 @@ void CGolemSkill_1::AllWayAbility()
 		D3DXVECTOR3 pos = m_apChara->GetPos();
 		D3DXVECTOR3 move = m_aimCharacter->GetPos() - pos;
 		m_bullet = CBullet::Create(pos, move * 0.01f, 10.0f, m_apChara->GetAbnormalAttack());
+		m_bullet->SetRelation(m_apChara->GetRelation());
 
 		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 10.0f);
 		m_Collision->SetParent(&m_bullet->GetPos());
