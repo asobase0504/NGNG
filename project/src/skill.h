@@ -42,6 +42,7 @@ public:
 
 	// Setter
 	void SetSkill(std::string tag, CCharacter *chara);			// スキルの設定
+	void SetCT(int ct) { m_CT = ct; }
 
 private:		// メンバ変数
 	CCharacter*		m_apChara;			// キャラクターのインスタンス

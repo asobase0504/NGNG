@@ -9,6 +9,7 @@
 #include "statue_chest.h"
 #include "player_manager.h"
 #include "item_manager.h"
+#include "collision_box.h"
 #include "input.h"
 
 //--------------------------------------------------------------
@@ -37,6 +38,9 @@ HRESULT CStatueChest::Init()
 	D3DXVECTOR3 rot = GetRot();
 
 	CStatue::Init(pos, rot);
+	m_collisionBox->SetPos(D3DXVECTOR3(0.0f, 5.0f, 0.0f));
+	m_collisionBox->SetSize(D3DXVECTOR3(2.5f, 5.0f, 2.5f));
+	LoadModel("STATUE_CHEST");
 	m_bOnce = false;
 
 	return S_OK;
@@ -75,7 +79,7 @@ void CStatueChest::Update()
 				// アイテムランダムドロップ関数追加
 				//---------------------------------------------------------------------------------
 				D3DXVECTOR3 pos = GetPos();
-				CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), CItemDataBase::ITEM_POWER_ON);
+				CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot(), CItemDataBase::ITEM_KIBORI);
 
 				m_bOnce = true;
 			}

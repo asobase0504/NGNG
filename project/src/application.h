@@ -20,7 +20,7 @@ class CRenderer;
 class CInput;
 class CTexture;
 class CMode;
-class CFade;
+class CModeFade;
 class CSound;
 class CTaskGroup;
 class CObjectXGroup;
@@ -43,6 +43,8 @@ public:
 		MODE_EDIT,			// エディタ画面
 		MODE_FADE,			// フェード画面
 		MODE_TUTORIAL,		// チュートリアル画面
+		MODE_SELECT,		// キャラクター選択画面
+		MODE_DEBUG,			// デバッグゲーム画面
 		MODE_MAX
 	};
 
@@ -71,11 +73,13 @@ public:	// メンバー関数
 	CTexture* GetTexture() { return m_texture; }
 	CTaskGroup* GetTaskGroup() { return m_taskGroup; }
 	CObjectXGroup* GetObjectXGroup() { return m_objectXGroup; }
-	CFade* GetFade() { return m_fade; }
+	CModeFade* GetFade() { return m_fade; }
 
 	void SetMode(CApplication::MODE inMode);
 	MODE* GetMode() { return &m_modeType; }
 
+
+	CMode* GetModeClass() { return m_mode; }
 	CSound* GetSound() { return m_sound; }
 	CColor* GetColor() { return m_color; }
 
@@ -83,7 +87,7 @@ private:
 	CTexture* m_texture;
 	CRenderer* m_renderer;
 	CTaskGroup* m_taskGroup;
-	CFade* m_fade;
+	CModeFade* m_fade;
 	CMode* m_mode;
 	CSound* m_sound;
 	CColor* m_color;

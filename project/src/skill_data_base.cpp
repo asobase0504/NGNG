@@ -86,7 +86,7 @@ void CSkillDataBase::Init()
 		//CStatus<unsigned int> atk = inusedCharacter->GetAtk();
 		//int nAtk = atk.GetCurrent();
 
-		inusedInTarget->Damage(50);
+		inusedCharacter->Attack(inusedInTarget,2.0f);
 
 		return false;
 	} };

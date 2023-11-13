@@ -11,6 +11,7 @@
 #include "statue_chest.h"
 #include "statue_luck.h"
 #include "statue_combat.h"
+#include "statue_teleporter.h"
 #include "statue.h"
 #include "collision_box.h"
 #include "application.h"
@@ -18,6 +19,7 @@
 
 #include "map.h"
 #include "object_mesh.h"
+#include "collision_mesh.h"
 
 //--------------------------------------------------------------
 //静的メンバ変数宣言
@@ -65,48 +67,35 @@ HRESULT CStatueManager::Init()
 //--------------------------------------------------------------
 void CStatueManager::Uninit(void)
 {
-}
-
-//--------------------------------------------------------------
-// 更新処理
-//--------------------------------------------------------------
-void CStatueManager::Update(void)
-{
-}
-
-//--------------------------------------------------------------
-// 描画処理
-//--------------------------------------------------------------
-void CStatueManager::Draw(void)
-{
+	if (m_statueManager != nullptr)
+	{
+		m_statueManager = nullptr;
+	}
+	CTask::Uninit();
 }
 
 //--------------------------------------------------------------
 // 生成処理
 //--------------------------------------------------------------
-CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
+CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, int type)
 {
-	CMap* pMap = CMap::GetMap();
-	CMesh* pMesh = pMap->GetMapMesh(0);
-
-	D3DXVECTOR3 Meshpos = pMesh->GetPos();
-
+	CStatue* statue = nullptr;
 	switch (type)
 	{
-	case CStatueManager::NONE:
-		m_pStatue = CStatue::Create(pos,D3DXVECTOR3(0.0f,0.0f,0.0f));
-		break;
 	case CStatueManager::BLOOD:
-		RandomCreateBlood(D3DXVECTOR3(pos.x, Meshpos.y, pos.z));
+		statue = CStatueBlood::Create(pos);
 		break;
 	case CStatueManager::CHEST:
-		RandomCreateChest(D3DXVECTOR3(pos.x, Meshpos.y, pos.z));
+		statue = CStatueChest::Create(pos);
 		break;
 	case CStatueManager::LUCK:
-		RandomCreateLuck(D3DXVECTOR3(pos.x, Meshpos.y, pos.z));
+		statue = CStatueLuck::Create(pos);
 		break;
 	case CStatueManager::COMBAT:
-		RandomCreateCombat(D3DXVECTOR3(pos.x, Meshpos.y, pos.z));
+		statue = CStatueCombat::Create(pos);
+		break;
+	case CStatueManager::TELEPORTER:
+		statue = CStatueTeleporter::Create(pos);
 		break;
 	case CStatueManager::MAX:
 		break;
@@ -114,26 +103,63 @@ CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, EType type)
 		break;
 	}
 
-	return m_pStatue;
+	return statue;
 }
 
 //--------------------------------------------------------------
-// 血の祭壇ランダム生成
+// 生成処理
 //--------------------------------------------------------------
-CStatue * CStatueManager::RandomCreateBlood(D3DXVECTOR3 pos)
+CStatue * CStatueManager::CreateStatue(int type)
 {
 	float randomPosX = FloatRandom(400.0f, -500.0f);
 	float randomPosZ = FloatRandom(500.0f, -415.0f);
 
-	m_pStatue = CStatueBlood::Create(D3DXVECTOR3(randomPosX, pos.y, randomPosZ));
+	D3DXVECTOR3 pos(randomPosX, -FLT_MAX, randomPosZ);
 
-	return m_pStatue;
+	return CreateStatue(pos, type);
+}
+
+//--------------------------------------------------------------
+// ランダムな像生成処理
+//--------------------------------------------------------------
+CStatue * CStatueManager::RandomCreate()
+{
+	// 生成
+	int randomCount = IntRandom(5, 1);
+	float randomPosX = FloatRandom(400.0f, -500.0f);
+	float randomPosZ = FloatRandom(500.0f, -415.0f);
+
+	CStatue* statue;
+
+	if (randomCount != 2)
+	{
+		statue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(randomPosX, -FLT_MIN, randomPosZ), randomCount);
+	}
+	else
+	{
+		int rand = IntRandom(4, 1);
+
+		if (rand == 1)
+		{
+			statue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(randomPosX, -FLT_MIN, randomPosZ), 1);
+		}
+		else if (rand == 2)
+		{
+			statue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(randomPosX, -FLT_MIN, randomPosZ), 3);
+		}
+		else
+		{
+			statue = CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(randomPosX, -FLT_MIN, randomPosZ), 4);
+		}
+	}
+
+	return statue;
 }
 
 //--------------------------------------------------------------
 // 宝箱ランダム生成
 //--------------------------------------------------------------
-CStatue * CStatueManager::RandomCreateChest(D3DXVECTOR3 pos)
+CStatue * CStatueManager::RandomCreateChest()
 {
 	// 生成個数
 	int randomCount = IntRandom(15, 8);
@@ -142,40 +168,13 @@ CStatue * CStatueManager::RandomCreateChest(D3DXVECTOR3 pos)
 	randomCount = IntRandom(3, 1);
 #endif // DEBUG
 
+	CStatue* statue;
 	for (int nCnt = 0; nCnt < randomCount; nCnt++)
 	{
 		float randomPosX = FloatRandom(400.0f, -500.0f);
 		float randomPosZ = FloatRandom(500.0f,-415.0f);
-		m_pStatue = CStatueChest::Create(D3DXVECTOR3(randomPosX,pos.y, randomPosZ));
+		statue = CStatueChest::Create(D3DXVECTOR3(randomPosX, -FLT_MIN, randomPosZ));
 	}
-	
-	return m_pStatue;
+
+	return statue;
 }
-
-//--------------------------------------------------------------
-// 運の祭壇ランダム生成
-//--------------------------------------------------------------
-CStatue * CStatueManager::RandomCreateLuck(D3DXVECTOR3 pos)
-{
-	float randomPosX = FloatRandom(400.0f, -500.0f);
-	float randomPosZ = FloatRandom(500.0f, -415.0f);
-
-	m_pStatue = CStatueLuck::Create(D3DXVECTOR3(randomPosX, pos.y, randomPosZ));
-
-	return m_pStatue;
-}
-
-//--------------------------------------------------------------
-// 戦いの祭壇ランダム生成
-//--------------------------------------------------------------
-CStatue * CStatueManager::RandomCreateCombat(D3DXVECTOR3 pos)
-{
-	float randomPosX = FloatRandom(400.0f, -500.0f);
-	float randomPosZ = FloatRandom(500.0f, -415.0f);
-
-	m_pStatue = CStatueCombat::Create(D3DXVECTOR3(randomPosX, pos.y, randomPosZ));
-
-	return m_pStatue;
-}
-
-

@@ -1,11 +1,11 @@
-//**************************************************************
+ï»¿//**************************************************************
 //
-// ƒXƒe[ƒ^ƒX
+// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 // Author : Yuda Kaito
 //
 //**************************************************************
-#ifndef _STATUS_H_			// ‚±‚Ìƒ}ƒNƒ’è‹`‚ª‚³‚ê‚Ä‚È‚©‚Á‚½‚ç
-#define _STATUS_H_			// “ñdƒCƒ“ƒNƒ‹[ƒh–h~‚Ìƒ}ƒNƒ’è‹`
+#ifndef _STATUS_H_			// ã“ã®ãƒã‚¯ãƒ­å®šç¾©ãŒã•ã‚Œã¦ãªã‹ã£ãŸã‚‰
+#define _STATUS_H_			// äºŒé‡ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰é˜²æ­¢ã®ãƒã‚¯ãƒ­å®šç¾©
 
 //--------------------------------------------------------------
 // include
@@ -13,26 +13,26 @@
 #include "task.h"
 
 //--------------------------------------------------------------
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 //--------------------------------------------------------------
 class CCharacter;
 
 //==============================================================
-// ƒXƒe[ƒ^ƒX
+// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 //==============================================================
 template <class T>
 class CStatus
 {
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÆƒfƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	CStatus() :
 		m_max(0),
 		m_current(0),
 		m_base(0),
 		m_addItem(0),
-		m_mulItem(0.0f),
+		m_mulItem(1.0f),
 		m_addBuff(0),
-		m_mulBuff(0.0f)
+		m_mulBuff(1.0f)
 	{
 	}
 
@@ -53,7 +53,7 @@ public:
 	}
 	void Update() {}
 
-	// Œ»İ‚Ì’l‚Ì•ÏX
+	// ç¾åœ¨ã®å€¤ã®å¤‰æ›´
 	void SetCurrent(const T& inNumber)
 	{
 		if (m_max < inNumber)
@@ -68,21 +68,28 @@ public:
 	void AddCurrent(T inNumber) { SetCurrent(m_current + inNumber); }
 	void MulCurrent(float inNumber) { SetCurrent(m_current * inNumber); }
 	T GetCurrent() { return m_current; }
+	T GetMax() { return m_max; }
+	T GetBase() { return m_base; }
+	T GetAddItem() { return m_addItem; }
+	T GetBuffItem() { return m_addBuff; }
+	T CalStatus() { return ((m_current + m_addBuff + m_addItem) * (T)(m_mulBuff * m_mulItem)); }
+
+	float GetMulItem() { return m_mulItem; }
+	float GetMulBuff() { return m_mulBuff; }
 
 	bool MaxCurrentSame() { return m_current >= m_max; }
 
-	T GetMax() { return m_max; }
+	void AddItemEffect(T inAdd) { m_addItem += inAdd; }
+	void AddBuffEffect(T inAdd) { m_addBuff += inAdd; }
 
-	void AddItemEffect(T inAdd) { m_max += inAdd; }
+private:	// ãƒ¡ãƒ³ãƒå¤‰æ•°
+	T m_max;			// æœ€å¤§å€¤
+	T m_current;		// ç¾åœ¨å€¤
+	T m_base;			// åŸºç¤å€¤
+	T m_addItem;		// ã‚¢ã‚¤ãƒ†ãƒ ã«ã‚ˆã‚‹åŠ ç®—å€¤
+	float m_mulItem;	// ã‚¢ã‚¤ãƒ†ãƒ ã«ã‚ˆã‚‹ä¹—ç®—å€¤
 
-private:	// ƒƒ“ƒo•Ï”
-	T m_max;			// Å‘å’l
-	T m_current;		// Œ»İ’l
-	T m_base;			// Šî‘b’l
-	T m_addItem;		// ƒAƒCƒeƒ€‚É‚æ‚é‰ÁZ’l
-	float m_mulItem;	// ƒAƒCƒeƒ€‚É‚æ‚éæZ’l
-
-	T m_addBuff;		// ó‘Ô•Ï‰»‚É‚æ‚é‰ÁZ’l
-	float m_mulBuff;	// ó‘Ô•Ï‰»‚É‚æ‚éæZ’l
+	T m_addBuff;		// çŠ¶æ…‹å¤‰åŒ–ã«ã‚ˆã‚‹åŠ ç®—å€¤
+	float m_mulBuff;	// çŠ¶æ…‹å¤‰åŒ–ã«ã‚ˆã‚‹ä¹—ç®—å€¤
 };
 #endif

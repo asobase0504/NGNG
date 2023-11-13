@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// 像管理
+// 像生成管理
 // Author : 梶田大夢
 //
 //**************************************************************
@@ -14,12 +14,7 @@
 #include "statue.h"
 
 //==============================================================
-// 前方宣言
-//==============================================================
-class CCollisionBox;
-
-//==============================================================
-// 敵管理クラス
+// 像生成クラス
 //==============================================================
 class CStatueManager : public CTask
 {
@@ -37,6 +32,7 @@ public:
 		CHEST,
 		LUCK,
 		COMBAT,
+		TELEPORTER,
 		MAX
 	};
 
@@ -46,21 +42,14 @@ public:
 	//プロトタイプ宣言
 	HRESULT	Init() override;
 	void	Uninit() override;
-	void	Update() override;
-	void	Draw() override;
 
-	// 静的メンバ関数
-	CStatue* CreateStatue(D3DXVECTOR3 pos, EType type);			// 像の生成
-	CStatue* RandomCreateBlood(D3DXVECTOR3 pos);				// 血の祭壇ランダム生成
-	CStatue* RandomCreateChest(D3DXVECTOR3 pos);				// 宝箱ランダム生成
-	CStatue* RandomCreateLuck(D3DXVECTOR3 pos);					// 運の祭壇ランダム生成
-	CStatue* RandomCreateCombat(D3DXVECTOR3 pos);				// 戦いの祭壇ランダム生成
-
-	CStatue* GetStatue() { return m_pStatue; }
-	CCollisionBox* GetStatueBox() { return m_pStatue->GetCollisionBox(); }
+	// 生成プロセス
+	CStatue* CreateStatue(D3DXVECTOR3 pos,int type);	// 像の生成
+	CStatue* CreateStatue(int type);					// 像の生成
+	CStatue* RandomCreate();			// ランダムな像生成
+	CStatue* RandomCreateChest();		// 宝箱ランダム生成
 
 private:		// メンバ変数
-	CStatue* m_pStatue;
 };
 #endif
 

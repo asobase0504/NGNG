@@ -40,19 +40,23 @@ public:
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Uninit() override;
 	void	Update() override;
-	void	Draw() override;
 
 	// 静的メンバ関数
 	static CEnemy *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);			// プレイヤーの生成
 	void SetActivity(ACTIVITY_FUNC NowAct) { m_Activity = NowAct; }
 	ACTIVITY_FUNC GetActivity() { return m_Activity; }
 
+	// 攻撃カウントの加算
+	void SetAttackCnt(int Cnt) { m_AttackCnt = Cnt; }
+	void AddAttackCnt(int Cnt) { m_AttackCnt += Cnt; }
+	int GetAttackCnt() { return m_AttackCnt; }
+
 private:
 	void Move();		// 移動
 
 private:	// メンバ変数
 	ACTIVITY_FUNC	m_Activity;
+	int				m_AttackCnt;
 };
 #endif

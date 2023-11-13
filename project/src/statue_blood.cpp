@@ -7,8 +7,13 @@
 
 // include
 #include "statue_blood.h"
+#include "statue_manager.h"
 #include "player_manager.h"
 #include "input.h"
+#include "map.h"
+#include "collision_mesh.h"
+#include "collision_box.h"
+#include "object_mesh.h"
 
 //--------------------------------------------------------------
 // コンストラクタ

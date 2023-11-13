@@ -116,7 +116,6 @@ void CObjectX::Draw()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	D3DMATERIAL9 matDef;			// 現在のマテリアル保存用
 	D3DXMATERIAL *pMat;				// マテリアルの情報
 
 	//マテリアルデータへのポインタを取得
@@ -153,8 +152,13 @@ void CObjectX::DrawMaterial()
 	// カメラ情報
 	CCamera* pCamera = (CCamera*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_CAMERA, GetPriority());
 
-	D3DXMATRIX viewMatrix = pCamera->GetMtxView();
-	D3DXMATRIX projMatrix = pCamera->GetMtxProje();
+	D3DXMATRIX viewMatrix;
+	D3DXMATRIX projMatrix;
+	if (pCamera != nullptr)
+	{
+		viewMatrix = pCamera->GetMtxView();
+		projMatrix = pCamera->GetMtxProje();
+	}
 
 	//-------------------------------------------------
 	// シェーダの設定
@@ -173,6 +177,11 @@ void CObjectX::DrawMaterial()
 
 	// ライト情報
 	CLight* lightClass = (CLight*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_LIGHT, GetPriority());
+
+	if (lightClass == nullptr)
+	{
+		lightClass = (CLight*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_LIGHT, GetPriority() - 1);
+	}
 	D3DLIGHT9 light = lightClass->GetLight(0);
 
 	// ライトの方向

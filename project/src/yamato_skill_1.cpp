@@ -43,7 +43,9 @@ void CYamatoSkill_1::InitAbility()
 	if (m_apChara != nullptr)
 	{
 		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_1");
-		m_Collision = CCollisionSphere::Create(m_apChara->GetPos(), pSkillData->GetSize("YAMATO_SKILL_1").x);
+		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), pSkillData->GetSize("YAMATO_SKILL_1").x);
+		m_Collision->SetParent(&m_apChara->GetPos());
+
 	}
 }
 
