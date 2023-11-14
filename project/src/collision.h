@@ -32,19 +32,17 @@ public:
 	virtual bool ToSphere(CCollisionSphere* inSphere) { return false; }
 
 	void SetParent(D3DXVECTOR3* inPos) { m_posParent = inPos; }
+	void SetPosParent(D3DXVECTOR3 inPos) {
+		if (m_posParent == nullptr)
+		{
+			return;
+		}
+		*m_posParent = inPos;
+	}
 
 	/* à íuån */
 	void SetPos(const D3DXVECTOR3& inPos) { m_posLocal = inPos; }
-	const D3DXVECTOR3 &GetPosWorld()
-	{
-		m_posWorld = m_posLocal;
-		if (m_posParent != nullptr)
-		{
-			m_posWorld += *m_posParent;
-		}
-
-		return m_posWorld;
-	}
+	const D3DXVECTOR3 &GetPosWorld();
 
 	/* à íuån */
 	void SetPosOld(const D3DXVECTOR3& inPosOld) { m_posOld = inPosOld; }
@@ -62,8 +60,13 @@ public:
 	void SetMtxWorld(D3DXMATRIX mtxWorld) { m_mtx = mtxWorld; }
 	const D3DXMATRIX& GetMtxWorld() { return m_mtx; }
 
+	/* è„Ç…ìñÇΩÇ¡ÇΩ */
 	void SetIsTop(bool isTop) { m_isTop = isTop; }
 	bool GetIsTop() { return m_isTop; }
+
+	/* â∫Ç…ìñÇΩÇ¡ÇΩ */
+	void SetIsUnder(bool isUnder) { m_isUnder = isUnder; }
+	bool GetIsUnder() { return m_isUnder; }
 
 private:
 	D3DXVECTOR3* m_posParent;
@@ -73,6 +76,7 @@ private:
 	D3DXVECTOR3 m_rot;
 	D3DXVECTOR3 m_size;
 	D3DXMATRIX m_mtx;
-	bool m_isTop;	// è„Ç…ìñÇΩÇ¡ÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
+	bool m_isTop;
+	bool m_isUnder;
 };
 #endif

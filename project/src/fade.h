@@ -24,7 +24,6 @@ class  CMotion;
 //==============================================================
 class CFade : public CObject2d
 {
-
 public:
 	CFade();
 	~CFade();
@@ -41,17 +40,17 @@ public:
 	HRESULT Init() override;
 	void Uninit() override;
 	void Update() override;
-	void Draw() override;
 
-	static CFade* Create();
-	void CFade::NextMode(CApplication::MODE nextMode);
 	FADE* GetFade() { return& m_fade; }
 
+private:
+	virtual void Change() = 0;
+protected:
+	FADE m_fade;
 private:
 	float m_fadeSp;
 	float m_fadeSet;
 	bool m_bake;
 	CApplication::MODE m_nextMode;
-	FADE m_fade;
 };
 #endif

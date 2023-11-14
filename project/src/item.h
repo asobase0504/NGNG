@@ -38,18 +38,19 @@ public:
 
 	static CItem* Create(CItemDataBase::EItemType inId);
 
-	void SetWhenPickFunc(ITEM_FUNC inFunc) { m_getFunc = inFunc; }
-	void SetWhenLostFunc(ITEM_FUNC inFunc) { m_lostFunc = inFunc; }
-	void SetWhenAllWayFunc(ITEM_FUNC inFunc) { m_allwayFunc = inFunc; }
-	void SetWhenDamageFunc(ITEM_ACTION_FUNC inFunc) { m_hitFunc = inFunc; }
-	void SetWhenHitFunc(ITEM_ACTION_FUNC inFunc) { m_hitFunc = inFunc; }
+	void SetWhenPickFunc(ITEM_FUNC inFunc) { m_getFunc = inFunc; }				// 入手したときの処理
+	void SetWhenLostFunc(ITEM_FUNC inFunc) { m_lostFunc = inFunc; }				// 失ったときの処理
+	void SetWhenAlwaysFunc(ITEM_FUNC inFunc) { m_allwayFunc = inFunc; }			// 常時発動している処理
+	void SetWhenReceiveFunc(ITEM_ACTION_FUNC inFunc) { m_damageFunc = inFunc; }	// ダメージを受ける時の処理
+	void SetWhenInflictFunc(ITEM_ACTION_FUNC inFunc) { m_hitFunc = inFunc; }	// ダメージを与えた時の処理
+	void SetModel(std::string str) { m_itemModelData = str; }
 
 	ITEM_FUNC GetWhenPickFunc() { return m_getFunc; }
 	ITEM_FUNC GetWhenLostFunc() { return m_lostFunc; }
 	ITEM_FUNC GetWhenAllWayFunc() { return m_allwayFunc; }
 	ITEM_ACTION_FUNC GetWhenDamageFunc() { return m_hitFunc; }
 	ITEM_ACTION_FUNC GetWhenHitFunc() { return m_hitFunc; }
-
+	std::string GetModel() { return m_itemModelData; }
 private:
 	ITEM_FUNC m_getFunc;
 	ITEM_FUNC m_lostFunc;
@@ -57,5 +58,7 @@ private:
 
 	ITEM_ACTION_FUNC m_damageFunc;
 	ITEM_ACTION_FUNC m_hitFunc;
+
+	std::string m_itemModelData;
 };
 #endif	// _ITEM_DATA_H_

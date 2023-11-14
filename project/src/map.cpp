@@ -15,8 +15,11 @@
 #include "map_model.h"
 #include "object_mesh.h"
 #include "file.h"
+#include "statue.h"
+#include "utility.h"
 
 #include "statue_manager.h"
+#include "enemy_manager.h"
 
 //==============================================================
 // 静的メンバ変数宣言
@@ -26,9 +29,11 @@ CMap* CMap::m_map = nullptr;
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CMap::CMap()
+CMap::CMap() :
+	CTask(CTaskGroup::EPriority::LEVEL_SYSTEM)
 {
-	m_mapModel.clear();
+	m_SpawnCnt = 0;
+	m_model.clear();
 	m_mesh.clear();
 }
 
@@ -43,19 +48,23 @@ CMap::~CMap()
 //--------------------------------------------------------------
 // 初期化
 //--------------------------------------------------------------
-HRESULT CMap::Init(void)
+HRESULT CMap::Init()
 {
-	Load("data/FILE/map/map01.json");
+	CStatueManager* manager = CStatueManager::GetInstance();
+	m_statue.push_back(manager->RandomCreate());
+	m_statue.push_back(manager->RandomCreate());
+	m_statue.push_back(manager->RandomCreate());
+	m_statue.push_back(manager->RandomCreate());
+	m_statue.push_back(manager->CreateStatue(CStatueManager::BLOOD));
+	m_statue.push_back(manager->CreateStatue(CStatueManager::LUCK));
+	m_statue.push_back(manager->CreateStatue(CStatueManager::TELEPORTER));
+	m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
+	m_statue.push_back(manager->CreateStatue(CStatueManager::COMBAT));
 
-	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
-	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
-	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
-	CStatueManager::GetInstance()->RandomCreate(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f));
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::BLOOD);
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::LUCK);
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::TELEPORTER);
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::CHEST);
-	CStatueManager::GetInstance()->CreateStatue(D3DXVECTOR3(0.0f, -FLT_MAX, 0.0f), CStatueManager::COMBAT);
+	for (int i = 0; i < 10; i++)
+	{
+		m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
+	}
 
 	return S_OK;
 }
@@ -63,22 +72,55 @@ HRESULT CMap::Init(void)
 //--------------------------------------------------------------
 // 終了
 //--------------------------------------------------------------
-void CMap::Uninit(void)
+void CMap::Uninit()
 {
+	for (CStatue* statue : m_statue)
+	{
+		statue->Uninit();
+		statue = nullptr;
+	}
+	for (CMesh* mesh : m_mesh)
+	{
+		mesh->Uninit();
+		mesh = nullptr;
+	}
+	for (CMapModel* model : m_model)
+	{
+		model->Uninit();
+		model = nullptr;
+	}
+	for (CCharacter* inChara : m_characterList)
+	{
+		inChara->Uninit();
+		inChara = nullptr;
+	}
+	m_statue.clear();
+	m_mesh.clear();
+	m_model.clear();
+	m_characterList.clear();
+
+	CTask::Uninit();
 }
 
 //--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
-void CMap::Update(void)
+void CMap::Update()
 {
-	m_map;
+	m_SpawnCnt++;
+
+	// 一定時間ごとにランダムな敵をスポーンさせる。
+	if (m_SpawnCnt >= 600)
+	{
+		m_SpawnCnt = 0;
+		CEnemyManager::GetInstance()->RandomSpawn();
+	}
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CMap* CMap::Create()
+CMap* CMap::Create(std::string path)
 {
 	//キャラクター生成
 	m_map = new CMap;
@@ -87,12 +129,16 @@ CMap* CMap::Create()
 	{//NULLチェック
 	 //メンバ変数に代入
 	 //初期化
+		m_map->Load(path);
 		m_map->Init();
 	}
 
 	return m_map;
 }
 
+//--------------------------------------------------------------
+// 読込み
+//--------------------------------------------------------------
 void CMap::Load(std::string path)
 {
 	nlohmann::json map = LoadJson(path);
@@ -105,7 +151,7 @@ void CMap::Load(std::string path)
 		D3DXVECTOR3 rot(model["ROT"][0], model["ROT"][1], model["ROT"][2]);
 		CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
 		object->LoadModel(model["TAG"]);
-		m_mapModel.push_back(object);
+		m_model.push_back(object);
 	}
 
 	size = map["MESH"].size();
@@ -120,4 +166,38 @@ void CMap::Load(std::string path)
 
 		m_mesh.push_back(object);
 	}
+
+	m_nextMapPath = map["NEXT_MAP"];
 }
+
+void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
+{
+	std::list<CCharacter*> charaList = GetCharacterList();
+
+	for (CCharacter* chara : charaList)
+	{// 攻撃範囲に敵がいるか判定する
+
+	 // 同じ関係性だったら攻撃を当てない。
+		switch (inRelation)
+		{
+		case CCharacter::ERelation::FRIENDLY:
+			if (chara->GetRelation() == CCharacter::ERelation::FRIENDLY)
+			{
+				continue;
+			}
+			break;
+		case CCharacter::ERelation::HOSTILE:
+			if (chara->GetRelation() == CCharacter::ERelation::HOSTILE)
+			{
+				continue;
+			}
+			break;
+		default:
+			assert(false);
+			break;
+		}
+
+		inFunc(chara);
+	}
+}
+

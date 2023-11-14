@@ -17,6 +17,8 @@
 #include "enemy_manager.h"
 #include "enemy.h"
 #include "utility.h"
+#include "application.h"
+#include "game.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -45,6 +47,7 @@ HRESULT CStatueTeleporter::Init()
 	m_time = 0;
 
 	CStatue::Init(pos, rot);
+	LoadModel("STATUE_SHRINE");
 	m_bOnce = false;
 	m_btimeAdd = false;
 
@@ -97,6 +100,8 @@ void CStatueTeleporter::Update()
 			//-------------------------
 			// マップ移動処理追加
 			//-------------------------
+			CGame* game = (CGame*)(CApplication::GetInstance()->GetMode());
+			//game-
 		}
 	}
 

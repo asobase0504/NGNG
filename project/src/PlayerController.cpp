@@ -230,6 +230,9 @@ bool CPlayerController::Skill_4()
 	return isSkill;
 }
 
+//--------------------------------------------------------------
+// ƒAƒCƒeƒ€‚ğæ“¾‚·‚éˆ—
+//--------------------------------------------------------------
 int CPlayerController::TakeItem()
 {
 	CInput* input = CInput::GetKey();

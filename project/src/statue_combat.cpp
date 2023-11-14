@@ -11,6 +11,7 @@
 #include "enemy_manager.h"
 #include "input.h"
 #include "utility.h"
+#include "map.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -38,6 +39,7 @@ HRESULT CStatueCombat::Init()
 	D3DXVECTOR3 rot = GetRot();
 
 	CStatue::Init(pos, rot);
+	LoadModel("STATUE_COMBAT");
 
 	return S_OK;
 }
@@ -71,16 +73,18 @@ void CStatueCombat::Update()
 				float randX = FloatRandom(1.5f, 0.5f);
 				float randZ = FloatRandom(1.5f, 0.5f);
 
-				CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX,pos.y,pos.z * randZ),D3DXVECTOR3(50.0f,50.0f,50.0f), CEnemyManager::NONE);
+				CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
 			}
 		}
 	}
-
+	
 	// 更新処理
 	CStatue::Update();
 
 #ifdef _DEBUG
+#if 0
 	CDebugProc::Print("CombatPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
+#endif // 0
 #endif // _DEBUG
 }
 

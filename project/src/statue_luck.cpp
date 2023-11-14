@@ -68,6 +68,7 @@ void CStatueLuck::Update()
 	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// ƒvƒŒƒCƒ„[‚ªG‚ê‚Ä‚¢‚éŽž
+	
 	if (Touch(pPlayer))
 	{
 		if (input->Trigger(KEY_BACK, -1))
@@ -133,7 +134,9 @@ void CStatueLuck::Update()
 	CStatue::Update();
 
 #ifdef _DEBUG
+#if 0
 	CDebugProc::Print("LuckPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
+#endif // 0
 #endif // _DEBUG
 }
 

@@ -5,6 +5,12 @@
 //
 //**************************************************************
 
+#ifdef _DEBUG
+#if 0
+#define ENEMY_DEBUG
+#endif
+#endif
+
 // include
 #include "enemy.h"
 #include "player.h"
@@ -15,6 +21,7 @@
 #include "collision_box.h"
 
 #include "enemy_data_base.h"
+#include "skill.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -40,29 +47,21 @@ HRESULT CEnemy::Init()
 	// 初期化処理
 	CCharacter::Init();
 
+	// 敵対状態
+	m_relation = ERelation::HOSTILE;
+
+	m_AttackCnt = 0;
 	m_apModel[0]->LoadModel("SKELETON");
 	m_apModel[0]->CalculationVtx();
 
-	D3DXVECTOR3 pos = GetPos();
-	D3DXVECTOR3 rot = GetRot();
-	D3DXVECTOR3 size = GetSize();
-	D3DXMATRIX mtx = GetMtxWorld();
+	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
 
+	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
+	m_collision->SetParent(&m_pos);
 
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_KEEP_DISTANCE));
-
-	m_collision.push_back(CCollisionCylinder::Create(pos, 10.0f, 10.0f));
-
+	m_Skill.push_back(CSkill::Create());
+	m_Skill[0]->SetSkill("YAMATO_SKILL_1",this);
 	return S_OK;
-}
-
-//--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CEnemy::Uninit()
-{
-	// 終了処理
-	CCharacter::Uninit();
 }
 
 //--------------------------------------------------------------
@@ -70,58 +69,25 @@ void CEnemy::Uninit()
 //--------------------------------------------------------------
 void CEnemy::Update()
 {
-	// 移動量の取得
-	D3DXVECTOR3 move = GetMove();
+	if (m_isStun)
+	{
+		SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
+		return;
+	}
 
-	//if (m_collisionSphere->ToMesh(CPlayerManager::GetInstance()->GetPlayerCylinder(), true))
-	//{
-	//	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
-	//	D3DXVECTOR3 pos = player->GetPos();
-	//	player->SetPos(D3DXVECTOR3(pos.x, m_collisionSphere->GetExtrusionHeight(), pos.z));
-	//	m_collisionSphere->SetPos(D3DXVECTOR3(pos.x, m_collisionSphere->GetExtrusionHeight(), pos.z));
-	//}
-
-	// 移動処理
-	//Move();
-
-	// 更新処理
-	CCharacter::Update();
-	
 	// 現在のactivityに設定する。
 	m_Activity(this);
 
-#ifdef _DEBUG
-	//CDebugProc::Print("Enemy：pos(%f,%f,%f)\n", pos.x, pos.y, pos.z);
-	//CDebugProc::Print("Enemy：move(%f,%f,%f)\n", move.x, move.y, move.z);
-	//CDebugProc::Print("EnemyCollision：pos(%f,%f,%f)\n", m_collision->GetPos().x, m_collision->GetPos().y, m_collision->GetPos().z);
+	// 更新処理
+	CCharacter::Update();
+
+#ifdef ENEMY_DEBUG
+	CDebugProc::Print("Enemy：move3(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
 #endif // _DEBUG
 }
 
 //--------------------------------------------------------------
-// 描画処理
-//--------------------------------------------------------------
-void CEnemy::Draw(void)
-{
-	// 描画処理
-	CCharacter::Draw();
-}
-
-//--------------------------------------------------------------
 // 生成
-//--------------------------------------------------------------
-CEnemy* CEnemy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
-{
-	CEnemy* pEnemy;
-	pEnemy = new CEnemy(CObject::ENEMY);
-	pEnemy->SetPos(pos);
-	pEnemy->SetSize(size);
-	pEnemy->Init();
-
-	return pEnemy;
-}
-
-//--------------------------------------------------------------
-// 移動
 //--------------------------------------------------------------
 void CEnemy::Move()
 {
@@ -143,16 +109,6 @@ void CEnemy::Move()
 	{
 		move.x -= MAX_SPEED;
 	}
-
-	if (pos.y <= PlayerPos.y)
-	{
-		move.y += MAX_SPEED;
-	}
-	else
-	{
-		move.y -= MAX_SPEED;
-	}
-
 	if (pos.z <= PlayerPos.z)
 	{
 		move.z += MAX_SPEED;
@@ -162,5 +118,5 @@ void CEnemy::Move()
 		move.z -= MAX_SPEED;
 	}
 
-	SetMove(move);
+	SetMoveXZ(move.x,move.z);
 }

@@ -14,11 +14,12 @@
 #include "sound.h"
 #include "task_group.h"
 #include "objectX_group.h"
-#include "fade.h"
+#include "mode_fade.h"
 
 #include "skill_data_base.h"
 #include "enemy_data_base.h"
 #include "item_data_base.h"
+#include "abnormal_data_base.h"
 
 /* 外部読込み */
 #include "font.h"
@@ -27,6 +28,8 @@
 /* シーンモード */
 #include "title.h"
 #include "game.h"
+#include "character_select.h"
+#include "debug_mode.h"
 
 //==============================================================
 // 静的メンバー変数の初期化
@@ -107,12 +110,12 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	m_texture = CTexture::GetInstance();
 	m_texture->LoadAll();
 
-	m_modeType = CApplication::MODE_GAME;	//現在のモード
+	m_modeType = CApplication::MODE_DEBUG;	//現在のモード
 
 	//モードの設定
 	SetMode(m_modeType);
 
-	m_fade = CFade::Create();
+	m_fade = CModeFade::Create();
 
 	CSkillDataBase::GetInstance();
 	CEnemyDataBase::GetInstance();
@@ -173,6 +176,7 @@ void CApplication::Uninit()
 	CSkillDataBase::Uninit();
 	CEnemyDataBase::Uninit();
 	CItemDataBase::Uninit();
+	CAbnormalDataBase::Uninit();
 
 }
 
@@ -221,6 +225,12 @@ void CApplication::SetMode(MODE mode)
 	case CApplication::MODE_GAME:
 		m_mode = new CGame;
 		break;
+	case CApplication::MODE_SELECT:
+		m_mode = new CCharacterSelect;
+		break;
+	case CApplication::MODE_DEBUG:
+		m_mode = new CGame;
+		//m_mode = new CDebugMode;
 	default:
 		break;
 	}

@@ -64,20 +64,14 @@ HRESULT CMesh::Init()
 //--------------------------------------------------------------
 void CMesh::Uninit()
 {
-	// 頂点バッファーの解放
-	if (m_vtxBuff != nullptr)
-	{
-		m_vtxBuff->Release();
-		m_vtxBuff = nullptr;
-	}
-
+	// バッファーの解放
 	if (m_idxBuff != nullptr)
 	{
 		m_idxBuff->Release();
 		m_idxBuff = nullptr;
 	}
 
-	Release();
+	CObjectPolygon3D::Uninit();
 }
 
 //--------------------------------------------------------------
@@ -88,6 +82,9 @@ void CMesh::Draw()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 	D3DXMATRIX mtxRot, mtxTrans;	// 計算用マトリックス
 
+	// ワイヤーフレーム
+	//pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	
 	//ライト設定falseにするとライトと食らわない
 	//pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
@@ -132,6 +129,8 @@ void CMesh::Draw()
 	pDevice->SetTexture(0, nullptr);
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+	//pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 //--------------------------------------------------------------
@@ -352,9 +351,9 @@ void CMesh::SetY(std::vector<std::vector<float>> inY)
 	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点座標の設定
-	for (int i = 0; i < inY.size(); i++)
+	for (int i = 0; i < (int)inY.size(); i++)
 	{
-		for (int j = 0; j < inY[i].size(); j++)
+		for (int j = 0; j < (int)inY[i].size(); j++)
 		{
 			// 座標の補正
 			int size = j + i * inY.size();
@@ -445,7 +444,7 @@ void CMesh::SetVtxMeshSize(int Size)
 	// 頂点座標の設定
 	for (int i = 0; i < m_vtx; i++)
 	{
-		float posx = ((i % m_vtxCountX));
+		float posx = (float)((i % m_vtxCountX));
 		float posz = ((i / m_vtxCountZ)) * -1.0f;
 
 		float texU = 1.0f / m_xsiz * (i % m_vtxCountX);

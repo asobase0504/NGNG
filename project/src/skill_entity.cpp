@@ -15,11 +15,13 @@
 #include "enemy_manager.h"
 #include "enemy.h"
 #include "collision_sphere.h"
+#include "map.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CSkillEntity::CSkillEntity(int nPriority)
+CSkillEntity::CSkillEntity(int nPriority) : 
+	m_Collision(nullptr)
 {
 
 }
@@ -37,6 +39,7 @@ CSkillEntity::~CSkillEntity()
 //--------------------------------------------------------------
 HRESULT CSkillEntity::Init()
 {
+	m_Duration = 200;
 	// 初期化
 	InitAbility();
 
@@ -46,12 +49,12 @@ HRESULT CSkillEntity::Init()
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CSkillEntity::Uninit(void)
+void CSkillEntity::Uninit()
 {
 	// 当たり判定の削除
 	if (m_Collision != nullptr)
 	{
-		delete m_Collision;
+		m_Collision->Uninit();
 		m_Collision = nullptr;
 	}
 
@@ -62,29 +65,48 @@ void CSkillEntity::Uninit(void)
 //--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
-void CSkillEntity::Update(void)
+void CSkillEntity::Update()
 {
 	// スキルデータのインスタンスを取得する
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 
+	AllWayAbility();
+
 	if (m_Duration > 0)
 	{
-		// 当たり判定
-		std::vector<CEnemy*> Enemy = CEnemyManager::GetInstance()->GetEnemy();
-		// エネミーの数を取得
-		int EnemyCount = Enemy.size();
+		bool collision = false;
 
-		for (int nCnt = 0; nCnt < EnemyCount; nCnt++)
-		{// 攻撃範囲に敵がいるか判定する
-			bool a = m_Collision->ToSphere((CCollisionSphere*)Enemy[nCnt]->GetCollision());
-			if (a)
+		// 効果時間の減少
+		m_Duration--;
+
+		if (m_Collision == nullptr)
+		{
+			return;
+		}
+
+		// 自分とは違う関係を持ってるキャラクターに行なう
+		CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this, &collision](CCharacter* inChara)
+		{
+			// 当たり判定
+			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
+			if (hit)
 			{// ダメージの判定
-				HitAbility(Enemy[nCnt]);
+				HitAbility(inChara);
+				collision = true;
 			}
+		});
+
+		if (collision)
+		{// 敵に当たっていたら
+			Uninit();
 		}
 	}
-	else
-	{
+	else if(m_Duration <= 0)
+	{// 効果時間が0以下になったら消す
 		Uninit();
 	}
+
+#ifdef _DEBUG
+	CDebugProc::Print("Duration : %\n", m_Duration);
+#endif // _DEBUG
 }

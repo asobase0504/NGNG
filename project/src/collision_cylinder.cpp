@@ -58,6 +58,10 @@ HRESULT CCollisionCylinder::Init()
 //--------------------------------------------------------------
 void CCollisionCylinder::Uninit()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		m_line[i]->Uninit();
+	}
 	CCollision::Uninit();
 }
 
@@ -72,22 +76,24 @@ void CCollisionCylinder::Update()
 	D3DXVECTOR3 size = GetSize();
 	D3DXVECTOR3 rot = GetRot();
 
-	float left = -size.x * 0.5f;	// x1
-	float right = size.x * 0.5f;	// x2
-	float back = size.z * 0.5f;		// z1
-	float front = -size.z * 0.5f;	// z2
+	float left = -m_length;	// x1
+	float right = m_length;	// x2
+	float top = m_height;		// z1
+	float bot = 0.0f;	// z2
 
 	// ４つの頂点
-	D3DXVECTOR3 posLine[4];
-	posLine[0] = D3DXVECTOR3(left - 10.0f, 0.0f, back + 10.0f);
-	posLine[1] = D3DXVECTOR3(right + 10.0f, 0.0f, back + 10.0f);
-	posLine[2] = D3DXVECTOR3(right + 10.0f, 0.0f, front - 10.0f);
-	posLine[3] = D3DXVECTOR3(left - 10.0f, 0.0f, front - 10.0f);
+	D3DXVECTOR3 posLine[6];
+	posLine[0] = D3DXVECTOR3(0.0f, 0.0f, left);
+	posLine[1] = D3DXVECTOR3(0.0f, 0.0f, right);
+	posLine[2] = D3DXVECTOR3(right, 0.0f, 0.0f);
+	posLine[3] = D3DXVECTOR3(left, 0.0f, 0.0f);
+	posLine[4] = D3DXVECTOR3(0.0f, top, 0.0f);
+	posLine[5] = D3DXVECTOR3(0.0f, bot, 0.0f);
 
 	m_line[0]->SetLine(pos, rot, posLine[0], posLine[1], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[1]->SetLine(pos, rot, posLine[1], posLine[2], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[2]->SetLine(pos, rot, posLine[2], posLine[3], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[3]->SetLine(pos, rot, posLine[3], posLine[0], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[1]->SetLine(pos, rot, posLine[2], posLine[3], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[2]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	//m_line[3]->SetLine(pos, rot, posLine[3], posLine[0], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 //--------------------------------------------------------------
@@ -172,6 +178,7 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	D3DXVECTOR3 extrusion(0.0f, 0.0f, 0.0f);
 
 	SetIsTop(false);
+	SetIsUnder(false);
 
 	if (InOut[0] < 0.0f && InOut[1] < 0.0f && InOut[2] < 0.0f && InOut[3] < 0.0f)
 	{// Yの押出
@@ -181,7 +188,7 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 			extrusion.y = boxPos.y + boxSize.y;
 			extrusion.z = cylinderPos.z;
 
-			SetPos(extrusion);
+			SetPosParent(extrusion);
 			SetIsTop(true);
 			isLanding = true;
 		}
@@ -192,7 +199,8 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 			extrusion.y = boxPos.y - m_height;
 			extrusion.z = cylinderPos.z; 
 
-			SetPos(extrusion);
+			SetIsUnder(true);
+			SetPosParent(extrusion);
 			isLanding = true;
 		}
 
@@ -242,7 +250,7 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 						extrusion.y = cylinderPos.y;
 						extrusion.z = (cylinderPosOld.z + vecMove.z * t1) + (nor.z * 0.1f) + (vecMove.z + difMove * nor.z);
 
-						SetPos(extrusion);
+						SetPosParent(extrusion);
 
 						break;
 					}
@@ -420,11 +428,7 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 
 			if (pos.y < meshHeight)
 			{// メッシュの高さよりプレイヤーの高さのほうが下のとき
-				float extrusion = 0.0f;
-				// 押し返し
-				extrusion = meshHeight;
-
-				SetPos(D3DXVECTOR3(pos.x, meshHeight, pos.z));
+				SetPosParent(D3DXVECTOR3(pos.x, meshHeight, pos.z));
 			}
 			else
 			{

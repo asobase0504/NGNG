@@ -33,15 +33,6 @@ class CSkill;
 class CPlayer : public CCharacter
 {
 public:
-	enum STATE
-	{
-		NONE = -1,
-		GROUND,
-		SKY,
-		MAX
-	};
-
-public:
 	// コンストラクタとデストラクタ
 	explicit CPlayer(int nPriority = 3);
 	~CPlayer();
@@ -58,8 +49,14 @@ public:
 	void SetController(CController* inOperate);
 	void SetPos(const D3DXVECTOR3& inPos);
 
+	// Getter
+	CSkill* GetSkill(int nCnt) { return m_Skill[nCnt]; }
+
+void OnUpdate() { m_isUpdate = true; }
+	void OffUpdate() { m_isUpdate = false; }
+
 private:
-	void Attack();		// 攻撃
+	void PAttack();		// 攻撃
 	void Move();		// 移動
 	void Jump();		// ジャンプ
 	void Dash();		// ダッシュ
@@ -71,9 +68,8 @@ private:		// メンバ変数
 	bool			m_isjump;		// ジャンプしているかどうか
 	bool			m_isdash;		// ダッシュしているかどうか
 
-	CController*		m_controller;			// 命令を出す人
-	CSkill*				m_Skill[MAX_SKILL];
-	CCollisionCylinder*	m_collisionCyinder;
-	STATE m_state;
+	bool			m_isUpdate;		// 更新を止めるか否か。
+
+	CController*	m_controller;			// 命令を出す人
 };
 #endif

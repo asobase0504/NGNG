@@ -17,6 +17,8 @@
 // 前方宣言
 //==============================================================
 class CCollisionSphere;
+class CCollisionCylinder;
+class CCollision;
 
 //==============================================================
 // クラス
@@ -35,16 +37,19 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	static CItemModel* Create(const D3DXVECTOR3& inPos, int inId);
+	static CItemModel* Create(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx ,int inId);
 
-	CCollisionSphere* GetCollision() { return m_collision; }
+	CCollisionSphere* GetCollision() { return m_collisionTake; }
 
 	int GetID() { return m_ID; }
 
+	void SetVec(D3DXMATRIX mtx) { m_mtx = mtx; }
 private:
 	// アイテムのモデルデータ
 	int m_ID;
-	std::array<std::string,CItemDataBase::ITEM_MAX> m_modelData;
-	CCollisionSphere* m_collision;
+	std::array<std::string,CItemDataBase::ITEM_MAX> m_ItemData;
+	CCollisionSphere* m_collisionTake;
+	CCollisionCylinder* m_collisionHit;
+	D3DXMATRIX m_mtx;
 };
 #endif	// _ITEM_MODEL_H_

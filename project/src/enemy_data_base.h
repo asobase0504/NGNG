@@ -27,6 +27,7 @@ public:
 		PATTERN_AIR_KEEP_DISTANCE,
 		PATTERN_GROUND_GO,
 		PATTERN_GROUND_KEEP_DISTANCE,
+		PATTERN_GROUND_GO_ATTACK,
 		PATTERN_GOLEM,
 		PATTERN_GOLEM_LASER,
 		MAX_PATTERN
@@ -46,5 +47,6 @@ private:
 	
 private:	// ÉÅÉìÉoïœêî
 	std::vector<ACTIVITY_FUNC> m_activityFunc;
+
 };
 #endif
