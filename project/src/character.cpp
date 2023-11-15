@@ -28,12 +28,18 @@
 
 #include <thread>
 
+//==============================================================
+// 定数宣言
+//==============================================================
+const int CCharacter::MAX_SKILL(4);
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
 CCharacter::CCharacter(int nPriority) : m_haveItem{}
 {
 	m_apModel.clear();
+	m_skill.clear();
 }
 
 //--------------------------------------------------------------
@@ -57,6 +63,7 @@ HRESULT CCharacter::Init()
 	m_isStun = false;
 	m_nonCombat = false;
 	m_nonCombatTime = 0;
+	m_isRunning = false;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
@@ -107,6 +114,8 @@ HRESULT CCharacter::Init()
 	}
 
 	m_state = GROUND;
+
+	m_skill.resize(MAX_SKILL);
 
 	return S_OK;
 }
@@ -344,7 +353,7 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 			return;
 		}
 
-		CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
+		CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
 
 		if (abnormalFunc != nullptr)
 		{
@@ -384,7 +393,7 @@ void CCharacter::Abnormal()
 			continue;
 		}
 
-		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
 
 		if (abnormalFunc != nullptr)
 		{
@@ -400,7 +409,7 @@ void CCharacter::Abnormal()
 			{
 				if (data >= m_haveAbnormal[i].s_effectTime)
 				{// 状態異常を削除する
-					CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
+					CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
 
 					//if (Los)
 					{// 失った時の処理を呼び出す

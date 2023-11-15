@@ -25,8 +25,8 @@ void CAbnormalDataBase::Init()
 	// ‚â‚¯‚Çó‘Ô ==============================================================================================
 	m_abnormal[ABNORMAL_FIRE]->SetWhenAddFunc([](CCharacter* inCharacter, int cnt)
 	{
-		inCharacter->AddUbnormalStack(ABNORMAL_FIRE);
-		inCharacter->SetUbnormalTime(ABNORMAL_FIRE, 300);
+		inCharacter->AddAbnormalStack(ABNORMAL_FIRE);
+		inCharacter->SetAbnormalTime(ABNORMAL_FIRE, 300);
 		inCharacter->SetTargetInterval(ABNORMAL_FIRE, 20);
 	});
 	m_abnormal[ABNORMAL_FIRE]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
@@ -38,8 +38,8 @@ void CAbnormalDataBase::Init()
 	});
 	m_abnormal[ABNORMAL_FIRE]->SetWhenAttackFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(ABNORMAL_FIRE);
-		outCharacter->SetUbnormalTime(ABNORMAL_FIRE, 600);
+		outCharacter->AddAbnormalStack(ABNORMAL_FIRE);
+		outCharacter->SetAbnormalTime(ABNORMAL_FIRE, 600);
 		outCharacter->SetTargetInterval(ABNORMAL_FIRE, 20);
 	});
 	m_abnormal[ABNORMAL_FIRE]->SetWhenClearFunc([](CCharacter* inCharacter, int cnt)
@@ -51,8 +51,8 @@ void CAbnormalDataBase::Init()
 	// oŒŒó‘Ô ================================================================================================
 	m_abnormal[ABNORMAL_BLEED]->SetWhenAddFunc([](CCharacter* inCharacter, int cnt)
 	{
-		inCharacter->AddUbnormalStack(ABNORMAL_BLEED);
-		inCharacter->SetUbnormalTime(ABNORMAL_BLEED, 300);
+		inCharacter->AddAbnormalStack(ABNORMAL_BLEED);
+		inCharacter->SetAbnormalTime(ABNORMAL_BLEED, 300);
 		inCharacter->SetTargetInterval(ABNORMAL_BLEED, 10);
 	});
 	m_abnormal[ABNORMAL_BLEED]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
@@ -65,8 +65,8 @@ void CAbnormalDataBase::Init()
 	});
 	m_abnormal[ABNORMAL_BLEED]->SetWhenAttackFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(ABNORMAL_BLEED);
-		outCharacter->SetUbnormalTime(ABNORMAL_BLEED, 600);
+		outCharacter->AddAbnormalStack(ABNORMAL_BLEED);
+		outCharacter->SetAbnormalTime(ABNORMAL_BLEED, 600);
 		outCharacter->SetTargetInterval(ABNORMAL_BLEED, 30);
 	});
 	m_abnormal[ABNORMAL_BLEED]->SetWhenClearFunc([](CCharacter* inCharacter, int cnt)
@@ -78,14 +78,14 @@ void CAbnormalDataBase::Init()
 	// oŒŒó‘Ô ================================================================================================
 	m_abnormal[ABNORMAL_STUN]->SetWhenAddFunc([](CCharacter* inCharacter, int cnt)
 	{
-		inCharacter->AddUbnormalStack(ABNORMAL_STUN);
-		inCharacter->SetUbnormalTime(ABNORMAL_STUN, 60);
+		inCharacter->AddAbnormalStack(ABNORMAL_STUN);
+		inCharacter->SetAbnormalTime(ABNORMAL_STUN, 60);
 	});
 
 	m_abnormal[ABNORMAL_STUN]->SetWhenAttackFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(ABNORMAL_STUN);
-		outCharacter->SetUbnormalTime(ABNORMAL_STUN, 200);
+		outCharacter->AddAbnormalStack(ABNORMAL_STUN);
+		outCharacter->SetAbnormalTime(ABNORMAL_STUN, 200);
 		inCharacter->SetStun(true);
 	});
 	m_abnormal[ABNORMAL_STUN]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)

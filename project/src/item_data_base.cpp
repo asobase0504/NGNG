@@ -2,6 +2,7 @@
 #include "item.h"
 
 #include "character.h"
+#include "skill.h"
 #include "utility.h"
 
 //==============================================================
@@ -122,10 +123,10 @@ void CItemDataBase::Init()
 	m_item[ITEM_BAKUTIKU]->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
 		for (int Cnt = 0; Cnt <= cnt; Cnt++)
-		{// TODO
+		{
 			if (IsSuccessRate(0.05f))
 			{// 攻撃時に5%の確率でスタンさせる。
-				//outCharacter->DamageBlock(true);
+				outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_STUN, true);
 				break;
 			}
 		}
@@ -267,8 +268,17 @@ void CItemDataBase::Init()
 	m_item[ITEM_KAZAGURUMA]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒すと18%の確率で全てのクールダウンをリセットする
 		if (outCharacter->IsDied())
-		{// TODO
-
+		{
+			for (int i = 0; i < cnt; i++)
+			{
+				if (IsSuccessRate(0.18))
+				{
+					for (int j = 0; j < CCharacter::MAX_SKILL; j++)
+					{
+						inCharacter->GetSkill(j)->SetCT(0);
+					}
+				}
+			}
 		}
 	});
 	//--------------------------------------------------------------
@@ -354,11 +364,21 @@ void CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	m_item[ITEM_ZOURI] = CItem::Create(ITEM_ZOURI);
-	// ひよこ---------------------------------------------------------
-	// 敵を倒すと移動速度が125%上がり、1(+0.5)秒間消える	TODO
+	// 草履---------------------------------------------------------
+	// 敵を倒すと移動速度が125%上がり、1(+0.5)秒間消える
 	m_item[ITEM_ZOURI]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
+		if (outCharacter->IsDied())
+		{// 敵が死んだら
+			// 現在の速度
+			float currentSpeed = inCharacter->GetSpeed()->GetCurrent();
+
+			// スピードが上がる割合を計算
+			currentSpeed *= (125 / 100);
+			
+			// 加算
+			inCharacter->GetSpeed()->AddItemEffect(currentSpeed);
+		}
 	});
 	//--------------------------------------------------------------
 
@@ -385,8 +405,8 @@ void CItemDataBase::Init()
 	// 足枷---------------------------------------------------------
 	// 攻撃を当てた敵の移動速度が2秒間60%減少する (秒数 +2)
 	m_item[ITEM_FETTERS]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
+	{// 
+		outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_SLOW, true);
 	});
 	//--------------------------------------------------------------
 
@@ -395,7 +415,17 @@ void CItemDataBase::Init()
 	// 走っている間はアーマーが30増加する (+30)
 	m_item[ITEM_SHIELD]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
+		if (inCharacter->GetIsRunning())
+		{
+			int armor = 0;
+
+			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			{// 持ってる数、割合を増やす
+				armor += 30;
+			}
+
+			inCharacter->GetBarrier()->AddItemEffect(armor);
+		}
 	});
 	//--------------------------------------------------------------
 

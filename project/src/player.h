@@ -18,14 +18,12 @@
 //==============================================================
 #define DASH_SPEED	(1.5f)
 #define JUMP		(15.0f)
-#define MAX_SKILL		(4)
 
 //==============================================================
 // 前方宣言
 //==============================================================
 class CController;
 class CCollisionCylinder;
-class CSkill;
 
 //==============================================================
 // プレイヤークラス
@@ -49,9 +47,6 @@ public:
 	void SetController(CController* inOperate);
 	void SetPos(const D3DXVECTOR3& inPos);
 
-	// Getter
-	CSkill* GetSkill(int nCnt) { return m_Skill[nCnt]; }
-
 void OnUpdate() { m_isUpdate = true; }
 	void OffUpdate() { m_isUpdate = false; }
 
@@ -71,6 +66,5 @@ private:		// メンバ変数
 	bool			m_isUpdate;		// 更新を止めるか否か。
 
 	CController*		m_controller;			// 命令を出す人
-	CSkill*				m_Skill[MAX_SKILL];
 };
 #endif

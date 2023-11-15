@@ -24,12 +24,15 @@ class CObjectX;
 class CCollisionCylinder;
 class CRoad;
 class CAbnormal;
+class CSkill;
 
 //==============================================================
 // プレイヤークラス
 //==============================================================
 class CCharacter : public CObject
 {
+public:
+	static const int MAX_SKILL;
 public:
 	enum STATE
 	{
@@ -60,9 +63,9 @@ public:
   
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
-	void AddUbnormalStack(const int id) { m_haveAbnormal[id].s_Time.push_back(0); m_haveAbnormal[id].s_stack++;}
+	void AddAbnormalStack(const int id) { m_haveAbnormal[id].s_Time.push_back(0); m_haveAbnormal[id].s_stack++;}
 	void SetInterval(const int id, const int Time) { m_haveAbnormal[id].s_interval = Time; }
-	void SetUbnormalTime(const int id, const int Time) { m_haveAbnormal[id].s_effectTime = Time; }
+	void SetAbnormalTime(const int id, const int Time) { m_haveAbnormal[id].s_effectTime = Time; }
 	void SetTargetInterval(const int id, const int MAXTIME) { m_haveAbnormal[id].s_target_interval = MAXTIME; }
 	void SetAttackAbnormal(const int id, bool onoff) { m_attackAbnormal[id] = onoff; }
 	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
@@ -134,19 +137,22 @@ public:
 	void Died() { m_isDied = true; }
 
 	// シールド回復するかどうか
-	void SetShield() { m_isShield = true; }
 	bool GetIsShield() { return m_isShield; }
 
 	// クリティカルかどうか
-	void SetCritical() { m_isCritical = true; }
 	bool GetIsCritical() { return m_isCritical; }
 
 	// クリティカルヒットした数
 	int GetNumCritical() { return m_numCritical; }
 
 	// 非戦闘時かどうか
-	void SetNonCombat() { m_nonCombat = true; }
 	bool GetIsNonCombat() { return m_nonCombat; }
+
+	// 走っているかどうか
+	bool GetIsRunning() { return m_isRunning; }
+
+	// スキル
+	CSkill* GetSkill(int num) { return m_skill[num]; }
 
 private:
 	virtual void Move();
@@ -174,6 +180,7 @@ protected:		// ステータス
 	bool m_isStun;			// スタン状態かそうでないか
 	bool m_nonCombat;		// 非戦闘時
 	int m_nonCombatTime;	// 非戦闘時になる時間
+	bool m_isRunning;		// 走っているかどうか
 	STATE m_state;
 
 	CStatus<int> m_hp;							// 体力
@@ -192,5 +199,7 @@ protected:		// ステータス
 	CStatus<int> m_money;						// 所持金
 
 	CRoad* m_road;								// 攻撃の道みたいな
+
+	std::vector<CSkill*> m_skill;
 };
 #endif
