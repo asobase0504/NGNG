@@ -61,6 +61,11 @@ HRESULT CMap::Init()
 	m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
 	m_statue.push_back(manager->CreateStatue(CStatueManager::COMBAT));
 
+	for (int i = 0; i < 10; i++)
+	{
+		m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
+	}
+
 	return S_OK;
 }
 
@@ -84,15 +89,15 @@ void CMap::Uninit()
 		model->Uninit();
 		model = nullptr;
 	}
-	for (CEnemy* enemy : m_enemy)
+	for (CCharacter* inChara : m_characterList)
 	{
-		enemy->Uninit();
-		enemy = nullptr;
+		inChara->Uninit();
+		inChara = nullptr;
 	}
 	m_statue.clear();
 	m_mesh.clear();
 	m_model.clear();
-	m_enemy.clear();
+	m_characterList.clear();
 
 	CTask::Uninit();
 }
@@ -108,7 +113,7 @@ void CMap::Update()
 	if (m_SpawnCnt >= 600)
 	{
 		m_SpawnCnt = 0;
-		InEnemyList(CEnemyManager::GetInstance()->RandomSpawn());
+		CEnemyManager::GetInstance()->RandomSpawn();
 	}
 }
 
@@ -165,10 +170,34 @@ void CMap::Load(std::string path)
 	m_nextMapPath = map["NEXT_MAP"];
 }
 
-void CMap::InEnemyList(D3DXVECTOR3, int)
+void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
 {
+	std::list<CCharacter*> charaList = GetCharacterList();
+
+	for (CCharacter* chara : charaList)
+	{// UŒ‚”ÍˆÍ‚É“G‚ª‚¢‚é‚©”»’è‚·‚é
+
+	 // “¯‚¶ŠÖŒW«‚¾‚Á‚½‚çUŒ‚‚ð“–‚Ä‚È‚¢B
+		switch (inRelation)
+		{
+		case CCharacter::ERelation::FRIENDLY:
+			if (chara->GetRelation() == CCharacter::ERelation::FRIENDLY)
+			{
+				continue;
+			}
+			break;
+		case CCharacter::ERelation::HOSTILE:
+			if (chara->GetRelation() == CCharacter::ERelation::HOSTILE)
+			{
+				continue;
+			}
+			break;
+		default:
+			assert(false);
+			break;
+		}
+
+		inFunc(chara);
+	}
 }
 
-void CMap::InEnemyList(int)
-{
-}

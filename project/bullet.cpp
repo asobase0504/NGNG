@@ -16,7 +16,9 @@
 #include "collision_cylinder.h"
 #include "abnormal.h"
 #include "abnormal_data_base.h"
+#include "player.h"
 #include "player_manager.h"
+#include "map.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -85,27 +87,27 @@ void CBullet::Update()
 		Uninit();
 	}
 
-	// プレイヤーの獲得
-	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	
-	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
+	CMap::GetMap()->DoDifferentRelation(m_relation, [this](CCharacter* inChara)
 	{
-		for (int i = 0; i < m_abnormal.size(); i++)
+		if (m_collision->ToCylinder(inChara->GetCollision()))
 		{
-			if (!m_abnormal[i])
+			for (int i = 0; i < m_abnormal.size(); i++)
 			{
-				continue;
-			}
+				if (!m_abnormal[i])
+				{
+					continue;
+				}
 
-			CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
+				CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
 
-			if (abnormalFunc != nullptr)
-			{
-				abnormalFunc(pPlayer, i,pPlayer);
+				if (abnormalFunc != nullptr)
+				{
+					abnormalFunc(inChara, i, inChara);
+				}
 			}
+			Uninit();
 		}
-		Uninit();
-	}
+	});	
 }
 
 //--------------------------------------------------------------

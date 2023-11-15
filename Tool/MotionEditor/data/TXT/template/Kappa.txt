@@ -1,0 +1,79 @@
+#==============================================================================
+#
+# モーション設定用テキストファイル
+# Author : MEIGEN ARITA
+#
+#==============================================================================
+SCRIPT			# この行は絶対消さないこと！
+
+#------------------------------------------------------------------------------
+# モデル数
+#------------------------------------------------------------------------------
+NUM_MODEL = 6
+
+#------------------------------------------------------------------------------
+# モデルファイル名
+#------------------------------------------------------------------------------
+MODEL_FILENAME = data\MODEL\Kappa\Body.x	# 体
+MODEL_FILENAME = data\MODEL\Kappa\Head.x	# 頭
+MODEL_FILENAME = data\MODEL\Kappa\ArmL.x	# 左手
+MODEL_FILENAME = data\MODEL\Kappa\ArmR.x	# 右手
+MODEL_FILENAME = data\MODEL\Kappa\LegL.x	# 左足
+MODEL_FILENAME = data\MODEL\Kappa\LegR.x	# 右足
+
+#------------------------------------------------------------------------------
+# キャラクター情報
+#------------------------------------------------------------------------------
+CHARACTERSET
+	PARTSSET
+		INDEX = 0					# 体
+		PARENT = -1					# (親)NULL
+		POS = 0.0 20.5 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET
+		INDEX = 1					# 頭
+		PARENT = 0					# (親)背骨
+		POS = 0.0 34.5 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET
+		INDEX = 2					# 左手
+		PARENT = 0					# (親)背骨
+		POS = -22.0 5.0 0.0
+		ROT = 0.0 0.0 -0.3
+	END_PARTSSET
+	
+	PARTSSET
+		INDEX = 3					# 右手
+		PARENT = 0					# (親)背骨
+		POS = 22.0 5.0 0.0
+		ROT = 0.0 0.0 0.3
+	END_PARTSSET
+
+	PARTSSET
+		INDEX = 4					# 左足
+		PARENT = 0					# (親)骨盤
+		POS = -9.0 -16.3 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET
+		INDEX = 5					# 右足
+		PARENT = 0					# (親)骨盤
+		POS = 9.0 -16.3 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+	
+END_CHARACTERSET
+
+#------------------------------------------------------------------------------
+# モーション情報
+#------------------------------------------------------------------------------
+MOTIONSET
+	MOTION = data\TXT\template\MOTION\SKELETON_NUTORAL.txt
+END_MOTIONSET
+
+END_SCRIPT		# この行は絶対消さないこと！

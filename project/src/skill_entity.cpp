@@ -1,7 +1,7 @@
 //**************************************************************
 //
-// ƒXƒLƒ‹
-// Author : ûü–ìŠ]›’
+// ã‚¹ã‚­ãƒ«
+// Author : é«™é‡é¦¨å°‡
 //
 //**************************************************************
 
@@ -18,15 +18,16 @@
 #include "map.h"
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
-CSkillEntity::CSkillEntity(int nPriority)
+CSkillEntity::CSkillEntity(int nPriority) : 
+	m_Collision(nullptr)
 {
 
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CSkillEntity::~CSkillEntity()
 {
@@ -34,71 +35,74 @@ CSkillEntity::~CSkillEntity()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //--------------------------------------------------------------
 HRESULT CSkillEntity::Init()
 {
-	m_Duration = 1;
-	// ‰Šú‰»
+	m_Duration = 200;
+	// åˆæœŸåŒ–
 	InitAbility();
 
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //--------------------------------------------------------------
-void CSkillEntity::Uninit(void)
+void CSkillEntity::Uninit()
 {
-	// “–‚½‚è”»’è‚Ìíœ
+	// å½“ãŸã‚Šåˆ¤å®šã®å‰Šé™¤
 	if (m_Collision != nullptr)
 	{
 		m_Collision->Uninit();
 		m_Collision = nullptr;
 	}
 
-	// ”jŠüˆ—
+	// ç ´æ£„å‡¦ç†
 	CTask::Uninit();
 }
 
 //--------------------------------------------------------------
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //--------------------------------------------------------------
-void CSkillEntity::Update(void)
+void CSkillEntity::Update()
 {
-	// ƒXƒLƒ‹ƒf[ƒ^‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚·‚é
+	// ã‚¹ã‚­ãƒ«ãƒ‡ãƒ¼ã‚¿ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã™ã‚‹
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
+
+	AllWayAbility();
 
 	if (m_Duration > 0)
 	{
 		bool collision = false;
 
-		// Œø‰ÊŠÔ‚ÌŒ¸­
+		// åŠ¹æœæ™‚é–“ã®æ¸›å°‘
 		m_Duration--;
 
-		// “–‚½‚è”»’è
-		std::list<CEnemy*> enemyList = CMap::GetMap()->GetEnemyList();
-
-		if (m_Collision != nullptr)
+		if (m_Collision == nullptr)
 		{
-			for (CEnemy* enemy : enemyList)
-			{// UŒ‚”ÍˆÍ‚É“G‚ª‚¢‚é‚©”»’è‚·‚é
-				bool EnemyCollision = m_Collision->ToSphere((CCollisionSphere*)enemy->GetCollision());
-				if (EnemyCollision)
-				{// ƒ_ƒ[ƒW‚Ì”»’è
-					HitAbility(enemy);
-					collision = true;
-				}
-			}
+			return;
 		}
 
+		// è‡ªåˆ†ã¨ã¯é•ã†é–¢ä¿‚ã‚’æŒã£ã¦ã‚‹ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã«è¡Œãªã†
+		CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this, &collision](CCharacter* inChara)
+		{
+			// å½“ãŸã‚Šåˆ¤å®š
+			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
+			if (hit)
+			{// ãƒ€ãƒ¡ãƒ¼ã‚¸ã®åˆ¤å®š
+				HitAbility(inChara);
+				collision = true;
+			}
+		});
+
 		if (collision)
-		{// “G‚É“–‚½‚Á‚Ä‚¢‚½‚ç
+		{// æ•µã«å½“ãŸã£ã¦ã„ãŸã‚‰
 			Uninit();
 		}
 	}
 	else if(m_Duration <= 0)
-	{// Œø‰ÊŠÔ‚ª0ˆÈ‰º‚É‚È‚Á‚½‚çÁ‚·
+	{// åŠ¹æœæ™‚é–“ãŒ0ä»¥ä¸‹ã«ãªã£ãŸã‚‰æ¶ˆã™
 		Uninit();
 	}
 

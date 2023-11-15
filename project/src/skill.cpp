@@ -65,7 +65,7 @@ void CSkill::Update(void)
 	}
 
 #ifdef _DEBUG
-	CDebugProc::Print("スキルのクールタイム : %d\n", m_CT);
+	CDebugProc::Print("%sのクールタイム : %d\n", m_Name.c_str(),m_CT);
 #endif // _DEBUG
 }
 

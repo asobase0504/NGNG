@@ -94,7 +94,9 @@ void CStatueChest::Update()
 	CStatue::Update();
 
 #ifdef _DEBUG
+#if 0
 	CDebugProc::Print("ChestPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
+#endif // 0
 #endif // _DEBUG
 }
 
