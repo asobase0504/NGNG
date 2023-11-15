@@ -15,12 +15,15 @@
 #include "enemy_manager.h"
 #include "enemy.h"
 #include "collision_sphere.h"
-#include "map.h"
+#include "yamato_skill_2.h"
+#include "game.h"
+#include "application.h"
+#include "camera_game.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CSkillEntity::CSkillEntity(int nPriority)
+CYamatoSkill_2::CYamatoSkill_2(int nPriority)
 {
 
 }
@@ -28,81 +31,52 @@ CSkillEntity::CSkillEntity(int nPriority)
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CSkillEntity::~CSkillEntity()
+CYamatoSkill_2::~CYamatoSkill_2()
 {
 
 }
 
 //--------------------------------------------------------------
-// 初期化処理
+// スキルが始まるとき
 //--------------------------------------------------------------
-HRESULT CSkillEntity::Init()
+void CYamatoSkill_2::InitAbility()
 {
-	m_Duration = 1;
-	// 初期化
-	InitAbility();
-
-	return S_OK;
-}
-
-//--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CSkillEntity::Uninit(void)
-{
-	// 当たり判定の削除
-	if (m_Collision != nullptr)
+	// 当たり判定を取得
+	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
+	if (m_apChara != nullptr)
 	{
-		m_Collision->Uninit();
-		m_Collision = nullptr;
-	}
+		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_2");
+		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("YAMATO_SKILL_2").x);
+		m_Collision->SetParent(&m_apChara->GetPos());
 
-	// 破棄処理
-	CTask::Uninit();
+		// カメラの方向に合わせる
+		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
+		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
+		vecNor *= 2.0f;			//移動させたい値を入れる
+		m_apChara->SetPos(m_apChara->GetPos() + vecNor);
+	}
 }
 
 //--------------------------------------------------------------
-// 更新処理
+// スキルが当たった時の効果
 //--------------------------------------------------------------
-void CSkillEntity::Update(void)
+void CYamatoSkill_2::HitAbility(CCharacter * Target)
 {
-	// スキルデータのインスタンスを取得する
+	
+}
+
+//--------------------------------------------------------------
+// スキル生成処理
+//--------------------------------------------------------------
+CYamatoSkill_2 *CYamatoSkill_2::Create(CCharacter* chara)
+{
+	// 生成処理
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 
-	if (m_Duration > 0)
-	{
-		bool collision = false;
+	CYamatoSkill_2* pSkill = new CYamatoSkill_2;
+	pSkill->m_apChara = chara;
+	pSkill->m_Name = "YAMATO_SKILL_2";
+	pSkill->Init();
 
-		// 効果時間の減少
-		m_Duration--;
-
-		// 当たり判定
-		std::list<CEnemy*> enemyList = CMap::GetMap()->GetEnemyList();
-
-		if (m_Collision != nullptr)
-		{
-			for (CEnemy* enemy : enemyList)
-			{// 攻撃範囲に敵がいるか判定する
-				bool EnemyCollision = m_Collision->ToSphere((CCollisionSphere*)enemy->GetCollision());
-				if (EnemyCollision)
-				{// ダメージの判定
-					HitAbility(enemy);
-					collision = true;
-				}
-			}
-		}
-
-		if (collision)
-		{// 敵に当たっていたら
-			Uninit();
-		}
-	}
-	else if(m_Duration <= 0)
-	{// 効果時間が0以下になったら消す
-		Uninit();
-	}
-
-#ifdef _DEBUG
-	CDebugProc::Print("Duration : %f\n", m_Duration);
-#endif // _DEBUG
+	return pSkill;
 }

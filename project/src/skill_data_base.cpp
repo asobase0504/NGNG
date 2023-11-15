@@ -14,6 +14,7 @@
 #include "enemy_manager.h"
 #include "collision_sphere.h"
 #include "yamato_skill_1.h"
+#include "yamato_skill_2.h"
 
 //==============================================================
 // Ã“Iƒƒ“ƒo[•Ï”‚ÌéŒ¾
@@ -94,6 +95,11 @@ void CSkillDataBase::Init()
 	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{ // ”­“®‚ÌŒø‰Ê
+		if (inusedCharacter != nullptr)
+		{
+			CYamatoSkill_2::Create(inusedCharacter);
+		}
+
 		return false;
 	},
 		[this](CCharacter* inusedCharacter,CCharacter* inusedInTarget)

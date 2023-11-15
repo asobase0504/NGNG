@@ -171,13 +171,25 @@ void CPlayer::PAttack()
 	}
 
 	// スキル1(右クリック)
-	m_controller->Skill_2();
-	
+	if(m_controller->Skill_2())
+	{
+		// 発動時に生成
+		m_Skill[1]->Skill1();
+	}
+
 	// スキル2(シフト)
-	m_controller->Skill_3();
+	if (m_controller->Skill_3())
+	{
+		// 発動時に生成
+		m_Skill[1]->Skill1();
+	}
 
 	// スキル3(R)
-	m_controller->Skill_4();
+	if (m_controller->Skill_4())
+	{
+		// 発動時に生成
+		m_Skill[1]->Skill2();
+	}
 }
 
 //--------------------------------------------------------------
