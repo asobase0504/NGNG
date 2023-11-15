@@ -58,7 +58,7 @@ private:
 	void TakeItem();	// アイテムを拾う
 
 private:		// メンバ変数
-	int				m_SkillStock;	// スキルストック数
+	int				m_skillStock;	// スキルストック数
 
 	bool			m_isjump;		// ジャンプしているかどうか
 	bool			m_isdash;		// ダッシュしているかどうか

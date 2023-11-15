@@ -115,7 +115,7 @@ void CGolemSkill_1::HitAbility(CCharacter * Target)
 		m_bullet = nullptr;
 	}
 
-	CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData(CAbnormalDataBase::ABNORMAL_FIRE)->GetWhenAddFunc();
+	CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData(CAbnormalDataBase::ABNORMAL_FIRE)->GetWhenAddFunc();
 	abnormalFunc(Target, CAbnormalDataBase::ABNORMAL_FIRE);
 	Uninit();
 }

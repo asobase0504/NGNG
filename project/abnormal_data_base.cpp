@@ -29,12 +29,12 @@ void CAbnormalDataBase::Init()
 	// 開始
 	m_abnormal[ABNORMAL_FIRE]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
 	{
-		inCharacter->AddUbnormalStack(id);
-		inCharacter->SetUbnormalTime(id, 300);
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 300);
 		inCharacter->SetTargetInterval(id, 20);
 	});
 	// 常時
-	m_abnormal[ABNORMAL_FIRE]->SetWhenAllWayFunc([](CCharacter* inCharacter, int id)
+	m_abnormal[ABNORMAL_FIRE]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
 	{
 		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
 
@@ -44,8 +44,8 @@ void CAbnormalDataBase::Init()
 	// 当たった時
 	m_abnormal[ABNORMAL_FIRE]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(id);
-		outCharacter->SetUbnormalTime(id, 600);
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 600);
 		outCharacter->SetTargetInterval(id, 20);
 	});
 	// 失った時
@@ -60,12 +60,12 @@ void CAbnormalDataBase::Init()
 	// 開始
 	m_abnormal[ABNORMAL_BURN]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
 	{
-		inCharacter->AddUbnormalStack(id);
-		inCharacter->SetUbnormalTime(id, 180);
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 180);
 		inCharacter->SetTargetInterval(id, 60);
 	});
 	// 常時
-	m_abnormal[ABNORMAL_BURN]->SetWhenAllWayFunc([](CCharacter* inCharacter, int id)
+	m_abnormal[ABNORMAL_BURN]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
 	{
 		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
 
@@ -75,8 +75,8 @@ void CAbnormalDataBase::Init()
 	// 攻撃
 	m_abnormal[ABNORMAL_BURN]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(id);
-		outCharacter->SetUbnormalTime(id, 600);
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 600);
 		outCharacter->SetTargetInterval(id, 60);
 	});
 	// 消失
@@ -93,12 +93,12 @@ void CAbnormalDataBase::Init()
 	// 開始
 	m_abnormal[ABNORMAL_BLEED]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
 	{
-		inCharacter->AddUbnormalStack(id);
-		inCharacter->SetUbnormalTime(id, 600);
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 600);
 		inCharacter->SetTargetInterval(id, 60);
 	});
 	// 常時
-	m_abnormal[ABNORMAL_BLEED]->SetWhenAllWayFunc([](CCharacter* inCharacter, int id)
+	m_abnormal[ABNORMAL_BLEED]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
 	{
 		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
 		
@@ -109,8 +109,8 @@ void CAbnormalDataBase::Init()
 	// 攻撃
 	m_abnormal[ABNORMAL_BLEED]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(id);
-		outCharacter->SetUbnormalTime(id, 600);
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 600);
 		outCharacter->SetTargetInterval(id, 60);
 	});
 	// 消失
@@ -128,19 +128,19 @@ void CAbnormalDataBase::Init()
 	m_abnormal[ABNORMAL_STUN]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
 	{
 		CCharacter* c = inCharacter;
-		inCharacter->AddUbnormalStack(id);
-		inCharacter->SetUbnormalTime(id, 60);
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 60);
 	});
 
 	// 攻撃
 	m_abnormal[ABNORMAL_STUN]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(id);
-		outCharacter->SetUbnormalTime(id, 60);
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 60);
 		inCharacter->SetStun(true);
 	});
 	// 常時
-	m_abnormal[ABNORMAL_STUN]->SetWhenAllWayFunc([](CCharacter* inCharacter, int id)
+	m_abnormal[ABNORMAL_STUN]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
 	{});
 	// 消失
 	m_abnormal[ABNORMAL_STUN]->SetWhenClearFunc([](CCharacter* inCharacter, int id)
@@ -157,8 +157,8 @@ void CAbnormalDataBase::Init()
 	// 開始
 	m_abnormal[ABNORMAL_SLOW]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
 	{
-		inCharacter->AddUbnormalStack(id);
-		inCharacter->SetUbnormalTime(id, 300);
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 300);
 		
 		if (inCharacter->GetAbnormalCount()[id].s_stack == 1)
 		{
@@ -168,8 +168,8 @@ void CAbnormalDataBase::Init()
 	// 攻撃
 	m_abnormal[ABNORMAL_SLOW]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
 	{
-		inCharacter->AddUbnormalStack(id);
-		inCharacter->SetUbnormalTime(id, 300);
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 300);
 	
 		if (inCharacter->GetAbnormalCount()[id].s_stack == 1)
 		{
@@ -178,7 +178,7 @@ void CAbnormalDataBase::Init()
 
 	});
 	// 常時
-	m_abnormal[ABNORMAL_SLOW]->SetWhenAllWayFunc([](CCharacter* inCharacter, int id)
+	m_abnormal[ABNORMAL_SLOW]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
 	{
 	});
 	// 消失
@@ -199,12 +199,12 @@ void CAbnormalDataBase::Init()
 	// 開始
 	m_abnormal[ABNORMAL_POISON]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
 	{
-		inCharacter->AddUbnormalStack(id);
-		inCharacter->SetUbnormalTime(id, 600);
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 600);
 		inCharacter->SetTargetInterval(id, 60);
 	});
 	// 常時
-	m_abnormal[ABNORMAL_POISON]->SetWhenAllWayFunc([](CCharacter* inCharacter, int id)
+	m_abnormal[ABNORMAL_POISON]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
 	{
 		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
 
@@ -215,8 +215,8 @@ void CAbnormalDataBase::Init()
 	// 攻撃
 	m_abnormal[ABNORMAL_POISON]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(id);
-		outCharacter->SetUbnormalTime(id, 600);
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 600);
 		outCharacter->SetTargetInterval(id, 60);
 	});
 	// 消失
@@ -233,12 +233,12 @@ void CAbnormalDataBase::Init()
 	// 開始
 	m_abnormal[ABNORMAL_PLAGUE]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
 	{
-		inCharacter->AddUbnormalStack(id);
-		inCharacter->SetUbnormalTime(id, 600);
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 600);
 		inCharacter->SetTargetInterval(id, 60);
 	});
 	// 常時
-	m_abnormal[ABNORMAL_PLAGUE]->SetWhenAllWayFunc([](CCharacter* inCharacter, int id)
+	m_abnormal[ABNORMAL_PLAGUE]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
 	{
 		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
 
@@ -249,8 +249,8 @@ void CAbnormalDataBase::Init()
 	// 攻撃
 	m_abnormal[ABNORMAL_PLAGUE]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(id);
-		outCharacter->SetUbnormalTime(id, 600);
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 600);
 		outCharacter->SetTargetInterval(id, 60);
 	});
 	// 消失

@@ -121,8 +121,6 @@ HRESULT CCharacter::Init()
 
 	m_state = GROUND;
 
-	m_skill.resize(MAX_SKILL);
-
 	return S_OK;
 }
 
@@ -133,11 +131,6 @@ void CCharacter::Uninit()
 {
 	// 破棄処理
 	CObject::Release();
-
-	if (m_road != nullptr)
-	{
-		m_road->Uninit();
-	}
 
 	m_apModel[0]->Uninit();
 	m_collision->Uninit();
@@ -221,7 +214,6 @@ void CCharacter::Update()
 	{
 		// 死亡処理
 		Died();
-		Uninit();
 	}
 
 	// 重力
@@ -385,6 +377,7 @@ void CCharacter::Died()
 	m_isDied = true;
 	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
 	list.remove(this);
+	Uninit();
 }
 
 void CCharacter::Move()
