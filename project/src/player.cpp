@@ -64,12 +64,12 @@ HRESULT CPlayer::Init()
 	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
 	{
 		// スキルを生成
-		m_Skill[nCnt] = CSkill::Create();
+		m_skill[nCnt] = CSkill::Create();
 		// intをstring型に変換する
 		std::ostringstream  name;
 		name << "YAMATO_SKILL_" << nCnt+1;
 		// スキルの設定
-		m_Skill[nCnt]->SetSkill(name.str(), this);
+		m_skill[nCnt]->SetSkill(name.str(), this);
 	}
 
 	// モデルの読み込み
@@ -173,7 +173,7 @@ void CPlayer::PAttack()
 	if (m_controller->Skill_1())
 	{
 		// 発動時に生成
-		m_Skill[0]->Skill1();
+		m_skill[0]->Skill1();
 	}
 
 	// スキル1(右クリック)
