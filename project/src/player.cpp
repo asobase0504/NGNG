@@ -188,7 +188,7 @@ void CPlayer::PAttack()
 	if (m_controller->Skill_4())
 	{
 		// 発動時に生成
-		m_Skill[1]->Skill2();
+		m_Skill[1]->Skill1();
 	}
 }
 
