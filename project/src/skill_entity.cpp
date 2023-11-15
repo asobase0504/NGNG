@@ -1,7 +1,7 @@
 //**************************************************************
 //
-// ƒXƒLƒ‹
-// Author : ûü–ìŠ]›’
+// ã‚¹ã‚­ãƒ«
+// Author : é«™é‡é¦¨å°‡
 //
 //**************************************************************
 
@@ -18,7 +18,7 @@
 #include "map.h"
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CSkillEntity::CSkillEntity(int nPriority) : 
 	m_Collision(nullptr)
@@ -27,7 +27,7 @@ CSkillEntity::CSkillEntity(int nPriority) :
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CSkillEntity::~CSkillEntity()
 {
@@ -35,13 +35,13 @@ CSkillEntity::~CSkillEntity()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //--------------------------------------------------------------
 HRESULT CSkillEntity::Init()
 {
 	MapChangeRelese();
 	m_Duration = 200;
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	InitAbility();
 
 	m_relation = m_apChara->GetRelation();
@@ -49,27 +49,27 @@ HRESULT CSkillEntity::Init()
 }
 
 //--------------------------------------------------------------
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //--------------------------------------------------------------
 void CSkillEntity::Uninit()
 {
-	// “–‚½‚è”»’è‚Ìíœ
+	// å½“ãŸã‚Šåˆ¤å®šã®å‰Šé™¤
 	if (m_Collision != nullptr)
 	{
 		m_Collision->Uninit();
 		m_Collision = nullptr;
 	}
 
-	// ”jŠüˆ—
+	// ç ´æ£„å‡¦ç†
 	CTask::Uninit();
 }
 
 //--------------------------------------------------------------
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //--------------------------------------------------------------
 void CSkillEntity::Update()
 {
-	// ƒXƒLƒ‹ƒf[ƒ^‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚·‚é
+	// ã‚¹ã‚­ãƒ«ãƒ‡ãƒ¼ã‚¿ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã™ã‚‹
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 
 	AllWayAbility();
@@ -78,7 +78,7 @@ void CSkillEntity::Update()
 	{
 		bool collision = false;
 
-		// Œø‰ÊŠÔ‚ÌŒ¸­
+		// åŠ¹æœæ™‚é–“ã®æ¸›å°‘
 		m_Duration--;
 
 		if (m_Collision == nullptr)
@@ -86,29 +86,29 @@ void CSkillEntity::Update()
 			return;
 		}
 
-		// ©•ª‚Æ‚Íˆá‚¤ŠÖŒW‚ğ‚Á‚Ä‚éƒLƒƒƒ‰ƒNƒ^[‚És‚È‚¤
+		// è‡ªåˆ†ã¨ã¯é•ã†é–¢ä¿‚ã‚’æŒã£ã¦ã‚‹ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã«è¡Œãªã†
 		CMap::GetMap()->DoDifferentRelation(m_relation, [this, &collision](CCharacter* inChara)
 		{
-			// “–‚½‚è”»’è
+			// å½“ãŸã‚Šåˆ¤å®š
 			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
 			if (hit)
-			{// ƒ_ƒ[ƒW‚Ì”»’è
+			{// ãƒ€ãƒ¡ãƒ¼ã‚¸ã®åˆ¤å®š
 				HitAbility(inChara);
 				collision = true;
 			}
 		});
 
 		if (collision)
-		{// “G‚É“–‚½‚Á‚Ä‚¢‚½‚ç
+		{// æ•µã«å½“ãŸã£ã¦ã„ãŸã‚‰
 			Uninit();
 		}
 	}
 	else if(m_Duration <= 0)
-	{// Œø‰ÊŠÔ‚ª0ˆÈ‰º‚É‚È‚Á‚½‚çÁ‚·
+	{// åŠ¹æœæ™‚é–“ãŒ0ä»¥ä¸‹ã«ãªã£ãŸã‚‰æ¶ˆã™
 		Uninit();
 	}
 
 #ifdef _DEBUG
-	CDebugProc::Print("Duration : %\n", m_Duration);
+	CDebugProc::Print("Duration : %f\n", m_Duration);
 #endif // _DEBUG
 }

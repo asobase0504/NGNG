@@ -88,27 +88,27 @@ void CBullet::Update()
 		Uninit();
 	}
 
-	CMap::GetMap()->DoDifferentRelation(m_relation, [this](CCharacter* inChara)
+	// プレイヤーの獲得
+	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
+	
+	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
-		if (m_collision->ToCylinder(inChara->GetCollision()))
+		for (int i = 0; i < m_abnormal.size(); i++)
 		{
-			for (int i = 0; i < m_abnormal.size(); i++)
+			if (!m_abnormal[i])
 			{
-				if (!m_abnormal[i])
-				{
-					continue;
-				}
-
-				CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
-
-				if (abnormalFunc != nullptr)
-				{
-					abnormalFunc(inChara, i, inChara);
-				}
+				continue;
 			}
-			Uninit();
+
+			CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
+
+			if (abnormalFunc != nullptr)
+			{
+				abnormalFunc(pPlayer, i,pPlayer);
+			}
 		}
-	});	
+		Uninit();
+	}
 }
 
 //--------------------------------------------------------------
