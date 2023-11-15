@@ -59,6 +59,7 @@ public:
 	const ERole& GetRole() const { return m_role; }
 
 	/* 優先順位 */
+	void SetPriority(CTaskGroup::EPriority pri) { m_priority = pri; }
 	CTaskGroup::EPriority GetPriority() { return m_priority; }
 
 	/* 更新する必要があるか */

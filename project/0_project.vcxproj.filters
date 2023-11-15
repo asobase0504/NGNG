@@ -352,6 +352,9 @@
     <ClCompile Include="src\map_fade.cpp">
       <Filter>ソース ファイル\Mode</Filter>
     </ClCompile>
+    <ClCompile Include="enemy_hp_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -613,6 +616,9 @@
     </ClInclude>
     <ClInclude Include="src\map_fade.h">
       <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_hp_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

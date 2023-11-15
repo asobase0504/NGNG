@@ -85,6 +85,7 @@ HRESULT CCharacter::Init()
 	m_money.Init(100);
 	m_money.SetCurrent(50);
 	m_isStun = false;
+	m_isBlock = false;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
@@ -112,6 +113,11 @@ void CCharacter::Uninit()
 {
 	// 破棄処理
 	CObject::Release();
+
+	if (m_road != nullptr)
+	{
+		m_road->Uninit();
+	}
 
 	m_apModel[0]->Uninit();
 	m_collision->Uninit();
@@ -194,7 +200,8 @@ void CCharacter::Update()
 	if (m_hp.GetCurrent() <= 0)
 	{
 		// 死亡処理
-		m_isDied = true;
+		Died();
+		Uninit();
 	}
 
 	// 重力
@@ -272,7 +279,7 @@ void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 
 	CObject::SetPos(inPos);
 }
-
+ 
 //--------------------------------------------------------------
 // 向きの設定
 //--------------------------------------------------------------
@@ -419,4 +426,25 @@ void CCharacter::Abnormal()
 			}
 		}
 	}
+}
+
+//--------------------------------------------------------------
+// 状態異常の種類の個数の獲得
+//--------------------------------------------------------------
+int CCharacter::GetAbnormalTypeCount()
+{
+	int abnormal_type_count = 0;
+	
+	// 付与されている状態異常をカウントする
+	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	{
+		if (m_haveAbnormal[i].s_stack <= 0)
+		{
+			continue;
+		}
+
+		abnormal_type_count++;
+	}
+
+	return abnormal_type_count;
 }

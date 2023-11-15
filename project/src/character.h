@@ -56,6 +56,9 @@ public:
 
 	std::vector<CObjectX*> GetModel() { return m_apModel; }
 
+	// 状態異常の種類のカウント
+	int GetAbnormalTypeCount();
+
 	void Damage(const int inDamage);
   
 	void SetPos(const D3DXVECTOR3& inPos);

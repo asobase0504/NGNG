@@ -19,6 +19,7 @@
 #include "application.h"
 #include "objectX.h"
 #include "collision_box.h"
+#include "enemy_hp_ui.h"
 
 #include "enemy_data_base.h"
 
@@ -55,10 +56,12 @@ HRESULT CEnemy::Init()
 	D3DXVECTOR3 size = GetSize();
 	D3DXMATRIX mtx = GetMtxWorld();
 
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_GO_ATTACK));
+	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
 
+	m_pEHPUI = CEnemy_HPUI::Create(this);
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
+
 	return S_OK;
 }
 
@@ -82,6 +85,19 @@ void CEnemy::Update()
 #ifdef ENEMY_DEBUG
 	CDebugProc::Print("EnemyFmove3(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
 #endif // _DEBUG
+}
+
+//--------------------------------------------------------------
+// I—¹
+//--------------------------------------------------------------
+void CEnemy::Uninit()
+{
+	if (m_pEHPUI != nullptr)
+	{
+		m_pEHPUI->Uninit();
+	}
+
+	CCharacter::Uninit();
 }
 
 //--------------------------------------------------------------
