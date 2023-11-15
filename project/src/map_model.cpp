@@ -32,6 +32,7 @@ CMapModel::~CMapModel()
 //--------------------------------------------------------------
 HRESULT CMapModel::Init()
 {
+	MapChangeRelese();
 	CObjectX::Init();
 
 	return S_OK;
@@ -42,6 +43,7 @@ HRESULT CMapModel::Init()
 //--------------------------------------------------------------
 HRESULT CMapModel::Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot, const D3DXVECTOR3& inSize)
 {
+	MapChangeRelese();
 	CObjectX::Init();
 
 	D3DXMATRIX mtx = GetMtxWorld();

@@ -25,14 +25,26 @@
 #include "object_mesh.h"
 #include "utility.h"
 
+#include "item_manager.h"
+
 #include <thread>
+
+//==============================================================
+// 定数宣言
+//==============================================================
+const int CCharacter::MAX_SKILL(4);
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
 CCharacter::CCharacter(int nPriority) : m_haveItem{}
 {
+	if (CMap::GetMap() != nullptr)
+	{
+		CMap::GetMap()->InCharacterList(this);
+	}
 	m_apModel.clear();
+	m_skill.clear();
 }
 
 //--------------------------------------------------------------
@@ -40,7 +52,6 @@ CCharacter::CCharacter(int nPriority) : m_haveItem{}
 //--------------------------------------------------------------
 CCharacter::~CCharacter()
 {
-
 }
 
 //--------------------------------------------------------------
@@ -50,11 +61,18 @@ HRESULT CCharacter::Init()
 {
 	CObject::Init();
 	m_isDied = false;
+	m_isShield = false;
+	m_isCritical = false;
+	m_numCritical = 0;
+	m_isBlock = false;
+	m_isStun = false;
+	m_nonCombat = false;
+	m_nonCombatTime = 0;
+	m_isRunning = false;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
 	m_apModel[0]->LoadModel("BOX");
-	m_road = CRoad::Create(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(50);
@@ -70,8 +88,8 @@ HRESULT CCharacter::Init()
 	m_attack.SetCurrent(100);
 	m_attackSpeed.Init(1.0f);
 	m_attackSpeed.SetCurrent(1.0f);
-	m_defense.Init(100);
-	m_defense.SetCurrent(100);
+	m_defense.Init(0);
+	m_defense.SetCurrent(0);
 	m_criticalRate.Init(0.0f);
 	m_criticalRate.SetCurrent(0.0f);
 	m_criticalDamage.Init(2.0f);
@@ -102,6 +120,8 @@ HRESULT CCharacter::Init()
 	}
 
 	m_state = GROUND;
+
+	m_skill.resize(MAX_SKILL);
 
 	return S_OK;
 }
@@ -327,6 +347,11 @@ void CCharacter::Damage(const int inDamage)
 //--------------------------------------------------------------
 void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 {
+	// ダメージを与えた処理
+	CItemManager::GetInstance()->AllWhenDamage(this, m_haveItem, pEnemy);
+	// ダメージを受けた処理
+	CItemManager::GetInstance()->AllWhenHit(pEnemy, pEnemy->m_haveItem, this);
+
 	// プレイヤーのダメージを計算
 	int Damage = CalDamage(SkillMul);
 
@@ -346,13 +371,20 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 			return;
 		}
 
-		CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
+		CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
 
 		if (abnormalFunc != nullptr)
 		{
 			abnormalFunc(this, i, pEnemy);
 		}
 	}
+}
+
+void CCharacter::Died()
+{
+	m_isDied = true;
+	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
+	list.remove(this);
 }
 
 void CCharacter::Move()
@@ -386,7 +418,7 @@ void CCharacter::Abnormal()
 			continue;
 		}
 
-		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
 
 		if (abnormalFunc != nullptr)
 		{
@@ -402,7 +434,7 @@ void CCharacter::Abnormal()
 			{
 				if (data >= m_haveAbnormal[i].s_effectTime)
 				{// 状態異常を削除する
-					CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
+					CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
 
 					//if (Los)
 					{// 失った時の処理を呼び出す

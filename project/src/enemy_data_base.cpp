@@ -14,6 +14,8 @@
 #include "bullet.h"
 #include "melee_attack.h"
 
+#include "skill.h"
+
 //行動パターンに必要なinclude
 #include "player_manager.h"
 
@@ -322,7 +324,7 @@ void CEnemyDataBase::Init()
 			{
 				// カウント開始
 				inEnemy->SetAttackCnt(0);
-				inEnemy->SetActivity(GetInstance()->GetActivityFunc(PATTERN_GOLEM_LASER));
+				inEnemy->GetSkill()[0]->Skill1();
 				move *= -0.5f;
 			}
 		}
@@ -346,52 +348,5 @@ void CEnemyDataBase::Init()
 		}
 
 		inEnemy->SetMoveXZ(move.x,move.z);
-	};
-
-	// ゴーレムのレーザーを打つ処理
-	m_activityFunc[PATTERN_GOLEM_LASER] = [](CEnemy* inEnemy)
-	{
-		// プレイヤーの獲得
-		CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-
-		// 目標の設定
-		inEnemy->GetRoad()->SetShooter(inEnemy);
-		inEnemy->GetRoad()->SetTarget(pPlayer);
-		inEnemy->GetRoad()->SetUse(true);
-
-		// カウント開始
-		inEnemy->AddAttackCnt(1);
-
-		//--------------------------------------------------------------------
-		// プレイヤーの位置取得
-		D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
-		// 座標の取得
-		D3DXVECTOR3 pos = inEnemy->GetPos();
-
-		D3DXVECTOR3 move = PlayerPos - pos;
-
-		//--------------------------------------------------------------------
-
-		if (inEnemy->GetAttackCnt() >= 180)
-		{
-			//inEnemy->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_FIRE,true);
-			inEnemy->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_SLOW, true);
-			//inEnemy->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_BLEED, true);
-
-			CBullet::Create(inEnemy->GetPos(), move * 0.01f, 10.0f,inEnemy->GetAbnormalAttack());
-			
-			// 一定以上の時間が経過したらレーザー発射
-			inEnemy->SetActivity(GetInstance()->GetActivityFunc(PATTERN_GOLEM));
-			inEnemy->SetAttackCnt(0);
-
-			inEnemy->GetRoad()->SetUse(false);
-		}
-		// 狙いを定めている状態
-		//if (inEnemy->GetAttackCnt() >= inEnemy->GetAttackTime())
-		//{
-			// 一定以上の時間が経過したらレーザー発射
-			// inEnemy->SetActivity(GetInstance()->GetActivityFunc(PATTERN_GOLEM));
-		//}
-
 	};
 }

@@ -78,6 +78,12 @@
     <Filter Include="ソース ファイル\Mode\Game\character\abnormality">
       <UniqueIdentifier>{3476f976-0f28-4fc6-b760-8f0d95b60701}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\character\enemy\bace">
+      <UniqueIdentifier>{38e9006d-9e87-4a80-acc4-82bd637324e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\character\skill\bace">
+      <UniqueIdentifier>{fe1c8bd6-869a-423f-8ba2-ade805331be9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -209,9 +215,6 @@
     <ClCompile Include="src\game.cpp">
       <Filter>ソース ファイル\Mode\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\skill_data_base.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
-    </ClCompile>
     <ClCompile Include="src\item_data_base.cpp">
       <Filter>ソース ファイル\Mode\Game\Item</Filter>
     </ClCompile>
@@ -254,12 +257,6 @@
     <ClCompile Include="src\Controller.cpp">
       <Filter>ソース ファイル\Mode\Game\character</Filter>
     </ClCompile>
-    <ClCompile Include="src\enemy.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="src\enemy_manager.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="src\player.cpp">
       <Filter>ソース ファイル\Mode\Game\character\player</Filter>
     </ClCompile>
@@ -268,12 +265,6 @@
     </ClCompile>
     <ClCompile Include="src\PlayerController.cpp">
       <Filter>ソース ファイル\Mode\Game\character\player</Filter>
-    </ClCompile>
-    <ClCompile Include="src\enemy_data_base.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="src\skill.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
     </ClCompile>
     <ClCompile Include="src\status.cpp">
       <Filter>ソース ファイル\Mode\Game\character</Filter>
@@ -290,9 +281,6 @@
     <ClCompile Include="src\PlayerController.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\skill.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\status.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -305,20 +293,11 @@
     <ClCompile Include="src\number.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\enemy.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="src\camera.cpp">
       <Filter>ソース ファイル\3D\camera</Filter>
     </ClCompile>
     <ClCompile Include="src\camera_game.cpp">
       <Filter>ソース ファイル\3D\camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\skill_entity.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
-    </ClCompile>
-    <ClCompile Include="bullet.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
     </ClCompile>
     <ClCompile Include="src\character_select.cpp">
       <Filter>ソース ファイル\Mode</Filter>
@@ -343,14 +322,47 @@
     <ClCompile Include="src\skill_ui.cpp">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClCompile>
-    <ClCompile Include="src\melee_attack.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="src\mode_fade.cpp">
       <Filter>ソース ファイル\Mode</Filter>
     </ClCompile>
     <ClCompile Include="src\map_fade.cpp">
       <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yamato_skill_2.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy_data_base.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy_manager.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="golem_skill_1.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_data_base.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_entity.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\melee_attack.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClCompile>
     <ClCompile Include="enemy_hp_ui.cpp">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
@@ -489,9 +501,6 @@
     <ClInclude Include="src\item_data_base.h">
       <Filter>ソース ファイル\Mode\Game\Item</Filter>
     </ClInclude>
-    <ClInclude Include="src\skill_data_base.h">
-      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
-    </ClInclude>
     <ClInclude Include="src\font.h">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClInclude>
@@ -531,12 +540,6 @@
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\Game\character</Filter>
     </ClInclude>
-    <ClInclude Include="src\enemy_manager.h">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="src\enemy.h">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
-    </ClInclude>
     <ClInclude Include="src\PlayerController.h">
       <Filter>ソース ファイル\Mode\Game\character\player</Filter>
     </ClInclude>
@@ -546,14 +549,8 @@
     <ClInclude Include="src\player_manager.h">
       <Filter>ソース ファイル\Mode\Game\character\player</Filter>
     </ClInclude>
-    <ClInclude Include="src\enemy_data_base.h">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
-    </ClInclude>
     <ClInclude Include="src\collision_sphere.h">
       <Filter>ソース ファイル\00_Main\02_Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="src\skill.h">
-      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
     </ClInclude>
     <ClInclude Include="src\status.h">
       <Filter>ソース ファイル\Mode\Game\character</Filter>
@@ -563,14 +560,7 @@
     </ClInclude>
     <ClInclude Include="src\Controller.h" />
     <ClInclude Include="src\PlayerController.h" />
-    <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\status.h" />
-    <ClInclude Include="src\yamato_skill_1.h">
-      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
-    </ClInclude>
-    <ClInclude Include="src\skill_entity.h">
-      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
-    </ClInclude>
     <ClInclude Include="src\number.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
@@ -582,9 +572,6 @@
     </ClInclude>
     <ClInclude Include="src\road.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\bullet.h">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="abnormal_data_base.h">
       <Filter>ソース ファイル\Mode\Game\character\abnormality</Filter>
@@ -604,18 +591,53 @@
     <ClInclude Include="src\procedure.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\bullet.h" />
     <ClInclude Include="src\skill_ui.h">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="src\melee_attack.h">
-      <Filter>ソース ファイル\Mode\Game\character\enemy</Filter>
     </ClInclude>
     <ClInclude Include="src\mode_fade.h">
       <Filter>ソース ファイル\Mode</Filter>
     </ClInclude>
     <ClInclude Include="src\map_fade.h">
       <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yamato_skill_2.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bullet.h">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy.h">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy_data_base.h">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy_manager.h">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="golem_skill_1.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yamato_skill_1.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_data_base.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_entity.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bullet.h">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\melee_attack.h">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClInclude>
     <ClInclude Include="enemy_hp_ui.h">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>

@@ -52,7 +52,7 @@ public:
 	static void Uninit();
 
 public:
-	CAbnormal* GetItemData(EAbnormalType inState) { return m_abnormal[inState]; }
+	CAbnormal* GetAbnormalData(EAbnormalType inState) { return m_abnormal[inState]; }
 
 private:	// ƒƒ“ƒo•Ï”
 	std::array<CAbnormal*, ABNORMAL_MAX> m_abnormal;
@@ -60,4 +60,4 @@ private:	// ƒƒ“ƒo•Ï”
 
 using abnormal_count = std::array<CAbnormalDataBase::SAbnormalStatus, CAbnormalDataBase::ABNORMAL_MAX>;
 using abnormal_attack = std::array<bool, CAbnormalDataBase::ABNORMAL_MAX>;
-#endif	// _ITEM_DATA_
+#endif	// _ABNORMAL_DATA_

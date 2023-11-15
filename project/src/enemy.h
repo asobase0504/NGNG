@@ -45,7 +45,6 @@ public:
 	void	Update() override;
 
 	// 静的メンバ関数
-	static CEnemy *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);			// プレイヤーの生成
 	void SetActivity(ACTIVITY_FUNC NowAct) { m_Activity = NowAct; }
 	ACTIVITY_FUNC GetActivity() { return m_Activity; }
 

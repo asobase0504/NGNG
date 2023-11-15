@@ -16,7 +16,9 @@
 #include "collision_cylinder.h"
 #include "abnormal.h"
 #include "abnormal_data_base.h"
+#include "player.h"
 #include "player_manager.h"
+#include "map.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -37,6 +39,7 @@ CBullet::~CBullet()
 //--------------------------------------------------------------
 HRESULT CBullet::Init()
 {
+	MapChangeRelese();
 	CObjectPolygon3D::Init();
 	SetAnchor(CObjectPolygon3D::ANCHOR_CENTER);
 	SetBillboard(true);
@@ -97,7 +100,7 @@ void CBullet::Update()
 				continue;
 			}
 
-			CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
+			CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
 
 			if (abnormalFunc != nullptr)
 			{

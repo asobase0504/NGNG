@@ -69,72 +69,71 @@ void CStatueLuck::Update()
 
 	// プレイヤーが触れている時
 	
-	if (Touch(pPlayer))
+	if (Touch())
 	{
-		if (input->Trigger(KEY_BACK, -1))
-		{// プレイヤーが特定のキーを押したとき
-			if (!m_bOnce)
+		if (!m_bOnce)
+		{
+			if (m_nItemCount < 2)
 			{
-				if (m_nItemCount < 2)
-				{
-					// プレイヤーお金を調整して設定
-					playerMoney->AddCurrent(-m_nUseMoney);
+				// プレイヤーお金を調整して設定
+				playerMoney->AddCurrent(-m_nUseMoney);
 
-					// アイテム確率計算
-					int randomCount = IntRandom(100, 1);
+				// アイテム確率計算
+				int randomCount = IntRandom(100, 1);
 
-					if (randomCount <= 4)
-					{// レア
+				if (randomCount <= 4)
+				{// レア
 
-					//--------------------------
-					//  アイテムドロップ関数
-					//--------------------------
+				//--------------------------
+				//  アイテムドロップ関数
+				//--------------------------
 
-						m_nItemCount++;
-					}
-					else if (randomCount >= 5 && randomCount <= 12)
-					{// アンコモン
-
-					 //--------------------------
-					 //  アイテムドロップ関数
-					 //--------------------------
-
-						m_nItemCount++;
-					}
-					else if (randomCount >= 13 && randomCount <= 39)
-					{// コモン
-
-					 //--------------------------
-					 //  アイテムドロップ関数
-					 //--------------------------
-
-						m_nItemCount++;
-					}
-					else
-					{// ハズレ
-
-					}
-
-					// 次回ガチャする時用に必要お金数を増やして設定しておく
-					int randomNumber = rand() % 10;
-					m_nUseMoney += randomNumber;
-
-					m_bOnce = true;
+					m_nItemCount++;
 				}
+				else if (randomCount >= 5 && randomCount <= 12)
+				{// アンコモン
+
+				 //--------------------------
+				 //  アイテムドロップ関数
+				 //--------------------------
+
+					m_nItemCount++;
+				}
+				else if (randomCount >= 13 && randomCount <= 39)
+				{// コモン
+
+				 //--------------------------
+				 //  アイテムドロップ関数
+				 //--------------------------
+
+					m_nItemCount++;
+				}
+				else
+				{// ハズレ
+
+				}
+
+				// 次回ガチャする時用に必要お金数を増やして設定しておく
+				int randomNumber = rand() % 10;
+				m_nUseMoney += randomNumber;
+
+				m_bOnce = true;
 			}
 		}
-		else
-		{
-			m_bOnce = false;
-			m_bChance = false;
-		}
+	}
+	else
+	{
+		m_bOnce = false;
+		m_bChance = false;
 	}
 
 	// 更新処理
 	CStatue::Update();
 
 #ifdef _DEBUG
+#if 0
 	CDebugProc::Print("LuckPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
+#endif // 0
 #endif // _DEBUG
 }
 

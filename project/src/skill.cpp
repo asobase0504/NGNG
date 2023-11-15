@@ -65,7 +65,7 @@ void CSkill::Update(void)
 	}
 
 #ifdef _DEBUG
-	CDebugProc::Print("スキルのクールタイム : %d\n", m_CT);
+	CDebugProc::Print("%sのクールタイム : %d\n", m_Name.c_str(),m_CT);
 #endif // _DEBUG
 }
 
@@ -91,7 +91,23 @@ void CSkill::Skill1()
 		// 当たり判定の持続時間の管理
 		CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 		pSkillData->GetDuration(m_Name);
-		
+		pSkillData->GetAbility(m_Name)(m_apChara);
+
+		// クールタイムの設定
+		m_CT = pSkillData->GetCT(m_Name);
+	}
+}
+
+//--------------------------------------------------------------
+// スキル1
+//--------------------------------------------------------------
+void CSkill::Skill2()
+{
+	if (m_CT == 0)
+	{// クールタイムがなければ当たり判定を生成する
+	 // 当たり判定の持続時間の管理
+		CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
+		pSkillData->GetDuration(m_Name);
 		pSkillData->GetAbility(m_Name)(m_apChara);
 
 		// クールタイムの設定
