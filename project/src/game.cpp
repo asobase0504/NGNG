@@ -82,6 +82,10 @@ HRESULT CGame::Init()
 
 	// プレイヤーの設定
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
+	m_controller = new CPlayerController(-1);
+	m_controller->Init();
+	m_controller->SetToOrder(pPlayer);
+	pPlayer->SetController(m_controller);
 	pPlayer->OffUpdate();
 	m_camera->SetTargetPos(pPlayer->GetPos());
 
@@ -141,9 +145,18 @@ void CGame::SetChangeMap()
 //--------------------------------------------------------------
 void CGame::ChangeMap(std::string inPath)
 {
+	CApplication::GetInstance()->GetTaskGroup()->AllProcess([](CTask* inTask)
+	{
+		if (!inTask->IsMapChangeRelese())
+		{
+			return;
+		}
+
+		inTask->Uninit();
+	});
+
 	if (m_map != nullptr)
 	{
-		m_map->Uninit();
 		m_map = nullptr;
 	}
 

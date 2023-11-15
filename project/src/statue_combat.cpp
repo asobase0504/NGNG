@@ -58,28 +58,25 @@ void CStatueCombat::Uninit()
 //--------------------------------------------------------------
 void CStatueCombat::Update()
 {
-	CInput* input = CInput::GetKey();
-	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	D3DXVECTOR3 pos = GetPos();
-
-	// プレイヤーが触れている時
-	if (Touch(pPlayer))
-	{
-		if (input->Trigger(KEY_BACK, -1))
-		{// プレイヤーが特定のキーを押したとき
-			for (int nCnt = 0; nCnt < 4; nCnt++)
-			{
-				// 敵の生成
-				float randX = FloatRandom(1.5f, 0.5f);
-				float randZ = FloatRandom(1.5f, 0.5f);
-
-				CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
-			}
-		}
-	}
-	
 	// 更新処理
 	CStatue::Update();
+
+	// プレイヤーが触れている時
+	if (!Touch())
+	{
+		return;
+	}
+
+	D3DXVECTOR3 pos = GetPos();
+
+	for (int nCnt = 0; nCnt < 4; nCnt++)
+	{
+		// 敵の生成
+		float randX = FloatRandom(1.5f, 0.5f);
+		float randZ = FloatRandom(1.5f, 0.5f);
+
+		CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
+	}
 
 #ifdef _DEBUG
 #if 0

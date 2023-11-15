@@ -69,6 +69,8 @@ public:
 	void PauseOn() { m_isUpdate = m_isPouseUpdate; }					// 更新を行うか行わないかポーズ状態で判断
 	void PauseOff() { if (!m_isPouseUpdate) { m_isUpdate = true; } }	// ポーズ状態で止まっていた更新を稼働させる
 
+	void MapChangeRelese() { m_isMapChangeDeleted = true; }
+	bool IsMapChangeRelese() { return m_isMapChangeDeleted; }
 private:
 	CTaskGroup::EPriority m_priority;
 
@@ -86,5 +88,6 @@ private:
 
 	bool m_isUpdate;		// 更新を行うか
 	bool m_isPouseUpdate;	// ポーズ中に更新処理を行うか
+	bool m_isMapChangeDeleted;	// マップ遷移時に消すもの
 };
 #endif

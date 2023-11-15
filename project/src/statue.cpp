@@ -12,9 +12,12 @@
 #include "collision_box.h"
 #include "player_manager.h"
 #include "player.h"
+#include "PlayerController.h"
 #include "map.h"
 #include "object_mesh.h"
 #include "statue_manager.h"
+#include "application.h"
+#include "game.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -38,6 +41,7 @@ CStatue::~CStatue()
 //--------------------------------------------------------------
 HRESULT CStatue::Init()
 {
+	MapChangeRelese();
 	CObjectX::Init();
 
 	D3DXMATRIX mtx = GetMtxWorld();
@@ -54,6 +58,7 @@ HRESULT CStatue::Init()
 //--------------------------------------------------------------
 HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 {
+	MapChangeRelese();
 	CObjectX::Init();
 	LoadModel(m_modelData);
 
@@ -144,12 +149,17 @@ CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot)
 	return pStatue;
 }
 
-bool CStatue::Touch(CPlayer* pPlayer)
+bool CStatue::Touch()
 {
-	if (m_collisionCylinder->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
+	CInput* input = CInput::GetKey();
+	if (input->Trigger(KEY_BACK, -1))
 	{
-		return true;
+		CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
+		CPlayer* player = game->GetController()->GetToOrder();
+		if (m_collisionCylinder->ToCylinder(player->GetCollision()))
+		{
+			return true;
+		}
 	}
-
 	return false;
 }

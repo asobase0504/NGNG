@@ -50,6 +50,7 @@ CMap::~CMap()
 //--------------------------------------------------------------
 HRESULT CMap::Init()
 {
+	MapChangeRelese();
 	CStatueManager* manager = CStatueManager::GetInstance();
 	m_statue.push_back(manager->RandomCreate());
 	m_statue.push_back(manager->RandomCreate());
@@ -74,26 +75,6 @@ HRESULT CMap::Init()
 //--------------------------------------------------------------
 void CMap::Uninit()
 {
-	for (CStatue* statue : m_statue)
-	{
-		statue->Uninit();
-		statue = nullptr;
-	}
-	for (CMesh* mesh : m_mesh)
-	{
-		mesh->Uninit();
-		mesh = nullptr;
-	}
-	for (CMapModel* model : m_model)
-	{
-		model->Uninit();
-		model = nullptr;
-	}
-	for (CCharacter* inChara : m_characterList)
-	{
-		inChara->Uninit();
-		inChara = nullptr;
-	}
 	m_statue.clear();
 	m_mesh.clear();
 	m_model.clear();

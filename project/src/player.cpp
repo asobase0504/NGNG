@@ -111,6 +111,11 @@ void CPlayer::Update()
 		return;
 	}
 
+	if (CInput::GetKey()->Trigger(DIK_O))
+	{
+
+	}
+
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 

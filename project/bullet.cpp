@@ -39,6 +39,7 @@ CBullet::~CBullet()
 //--------------------------------------------------------------
 HRESULT CBullet::Init()
 {
+	MapChangeRelese();
 	CObjectPolygon3D::Init();
 	SetAnchor(CObjectPolygon3D::ANCHOR_CENTER);
 	SetBillboard(true);
