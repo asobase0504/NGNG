@@ -12,6 +12,7 @@
 //==============================================================
 #include "object_polygon3d.h"
 #include "abnormal_data_base.h"
+#include "character.h"
 
 //==============================================================
 // É}ÉNÉçêÈåæ
@@ -41,12 +42,15 @@ public:
 
 	void SetSpeed(float speed) { m_speed = speed; }
 	void SetAbnormal(abnormal_attack abnormal) { m_abnormal = abnormal; }
+	void SetRelation(CCharacter::ERelation inRelation) { m_relation = inRelation; }
+
 private:
 	int m_life;
 	bool m_ispenetration;
 	float m_speed;
 	CCollision*		m_collision;
 	abnormal_attack m_abnormal;
+	CCharacter::ERelation m_relation;
 };
 
 #endif

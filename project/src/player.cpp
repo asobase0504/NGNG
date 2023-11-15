@@ -52,9 +52,14 @@ CPlayer::~CPlayer()
 //--------------------------------------------------------------
 HRESULT CPlayer::Init()
 {
-	m_isUpdate = true;
+	m_Skill.resize(MAX_SKILL);
+
 	// 初期化処理
 	CCharacter::Init();
+
+	// 友好状態
+	m_relation = ERelation::FRIENDLY;
+	m_isUpdate = true;
 
 	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
 	{
@@ -74,6 +79,7 @@ HRESULT CPlayer::Init()
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
 
+	// 当たり判定
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 55.0f);
 	m_collision->SetParent(&m_pos);
 	return S_OK;
@@ -171,13 +177,25 @@ void CPlayer::PAttack()
 	}
 
 	// スキル1(右クリック)
-	m_controller->Skill_2();
-	
+	if(m_controller->Skill_2())
+	{
+		// 発動時に生成
+		m_Skill[1]->Skill1();
+	}
+
 	// スキル2(シフト)
-	m_controller->Skill_3();
+	if (m_controller->Skill_3())
+	{
+		// 発動時に生成
+		m_Skill[1]->Skill1();
+	}
 
 	// スキル3(R)
-	m_controller->Skill_4();
+	if (m_controller->Skill_4())
+	{
+		// 発動時に生成
+		m_Skill[1]->Skill1();
+	}
 }
 
 //--------------------------------------------------------------

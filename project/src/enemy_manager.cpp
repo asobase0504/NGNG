@@ -63,36 +63,14 @@ void CEnemyManager::Uninit(void)
 }
 
 //--------------------------------------------------------------
-// XVˆ—
+// “G‚Ìì¬
 //--------------------------------------------------------------
-void CEnemyManager::Update(void)
-{
-}
-
-//--------------------------------------------------------------
-// •`‰æˆ—
-//--------------------------------------------------------------
-void CEnemyManager::Draw(void)
-{
-}
-
 CEnemy* CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type)
 {
-	CEnemy* enemy = nullptr;
-
-	enemy = CEnemy::Create(pos, size);
-	switch (type)
-	{
-	case CEnemyManager::NONE:
-		break;
-	case CEnemyManager::SKELETON:
-		break;
-	case CEnemyManager::MAX:
-		break;
-	default:
-		break;
-	}
-
+	CEnemy* enemy = new CEnemy;
+	enemy->Init();
+	enemy->SetPos(pos);
+	enemy->SetSize(size);
 	return enemy;
 }
 

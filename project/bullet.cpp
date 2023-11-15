@@ -18,6 +18,7 @@
 #include "abnormal_data_base.h"
 #include "player.h"
 #include "player_manager.h"
+#include "map.h"
 
 //--------------------------------------------------------------
 // コンストラクタ

@@ -155,26 +155,3 @@ CStatue * CStatueManager::RandomCreate()
 
 	return statue;
 }
-
-//--------------------------------------------------------------
-// •ó” ƒ‰ƒ“ƒ_ƒ€¶¬
-//--------------------------------------------------------------
-CStatue * CStatueManager::RandomCreateChest()
-{
-	// ¶¬ŒÂ”
-	int randomCount = IntRandom(15, 8);
-
-#ifdef _DEBUG
-	randomCount = IntRandom(3, 1);
-#endif // DEBUG
-
-	CStatue* statue;
-	for (int nCnt = 0; nCnt < randomCount; nCnt++)
-	{
-		float randomPosX = FloatRandom(400.0f, -500.0f);
-		float randomPosZ = FloatRandom(500.0f,-415.0f);
-		statue = CStatueChest::Create(D3DXVECTOR3(randomPosX, -FLT_MIN, randomPosZ));
-	}
-
-	return statue;
-}

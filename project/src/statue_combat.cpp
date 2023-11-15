@@ -73,7 +73,7 @@ void CStatueCombat::Update()
 				float randX = FloatRandom(1.5f, 0.5f);
 				float randZ = FloatRandom(1.5f, 0.5f);
 
-				CMap::GetMap()->InEnemyList(CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE));
+				CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
 			}
 		}
 	}
@@ -82,7 +82,9 @@ void CStatueCombat::Update()
 	CStatue::Update();
 
 #ifdef _DEBUG
+#if 0
 	CDebugProc::Print("CombatPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
+#endif // 0
 #endif // _DEBUG
 }
 
