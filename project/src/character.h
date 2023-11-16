@@ -148,7 +148,6 @@ public:
 	// 関係
 	ERelation GetRelation() { return m_relation; }
 
-
 	// シールド回復するかどうか
 	bool GetIsShield() { return m_isShield; }
 
@@ -213,6 +212,5 @@ protected:		// ステータス
 
 	std::vector<CSkill*> m_skill;
 	ERelation m_relation;
-
 };
 #endif

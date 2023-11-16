@@ -84,6 +84,9 @@
     <Filter Include="ソース ファイル\Mode\Game\character\skill\bace">
       <UniqueIdentifier>{fe1c8bd6-869a-423f-8ba2-ade805331be9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\Item\item_object">
+      <UniqueIdentifier>{4843f87a-3975-4ce7-8ba8-1153d1bab0c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -364,6 +367,9 @@
     <ClCompile Include="src\melee_attack.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClCompile>
+    <ClCompile Include="src\gold_nugget.cpp">
+      <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
+    </ClCompile>
     <ClCompile Include="enemy_hp_ui.cpp">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClCompile>
@@ -638,6 +644,9 @@
     </ClInclude>
     <ClInclude Include="src\melee_attack.h">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gold_nugget.h">
+      <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
     </ClInclude>
     <ClInclude Include="enemy_hp_ui.h">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
