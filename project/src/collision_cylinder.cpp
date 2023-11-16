@@ -49,20 +49,9 @@ HRESULT CCollisionCylinder::Init()
 	for (int i = 0; i < 4; i++)
 	{
 		m_line[i] = CLine::Create();
+		SetEndChildren(m_line[i]);
 	}
 	return S_OK;
-}
-
-//--------------------------------------------------------------
-// I—¹
-//--------------------------------------------------------------
-void CCollisionCylinder::Uninit()
-{
-	for (int i = 0; i < 4; i++)
-	{
-		m_line[i]->Uninit();
-	}
-	CCollision::Uninit();
 }
 
 //--------------------------------------------------------------
