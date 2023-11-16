@@ -356,17 +356,31 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 
 	for (int nCnt = 0; nCnt < primitive; nCnt++)
 	{
+		if ((pIdx[nCnt + 0] == pIdx[nCnt + 1]) ||
+			(pIdx[nCnt + 0] == pIdx[nCnt + 2]) ||
+			(pIdx[nCnt + 2] == pIdx[nCnt + 1]))
+		{// èkëﬁÉ|ÉäÉSÉìÇîÚÇŒÇ∑
+			continue;
+		}
+
 		D3DXVECTOR3 posPoly[nTri];
+		D3DXVECTOR3 pos = GetPosWorld();
 
 		// í∏ì_ç¿ïWÇÃéÊìæ
 		posPoly[0] = pVtx[pIdx[nCnt + 0]].pos;
 		posPoly[1] = pVtx[pIdx[nCnt + 1]].pos;
 		posPoly[2] = pVtx[pIdx[nCnt + 2]].pos;
 
-		if ((pIdx[nCnt + 0] == pIdx[nCnt + 1]) ||
-			(pIdx[nCnt + 0] == pIdx[nCnt + 2]) ||
-			(pIdx[nCnt + 2] == pIdx[nCnt + 1]))
-		{// èkëﬁÉ|ÉäÉSÉìÇîÚÇŒÇ∑
+		if (fabs(posPoly[0].x - pos.x) >= 100.0f && fabs(posPoly[0].z - pos.z) >= 100.0f)
+		{
+			continue;
+		}
+		if (fabs(posPoly[1].x - pos.x) >= 100.0f && fabs(posPoly[1].z - pos.z) >= 100.0f)
+		{
+			continue;
+		}
+		if (fabs(posPoly[2].x - pos.x) >= 100.0f && fabs(posPoly[2].z - pos.z) >= 100.0f)
+		{
 			continue;
 		}
 
@@ -383,8 +397,6 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 		vecLine[2] = posPoly[0] - posPoly[2];
 
 		D3DXVECTOR3 vecPlayer[nTri];
-
-		D3DXVECTOR3 pos = GetPosWorld();
 
 		// í∏ì_ç¿ïWÇÃéÊìæ
 		vecPlayer[0] = pos - posPoly[0];

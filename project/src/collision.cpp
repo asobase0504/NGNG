@@ -31,13 +31,11 @@ void CCollision::Update()
 
 const D3DXVECTOR3 & CCollision::GetPosWorld()
 {
+	m_posWorld = m_posLocal;
+	if (m_posParent != nullptr)
 	{
-		m_posWorld = m_posLocal;
-		if (m_posParent != nullptr)
-		{
-			m_posWorld += *m_posParent;
-		}
-
-		return m_posWorld;
+		m_posWorld += *m_posParent;
 	}
+
+	return m_posWorld;
 }

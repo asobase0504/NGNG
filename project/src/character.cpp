@@ -137,7 +137,6 @@ void CCharacter::Update()
 
 	bool isGround = false;
 
-
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
 
