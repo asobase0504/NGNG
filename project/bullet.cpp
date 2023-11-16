@@ -48,7 +48,8 @@ HRESULT CBullet::Init()
 	
 	m_collision = CCollisionCylinder::Create(GetPos(),10.0f,10.0f);
 
-	for (int i = 0; i < m_abnormal.size(); i++)
+	int size = m_abnormal.size();
+	for (int i = 0; i < size; i++)
 	{
 		m_abnormal[i] = false;
 	}
@@ -93,7 +94,8 @@ void CBullet::Update()
 	
 	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
-		for (int i = 0; i < m_abnormal.size(); i++)
+		int size = m_abnormal.size();
+		for (int i = 0; i < size; i++)
 		{
 			if (!m_abnormal[i])
 			{

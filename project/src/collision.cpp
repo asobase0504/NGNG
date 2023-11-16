@@ -8,7 +8,8 @@ CCollision::CCollision() :
 	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_size(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_isTop(false),
-	m_isUnder(false)
+	m_isUnder(false),
+	m_hitMeshIdx(-1)
 {
 	D3DXMatrixIdentity(&m_mtx);
 }

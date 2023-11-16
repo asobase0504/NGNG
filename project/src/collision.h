@@ -78,5 +78,7 @@ private:
 	D3DXMATRIX m_mtx;
 	bool m_isTop;
 	bool m_isUnder;
+
+	int m_hitMeshIdx;
 };
 #endif

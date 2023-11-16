@@ -160,6 +160,7 @@ void CCharacter::Update()
 		SetMoveXZ(0.0f, 0.0f);
 	}
 
+	// マップモデル
 	for (int i = 0; i < map->GetNumModel(); i++)
 	{
 		if (m_collision->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
@@ -173,6 +174,7 @@ void CCharacter::Update()
 		}
 	}
 
+	// マップメッシュ
 	for (int i = 0; i < map->GetNumMesh(); i++)
 	{
 		if (m_collision->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
