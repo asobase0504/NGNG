@@ -121,19 +121,10 @@ HRESULT CCharacter::Init()
 
 	m_state = GROUND;
 
+	// 親子関係の構築
+	SetEndChildren(m_apModel[0]);
+
 	return S_OK;
-}
-
-//--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CCharacter::Uninit()
-{
-	// 破棄処理
-	CObject::Release();
-
-	m_apModel[0]->Uninit();
-	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------

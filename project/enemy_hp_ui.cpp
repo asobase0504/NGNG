@@ -59,25 +59,9 @@ HRESULT CEnemy_HPUI::Init()
 	m_gage->SetSize(D3DXVECTOR3(10.0f, 1.0f, 0.0f));
 	m_gage->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
+	SetEndChildren(m_gage);
+	SetEndChildren(m_background);
 	return S_OK;
-}
-
-//--------------------------------------------------------------
-// I—¹
-//--------------------------------------------------------------
-void CEnemy_HPUI::Uninit()
-{
-	CObject::Uninit();
-
-	if (m_gage != nullptr)
-	{
-		m_gage->Uninit();
-	}
-
-	if (m_background != nullptr)
-	{
-		m_background->Uninit();
-	}
 }
 
 //--------------------------------------------------------------

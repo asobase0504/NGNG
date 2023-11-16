@@ -70,6 +70,7 @@ HRESULT CPlayer::Init()
 		name << "YAMATO_SKILL_" << nCnt+1;
 		// スキルの設定
 		m_skill[nCnt]->SetSkill(name.str(), this);
+		SetEndChildren(m_skill[nCnt]);
 	}
 
 	// モデルの読み込み

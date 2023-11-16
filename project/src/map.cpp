@@ -158,6 +158,11 @@ void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<v
 	for (CCharacter* chara : charaList)
 	{// UŒ‚”ÍˆÍ‚É“G‚ª‚¢‚é‚©”»’è‚·‚é
 
+		if (chara->IsDeleted())
+		{
+			continue;
+		}
+
 	 // “¯‚¶ŠÖŒW«‚¾‚Á‚½‚çUŒ‚‚ğ“–‚Ä‚È‚¢B
 		switch (inRelation)
 		{

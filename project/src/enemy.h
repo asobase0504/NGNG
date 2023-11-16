@@ -41,7 +41,6 @@ public:
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Uninit() override;
 	void	Update() override;
 
 	// 静的メンバ関数

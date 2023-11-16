@@ -61,11 +61,15 @@ HRESULT CEnemy::Init()
 	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
 
 	m_pEHPUI = CEnemy_HPUI::Create(this);
+	SetEndChildren(m_pEHPUI);
+
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
+	SetEndChildren(m_collision);
 
 	m_skill.push_back(CSkill::Create());
 	m_skill[0]->SetSkill("GOLEM_SKILL_1",this);
+	SetEndChildren(m_skill[0]);
 	return S_OK;
 }
 
@@ -89,19 +93,6 @@ void CEnemy::Update()
 #ifdef ENEMY_DEBUG
 	CDebugProc::Print("EnemyFmove3(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
 #endif // _DEBUG
-}
-
-//--------------------------------------------------------------
-// I—¹
-//--------------------------------------------------------------
-void CEnemy::Uninit()
-{
-	if (m_pEHPUI != nullptr)
-	{
-		m_pEHPUI->Uninit();
-	}
-
-	CCharacter::Uninit();
 }
 
 //--------------------------------------------------------------
