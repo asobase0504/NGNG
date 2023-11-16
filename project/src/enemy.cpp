@@ -60,8 +60,8 @@ HRESULT CEnemy::Init()
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
 
-	m_Skill.push_back(CSkill::Create());
-	m_Skill[0]->SetSkill("GOLEM_SKILL_1",this);
+	m_skill.push_back(CSkill::Create());
+	m_skill[0]->SetSkill("GOLEM_SKILL_1",this);
 	return S_OK;
 }
 

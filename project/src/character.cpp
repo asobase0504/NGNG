@@ -118,8 +118,6 @@ HRESULT CCharacter::Init()
 
 	m_state = GROUND;
 
-	m_skill.resize(MAX_SKILL);
-
 	return S_OK;
 }
 

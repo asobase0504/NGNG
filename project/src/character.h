@@ -128,7 +128,7 @@ public:
 	CStatus<int>* GetMoney() { return &m_money; }
 
 	// スキルの取得
-	std::vector<CSkill*> GetSkill() { return m_Skill; }
+	std::vector<CSkill*> GetSkill() { return m_skill; }
 
 	// 状態異常
 	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }

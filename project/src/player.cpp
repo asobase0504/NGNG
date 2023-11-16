@@ -52,7 +52,7 @@ CPlayer::~CPlayer()
 //--------------------------------------------------------------
 HRESULT CPlayer::Init()
 {
-	m_Skill.resize(MAX_SKILL);
+	m_skill.resize(MAX_SKILL);
 
 	// 初期化処理
 	CCharacter::Init();
@@ -185,21 +185,21 @@ void CPlayer::PAttack()
 	if(m_controller->Skill_2())
 	{
 		// 発動時に生成
-		m_Skill[1]->Skill1();
+		m_skill[1]->Skill1();
 	}
 
 	// スキル2(シフト)
 	if (m_controller->Skill_3())
 	{
 		// 発動時に生成
-		m_Skill[1]->Skill1();
+		m_skill[1]->Skill1();
 	}
 
 	// スキル3(R)
 	if (m_controller->Skill_4())
 	{
 		// 発動時に生成
-		m_Skill[1]->Skill1();
+		m_skill[1]->Skill1();
 	}
 }
 
