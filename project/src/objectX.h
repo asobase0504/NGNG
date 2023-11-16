@@ -78,9 +78,6 @@ public:
 	void AttachShadow(bool isAttach = true) { m_isHasShadow = isAttach; }
 
 	/* “–‚½‚è”»’è */
-	void SetCollisionFlag(bool inFlag) { m_isCollision = inFlag; }	// “–‚½‚è”»’è‚Ì—L–³‚ğİ’è
-
-	bool IsCollision() { return m_isCollision; }	// “–‚½‚è”»’è‚Ì—L–³‚ğæ“¾
 	bool SphereAndAABB(CObjectX* inObjectX,D3DXVECTOR3* outPos = nullptr);
 	bool RayAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inNormal, D3DXVECTOR3* outPos = nullptr);
 	bool SegmentAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inPos2, D3DXVECTOR3* outPos = nullptr);

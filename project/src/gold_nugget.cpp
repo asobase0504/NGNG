@@ -10,6 +10,13 @@
 //==============================================================
 #include "gold_nugget.h"
 
+#include "application.h"
+#include "game.h"
+#include "player.h"
+#include "PlayerController.h"
+
+#include "collision_box.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -31,7 +38,9 @@ HRESULT CGoldNugget::Init()
 {
 	LoadModel("BOX");
 
-	m_collision;
+	// 当たり判定
+	m_collision = CCollisionBox::Create(GetPos(), GetRot(), D3DXVECTOR3(10.0f, 10.0f, 10.0f), GetMtxWorld());
+	m_collision->SetParent(&m_pos);
 
 	return S_OK;
 }
@@ -41,6 +50,12 @@ HRESULT CGoldNugget::Init()
 //--------------------------------------------------------------
 void CGoldNugget::Update()
 {
+	CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
+	CPlayer* player = game->GetController()->GetToOrder();
+	if (m_collision->ToCylinder(player->GetCollision()))
+	{
+		player->GetMoney()->AddItemEffect(30);
+	}
 }
 
 //--------------------------------------------------------------

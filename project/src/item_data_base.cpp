@@ -1,8 +1,19 @@
-﻿#include "item_data_base.h"
+﻿//**************************************************************
+//
+// item_data_base
+// Author: Buriya Kota
+//
+//**************************************************************
+
+//==============================================================
+// include
+//==============================================================
+#include "item_data_base.h"
 #include "item.h"
 
 #include "character.h"
 #include "skill.h"
+#include "gold_nugget.h"
 #include "utility.h"
 
 //==============================================================
@@ -271,7 +282,7 @@ void CItemDataBase::Init()
 		{
 			for (int i = 0; i < cnt; i++)
 			{
-				if (IsSuccessRate(0.18))
+				if (IsSuccessRate(0.18f))
 				{
 					for (int j = 0; j < CCharacter::MAX_SKILL; j++)
 					{
@@ -286,14 +297,32 @@ void CItemDataBase::Init()
 	m_item[ITEM_KOBAN] = CItem::Create(ITEM_KOBAN);
 	// 小判---------------------------------------------------------
 	m_item[ITEM_KOBAN]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// 敵を倒した際4%の確率で金塊が出現する (+4%) TODO
+	{// 敵を倒した際4%の確率で金塊が出現する (+4%)
+		float probability = 0.0f;
+
+		for (int j = 0; j <= cnt; j++)
+		{
+			probability += 0.04f;
+		}
+
+		if (IsSuccessRate(probability))
+		{
+			CGoldNugget::Create();
+		}
 	});
 	//--------------------------------------------------------------
 
 	m_item[ITEM_ONIMEN] = CItem::Create(ITEM_ONIMEN);
 	// 鬼面---------------------------------------------------------
 	m_item[ITEM_ONIMEN]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// 4つ以上のデバフがついた敵に死の印が付き、受けるダメージが7秒間(+7秒)50%増加する TODO
+	{// 4つ以上のデバフがついた敵に死の印が付き、受けるダメージが7秒間(+7秒)50%増加する
+		int numDebuff = outCharacter->GetAbnormalTypeCount();
+
+		if (numDebuff >= 4)
+		{// デバフを付与する　TODO
+			//outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_STUN, true);
+		}
+
 	});
 	//--------------------------------------------------------------
 
@@ -483,6 +512,24 @@ void CItemDataBase::Init()
 	m_item[ITEM_HANNYA]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// TODO
 		//inCharacter->GetCriticalRate()->AddItemEffect(5);
+	});
+	//--------------------------------------------------------------
+
+	m_item[ITEM_ELITE] = CItem::Create(ITEM_ELITE);
+	// エリート---------------------------------------------------------
+	// 持っているものはエリートになる
+	m_item[ITEM_ELITE]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
+	{// 倍率の設定
+		float magnification = 2.0f;
+		int hp = inCharacter->GetHp()->GetCurrent();
+		hp *= magnification;
+		inCharacter->GetHp()->SetCurrent(hp);
+		int def = inCharacter->GetDefense()->GetCurrent();
+		def *= magnification;
+		inCharacter->GetDefense()->SetCurrent(def);
+		int atk = inCharacter->GetAtk()->GetCurrent();
+		atk *= magnification;
+		inCharacter->GetAtk()->SetCurrent(atk);
 	});
 	//--------------------------------------------------------------
 }

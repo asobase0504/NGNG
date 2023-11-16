@@ -243,7 +243,7 @@ void CMotionModel3D::SetMaxMinVtx()
 //--------------------------------------------------------------
 bool CMotionModel3D::SegmentCollision(CObjectX* inObjectX)
 {
-	if (!inObjectX->IsCollision())
+	//if (!inObjectX->IsCollision())
 	{
 		return false;
 	}
