@@ -81,8 +81,8 @@ void CStatueTeleporter::Update()
 
 			//m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(randX, 0.0f, randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
 
-			CStatus<int>* enemyHp = m_pEnemy->GetHp();
-			enemyHp->SetCurrent(0);
+			//CStatus<int>* enemyHp = m_pEnemy->GetHp();
+			//enemyHp->SetCurrent(0);
 			m_bOnce = true;
 		}
 
@@ -91,7 +91,7 @@ void CStatueTeleporter::Update()
 
 	if (m_bOnce)
 	{
-		if ((m_pEnemy->IsDied()) && (m_time >= MAX_TIME))
+		if (/*(m_pEnemy->IsDied()) &&*/ (m_time >= MAX_TIME))
 		{
 			//-------------------------
 			// ƒ}ƒbƒvˆÚ“®ˆ—’Ç‰Á

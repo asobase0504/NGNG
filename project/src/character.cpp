@@ -368,7 +368,7 @@ void CCharacter::Died()
 	m_isDied = true;
 	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
 	list.remove(this);
-	Uninit();
+	Release();
 }
 
 void CCharacter::Move()

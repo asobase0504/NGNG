@@ -163,24 +163,9 @@ void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<v
 			continue;
 		}
 
-	 // “¯‚¶ŠÖŒW«‚¾‚Á‚½‚çUŒ‚‚ð“–‚Ä‚È‚¢B
-		switch (inRelation)
+		if (chara->GetRelation() == inRelation)
 		{
-		case CCharacter::ERelation::FRIENDLY:
-			if (chara->GetRelation() == CCharacter::ERelation::FRIENDLY)
-			{
-				continue;
-			}
-			break;
-		case CCharacter::ERelation::HOSTILE:
-			if (chara->GetRelation() == CCharacter::ERelation::HOSTILE)
-			{
-				continue;
-			}
-			break;
-		default:
-			assert(false);
-			break;
+			continue;
 		}
 
 		inFunc(chara);
