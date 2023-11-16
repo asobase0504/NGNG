@@ -364,6 +364,9 @@
     <ClCompile Include="src\melee_attack.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClCompile>
+    <ClCompile Include="enemy_hp_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -635,6 +638,9 @@
     </ClInclude>
     <ClInclude Include="src\melee_attack.h">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_hp_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

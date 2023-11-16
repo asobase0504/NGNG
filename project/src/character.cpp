@@ -23,6 +23,7 @@
 #include "map.h"
 #include "map_model.h"
 #include "object_mesh.h"
+#include "utility.h"
 
 #include "item_manager.h"
 
@@ -101,6 +102,8 @@ HRESULT CCharacter::Init()
 	m_jumpCount.SetCurrent(0);
 	m_money.Init(100);
 	m_money.SetCurrent(50);
+	m_isStun = false;
+	m_isBlock = false;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
@@ -210,7 +213,7 @@ void CCharacter::Update()
 	if (m_hp.GetCurrent() <= 0)
 	{
 		// 死亡処理
-		m_isDied = true;
+		Died();
 	}
 
 	// 重力
@@ -288,7 +291,7 @@ void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 
 	CObject::SetPos(inPos);
 }
-
+ 
 //--------------------------------------------------------------
 // 向きの設定
 //--------------------------------------------------------------
@@ -343,13 +346,19 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 
 	// プレイヤーのダメージを計算
 	int Damage = CalDamage(SkillMul);
+
+	if (IsSuccessRate(m_criticalRate.GetMax()))
+	{
+ 		Damage *= m_criticalDamage.GetMax();
+	}
+
 	// エネミーにダメージを与える。
 	pEnemy->Damage(Damage);
 
 	// 付与されている状態異常を作動させる
 	for (int i = 0; i < m_attackAbnormal.size(); i++)
 	{
-		if (m_attackAbnormal[i] != false)
+		if (!m_attackAbnormal[i])
 		{
 			return;
 		}
@@ -368,6 +377,7 @@ void CCharacter::Died()
 	m_isDied = true;
 	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
 	list.remove(this);
+	Uninit();
 }
 
 void CCharacter::Move()
@@ -441,4 +451,25 @@ void CCharacter::Abnormal()
 			}
 		}
 	}
+}
+
+//--------------------------------------------------------------
+// 状態異常の種類の個数の獲得
+//--------------------------------------------------------------
+int CCharacter::GetAbnormalTypeCount()
+{
+	int abnormal_type_count = 0;
+	
+	// 付与されている状態異常をカウントする
+	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	{
+		if (m_haveAbnormal[i].s_stack <= 0)
+		{
+			continue;
+		}
+
+		abnormal_type_count++;
+	}
+
+	return abnormal_type_count;
 }

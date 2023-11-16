@@ -25,6 +25,7 @@ class CController;
 class CCollisionBox;
 class CCollisionSphere;
 class CEnemyDataBase;
+class CEnemy_HPUI;
 
 //==============================================================
 // 敵クラス
@@ -40,6 +41,7 @@ public:
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
+	void	Uninit() override;
 	void	Update() override;
 
 	// 静的メンバ関数
@@ -57,5 +59,6 @@ private:
 private:	// メンバ変数
 	ACTIVITY_FUNC	m_Activity;
 	int				m_AttackCnt;
+	CEnemy_HPUI*	m_pEHPUI;
 };
 #endif
