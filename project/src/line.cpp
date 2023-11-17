@@ -108,8 +108,7 @@ void CLine::Uninit()
 		m_vtxBuff = nullptr;
 	}
 
-	// オブジェクト3Dの解放
-	Release();
+	CObject::Uninit();
 }
 
 //--------------------------------------------------------------

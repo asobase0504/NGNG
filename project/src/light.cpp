@@ -63,22 +63,6 @@ void CLight::Uninit(void)
 //--------------------------------------------------------------
 void CLight::Update(void)
 {
-	if (CInput::GetKey()->Press(DIK_I))
-	{
-		m_light[0].Direction.y += -0.1f;
-	}
-	if (CInput::GetKey()->Press(DIK_K))
-	{
-		m_light[0].Direction.y += 0.1f;
-	}
-	if (CInput::GetKey()->Press(DIK_J))
-	{
-		m_light[0].Direction.x += -0.1f;
-	}
-	if (CInput::GetKey()->Press(DIK_L))
-	{
-		m_light[0].Direction.x += 0.1f;
-	}
 }
 
 //--------------------------------------------------------------

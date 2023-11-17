@@ -21,7 +21,6 @@ public:
 	~CCollisionCylinder();
 
 	HRESULT Init();
-	void Uninit();
 	void Update();
 
 	bool ToCylinder(CCollisionCylinder* inCyinder) override;

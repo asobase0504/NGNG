@@ -70,7 +70,7 @@ void CAbnormalDataBase::Init()
 		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
 
 		inCharacter->SetInterval(id, 0);
-		inCharacter->GetHp()->AddCurrent((inCharacter->GetHp()->GetMax() * 0.1f) * ab_ct[id].s_stack);
+		inCharacter->GetHp()->AddCurrent((int)((inCharacter->GetHp()->GetMax() * 0.1f)) * ab_ct[id].s_stack);
 	});
 	// UŒ‚
 	m_abnormal[ABNORMAL_BURN]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
@@ -210,7 +210,7 @@ void CAbnormalDataBase::Init()
 
 		// •t—^‚³‚ê‚Ä‚¢‚éó‘ÔˆÙí‚Ìtik‚ð‘‚â‚·
 		inCharacter->SetInterval(id, 0);
-		inCharacter->GetHp()->AddCurrent((inCharacter->GetHp()->GetMax() * 0.05f) * ab_ct[id].s_stack);
+		inCharacter->GetHp()->AddCurrent((int)((inCharacter->GetHp()->GetMax() * 0.05f) * ab_ct[id].s_stack));
 	});
 	// UŒ‚
 	m_abnormal[ABNORMAL_POISON]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)

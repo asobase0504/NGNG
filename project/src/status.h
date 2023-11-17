@@ -32,7 +32,8 @@ public:
 		m_addItem(0),
 		m_mulItem(1.0f),
 		m_addBuff(0),
-		m_mulBuff(1.0f)
+		m_mulBuff(1.0f),
+		m_isMax(false)
 	{
 	}
 
@@ -47,9 +48,6 @@ public:
 		m_addBuff = 0;
 
 		return S_OK;
-	}
-	void Uninit()
-	{
 	}
 	void Update() {}
 
@@ -77,11 +75,15 @@ public:
 	float GetMulItem() { return m_mulItem; }
 	float GetMulBuff() { return m_mulBuff; }
 
-	bool MaxCurrentSame() { return m_current >= m_max; }
+	// 現在の値が上限を越しているか否か
+	bool MaxCurrentSame() { return m_isMax ? m_current >= m_max : false; }
 
 	void AddItemEffect(T inAdd) { m_addItem += inAdd; }
+	void ResetItemEffect(T inAdd) { m_addItem = 0; }
 	void AddBuffEffect(T inAdd) { m_addBuff += inAdd; }
+	void ResetBuffEffect(T inAdd) { m_addBuff = 0; }
 
+	void AttachMax() { m_isMax = true; }
 private:	// メンバ変数
 	T m_max;			// 最大値
 	T m_current;		// 現在値
@@ -91,5 +93,7 @@ private:	// メンバ変数
 
 	T m_addBuff;		// 状態変化による加算値
 	float m_mulBuff;	// 状態変化による乗算値
+
+	bool m_isMax;
 };
 #endif

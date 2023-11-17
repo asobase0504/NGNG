@@ -37,7 +37,6 @@ public:
 	HRESULT	Init() override;
 	void	Uninit() override;
 	void	Update() override;
-	void	Draw() override;
 
 	// Ã“Iƒƒ“ƒoŠÖ”
 	static CStatueChest *Create(D3DXVECTOR3 pos);			// •ó” ‚ÌÕ’d‚Ì¶¬
