@@ -329,7 +329,27 @@ void CItemDataBase::Init()
 	m_item[ITEM_BROKEN_KABUTO] = CItem::Create(ITEM_BROKEN_KABUTO);
 	// 壊れた兜---------------------------------------------------------
 	m_item[ITEM_BROKEN_KABUTO]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// 体力が13%以下になったエリートモンスターを即死させる (+13%)TODO
+	{// 体力が13%以下になったエリートモンスターを即死させる (+13%)
+		if (outCharacter->GetIsElite())
+		{
+			int parcent = 0;
+
+			for (int j = 0; j <= cnt; j++)
+			{
+				parcent += 13;
+			}
+
+			// 一定の体力以下になった敵を殺す
+			int hp = outCharacter->GetHp()->GetMax();
+			hp *= (parcent / 100);
+
+			int hpCurrent = outCharacter->GetHp()->GetCurrent();
+
+			if (hpCurrent <= hp)
+			{// 現在の体力が規定値以下だったら
+				outCharacter->Died();
+			}
+		}
 	});
 	//--------------------------------------------------------------
 

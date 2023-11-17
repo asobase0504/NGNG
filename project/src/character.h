@@ -163,6 +163,9 @@ public:
 	// 走っているかどうか
 	bool GetIsRunning() { return m_isRunning; }
 
+	// エリートかどうか
+	bool GetIsElite() { return m_isElite; }
+
 	// スキル
 	CSkill* GetSkill(int num) { return m_skill[num]; }
 
@@ -193,6 +196,8 @@ protected:		// ステータス
 	bool m_nonCombat;		// 非戦闘時
 	int m_nonCombatTime;	// 非戦闘時になる時間
 	bool m_isRunning;		// 走っているかどうか
+	bool m_isElite;			// エリート
+
 	STATE m_state;
 
 	CStatus<int> m_hp;							// 体力
