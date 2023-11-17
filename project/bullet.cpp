@@ -39,6 +39,7 @@ CBullet::~CBullet()
 //--------------------------------------------------------------
 HRESULT CBullet::Init()
 {
+	MapChangeRelese();
 	CObjectPolygon3D::Init();
 	SetAnchor(CObjectPolygon3D::ANCHOR_CENTER);
 	SetBillboard(true);
@@ -47,7 +48,8 @@ HRESULT CBullet::Init()
 	
 	m_collision = CCollisionCylinder::Create(GetPos(),10.0f,10.0f);
 
-	for (int i = 0; i < m_abnormal.size(); i++)
+	int size = m_abnormal.size();
+	for (int i = 0; i < size; i++)
 	{
 		m_abnormal[i] = false;
 	}
@@ -87,27 +89,28 @@ void CBullet::Update()
 		Uninit();
 	}
 
-	CMap::GetMap()->DoDifferentRelation(m_relation, [this](CCharacter* inChara)
+	// プレイヤーの獲得
+	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
+	
+	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
-		if (m_collision->ToCylinder(inChara->GetCollision()))
+		int size = m_abnormal.size();
+		for (int i = 0; i < size; i++)
 		{
-			for (int i = 0; i < m_abnormal.size(); i++)
+			if (!m_abnormal[i])
 			{
-				if (!m_abnormal[i])
-				{
-					continue;
-				}
-
-				CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
-
-				if (abnormalFunc != nullptr)
-				{
-					abnormalFunc(inChara, i, inChara);
-				}
+				continue;
 			}
-			Uninit();
+
+			CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
+
+			if (abnormalFunc != nullptr)
+			{
+				abnormalFunc(pPlayer, i,pPlayer);
+			}
 		}
-	});	
+		Uninit();
+	}
 }
 
 //--------------------------------------------------------------

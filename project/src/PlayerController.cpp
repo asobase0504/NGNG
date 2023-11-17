@@ -8,6 +8,7 @@
 // include
 //==============================================================
 #include "PlayerController.h"
+#include "player.h"
 #include "application.h"
 #include "input.h"
 

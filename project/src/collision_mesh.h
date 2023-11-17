@@ -28,7 +28,6 @@ public:
 	~CCollisionMesh();
 
 	HRESULT Init();
-	void Uninit();
 
 	static CCollisionMesh* Create(int inPrimitive, LPDIRECT3DVERTEXBUFFER9 inVtxBuff, LPDIRECT3DINDEXBUFFER9 inIdxBuff, D3DXMATRIX inMtxWorld);
 

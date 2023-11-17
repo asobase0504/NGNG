@@ -92,8 +92,7 @@ void CMotionModel3D::Uninit()
 		m_motion = nullptr;
 	}
 
-	// オブジェクト2Dの解放
-	Release();
+	CObjectX::Uninit();
 }
 
 //--------------------------------------------------------------

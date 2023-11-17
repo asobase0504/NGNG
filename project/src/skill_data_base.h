@@ -12,6 +12,7 @@
 //--------------------------------------------------------------
 class CCharacter;
 class CCollision;
+class CSkillEntity;
 class CSkill;
 
 //==============================================================
@@ -20,7 +21,7 @@ class CSkill;
 class CSkillDataBase
 {
 public:
-	using ABILITY = std::function<bool(CCharacter*)>;
+	using ABILITY = std::function<CSkillEntity*(CCharacter*)>;
 
 	struct BASE
 	{

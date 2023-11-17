@@ -1,6 +1,6 @@
-//**************************************************************
+ï»¿//**************************************************************
 //
-// ƒXƒLƒ‹ƒf[ƒ^ƒx[ƒX
+// ã‚¹ã‚­ãƒ«ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹
 // Author : Yuda Kaito
 //
 //**************************************************************
@@ -16,22 +16,23 @@
 
 // Skill
 #include "yamato_skill_1.h"
+#include "yamato_skill_2.h"
 #include "golem_skill_1.h"
 
 //==============================================================
-// Ã“Iƒƒ“ƒo[•Ï”‚ÌéŒ¾
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®å®£è¨€
 //==============================================================
 CSkillDataBase* CSkillDataBase::m_instance = nullptr;
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CSkillDataBase::CSkillDataBase()
 {
 }
 
 //--------------------------------------------------------------
-// instance‚Ìæ“¾
+// instanceã®å–å¾—
 //--------------------------------------------------------------
 CSkillDataBase * CSkillDataBase::GetInstance()
 {
@@ -48,14 +49,14 @@ CSkillDataBase * CSkillDataBase::GetInstance()
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CSkillDataBase::~CSkillDataBase()
 {
 }
 
 //--------------------------------------------------------------
-// I—¹
+// çµ‚äº†
 //--------------------------------------------------------------
 void CSkillDataBase::Uninit()
 {
@@ -70,42 +71,48 @@ void CSkillDataBase::Uninit()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»
+// åˆæœŸåŒ–
 //--------------------------------------------------------------
 void CSkillDataBase::Init()
 {
-	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,30,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	m_dates["YAMATO_SKILL_1"] = { 60,1,1,0,60,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
-	{// ”­“®‚ÌŒø‰Ê
+	{// ç™ºå‹•æ™‚ã®åŠ¹æœ
+		CSkillEntity* entity = nullptr;
 		if (inusedCharacter != nullptr)
 		{
-			CYamatoSkill_1::Create(inusedCharacter);
+			entity = CYamatoSkill_1::Create(inusedCharacter);
 		}
-
-		return false;
+		return entity;
 	}};
 	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
-	{ // ”­“®‚ÌŒø‰Ê
-		return false;
+	{ // ç™ºå‹•æ™‚ã®åŠ¹æœ
+		CSkillEntity* entity = nullptr;
+		if (inusedCharacter != nullptr)
+		{
+			entity = CYamatoSkill_2::Create(inusedCharacter);
+		}
+		return entity;
 	}};
 	m_dates["YAMATO_SKILL_3"] = { 0,1,1,0,5,0,D3DXVECTOR3(0.0f,0.0f,0.0f),
 		[](CCharacter* inusedCharacter)
-	{ // ”­“®‚ÌŒø‰Ê
-		return false;
+	{ // ç™ºå‹•æ™‚ã®åŠ¹æœ
+		return nullptr;
 	}};
 	m_dates["YAMATO_SKILL_4"] = { 0,1,1,0,5,0,D3DXVECTOR3(0.0f,0.0f,0.0f),
 		[](CCharacter* inusedCharacter)
-	{ // ”­“®‚ÌŒø‰Ê
-		return false;
+	{ // ç™ºå‹•æ™‚ã®åŠ¹æœ
+		return nullptr;
 	}};
 	m_dates["GOLEM_SKILL_1"] = { 50,1,1,0,600,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
-	{// ”­“®‚ÌŒø‰Ê
+	{ // ç™ºå‹•æ™‚ã®åŠ¹æœ
+		CSkillEntity* entity = nullptr;
 		if (inusedCharacter != nullptr)
 		{
-			CGolemSkill_1::Create(inusedCharacter);
+			entity = CGolemSkill_1::Create(inusedCharacter);
 		}
-		return false;
+		return entity;
 	}};
 }

@@ -68,18 +68,15 @@ void CStatueBlood::Update()
 	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
-	if (Touch(pPlayer))
+	if (Touch())
 	{
-		if (input->Trigger(KEY_BACK, -1))
-		{// プレイヤーが特定のキーを押したとき
-			if (!m_bOnce)
-			{
-				// プレイヤーのHPとお金を調整して設定
-				playerHp->AddCurrent(-10);
-				playerMoney->AddCurrent(10);
+		if (!m_bOnce)
+		{
+			// プレイヤーのHPとお金を調整して設定
+			playerHp->AddCurrent(-10);
+			playerMoney->AddCurrent(10);
 
-				m_bOnce = true;
-			}
+			m_bOnce = true;
 		}
 		else
 		{

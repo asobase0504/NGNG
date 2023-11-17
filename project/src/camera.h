@@ -35,6 +35,8 @@ public:
 	const D3DXMATRIX& GetMtxProje() { return m_mtxProject; }
 	const D3DXMATRIX& GetMtxView() { return m_mtxView; }
 	const D3DXVECTOR3& GetPos() { return m_posV; }
+	const D3DXVECTOR3& GetPosR() { return m_posR; }
+	const D3DXVECTOR3& GetRot() { return m_rot; }
 
 	const D3DXVECTOR3 VectorCombinedRot(const D3DXVECTOR3& inVector);
 

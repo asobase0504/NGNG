@@ -23,6 +23,7 @@
     <ClCompile Include="abnormal_data_base.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="golem_skill_1.cpp" />
+    <ClCompile Include="enemy_hp_ui.cpp" />
     <ClCompile Include="src\map_fade.cpp" />
     <ClCompile Include="src\mode_fade.cpp" />
     <ClCompile Include="src\road.cpp" />
@@ -108,11 +109,13 @@
     <ClCompile Include="src\utility.cpp" />
     <ClCompile Include="src\words.cpp" />
     <ClCompile Include="src\yamato_skill_1.cpp" />
+    <ClCompile Include="src\yamato_skill_2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="abnormal.h" />
     <ClInclude Include="abnormal_data_base.h" />
     <ClInclude Include="golem_skill_1.h" />
+    <ClInclude Include="enemy_hp_ui.h" />
     <ClInclude Include="src\character_select.h" />
     <ClInclude Include="src\debug_mode.h" />
     <ClInclude Include="src\bullet.h" />
@@ -196,6 +199,7 @@
     <ClInclude Include="src\utility.h" />
     <ClInclude Include="src\words.h" />
     <ClInclude Include="src\yamato_skill_1.h" />
+    <ClInclude Include="src\yamato_skill_2.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">

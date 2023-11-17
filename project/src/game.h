@@ -24,6 +24,7 @@ class CEnemyManager;
 class CCameraGame;
 class CLight;
 class CMap;
+class CPlayerController;
 class CMapFade;
 
 //==============================================================
@@ -40,11 +41,13 @@ public:
 	void Update() override;
 
 	CCameraGame* GetCamera() { return m_camera; }
+	CPlayerController* GetController() { return m_controller; }
 
 	void SetChangeMap();
 	void ChangeMap(std::string);
 private:
 	CPlayerManager* m_player;	// プレイヤー
+	CPlayerController* m_controller;	// コントローラー
 	CEnemyManager* m_enemy;		// 敵
 	CCameraGame* m_camera;
 	CMap* m_map;

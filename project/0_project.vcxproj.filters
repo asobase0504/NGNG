@@ -328,6 +328,9 @@
     <ClCompile Include="src\map_fade.cpp">
       <Filter>ソース ファイル\Mode</Filter>
     </ClCompile>
+    <ClCompile Include="src\yamato_skill_2.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClCompile>
     <ClCompile Include="bullet.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClCompile>
@@ -360,6 +363,9 @@
     </ClCompile>
     <ClCompile Include="src\melee_attack.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_hp_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -594,6 +600,9 @@
     <ClInclude Include="src\map_fade.h">
       <Filter>ソース ファイル\Mode</Filter>
     </ClInclude>
+    <ClInclude Include="src\yamato_skill_2.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClInclude>
     <ClInclude Include="src\bullet.h">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClInclude>
@@ -629,6 +638,9 @@
     </ClInclude>
     <ClInclude Include="src\melee_attack.h">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_hp_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

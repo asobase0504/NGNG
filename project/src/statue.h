@@ -38,7 +38,7 @@ public:
 	CCollisionBox* GetCollisionBox() { return m_collisionBox; }
 	CCollisionCylinder* GetCollisionCylinder() { return m_collisionCylinder; }
 
-	bool Touch(CPlayer* pPlayer);
+	bool Touch();
 protected:
 	std::string m_modelData;
 	CCollisionBox* m_collisionBox;

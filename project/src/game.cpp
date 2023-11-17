@@ -71,6 +71,8 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init()
 {
+	CInput::GetKey()->SetCursorErase(false);
+	CInput::GetKey()->LockCursorPos(true);
 	m_mapFade = CMapFade::Create();
 	m_mapFade->NextMap("data/FILE/map/map01.json");
 
@@ -82,11 +84,19 @@ HRESULT CGame::Init()
 
 	// プレイヤーの設定
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->CreatePlayer(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
+	m_controller = new CPlayerController(-1);
+	m_controller->Init();
+	m_controller->SetToOrder(pPlayer);
+	pPlayer->SetController(m_controller);
 	pPlayer->OffUpdate();
 	m_camera->SetTargetPos(pPlayer->GetPos());
 
 	CHPUI::Create(pPlayer->GetHp());
 	CMONEYUI::Create(pPlayer->GetMoney());
+
+	CHPUI::Create(pPlayer->GetHp());
+	CMONEYUI::Create(pPlayer->GetMoney());
+	CSKILLUI::Create(pPlayer->GetSkill(0));
 
 	// エネミーの生成
 	//CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
@@ -102,7 +112,8 @@ HRESULT CGame::Init()
 //--------------------------------------------------------------
 void CGame::Uninit()
 {
-
+	CInput::GetKey()->SetCursorErase(true);
+	CInput::GetKey()->LockCursorPos(false);
 }
 
 //--------------------------------------------------------------
@@ -141,9 +152,18 @@ void CGame::SetChangeMap()
 //--------------------------------------------------------------
 void CGame::ChangeMap(std::string inPath)
 {
+	CApplication::GetInstance()->GetTaskGroup()->AllProcess([](CTask* inTask)
+	{
+		if (!inTask->IsMapChangeRelese())
+		{
+			return;
+		}
+
+		inTask->Uninit();
+	});
+
 	if (m_map != nullptr)
 	{
-		m_map->Uninit();
 		m_map = nullptr;
 	}
 
