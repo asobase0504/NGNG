@@ -62,6 +62,10 @@ void CCamera::Uninit(void)
 //--------------------------------------------------------------
 void CCamera::Update(void)
 {
+	NormalizeAngle(m_rot.x);
+	NormalizeAngle(m_rot.y);
+	NormalizeAngle(m_rot.z);
+
 #ifdef _DEBUG
 	CDebugProc::Print("éãì_ : %0.2f, %0.2f, %0.2f\n", m_posV.x, m_posV.y, m_posV.z);
 	CDebugProc::Print("íçéãì_ : %0.2f, %0.2f, %0.2f\n", m_posR.x, m_posR.y, m_posR.z);

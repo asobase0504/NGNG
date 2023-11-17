@@ -24,7 +24,7 @@ const float CMesh::MOUNTAIN(50.0f);
 // コンストラクタ
 //--------------------------------------------------------------
 CMesh::CMesh(CTaskGroup::EPriority nPriority) :
-	CObjectPolygon3D(nPriority),
+	CObjectPolygon3D(CTaskGroup::EPriority::LEVEL_3D_2),
 	m_xsiz(0),			// X軸の面数
 	m_zsiz(0),			// Y軸の面数
 	m_vtxCountX(0),		// X軸の辺の頂点数

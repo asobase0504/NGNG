@@ -17,13 +17,15 @@
 #include "utility.h"
 #include "camera.h"
 #include "light.h"
+#include "game.h"
+#include "camera_game.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
 CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 	CObject(nPriority),
-	m_scale(1.0f,1.0f,1.0f),
+	m_scale(1.0f, 1.0f, 1.0f),
 	m_minVtxOrigin(0.0f, 0.0f, 0.0f),
 	m_maxVtxOrigin(0.0f, 0.0f, 0.0f),
 	m_minVtx(0.0f, 0.0f, 0.0f),
@@ -35,7 +37,7 @@ CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 	m_isCollision(true),
 	m_isHasOutLine(false),
 	m_isHasShadow(false),
-	m_TimeCnt(120),
+	m_TimeTarget(120),
 	tex0(nullptr)
 {
 	//オブジェクトのタイプセット処理
@@ -61,6 +63,7 @@ HRESULT CObjectX::Init()
 {
 	extern LPD3DXEFFECT pEffect;	// シェーダー
 
+	// これさぁ・・・やっぱ用途ごとの名前じゃないほうが良かったんじゃ？
 	// ハンドルの初期化
 	m_hTechnique = pEffect->GetTechniqueByName("Diffuse");			// エフェクト
 	m_hTexture = pEffect->GetParameterByName(NULL, "Tex");			// テクスチャ
@@ -70,7 +73,17 @@ HRESULT CObjectX::Init()
 	m_hWorld = pEffect->GetParameterByName(NULL, "mWorld");			// ワールド行列
 	m_hProj = pEffect->GetParameterByName(NULL, "mProj");			// プロジェクション行列
 	m_hView = pEffect->GetParameterByName(NULL, "mView");			// ビュー行列
-	m_hTime = pEffect->GetParameterByName(NULL, "Test");
+	m_hTime = pEffect->GetParameterByName(NULL, "Test");			// 時間
+	m_hTimeTarget = pEffect->GetParameterByName(NULL, "TimeTarget");// 目標時間
+	m_hSize = pEffect->GetParameterByName(NULL, "mSize");		// サイズ設定
+	m_hRot = pEffect->GetParameterByName(NULL, "mRot");
+	m_hTrans = pEffect->GetParameterByName(NULL, "mTrans");
+	m_hParent = pEffect->GetParameterByName(NULL, "mParent");
+	m_hScale = pEffect->GetParameterByName(NULL, "mScale");
+	m_hCameraVec = pEffect->GetParameterByName(NULL, "vEyeVec");
+	m_hvEyePos = pEffect->GetParameterByName(NULL, "mEyePos");
+
+	m_TimeCnt = m_TimeTarget;
 
 	CObject::Init();
 
@@ -84,54 +97,10 @@ HRESULT CObjectX::Init()
 //--------------------------------------------------------------
 void CObjectX::Draw()
 {
-	// 計算用マトリックス
-	D3DXMATRIX mtxScale;
-	D3DXMATRIX mtxTrans;
-	D3DXMATRIX mtxRot;
-
-	// ワールドマトリックスの初期化
-	D3DXMatrixIdentity(&m_mtxWorld);
-
-	// 大きさを反映
-	D3DXMatrixScaling(&mtxScale, m_scale.x, m_scale.y, m_scale.z);
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
-
-	// 向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
-
-	// 位置を反映
-	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
-
-	if (m_parent != nullptr)
-	{
-		D3DXMATRIX mtxParent = m_parent->GetMtxWorld();
-
-		// 行列掛け算関数
-		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
-	}
-
-	//ワールドマトリックスの設定
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
-	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
-
-	D3DXMATERIAL *pMat;				// マテリアルの情報
-
-	//マテリアルデータへのポインタを取得
-	pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
-
-	DrawMaterial();
-}
-
-//--------------------------------------------------------------
-// 描画
-// Author : Yuda Kaito
-// 概要 : 描画を行う
-//--------------------------------------------------------------
-void CObjectX::DrawMaterial()
-{
 	extern LPD3DXEFFECT pEffect;		// シェーダー
+
+	// デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 
 	if (pEffect == nullptr)
 	{
@@ -139,12 +108,63 @@ void CObjectX::DrawMaterial()
 		return;
 	}
 
-	if (m_TimeCnt > 0)
+	if (m_isBlackFlash && m_TimeCnt > 0)
 	{
 		m_TimeCnt--;
 	}
+	if (!m_isBlackFlash && m_TimeCnt <= m_TimeTarget)
+	{
+		m_TimeCnt++;
+	}
+
+	if (CInput::GetKey()->Trigger(DIK_R))
+	{
+		m_isBlackFlash = true;
+	}
+	if (CInput::GetKey()->Trigger(DIK_P))
+	{
+		m_isBlackFlash = false;
+	}
 
 	/* pEffectに値が入ってる */
+
+	//-------------------------------------------------
+	// シェーダの設定
+	//-------------------------------------------------
+
+	// 計算用マトリックス
+	D3DXMATRIX mtxScale;
+	D3DXMATRIX mtxSize;
+	D3DXMATRIX mtxTrans;
+	D3DXMATRIX mtxRot;
+
+	// ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&m_mtxWorld);
+	D3DXVECTOR3 CameraRot = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot();
+
+	// 大きさを反映
+	D3DXMatrixScaling(&mtxScale, m_scale.x, m_scale.y, m_scale.z);
+	// 大きさを反映
+	D3DXMatrixScaling(&mtxSize, 1.03f,1.03f,1.03f);
+	// 向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+	// 位置を反映
+	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
+
+	D3DXMATRIX mtxParent;
+	D3DXMatrixIdentity(&mtxParent);
+
+	if (m_parent != nullptr)
+	{// ToDo : ここを直さないとパーツが動かないので気を付けよう！俺がやる、そのうちな。
+		mtxParent = m_parent->GetMtxWorld();
+
+		// 行列掛け算関数
+		//D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
+
+		pEffect->SetMatrix(m_hParent, &mtxParent);
+	}
+
+	//------------------------------------------------------------------------------------------//
 
 	// タスクグループ情報
 	CTaskGroup* taskGroup = CApplication::GetInstance()->GetTaskGroup();
@@ -154,23 +174,42 @@ void CObjectX::DrawMaterial()
 
 	D3DXMATRIX viewMatrix;
 	D3DXMATRIX projMatrix;
+
 	if (pCamera != nullptr)
 	{
 		viewMatrix = pCamera->GetMtxView();
 		projMatrix = pCamera->GetMtxProje();
 	}
 
-	//-------------------------------------------------
-	// シェーダの設定
-	//-------------------------------------------------
 	pEffect->SetTechnique(m_hTechnique);
 	pEffect->Begin(NULL, 0);
 
 	// ワールド射影変換行列
 	// シェーダーに行列を渡す
 	pEffect->SetMatrix(m_hWorld, &m_mtxWorld);
+	pEffect->SetMatrix(m_hScale, &mtxScale);
+	pEffect->SetMatrix(m_hSize, &mtxSize);
+	pEffect->SetMatrix(m_hRot, &mtxRot);
+	pEffect->SetMatrix(m_hTrans, &mtxTrans);
 	pEffect->SetMatrix(m_hProj, &projMatrix);
 	pEffect->SetMatrix(m_hView, &viewMatrix);
+
+	// シェーダーに目的の値を渡す
+	pEffect->SetFloat(m_hTimeTarget, m_TimeTarget);
+
+	// シェーダーにカメラ座標を渡す
+	D3DXVECTOR3 c = pCamera->GetPos();
+	D3DXVECTOR3 camerapos = D3DXVECTOR3(c.x, c.y, c.z);
+	D3DXVECTOR3 objpos = D3DXVECTOR3(m_mtxWorld._41, m_mtxWorld._42, m_mtxWorld._43);
+
+	D3DXVECTOR3 vec = camerapos - objpos;
+
+	D3DXVec3Normalize(&vec,&vec);
+	NormalizeAngle(vec.x);
+	NormalizeAngle(vec.y);
+	NormalizeAngle(vec.z);
+
+	pEffect->SetVector(m_hCameraVec, &D3DXVECTOR4(vec.x, vec.y, vec.z,0.0f));
 
 	// シェーダーに描画から経過した時間を渡す
 	pEffect->SetFloat(m_hTime, m_TimeCnt);
@@ -188,6 +227,7 @@ void CObjectX::DrawMaterial()
 	D3DXVECTOR4 lightDir = D3DXVECTOR4(light.Direction.x, light.Direction.y, light.Direction.z, 0);
 	// ライトの方向をシェーダーに渡す
 	pEffect->SetVector(m_hvLightDir, &lightDir);
+	pEffect->SetVector(m_hCameraVec, &D3DXVECTOR4(CameraRot.x, CameraRot.y, CameraRot.z, 0.0f));
 
 	//マテリアルデータのポインタを取得する
 	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
@@ -227,12 +267,33 @@ void CObjectX::DrawMaterial()
 		// テクスチャの設定
 		pEffect->SetTexture(m_hTexture, tex0);
 
+		// 通常モデルの描画
 		pEffect->BeginPass(1);
 		m_mesh->DrawSubset(nCntMat);	//モデルパーツの描画
+		pEffect->EndPass();
+
+		// 黒モデルの描画
+		pEffect->BeginPass(2);
+		//カリングの設定を元に戻す
+		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+		m_mesh->DrawSubset(nCntMat);	//モデルパーツの描画
+		//カリングの設定を元に戻す
+		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 		pEffect->EndPass();
 	}
 
 	pEffect->End();
+}
+
+//--------------------------------------------------------------
+// 描画
+// Author : Yuda Kaito
+// 概要 : 描画を行う
+//--------------------------------------------------------------
+void CObjectX::DrawMaterial()
+{
+	extern LPD3DXEFFECT pEffect;		// シェーダー
 }
 
 //--------------------------------------------------------------
@@ -387,7 +448,7 @@ void CObjectX::Projection(void)
 
 	normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	D3DXPlaneFromPointNormal(&planeField, &pos, &normal);
-	D3DXMatrixShadow(&mtxShadow,&vecLight, &planeField);
+	D3DXMatrixShadow(&mtxShadow, &vecLight, &planeField);
 
 	// ワールドマトリックスと掛け合わせる
 	D3DXMatrixMultiply(&mtxShadow, &m_mtxWorld, &mtxShadow);
@@ -459,7 +520,7 @@ bool CObjectX::SphereAndAABB(CObjectX* inObjectX, D3DXVECTOR3* outPos)
 		return false;
 	}
 
-	D3DXVECTOR3 dist(0.0f,0.0f,0.0f);
+	D3DXVECTOR3 dist(0.0f, 0.0f, 0.0f);
 	float length = AABBAndPointLength(inObjectX, &dist);	// 最短距離
 
 	if (m_maxVtx.x * 1.4f > length)
@@ -643,11 +704,11 @@ float CObjectX::AABBAndPointLength(CObjectX* inObject, D3DXVECTOR3* outDist)
 {
 	float SqLen = 0.0f;	// 長さのべき乗の値を格納
 
-	// 各軸で点が最小値以下もしくは最大値以上ならば、差を考慮
+						// 各軸で点が最小値以下もしくは最大値以上ならば、差を考慮
 
 	D3DXVECTOR3 min = inObject->m_pos + inObject->m_minVtx;
 	D3DXVECTOR3 max = inObject->m_pos + inObject->m_maxVtx;
-	D3DXVECTOR3 dist(0.0f,0.0f,0.0f);
+	D3DXVECTOR3 dist(0.0f, 0.0f, 0.0f);
 
 	if (m_pos.x < min.x)
 	{
@@ -682,7 +743,7 @@ float CObjectX::AABBAndPointLength(CObjectX* inObject, D3DXVECTOR3* outDist)
 	if (m_pos.z > max.z)
 	{
 		SqLen += (m_pos.z - max.z) * (m_pos.z - max.z);
-		dist.z+= -1.0f;
+		dist.z += -1.0f;
 	}
 
 	D3DXVec3Normalize(&dist, &dist);
