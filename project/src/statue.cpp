@@ -64,8 +64,10 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 
 	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 25.0f, 0.0f), inRot, D3DXVECTOR3(10.0f, 25.0f, 10.0f), GetMtxWorld());
 	m_collisionBox->SetParent(&m_pos);
+	SetEndChildren(m_collisionBox);
 	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 20.0f, 20.0f);
 	m_collisionCylinder->SetParent(&m_pos);
+	SetEndChildren(m_collisionCylinder);
 
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
@@ -87,25 +89,6 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 	pCylinder->Uninit();
 
 	return S_OK;
-}
-
-//--------------------------------------------------------------
-// 終了
-//--------------------------------------------------------------
-void CStatue::Uninit()
-{
-	if (m_collisionBox != nullptr)
-	{
-		m_collisionBox->Uninit();
-		m_collisionBox = nullptr;
-	}
-	if (m_collisionCylinder != nullptr)
-	{
-		m_collisionCylinder->Uninit();
-		m_collisionCylinder = nullptr;
-	}
-	
-	CObjectX::Uninit();
 }
 
 //--------------------------------------------------------------

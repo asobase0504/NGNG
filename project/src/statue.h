@@ -30,7 +30,6 @@ public:
 
 	HRESULT Init() override;
 	HRESULT Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot);
-	void Uninit() override;
 	void Update() override;
 
 	static CStatue* Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot);
