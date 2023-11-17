@@ -67,6 +67,8 @@ HRESULT CMap::Init()
 		m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
 	}
 
+	CMesh::Create()->SetSkyMesh();
+
 	return S_OK;
 }
 
