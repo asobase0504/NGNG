@@ -118,8 +118,18 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	bool isLanding = false;
 
 	D3DXVECTOR3 boxPos = inBox->GetPosWorld();
+	D3DXVECTOR3 boxRot = inBox->GetRot();
 	D3DXVECTOR3 boxSize = inBox->GetSize();
-	D3DXMATRIX boxMtxWorld = inBox->GetMtxWorld();
+	D3DXMATRIX boxMtxWorld, mtxTrans, mtxRot;
+
+	D3DXMatrixIdentity(&boxMtxWorld);
+
+	// Œü‚«‚ð”½‰f
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, boxRot.y, boxRot.x, boxRot.z);
+	D3DXMatrixMultiply(&boxMtxWorld, &boxMtxWorld, &mtxRot);
+	// ˆÊ’u‚ð”½‰f
+	D3DXMatrixTranslation(&mtxTrans, boxPos.x, boxPos.y, boxPos.z);
+	D3DXMatrixMultiply(&boxMtxWorld, &boxMtxWorld, &mtxTrans);
 
 	D3DXVECTOR3 cylinderPos = GetPosWorld();
 	D3DXVECTOR3 cylinderPosOld = GetPosOld();

@@ -28,6 +28,7 @@ public:
 	bool ToSphere(CCollisionSphere* inSphere) override;
 	bool ToMesh(CCollisionMesh* inMesh) override;
 
+	// ‘æˆê: À•W ‘æ“ñ: ’·‚³ ‘æO : ‚‚³
 	static CCollisionCylinder* Create(const D3DXVECTOR3& pos, const float length ,const float height);
 
 	float GetLength() { return m_length; }
