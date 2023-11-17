@@ -9,7 +9,7 @@ SCRIPT			# この行は絶対消さないこと！
 #------------------------------------------------------------------------------
 # モデル数
 #------------------------------------------------------------------------------
-NUM_MODEL = 18
+NUM_MODEL = 20
 
 #------------------------------------------------------------------------------
 # モデルファイル名
@@ -32,6 +32,8 @@ MODEL_FILENAME = data\MODEL\Hero\AsiL.x			# 左足
 MODEL_FILENAME = data\MODEL\Hero\AsiR.x			# 右足
 MODEL_FILENAME = data\MODEL\Hero\TopFuku.x		# 上服
 MODEL_FILENAME = data\MODEL\Hero\UnderFuku.x	# 下服
+MODEL_FILENAME = data\MODEL\Hero\Katana1.x		# 刀1
+MODEL_FILENAME = data\MODEL\Hero\Katana2.x		# 刀2
 
 #------------------------------------------------------------------------------
 # キャラクター情報
@@ -160,6 +162,20 @@ CHARACTERSET
 		INDEX = 17					# 下服
 		PARENT = 0					# (親)体
 		POS = 0.0 -10.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+	
+	PARTSSET
+		INDEX = 18					# 刀1
+		PARENT = 0					# (親)体
+		POS = -20.0 -10.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+	
+	PARTSSET
+		INDEX = 19					# 刀2
+		PARENT = 0					# (親)体
+		POS = 20.0 -10.0 0.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 	
