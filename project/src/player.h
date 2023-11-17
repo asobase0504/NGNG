@@ -32,7 +32,7 @@ class CPlayer : public CCharacter
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CPlayer(int nPriority = 3);
+	explicit CPlayer(int nPriority = 5);
 	~CPlayer();
 	
 	//プロトタイプ宣言
