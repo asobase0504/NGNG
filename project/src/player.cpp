@@ -9,28 +9,31 @@
 // include
 //==============================================================
 #include "player.h"
-
-#include "application.h"
-#include "objectX.h"
-#include "object_mesh.h"
-
-#include "collision_cylinder.h"
-#include "collision_mesh.h"
-#include "utility.h"
-
-#include "skill.h"
-#include "skill_data_base.h"
-#include "item.h"
-#include "item_data_base.h"
-#include "statue.h"
-#include "statue_manager.h"
-#include "enemy.h"
-#include "enemy_manager.h"
 #include "player_manager.h"
 #include "Controller.h"
-
+#include "utility.h"
+// 全体情報
 #include "game.h"
 #include "camera_game.h"
+#include "application.h"
+// 見た目
+#include "objectX.h"
+#include "object_mesh.h"
+// 当たり判定
+#include "collision_cylinder.h"
+#include "collision_mesh.h"
+// 敵
+#include "enemy.h"
+#include "enemy_manager.h"
+// スキル
+#include "skill.h"
+#include "skill_data_base.h"
+// アイテム
+#include "item.h"
+#include "item_data_base.h"
+//像
+#include "statue.h"
+#include "statue_manager.h"
 
 //--------------------------------------------------------------
 // コンストラクタ

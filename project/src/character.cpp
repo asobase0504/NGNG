@@ -347,7 +347,7 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	// エネミーにダメージを与える。
 	pEnemy->Damage(Damage);
 
-	// 付与されている状態異常を作動させる
+	// 攻撃付与されている状態異常を作動させる
 	for (int i = 0; i < m_attackAbnormal.size(); i++)
 	{
 		if (!m_attackAbnormal[i])

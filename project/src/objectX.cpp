@@ -112,15 +112,6 @@ void CObjectX::Draw()
 		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
 	}
 
-	////ワールドマトリックスの設定
-	//LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
-	//pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
-
-	//D3DXMATERIAL *pMat;				// マテリアルの情報
-
-	////マテリアルデータへのポインタを取得
-	//pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
-
 	DrawMaterial();
 }
 

@@ -32,7 +32,6 @@ public:
 	HRESULT Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot);
 	void Uninit() override;
 	void Update() override;
-	void Draw() override; 
 
 	static CStatue* Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot);
 	CCollisionBox* GetCollisionBox() { return m_collisionBox; }
