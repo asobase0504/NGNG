@@ -151,6 +151,9 @@ void CMap::Load(std::string path)
 	m_nextMapPath = map["NEXT_MAP"];
 }
 
+//--------------------------------------------------------------
+// à·Ç§ä÷åWÇÃÇ‡ÇÃÇ…ä÷êîÇçsÇ§
+//--------------------------------------------------------------
 void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
 {
 	std::list<CCharacter*> charaList = GetCharacterList();

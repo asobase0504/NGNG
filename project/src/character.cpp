@@ -76,8 +76,10 @@ HRESULT CCharacter::Init()
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(50);
+	m_hp.AttachMax();
 	m_addHp.Init(100);
 	m_addHp.SetCurrent(100);
+	m_addHp.AttachMax();
 	m_addHpSubTime.Init(100);
 	m_addHpSubTime.SetCurrent(100);
 	m_barrier.Init(100);
