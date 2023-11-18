@@ -370,6 +370,9 @@
     <ClCompile Include="enemy_hp_ui.cpp">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClCompile>
+    <ClCompile Include="src\model_skin.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
     <ClCompile Include="connect.cpp">
       <Filter>ソース ファイル\Server</Filter>
     </ClCompile>
@@ -653,6 +656,9 @@
     </ClInclude>
     <ClInclude Include="enemy_hp_ui.h">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model_skin.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
     <ClInclude Include="connect.h">
       <Filter>ソース ファイル\Server</Filter>
