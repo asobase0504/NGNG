@@ -12,6 +12,7 @@
 
 #include "item.h"
 #include "item_model.h"
+#include "utility.h"
 
 //==============================================================
 // Ã“Iƒƒ“ƒo•Ï”éŒ¾
@@ -75,6 +76,12 @@ void CItemManager::Update()
 //--------------------------------------------------------------
 void CItemManager::Draw()
 {
+}
+
+void CItemManager::CreateRandomItem(const D3DXVECTOR3 & inPos, const D3DXMATRIX & boxmtx)
+{
+	int id = IntRandom(0, CItemDataBase::EItemType::ITEM_MAX);
+	CreateItem(inPos, boxmtx,(CItemDataBase::EItemType)id);
 }
 
 //--------------------------------------------------------------

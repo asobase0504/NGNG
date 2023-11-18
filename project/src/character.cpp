@@ -75,7 +75,7 @@ HRESULT CCharacter::Init()
 	m_apModel[0]->LoadModel("BOX");
 
 	m_hp.Init(100);
-	m_hp.SetCurrent(50);
+	m_hp.SetCurrent(100);
 	m_hp.AttachMax();
 	m_addHp.Init(100);
 	m_addHp.SetCurrent(100);
@@ -102,6 +102,7 @@ HRESULT CCharacter::Init()
 	m_jumpPower.SetCurrent(3.0f);
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
+	m_jumpCount.AttachMax();
 	m_money.Init(100);
 	m_money.SetCurrent(50);
 	m_isStun = false;
