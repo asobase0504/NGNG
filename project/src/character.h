@@ -165,10 +165,13 @@ private:
 protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
 	CCollisionCylinder*	m_collision;			// 当たり判定
-private:		// メンバ変数
+	ERelation m_relation;
 
-protected:		// ステータス
+	std::vector<CSkill*> m_skill;
+private:		// ステータス
 
+
+protected:
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;
 	// 持っている状態異常の個数をそれぞれ管理
@@ -201,9 +204,5 @@ protected:		// ステータス
 	CStatus<float> m_jumpPower;					// ジャンプ力
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 	CStatus<int> m_money;						// 所持金
-
-	std::vector<CSkill*> m_skill;
-	ERelation m_relation;
-
 };
 #endif

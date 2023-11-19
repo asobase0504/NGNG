@@ -50,6 +50,8 @@ void CObject::Update()
 	// ˆÚ“®
 	AddPos(GetMove());
 	AddRot(GetMoveRot());
+
+	m_mtxWorld;
 }
 
 //--------------------------------------------------------------

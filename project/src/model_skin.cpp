@@ -6,15 +6,18 @@
 //
 //=============================================================================
 
+//==============================================================
+// include
+//==============================================================
 #include "model_skin.h"
 #include "application.h"
 #include "renderer.h"
 
-//=============================================================================
+//--------------------------------------------------------------
 // インスタンス生成
 // Author : 唐﨑結斗
 // 概要 : モーションキャラクター3Dを生成する
-//=============================================================================
+//--------------------------------------------------------------
 CSkinMesh * CSkinMesh::Create(std::string Name)
 {
 	// オブジェクトインスタンス
@@ -30,25 +33,26 @@ CSkinMesh * CSkinMesh::Create(std::string Name)
 	pSkinMesh->Init(Name);
 
 	// インスタンスを返す
-	return pModelObj;
+	return pSkinMesh;
 }
 
+//--------------------------------------------------------------
 //フレームを作成する
-HRESULT MY_HIERARCHY::CreateFrame(std::string Name, LPD3DXFRAME *ppNewFrame)
+//--------------------------------------------------------------
+HRESULT MY_HIERARCHY::CreateFrame(LPCSTR Name, LPD3DXFRAME *ppNewFrame)
 {
-	HRESULT hr = S_OK;
 	MYFRAME *pFrame;
 	//新しいフレームアドレス格納用変数を初期化
 	*ppNewFrame = NULL;
 	//フレームの領域確保
 	pFrame = new MYFRAME;
 	//領域確保の失敗時の処理
-	if (pFrame == NULL)
+	if (pFrame == nullptr)
 	{
 		return E_OUTOFMEMORY;
 	}
 	//フレーム名格納用領域確保
-	pFrame->Name = new TCHAR[lstrlen(Name.c_str()) + 1];
+	pFrame->Name = new TCHAR[lstrlen(Name) + 1];
 	//領域確保の失敗時の処理
 	if (!pFrame->Name)
 	{
@@ -56,7 +60,7 @@ HRESULT MY_HIERARCHY::CreateFrame(std::string Name, LPD3DXFRAME *ppNewFrame)
 	}
 	// strcpy(pFrame->Name,Name);
 	//フレーム名格納
-	strcpy(pFrame->Name, Name.c_str());
+	strcpy(pFrame->Name, Name);
 	//行列の初期化
 	D3DXMatrixIdentity(&pFrame->TransformationMatrix);
 	D3DXMatrixIdentity(&pFrame->CombinedTransformationMatrix);
@@ -73,21 +77,19 @@ HRESULT MY_HIERARCHY::CreateFrame(std::string Name, LPD3DXFRAME *ppNewFrame)
 	*ppNewFrame = pFrame;
 	return S_OK;
 }
-//
-//HRESULT MY_HIERARCHY::CreateMeshContainer
+
+//--------------------------------------------------------------
 //メッシュコンテナーを作成する
-HRESULT MY_HIERARCHY::CreateMeshContainer(std::string Name, CONST D3DXMESHDATA* pMeshData,
+//--------------------------------------------------------------
+HRESULT MY_HIERARCHY::CreateMeshContainer(LPCSTR Name, CONST D3DXMESHDATA* pMeshData,
 	CONST D3DXMATERIAL* pMaterials, CONST D3DXEFFECTINSTANCE* pEffectInstances,
 	DWORD NumMaterials, CONST DWORD *pAdjacency, LPD3DXSKININFO pSkinInfo,
 	LPD3DXMESHCONTAINER *ppMeshContainer)
 {
-	//    HRESULT hr;
 	//ローカル生成用
 	MYMESHCONTAINER *pMeshContainer = NULL;
 	//メッシュの面の数を格納
 	int iFacesAmount;
-	//forループで使用
-	int iMaterial;
 	//一時的なDirectXデバイス取得用
 	LPDIRECT3DDEVICE9 pDevice = NULL;
 	//一時的なメッシュデータ格納用
@@ -108,14 +110,14 @@ HRESULT MY_HIERARCHY::CreateMeshContainer(std::string Name, CONST D3DXMESHDATA* 
 	//メッシュコンテナを初期化
 	ZeroMemory(pMeshContainer, sizeof(MYMESHCONTAINER));
 	//メッシュコンテナの名前格納用領域を動的確保
-	pMeshContainer->Name = new TCHAR[lstrlen(Name.c_str()) + 1];
+	pMeshContainer->Name = new TCHAR[lstrlen(Name) + 1];
 	//失敗時の処理
 	if (!pMeshContainer->Name)
 	{
 		return E_FAIL;
 	}
 	//確保した領域にメッシュコンテナ名を格納
-	strcpy(pMeshContainer->Name, Name.c_str());
+	strcpy(pMeshContainer->Name, Name);
 	//DirectXデバイス取得
 	pMesh->GetDevice(&pDevice);
 	//メッシュの面の数を取得
@@ -143,42 +145,46 @@ HRESULT MY_HIERARCHY::CreateMeshContainer(std::string Name, CONST D3DXMESHDATA* 
 	{
 		//外部引数のマテリアルデータアドレスをメッシュコンテナに格納
 		memcpy(pMeshContainer->pMaterials, pMaterials, sizeof(D3DXMATERIAL) * NumMaterials);
+
+		int iMaterial;
 		//マテリアル数分ループさせる
 		for (iMaterial = 0; (DWORD)iMaterial < NumMaterials; iMaterial++)
 		{
 			//テクスチャのファイル名がNULLでなければ(テクスチャデータがあれば)
-			if (pMeshContainer->pMaterials[iMaterial].pTextureFilename != NULL)
+			if (pMeshContainer->pMaterials[iMaterial].pTextureFilename == NULL)
 			{
-				//テクスチャのファイルパス保存用変数
-				TCHAR strTexturePath[MAX_PATH];
-				//テクスチャのファイルパスを保存(再読み込み時に必要)
-				strcpy_s(strTexturePath, lstrlen(pMeshContainer->pMaterials[iMaterial].pTextureFilename) + 1, pMeshContainer->pMaterials[iMaterial].pTextureFilename);
+				continue;
+			}
+
+			//テクスチャのファイルパス保存用変数
+			TCHAR strTexturePath[MAX_PATH];
+			//テクスチャのファイルパスを保存(再読み込み時に必要)
+			strcpy_s(strTexturePath, lstrlen(pMeshContainer->pMaterials[iMaterial].pTextureFilename) + 1, pMeshContainer->pMaterials[iMaterial].pTextureFilename);
+			//テクスチャ情報の読み込み
+			if (FAILED(D3DXCreateTextureFromFile(pDevice, strTexturePath,
+				&pMeshContainer->ppTextures[iMaterial])))
+			{
+				//失敗時の処理
+				//テクスチャファイル名格納用
+				CHAR TexMeshPass[255];
+				//追記
+				//もしなければ、Graphフォルダを調べる
+				//注）ファイル名の結合時に、必ず両方にファイル名がある事を確認してから
+				//  strcpy_sとstrcat_sを使うようにする(この場合は、上にある 
+				//    テクスチャのファイルがあり、さらにそのファイル名の長さが0でなければ の所のif文)。
+				//  TexMeshPassに、Xファイルがある場所と同じディレクトリと、テクスチャのファイル名を
+				//  結合したものを格納
+				// strcpy_s( TexMeshPass, sizeof( TexMeshPass ) , "./../Source/Graph/" );
+				strcpy_s(TexMeshPass, sizeof(TexMeshPass), "./Graph/");
+				strcat_s(TexMeshPass, sizeof(TexMeshPass) - strlen(TexMeshPass) - strlen(strTexturePath) - 1, strTexturePath);
 				//テクスチャ情報の読み込み
-				if (FAILED(D3DXCreateTextureFromFile(pDevice, strTexturePath,
+				if (FAILED(D3DXCreateTextureFromFile(pDevice, TexMeshPass,
 					&pMeshContainer->ppTextures[iMaterial])))
 				{
-					//失敗時の処理
-					//テクスチャファイル名格納用
-					CHAR TexMeshPass[255];
-					//追記
-					//もしなければ、Graphフォルダを調べる
-					//注）ファイル名の結合時に、必ず両方にファイル名がある事を確認してから
-					//  strcpy_sとstrcat_sを使うようにする(この場合は、上にある 
-					//    テクスチャのファイルがあり、さらにそのファイル名の長さが0でなければ の所のif文)。
-					//  TexMeshPassに、Xファイルがある場所と同じディレクトリと、テクスチャのファイル名を
-					//  結合したものを格納
-					// strcpy_s( TexMeshPass, sizeof( TexMeshPass ) , "./../Source/Graph/" );
-					strcpy_s(TexMeshPass, sizeof(TexMeshPass), "./Graph/");
-					strcat_s(TexMeshPass, sizeof(TexMeshPass) - strlen(TexMeshPass) - strlen(strTexturePath) - 1, strTexturePath);
-					//テクスチャ情報の読み込み
-					if (FAILED(D3DXCreateTextureFromFile(pDevice, TexMeshPass,
-						&pMeshContainer->ppTextures[iMaterial])))
-					{
-						pMeshContainer->ppTextures[iMaterial] = NULL;
-					}
-					//テクスチャのファイルパスをNULLにする
-					pMeshContainer->pMaterials[iMaterial].pTextureFilename = NULL;
+					pMeshContainer->ppTextures[iMaterial] = NULL;
 				}
+				//テクスチャのファイルパスをNULLにする
+				pMeshContainer->pMaterials[iMaterial].pTextureFilename = NULL;
 			}
 		}
 	}
@@ -196,6 +202,7 @@ HRESULT MY_HIERARCHY::CreateMeshContainer(std::string Name, CONST D3DXMESHDATA* 
 		//スペキュラも0.5に設定(上で設定したマテリアルカラーの0.5の設定をコピー)
 		pMeshContainer->pMaterials[0].MatD3D.Specular = pMeshContainer->pMaterials[0].MatD3D.Diffuse;
 	}
+
 	//メッシュ情報を格納(今回は通常メッシュと完全に分けているためすべてスキンメッシュ情報となる)
 	pMeshContainer->pSkinInfo = pSkinInfo;
 	//参照カウンタ
@@ -218,20 +225,21 @@ HRESULT MY_HIERARCHY::CreateMeshContainer(std::string Name, CONST D3DXMESHDATA* 
 	pMesh->CloneMesh(pMesh->GetOptions(), &Decl[0], pDevice, &pMeshContainer->pOriMesh);
 	//メッシュのタイプを定義
 	pMeshContainer->MeshData.Type = D3DXMESHTYPE_MESH;
+
 	//- 固定パイプライン描画用に変換 -//
 	//シェーダで描画する場合は別途変換が必要
 	//頂点単位でのブレンドの重みとボーンの組み合わせテーブルを適応した新しいメッシュを返す。
 	if (FAILED(pMeshContainer->pSkinInfo->ConvertToBlendedMesh(
-		pMeshContainer->pOriMesh, //元のメッシュデータアドレス
-		NULL, //オプション(現在は使われていないためNULLでいい)
-		pMeshContainer->pAdjacency, //元のメッシュの隣接性情報
-		NULL, //出力メッシュの隣接性情報
-		NULL, //各面の新しいインデックス値格納用変数のアドレス
-		NULL, //角頂点の新しいインデックス値格納用変数のアドレス
-		&pMeshContainer->dwWeight, //ボーンの影響の一面当たりの最大数格納用変数のアドレス
-		&pMeshContainer->dwBoneNum, //ボーンの組み合わせテーブルに含まれるボーン数格納用変数のアドレス
-		&pMeshContainer->pBoneBuffer, //ボーンの組み合わせテーブルへのポインタ
-		&pMeshContainer->MeshData.pMesh //出力されるメッシュアドレス格納用変数のアドレス(固定パイプライン用)
+		pMeshContainer->pOriMesh,			// 元のメッシュデータアドレス
+		NULL,								// オプション(現在は使われていないためNULLでいい)
+		pMeshContainer->pAdjacency,			// 元のメッシュの隣接性情報
+		NULL,								// 出力メッシュの隣接性情報
+		NULL,								// 各面の新しいインデックス値格納用変数のアドレス
+		NULL,								// 角頂点の新しいインデックス値格納用変数のアドレス
+		&pMeshContainer->dwWeight,			// ボーンの影響の一面当たりの最大数格納用変数のアドレス
+		&pMeshContainer->dwBoneNum,			// ボーンの組み合わせテーブルに含まれるボーン数格納用変数のアドレス
+		&pMeshContainer->pBoneBuffer,		// ボーンの組み合わせテーブルへのポインタ
+		&pMeshContainer->MeshData.pMesh		// 出力されるメッシュアドレス格納用変数のアドレス(固定パイプライン用)
 	)))
 	{
 		return E_FAIL;
@@ -242,9 +250,10 @@ HRESULT MY_HIERARCHY::CreateMeshContainer(std::string Name, CONST D3DXMESHDATA* 
 	SAFE_RELEASE(pDevice);
 	return S_OK;
 }
-//
-//HRESULT MY_HIERARCHY::DestroyFrame(LPD3DXFRAME pFrameToFree) 
+
+//--------------------------------------------------------------
 //フレームを破棄する
+//--------------------------------------------------------------
 HRESULT MY_HIERARCHY::DestroyFrame(LPD3DXFRAME pFrameToFree)
 {
 	//2銃解放防止
@@ -261,9 +270,10 @@ HRESULT MY_HIERARCHY::DestroyFrame(LPD3DXFRAME pFrameToFree)
 	SAFE_DELETE(pFrameToFree);
 	return S_OK;
 }
-//
-//HRESULT MY_HIERARCHY::DestroyMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase)
+
+//--------------------------------------------------------------
 //メッシュコンテナーを破棄する
+//--------------------------------------------------------------
 HRESULT MY_HIERARCHY::DestroyMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase)
 {
 	int iMaterial;
@@ -294,19 +304,19 @@ HRESULT MY_HIERARCHY::DestroyMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBas
 	return S_OK;
 }
 
-CSkinMesh::CSkinMesh() 
+//--------------------------------------------------------------
+// コンストラクタ
+//--------------------------------------------------------------
+CSkinMesh::CSkinMesh()
 {
-	//マテリアル変更フラグ
-	m_MaterialFlg = FALSE;
-	//マテリアルデータ
-	ZeroMemory(&m_Material, sizeof(D3DMATERIAL9));
 	//単位行列化
 	D3DXMatrixIdentity(&(this->m_World));
 	//アニメーション時間初期化
 	m_AnimeTime = 0;
 	//アニメーションスピード初期化
 	m_AnimSpeed = SKIN_ANIME_SPEED; //固定
-									//現在のアニメーショントラック初期化
+
+	//現在のアニメーショントラック初期化
 	m_CurrentTrack = 0;
 	//アニメーションデータトラック初期化
 	//有効にする
@@ -318,7 +328,11 @@ CSkinMesh::CSkinMesh()
 	//速度
 	m_CurrentTrackDesc.Speed = 1;
 }
-void CSkinMesh::Release() 
+
+//--------------------------------------------------------------
+// release
+//--------------------------------------------------------------
+void CSkinMesh::Release()
 {
 	if (m_pFrameRoot != NULL)
 	{
@@ -335,26 +349,34 @@ void CSkinMesh::Release()
 	//メッシュコンテナありのフレーム参照変数の要素を削除
 	m_IntoMeshFrameArray.clear();
 }
+
+//--------------------------------------------------------------
+//ボーン行列の初期化
+//--------------------------------------------------------------
 HRESULT CSkinMesh::AllocateBoneMatrix(LPD3DXFRAME pFrameRoot, LPD3DXMESHCONTAINER pMeshContainerBase)
 {
 	MYFRAME *pFrame = NULL;
 	DWORD dwBoneNum = 0;
+
 	//メッシュコンテナの型をオリジナルの型として扱う
 	//(メッシュコンテナ生成時にオリジナルの型として作っているので問題はないが、
 	//基本ダウンキャストは危険なので多用は避けるべき)
 	MYMESHCONTAINER *pMeshContainer = (MYMESHCONTAINER*)pMeshContainerBase;
+
 	//スキンメッシュでなければ
 	if (pMeshContainer->pSkinInfo == NULL)
 	{
 		return S_OK;
 	}
+
 	//ボーンの数取得
 	dwBoneNum = pMeshContainer->pSkinInfo->GetNumBones();
 	//各ボーンのワールド行列格納用領域を確保
 	SAFE_DELETE(pMeshContainer->ppBoneMatrix);
 	pMeshContainer->ppBoneMatrix = new D3DXMATRIX*[dwBoneNum];
+
 	//ボーンの数だけループ
-	for (DWORD i = 0; i<dwBoneNum; i++)
+	for (DWORD i = 0; i < dwBoneNum; i++)
 	{
 		//子フレーム(ボーン)のアドレスを検索してpFrameに格納
 		pFrame = (MYFRAME*)D3DXFrameFind(pFrameRoot, pMeshContainer->pSkinInfo->GetBoneName(i));
@@ -368,14 +390,14 @@ HRESULT CSkinMesh::AllocateBoneMatrix(LPD3DXFRAME pFrameRoot, LPD3DXMESHCONTAINE
 	}
 	return S_OK;
 }
-//
-//HRESULT AllocateAllBoneMatrices( THING* pThing,LPD3DXFRAME pFrame )
-//
-//ボーン行列の初期化
+
+//--------------------------------------------------------------
+// マテリアル内全体のボーン行列の初期化
+//--------------------------------------------------------------
 HRESULT CSkinMesh::AllocateAllBoneMatrices(LPD3DXFRAME pFrameRoot, LPD3DXFRAME pFrame)
 {
 	//階層の走査(メモリを確保したメッシュコンテナ領域を探す処理)
-	if (pFrame->pMeshContainer != NULL)
+	if (pFrame->pMeshContainer != nullptr)
 	{
 		//ボーン行列の初期化処理
 		if (FAILED(AllocateBoneMatrix(pFrameRoot, pFrame->pMeshContainer)))
@@ -384,14 +406,14 @@ HRESULT CSkinMesh::AllocateAllBoneMatrices(LPD3DXFRAME pFrameRoot, LPD3DXFRAME p
 		}
 	}
 	//再起判断処理
-	if (pFrame->pFrameSibling != NULL)
+	if (pFrame->pFrameSibling != nullptr)
 	{
 		if (FAILED(AllocateAllBoneMatrices(pFrameRoot, pFrame->pFrameSibling)))
 		{
 			return E_FAIL;
 		}
 	}
-	if (pFrame->pFrameFirstChild != NULL)
+	if (pFrame->pFrameFirstChild != nullptr)
 	{
 		if (FAILED(AllocateAllBoneMatrices(pFrameRoot, pFrame->pFrameFirstChild)))
 		{
@@ -400,8 +422,10 @@ HRESULT CSkinMesh::AllocateAllBoneMatrices(LPD3DXFRAME pFrameRoot, LPD3DXFRAME p
 	}
 	return S_OK;
 }
-//void RenderMeshContainer(LPDIRECT3DDEVICE9 pDevice,MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
+
+//--------------------------------------------------------------
 //フレーム内のそれぞれのメッシュをレンダリングする
+//--------------------------------------------------------------
 void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 {
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
@@ -462,17 +486,17 @@ void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pF
 			pMeshContainer->MeshData.pMesh->DrawSubset(i);
 		}
 	}
-	//通常メッシュの場合
 	else
 	{
+		//通常メッシュの場合
 		MessageBox(NULL, "スキンメッシュXファイルの描画に失敗しました。", NULL, MB_OK);
 		exit(EOF);
 	}
 }
 
-//
-//void DrawFrame(LPDIRECT3DDEVICE9 pDevice,LPD3DXFRAME pFrameBase)
+//--------------------------------------------------------------
 //フレームをレンダリングする。
+//--------------------------------------------------------------
 void CSkinMesh::DrawFrame(LPD3DXFRAME pFrameBase)
 {
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
@@ -500,9 +524,10 @@ void CSkinMesh::DrawFrame(LPD3DXFRAME pFrameBase)
 		DrawFrame(pFrame->pFrameFirstChild);
 	}
 }
-//
-//void UpdateFrameMatrices(LPD3DXFRAME pFrameBase, LPD3DXMATRIX pParentMatrix)
+
+//--------------------------------------------------------------
 //フレーム内のメッシュ毎にワールド変換行列を更新する
+//--------------------------------------------------------------
 void CSkinMesh::UpdateFrameMatrices(LPD3DXFRAME pFrameBase, LPD3DXMATRIX pParentMatrix)
 {
 	MYFRAME *pFrame = (MYFRAME*)pFrameBase;
@@ -525,7 +550,10 @@ void CSkinMesh::UpdateFrameMatrices(LPD3DXFRAME pFrameBase, LPD3DXMATRIX pParent
 		UpdateFrameMatrices(pFrame->pFrameFirstChild, &pFrame->CombinedTransformationMatrix);
 	}
 }
+
+//--------------------------------------------------------------
 //全ての階層フレームを解放する
+//--------------------------------------------------------------
 void CSkinMesh::FreeAnim(LPD3DXFRAME pFrame)
 {
 	if (pFrame->pMeshContainer != NULL)
@@ -538,12 +566,28 @@ void CSkinMesh::FreeAnim(LPD3DXFRAME pFrame)
 	if (pFrame->pFrameFirstChild != NULL)
 		FreeAnim(pFrame->pFrameFirstChild);
 }
+
+//--------------------------------------------------------------
+// 更新
+//--------------------------------------------------------------
+void CSkinMesh::Update()
+{
+	//アニメーション時間を更新
+	m_AnimeTime++;
+	//マトリックス行列反映
+	/*m_World = _World;*/
+}
+
+//--------------------------------------------------------------
+// 初期化
+//--------------------------------------------------------------
 HRESULT CSkinMesh::Init(std::string pMeshPass)
 {
 	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 	std::string TmpMeshPass;
 	TmpMeshPass = pMeshPass;
+
 	// Xファイルからアニメーションメッシュを読み込み作成する
 	if (FAILED(
 		D3DXLoadMeshHierarchyFromX(TmpMeshPass.c_str(), D3DXMESH_MANAGED, pDevice, &m_cHierarchy,
@@ -554,10 +598,14 @@ HRESULT CSkinMesh::Init(std::string pMeshPass)
 		MessageBox(NULL, "Xファイルの読み込みに失敗しました", TmpMeshPass.c_str(), MB_OK);
 		return E_FAIL;
 	}
+
 	//ボーン行列初期化
 	AllocateAllBoneMatrices(m_pFrameRoot, m_pFrameRoot);
+
+	m_pAnimSet.resize(m_pAnimController->GetNumAnimationSets());
+
 	//アニメーショントラックの取得
-	for (DWORD i = 0; i<m_pAnimController->GetNumAnimationSets(); i++)
+	for (DWORD i = 0; i < m_pAnimController->GetNumAnimationSets(); i++)
 	{
 		//アニメーション取得
 		m_pAnimController->GetAnimationSet(i, &(m_pAnimSet[i]));
@@ -567,7 +615,7 @@ HRESULT CSkinMesh::Init(std::string pMeshPass)
 	m_IntoMeshFrameArray.clear();
 	CreateFrameArray(m_pFrameRoot);
 	//フレーム配列にオフセット情報作成
-	for (DWORD i = 0; i<m_IntoMeshFrameArray.size(); i++) 
+	for (DWORD i = 0; i < m_IntoMeshFrameArray.size(); i++) 
 	{
 		MYMESHCONTAINER* pMyMeshContainer = (MYMESHCONTAINER*)m_IntoMeshFrameArray[i]->pMeshContainer;
 		while (pMyMeshContainer) 
@@ -576,10 +624,10 @@ HRESULT CSkinMesh::Init(std::string pMeshPass)
 			if (pMyMeshContainer->pSkinInfo) 
 			{
 				DWORD cBones = pMyMeshContainer->pSkinInfo->GetNumBones();
-				for (DWORD iBone = 0; iBone<cBones; iBone++) 
+				for (DWORD iBone = 0; iBone < cBones; iBone++) 
 				{
 					//フレーム内から同じ名前のフレームを検索
-					for (DWORD Idx = 0; Idx<m_FrameArray.size(); Idx++) 
+					for (DWORD Idx = 0; Idx < m_FrameArray.size(); Idx++) 
 					{
 						if (strcmp(pMyMeshContainer->pSkinInfo->GetBoneName(iBone), m_FrameArray[Idx]->Name) == 0) 
 						{
@@ -598,10 +646,13 @@ HRESULT CSkinMesh::Init(std::string pMeshPass)
 	}
 	return S_OK;
 }
+
+//--------------------------------------------------------------
 //すべてのフレームポインタ格納処理関数
+//--------------------------------------------------------------
 void CSkinMesh::CreateFrameArray(LPD3DXFRAME _pFrame)
 {
-	if (_pFrame == NULL) { return; }
+	if (_pFrame == nullptr) { return; }
 	//フレームアドレス格納
 	MYFRAME* pMyFrame = (MYFRAME*)_pFrame;
 	m_FrameArray.push_back(pMyFrame);
@@ -621,39 +672,11 @@ void CSkinMesh::CreateFrameArray(LPD3DXFRAME _pFrame)
 		CreateFrameArray(pMyFrame->pFrameSibling);
 	}
 }
-//- 更新処理 -//
-void CSkinMesh::Update(D3DXMATRIX _World) 
-{
-	//押しっぱなしによる連続切り替え防止
-	static bool PushFlg = false; //ここでは仮でフラグを使用するが、本来はメンバ変数などにする
-								 //アニメーション変更チェック
-	if ((GetAsyncKeyState(VK_LEFT) & 0x8000) || (GetAsyncKeyState(VK_RIGHT) & 0x8000)) {
-		if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
-			if (PushFlg == false) {
-				int Num = GetAnimTrack() - 1;
-				if (Num < 0)Num = 0;
-				ChangeAnim(Num);
-			}
-		}
-		if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
-			if (PushFlg == false) {
-				int Num = GetAnimTrack() + 1;
-				if ((DWORD)Num > m_pAnimController->GetNumAnimationSets())Num = m_pAnimController->GetNumAnimationSets();
-				ChangeAnim(Num);
-			}
-		}
-		PushFlg = true;
-	}
-	else {
-		PushFlg = false;
-	}
-	//マトリックス行列反映
-	m_World = _World;
-	//アニメーション時間を更新
-	m_AnimeTime++;
-}
+
+//--------------------------------------------------------------
 //スキンメッシュの描画
-void CSkinMesh::Draw() 
+//--------------------------------------------------------------
+void CSkinMesh::Draw()
 {
 	//現在のアニメーション番号を適応
 	m_pAnimController->SetTrackAnimationSet(0, m_pAnimSet[m_CurrentTrack]);
@@ -668,9 +691,23 @@ void CSkinMesh::Draw()
 	//0(再生中の)トラックから更新したトラックデスクを取得する
 	m_pAnimController->GetTrackDesc(0, &m_CurrentTrackDesc);
 }
+
+//--------------------------------------------------------------
 //オブジェクトのアニメーション変更( 変更するアニメーション番号 )
-void CSkinMesh::ChangeAnim(DWORD _NewAnimNum) 
+//--------------------------------------------------------------
+void CSkinMesh::ChangeAnim(DWORD _NewAnimNum)
 {
+	// -の値になるようだったら。
+	if (_NewAnimNum < 0)
+	{
+		_NewAnimNum = 0;
+	}
+	// 最大値を超えようとしてたら
+	if (_NewAnimNum > m_pAnimController->GetNumAnimationSets())
+	{
+		_NewAnimNum = m_pAnimController->GetNumAnimationSets();
+	}
+
 	//新規アニメーションに変更
 	m_CurrentTrack = _NewAnimNum;
 	//アニメーションタイムを初期化
@@ -680,11 +717,15 @@ void CSkinMesh::ChangeAnim(DWORD _NewAnimNum)
 	m_CurrentTrackDesc.Position = 0;
 	m_pAnimController->SetTrackDesc(0, &m_CurrentTrackDesc);
 }
+
+//--------------------------------------------------------------
 //対象のボーンを検索
+//--------------------------------------------------------------
 MYFRAME* CSkinMesh::SearchBoneFrame(std::string _BoneName, D3DXFRAME* _pFrame)
 {
 	MYFRAME* pFrame = (MYFRAME*)_pFrame;
-	if (strcmp(pFrame->Name, _BoneName.c_str()) == 0) {
+	if (strcmp(pFrame->Name, _BoneName.c_str()) == 0)
+	{
 		return pFrame;
 	}
 	if (_pFrame->pFrameSibling != NULL)
@@ -705,7 +746,10 @@ MYFRAME* CSkinMesh::SearchBoneFrame(std::string _BoneName, D3DXFRAME* _pFrame)
 	}
 	return NULL;
 }
+
+//--------------------------------------------------------------
 //ボーンのマトリックス取得( ボーンの名前 )
+//--------------------------------------------------------------
 D3DXMATRIX CSkinMesh::GetBoneMatrix(std::string _BoneName)
 {
 	MYFRAME* pFrame = SearchBoneFrame(_BoneName, m_pFrameRoot);
@@ -724,10 +768,12 @@ D3DXMATRIX CSkinMesh::GetBoneMatrix(std::string _BoneName)
 		return TmpMatrix;
 	}
 }
+
+//--------------------------------------------------------------
 //ボーンのマトリックスポインタ取得( ボーンの名前 )
+//--------------------------------------------------------------
 D3DXMATRIX* CSkinMesh::GetpBoneMatrix(std::string _BoneName)
 {
-	
 	//注意）RokDeBone用に設定(対象ボーンの一つ先の行列をとってくる)
 	MYFRAME* pFrame = SearchBoneFrame(_BoneName, m_pFrameRoot);
 	//ボーンが見つかれば

@@ -46,6 +46,9 @@
 
 /* サーバー */
 #include "connect.h"
+
+#include "model_skin.h"
+
 //==============================================================
 // 定数
 //==============================================================
@@ -99,6 +102,8 @@ HRESULT CGame::Init()
 	CHPUI::Create(pPlayer->GetHp());
 	CMONEYUI::Create(pPlayer->GetMoney());
 	CSKILLUI::Create(pPlayer->GetSkill(0));
+
+	CSkinMesh::Create("data/default2.x");
 
 	//m_tcp = new CClient;
 	//m_tcp->Init("127.0.0.1", 13567);
