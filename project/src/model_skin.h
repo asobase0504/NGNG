@@ -72,18 +72,17 @@ private:
 	//追加
 	//すべてのフレームポインタ格納処理関数
 	void CreateFrameArray(LPD3DXFRAME _pFrame);
-	// フレーム参照用配列
-	std::vector<MYFRAME*> m_FrameArray;			// 全フレーム参照配列
-	std::vector<MYFRAME*> m_IntoMeshFrameArray;	// メッシュコンテナありのフレーム参照配列
 
 	LPD3DXFRAME m_pFrameRoot;	//ボーン情報
-	LPD3DXANIMATIONCONTROLLER m_pAnimController;	//アニメーションコントローラ
 
+	// アニメーション
+	LPD3DXANIMATIONCONTROLLER m_pAnimController;	//アニメーションコントローラ
 	std::vector<LPD3DXANIMATIONSET> m_pAnimSet;	//アニメーションデータ格納用
 	DWORD m_AnimeTime;	//現在のアニメーションが開始されてからの時間(1/60秒)
 	float m_AnimSpeed;	//アニメーションスピード
 	DWORD m_CurrentTrack;	//現在のアニメーショントラック
 	D3DXTRACK_DESC m_CurrentTrackDesc;	//現在のアニメーションデータトラック
+	DWORD m_animeEndTime;				// アニメーション終了フレーム
 
 	bool m_isLoop;	// Loopしたかどうか
 	bool m_isAnimeEnd;	// 一回アニメーションを終わらせたか

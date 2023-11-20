@@ -16,10 +16,10 @@
 struct MYFRAME : public D3DXFRAME
 {
 	D3DXMATRIX CombinedTransformationMatrix;
-	// オフセット行列(インデックス付描画用)
-	D3DXMATRIX OffsetMat;
-	// 行列テーブルのインデックス番号(インデックス付用)
-	DWORD OffsetID;
+	//// オフセット行列(インデックス付描画用)
+	//D3DXMATRIX OffsetMat;
+	//// 行列テーブルのインデックス番号(インデックス付用)
+	//DWORD OffsetID;
 };
 
 //派生メッシュコンテナー構造体(
@@ -33,12 +33,8 @@ struct MYMESHCONTAINER : public D3DXMESHCONTAINER
 	std::vector<D3DXMATRIX*> ppBoneMatrix; //全てのボーンのワールド行列の先頭ポインター
 	std::vector<D3DXMATRIX> pBoneOffsetMatrices; //フレームとしてのボーンのワールド行列のポインター
 	LPD3DXMESH pOriMesh; //オリジナルメッシュ用
-	DWORD NumPaletteEntries; //パレットサイズ
 
-							 // Work用
-	std::vector<D3DXMATRIX> m_WorkBoneMatArray;
 	// 影響するフレームへの参照配列。描画時にこのフレームの行列を使う。
-	std::vector<MYFRAME*> BoneFrameArray;
 	MYMESHCONTAINER()
 	{
 		ppBoneMatrix.clear();

@@ -19,16 +19,17 @@
 //--------------------------------------------------------------
 HRESULT MY_HIERARCHY::CreateFrame(LPCSTR Name, LPD3DXFRAME *ppNewFrame)
 {
-	MYFRAME *pFrame;
 	//新しいフレームアドレス格納用変数を初期化
-	*ppNewFrame = NULL;
+	*ppNewFrame = nullptr;
 	//フレームの領域確保
-	pFrame = new MYFRAME;
+	MYFRAME* pFrame = new MYFRAME;
+
 	//領域確保の失敗時の処理
 	if (pFrame == nullptr)
 	{
 		return E_OUTOFMEMORY;
 	}
+
 	//フレーム名格納用領域確保
 	pFrame->Name = new TCHAR[lstrlen(Name) + 1];
 	//領域確保の失敗時の処理
@@ -36,15 +37,15 @@ HRESULT MY_HIERARCHY::CreateFrame(LPCSTR Name, LPD3DXFRAME *ppNewFrame)
 	{
 		return E_FAIL;
 	}
-	// strcpy(pFrame->Name,Name);
+
 	//フレーム名格納
 	strcpy(pFrame->Name, Name);
 	//行列の初期化
 	D3DXMatrixIdentity(&pFrame->TransformationMatrix);
-	D3DXMatrixIdentity(&pFrame->CombinedTransformationMatrix);
+	//D3DXMatrixIdentity(&pFrame->CombinedTransformationMatrix);
 	//追加：オフセット関係初期化
-	pFrame->OffsetID = 0xFFFFFFFF;
-	D3DXMatrixIdentity(&(pFrame->OffsetMat));
+	/*pFrame->OffsetID = 0xFFFFFFFF;
+	D3DXMatrixIdentity(&(pFrame->OffsetMat));*/
 	//新規フレームのメッシュコンテナ初期化
 	pFrame->pMeshContainer = NULL;
 	//新規フレームの兄弟フレームアドレス格納用変数初期化

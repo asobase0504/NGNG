@@ -70,39 +70,7 @@ HRESULT CSkinMesh::Init(std::string pMeshPass)
 	}
 
 	//すべてのフレーム参照変数の生成
-	m_FrameArray.clear();
-	m_IntoMeshFrameArray.clear();
 	CreateFrameArray(m_pFrameRoot);
-	//フレーム配列にオフセット情報作成
-	for (DWORD i = 0; i < m_IntoMeshFrameArray.size(); i++)
-	{
-		MYMESHCONTAINER* pMyMeshContainer = (MYMESHCONTAINER*)m_IntoMeshFrameArray[i]->pMeshContainer;
-		while (pMyMeshContainer)
-		{
-			//スキン情報
-			if (pMyMeshContainer->pSkinInfo)
-			{
-				DWORD cBones = pMyMeshContainer->pSkinInfo->GetNumBones();
-				for (DWORD iBone = 0; iBone < cBones; iBone++)
-				{
-					//フレーム内から同じ名前のフレームを検索
-					for (DWORD Idx = 0; Idx < m_FrameArray.size(); Idx++)
-					{
-						if (strcmp(pMyMeshContainer->pSkinInfo->GetBoneName(iBone), m_FrameArray[Idx]->Name) == 0)
-						{
-							pMyMeshContainer->BoneFrameArray.push_back(m_FrameArray[Idx]);
-							//Offset行列
-							m_FrameArray[Idx]->OffsetMat = *(pMyMeshContainer->pSkinInfo->GetBoneOffsetMatrix(iBone));
-							m_FrameArray[Idx]->OffsetID = Idx;
-							break;
-						}
-					}
-				}
-			}
-			//次へ
-			pMyMeshContainer = (MYMESHCONTAINER *)pMyMeshContainer->pNextMeshContainer;
-		}
-	}
 	return S_OK;
 }
 
@@ -180,10 +148,7 @@ CSkinMesh * CSkinMesh::Create(std::string Name)
 //--------------------------------------------------------------
 void CSkinMesh::Release()
 {
-	//すべてのフレーム参照変数の要素を削除
-	m_FrameArray.clear();
-	//メッシュコンテナありのフレーム参照変数の要素を削除
-	m_IntoMeshFrameArray.clear();
+
 }
 
 //--------------------------------------------------------------
@@ -394,12 +359,8 @@ void CSkinMesh::CreateFrameArray(LPD3DXFRAME _pFrame)
 	if (_pFrame == nullptr) { return; }
 	//フレームアドレス格納
 	MYFRAME* pMyFrame = (MYFRAME*)_pFrame;
-	m_FrameArray.push_back(pMyFrame);
-	//メッシュコンテナがある場合はIntoMeshFrameArrayにアドレスを格納
-	if (pMyFrame->pMeshContainer != NULL) 
-	{
-		m_IntoMeshFrameArray.push_back(pMyFrame);
-	}
+	m_animeEndTime++;
+
 	//子フレーム検索
 	if (pMyFrame->pFrameFirstChild != NULL) 
 	{

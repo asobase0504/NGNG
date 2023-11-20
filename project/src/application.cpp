@@ -31,6 +31,8 @@
 #include "character_select.h"
 #include "debug_mode.h"
 
+#include "model_skin_group.h"
+
 //==============================================================
 // Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
 //==============================================================
@@ -178,6 +180,9 @@ void CApplication::Uninit()
 	CItemDataBase::Uninit();
 	CAbnormalDataBase::Uninit();
 
+	CSkinMeshGroup* group = CSkinMeshGroup::GetInstance();
+	delete group;
+	group = nullptr;
 }
 
 //--------------------------------------------------------------
