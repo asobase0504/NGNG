@@ -33,12 +33,7 @@ CWords::~CWords()
 //------------------------------------
 HRESULT CWords::Init(void)
 {
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_moveRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	
 	CObject2d::Init();
-
 	return S_OK;
 }
 
@@ -82,7 +77,7 @@ CWords *CWords::Create(const char*Text, D3DXVECTOR3 pos, D3DXVECTOR3 Size, CFont
 		pObject->SetPos(pos);
 		pObject->SetSize(Size);
 		pObject->Init();
-		pObject->Setwords(Text, Type);
+		pObject->SetWords(Text, Type);
 
 	}
 	return pObject;
@@ -91,10 +86,10 @@ CWords *CWords::Create(const char*Text, D3DXVECTOR3 pos, D3DXVECTOR3 Size, CFont
 //=============================================================================
 // GetPosä÷êî
 //=============================================================================
-void CWords::Setwords(const char*Text, CFont::FONT Type)
+void CWords::SetWords(const char*Text, CFont::FONT Type)
 {
-	std::string Txt = Text;
-	if (Txt != "")
+	std::string txt = Text;
+	if (txt != "")
 	{
 		m_pTex = CFont::GetFont(Text, Type);
 	}

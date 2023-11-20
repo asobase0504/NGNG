@@ -82,7 +82,6 @@ void CPlayerManager::Draw(void)
 CPlayer* CPlayerManager::CreatePlayer(D3DXVECTOR3 pos)
 {
 	m_pPlayer = CPlayer::Create(pos);
-	m_pPlayer->SetController(new CPlayerController(-1));
 
 	return m_pPlayer;
 }

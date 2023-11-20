@@ -47,15 +47,6 @@ HRESULT CStatueChest::Init()
 }
 
 //--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CStatueChest::Uninit()
-{
-	// 終了処理
-	CStatue::Uninit();
-}
-
-//--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
 void CStatueChest::Update()
@@ -66,28 +57,25 @@ void CStatueChest::Update()
 	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
-	if (Touch(pPlayer))
+	if (Touch())
 	{
-		if (input->Trigger(KEY_BACK, -1))
-		{// プレイヤーが特定のキーを押したとき
-			if (!m_bOnce)
-			{
-				// プレイヤーお金を調整して設定
-				playerMoney->AddCurrent(-10);
-
-				//-------------------------------------------------------------------------------
-				// アイテムランダムドロップ関数追加
-				//---------------------------------------------------------------------------------
-				D3DXVECTOR3 pos = GetPos();
-				CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot(), CItemDataBase::ITEM_KIBORI);
-
-				m_bOnce = true;
-			}
-		}
-		else
+		if (!m_bOnce)
 		{
-			m_bOnce = false;
+			// プレイヤーお金を調整して設定
+			playerMoney->AddCurrent(-10);
+
+			//-------------------------------------------------------------------------------
+			// アイテムランダムドロップ関数追加
+			//---------------------------------------------------------------------------------
+			D3DXVECTOR3 pos = GetPos();
+			CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot(), CItemDataBase::ITEM_KIBORI);
+
+			m_bOnce = true;
 		}
+	}
+	else
+	{
+		m_bOnce = false;
 	}
 
 	// 更新処理
@@ -98,15 +86,6 @@ void CStatueChest::Update()
 	CDebugProc::Print("ChestPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
 #endif // 0
 #endif // _DEBUG
-}
-
-//--------------------------------------------------------------
-// 描画処理
-//--------------------------------------------------------------
-void CStatueChest::Draw(void)
-{
-	// 描画処理
-	CStatue::Draw();
 }
 
 //--------------------------------------------------------------

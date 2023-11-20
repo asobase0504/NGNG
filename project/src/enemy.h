@@ -25,6 +25,7 @@ class CController;
 class CCollisionBox;
 class CCollisionSphere;
 class CEnemyDataBase;
+class CEnemy_HPUI;
 
 //==============================================================
 // 敵クラス
@@ -57,5 +58,6 @@ private:
 private:	// メンバ変数
 	ACTIVITY_FUNC	m_Activity;
 	int				m_AttackCnt;
+	CEnemy_HPUI*	m_pEHPUI;
 };
 #endif

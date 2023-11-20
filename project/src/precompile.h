@@ -9,6 +9,13 @@
 #ifndef PRECOMPILE_H_	// このマクロ定義がされてなかったら
 #define PRECOMPILE_H_	// 二重インクルード防止のマクロ定義
 
+
+//オンライン
+#include <stdlib.h>
+#include <WinSock2.h>
+
+#pragma comment(lib, "ws2_32.lib")
+
 // メモリーリークのチェック
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
@@ -76,5 +83,8 @@
 
 // Input
 #include "input.h"
+
+
+
 
 #endif

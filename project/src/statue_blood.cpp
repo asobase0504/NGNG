@@ -48,15 +48,6 @@ HRESULT CStatueBlood::Init()
 }
 
 //--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CStatueBlood::Uninit()
-{
-	// 終了処理
-	CStatue::Uninit();
-}
-
-//--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
 void CStatueBlood::Update()
@@ -68,18 +59,15 @@ void CStatueBlood::Update()
 	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
-	if (Touch(pPlayer))
+	if (Touch())
 	{
-		if (input->Trigger(KEY_BACK, -1))
-		{// プレイヤーが特定のキーを押したとき
-			if (!m_bOnce)
-			{
-				// プレイヤーのHPとお金を調整して設定
-				playerHp->AddCurrent(-10);
-				playerMoney->AddCurrent(10);
+		if (!m_bOnce)
+		{
+			// プレイヤーのHPとお金を調整して設定
+			playerHp->AddCurrent(-10);
+			playerMoney->AddCurrent(10);
 
-				m_bOnce = true;
-			}
+			m_bOnce = true;
 		}
 		else
 		{
@@ -95,15 +83,6 @@ void CStatueBlood::Update()
 	CDebugProc::Print("BloodPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
 #endif // 0
 #endif // _DEBUG
-}
-
-//--------------------------------------------------------------
-// 描画処理
-//--------------------------------------------------------------
-void CStatueBlood::Draw(void)
-{
-	// 描画処理
-	CStatue::Draw();
 }
 
 //--------------------------------------------------------------

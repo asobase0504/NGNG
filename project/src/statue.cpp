@@ -12,9 +12,12 @@
 #include "collision_box.h"
 #include "player_manager.h"
 #include "player.h"
+#include "PlayerController.h"
 #include "map.h"
 #include "object_mesh.h"
 #include "statue_manager.h"
+#include "application.h"
+#include "game.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -38,6 +41,7 @@ CStatue::~CStatue()
 //--------------------------------------------------------------
 HRESULT CStatue::Init()
 {
+	MapChangeRelese();
 	CObjectX::Init();
 
 	D3DXMATRIX mtx = GetMtxWorld();
@@ -54,13 +58,16 @@ HRESULT CStatue::Init()
 //--------------------------------------------------------------
 HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 {
+	MapChangeRelese();
 	CObjectX::Init();
 	LoadModel(m_modelData);
 
 	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 25.0f, 0.0f), inRot, D3DXVECTOR3(10.0f, 25.0f, 10.0f), GetMtxWorld());
 	m_collisionBox->SetParent(&m_pos);
+	SetEndChildren(m_collisionBox);
 	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 20.0f, 20.0f);
 	m_collisionCylinder->SetParent(&m_pos);
+	SetEndChildren(m_collisionCylinder);
 
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
@@ -85,25 +92,6 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 }
 
 //--------------------------------------------------------------
-// 終了
-//--------------------------------------------------------------
-void CStatue::Uninit()
-{
-	if (m_collisionBox != nullptr)
-	{
-		m_collisionBox->Uninit();
-		m_collisionBox = nullptr;
-	}
-	if (m_collisionCylinder != nullptr)
-	{
-		m_collisionCylinder->Uninit();
-		m_collisionCylinder = nullptr;
-	}
-	
-	CObjectX::Uninit();
-}
-
-//--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
 void CStatue::Update()
@@ -118,14 +106,6 @@ void CStatue::Update()
 	CDebugProc::Print("StatueCollisionCylinder:pos(%f,%f,%f)\n", m_collisionCylinder->GetPosWorld().x, m_collisionCylinder->GetPosWorld().y, m_collisionCylinder->GetPosWorld().z);
 #endif
 #endif // _DEBUG
-}
-
-//--------------------------------------------------------------
-// 描画
-//--------------------------------------------------------------
-void CStatue::Draw()
-{
-	CObjectX::Draw();
 }
 
 //--------------------------------------------------------------
@@ -144,12 +124,17 @@ CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot)
 	return pStatue;
 }
 
-bool CStatue::Touch(CPlayer* pPlayer)
+bool CStatue::Touch()
 {
-	if (m_collisionCylinder->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
+	CInput* input = CInput::GetKey();
+	if (input->Trigger(KEY_BACK, -1))
 	{
-		return true;
+		CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
+		CPlayer* player = game->GetController()->GetToOrder();
+		if (m_collisionCylinder->ToCylinder(player->GetCollision()))
+		{
+			return true;
+		}
 	}
-
 	return false;
 }

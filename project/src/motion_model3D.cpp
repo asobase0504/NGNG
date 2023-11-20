@@ -92,8 +92,7 @@ void CMotionModel3D::Uninit()
 		m_motion = nullptr;
 	}
 
-	// オブジェクト2Dの解放
-	Release();
+	CObjectX::Uninit();
 }
 
 //--------------------------------------------------------------
@@ -243,7 +242,7 @@ void CMotionModel3D::SetMaxMinVtx()
 //--------------------------------------------------------------
 bool CMotionModel3D::SegmentCollision(CObjectX* inObjectX)
 {
-	if (!inObjectX->IsCollision())
+	//if (!inObjectX->IsCollision())
 	{
 		return false;
 	}

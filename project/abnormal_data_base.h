@@ -17,8 +17,10 @@ public:
 	{
 		ABNORMAL_NONE = -1,
 		ABNORMAL_FIRE,
+		ABNORMAL_BURN,
 		ABNORMAL_STUN,
 		ABNORMAL_POISON,
+		ABNORMAL_PLAGUE,
 		ABNORMAL_SLOW,
 		ABNORMAL_BLEED,
 		ABNORMAL_FROZEN,
@@ -27,6 +29,7 @@ public:
 		ABNORMAL_VOID,
 		ABNORMAL_SPEED_UP,
 		ABNORMAL_ATK_SPD_UP,
+		ABNORMAL_FRENZY,
 		ABNORMAL_MAX
 	};
 
@@ -50,7 +53,7 @@ public:
 	static void Uninit();
 
 public:
-	CAbnormal* GetItemData(EAbnormalType inState) { return m_abnormal[inState]; }
+	CAbnormal* GetAbnormalData(EAbnormalType inState) { return m_abnormal[inState]; }
 
 private:	// ÉÅÉìÉoïœêî
 	std::array<CAbnormal*, ABNORMAL_MAX> m_abnormal;
@@ -58,4 +61,4 @@ private:	// ÉÅÉìÉoïœêî
 
 using abnormal_count = std::array<CAbnormalDataBase::SAbnormalStatus, CAbnormalDataBase::ABNORMAL_MAX>;
 using abnormal_attack = std::array<bool, CAbnormalDataBase::ABNORMAL_MAX>;
-#endif	// _ITEM_DATA_
+#endif	// _ABNORMAL_DATA_

@@ -24,11 +24,14 @@ class CMesh : public CObjectPolygon3D
 {
 public:
 	static const float MOUNTAIN;
+	static const float MAX_SIZE;
+	static const int START_HORIZONTAL;
+	static const int START_VERTICAL;
 
 public:
 	virtual void OnHit() {}	// メッシュの当たった時の判定
 
-	CMesh(CTaskGroup::EPriority nPriority = CTaskGroup::EPriority::LEVEL_3D_1);
+	CMesh(CTaskGroup::EPriority nPriority = CTaskGroup::EPriority::LEVEL_3D_2);
 	~CMesh() override;
 
 	HRESULT Init() override;		// 初期化
@@ -55,6 +58,7 @@ public:
 	CCollisionMesh* GetCollisionMesh() { return m_collisionMesh; }
 
 	void SetY(std::vector<std::vector<float>> inY);
+	void SetSkyMesh();
 
 private:
 	void SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx, int nCnt, bool isUp);
@@ -62,6 +66,7 @@ private:
 	void SetVtxMeshLight();
 
 	LPDIRECT3DINDEXBUFFER9 m_idxBuff;	// インデックスバッファ
+	LPDIRECT3DVERTEXBUFFER9 m_vtxBuffCone;	// 円錐の頂点バッファへのポインタ
 
 	int m_xsiz;				// 面数
 	int m_zsiz;				// 面数

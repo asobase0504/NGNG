@@ -23,16 +23,16 @@
 const D3DXVECTOR3 CObjectPolygon3D::m_Vtx[ANCHOR_MAX][4] =
 {
 	{
-		D3DXVECTOR3(-1.0f, -1.0f, 0.0f),
-		D3DXVECTOR3(+1.0f, -1.0f, 0.0f),
 		D3DXVECTOR3(-1.0f, +1.0f, 0.0f),
 		D3DXVECTOR3(+1.0f, +1.0f, 0.0f),
+		D3DXVECTOR3(-1.0f, -1.0f, 0.0f),
+		D3DXVECTOR3(+1.0f, -1.0f, 0.0f),
 	},
 	{
-		D3DXVECTOR3(0.0f, -1.0f, 0.0f),
-		D3DXVECTOR3(+2.0f, -1.0f, 0.0f),
 		D3DXVECTOR3(0.0f, +1.0f, 0.0f),
 		D3DXVECTOR3(+2.0f, +1.0f, 0.0f),
+		D3DXVECTOR3(0.0f, -1.0f, 0.0f),
+		D3DXVECTOR3(+2.0f, -1.0f, 0.0f),
 	}
 };
 
@@ -111,7 +111,7 @@ void CObjectPolygon3D::Uninit()
 		m_vtxBuff->Release();
 		m_vtxBuff = nullptr;
 	}
-	Release();
+	CObject::Uninit();
 }
 
 //--------------------------------------------------------------

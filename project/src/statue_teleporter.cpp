@@ -55,53 +55,40 @@ HRESULT CStatueTeleporter::Init()
 }
 
 //--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CStatueTeleporter::Uninit()
-{
-	// 終了処理
-	CStatue::Uninit();
-}
-
-//--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
 void CStatueTeleporter::Update()
 {
 	// 情報取得
 	CInput* input = CInput::GetKey();
-	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
 
 	// プレイヤーが触れている時
-	if (Touch(pPlayer))
+	if (Touch())
 	{
-		if (input->Trigger(KEY_BACK, -1))
-		{// プレイヤーが特定のキーを押したとき
-			if (!m_bOnce)
-			{
-				float randX = FloatRandom(1.5f, 0.5f);
-				float randZ = FloatRandom(1.5f, 0.5f);
+		if (!m_bOnce)
+		{
+			float randX = FloatRandom(1.5f, 0.5f);
+			float randZ = FloatRandom(1.5f, 0.5f);
 
-				m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(randX, 0.0f, randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
+			//m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(randX, 0.0f, randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
 
-				CStatus<int>* enemyHp = m_pEnemy->GetHp();
-				enemyHp->SetCurrent(0);
-				m_bOnce = true;
-			}
-
-			m_btimeAdd = true;
+			//CStatus<int>* enemyHp = m_pEnemy->GetHp();
+			//enemyHp->SetCurrent(0);
+			m_bOnce = true;
 		}
+
+		m_btimeAdd = true;
 	}
 
 	if (m_bOnce)
 	{
-		if ((m_pEnemy->IsDied()) && (m_time >= MAX_TIME))
+		if (/*(m_pEnemy->IsDied()) &&*/ (m_time >= MAX_TIME))
 		{
 			//-------------------------
 			// マップ移動処理追加
 			//-------------------------
-			CGame* game = (CGame*)(CApplication::GetInstance()->GetMode());
-			//game-
+			CGame* game = (CGame*)(CApplication::GetInstance()->GetModeClass());
+			game->SetChangeMap();
 		}
 	}
 
@@ -117,15 +104,6 @@ void CStatueTeleporter::Update()
 #ifdef _DEBUG
 	CDebugProc::Print("BloodPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
 #endif // _DEBUG
-}
-
-//--------------------------------------------------------------
-// 描画処理
-//--------------------------------------------------------------
-void CStatueTeleporter::Draw(void)
-{
-	// 描画処理
-	CStatue::Draw();
 }
 
 //--------------------------------------------------------------

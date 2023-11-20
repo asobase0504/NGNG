@@ -84,6 +84,12 @@
     <Filter Include="ソース ファイル\Mode\Game\character\skill\bace">
       <UniqueIdentifier>{fe1c8bd6-869a-423f-8ba2-ade805331be9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Server">
+      <UniqueIdentifier>{4a4a5c46-8098-44a6-910b-c995e9fa86af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\Item\item_object">
+      <UniqueIdentifier>{4843f87a-3975-4ce7-8ba8-1153d1bab0c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -328,6 +334,9 @@
     <ClCompile Include="src\map_fade.cpp">
       <Filter>ソース ファイル\Mode</Filter>
     </ClCompile>
+    <ClCompile Include="src\yamato_skill_2.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClCompile>
     <ClCompile Include="bullet.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClCompile>
@@ -360,6 +369,21 @@
     </ClCompile>
     <ClCompile Include="src\melee_attack.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gold_nugget.cpp">
+      <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_hp_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="connect.cpp">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tcp_client.cpp">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model_date.cpp">
+      <Filter>ソース ファイル\Server</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -594,6 +618,9 @@
     <ClInclude Include="src\map_fade.h">
       <Filter>ソース ファイル\Mode</Filter>
     </ClInclude>
+    <ClInclude Include="src\yamato_skill_2.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClInclude>
     <ClInclude Include="src\bullet.h">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClInclude>
@@ -629,6 +656,21 @@
     </ClInclude>
     <ClInclude Include="src\melee_attack.h">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gold_nugget.h">
+      <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_hp_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="connect.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tcp_client.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model_date.h">
+      <Filter>ソース ファイル\Server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
