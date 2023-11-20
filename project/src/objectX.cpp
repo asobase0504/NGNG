@@ -483,7 +483,7 @@ void CObjectX::SetMaterialDiffuse(unsigned int index, const D3DXCOLOR& inColor)
 //--------------------------------------------------------------
 bool CObjectX::SphereAndAABB(CObjectX* inObjectX, D3DXVECTOR3* outPos)
 {
-	if (!inObjectX->IsCollision())
+	//if (!inObjectX->IsCollision())
 	{
 		return false;
 	}

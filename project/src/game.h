@@ -26,6 +26,7 @@ class CLight;
 class CMap;
 class CPlayerController;
 class CMapFade;
+class CClient;
 
 //==============================================================
 // ÉQÅ[ÉÄÉNÉâÉX
@@ -53,5 +54,6 @@ private:
 	CMap* m_map;
 	CLight* m_light;
 	CMapFade* m_mapFade;
+	CClient*m_tcp;
 };
 #endif

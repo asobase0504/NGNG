@@ -69,6 +69,7 @@ HRESULT CCharacter::Init()
 	m_nonCombat = false;
 	m_nonCombatTime = 0;
 	m_isRunning = false;
+	m_isElite = false;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
