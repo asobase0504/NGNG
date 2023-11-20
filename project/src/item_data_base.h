@@ -51,12 +51,14 @@ public:
 		ITEM_FLOWER,			// â‘
 		ITEM_IRON_WIRE,			// ìSê¸
 		ITEM_HANNYA,			// ÇÕÇÒÇ…Ç·ÇÃÇﬂÇÒ
+		ITEM_ELITE,				// ÉGÉäÅ[ÉgÇ©Ç«Ç§Ç©
 		ITEM_MAX
 	};
 private:
 	explicit CItemDataBase();
 	static CItemDataBase* m_instance;
 	void Init();
+
 public:
 	static CItemDataBase* GetInstance();
 	~CItemDataBase();

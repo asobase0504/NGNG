@@ -149,7 +149,7 @@ void CProcedure::SetNumber(int inNumber)
 	for (int nCnt = 0; nCnt < m_digit; nCnt++)
 	{
 		m_pNumber[nCnt]->SetNumber(aPosTexU[nCnt]);
-		m_pNumber[nCnt]->SetTexPos(10.0f,aPosTexU[nCnt]);
+		m_pNumber[nCnt]->SetTexPos(10.0f, (float)aPosTexU[nCnt]);
 	}
 }
 

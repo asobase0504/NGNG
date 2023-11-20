@@ -69,6 +69,7 @@ HRESULT CCharacter::Init()
 	m_nonCombat = false;
 	m_nonCombatTime = 0;
 	m_isRunning = false;
+	m_isElite = false;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
@@ -105,6 +106,9 @@ HRESULT CCharacter::Init()
 	m_jumpCount.AttachMax();
 	m_money.Init(100);
 	m_money.SetCurrent(50);
+	m_regenetionTime.Init(60);
+	m_regenetion.Init(1);
+	m_RegenetionCnt = 0;
 	m_isStun = false;
 	m_isBlock = false;
 
@@ -216,6 +220,9 @@ void CCharacter::Update()
 
 	// 付与されている状態異常を作動させる
 	Abnormal();
+
+	// 自動回復
+	Regenation();
 }
 
 //--------------------------------------------------------------
@@ -467,4 +474,48 @@ int CCharacter::GetAbnormalTypeCount()
 	}
 
 	return abnormal_type_count;
+}
+
+//--------------------------------------------------------------
+// 回復
+//--------------------------------------------------------------
+void CCharacter::Heal(int heal)
+{
+	int HealHp = heal;
+	int HealHpCheck = m_hp.GetCurrent() + HealHp;
+
+	if (HealHpCheck >= m_hp.GetMax())
+	{
+		HealHp = m_hp.GetMax() - m_hp.GetCurrent();
+	}
+
+	m_hp.AddCurrent(HealHp);
+}
+
+//--------------------------------------------------------------
+// 割合回復
+//--------------------------------------------------------------
+void CCharacter::RatioHeal(float heal)
+{
+	float Raito = m_hp.GetCurrent() * heal;
+	if (Raito <= 1)
+	{
+		Raito = 1.0f;
+	}
+
+	Heal(Raito);
+}
+
+//--------------------------------------------------------------
+// 自動回復
+//--------------------------------------------------------------
+void CCharacter::Regenation()
+{
+	m_RegenetionCnt++;
+
+	if (m_regenetionTime.GetBase() <= m_RegenetionCnt)
+	{
+		m_RegenetionCnt = 0;
+		Heal(m_regenetion.GetBase());
+	}
 }

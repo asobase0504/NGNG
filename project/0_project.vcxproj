@@ -24,6 +24,7 @@
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="connect.cpp" />
     <ClCompile Include="golem_skill_1.cpp" />
+    <ClCompile Include="src\gold_nugget.cpp" />
     <ClCompile Include="enemy_hp_ui.cpp" />
     <ClCompile Include="src\map_fade.cpp" />
     <ClCompile Include="src\model_date.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="src\file.h" />
     <ClInclude Include="src\font.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\gold_nugget.h" />
     <ClInclude Include="src\hp_ui.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\input\DirectInput.h" />

@@ -11,6 +11,10 @@
     [
       "NUMBER",
       "data\/TEXTURE\/number.png"
-    ]
+    ],
+	[
+	 "TOON",
+	 "data\/TEXTURE\/toon.png"
+	]
   ]
 }
