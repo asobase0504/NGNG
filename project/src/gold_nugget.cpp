@@ -8,62 +8,68 @@
 //==============================================================
 // include
 //==============================================================
-#include "item.h"
+#include "gold_nugget.h"
+
+#include "application.h"
+#include "game.h"
+#include "player.h"
+#include "PlayerController.h"
+
+#include "collision_box.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItem::CItem(CTaskGroup::EPriority list) : 
-	m_getFunc(nullptr),
-	m_lostFunc(nullptr),
-	m_allwayFunc(nullptr),
-	m_damageFunc(nullptr),
-	m_hitFunc(nullptr),
-	m_rarity(RARITY_NONE)
+CGoldNugget::CGoldNugget(CTaskGroup::EPriority list)
 {
 }
 
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CItem::~CItem()
+CGoldNugget::~CGoldNugget()
 {
 }
 
 //--------------------------------------------------------------
 // 初期化
 //--------------------------------------------------------------
-HRESULT CItem::Init()
+HRESULT CGoldNugget::Init()
 {
-	return S_OK;
-}
+	LoadModel("BOX");
 
-//--------------------------------------------------------------
-// 終了
-//--------------------------------------------------------------
-void CItem::Uninit()
-{
+	// 当たり判定
+	m_collision = CCollisionBox::Create(GetPos(), GetRot(), D3DXVECTOR3(10.0f, 10.0f, 10.0f), GetMtxWorld());
+	m_collision->SetParent(&m_pos);
+
+	return S_OK;
 }
 
 //--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
-void CItem::Update()
+void CGoldNugget::Update()
 {
+	CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
+	CPlayer* player = game->GetController()->GetToOrder();
+	if (m_collision->ToCylinder(player->GetCollision()))
+	{
+		player->GetMoney()->AddItemEffect(30);
+	}
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CItem* CItem::Create(CItemDataBase::EItemType inId)
+CGoldNugget* CGoldNugget::Create()
 {
-	CItem* pItemData = nullptr;
-	pItemData = new CItem;
+	CGoldNugget* pGoldNugget = nullptr;
+	pGoldNugget = new CGoldNugget;
 
-	if (pItemData != nullptr)
+	if (pGoldNugget != nullptr)
 	{
-		pItemData->Init();
+		pGoldNugget->Init();
 	}
 
-	return pItemData;
+	return pGoldNugget;
 }
