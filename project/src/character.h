@@ -158,8 +158,6 @@ public:
 	// 走っているかどうか
 	bool GetIsRunning() { return m_isRunning; }
 
-	// スキル
-	CSkill* GetSkill(int num) { return m_skill[num]; }
 
 	// 回復
 	void Regenation();
