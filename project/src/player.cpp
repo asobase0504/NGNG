@@ -128,6 +128,7 @@ void CPlayer::Update()
 		return;
 	}
 
+	
 	if (!m_isStun)
 	{
 

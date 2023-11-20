@@ -86,6 +86,26 @@ void CMesh::Draw()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 	D3DXMATRIX mtxRot, mtxTrans;	// 計算用マトリックス
 
+	//-------------------------------------------------
+	// シェーダの設定
+	//-------------------------------------------------
+	extern LPD3DXEFFECT pEffect;		// シェーダー
+
+	if (pEffect == nullptr)
+	{
+		assert(false);
+		return;
+	}
+
+	if (m_TimeCnt > 0)
+	{
+		m_TimeCnt--;
+	}
+	if (m_TimeCnt <= m_TimeTarget)
+	{
+		m_TimeCnt++;
+	}
+
 	// ワイヤーフレーム
 	//pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	
