@@ -132,7 +132,7 @@ void CObject2d::Uninit()
 		m_vtxBuff->Release();
 		m_vtxBuff = nullptr;
 	}
-	Release();
+	CTask::Uninit();
 }
 
 //--------------------------------------------------------------

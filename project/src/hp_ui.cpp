@@ -26,10 +26,6 @@ HRESULT CHPUI::Init()
 	return S_OK;
 }
 
-void CHPUI::Uninit()
-{
-}
-
 void CHPUI::Update()
 {
 	float rate = (float)m_hp->GetCurrent() / (float)m_hp->GetMax();

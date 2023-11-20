@@ -27,7 +27,6 @@ public:
 	~CMONEYUI();
 
 	HRESULT Init() override;
-	void Uninit() override;
 	void Update() override;
 
 	static CMONEYUI* Create(CStatus<int>* inMoney);

@@ -111,7 +111,7 @@ void CObjectPolygon3D::Uninit()
 		m_vtxBuff->Release();
 		m_vtxBuff = nullptr;
 	}
-	Release();
+	CObject::Uninit();
 }
 
 //--------------------------------------------------------------

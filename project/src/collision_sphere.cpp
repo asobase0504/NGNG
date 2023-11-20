@@ -17,19 +17,10 @@ HRESULT CCollisionSphere::Init()
 	for (int i = 0; i < 8; i++)
 	{
 		m_line[i] = CLine::Create();
+		SetEndChildren(m_line[i]);
 	}
 
 	return S_OK;
-}
-
-void CCollisionSphere::Uninit()
-{
-	CCollision::Uninit();
-
-	for (int i = 0; i < 8; i++)
-	{
-		m_line[i]->Uninit();
-	}
 }
 
 void CCollisionSphere::Update()

@@ -71,6 +71,8 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init()
 {
+	CInput::GetKey()->SetCursorErase(false);
+	CInput::GetKey()->LockCursorPos(true);
 	m_mapFade = CMapFade::Create();
 	m_mapFade->NextMap("data/FILE/map/map01.json");
 
@@ -110,7 +112,8 @@ HRESULT CGame::Init()
 //--------------------------------------------------------------
 void CGame::Uninit()
 {
-
+	CInput::GetKey()->SetCursorErase(true);
+	CInput::GetKey()->LockCursorPos(false);
 }
 
 //--------------------------------------------------------------

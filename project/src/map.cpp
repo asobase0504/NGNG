@@ -151,6 +151,9 @@ void CMap::Load(std::string path)
 	m_nextMapPath = map["NEXT_MAP"];
 }
 
+//--------------------------------------------------------------
+// à·Ç§ä÷åWÇÃÇ‡ÇÃÇ…ä÷êîÇçsÇ§
+//--------------------------------------------------------------
 void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
 {
 	std::list<CCharacter*> charaList = GetCharacterList();
@@ -158,24 +161,14 @@ void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<v
 	for (CCharacter* chara : charaList)
 	{// çUåÇîÕàÕÇ…ìGÇ™Ç¢ÇÈÇ©îªíËÇ∑ÇÈ
 
-	 // ìØÇ∂ä÷åWê´ÇæÇ¡ÇΩÇÁçUåÇÇìñÇƒÇ»Ç¢ÅB
-		switch (inRelation)
+		if (chara->IsDeleted())
 		{
-		case CCharacter::ERelation::FRIENDLY:
-			if (chara->GetRelation() == CCharacter::ERelation::FRIENDLY)
-			{
-				continue;
-			}
-			break;
-		case CCharacter::ERelation::HOSTILE:
-			if (chara->GetRelation() == CCharacter::ERelation::HOSTILE)
-			{
-				continue;
-			}
-			break;
-		default:
-			assert(false);
-			break;
+			continue;
+		}
+
+		if (chara->GetRelation() == inRelation)
+		{
+			continue;
 		}
 
 		inFunc(chara);

@@ -110,6 +110,11 @@ void CInputMouse::Update(void)
 	DIMOUSESTATE2 aKeyState;		// マウス入力情報
 	int nCntKey;
 
+	if (m_lockCusor)
+	{
+		LockCusorPos();
+	}
+
 	// 入力デバイスからデータを取得
 	if (SUCCEEDED(m_pDevMouse->GetDeviceState(sizeof(aKeyState), &aKeyState)))
 	{
@@ -252,4 +257,29 @@ int CInputMouse::GetMouseWheel(void)
 D3DXVECTOR3 CInputMouse::GetMouseMove(void)
 {
 	return D3DXVECTOR3((float)(m_aKeyState.lX), (float)(m_aKeyState.lY), (float)(m_aKeyState.lZ));
+}
+
+//=============================================================================
+// マウスカーソルの位置固定
+// Author : YudaKaito
+//=============================================================================
+void CInputMouse::LockCusorPos()
+{
+	D3DXVECTOR2 pos;
+
+	pos.x = SCREEN_WIDTH / 2;
+	pos.y = SCREEN_HEIGHT / 2;
+
+	WINDOWINFO windowInfo;
+
+	//ウィンドウの位置を取得
+	windowInfo.cbSize = sizeof(WINDOWINFO);
+	GetWindowInfo(m_hWnd, &windowInfo);
+
+	//マウスの移動先の絶対座標（モニター左上からの座標）
+	pos.x += windowInfo.rcWindow.left;
+	pos.y += windowInfo.rcWindow.top + 35; //ウィンドウのタイトルバーの分（35px）をプラス
+
+	SetCursorPos((int)pos.x, (int)pos.y);
+
 }

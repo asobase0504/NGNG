@@ -10,6 +10,7 @@
 //==============================================================
 #include "skill.h"
 #include "skill_data_base.h"
+#include "skill_entity.h"
 #include "player_manager.h"
 #include "enemy_manager.h"
 #include "enemy.h"
@@ -93,7 +94,10 @@ void CSkill::Skill1()
 		// 当たり判定の持続時間の管理
 		CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 		pSkillData->GetDuration(m_Name);
-		pSkillData->GetAbility(m_Name)(m_apChara);
+		CSkillEntity* entity = pSkillData->GetAbility(m_Name)(m_apChara);
+
+		// 親子関係の構築
+		SetEndChildren(entity);
 
 		// クールタイムの設定
 		m_CT = pSkillData->GetCT(m_Name) * m_atkSpd;

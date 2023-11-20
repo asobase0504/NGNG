@@ -8,7 +8,8 @@ CCollision::CCollision() :
 	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_size(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_isTop(false),
-	m_isUnder(false)
+	m_isUnder(false),
+	m_hitMeshIdx(-1)
 {
 	D3DXMatrixIdentity(&m_mtx);
 }
@@ -30,13 +31,11 @@ void CCollision::Update()
 
 const D3DXVECTOR3 & CCollision::GetPosWorld()
 {
+	m_posWorld = m_posLocal;
+	if (m_posParent != nullptr)
 	{
-		m_posWorld = m_posLocal;
-		if (m_posParent != nullptr)
-		{
-			m_posWorld += *m_posParent;
-		}
-
-		return m_posWorld;
+		m_posWorld += *m_posParent;
 	}
+
+	return m_posWorld;
 }

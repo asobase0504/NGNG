@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// ƒIƒuƒWƒFƒNƒgXˆ— [objectX.cpp]
+// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆXå‡¦ç† [objectX.cpp]
 // Author : Yuda Kaito
 //
 //**************************************************************
@@ -21,7 +21,7 @@
 #include "camera_game.h"
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 	CObject(nPriority),
@@ -38,7 +38,7 @@ CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 	m_isHasOutLine(false),
 	m_isHasShadow(false)
 {
-	//ƒIƒuƒWƒFƒNƒg‚Ìƒ^ƒCƒvƒZƒbƒgˆ—
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¿ã‚¤ãƒ—ã‚»ãƒƒãƒˆå‡¦ç†
 	CObject::SetType(CObject::MODEL);
 	D3DXMatrixIdentity(&m_mtxWorld);
 	D3DXMatrixIdentity(&m_mtxRot);
@@ -46,16 +46,16 @@ CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CObjectX::~CObjectX()
 {
 }
 
 //--------------------------------------------------------------
-// ƒIƒuƒWƒFƒNƒg‚Ì‰Šú‰»
+// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–
 // Author : Yuda Kaito
-// ŠT—v : ‰Šú‰»‚ðs‚¤
+// æ¦‚è¦ : åˆæœŸåŒ–ã‚’è¡Œã†
 //--------------------------------------------------------------
 HRESULT CObjectX::Init()
 {
@@ -65,15 +65,15 @@ HRESULT CObjectX::Init()
 }
 
 //--------------------------------------------------------------
-// •`‰æ
+// æç”»
 // Author : Yuda Kaito
-// ŠT—v : •`‰æ‚ðs‚¤
+// æ¦‚è¦ : æç”»ã‚’è¡Œã†
 //--------------------------------------------------------------
 void CObjectX::Draw()
 {
-	extern LPD3DXEFFECT pEffect;		// ƒVƒF[ƒ_[
+	extern LPD3DXEFFECT pEffect;		// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 
-	// ƒfƒoƒCƒX‚ÌŽæ“¾
+	// ãƒ‡ãƒã‚¤ã‚¹ã®å–å¾—
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 
 	if (pEffect == nullptr)
@@ -100,50 +100,51 @@ void CObjectX::Draw()
 		m_isBlackFlash = false;
 	}
 
-	/* pEffect‚É’l‚ª“ü‚Á‚Ä‚é */
+	/* pEffectã«å€¤ãŒå…¥ã£ã¦ã‚‹ */
 
 	//-------------------------------------------------
-	// ƒVƒF[ƒ_‚ÌÝ’è
+	// ã‚·ã‚§ãƒ¼ãƒ€ã®è¨­å®š
 	//-------------------------------------------------
 
-	// ŒvŽZ—pƒ}ƒgƒŠƒbƒNƒX
+	// è¨ˆç®—ç”¨ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
 	D3DXMATRIX mtxScale;
 	D3DXMATRIX mtxSize;
 	D3DXMATRIX mtxTrans;
 	D3DXMATRIX mtxRot;
 
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity(&m_mtxWorld);
 	D3DXVECTOR3 CameraRot = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot();
 
-	// ‘å‚«‚³‚ð”½‰f
+	// å¤§ãã•ã‚’åæ˜ 
 	D3DXMatrixScaling(&mtxScale, m_scale.x, m_scale.y, m_scale.z);
-	// ‘å‚«‚³‚ð”½‰f
+	// å¤§ãã•ã‚’åæ˜ 
 	D3DXMatrixScaling(&mtxSize, 1.03f,1.03f,1.03f);
-	// Œü‚«‚ð”½‰f
+	// å‘ãã‚’åæ˜ 
 	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
-	// ˆÊ’u‚ð”½‰f
+	// ä½ç½®ã‚’åæ˜ 
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
 
 	D3DXMATRIX mtxParent;
 	D3DXMatrixIdentity(&mtxParent);
 
 	if (m_parent != nullptr)
-	{// ToDo : ‚±‚±‚ð’¼‚³‚È‚¢‚Æƒp[ƒc‚ª“®‚©‚È‚¢‚Ì‚Å‹C‚ð•t‚¯‚æ‚¤I‰´‚ª‚â‚éA‚»‚Ì‚¤‚¿‚ÈB
+	{// ToDo : ã“ã“ã‚’ç›´ã•ãªã„ã¨ãƒ‘ãƒ¼ãƒ„ãŒå‹•ã‹ãªã„ã®ã§æ°—ã‚’ä»˜ã‘ã‚ˆã†ï¼ä¿ºãŒã‚„ã‚‹ã€ãã®ã†ã¡ãªã€‚
 		mtxParent = m_parent->GetMtxWorld();
 
-		// s—ñŠ|‚¯ŽZŠÖ”
+		// è¡Œåˆ—æŽ›ã‘ç®—é–¢æ•°
 		//D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
 
 		pEffect->SetMatrix(m_hParent, &mtxParent);
+
 	}
 
 	//------------------------------------------------------------------------------------------//
 
-	// ƒ^ƒXƒNƒOƒ‹[ƒvî•ñ
+	// ã‚¿ã‚¹ã‚¯ã‚°ãƒ«ãƒ¼ãƒ—æƒ…å ±
 	CTaskGroup* taskGroup = CApplication::GetInstance()->GetTaskGroup();
 
-	// ƒJƒƒ‰î•ñ
+	// ã‚«ãƒ¡ãƒ©æƒ…å ±
 	CCamera* pCamera = (CCamera*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_CAMERA, GetPriority());
 
 	D3DXMATRIX viewMatrix;
@@ -158,8 +159,8 @@ void CObjectX::Draw()
 	pEffect->SetTechnique(m_hTechnique);
 	pEffect->Begin(NULL, 0);
 
-	// ƒ[ƒ‹ƒhŽË‰e•ÏŠ·s—ñ
-	// ƒVƒF[ƒ_[‚És—ñ‚ð“n‚·
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰å°„å½±å¤‰æ›è¡Œåˆ—
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«è¡Œåˆ—ã‚’æ¸¡ã™
 	pEffect->SetMatrix(m_hWorld, &m_mtxWorld);
 	pEffect->SetMatrix(m_hScale, &mtxScale);
 	pEffect->SetMatrix(m_hSize, &mtxSize);
@@ -168,10 +169,10 @@ void CObjectX::Draw()
 	pEffect->SetMatrix(m_hProj, &projMatrix);
 	pEffect->SetMatrix(m_hView, &viewMatrix);
 
-	// ƒVƒF[ƒ_[‚É–Ú“I‚Ì’l‚ð“n‚·
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«ç›®çš„ã®å€¤ã‚’æ¸¡ã™
 	pEffect->SetFloat(m_hTimeTarget, m_TimeTarget);
 
-	// ƒVƒF[ƒ_[‚ÉƒJƒƒ‰À•W‚ð“n‚·
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«ã‚«ãƒ¡ãƒ©åº§æ¨™ã‚’æ¸¡ã™
 	D3DXVECTOR3 c = pCamera->GetPos();
 	D3DXVECTOR3 camerapos = D3DXVECTOR3(c.x, c.y, c.z);
 	D3DXVECTOR3 objpos = GetPos();
@@ -185,10 +186,10 @@ void CObjectX::Draw()
 
 	pEffect->SetVector(m_hCameraVec, &D3DXVECTOR4(vec.x, vec.y, vec.z,0.0f));
 
-	// ƒVƒF[ƒ_[‚É•`‰æ‚©‚çŒo‰ß‚µ‚½ŽžŠÔ‚ð“n‚·
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«æç”»ã‹ã‚‰çµŒéŽã—ãŸæ™‚é–“ã‚’æ¸¡ã™
 	pEffect->SetFloat(m_hTime, m_TimeCnt);
 
-	// ƒ‰ƒCƒgî•ñ
+	// ãƒ©ã‚¤ãƒˆæƒ…å ±
 	CLight* lightClass = (CLight*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_LIGHT, GetPriority());
 
 	if (lightClass == nullptr)
@@ -197,17 +198,17 @@ void CObjectX::Draw()
 	}
 	D3DLIGHT9 light = lightClass->GetLight(0);
 
-	// ƒ‰ƒCƒg‚Ì•ûŒü
+	// ãƒ©ã‚¤ãƒˆã®æ–¹å‘
 	D3DXVECTOR4 lightDir = D3DXVECTOR4(light.Direction.x, light.Direction.y, light.Direction.z, 0);
-	// ƒ‰ƒCƒg‚Ì•ûŒü‚ðƒVƒF[ƒ_[‚É“n‚·
+	// ãƒ©ã‚¤ãƒˆã®æ–¹å‘ã‚’ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«æ¸¡ã™
 	pEffect->SetVector(m_hvLightDir, &lightDir);
 
-	//ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾‚·‚é
+	//ãƒžãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—ã™ã‚‹
 	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
 
 	for (int nCntMat = 0; nCntMat < (int)m_numMat; nCntMat++)
 	{
-		// ƒ‚ƒfƒ‹‚ÌF‚ÌÝ’è 
+		// ãƒ¢ãƒ‡ãƒ«ã®è‰²ã®è¨­å®š 
 		{
 			D3DXVECTOR4 Diffuse;
 
@@ -233,20 +234,20 @@ void CObjectX::Draw()
 
 		LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
 		if (texture != nullptr)
-		{// ƒeƒNƒXƒ`ƒƒ‚Ì“K‰ž
+		{// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é©å¿œ
 			tex0 = texture;
 		}
 
-		// ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 		pEffect->SetTexture(m_hTexture, tex0);
-		// ’Êíƒ‚ƒfƒ‹‚Ì•`‰æ
+		// é€šå¸¸ãƒ¢ãƒ‡ãƒ«ã®æç”»
 		pEffect->BeginPass(1);
-		m_mesh->DrawSubset(nCntMat);	//ƒ‚ƒfƒ‹ƒp[ƒc‚Ì•`‰æ
+		m_mesh->DrawSubset(nCntMat);	//ãƒ¢ãƒ‡ãƒ«ãƒ‘ãƒ¼ãƒ„ã®æç”»
 		pEffect->EndPass();
 
-		// •ƒ‚ƒfƒ‹‚Ì•`‰æ
+		// é»’ãƒ¢ãƒ‡ãƒ«ã®æç”»
 		pEffect->BeginPass(3);
-		m_mesh->DrawSubset(nCntMat);	//ƒ‚ƒfƒ‹ƒp[ƒc‚Ì•`‰æ
+		m_mesh->DrawSubset(nCntMat);	//ãƒ¢ãƒ‡ãƒ«ãƒ‘ãƒ¼ãƒ„ã®æç”»
 		pEffect->EndPass();
 	}
 
@@ -254,17 +255,17 @@ void CObjectX::Draw()
 }
 
 //--------------------------------------------------------------
-// •`‰æ
+// æç”»
 // Author : Yuda Kaito
-// ŠT—v : •`‰æ‚ðs‚¤
+// æ¦‚è¦ : æç”»ã‚’è¡Œã†
 //--------------------------------------------------------------
 void CObjectX::DrawMaterial()
 {
-	extern LPD3DXEFFECT pEffect;		// ƒVƒF[ƒ_[
+	extern LPD3DXEFFECT pEffect;		// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 }
 
 //--------------------------------------------------------------
-// scale‚ÌÝ’è
+// scaleã®è¨­å®š
 //--------------------------------------------------------------
 void CObjectX::SetScale(const D3DXVECTOR3& inScale)
 {
@@ -280,7 +281,7 @@ void CObjectX::SetScale(const D3DXVECTOR3& inScale)
 }
 
 //--------------------------------------------------------------
-// Œü‚«‚ÌÝ’è
+// å‘ãã®è¨­å®š
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::SetRot(const D3DXVECTOR3 & inRot)
@@ -293,7 +294,7 @@ void CObjectX::SetRot(const D3DXVECTOR3 & inRot)
 }
 
 //--------------------------------------------------------------
-// ’¸“_Å‘å¬’l‚ÌŒvŽZˆ—
+// é ‚ç‚¹æœ€å¤§å°å€¤ã®è¨ˆç®—å‡¦ç†
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::SetMtxRot(const D3DXVECTOR3& inRot)
@@ -304,7 +305,7 @@ void CObjectX::SetMtxRot(const D3DXVECTOR3& inRot)
 }
 
 //--------------------------------------------------------------
-// ’¸“_Å‘å¬’l‚ÌŒvŽZˆ—
+// é ‚ç‚¹æœ€å¤§å°å€¤ã®è¨ˆç®—å‡¦ç†
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::CalculationVtx()
@@ -313,8 +314,8 @@ void CObjectX::CalculationVtx()
 
 	D3DXMatrixIdentity(&mtxWorld);
 
-	// Œü‚«‚Ì”½‰f
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &m_mtxRot);		// s—ñŠ|‚¯ŽZŠÖ”
+	// å‘ãã®åæ˜ 
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &m_mtxRot);		// è¡Œåˆ—æŽ›ã‘ç®—é–¢æ•°
 
 	D3DXVec3TransformCoord(&m_maxVtx, &m_maxVtx, &mtxWorld);
 	D3DXVec3TransformCoord(&m_minVtx, &m_minVtx, &mtxWorld);
@@ -342,34 +343,34 @@ void CObjectX::CalculationVtx()
 }
 
 //--------------------------------------------------------------
-// ¶¬ˆ—
+// ç”Ÿæˆå‡¦ç†
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 CObjectX * CObjectX::Create(D3DXVECTOR3 pos, CTaskGroup::EPriority nPriority)
 {
-	// ƒ|ƒCƒ“ƒ^éŒ¾
+	// ãƒã‚¤ãƒ³ã‚¿å®£è¨€
 	CObjectX *pObjectX = nullptr;
 
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	pObjectX = new CObjectX(nPriority);
 
 	if (pObjectX != nullptr)
-	{// ƒ|ƒCƒ“ƒ^‚ª‘¶Ý‚µ‚½‚çŽÀs
+	{// ãƒã‚¤ãƒ³ã‚¿ãŒå­˜åœ¨ã—ãŸã‚‰å®Ÿè¡Œ
 		pObjectX->Init();
 		pObjectX->SetPos(pos);
 		pObjectX->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 	else
-	{// ƒ|ƒCƒ“ƒ^‚ª‹•–³‚¾‚Á‚½‚çŽÀs
+	{// ãƒã‚¤ãƒ³ã‚¿ãŒè™šç„¡ã ã£ãŸã‚‰å®Ÿè¡Œ
 		assert(false);
 	}
 
-	// ƒ|ƒCƒ“ƒ^‚ð•Ô‚·
+	// ãƒã‚¤ãƒ³ã‚¿ã‚’è¿”ã™
 	return pObjectX;
 }
 
 //--------------------------------------------------------------
-// ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
+// ãƒ¢ãƒ‡ãƒ«ã®èª­ã¿è¾¼ã¿
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::LoadModel(std::string aFileName)
@@ -386,24 +387,24 @@ void CObjectX::LoadModel(std::string aFileName)
 }
 
 //--------------------------------------------------------------
-// •½s“Š‰eˆ—
+// å¹³è¡ŒæŠ•å½±å‡¦ç†
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::Projection(void)
 {
-	// ƒfƒoƒCƒX‚ÌŽæ“¾
+	// ãƒ‡ãƒã‚¤ã‚¹ã®å–å¾—
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 
-	D3DXMATRIX mtxTrans;	// ŒvŽZ—pƒ}ƒgƒŠƒbƒNƒX
+	D3DXMATRIX mtxTrans;	// è¨ˆç®—ç”¨ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
 
-	// •Ï”éŒ¾
+	// å¤‰æ•°å®£è¨€
 	D3DXMATRIX mtxShadow;
 	D3DXPLANE planeField;
 	D3DXVECTOR4 vecLight;
 	D3DXVECTOR3 pos, normal;
 	D3DMATERIAL9 Material;
 
-	// ƒVƒƒƒhƒEƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ã‚·ãƒ£ãƒ‰ã‚¦ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity(&mtxShadow);
 
 	vecLight = -D3DXVECTOR4(0.2f, -0.5f, 0.3f, 0.0f);
@@ -417,49 +418,49 @@ void CObjectX::Projection(void)
 	D3DXPlaneFromPointNormal(&planeField, &pos, &normal);
 	D3DXMatrixShadow(&mtxShadow, &vecLight, &planeField);
 
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚ÆŠ|‚¯‡‚í‚¹‚é
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã¨æŽ›ã‘åˆã‚ã›ã‚‹
 	D3DXMatrixMultiply(&mtxShadow, &m_mtxWorld, &mtxShadow);
 
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚ÌÝ’èiƒ[ƒ‹ƒhÀ•Ws—ñ‚ÌÝ’èj
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®šï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™è¡Œåˆ—ã®è¨­å®šï¼‰
 	pDevice->SetTransform(D3DTS_WORLD, &mtxShadow);
 
-	// Œ»Ý‚Ìƒ}ƒeƒŠƒAƒ‹‚ð•ÛŽ
+	// ç¾åœ¨ã®ãƒžãƒ†ãƒªã‚¢ãƒ«ã‚’ä¿æŒ
 	D3DMATERIAL9 matDef;
 	pDevice->GetMaterial(&matDef);
 
 	if (m_buffMat != nullptr)
 	{
-		// ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// ãƒžãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
 
 		for (int nCntMat = 0; nCntMat < (int)m_numMat; nCntMat++)
 		{
-			// ƒ}ƒeƒŠƒAƒ‹‚ÌÝ’è
+			// ãƒžãƒ†ãƒªã‚¢ãƒ«ã®è¨­å®š
 			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
 			Material = pMat[nCntMat].MatD3D;
 			Material.Diffuse = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
 			Material.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
 
-			// ƒ}ƒeƒŠƒAƒ‹‚ÌÝ’è
+			// ãƒžãƒ†ãƒªã‚¢ãƒ«ã®è¨­å®š
 			pDevice->SetMaterial(&Material);
 
-			// ƒ‚ƒfƒ‹ƒp[ƒc‚Ì•`‰æ
+			// ãƒ¢ãƒ‡ãƒ«ãƒ‘ãƒ¼ãƒ„ã®æç”»
 			m_mesh->DrawSubset(nCntMat);
 		}
 	}
 
-	// •ÛŽ‚µ‚Ä‚¢‚½ƒ}ƒeƒŠƒAƒ‹‚ð–ß‚·
+	// ä¿æŒã—ã¦ã„ãŸãƒžãƒ†ãƒªã‚¢ãƒ«ã‚’æˆ»ã™
 	pDevice->SetMaterial(&matDef);
 }
 
 //--------------------------------------------------------------
-// F–¡iŠgŽU”½ŽËŒõj‚ÌÝ’è
+// è‰²å‘³ï¼ˆæ‹¡æ•£åå°„å…‰ï¼‰ã®è¨­å®š
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::SetMaterialDiffuse(unsigned int index, const D3DXCOLOR& inColor)
 {
-	// •ÏX—\’è‚Ìƒ}ƒeƒŠƒAƒ‹‚ª‚È‚¢ê‡
+	// å¤‰æ›´äºˆå®šã®ãƒžãƒ†ãƒªã‚¢ãƒ«ãŒãªã„å ´åˆ
 	if (index >= m_numMat)
 	{
 		assert(false);
@@ -477,7 +478,7 @@ void CObjectX::SetMaterialDiffuse(unsigned int index, const D3DXCOLOR& inColor)
 }
 
 //--------------------------------------------------------------
-// Sphere‚ÆAABB‚Ì“–‚½‚è”»’è
+// Sphereã¨AABBã®å½“ãŸã‚Šåˆ¤å®š
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 bool CObjectX::SphereAndAABB(CObjectX* inObjectX, D3DXVECTOR3* outPos)
@@ -488,7 +489,7 @@ bool CObjectX::SphereAndAABB(CObjectX* inObjectX, D3DXVECTOR3* outPos)
 	}
 
 	D3DXVECTOR3 dist(0.0f, 0.0f, 0.0f);
-	float length = AABBAndPointLength(inObjectX, &dist);	// Å’Z‹——£
+	float length = AABBAndPointLength(inObjectX, &dist);	// æœ€çŸ­è·é›¢
 
 	if (m_maxVtx.x * 1.4f > length)
 	{
@@ -504,7 +505,7 @@ bool CObjectX::SphereAndAABB(CObjectX* inObjectX, D3DXVECTOR3* outPos)
 }
 
 //--------------------------------------------------------------
-// Ray‚ÆAABB‚Ì“–‚½‚è”»’è
+// Rayã¨AABBã®å½“ãŸã‚Šåˆ¤å®š
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 bool CObjectX::RayAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inNormal, D3DXVECTOR3* outPos)
@@ -569,12 +570,12 @@ bool CObjectX::RayAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inNormal,
 }
 
 //--------------------------------------------------------------
-// ü•ª‚ÆAABB‚Ì“–‚½‚è”»’è
+// ç·šåˆ†ã¨AABBã®å½“ãŸã‚Šåˆ¤å®š
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 bool CObjectX::SegmentAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inPos2, D3DXVECTOR3* outPos)
 {
-	// ü•ª‚Ì—¼’[“_‚ªAABB“à‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ð”»’è‚·‚éB
+	// ç·šåˆ†ã®ä¸¡ç«¯ç‚¹ãŒAABBå†…ã«å«ã¾ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’åˆ¤å®šã™ã‚‹ã€‚
 	{
 		D3DXVECTOR3 min = m_pos + m_minVtx;
 		D3DXVECTOR3 max = m_pos + m_maxVtx;
@@ -664,14 +665,14 @@ bool CObjectX::SegmentAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inPos
 }
 
 //--------------------------------------------------------------
-// Œ»Ý’n‚ÆAABB‚ÌÅ¬‹——£
+// ç¾åœ¨åœ°ã¨AABBã®æœ€å°è·é›¢
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 float CObjectX::AABBAndPointLength(CObjectX* inObject, D3DXVECTOR3* outDist)
 {
-	float SqLen = 0.0f;	// ’·‚³‚Ì‚×‚«æ‚Ì’l‚ðŠi”[
+	float SqLen = 0.0f;	// é•·ã•ã®ã¹ãä¹—ã®å€¤ã‚’æ ¼ç´
 
-						// ŠeŽ²‚Å“_‚ªÅ¬’lˆÈ‰º‚à‚µ‚­‚ÍÅ‘å’lˆÈã‚È‚ç‚ÎA·‚ðl—¶
+						// å„è»¸ã§ç‚¹ãŒæœ€å°å€¤ä»¥ä¸‹ã‚‚ã—ãã¯æœ€å¤§å€¤ä»¥ä¸Šãªã‚‰ã°ã€å·®ã‚’è€ƒæ…®
 
 	D3DXVECTOR3 min = inObject->m_pos + inObject->m_minVtx;
 	D3DXVECTOR3 max = inObject->m_pos + inObject->m_maxVtx;

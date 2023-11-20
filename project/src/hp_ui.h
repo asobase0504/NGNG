@@ -29,7 +29,6 @@ public:
 	~CHPUI();
 
 	HRESULT Init() override;
-	void Uninit() override;
 	void Update() override;
 
 	static CHPUI* Create(CStatus<int>* inHp);
