@@ -23,7 +23,7 @@ class CObjectX;
 class CCollisionCylinder;
 class CSkill;
 class CAbnormal;
-class CSkill;
+class CSkinMesh;
 
 //==============================================================
 // プレイヤークラス
