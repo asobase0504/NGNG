@@ -27,7 +27,7 @@ const int CMesh::START_VERTICAL(15);
 // コンストラクタ
 //--------------------------------------------------------------
 CMesh::CMesh(CTaskGroup::EPriority nPriority) :
-	CObjectPolygon3D(nPriority),
+	CObjectPolygon3D(CTaskGroup::EPriority::LEVEL_3D_2),
 	m_xsiz(0),			// X軸の面数
 	m_zsiz(0),			// Y軸の面数
 	m_vtxCountX(0),		// X軸の辺の頂点数
@@ -59,8 +59,6 @@ HRESULT CMesh::Init()
 	m_vtxBuff = nullptr;		// 頂点バッファーへのポインタ
 	m_idxBuff = nullptr;		// インデックスバッファ
 	m_vtxBuffCone = nullptr;	// 円錐の頂点バッファへのポインタ
-
-	m_collisionMesh = CCollisionMesh::Create(m_polygonCount, m_vtxBuff, m_idxBuff, m_mtxWorld);
 
 	return S_OK;
 }

@@ -77,8 +77,10 @@ HRESULT CCharacter::Init()
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(50);
+	m_hp.AttachMax();
 	m_addHp.Init(100);
 	m_addHp.SetCurrent(100);
+	m_addHp.AttachMax();
 	m_addHpSubTime.Init(100);
 	m_addHpSubTime.SetCurrent(100);
 	m_barrier.Init(100);
@@ -122,19 +124,10 @@ HRESULT CCharacter::Init()
 
 	m_state = GROUND;
 
+	// 親子関係の構築
+	SetEndChildren(m_apModel[0]);
+
 	return S_OK;
-}
-
-//--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CCharacter::Uninit()
-{
-	// 破棄処理
-	CObject::Release();
-
-	m_apModel[0]->Uninit();
-	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------
@@ -146,7 +139,6 @@ void CCharacter::Update()
 	CObject::Update();
 
 	bool isGround = false;
-
 
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
@@ -170,6 +162,7 @@ void CCharacter::Update()
 		SetMoveXZ(0.0f, 0.0f);
 	}
 
+	// マップモデル
 	for (int i = 0; i < map->GetNumModel(); i++)
 	{
 		if (m_collision->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
@@ -183,6 +176,7 @@ void CCharacter::Update()
 		}
 	}
 
+	// マップメッシュ
 	for (int i = 0; i < map->GetNumMesh(); i++)
 	{
 		if (m_collision->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
@@ -356,7 +350,7 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	// エネミーにダメージを与える。
 	pEnemy->Damage(Damage);
 
-	// 付与されている状態異常を作動させる
+	// 攻撃付与されている状態異常を作動させる
 	for (int i = 0; i < m_attackAbnormal.size(); i++)
 	{
 		if (!m_attackAbnormal[i])
@@ -378,7 +372,7 @@ void CCharacter::Died()
 	m_isDied = true;
 	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
 	list.remove(this);
-	Uninit();
+	Release();
 }
 
 void CCharacter::Move()

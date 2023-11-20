@@ -28,7 +28,6 @@ public:
 	~CSKILLUI();
 
 	HRESULT Init() override;
-	void Uninit() override;
 	void Update() override;
 
 	static CSKILLUI* Create(CSkill* inSkill);

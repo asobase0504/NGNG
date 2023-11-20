@@ -31,7 +31,7 @@ public:
 public:
 	virtual void OnHit() {}	// ƒƒbƒVƒ…‚Ì“–‚½‚Á‚½‚Ì”»’è
 
-	CMesh(CTaskGroup::EPriority nPriority = CTaskGroup::EPriority::LEVEL_3D_1);
+	CMesh(CTaskGroup::EPriority nPriority = CTaskGroup::EPriority::LEVEL_3D_2);
 	~CMesh() override;
 
 	HRESULT Init() override;		// ‰Šú‰»

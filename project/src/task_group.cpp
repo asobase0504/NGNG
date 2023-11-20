@@ -102,13 +102,11 @@ void CTaskGroup::Update()
 {
 	AllProcess([](CTask* task)
 	{
-		if (!task->IsDeleted())
+		if (!(!task->IsDeleted() && task->NeedUpdate()))
 		{
-			if (task->NeedUpdate())
-			{
-				task->Update();
-			}
+			return;
 		}
+		task->Update();
 	});
 
 	DeleteTask();	// タスクリストの削除

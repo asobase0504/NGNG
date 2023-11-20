@@ -33,7 +33,6 @@ public:
 	~CEnemy_HPUI() override;
 
 	HRESULT Init() override;
-	void Uninit() override;
 	void Update() override;
 	void Draw() override;
 

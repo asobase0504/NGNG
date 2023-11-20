@@ -70,6 +70,7 @@ public:
 	D3DXVECTOR3 VectorMoveJoyStick(int nNum = 0, bool bleftandright = false); //ジョイスティックのベクトル取得
 	D3DXVECTOR3 VectorMoveJoyStickAll(bool bleftandright = false); //ジョイスティックのベクトル取得
 
+//------------------------------------------------------
 	/* Mouse */
 	bool Press(MOUSE_KEY key);				//プレス
 	bool Trigger(MOUSE_KEY key);			//トリガー
@@ -77,10 +78,13 @@ public:
 
 	D3DXVECTOR3 VectorMoveKeyAll();			//十字キー式のベクトル取得
 
-	D3DXVECTOR3 GetMouseCursor(void);		// マウスカーソルのスクリーン座標の取得
-	int GetMouseWheel(void);				// マウスのホイールの動き処理
-	D3DXVECTOR3 GetMouseMove(void);			// マウスの移動量を出力処理
-	void SetCursorErase(bool bUse);			// 画面内のカーソルを消すかどうか
+	// Cursor
+	D3DXVECTOR3 GetMouseMove(void);		// 移動量を出力処理
+	void LockCursorPos(bool isUse);		// 位置固定
+	void SetCursorErase(bool isUse);	// 画面内のカーソルを消すかどうか
+	D3DXVECTOR3 GetMouseCursor(void);	// カーソルのスクリーン座標の取得
+	int GetMouseWheel(void);			// ホイールの動き処理
+//------------------------------------------------------
 
 	InputType GetOldInputType() { return m_nOldInputType; }		//最後に触ったデバイス
 																

@@ -55,15 +55,6 @@ HRESULT CStatueTeleporter::Init()
 }
 
 //--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CStatueTeleporter::Uninit()
-{
-	// 終了処理
-	CStatue::Uninit();
-}
-
-//--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
 void CStatueTeleporter::Update()
@@ -81,8 +72,8 @@ void CStatueTeleporter::Update()
 
 			//m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(randX, 0.0f, randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
 
-			CStatus<int>* enemyHp = m_pEnemy->GetHp();
-			enemyHp->SetCurrent(0);
+			//CStatus<int>* enemyHp = m_pEnemy->GetHp();
+			//enemyHp->SetCurrent(0);
 			m_bOnce = true;
 		}
 
@@ -91,7 +82,7 @@ void CStatueTeleporter::Update()
 
 	if (m_bOnce)
 	{
-		if ((m_pEnemy->IsDied()) && (m_time >= MAX_TIME))
+		if (/*(m_pEnemy->IsDied()) &&*/ (m_time >= MAX_TIME))
 		{
 			//-------------------------
 			// マップ移動処理追加
@@ -113,15 +104,6 @@ void CStatueTeleporter::Update()
 #ifdef _DEBUG
 	CDebugProc::Print("BloodPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
 #endif // _DEBUG
-}
-
-//--------------------------------------------------------------
-// 描画処理
-//--------------------------------------------------------------
-void CStatueTeleporter::Draw(void)
-{
-	// 描画処理
-	CStatue::Draw();
 }
 
 //--------------------------------------------------------------
