@@ -167,6 +167,11 @@ public:
 	// スキル
 	CSkill* GetSkill(int num) { return m_skill[num]; }
 
+	// 回復
+	void Regenation();
+	void Heal(int heal);
+	void RatioHeal(float heal);
+
 private:
 	virtual void Move();
 	void Abnormal();
@@ -210,9 +215,12 @@ protected:		// ステータス
 	CStatus<float> m_jumpPower;					// ジャンプ力
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 	CStatus<int> m_money;						// 所持金
+	CStatus<int> m_regenetionTime;				// 自動回復の間隔
+	CStatus<int> m_regenetion;					// 自動回復の値
 
 	std::vector<CSkill*> m_skill;
 	ERelation m_relation;
 
+	int m_RegenetionCnt;
 };
 #endif

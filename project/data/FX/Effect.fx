@@ -105,7 +105,7 @@ VS_OUTPUT VS(
 //=========================================
 // 頂点シェーダー・黒
 //=========================================
-VS_OUTPUT BLACK_VS(
+VS_OUTPUT OUTLINE_VS(
 	float4 Pos    : POSITION,	// ローカル位置座標
 	float4 Normal : NORMAL,		// 法線ベクトル
 	float2 Tex : TEXCOORD		// テクスチャの法線ベクトル
@@ -125,7 +125,7 @@ VS_OUTPUT BLACK_VS(
 	n.zw = 0;
 
 	// 座標変換
-	Out.Pos = pos + 0.5f*n;
+	Out.Pos = pos + 0.75f * n;
 
 	// テクスチャ座標
 	Out.Tex = Tex;
@@ -136,7 +136,7 @@ VS_OUTPUT BLACK_VS(
 	//法線ベクトル。
 	float3 N = -normalize(Normal.xyz);
 
-	Out.Color = float4(1.0f,1.0f,1.0f,1.0f);
+	Out.Color = float4(1.0f,0.0f,0.0f,1.0f);
 
 	Out.Normal = N;
 
@@ -156,6 +156,10 @@ float4 PS(VS_OUTPUT In) : COLOR
 //=========================================
 float4 VSPS(VS_OUTPUT In) : COLOR
 {
+	half nl = max(0, dot(In.Normal, vEyeVec));
+
+	In.Color.a = nl;
+
 	return In.Color;		// 拡散光＋環境光(テクスチャの色)
 }
 
@@ -167,14 +171,15 @@ float4 Mono_PS(VS_OUTPUT In) : COLOR
 	/* メモ : ピクセルシェーダーはピクセル単位で処理が通るので、
 	もしかしたら徐々に灰色にするのはシェーダーの処理ではないのでは？
 	というか、段々灰色になる処理は難しいのでは？ */
+	half nl = max(0, dot(In.Normal, vEyeVec));
 
-	//float ColSimple = (In.Color.r + In.Color.g + In.Color.b) / 3.0f;
+	float ColSimple = 0.9f;
 
-	//In.Color.r -= (In.Color.r - ColSimple) / 120 * (Test - 120) * -1;
-	//In.Color.g -= (In.Color.g - ColSimple) / 120 * (Test - 120) * -1;
-	//In.Color.b -= (In.Color.b - ColSimple) / 120 * (Test - 120) * -1;
+	In.Color.r -= (In.Color.r - ColSimple) / 120 * (Test - 120) * -1;
+	In.Color.g -= (In.Color.g - ColSimple) / 120 * (Test - 120) * -1;
+	In.Color.b -= (In.Color.b - ColSimple) / 120 * (Test - 120) * -1;
 
-	//In.Color = float4(In.Color.r, In.Color.g, In.Color.b, 1.0f);
+	In.Color = float4(In.Color.r, In.Color.g, In.Color.b, 1.0f);
 
 	return In.Color;		// 拡散光＋環境光(テクスチャの色)
 }
@@ -247,14 +252,19 @@ technique Diffuse
 	pass P1
 	{
 		VertexShader = compile vs_2_0 VS();
-		PixelShader = compile ps_2_0 Mono_PS();
+		PixelShader = compile ps_2_0 PS();
 	}
 	pass P2
 	{
-		VertexShader = compile vs_2_0 BLACK_VS();
-		PixelShader = compile ps_2_0 VSPS();
+		VertexShader = compile vs_2_0 VS();
+		PixelShader = compile ps_2_0 Mono_PS();
 	}
 	pass P3
+	{
+		VertexShader = compile vs_2_0 OUTLINE_VS();
+		PixelShader = compile ps_2_0 VSPS();
+	}
+	pass P4
 	{
 		VertexShader = compile vs_2_0 MATRIX_VS();
 		PixelShader = compile ps_2_0 PS();
