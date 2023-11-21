@@ -64,6 +64,8 @@ void CSkill::Update(void)
 	{// クールタイムがあれば減少させる
 		m_CT--;
 	}
+	
+	m_atkSpd = m_apChara->GetAtkSpd()->GetCurrent();
 
 #ifdef _DEBUG
 	CDebugProc::Print("%sのクールタイム : %d\n", m_Name.c_str(),m_CT);
@@ -98,7 +100,7 @@ void CSkill::Skill1()
 		SetEndChildren(entity);
 
 		// クールタイムの設定
-		m_CT = pSkillData->GetCT(m_Name);
+		m_CT = pSkillData->GetCT(m_Name) * m_atkSpd;
 	}
 }
 

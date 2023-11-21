@@ -90,6 +90,9 @@
     <Filter Include="ソース ファイル\Mode\Game\Item\item_object">
       <UniqueIdentifier>{4843f87a-3975-4ce7-8ba8-1153d1bab0c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\Result">
+      <UniqueIdentifier>{035c48c2-e5de-40a8-99e7-3279f3f45b16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -385,6 +388,18 @@
     <ClCompile Include="src\model_date.cpp">
       <Filter>ソース ファイル\Server</Filter>
     </ClCompile>
+    <ClCompile Include="src\result.cpp">
+      <Filter>ソース ファイル\Mode\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\input_touch_panel.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model_skin.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model_skin_group.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -672,6 +687,18 @@
     <ClInclude Include="src\model_date.h">
       <Filter>ソース ファイル\Server</Filter>
     </ClInclude>
+    <ClInclude Include="src\result.h">
+      <Filter>ソース ファイル\Mode\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\input_touch_panel.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model_skin.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model_skin_group.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
@@ -686,5 +713,6 @@
       <Filter>ソース ファイル\Mode\Game\map\json</Filter>
     </None>
     <None Include="data\FILE\model.json" />
+    <None Include="data\FILE\texture.json" />
   </ItemGroup>
 </Project>

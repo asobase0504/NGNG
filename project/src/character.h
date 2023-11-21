@@ -23,7 +23,7 @@ class CObjectX;
 class CCollisionCylinder;
 class CSkill;
 class CAbnormal;
-class CSkill;
+class CSkinMesh;
 
 //==============================================================
 // プレイヤークラス
@@ -158,11 +158,12 @@ public:
 	// 走っているかどうか
 	bool GetIsRunning() { return m_isRunning; }
 
+	// 回復
+	void Regenation();
+	void Heal(int heal);
+	void RatioHeal(float heal);
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
-
-	// スキル
-	CSkill* GetSkill(int num) { return m_skill[num]; }
 
 private:
 	virtual void Move();
@@ -171,10 +172,13 @@ private:
 protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
 	CCollisionCylinder*	m_collision;			// 当たり判定
-private:		// メンバ変数
+	ERelation m_relation;
 
-protected:		// ステータス
+	std::vector<CSkill*> m_skill;
+private:		// ステータス
 
+
+protected:
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;
 	// 持っている状態異常の個数をそれぞれ管理
@@ -209,8 +213,9 @@ protected:		// ステータス
 	CStatus<float> m_jumpPower;					// ジャンプ力
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 	CStatus<int> m_money;						// 所持金
+	CStatus<int> m_regenetionTime;				// 自動回復の間隔
+	CStatus<int> m_regenetion;					// 自動回復の値
 
-	std::vector<CSkill*> m_skill;
-	ERelation m_relation;
+	int m_RegenetionCnt;
 };
 #endif

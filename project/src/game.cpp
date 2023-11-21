@@ -27,6 +27,7 @@
 #include "objectX.h"
 #include "object_mesh.h"
 #include "object_polygon3d.h"
+#include "model_skin_group.h"
 
 /* Game系統 */
 #include "player.h"
@@ -46,6 +47,9 @@
 
 /* サーバー */
 #include "connect.h"
+
+#include "model_skin.h"
+
 //==============================================================
 // 定数
 //==============================================================
@@ -75,6 +79,10 @@ HRESULT CGame::Init()
 {
 	//CInput::GetKey()->SetCursorErase(false);
 	CInput::GetKey()->LockCursorPos(false);
+
+	// 虚無マップ
+	m_map = CMap::Create("data/FILE/map/map01.json");
+
 	m_mapFade = CMapFade::Create();
 	m_mapFade->NextMap("data/FILE/map/map01.json");
 
@@ -100,6 +108,11 @@ HRESULT CGame::Init()
 	CMONEYUI::Create(pPlayer->GetMoney());
 	CSKILLUI::Create(pPlayer->GetSkill(0));
 
+	CSkinMeshGroup::GetInstance()->LoadAll();
+
+	m_skin = CSkinMesh::Create("KENGOU");
+	m_skin->SetPos(D3DXVECTOR3(50.f, 0.f, 0.f));
+
 	//m_tcp = new CClient;
 	//m_tcp->Init("127.0.0.1", 13567);
 	// エネミーの生成
@@ -122,6 +135,9 @@ void CGame::Uninit()
 		delete m_tcp;
 		m_tcp = nullptr;
 	}*/
+
+	CSkinMeshGroup::GetInstance()->Unload("KENGOU");
+	CSkinMeshGroup::GetInstance()->Unload("SKE");
 
 	CInput::GetKey()->SetCursorErase(true);
 	CInput::GetKey()->LockCursorPos(false);
@@ -148,6 +164,19 @@ void CGame::Update()
 	if (pInput->Trigger(DIK_6))
 	{
 		SetChangeMap();
+	}
+	if (pInput->Trigger(DIK_C))
+	{
+		m_skin->ChangeAnim(1);
+	}
+	if (pInput->Trigger(DIK_V))
+	{
+		m_skin->ChangeAnim(0);
+	}
+	if (pInput->Trigger(DIK_X))
+	{
+		CSkinMesh* skin = CSkinMesh::Create("KENGOU");
+		skin->SetPos(D3DXVECTOR3(50.f, 0.f, 50.f));
 	}
 
 	/*if (m_tcp->GetIsConnect())

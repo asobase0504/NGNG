@@ -32,7 +32,7 @@ CSkillDataBase::CSkillDataBase()
 }
 
 //--------------------------------------------------------------
-// instanceの取得
+// instance縺ｮ蜿門ｾ・
 //--------------------------------------------------------------
 CSkillDataBase * CSkillDataBase::GetInstance()
 {

@@ -1,4 +1,4 @@
-//**************************************************************
+﻿//**************************************************************
 //
 // オブジェクトX処理 [objectX.cpp]
 // Author : Yuda Kaito
@@ -36,9 +36,7 @@ CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 	m_parent(nullptr),
 	m_isCollision(true),
 	m_isHasOutLine(false),
-	m_isHasShadow(false),
-	m_TimeTarget(120),
-	tex0(nullptr)
+	m_isHasShadow(false)
 {
 	//オブジェクトのタイプセット処理
 	CObject::SetType(CObject::MODEL);
@@ -61,30 +59,6 @@ CObjectX::~CObjectX()
 //--------------------------------------------------------------
 HRESULT CObjectX::Init()
 {
-	extern LPD3DXEFFECT pEffect;	// シェーダー
-
-	// これさぁ・・・やっぱ用途ごとの名前じゃないほうが良かったんじゃ？
-	// ハンドルの初期化
-	m_hTechnique = pEffect->GetTechniqueByName("Diffuse");			// エフェクト
-	m_hTexture = pEffect->GetParameterByName(NULL, "Tex");			// テクスチャ
-	m_hvLightDir = pEffect->GetParameterByName(NULL, "vLightDir");	// ライトの方向
-	m_hvDiffuse = pEffect->GetParameterByName(NULL, "vDiffuse");	// 頂点カラー
-	m_hvAmbient = pEffect->GetParameterByName(NULL, "vAmbient");	// 頂点カラー
-	m_hWorld = pEffect->GetParameterByName(NULL, "mWorld");			// ワールド行列
-	m_hProj = pEffect->GetParameterByName(NULL, "mProj");			// プロジェクション行列
-	m_hView = pEffect->GetParameterByName(NULL, "mView");			// ビュー行列
-	m_hTime = pEffect->GetParameterByName(NULL, "Test");			// 時間
-	m_hTimeTarget = pEffect->GetParameterByName(NULL, "TimeTarget");// 目標時間
-	m_hSize = pEffect->GetParameterByName(NULL, "mSize");		// サイズ設定
-	m_hRot = pEffect->GetParameterByName(NULL, "mRot");
-	m_hTrans = pEffect->GetParameterByName(NULL, "mTrans");
-	m_hParent = pEffect->GetParameterByName(NULL, "mParent");
-	m_hScale = pEffect->GetParameterByName(NULL, "mScale");
-	m_hCameraVec = pEffect->GetParameterByName(NULL, "vEyeVec");
-	m_hvEyePos = pEffect->GetParameterByName(NULL, "mEyePos");
-
-	m_TimeCnt = m_TimeTarget;
-
 	CObject::Init();
 
 	return S_OK;
@@ -190,7 +164,7 @@ void CObjectX::Draw()
 	pEffect->SetMatrix(m_hWorld, &m_mtxWorld);
 	pEffect->SetMatrix(m_hScale, &mtxScale);
 	pEffect->SetMatrix(m_hSize, &mtxSize);
-	pEffect->SetMatrix(m_hRot, &mtxRot);
+	pEffect->SetMatrix(m_hRot,	&mtxRot);
 	pEffect->SetMatrix(m_hTrans, &mtxTrans);
 	pEffect->SetMatrix(m_hProj, &projMatrix);
 	pEffect->SetMatrix(m_hView, &viewMatrix);
@@ -201,7 +175,7 @@ void CObjectX::Draw()
 	// シェーダーにカメラ座標を渡す
 	D3DXVECTOR3 c = pCamera->GetPos();
 	D3DXVECTOR3 camerapos = D3DXVECTOR3(c.x, c.y, c.z);
-	D3DXVECTOR3 objpos = D3DXVECTOR3(m_mtxWorld._41, m_mtxWorld._42, m_mtxWorld._43);
+	D3DXVECTOR3 objpos = GetPos();
 
 	D3DXVECTOR3 vec = camerapos - objpos;
 
@@ -222,13 +196,13 @@ void CObjectX::Draw()
 	{
 		lightClass = (CLight*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_LIGHT, GetPriority() - 1);
 	}
+
 	D3DLIGHT9 light = lightClass->GetLight(0);
 
 	// ライトの方向
 	D3DXVECTOR4 lightDir = D3DXVECTOR4(light.Direction.x, light.Direction.y, light.Direction.z, 0);
 	// ライトの方向をシェーダーに渡す
 	pEffect->SetVector(m_hvLightDir, &lightDir);
-	pEffect->SetVector(m_hCameraVec, &D3DXVECTOR4(CameraRot.x, CameraRot.y, CameraRot.z, 0.0f));
 
 	//マテリアルデータのポインタを取得する
 	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
@@ -267,20 +241,14 @@ void CObjectX::Draw()
 
 		// テクスチャの設定
 		pEffect->SetTexture(m_hTexture, tex0);
-
 		// 通常モデルの描画
 		pEffect->BeginPass(1);
 		m_mesh->DrawSubset(nCntMat);	//モデルパーツの描画
 		pEffect->EndPass();
 
 		// 黒モデルの描画
-		pEffect->BeginPass(2);
-		//カリングの設定を元に戻す
-		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+		pEffect->BeginPass(3);
 		m_mesh->DrawSubset(nCntMat);	//モデルパーツの描画
-		//カリングの設定を元に戻す
-		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
 		pEffect->EndPass();
 	}
 
@@ -294,11 +262,11 @@ void CObjectX::Draw()
 //--------------------------------------------------------------
 void CObjectX::DrawMaterial()
 {
-	extern LPD3DXEFFECT pEffect;		// シェーダー
+	extern LPD3DXEFFECT pEffect;		// 繧ｷ繧ｧ繝ｼ繝繝ｼ
 }
 
 //--------------------------------------------------------------
-// scaleの設定
+// scale縺ｮ險ｭ螳・
 //--------------------------------------------------------------
 void CObjectX::SetScale(const D3DXVECTOR3& inScale)
 {
@@ -347,8 +315,8 @@ void CObjectX::CalculationVtx()
 
 	D3DXMatrixIdentity(&mtxWorld);
 
-	// 向きの反映
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &m_mtxRot);		// 行列掛け算関数
+	// 蜷代″縺ｮ蜿肴丐
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &m_mtxRot);		// 陦悟・謗帙￠邂鈴未謨ｰ
 
 	D3DXVec3TransformCoord(&m_maxVtx, &m_maxVtx, &mtxWorld);
 	D3DXVec3TransformCoord(&m_minVtx, &m_minVtx, &mtxWorld);
