@@ -165,9 +165,6 @@ public:
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
 
-	// スキル
-	CSkill* GetSkill(int num) { return m_skill[num]; }
-
 private:
 	virtual void Move();
 	void Abnormal();
@@ -219,8 +216,6 @@ protected:
 	CStatus<int> m_regenetionTime;				// 自動回復の間隔
 	CStatus<int> m_regenetion;					// 自動回復の値
 
-	std::vector<CSkill*> m_skill;
-	ERelation m_relation;
 	int m_RegenetionCnt;
 };
 #endif

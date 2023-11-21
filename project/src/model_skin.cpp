@@ -235,62 +235,61 @@ void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pF
 	LPD3DXBONECOMBINATION pBoneCombination;
 	UINT iMatrixIndex;
 	D3DXMATRIX mStack;
+
 	//スキンメッシュの描画
-	if (pMeshContainer->pSkinInfo != NULL)
-	{
-		//ボーンテーブルからバッファの先頭アドレスを取得
-		pBoneCombination = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneBuffer->GetBufferPointer());
-		//dwPrevBoneIDにUINT_MAXの値(0xffffffff)を格納
-		dwPrevBoneID = UINT_MAX;
-		//スキニング計算
-		for (i = 0; i < pMeshContainer->dwBoneNum; i++)
-		{
-			dwBlendMatrixNum = 0;
-			//影響している行列数取得
-			for (k = 0; k< pMeshContainer->dwWeight; k++)
-			{
-				//UINT_MAX(-1)
-				if (pBoneCombination[i].BoneId[k] != UINT_MAX)
-				{
-					//現在影響を受けているボーンの数
-					dwBlendMatrixNum = k;
-				}
-			}
-			//ジオメトリブレンディングを使用するために行列の個数を指定
-			pDevice->SetRenderState(D3DRS_VERTEXBLEND, dwBlendMatrixNum);
-			//影響している行列の検索
-			for (k = 0; k < pMeshContainer->dwWeight; k++)
-			{
-				//iMatrixIndexに1度の呼び出しで描画出来る各ボーンを識別する値を格納
-				//( このBoneID配列の長さはメッシュの種類によって異なる
-				//( インデックスなしであれば　=　頂点ごとの重み であり
-				// インデックスありであれば　=　ボーン行列パレットのエントリ数)
-				//現在のボーン(i番目)からみてk番目のボーンid
-				iMatrixIndex = pBoneCombination[i].BoneId[k];
-				//行列の情報があれば
-				if (iMatrixIndex != UINT_MAX)
-				{
-					//mStackにオフセット行列*ボーン行列を格納
-					mStack = pMeshContainer->pBoneOffsetMatrices[iMatrixIndex] * (*pMeshContainer->ppBoneMatrix[iMatrixIndex]);
-					//行列スタックに格納
-					pDevice->SetTransform(D3DTS_WORLDMATRIX(k), &mStack);
-				}
-			}
-			D3DMATERIAL9 TmpMat = pMeshContainer->pMaterials[pBoneCombination[i].AttribId].MatD3D;
-			TmpMat.Emissive.a = TmpMat.Diffuse.a = TmpMat.Ambient.a = 1.0f;
-			pDevice->SetMaterial(&TmpMat);
-			pDevice->SetTexture(0, pMeshContainer->ppTextures[pBoneCombination[i].AttribId]);
-			//dwPrevBoneIDに属性テーブルの識別子を格納
-			dwPrevBoneID = pBoneCombination[i].AttribId;
-			//メッシュの描画
-			pMeshContainer->MeshData.pMesh->DrawSubset(i);
-		}
-	}
-	else
+	if (pMeshContainer->pSkinInfo == NULL)
 	{
 		//通常メッシュの場合
 		MessageBox(NULL, "スキンメッシュXファイルの描画に失敗しました。", NULL, MB_OK);
 		exit(EOF);
+	}
+
+	//ボーンテーブルからバッファの先頭アドレスを取得
+	pBoneCombination = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneBuffer->GetBufferPointer());
+	//dwPrevBoneIDにUINT_MAXの値(0xffffffff)を格納
+	dwPrevBoneID = UINT_MAX;
+	//スキニング計算
+	for (i = 0; i < pMeshContainer->dwBoneNum; i++)
+	{
+		dwBlendMatrixNum = 0;
+		//影響している行列数取得
+		for (k = 0; k < pMeshContainer->dwWeight; k++)
+		{
+			//UINT_MAX(-1)
+			if (pBoneCombination[i].BoneId[k] != UINT_MAX)
+			{
+				//現在影響を受けているボーンの数
+				dwBlendMatrixNum = k;
+			}
+		}
+		//ジオメトリブレンディングを使用するために行列の個数を指定
+		pDevice->SetRenderState(D3DRS_VERTEXBLEND, dwBlendMatrixNum);
+		//影響している行列の検索
+		for (k = 0; k < pMeshContainer->dwWeight; k++)
+		{
+			//iMatrixIndexに1度の呼び出しで描画出来る各ボーンを識別する値を格納
+			//( このBoneID配列の長さはメッシュの種類によって異なる
+			//( インデックスなしであれば　=　頂点ごとの重み であり
+			// インデックスありであれば　=　ボーン行列パレットのエントリ数)
+			//現在のボーン(i番目)からみてk番目のボーンid
+			iMatrixIndex = pBoneCombination[i].BoneId[k];
+			//行列の情報があれば
+			if (iMatrixIndex != UINT_MAX)
+			{
+				//mStackにオフセット行列*ボーン行列を格納
+				mStack = pMeshContainer->pBoneOffsetMatrices[iMatrixIndex] * (*pMeshContainer->ppBoneMatrix[iMatrixIndex]);
+				//行列スタックに格納
+				pDevice->SetTransform(D3DTS_WORLDMATRIX(k), &mStack);
+			}
+		}
+		D3DMATERIAL9 TmpMat = pMeshContainer->pMaterials[pBoneCombination[i].AttribId].MatD3D;
+		TmpMat.Emissive.a = TmpMat.Diffuse.a = TmpMat.Ambient.a = 1.0f;
+		pDevice->SetMaterial(&TmpMat);
+		pDevice->SetTexture(0, pMeshContainer->ppTextures[pBoneCombination[i].AttribId]);
+		//dwPrevBoneIDに属性テーブルの識別子を格納
+		dwPrevBoneID = pBoneCombination[i].AttribId;
+		//メッシュの描画
+		pMeshContainer->MeshData.pMesh->DrawSubset(i);
 	}
 }
 
