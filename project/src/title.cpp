@@ -47,13 +47,6 @@ HRESULT CTitle::Init(void)
 	camera->Init();
 
 	{
-		CObjectX* testX = CObjectX::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-		testX->LoadModel("BOX");
-		testX->SetMoveRot(D3DXVECTOR3(0.0f, 0.01f, 0.0f));
-		testX->CalculationVtx();
-	}
-
-	{
 		CObject2d* titleBg = CObject2d::Create();
 		titleBg->SetPos(CApplication::CENTER_POS);
 		titleBg->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.25f));
@@ -88,7 +81,7 @@ void CTitle::Update(void)
 
 	if (pInput->Trigger(DIK_F1))
 	{
-		pFade->NextMode(CApplication::MODE_DEBUG);
+		pFade->NextMode(CApplication::MODE_GAME);
 	}
 
 	if (pInput->Trigger(DIK_K))

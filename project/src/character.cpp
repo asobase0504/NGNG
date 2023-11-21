@@ -372,7 +372,7 @@ void CCharacter::Died()
 	m_isDied = true;
 	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
 	list.remove(this);
-	Release();
+	//Release();
 }
 
 void CCharacter::Move()

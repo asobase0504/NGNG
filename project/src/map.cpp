@@ -33,6 +33,7 @@ CMap::CMap() :
 	CTask(CTaskGroup::EPriority::LEVEL_SYSTEM)
 {
 	m_SpawnCnt = 0;
+	m_characterList.clear();
 	m_model.clear();
 	m_mesh.clear();
 }

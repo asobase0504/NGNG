@@ -391,6 +391,9 @@
     <ClCompile Include="src\result.cpp">
       <Filter>ソース ファイル\Mode\Result</Filter>
     </ClCompile>
+    <ClCompile Include="src\input\input_touch_panel.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -680,6 +683,9 @@
     </ClInclude>
     <ClInclude Include="src\result.h">
       <Filter>ソース ファイル\Mode\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\input_touch_panel.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
