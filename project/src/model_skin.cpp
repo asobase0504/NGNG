@@ -13,11 +13,16 @@
 #include "application.h"
 #include "renderer.h"
 #include "model_skin_group.h"
+#include "texture.h"
+#include "utility.h"
+#include "camera.h"
+#include "light.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CSkinMesh::CSkinMesh()
+CSkinMesh::CSkinMesh() :
+	CObject(CTaskGroup::LEVEL_3D_1)
 {
 	//単位行列化
 	D3DXMatrixIdentity(&(this->m_mtxWorld));
@@ -47,6 +52,7 @@ CSkinMesh::CSkinMesh()
 //--------------------------------------------------------------
 HRESULT CSkinMesh::Init(std::string pMeshPass)
 {
+	CObject::Init();
 	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 	std::string TmpMeshPass;
@@ -223,11 +229,16 @@ HRESULT CSkinMesh::AllocateAllBoneMatrices(LPD3DXFRAME pFrameRoot, LPD3DXFRAME p
 	return S_OK;
 }
 
-//--------------------------------------------------------------
-//フレーム内のそれぞれのメッシュをレンダリングする
-//--------------------------------------------------------------
-void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
+void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 {
+	//スキンメッシュの描画
+	if (pMeshContainer->pSkinInfo == NULL)
+	{
+		//通常メッシュの場合
+		MessageBox(NULL, "スキンメッシュXファイルの描画に失敗しました。", NULL, MB_OK);
+		exit(EOF);
+	}
+
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 	DWORD i, k;
 	DWORD dwBlendMatrixNum;
@@ -236,13 +247,105 @@ void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pF
 	UINT iMatrixIndex;
 	D3DXMATRIX mStack;
 
-	//スキンメッシュの描画
-	if (pMeshContainer->pSkinInfo == NULL)
+	extern LPD3DXEFFECT pEffect;		// シェーダー
+	if (pEffect == nullptr)
 	{
-		//通常メッシュの場合
-		MessageBox(NULL, "スキンメッシュXファイルの描画に失敗しました。", NULL, MB_OK);
-		exit(EOF);
+		assert(false);
+		return;
 	}
+
+	/* pEffectに値が入ってる */
+
+	//-------------------------------------------------
+	// シェーダの設定
+	//-------------------------------------------------
+
+	// 計算用マトリックス
+	D3DXMATRIX mtxScale;
+	D3DXMATRIX mtxSize;
+	D3DXMATRIX mtxTrans;
+	D3DXMATRIX mtxRot;
+
+	// ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&m_mtxWorld);
+
+	// 大きさを反映
+	D3DXMatrixScaling(&mtxScale, 1.0f, 1.0f, 1.0f);
+	// 大きさを反映
+	D3DXMatrixScaling(&mtxSize, 1.03f, 1.03f, 1.03f);
+	// 向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+	// 位置を反映
+	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
+
+	D3DXMATRIX mtxParent;
+	D3DXMatrixIdentity(&mtxParent);
+
+	//------------------------------------------------------------------------------------------//
+
+	// タスクグループ情報
+	CTaskGroup* taskGroup = CApplication::GetInstance()->GetTaskGroup();
+
+	// カメラ情報
+	CCamera* pCamera = (CCamera*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_CAMERA, GetPriority());
+
+	D3DXMATRIX viewMatrix;
+	D3DXMATRIX projMatrix;
+
+	if (pCamera != nullptr)
+	{
+		viewMatrix = pCamera->GetMtxView();
+		projMatrix = pCamera->GetMtxProje();
+	}
+
+	pEffect->SetTechnique(m_hTechnique);
+	pEffect->Begin(NULL, 0);
+
+	// ワールド射影変換行列
+	// シェーダーに行列を渡す
+	pEffect->SetMatrix(m_hWorld, &m_mtxWorld);
+	pEffect->SetMatrix(m_hScale, &mtxScale);
+	pEffect->SetMatrix(m_hSize, &mtxSize);
+	pEffect->SetMatrix(m_hRot, &mtxRot);
+	pEffect->SetMatrix(m_hTrans, &mtxTrans);
+	pEffect->SetMatrix(m_hProj, &projMatrix);
+	pEffect->SetMatrix(m_hView, &viewMatrix);
+
+	// シェーダーに目的の値を渡す
+	pEffect->SetFloat(m_hTimeTarget, m_TimeTarget);
+
+	// シェーダーにカメラ座標を渡す
+	D3DXVECTOR3 c = pCamera->GetPos();
+	D3DXVECTOR3 camerapos = D3DXVECTOR3(c.x, c.y, c.z);
+	D3DXVECTOR3 objpos = GetPos();
+
+	D3DXVECTOR3 vec = camerapos - objpos;
+
+	D3DXVec3Normalize(&vec, &vec);
+	NormalizeAngle(vec.x);
+	NormalizeAngle(vec.y);
+	NormalizeAngle(vec.z);
+
+	pEffect->SetVector(m_hCameraVec, &D3DXVECTOR4(vec.x, vec.y, vec.z, 0.0f));
+
+	// シェーダーに描画から経過した時間を渡す
+	pEffect->SetFloat(m_hTime, 0);
+
+	// ライト情報
+	CLight* lightClass = (CLight*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_LIGHT, GetPriority());
+
+	if (lightClass == nullptr)
+	{
+		lightClass = (CLight*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_LIGHT, GetPriority() - 1);
+	}
+
+	D3DLIGHT9 light = lightClass->GetLight(0);
+
+	// ライトの方向
+	D3DXVECTOR4 lightDir = D3DXVECTOR4(light.Direction.x, light.Direction.y, light.Direction.z, 0);
+	// ライトの方向をシェーダーに渡す
+	pEffect->SetVector(m_hvLightDir, &lightDir);
+
 
 	//ボーンテーブルからバッファの先頭アドレスを取得
 	pBoneCombination = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneBuffer->GetBufferPointer());
@@ -282,12 +385,111 @@ void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pF
 				pDevice->SetTransform(D3DTS_WORLDMATRIX(k), &mStack);
 			}
 		}
+
 		D3DMATERIAL9 TmpMat = pMeshContainer->pMaterials[pBoneCombination[i].AttribId].MatD3D;
 		TmpMat.Emissive.a = TmpMat.Diffuse.a = TmpMat.Ambient.a = 1.0f;
-		pDevice->SetMaterial(&TmpMat);
-		pDevice->SetTexture(0, pMeshContainer->ppTextures[pBoneCombination[i].AttribId]);
+
 		//dwPrevBoneIDに属性テーブルの識別子を格納
 		dwPrevBoneID = pBoneCombination[i].AttribId;
+
+		// モデルの色の設定 
+		{
+			D3DXVECTOR4 Diffuse;
+			Diffuse = D3DXVECTOR4(TmpMat.Diffuse.r, TmpMat.Diffuse.g, TmpMat.Diffuse.b, TmpMat.Diffuse.a);
+
+			Diffuse.w = m_color.a;
+
+			pEffect->SetVector(m_hvDiffuse, &Diffuse);
+		}
+		{
+			D3DXVECTOR4 Ambient;
+			//Ambient = D3DXVECTOR4(pMat[nCntMat].MatD3D.Ambient.r, pMat[nCntMat].MatD3D.Ambient.g, pMat[nCntMat].MatD3D.Ambient.b, pMat[nCntMat].MatD3D.Ambient.a);
+			Ambient = D3DXVECTOR4(0.0f, 0.0f, 0.0f, TmpMat.Ambient.a);
+			pEffect->SetVector(m_hvAmbient, &Ambient);
+		}
+
+		LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
+		if (texture != nullptr)
+		{// テクスチャの適応
+			tex0 = texture;
+		}
+
+		// テクスチャの設定
+		pEffect->SetTexture(m_hTexture, tex0);
+		// 通常モデルの描画
+		pEffect->BeginPass(1);
+		pMeshContainer->MeshData.pMesh->DrawSubset(i);
+		pEffect->EndPass();
+
+		// 黒モデルの描画
+		pEffect->BeginPass(3);
+		pMeshContainer->MeshData.pMesh->DrawSubset(i);
+		pEffect->EndPass();
+
+	}
+	pEffect->End();
+
+}
+
+//--------------------------------------------------------------
+//フレーム内のそれぞれのメッシュをレンダリングする
+//--------------------------------------------------------------
+void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
+{
+	//スキンメッシュの描画
+	if (pMeshContainer->pSkinInfo == NULL)
+	{
+		//通常メッシュの場合
+		MessageBox(NULL, "スキンメッシュXファイルの描画に失敗しました。", NULL, MB_OK);
+		exit(EOF);
+	}
+
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
+	DWORD i, k;
+	DWORD dwBlendMatrixNum;
+	LPD3DXBONECOMBINATION pBoneCombination;
+	UINT iMatrixIndex;
+	D3DXMATRIX mStack;
+
+	//ボーンテーブルからバッファの先頭アドレスを取得
+	pBoneCombination = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneBuffer->GetBufferPointer());
+	//スキニング計算
+	for (i = 0; i < pMeshContainer->dwBoneNum; i++)
+	{
+		dwBlendMatrixNum = 0;
+		//影響している行列数取得
+		for (k = 0; k < pMeshContainer->dwWeight; k++)
+		{
+			//UINT_MAX(-1)
+			if (pBoneCombination[i].BoneId[k] != UINT_MAX)
+			{
+				//現在影響を受けているボーンの数
+				dwBlendMatrixNum = k;
+			}
+		}
+		//ジオメトリブレンディングを使用するために行列の個数を指定
+		pDevice->SetRenderState(D3DRS_VERTEXBLEND, dwBlendMatrixNum);
+		//影響している行列の検索
+		for (k = 0; k < pMeshContainer->dwWeight; k++)
+		{
+			//iMatrixIndexに1度の呼び出しで描画出来る各ボーンを識別する値を格納
+			//( このBoneID配列の長さはメッシュの種類によって異なる
+			//( インデックスなしであれば　=　頂点ごとの重み であり
+			// インデックスありであれば　=　ボーン行列パレットのエントリ数)
+			//現在のボーン(i番目)からみてk番目のボーンid
+			iMatrixIndex = pBoneCombination[i].BoneId[k];
+			//行列の情報があれば
+			if (iMatrixIndex != UINT_MAX)
+			{
+				//mStackにオフセット行列*ボーン行列を格納
+				mStack = pMeshContainer->pBoneOffsetMatrices[iMatrixIndex] * (*pMeshContainer->ppBoneMatrix[iMatrixIndex]);
+				//行列スタックに格納
+				pDevice->SetTransform(D3DTS_WORLDMATRIX(k), &mStack);
+			}
+		}
+		D3DMATERIAL9 TmpMat = pMeshContainer->pMaterials[pBoneCombination[i].AttribId].MatD3D;
+		pDevice->SetMaterial(&TmpMat);
+		pDevice->SetTexture(0, pMeshContainer->ppTextures[pBoneCombination[i].AttribId]);
 		//メッシュの描画
 		pMeshContainer->MeshData.pMesh->DrawSubset(i);
 	}
