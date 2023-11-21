@@ -42,6 +42,7 @@ public:
 	HRESULT Init(std::string pMeshPass);
 	HRESULT AllocateBoneMatrix(LPD3DXFRAME pFrameRoot, LPD3DXMESHCONTAINER pMeshContainerBase);
 	HRESULT AllocateAllBoneMatrices(LPD3DXFRAME pFrameRoot, LPD3DXFRAME pFrameBase);
+	void ShaderDraw(MYMESHCONTAINER*, MYFRAME*);
 	void RenderMeshContainer(MYMESHCONTAINER*, MYFRAME*);
 	void UpdateFrameMatrices(LPD3DXFRAME pFrameBase, LPD3DXMATRIX pParentMatrix);
 	void DrawFrame(LPD3DXFRAME);

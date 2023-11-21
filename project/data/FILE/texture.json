@@ -1,25 +1,9 @@
 {
 	"TEXTURE": [
-		[
-      "SKY",
-      "data\/TEXTURE\/Sky.jpg"
-    ],
-		[
-			"TITLE_LOGO",
-			"data\/TEXTURE\/TEXT\/title.png"
-		],
-		[
-			"TEST",
-			"data\/TEXTURE\/test.jpg"
-		],
-		[
-			"NUMBER",
-			"data\/TEXTURE\/number.png"
-		]
-	],
-	[
-	 "TOON",
-	 "data\/TEXTURE\/toon.png"
-	]
+	["SKY","data\/TEXTURE\/Sky.jpg"],
+	["TITLE_LOGO","data\/TEXTURE\/TEXT\/title.png"],
+	["TEST","data\/TEXTURE\/test.jpg"],
+	["NUMBER","data\/TEXTURE\/number.png"],
+	[ "TOON","data\/TEXTURE\/toon.png"]
   ]
 }
