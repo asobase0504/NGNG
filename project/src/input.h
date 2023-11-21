@@ -21,6 +21,7 @@
 class CInputKeyboard;
 class CInputJoyPad;
 class CInputMouse;
+class CInputTouchPanel;
 
 //----------------------------------------------------------------------------
 //クラス定義
@@ -34,7 +35,7 @@ public:
 
 	//*アプリケーション処理に書くやつ
 	static CInput *Create();							//入力処理系のクリエイト、Initの前に書く
-	HRESULT Init(HINSTANCE hInstance, HWND hWnd);		//入力処理全部の初期化
+	HRESULT Init(HINSTANCE hInstance, HWND hWnd, D3DXVECTOR2 ScreenSize);		//入力処理全部の初期化
 	void Uninit();										//入力処理全部の終了処理
 	void Update();										//入力処理全部の更新処理
 	//*
@@ -82,6 +83,7 @@ public:
 	D3DXVECTOR3 GetMouseMove(void);		// 移動量を出力処理
 	void LockCursorPos(bool isUse);		// 位置固定
 	void SetCursorErase(bool isUse);	// 画面内のカーソルを消すかどうか
+	bool TriggerTouchClick(const D3DXVECTOR3 &RectanglePos, const D3DXVECTOR3 &RectangleSize);
 	D3DXVECTOR3 GetMouseCursor(void);	// カーソルのスクリーン座標の取得
 	int GetMouseWheel(void);			// ホイールの動き処理
 //------------------------------------------------------
@@ -96,17 +98,26 @@ public:
 	void IntermediateReception(bool bIR = false);	//デバイスの途中検知のオンオフ
 	bool GetIntermediateReception();		//現在デバイスの途中検知を行っているかどうか
 
+	CInputTouchPanel *GetTouchPanel();	//タッチパネルの情報取得
+	void SetTouchData(TOUCHINPUT *pTouchData, int nCntData);//タッチデータの保存
+	bool PressTouchPanel(int nNum = 0);				//タッチパネルプレス
+	bool TriggerTouchPanel(int nNum = 0);				//タッチパネルトリガー
+	D3DXVECTOR3 GetTouchPanelPos(int nNum = 0);		//タッチパネルPos
+
+	bool RectangleHitTest(const D3DXVECTOR3 &RectanglePos, const D3DXVECTOR3 &RectangleSize, const D3DXVECTOR3 &Pos);//矩形と点の当たり判定
+
 private:
 	bool KeyChackAll(STAN_DART_INPUT_KEY key, int type);			// 全デバイスの入力を確認
 	bool KeyChackNum(STAN_DART_INPUT_KEY key, int type, int nNum);	// 指定したデバイスの入力を確認
 private:
 
-	CInputKeyboard *m_pKeyboard;			//キーボードの情報
-	CInputJoyPad *m_pJoyPad;				//ジョイパッドの情報
-	CInputMouse *m_pMouse;					//マウスの情報
-	static CInput *m_pInput;				//このクラスの情報
-	InputType m_nOldInputType;				//最後に触ったデバイス
-	bool m_bEffect;							//エフェクトを行った
+	CInputKeyboard *m_pKeyboard;			// キーボードの情報
+	CInputJoyPad *m_pJoyPad;				// ジョイパッドの情報
+	CInputMouse *m_pMouse;					// マウスの情報
+	CInputTouchPanel *m_pTouchPanel;		// タッチパネル
+	static CInput *m_pInput;				// このクラスの情報
+	InputType m_nOldInputType;				// 最後に触ったデバイス
+	bool m_bEffect;							// エフェクトを行った
 };
 
 #endif

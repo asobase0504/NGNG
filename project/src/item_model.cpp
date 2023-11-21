@@ -85,6 +85,9 @@ void CItemModel::Uninit()
 //--------------------------------------------------------------
 void CItemModel::Update()
 {
+	CItem *item = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)m_ID);
+	LoadModel(item->GetModel());
+
 	bool isGround = false;
 
 	CMap* map = CMap::GetMap();

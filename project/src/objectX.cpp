@@ -1,6 +1,6 @@
-//**************************************************************
+﻿//**************************************************************
 //
-// オブジェクチE処琁E[objectX.cpp]
+// オブジェクトX処理 [objectX.cpp]
 // Author : Yuda Kaito
 //
 //**************************************************************
@@ -38,7 +38,7 @@ CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 	m_isHasOutLine(false),
 	m_isHasShadow(false)
 {
-	//オブジェクト�EタイプセチE��処琁E
+	//オブジェクトのタイプセット処理
 	CObject::SetType(CObject::MODEL);
 	D3DXMatrixIdentity(&m_mtxWorld);
 	D3DXMatrixIdentity(&m_mtxRot);
@@ -46,16 +46,16 @@ CObjectX::CObjectX(CTaskGroup::EPriority nPriority) :
 }
 
 //--------------------------------------------------------------
-// チE��トラクタ
+// デストラクタ
 //--------------------------------------------------------------
 CObjectX::~CObjectX()
 {
 }
 
 //--------------------------------------------------------------
-// オブジェクト�E初期匁E
+// オブジェクトの初期化
 // Author : Yuda Kaito
-// 概要E: 初期化を行う
+// 概要 : 初期化を行う
 //--------------------------------------------------------------
 HRESULT CObjectX::Init()
 {
@@ -67,13 +67,13 @@ HRESULT CObjectX::Init()
 //--------------------------------------------------------------
 // 描画
 // Author : Yuda Kaito
-// 概要E: 描画を行う
+// 概要 : 描画を行う
 //--------------------------------------------------------------
 void CObjectX::Draw()
 {
 	extern LPD3DXEFFECT pEffect;		// シェーダー
 
-	// チE��イスの取征E
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 
 	if (pEffect == nullptr)
@@ -100,19 +100,19 @@ void CObjectX::Draw()
 		m_isBlackFlash = false;
 	}
 
-	/* pEffectに値が�EってめE*/
+	/* pEffectに値が入ってる */
 
 	//-------------------------------------------------
-	// シェーダの設宁E
+	// シェーダの設定
 	//-------------------------------------------------
 
-	// 計算用マトリチE��ス
+	// 計算用マトリックス
 	D3DXMATRIX mtxScale;
 	D3DXMATRIX mtxSize;
 	D3DXMATRIX mtxTrans;
 	D3DXMATRIX mtxRot;
 
-	// ワールド�EトリチE��スの初期匁E
+	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
 	D3DXVECTOR3 CameraRot = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot();
 
@@ -129,10 +129,10 @@ void CObjectX::Draw()
 	D3DXMatrixIdentity(&mtxParent);
 
 	if (m_parent != nullptr)
-	{// ToDo : ここを直さなぁE��パ�EチE��動かなぁE�Eで気を付けよう�E�俺がやる、そのぁE��な、E
+	{// ToDo : ここを直さないとパーツが動かないので気を付けよう！俺がやる、そのうちな。
 		mtxParent = m_parent->GetMtxWorld();
 
-		// 行�E掛け算関数
+		// 行列掛け算関数
 		//D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
 
 		pEffect->SetMatrix(m_hParent, &mtxParent);
@@ -144,7 +144,7 @@ void CObjectX::Draw()
 	// タスクグループ情報
 	CTaskGroup* taskGroup = CApplication::GetInstance()->GetTaskGroup();
 
-	// カメラ惁E��
+	// カメラ情報
 	CCamera* pCamera = (CCamera*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_CAMERA, GetPriority());
 
 	D3DXMATRIX viewMatrix;
@@ -159,8 +159,8 @@ void CObjectX::Draw()
 	pEffect->SetTechnique(m_hTechnique);
 	pEffect->Begin(NULL, 0);
 
-	// ワールド封E��変換行�E
-	// シェーダーに行�Eを渡ぁE
+	// ワールド射影変換行列
+	// シェーダーに行列を渡す
 	pEffect->SetMatrix(m_hWorld, &m_mtxWorld);
 	pEffect->SetMatrix(m_hScale, &mtxScale);
 	pEffect->SetMatrix(m_hSize, &mtxSize);
@@ -169,10 +169,10 @@ void CObjectX::Draw()
 	pEffect->SetMatrix(m_hProj, &projMatrix);
 	pEffect->SetMatrix(m_hView, &viewMatrix);
 
-	// シェーダーに目皁E�E値を渡ぁE
+	// シェーダーに目的の値を渡す
 	pEffect->SetFloat(m_hTimeTarget, m_TimeTarget);
 
-	// シェーダーにカメラ座標を渡ぁE
+	// シェーダーにカメラ座標を渡す
 	D3DXVECTOR3 c = pCamera->GetPos();
 	D3DXVECTOR3 camerapos = D3DXVECTOR3(c.x, c.y, c.z);
 	D3DXVECTOR3 objpos = GetPos();
@@ -186,7 +186,7 @@ void CObjectX::Draw()
 
 	pEffect->SetVector(m_hCameraVec, &D3DXVECTOR4(vec.x, vec.y, vec.z,0.0f));
 
-	// シェーダーに描画から経過した時間を渡ぁE
+	// シェーダーに描画から経過した時間を渡す
 	pEffect->SetFloat(m_hTime, m_TimeCnt);
 
 	// ライト情報
@@ -196,19 +196,20 @@ void CObjectX::Draw()
 	{
 		lightClass = (CLight*)taskGroup->SearchRoleTop(CTask::ERole::ROLE_LIGHT, GetPriority() - 1);
 	}
+
 	D3DLIGHT9 light = lightClass->GetLight(0);
 
-	// ライト�E方吁E
+	// ライトの方向
 	D3DXVECTOR4 lightDir = D3DXVECTOR4(light.Direction.x, light.Direction.y, light.Direction.z, 0);
-	// ライト�E方向をシェーダーに渡ぁE
+	// ライトの方向をシェーダーに渡す
 	pEffect->SetVector(m_hvLightDir, &lightDir);
 
-	//マテリアルチE�Eタのポインタを取得すめE
+	//マテリアルデータのポインタを取得する
 	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
 
 	for (int nCntMat = 0; nCntMat < (int)m_numMat; nCntMat++)
 	{
-		// モチE��の色の設宁E
+		// モデルの色の設定 
 		{
 			D3DXVECTOR4 Diffuse;
 
@@ -234,20 +235,20 @@ void CObjectX::Draw()
 
 		LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
 		if (texture != nullptr)
-		{// チE��スチャの適忁E
+		{// テクスチャの適応
 			tex0 = texture;
 		}
 
-		// チE��スチャの設宁E
+		// テクスチャの設定
 		pEffect->SetTexture(m_hTexture, tex0);
-		// 通常モチE��の描画
+		// 通常モデルの描画
 		pEffect->BeginPass(1);
-		m_mesh->DrawSubset(nCntMat);	//モチE��パ�EチE�E描画
+		m_mesh->DrawSubset(nCntMat);	//モデルパーツの描画
 		pEffect->EndPass();
 
-		// 黒モチE��の描画
+		// 黒モデルの描画
 		pEffect->BeginPass(3);
-		m_mesh->DrawSubset(nCntMat);	//モチE��パ�EチE�E描画
+		m_mesh->DrawSubset(nCntMat);	//モデルパーツの描画
 		pEffect->EndPass();
 	}
 
@@ -257,15 +258,15 @@ void CObjectX::Draw()
 //--------------------------------------------------------------
 // 描画
 // Author : Yuda Kaito
-// 概要E: 描画を行う
+// 概要 : 描画を行う
 //--------------------------------------------------------------
 void CObjectX::DrawMaterial()
 {
-	extern LPD3DXEFFECT pEffect;		// シェーダー
+	extern LPD3DXEFFECT pEffect;		// 繧ｷ繧ｧ繝ｼ繝繝ｼ
 }
 
 //--------------------------------------------------------------
-// scaleの設宁E
+// scale縺ｮ險ｭ螳・
 //--------------------------------------------------------------
 void CObjectX::SetScale(const D3DXVECTOR3& inScale)
 {
@@ -281,7 +282,7 @@ void CObjectX::SetScale(const D3DXVECTOR3& inScale)
 }
 
 //--------------------------------------------------------------
-// 向きの設宁E
+// 向きの設定
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::SetRot(const D3DXVECTOR3 & inRot)
@@ -294,7 +295,7 @@ void CObjectX::SetRot(const D3DXVECTOR3 & inRot)
 }
 
 //--------------------------------------------------------------
-// 頂点最大小値の計算�E琁E
+// 頂点最大小値の計算処理
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::SetMtxRot(const D3DXVECTOR3& inRot)
@@ -305,7 +306,7 @@ void CObjectX::SetMtxRot(const D3DXVECTOR3& inRot)
 }
 
 //--------------------------------------------------------------
-// 頂点最大小値の計算�E琁E
+// 頂点最大小値の計算処理
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::CalculationVtx()
@@ -314,8 +315,8 @@ void CObjectX::CalculationVtx()
 
 	D3DXMatrixIdentity(&mtxWorld);
 
-	// 向きの反映
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &m_mtxRot);		// 行�E掛け算関数
+	// 蜷代″縺ｮ蜿肴丐
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &m_mtxRot);		// 陦悟・謗帙￠邂鈴未謨ｰ
 
 	D3DXVec3TransformCoord(&m_maxVtx, &m_maxVtx, &mtxWorld);
 	D3DXVec3TransformCoord(&m_minVtx, &m_minVtx, &mtxWorld);
@@ -343,7 +344,7 @@ void CObjectX::CalculationVtx()
 }
 
 //--------------------------------------------------------------
-// 生�E処琁E
+// 生成処理
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 CObjectX * CObjectX::Create(D3DXVECTOR3 pos, CTaskGroup::EPriority nPriority)
@@ -351,17 +352,17 @@ CObjectX * CObjectX::Create(D3DXVECTOR3 pos, CTaskGroup::EPriority nPriority)
 	// ポインタ宣言
 	CObjectX *pObjectX = nullptr;
 
-	// インスタンス生�E
+	// インスタンス生成
 	pObjectX = new CObjectX(nPriority);
 
 	if (pObjectX != nullptr)
-	{// ポインタが存在したら実衁E
+	{// ポインタが存在したら実行
 		pObjectX->Init();
 		pObjectX->SetPos(pos);
 		pObjectX->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 	else
-	{// ポインタが虚無だったら実衁E
+	{// ポインタが虚無だったら実行
 		assert(false);
 	}
 
@@ -370,7 +371,7 @@ CObjectX * CObjectX::Create(D3DXVECTOR3 pos, CTaskGroup::EPriority nPriority)
 }
 
 //--------------------------------------------------------------
-// モチE��の読み込み
+// モデルの読み込み
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::LoadModel(std::string aFileName)
@@ -387,15 +388,15 @@ void CObjectX::LoadModel(std::string aFileName)
 }
 
 //--------------------------------------------------------------
-// 平行投影処琁E
+// 平行投影処理
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::Projection(void)
 {
-	// チE��イスの取征E
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 
-	D3DXMATRIX mtxTrans;	// 計算用マトリチE��ス
+	D3DXMATRIX mtxTrans;	// 計算用マトリックス
 
 	// 変数宣言
 	D3DXMATRIX mtxShadow;
@@ -404,7 +405,7 @@ void CObjectX::Projection(void)
 	D3DXVECTOR3 pos, normal;
 	D3DMATERIAL9 Material;
 
-	// シャドウマトリチE��スの初期匁E
+	// シャドウマトリックスの初期化
 	D3DXMatrixIdentity(&mtxShadow);
 
 	vecLight = -D3DXVECTOR4(0.2f, -0.5f, 0.3f, 0.0f);
@@ -418,10 +419,10 @@ void CObjectX::Projection(void)
 	D3DXPlaneFromPointNormal(&planeField, &pos, &normal);
 	D3DXMatrixShadow(&mtxShadow, &vecLight, &planeField);
 
-	// ワールド�EトリチE��スと掛け合わせる
+	// ワールドマトリックスと掛け合わせる
 	D3DXMatrixMultiply(&mtxShadow, &m_mtxWorld, &mtxShadow);
 
-	// ワールド�EトリチE��スの設定（ワールド座標行�Eの設定！E
+	// ワールドマトリックスの設定（ワールド座標行列の設定）
 	pDevice->SetTransform(D3DTS_WORLD, &mtxShadow);
 
 	// 現在のマテリアルを保持
@@ -430,37 +431,37 @@ void CObjectX::Projection(void)
 
 	if (m_buffMat != nullptr)
 	{
-		// マテリアルチE�Eタへのポインタを取征E
+		// マテリアルデータへのポインタを取得
 		D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
 
 		for (int nCntMat = 0; nCntMat < (int)m_numMat; nCntMat++)
 		{
-			// マテリアルの設宁E
+			// マテリアルの設定
 			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
 			Material = pMat[nCntMat].MatD3D;
 			Material.Diffuse = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
 			Material.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
 
-			// マテリアルの設宁E
+			// マテリアルの設定
 			pDevice->SetMaterial(&Material);
 
-			// モチE��パ�EチE�E描画
+			// モデルパーツの描画
 			m_mesh->DrawSubset(nCntMat);
 		}
 	}
 
-	// 保持してぁE��マテリアルを戻ぁE
+	// 保持していたマテリアルを戻す
 	pDevice->SetMaterial(&matDef);
 }
 
 //--------------------------------------------------------------
-// 色味�E�拡散反封E�E�E��E設宁E
+// 色味（拡散反射光）の設定
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 void CObjectX::SetMaterialDiffuse(unsigned int index, const D3DXCOLOR& inColor)
 {
-	// 変更予定�EマテリアルがなぁE��吁E
+	// 変更予定のマテリアルがない場合
 	if (index >= m_numMat)
 	{
 		assert(false);
@@ -478,7 +479,7 @@ void CObjectX::SetMaterialDiffuse(unsigned int index, const D3DXCOLOR& inColor)
 }
 
 //--------------------------------------------------------------
-// SphereとAABBの当たり判宁E
+// SphereとAABBの当たり判定
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 bool CObjectX::SphereAndAABB(CObjectX* inObjectX, D3DXVECTOR3* outPos)
@@ -505,7 +506,7 @@ bool CObjectX::SphereAndAABB(CObjectX* inObjectX, D3DXVECTOR3* outPos)
 }
 
 //--------------------------------------------------------------
-// RayとAABBの当たり判宁E
+// RayとAABBの当たり判定
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 bool CObjectX::RayAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inNormal, D3DXVECTOR3* outPos)
@@ -570,12 +571,12 @@ bool CObjectX::RayAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inNormal,
 }
 
 //--------------------------------------------------------------
-// 線�EとAABBの当たり判宁E
+// 線分とAABBの当たり判定
 // Author : Yuda Kaito
 //--------------------------------------------------------------
 bool CObjectX::SegmentAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inPos2, D3DXVECTOR3* outPos)
 {
-	// 線�Eの両端点がAABB冁E��含まれてぁE��かどぁE��を判定する、E
+	// 線分の両端点がAABB内に含まれているかどうかを判定する。
 	{
 		D3DXVECTOR3 min = m_pos + m_minVtx;
 		D3DXVECTOR3 max = m_pos + m_maxVtx;
@@ -670,9 +671,9 @@ bool CObjectX::SegmentAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inPos
 //--------------------------------------------------------------
 float CObjectX::AABBAndPointLength(CObjectX* inObject, D3DXVECTOR3* outDist)
 {
-	float SqLen = 0.0f;	// 長さ�Eべき乗�E値を格紁E
+	float SqLen = 0.0f;	// 長さのべき乗の値を格納
 
-						// 吁E��で点が最小値以下もしくは最大値以上なら�E、差を老E�E
+						// 各軸で点が最小値以下もしくは最大値以上ならば、差を考慮
 
 	D3DXVECTOR3 min = inObject->m_pos + inObject->m_minVtx;
 	D3DXVECTOR3 max = inObject->m_pos + inObject->m_maxVtx;

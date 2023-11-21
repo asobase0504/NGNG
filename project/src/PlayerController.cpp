@@ -177,7 +177,7 @@ bool CPlayerController::Skill_2()
 	}
 
 	// スキルの使用
-	if (input->Trigger(MOUSE_INPUT_RIGHT, -1))
+	if (input->Trigger(MOUSE_INPUT_RIGHT))
 	{
 		isSkill = true;
 	}
@@ -200,7 +200,7 @@ bool CPlayerController::Skill_3()
 	}
 
 	// スキルの使用
-	if (input->Trigger(KEY_SHIFT, -1))
+	if (input->Trigger(KEY_SHIFT))
 	{
 		isSkill = true;
 	}
