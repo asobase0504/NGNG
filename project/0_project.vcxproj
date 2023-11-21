@@ -26,9 +26,11 @@
     <ClCompile Include="golem_skill_1.cpp" />
     <ClCompile Include="src\gold_nugget.cpp" />
     <ClCompile Include="enemy_hp_ui.cpp" />
+    <ClCompile Include="src\input\input_touch_panel.cpp" />
     <ClCompile Include="src\map_fade.cpp" />
     <ClCompile Include="src\model_date.cpp" />
     <ClCompile Include="src\mode_fade.cpp" />
+    <ClCompile Include="src\result.cpp" />
     <ClCompile Include="src\road.cpp" />
     <ClCompile Include="src\character_select.cpp" />
     <ClCompile Include="src\debug_mode.cpp" />
@@ -150,6 +152,7 @@
     <ClInclude Include="src\input\inputkeyboard.h" />
     <ClInclude Include="src\input\inputkeydata.h" />
     <ClInclude Include="src\input\inputmouse.h" />
+    <ClInclude Include="src\input\input_touch_panel.h" />
     <ClInclude Include="src\item.h" />
     <ClInclude Include="src\item_data_base.h" />
     <ClInclude Include="src\item_manager.h" />
@@ -184,6 +187,7 @@
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\procedure.h" />
     <ClInclude Include="src\renderer.h" />
+    <ClInclude Include="src\result.h" />
     <ClInclude Include="src\road.h" />
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\skill_data_base.h" />
@@ -219,6 +223,7 @@
     <None Include="data\FILE\map\map01.json" />
     <None Include="data\FILE\map\map02.json" />
     <None Include="data\FILE\model.json" />
+    <None Include="data\FILE\texture.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7EBBFD2F-1F99-4A13-9899-6C72FA7C556A}</ProjectGuid>

@@ -165,9 +165,6 @@ public:
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
 
-	// スキル
-	CSkill* GetSkill(int num) { return m_skill[num]; }
-
 private:
 	virtual void Move();
 	void Abnormal();

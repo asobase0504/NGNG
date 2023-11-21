@@ -92,7 +92,7 @@ void CBullet::Update()
 	// プレイヤーの獲得
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
 	
-	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
+	if (!pPlayer->IsDied() && m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
 		int size = m_abnormal.size();
 		for (int i = 0; i < size; i++)
