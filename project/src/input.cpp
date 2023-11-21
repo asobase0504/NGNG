@@ -13,6 +13,7 @@
 #include "input\inputkeyboard.h"
 #include "input\inputjoypad.h"
 #include "input\inputmouse.h"
+#include "input\input_touch_panel.h"
 #include <assert.h>
 
 //-----------------------------------------------------------------------------
@@ -28,6 +29,7 @@ CInput::CInput()
 	m_pKeyboard = nullptr;		//キーボードの情報
 	m_pJoyPad = nullptr;		//ジョイパッドの情報
 	m_pMouse = nullptr;			//マウスの情報
+	m_pTouchPanel = nullptr;	//タッチパネルの情報
 	m_nOldInputType = INPUT_TYPE_KEYBOARD;
 }
 
@@ -41,7 +43,7 @@ CInput::~CInput()
 //*************************************************************************************
 //初期化
 //*************************************************************************************
-HRESULT CInput::Init(HINSTANCE hInstance, HWND hWnd)
+HRESULT CInput::Init(HINSTANCE hInstance, HWND hWnd, D3DXVECTOR2 ScreenSize)
 {
 	//DirectInputオブジェクトの生成
 	if (FAILED(CDirectInput::Create(hInstance, hWnd)))
@@ -76,6 +78,10 @@ HRESULT CInput::Init(HINSTANCE hInstance, HWND hWnd)
 		return E_FAIL;
 	}
 
+	//タッチパネルの生成
+	m_pTouchPanel = new CInputTouchPanel;
+	m_pTouchPanel->SetScreenSize(ScreenSize);
+
 	return S_OK;
 }
 
@@ -108,6 +114,13 @@ void CInput::Uninit()
 		m_pMouse = nullptr;
 	}
 
+	//タッチパネルの破棄
+	if (m_pTouchPanel != nullptr)
+	{
+		delete m_pTouchPanel;
+		m_pTouchPanel = nullptr;
+	}
+
 	//DirectInputオブジェクトの破棄
 	CDirectInput::Break();
 
@@ -130,6 +143,8 @@ void CInput::Update()
 	m_pJoyPad->Update();
 	//マウスの更新
 	m_pMouse->Update();
+	//タッチパネルの更新
+	m_pTouchPanel->Update();
 
 	//最後に触ったデバイス
 	if (m_pJoyPad->GetPressAll())
@@ -423,6 +438,46 @@ D3DXVECTOR3 CInput::VectorMoveJoyStickAll(bool bleftandright)
 }
 
 //*************************************************************************************
+//タッチパネルの情報取得
+//*************************************************************************************
+CInputTouchPanel * CInput::GetTouchPanel()
+{
+	return m_pTouchPanel;
+}
+
+//*************************************************************************************
+//タッチデータの保存
+//*************************************************************************************
+void CInput::SetTouchData(TOUCHINPUT * pTouchData, int nCntData)
+{
+	m_pTouchPanel->SetTouchData(pTouchData, nCntData);
+}
+
+//*************************************************************************************
+//タッチパネルのプレス
+//*************************************************************************************
+bool CInput::PressTouchPanel(int nNum)
+{
+	return m_pTouchPanel->GetPress(nNum);
+}
+
+//*************************************************************************************
+//タッチパネルのトリガー
+//*************************************************************************************
+bool CInput::TriggerTouchPanel(int nNum)
+{
+	return m_pTouchPanel->GetTrigger(nNum);
+}
+
+//*************************************************************************************
+//タッチパネルのPos
+//*************************************************************************************
+D3DXVECTOR3 CInput::GetTouchPanelPos(int nNum)
+{
+	return m_pTouchPanel->GetTouchPos(nNum);
+}
+
+//*************************************************************************************
 // マウスカーソルのスクリーン座標の取得
 //*************************************************************************************
 D3DXVECTOR3 CInput::GetMouseCursor(void)
@@ -461,6 +516,66 @@ void CInput::SetCursorErase(bool bUse)
 {
 	// 画面内のカーソルを消すかどうか
 	m_pMouse->SetCursorErase(bUse);
+}
+
+//*************************************************************************************
+//タッチもしくはクリックをしたかどうかのTrigger
+//*************************************************************************************
+bool CInput::TriggerTouchClick(const D3DXVECTOR3 &RectanglePos, const D3DXVECTOR3 &RectangleSize)
+{
+	//タッチパネルとマウスの位置
+	D3DXVECTOR3 TouchPos = GetTouchPanelPos();
+	D3DXVECTOR3 MousePos = GetMouseCursor();
+
+	//タッチパネル
+	bool bTouch = TriggerTouchPanel();
+	//マウス
+	bool bMouse = Trigger(MOUSE_INPUT_LEFT);
+
+	if (!bTouch && !bMouse)
+	{//そもそも押されていない
+		return false;
+	}
+
+	if (bTouch)
+	{ //タッチパネルのが押されていたら
+		if (m_bEffect)
+		{
+			m_bEffect = false;
+		}
+		return RectangleHitTest(RectanglePos, RectangleSize, TouchPos);
+	}
+	else if (bMouse)
+	{ //マウスのが押されていたら
+		if (m_bEffect)
+		{
+			m_bEffect = false;
+		}
+		return RectangleHitTest(RectanglePos, RectangleSize, MousePos);
+	}
+
+	return false;
+}
+
+//*************************************************************************************
+//矩形と点の当たり判定
+//*************************************************************************************
+bool CInput::RectangleHitTest(const D3DXVECTOR3 &RectanglePos, const D3DXVECTOR3 &RectangleSize, const D3DXVECTOR3 &Pos)
+{
+	//各変数
+	D3DXVECTOR3 rectanglepos = RectanglePos;
+	D3DXVECTOR3 rectanglesize = RectangleSize;
+	D3DXVECTOR3 pos = Pos;
+
+	//	タッチ座標がポリゴンの中だったら
+	if (rectanglepos.x + rectanglesize.x >= pos.x
+		&& rectanglepos.x - rectanglesize.x <= pos.x
+		&& rectanglepos.y - rectanglesize.y <= pos.y
+		&& rectanglepos.y + rectanglesize.y >= pos.y)
+	{
+		return true;
+	}
+	return false;
 }
 
 //*************************************************************************************

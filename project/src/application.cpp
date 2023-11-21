@@ -92,7 +92,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 
 	// “ü—Íˆ—‚Ì‰Šú‰»ˆ—
 	CInput::Create();
-	if (FAILED(CInput::GetKey()->Init(hInstance, hWnd)))
+	if (FAILED(CInput::GetKey()->Init(hInstance, hWnd, D3DXVECTOR2(CENTER_POS.x, CENTER_POS.y))))
 	{
 		return E_FAIL;
 	}
