@@ -355,6 +355,9 @@
     <ClCompile Include="src\yamato_skill_2.cpp">
       <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
     </ClCompile>
+    <ClCompile Include="src\yamato_skill_3.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -618,6 +621,9 @@
       <Filter>ソース ファイル\Mode</Filter>
     </ClInclude>
     <ClInclude Include="src\yamato_skill_2.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yamato_skill_3.h">
       <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
     </ClInclude>
   </ItemGroup>

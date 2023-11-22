@@ -118,24 +118,29 @@ bool CPlayerController::Jump()
 //--------------------------------------------------------------
 // ダッシュ
 //--------------------------------------------------------------
-bool CPlayerController::Dash()
+bool CPlayerController::Dash(bool dash)
 {
 	CInput* input = CInput::GetKey();
 
-	bool isDash = false;
-
 	if (input == nullptr)
 	{
-		return isDash;
+		return dash;
 	}
 
 	// ダッシュ
-	if (input->Press(DIK_LCONTROL, -1))
+	if (input->Trigger(DIK_LCONTROL, -1))
 	{
-		isDash = true;
+		if (dash == false)
+		{
+			dash = true;
+		}
+		else
+		{
+			dash = false;
+		}
 	}
 
-	return isDash;
+	return dash;
 }
 
 //--------------------------------------------------------------

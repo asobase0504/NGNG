@@ -15,6 +15,7 @@
 #include "collision_sphere.h"
 #include "yamato_skill_1.h"
 #include "yamato_skill_2.h"
+#include "yamato_skill_3.h"
 
 //==============================================================
 // Ã“Iƒƒ“ƒo[•Ï”‚ÌéŒ¾
@@ -72,7 +73,7 @@ void CSkillDataBase::Uninit()
 //--------------------------------------------------------------
 void CSkillDataBase::Init()
 {
-	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,30,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,30,30,0.7,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{// ”­“®‚ÌŒø‰Ê
 		if (inusedCharacter != nullptr)
@@ -92,7 +93,7 @@ void CSkillDataBase::Init()
 		return false;
 	} };
 
-	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,5,1.0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{ // ”­“®‚ÌŒø‰Ê
 		if (inusedCharacter != nullptr)
@@ -106,16 +107,21 @@ void CSkillDataBase::Init()
 	{ // Hit‚ÌŒø‰Ê
 		return false;
 	} };
-	m_dates["YAMATO_SKILL_3"] = { 0,1,1,0,5,0,D3DXVECTOR3(0.0f,0.0f,0.0f),
+	m_dates["YAMATO_SKILL_3"] = { 120,1,1,0,120,20,0.0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[](CCharacter* inusedCharacter)
 	{ // ”­“®‚ÌŒø‰Ê
+		if (inusedCharacter != nullptr)
+		{
+			CYamatoSkill_3::Create(inusedCharacter);
+		}
+
 		return false;
 	},
 		[](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
 	{ // Hit‚ÌŒø‰Ê
 		return false;
 	} };
-	m_dates["YAMATO_SKILL_4"] = { 0,1,1,0,5,0,D3DXVECTOR3(0.0f,0.0f,0.0f),
+	m_dates["YAMATO_SKILL_4"] = { 0,1,1,0,5,0,1.0,D3DXVECTOR3(0.0f,0.0f,0.0f),
 		[](CCharacter* inusedCharacter)
 	{ // ”­“®‚ÌŒø‰Ê
 		return false;

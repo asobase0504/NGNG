@@ -1,11 +1,11 @@
 //**************************************************************
 //
-// スキル(通常攻撃)
+// スキル(回転切り)
 // Author : 髙野馨將
 //
 //**************************************************************
-#ifndef _YAMATO_SKILL_1_H_			// このマクロ定義がされてなかったら
-#define _YAMATO_SKILL_1_H_			// 二重インクルード防止のマクロ定義
+#ifndef _YAMATO_SKILL_3_H_			// このマクロ定義がされてなかったら
+#define _YAMATO_SKILL_3_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
@@ -21,15 +21,15 @@ class CCollision;
 //==============================================================
 // スキルクラス
 //==============================================================
-class CYamatoSkill_1 : public CSkillEntity
+class CYamatoSkill_3 : public CSkillEntity
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CYamatoSkill_1(int nPriority = 3);
-	~CYamatoSkill_1();
+	explicit CYamatoSkill_3(int nPriority = 3);
+	~CYamatoSkill_3();
 
 	// 静的メンバ関数
-	static CYamatoSkill_1	*Create(CCharacter* chara);					// スキルの生成
+	static CYamatoSkill_3	*Create(CCharacter* chara);					// スキルの生成
 
 	void InitAbility() override;										// スキルが始まるとき
 	void HitAbility(CCharacter* Target) override;						// スキルが当たった時の効果

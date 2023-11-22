@@ -108,6 +108,7 @@
     <ClCompile Include="src\words.cpp" />
     <ClCompile Include="src\yamato_skill_1.cpp" />
     <ClCompile Include="src\yamato_skill_2.cpp" />
+    <ClCompile Include="src\yamato_skill_3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="abnormal.h" />
@@ -196,6 +197,7 @@
     <ClInclude Include="src\words.h" />
     <ClInclude Include="src\yamato_skill_1.h" />
     <ClInclude Include="src\yamato_skill_2.h" />
+    <ClInclude Include="src\yamato_skill_3.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
