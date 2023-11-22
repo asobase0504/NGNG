@@ -23,7 +23,9 @@ CObject::CObject(CTaskGroup::EPriority inPriority, CTaskGroup::EPushMethod inMet
 	m_moveRot(0.0f, 0.0f, 0.0f),		// 回転量
 	m_size(0.0f, 0.0f, 0.0f),			// 大きさ
 	m_color(1.0f, 1.0f, 1.0f,1.0f),		// 色
-	m_type(NONE)
+	m_type(NONE),
+	m_TimeTarget(120),
+	tex0(nullptr)
 {
 	SetRole(ROLE_OBJECT);
 }
@@ -37,6 +39,30 @@ CObject::~CObject()
 
 HRESULT CObject::Init()
 {
+	extern LPD3DXEFFECT pEffect;	// シェーダー
+
+	// これさぁ・・・やっぱ用途ごとの名前じゃないほうが良かったんじゃ？
+	// ハンドルの初期化
+	m_hTechnique = pEffect->GetTechniqueByName("Diffuse");			// エフェクト
+	m_hTexture = pEffect->GetParameterByName(NULL, "Tex");			// テクスチャ
+	m_hvLightDir = pEffect->GetParameterByName(NULL, "vLightDir");	// ライトの方向
+	m_hvDiffuse = pEffect->GetParameterByName(NULL, "vDiffuse");	// 頂点カラー
+	m_hvAmbient = pEffect->GetParameterByName(NULL, "vAmbient");	// 頂点カラー
+	m_hWorld = pEffect->GetParameterByName(NULL, "mWorld");			// ワールド行列
+	m_hProj = pEffect->GetParameterByName(NULL, "mProj");			// プロジェクション行列
+	m_hView = pEffect->GetParameterByName(NULL, "mView");			// ビュー行列
+	m_hTime = pEffect->GetParameterByName(NULL, "Test");			// 時間
+	m_hTimeTarget = pEffect->GetParameterByName(NULL, "TimeTarget");// 目標時間
+	m_hSize = pEffect->GetParameterByName(NULL, "mSize");		// サイズ設定
+	m_hRot = pEffect->GetParameterByName(NULL, "mRot");
+	m_hTrans = pEffect->GetParameterByName(NULL, "mTrans");
+	m_hParent = pEffect->GetParameterByName(NULL, "mParent");
+	m_hScale = pEffect->GetParameterByName(NULL, "mScale");
+	m_hCameraVec = pEffect->GetParameterByName(NULL, "vEyeVec");
+	m_hvEyePos = pEffect->GetParameterByName(NULL, "mEyePos");
+
+	m_TimeCnt = m_TimeTarget;
+	
 	return S_OK;
 }
 
@@ -50,6 +76,8 @@ void CObject::Update()
 	// 移動
 	AddPos(GetMove());
 	AddRot(GetMoveRot());
+
+	m_mtxWorld;
 }
 
 //--------------------------------------------------------------

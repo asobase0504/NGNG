@@ -1,7 +1,7 @@
 //**************************************************************
 //
-// item
-// Author: Buriya Kota
+// HP_BAR
+// Author: Yuda Kaito
 //
 //**************************************************************
 #ifndef _HP_UI_H_
@@ -29,7 +29,6 @@ public:
 	~CHPUI();
 
 	HRESULT Init() override;
-	void Uninit() override;
 	void Update() override;
 
 	static CHPUI* Create(CStatus<int>* inHp);

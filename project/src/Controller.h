@@ -10,8 +10,7 @@
 //-----------------------------------------
 // include
 //-----------------------------------------
-#include <d3dx9.h>
-#include "Player.h"
+class CPlayer;
 
 //-----------------------------------------
 // オペレータークラス
@@ -37,6 +36,7 @@ public:
 
 	// Setter
 	void SetToOrder(CPlayer* inOrder) { m_toOrder = inOrder; }
+	CPlayer* GetToOrder() { return m_toOrder; }
 protected:
 	CPlayer* m_toOrder;	// 命令先
 	int chargeCount;

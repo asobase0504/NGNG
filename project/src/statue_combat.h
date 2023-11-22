@@ -35,9 +35,7 @@ public:
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Uninit() override;
 	void	Update() override;
-	void	Draw() override;
 
 	// 静的メンバ関数
 	static CStatueCombat *Create(D3DXVECTOR3 pos);			// 生成

@@ -9,6 +9,13 @@
 #ifndef PRECOMPILE_H_	// このマクロ定義がされてなかったら
 #define PRECOMPILE_H_	// 二重インクルード防止のマクロ定義
 
+
+//オンライン
+#include <stdlib.h>
+#include <WinSock2.h>
+
+#pragma comment(lib, "ws2_32.lib")
+
 // メモリーリークのチェック
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
@@ -77,4 +84,8 @@
 // Input
 #include "input.h"
 
+// Delete
+#define SAFE_RELEASE(p) if (p) { (p)->Release(); (p) = nullptr; }
+#define SAFE_DELETE(p) if (p) { delete (p); (p) = nullptr; }
+#define SAFE_DELETE_ARRAY(p) if (p) { delete[] (p); (p) = nullptr; }
 #endif

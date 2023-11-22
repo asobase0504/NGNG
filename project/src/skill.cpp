@@ -10,6 +10,7 @@
 //==============================================================
 #include "skill.h"
 #include "skill_data_base.h"
+#include "skill_entity.h"
 #include "player_manager.h"
 #include "enemy_manager.h"
 #include "enemy.h"
@@ -63,6 +64,14 @@ void CSkill::Update(void)
 	{// クールタイムがあれば減少させる
 		m_CT--;
 	}
+	
+	m_atkSpd = m_apChara->GetAtkSpd()->GetCurrent();
+
+	// Entityが全部死んだ。
+	if (GetEndChildrenSize() == 0)
+	{
+
+	}
 
 #ifdef _DEBUG
 	CDebugProc::Print("%sのクールタイム : %d\n", m_Name.c_str(),m_CT);
@@ -91,10 +100,13 @@ void CSkill::Skill()
 		// 当たり判定の持続時間の管理
 		CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 		pSkillData->GetDuration(m_Name);
-		pSkillData->GetAbility(m_Name)(m_apChara);
+		CSkillEntity* entity = pSkillData->GetAbility(m_Name)(m_apChara);
+
+		// 親子関係の構築
+		SetEndChildren(entity);
 
 		// クールタイムの設定
-		m_CT = pSkillData->GetCT(m_Name);
+		m_CT = pSkillData->GetCT(m_Name) * m_atkSpd;
 	}
 }
 

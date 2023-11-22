@@ -21,84 +21,242 @@ CAbnormalDataBase::CAbnormalDataBase()
 //--------------------------------------------------------------
 void CAbnormalDataBase::Init()
 {
+	//========================================================================================================
+	// やけど状態 
+	// 効果 : 毎秒2(*スタック数)のダメージを与える
+	//========================================================================================================
 	m_abnormal[ABNORMAL_FIRE] = CAbnormal::Create(ABNORMAL_FIRE);
-	// やけど状態 ==============================================================================================
-	m_abnormal[ABNORMAL_FIRE]->SetWhenAddFunc([](CCharacter* inCharacter, int cnt)
+	// 開始
+	m_abnormal[ABNORMAL_FIRE]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
 	{
-		inCharacter->AddUbnormalStack(ABNORMAL_FIRE);
-		inCharacter->SetUbnormalTime(ABNORMAL_FIRE, 300);
-		inCharacter->SetTargetInterval(ABNORMAL_FIRE, 20);
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 300);
+		inCharacter->SetTargetInterval(id, 20);
 	});
-	m_abnormal[ABNORMAL_FIRE]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
+	// 常時
+	m_abnormal[ABNORMAL_FIRE]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
 	{
 		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
 
-		inCharacter->SetInterval(ABNORMAL_FIRE, 0);
-		inCharacter->GetHp()->AddCurrent(-1 * ab_ct[cnt].s_stack);
+		inCharacter->SetInterval(id, 0);
+		inCharacter->GetHp()->AddCurrent(-1 * ab_ct[id].s_stack);
 	});
-	m_abnormal[ABNORMAL_FIRE]->SetWhenAttackFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	// 当たった時
+	m_abnormal[ABNORMAL_FIRE]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(ABNORMAL_FIRE);
-		outCharacter->SetUbnormalTime(ABNORMAL_FIRE, 600);
-		outCharacter->SetTargetInterval(ABNORMAL_FIRE, 20);
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 600);
+		outCharacter->SetTargetInterval(id, 20);
 	});
-	m_abnormal[ABNORMAL_FIRE]->SetWhenClearFunc([](CCharacter* inCharacter, int cnt)
-	{
-	});
-	//==========================================================================================================
+	// 失った時
+	m_abnormal[ABNORMAL_FIRE]->SetWhenClearFunc([](CCharacter* inCharacter, int id)
+	{});
 
-	m_abnormal[ABNORMAL_BLEED] = CAbnormal::Create(ABNORMAL_BLEED);
-	// 出血状態 ================================================================================================
-	m_abnormal[ABNORMAL_BLEED]->SetWhenAddFunc([](CCharacter* inCharacter, int cnt)
+	//========================================================================================================
+	// 炎上状態 
+	// 効果 : 毎秒最大体力の10%を削るダメージを与える
+	//========================================================================================================
+	m_abnormal[ABNORMAL_BURN] = CAbnormal::Create(ABNORMAL_BURN);
+	// 開始
+	m_abnormal[ABNORMAL_BURN]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
 	{
-		inCharacter->AddUbnormalStack(ABNORMAL_BLEED);
-		inCharacter->SetUbnormalTime(ABNORMAL_BLEED, 300);
-		inCharacter->SetTargetInterval(ABNORMAL_BLEED, 10);
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 180);
+		inCharacter->SetTargetInterval(id, 60);
 	});
-	m_abnormal[ABNORMAL_BLEED]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
+	// 常時
+	m_abnormal[ABNORMAL_BURN]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
+	{
+		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
+
+		inCharacter->SetInterval(id, 0);
+		inCharacter->GetHp()->AddCurrent((int)((inCharacter->GetHp()->GetMax() * 0.1f)) * ab_ct[id].s_stack);
+	});
+	// 攻撃
+	m_abnormal[ABNORMAL_BURN]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
+	{
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 600);
+		outCharacter->SetTargetInterval(id, 60);
+	});
+	// 消失
+	m_abnormal[ABNORMAL_BURN]->SetWhenClearFunc([](CCharacter* inCharacter, int id)
+	{
+	});
+
+	//========================================================================================================
+	// やけど状態 
+	// 効果 : 1秒毎に2(*スタック数)のダメージを与える
+	//========================================================================================================
+	m_abnormal[ABNORMAL_BLEED] = CAbnormal::Create(ABNORMAL_BLEED);
+
+	// 開始
+	m_abnormal[ABNORMAL_BLEED]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
+	{
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 600);
+		inCharacter->SetTargetInterval(id, 60);
+	});
+	// 常時
+	m_abnormal[ABNORMAL_BLEED]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
 	{
 		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
 		
 		// 付与されている状態異常のtikを増やす
-		inCharacter->SetInterval(ABNORMAL_BLEED, 0);
-		inCharacter->GetHp()->AddCurrent(-2 * ab_ct[cnt].s_stack);
+		inCharacter->SetInterval(id, 0);
+		inCharacter->GetHp()->AddCurrent(-2 * ab_ct[id].s_stack);
 	});
-	m_abnormal[ABNORMAL_BLEED]->SetWhenAttackFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	// 攻撃
+	m_abnormal[ABNORMAL_BLEED]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(ABNORMAL_BLEED);
-		outCharacter->SetUbnormalTime(ABNORMAL_BLEED, 600);
-		outCharacter->SetTargetInterval(ABNORMAL_BLEED, 30);
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 600);
+		outCharacter->SetTargetInterval(id, 60);
 	});
-	m_abnormal[ABNORMAL_BLEED]->SetWhenClearFunc([](CCharacter* inCharacter, int cnt)
+	// 消失
+	m_abnormal[ABNORMAL_BLEED]->SetWhenClearFunc([](CCharacter* inCharacter, int id)
 	{
 	});
-	//	//==========================================================================================================
 
+	//========================================================================================================
+	// スタン状態
+	// 効果 : 一時的に行動不能になる
+	//========================================================================================================
 	m_abnormal[ABNORMAL_STUN] = CAbnormal::Create(ABNORMAL_STUN);
-	// 出血状態 ================================================================================================
-	m_abnormal[ABNORMAL_STUN]->SetWhenAddFunc([](CCharacter* inCharacter, int cnt)
+	
+	// 開始
+	m_abnormal[ABNORMAL_STUN]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
 	{
-		inCharacter->AddUbnormalStack(ABNORMAL_STUN);
-		inCharacter->SetUbnormalTime(ABNORMAL_STUN, 60);
+		CCharacter* c = inCharacter;
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 60);
 	});
 
-	m_abnormal[ABNORMAL_STUN]->SetWhenAttackFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	// 攻撃
+	m_abnormal[ABNORMAL_STUN]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
 	{
-		outCharacter->AddUbnormalStack(ABNORMAL_STUN);
-		outCharacter->SetUbnormalTime(ABNORMAL_STUN, 200);
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 60);
 		inCharacter->SetStun(true);
 	});
-	m_abnormal[ABNORMAL_STUN]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
-	{
-		//// 付与されている状態異常のtikを増やす
-		//inCharacter->SetInterval(ABNORMAL_BLEED, 0);
-	});
-
-	m_abnormal[ABNORMAL_STUN]->SetWhenClearFunc([](CCharacter* inCharacter, int cnt)
+	// 常時
+	m_abnormal[ABNORMAL_STUN]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
+	{});
+	// 消失
+	m_abnormal[ABNORMAL_STUN]->SetWhenClearFunc([](CCharacter* inCharacter, int id)
 	{
 		inCharacter->SetStun(false);
 	});
-	//	//==========================================================================================================
+
+	//==========================================================================================================
+	// スロウ状態 
+	// 効果 : 状態異常にかかったキャラクターの移動速度を-50%する
+	//==========================================================================================================
+	m_abnormal[ABNORMAL_SLOW] = CAbnormal::Create(ABNORMAL_SLOW);
+
+	// 開始
+	m_abnormal[ABNORMAL_SLOW]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
+	{
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 300);
+		
+		if (inCharacter->GetAbnormalCount()[id].s_stack == 1)
+		{
+			inCharacter->GetSpeed()->AddCurrent(-inCharacter->GetSpeed()->GetMax() * 0.5f);
+		}
+	});
+	// 攻撃
+	m_abnormal[ABNORMAL_SLOW]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
+	{
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 300);
+	
+		if (inCharacter->GetAbnormalCount()[id].s_stack == 1)
+		{
+			inCharacter->GetSpeed()->AddCurrent(-inCharacter->GetSpeed()->GetMax() * 0.5f);
+		}
+
+	});
+	// 常時
+	m_abnormal[ABNORMAL_SLOW]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
+	{
+	});
+	// 消失
+	m_abnormal[ABNORMAL_SLOW]->SetWhenClearFunc([](CCharacter* inCharacter, int id)
+	{
+		if (inCharacter->GetAbnormalCount()[id].s_stack == 1)
+		{
+			inCharacter->GetSpeed()->AddCurrent(inCharacter->GetSpeed()->GetMax() * 0.5f);
+		}
+	});
+
+	//========================================================================================================
+	// 毒状態
+	// 効果 : 毎秒割合ダメージを与える
+	//========================================================================================================
+	m_abnormal[ABNORMAL_POISON] = CAbnormal::Create(ABNORMAL_POISON);
+
+	// 開始
+	m_abnormal[ABNORMAL_POISON]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
+	{
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 600);
+		inCharacter->SetTargetInterval(id, 60);
+	});
+	// 常時
+	m_abnormal[ABNORMAL_POISON]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
+	{
+		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
+
+		// 付与されている状態異常のtikを増やす
+		inCharacter->SetInterval(id, 0);
+		inCharacter->GetHp()->AddCurrent((int)((inCharacter->GetHp()->GetMax() * 0.05f) * ab_ct[id].s_stack));
+	});
+	// 攻撃
+	m_abnormal[ABNORMAL_POISON]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
+	{
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 600);
+		outCharacter->SetTargetInterval(id, 60);
+	});
+	// 消失
+	m_abnormal[ABNORMAL_POISON]->SetWhenClearFunc([](CCharacter* inCharacter, int id)
+	{
+	});
+
+	//========================================================================================================
+	// 疫病状態
+	// 効果 : 毎秒HPの2(*スタック数)のダメージを与える
+	//========================================================================================================
+	m_abnormal[ABNORMAL_PLAGUE] = CAbnormal::Create(ABNORMAL_PLAGUE);
+
+	// 開始
+	m_abnormal[ABNORMAL_PLAGUE]->SetWhenAddFunc([](CCharacter* inCharacter, int id)
+	{
+		inCharacter->AddAbnormalStack(id);
+		inCharacter->SetAbnormalTime(id, 600);
+		inCharacter->SetTargetInterval(id, 60);
+	});
+	// 常時
+	m_abnormal[ABNORMAL_PLAGUE]->SetWhenAllWaysFunc([](CCharacter* inCharacter, int id)
+	{
+		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
+
+		// 付与されている状態異常のtikを増やす
+		inCharacter->SetInterval(id, 0);
+		inCharacter->GetHp()->AddCurrent((-2 * ab_ct[id].s_stack) * ab_ct[id].s_stack);
+	});
+	// 攻撃
+	m_abnormal[ABNORMAL_PLAGUE]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
+	{
+		outCharacter->AddAbnormalStack(id);
+		outCharacter->SetAbnormalTime(id, 600);
+		outCharacter->SetTargetInterval(id, 60);
+	});
+	// 消失
+	m_abnormal[ABNORMAL_PLAGUE]->SetWhenClearFunc([](CCharacter* inCharacter, int id)
+	{
+	});
 }
 
 //--------------------------------------------------------------

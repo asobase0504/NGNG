@@ -31,6 +31,8 @@
 #include "character_select.h"
 #include "debug_mode.h"
 
+#include "model_skin_group.h"
+
 //==============================================================
 // Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
 //==============================================================
@@ -90,7 +92,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 
 	// “ü—Íˆ—‚Ì‰Šú‰»ˆ—
 	CInput::Create();
-	if (FAILED(CInput::GetKey()->Init(hInstance, hWnd)))
+	if (FAILED(CInput::GetKey()->Init(hInstance, hWnd, D3DXVECTOR2(CENTER_POS.x, CENTER_POS.y))))
 	{
 		return E_FAIL;
 	}
@@ -178,6 +180,9 @@ void CApplication::Uninit()
 	CItemDataBase::Uninit();
 	CAbnormalDataBase::Uninit();
 
+	CSkinMeshGroup* group = CSkinMeshGroup::GetInstance();
+	delete group;
+	group = nullptr;
 }
 
 //--------------------------------------------------------------

@@ -9,28 +9,39 @@
 // include
 //==============================================================
 #include "player.h"
+#include "player_manager.h"
+#include "Controller.h"
+#include "utility.h"
 
+// 全体情報
+#include "game.h"
+#include "camera_game.h"
 #include "application.h"
+#include "result.h"
+
+// 見た目
 #include "objectX.h"
 #include "object_mesh.h"
 
+// 当たり判定
 #include "collision_cylinder.h"
 #include "collision_mesh.h"
-#include "utility.h"
 
-#include "skill.h"
-#include "skill_data_base.h"
-#include "item.h"
-#include "item_data_base.h"
-#include "statue.h"
-#include "statue_manager.h"
+// 敵
 #include "enemy.h"
 #include "enemy_manager.h"
-#include "player_manager.h"
-#include "Controller.h"
 
-#include "game.h"
-#include "camera_game.h"
+// スキル
+#include "skill.h"
+#include "skill_data_base.h"
+
+// アイテム
+#include "item.h"
+#include "item_data_base.h"
+
+//像
+#include "statue.h"
+#include "statue_manager.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -52,7 +63,7 @@ CPlayer::~CPlayer()
 //--------------------------------------------------------------
 HRESULT CPlayer::Init()
 {
-	m_Skill.resize(MAX_SKILL);
+	m_skill.resize(MAX_SKILL);
 
 	m_isdash = false;
 	m_isUpdate = true;
@@ -66,12 +77,13 @@ HRESULT CPlayer::Init()
 	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
 	{
 		// スキルを生成
-		m_Skill[nCnt] = CSkill::Create();
+		m_skill[nCnt] = CSkill::Create();
 		// intをstring型に変換する
 		std::ostringstream  name;
 		name << "YAMATO_SKILL_" << nCnt+1;
 		// スキルの設定
-		m_Skill[nCnt]->SetSkill(name.str(), this);
+		m_skill[nCnt]->SetSkill(name.str(), this);
+		SetEndChildren(m_skill[nCnt]);
 	}
 
 	// モデルの読み込み
@@ -113,6 +125,11 @@ void CPlayer::Update()
 		return;
 	}
 
+	if (CInput::GetKey()->Trigger(DIK_O))
+	{
+
+	}
+
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 
@@ -121,7 +138,7 @@ void CPlayer::Update()
 		return;
 	}
 
-	if (!m_isStun)
+	if (!m_isStun && !IsDied())
 	{
 
 		// 移動
@@ -142,6 +159,11 @@ void CPlayer::Update()
 	else
 	{
 		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	}
+
+	if (IsDied())
+	{
+		CResult::Create();
 	}
 
 	// 更新処理

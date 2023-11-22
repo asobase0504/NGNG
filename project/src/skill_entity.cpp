@@ -1,4 +1,4 @@
-//**************************************************************
+﻿//**************************************************************
 //
 // スキル
 // Author : 髙野馨將
@@ -39,12 +39,14 @@ CSkillEntity::~CSkillEntity()
 //--------------------------------------------------------------
 HRESULT CSkillEntity::Init()
 {
+	MapChangeRelese();
 	// 初期化
 	m_Duration = 1;
 	m_Interval = 0;
 	m_isSkill = false;
 	InitAbility();
 
+	m_relation = m_apChara->GetRelation();
 	return S_OK;
 }
 
@@ -101,7 +103,7 @@ void CSkillEntity::Update()
 		std::list<CEnemy*> enemyList = CMap::GetMap()->GetEnemyList();
 
 		// 自分とは違う関係を持ってるキャラクターに行なう
-		CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this, &collision](CCharacter* inChara)
+		CMap::GetMap()->DoDifferentRelation(m_relation, [this, &collision](CCharacter* inChara)
 		{
 			// 当たり判定
 			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());

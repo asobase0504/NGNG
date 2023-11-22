@@ -33,6 +33,7 @@ CMap::CMap() :
 	CTask(CTaskGroup::EPriority::LEVEL_SYSTEM)
 {
 	m_SpawnCnt = 0;
+	m_characterList.clear();
 	m_model.clear();
 	m_mesh.clear();
 }
@@ -50,6 +51,7 @@ CMap::~CMap()
 //--------------------------------------------------------------
 HRESULT CMap::Init()
 {
+	MapChangeRelese();
 	CStatueManager* manager = CStatueManager::GetInstance();
 	m_statue.push_back(manager->RandomCreate());
 	m_statue.push_back(manager->RandomCreate());
@@ -66,6 +68,10 @@ HRESULT CMap::Init()
 		m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
 	}
 
+	CMesh* sky = CMesh::Create();
+	sky->SetSkyMesh();
+	sky->SetTexture("SKY");
+
 	return S_OK;
 }
 
@@ -74,26 +80,6 @@ HRESULT CMap::Init()
 //--------------------------------------------------------------
 void CMap::Uninit()
 {
-	for (CStatue* statue : m_statue)
-	{
-		statue->Uninit();
-		statue = nullptr;
-	}
-	for (CMesh* mesh : m_mesh)
-	{
-		mesh->Uninit();
-		mesh = nullptr;
-	}
-	for (CMapModel* model : m_model)
-	{
-		model->Uninit();
-		model = nullptr;
-	}
-	for (CCharacter* inChara : m_characterList)
-	{
-		inChara->Uninit();
-		inChara = nullptr;
-	}
 	m_statue.clear();
 	m_mesh.clear();
 	m_model.clear();
@@ -170,6 +156,9 @@ void CMap::Load(std::string path)
 	m_nextMapPath = map["NEXT_MAP"];
 }
 
+//--------------------------------------------------------------
+// à·Ç§ä÷åWÇÃÇ‡ÇÃÇ…ä÷êîÇçsÇ§
+//--------------------------------------------------------------
 void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
 {
 	std::list<CCharacter*> charaList = GetCharacterList();
@@ -177,24 +166,14 @@ void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<v
 	for (CCharacter* chara : charaList)
 	{// çUåÇîÕàÕÇ…ìGÇ™Ç¢ÇÈÇ©îªíËÇ∑ÇÈ
 
-	 // ìØÇ∂ä÷åWê´ÇæÇ¡ÇΩÇÁçUåÇÇìñÇƒÇ»Ç¢ÅB
-		switch (inRelation)
+		if (chara->IsDeleted())
 		{
-		case CCharacter::ERelation::FRIENDLY:
-			if (chara->GetRelation() == CCharacter::ERelation::FRIENDLY)
-			{
-				continue;
-			}
-			break;
-		case CCharacter::ERelation::HOSTILE:
-			if (chara->GetRelation() == CCharacter::ERelation::HOSTILE)
-			{
-				continue;
-			}
-			break;
-		default:
-			assert(false);
-			break;
+			continue;
+		}
+
+		if (chara->GetRelation() == inRelation)
+		{
+			continue;
 		}
 
 		inFunc(chara);

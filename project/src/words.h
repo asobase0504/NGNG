@@ -21,9 +21,9 @@ public:
 	static CWords *CWords::Create(const char * Text, D3DXVECTOR3 pos, D3DXVECTOR3 Size, CFont::FONT Type);
 
 private:
-	void Setwords(const char*Text, CFont::FONT Type);
+	void SetWords(const char*Text, CFont::FONT Type);
 
-	int  m_nTimer;
+private:
 	float m_nScale;
 	LPDIRECT3DTEXTURE9 m_pTex;
 };

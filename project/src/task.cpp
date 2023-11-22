@@ -21,8 +21,11 @@ CTask::CTask(CTaskGroup::EPriority inPriority, CTaskGroup::EPushMethod inMethod,
 	m_isDeleted(false),
 	m_isProtect(false),
 	m_isUpdate(true),
-	m_isPouseUpdate(false)
+	m_isPouseUpdate(false),
+	m_isMapChangeDeleted(false),
+	m_parentEnd(nullptr)
 {
+	m_childrensEnd.clear();
 	m_priority = inPriority;
 
 	CTaskGroup* taskGroup = CApplication::GetInstance()->GetTaskGroup();
@@ -61,4 +64,21 @@ CTask::~CTask()
 void CTask::Uninit()
 {
 	Release();
+
+	if (m_parentEnd != nullptr)
+	{
+		m_parentEnd->m_childrensEnd.remove(this);
+		m_parentEnd = nullptr;
+	}
+
+	if (!m_childrensEnd.empty())
+	{
+		std::list<CTask*>::iterator it;
+		for (it = m_childrensEnd.begin(); !m_childrensEnd.empty(); )
+		{
+			(*it)->Uninit();
+			it = m_childrensEnd.begin();
+		}
+	}
+	m_childrensEnd.clear();
 }

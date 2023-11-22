@@ -49,20 +49,9 @@ HRESULT CCollisionCylinder::Init()
 	for (int i = 0; i < 4; i++)
 	{
 		m_line[i] = CLine::Create();
+		SetEndChildren(m_line[i]);
 	}
 	return S_OK;
-}
-
-//--------------------------------------------------------------
-// èIóπ
-//--------------------------------------------------------------
-void CCollisionCylinder::Uninit()
-{
-	for (int i = 0; i < 4; i++)
-	{
-		m_line[i]->Uninit();
-	}
-	CCollision::Uninit();
 }
 
 //--------------------------------------------------------------
@@ -129,8 +118,18 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	bool isLanding = false;
 
 	D3DXVECTOR3 boxPos = inBox->GetPosWorld();
+	D3DXVECTOR3 boxRot = inBox->GetRot();
 	D3DXVECTOR3 boxSize = inBox->GetSize();
-	D3DXMATRIX boxMtxWorld = inBox->GetMtxWorld();
+	D3DXMATRIX boxMtxWorld, mtxTrans, mtxRot;
+
+	D3DXMatrixIdentity(&boxMtxWorld);
+
+	// å¸Ç´ÇîΩâf
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, boxRot.y, boxRot.x, boxRot.z);
+	D3DXMatrixMultiply(&boxMtxWorld, &boxMtxWorld, &mtxRot);
+	// à íuÇîΩâf
+	D3DXMatrixTranslation(&mtxTrans, boxPos.x, boxPos.y, boxPos.z);
+	D3DXMatrixMultiply(&boxMtxWorld, &boxMtxWorld, &mtxTrans);
 
 	D3DXVECTOR3 cylinderPos = GetPosWorld();
 	D3DXVECTOR3 cylinderPosOld = GetPosOld();
@@ -266,19 +265,22 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 //--------------------------------------------------------------
 bool CCollisionCylinder::ToSphere(CCollisionSphere * inSphere)
 {
+	float lengthSphere = inSphere->GetLength();
+	D3DXVECTOR3 posWorldSphere = inSphere->GetPosWorld();
+
 	// â~íåÇÃîºåaÇ∆ãÖÇÃîºåaÇë´ÇµÇΩãóó£
-	float addLength = m_length + inSphere->GetLength();
-	float addHeight = m_height + inSphere->GetLength();
+	float addLength = m_length + lengthSphere;
+	float addHeight = m_height + lengthSphere;
 
 	// â~íåÇÃíÜêSílÇ©ÇÁãÖÇÃíÜêSílÇ‹Ç≈ÇÃãóó£
 	D3DXVECTOR3 differenceX = D3DXVECTOR3(0.0f,0.0f,0.0f);
-	differenceX.x = GetPosWorld().x - inSphere->GetPosWorld().x;
+	differenceX.x = GetPosWorld().x - posWorldSphere.x;
 
 	D3DXVECTOR3 differenceY = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	differenceY.y = GetPosWorld().y - inSphere->GetPosWorld().y;
+	differenceY.y = GetPosWorld().y - posWorldSphere.y;
 
 	D3DXVECTOR3 differenceZ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	differenceZ.z = GetPosWorld().z - inSphere->GetPosWorld().z;
+	differenceZ.z = GetPosWorld().z - posWorldSphere.z;
 
 	//x,y,zÇÃê‚ëŒílÇÃåvéZ
 	float differenceLengthX = D3DXVec3Length(&differenceX);
@@ -289,50 +291,50 @@ bool CCollisionCylinder::ToSphere(CCollisionSphere * inSphere)
 		&& differenceLengthY < addHeight
 		&& differenceLengthZ <= addLength)
 	{
-		if (GetPosWorld().z + (m_length * 0.5f) > inSphere->GetPosWorld().z - inSphere->GetLength()
-			&& GetPosWorld().z - (m_length * 0.5f) < inSphere->GetPosWorld().z + inSphere->GetLength()
-			&& GetPosWorld().y + (m_height * 0.5f) > inSphere->GetPosWorld().y - inSphere->GetLength()
-			&& GetPosWorld().y - (m_height * 0.5f) < inSphere->GetPosWorld().y + inSphere->GetLength())
+		if (GetPosWorld().z + (m_length * 0.5f) > posWorldSphere.z - lengthSphere
+			&& GetPosWorld().z - (m_length * 0.5f) < posWorldSphere.z + lengthSphere
+			&& GetPosWorld().y + (m_height * 0.5f) > posWorldSphere.y - lengthSphere
+			&& GetPosWorld().y - (m_height * 0.5f) < posWorldSphere.y + lengthSphere)
 		{
-			if (GetPosWorld().x + (m_length * 0.5f) > inSphere->GetPosWorld().x - inSphere->GetLength())
+			if (GetPosWorld().x + (m_length * 0.5f) > posWorldSphere.x - lengthSphere)
 			{// ç∂ÇÃìñÇΩÇËîªíË
 				return true;
 			}
 
-			if (GetPosWorld().x - (m_length * 0.5f) < inSphere->GetPosWorld().x + inSphere->GetLength())
+			if (GetPosWorld().x - (m_length * 0.5f) < posWorldSphere.x + lengthSphere)
 			{// âEÇÃìñÇΩÇËîªíË
  				return true;
 			}
 		}
 
-		if (GetPosWorld().x + (m_length * 0.5f) > inSphere->GetPosWorld().x - inSphere->GetLength()
-			&& GetPosWorld().x - (m_length * 0.5f) < inSphere->GetPosWorld().x + inSphere->GetLength()
-			&& GetPosWorld().y + (m_height * 0.5f) > inSphere->GetPosWorld().y - inSphere->GetLength()
-			&& GetPosWorld().y - (m_height * 0.5f) < inSphere->GetPosWorld().y + inSphere->GetLength())
+		if (GetPosWorld().x + (m_length * 0.5f) > posWorldSphere.x - lengthSphere
+			&& GetPosWorld().x - (m_length * 0.5f) < posWorldSphere.x + lengthSphere
+			&& GetPosWorld().y + (m_height * 0.5f) > posWorldSphere.y - lengthSphere
+			&& GetPosWorld().y - (m_height * 0.5f) < posWorldSphere.y + lengthSphere)
 		{
-			if (GetPosWorld().z + (m_length * 0.5f) > inSphere->GetPosWorld().z - inSphere->GetLength())
+			if (GetPosWorld().z + (m_length * 0.5f) > posWorldSphere.z - lengthSphere)
 			{// ëOÇÃìñÇΩÇËîªíË
 				return true;
 			}
 
-			if (GetPosWorld().z - (m_length * 0.5f) < inSphere->GetPosWorld().z + inSphere->GetLength())
+			if (GetPosWorld().z - (m_length * 0.5f) < posWorldSphere.z + lengthSphere)
 			{// âúÇÃìñÇΩÇËîªíË
 				return true;
 			}
 		}
 
-		if (GetPosWorld().x + (m_length * 0.5f) > inSphere->GetPosWorld().x - inSphere->GetLength()
-			&& GetPosWorld().x - (m_length * 0.5f) < inSphere->GetPosWorld().x + inSphere->GetLength()
-			&& GetPosWorld().z + (m_length * 0.5f) > inSphere->GetPosWorld().z - inSphere->GetLength()
-			&& GetPosWorld().z - (m_length * 0.5f) < inSphere->GetPosWorld().z + inSphere->GetLength())
+		if (GetPosWorld().x + (m_length * 0.5f) > posWorldSphere.x - lengthSphere
+			&& GetPosWorld().x - (m_length * 0.5f) < posWorldSphere.x + lengthSphere
+			&& GetPosWorld().z + (m_length * 0.5f) > posWorldSphere.z - lengthSphere
+			&& GetPosWorld().z - (m_length * 0.5f) < posWorldSphere.z + lengthSphere)
 		{
-			if (GetPosWorld().y + (m_height * 0.5f) < inSphere->GetPosWorld().y - inSphere->GetLength()
+			if (GetPosWorld().y + (m_height * 0.5f) < posWorldSphere.y - lengthSphere
 				)
 			{// è„ÇÃìñÇΩÇËîªíË
 				return true;
 			}
 
-			if (GetPosWorld().y - (m_height * 0.5f) > inSphere->GetPosWorld().y + inSphere->GetLength())
+			if (GetPosWorld().y - (m_height * 0.5f) > posWorldSphere.y + lengthSphere)
 			{// â∫ÇÃìñÇΩÇËîªíË
 				return true;
 			}
@@ -364,17 +366,31 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 
 	for (int nCnt = 0; nCnt < primitive; nCnt++)
 	{
+		if ((pIdx[nCnt + 0] == pIdx[nCnt + 1]) ||
+			(pIdx[nCnt + 0] == pIdx[nCnt + 2]) ||
+			(pIdx[nCnt + 2] == pIdx[nCnt + 1]))
+		{// èkëﬁÉ|ÉäÉSÉìÇîÚÇŒÇ∑
+			continue;
+		}
+
 		D3DXVECTOR3 posPoly[nTri];
+		D3DXVECTOR3 pos = GetPosWorld();
 
 		// í∏ì_ç¿ïWÇÃéÊìæ
 		posPoly[0] = pVtx[pIdx[nCnt + 0]].pos;
 		posPoly[1] = pVtx[pIdx[nCnt + 1]].pos;
 		posPoly[2] = pVtx[pIdx[nCnt + 2]].pos;
 
-		if ((pIdx[nCnt + 0] == pIdx[nCnt + 1]) ||
-			(pIdx[nCnt + 0] == pIdx[nCnt + 2]) ||
-			(pIdx[nCnt + 2] == pIdx[nCnt + 1]))
-		{// èkëﬁÉ|ÉäÉSÉìÇîÚÇŒÇ∑
+		if (fabs(posPoly[0].x - pos.x) >= 100.0f && fabs(posPoly[0].z - pos.z) >= 100.0f)
+		{
+			continue;
+		}
+		if (fabs(posPoly[1].x - pos.x) >= 100.0f && fabs(posPoly[1].z - pos.z) >= 100.0f)
+		{
+			continue;
+		}
+		if (fabs(posPoly[2].x - pos.x) >= 100.0f && fabs(posPoly[2].z - pos.z) >= 100.0f)
+		{
 			continue;
 		}
 
@@ -391,8 +407,6 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 		vecLine[2] = posPoly[0] - posPoly[2];
 
 		D3DXVECTOR3 vecPlayer[nTri];
-
-		D3DXVECTOR3 pos = GetPosWorld();
 
 		// í∏ì_ç¿ïWÇÃéÊìæ
 		vecPlayer[0] = pos - posPoly[0];

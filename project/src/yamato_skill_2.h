@@ -32,6 +32,7 @@ public:
 	static CYamatoSkill_2	*Create(CCharacter* chara);					// スキルの生成
 
 	void InitAbility() override;										// スキルが始まるとき
+	void AllWayAbility() override {}
 	void HitAbility(CCharacter* Target) override;						// スキルが当たった時の効果
 
 private:		// メンバ変数

@@ -78,9 +78,6 @@ public:
 	void AttachShadow(bool isAttach = true) { m_isHasShadow = isAttach; }
 
 	/* 当たり判定 */
-	void SetCollisionFlag(bool inFlag) { m_isCollision = inFlag; }	// 当たり判定の有無を設定
-
-	bool IsCollision() { return m_isCollision; }	// 当たり判定の有無を取得
 	bool SphereAndAABB(CObjectX* inObjectX,D3DXVECTOR3* outPos = nullptr);
 	bool RayAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inNormal, D3DXVECTOR3* outPos = nullptr);
 	bool SegmentAndAABB(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inPos2, D3DXVECTOR3* outPos = nullptr);
@@ -111,20 +108,6 @@ private:
 	bool m_isHasOutLine;			// アウトラインを使うか
 	bool m_isHasShadow;			// アウトラインを使うか
 
-	float m_TimeCnt;
-
-	//=========================================
-	//ハンドル一覧
-	//=========================================
-	IDirect3DTexture9*	tex0;	// テクスチャ保存用
-	D3DXHANDLE			m_hView;		// view行列
-	D3DXHANDLE			m_hProj;		// projection行列
-	D3DXHANDLE			m_hWorld;		// ワールド行列
-	D3DXHANDLE			m_hvLightDir;	// ライトの方向
-	D3DXHANDLE			m_hvDiffuse;	// 頂点色
-	D3DXHANDLE			m_hvAmbient;	// 頂点色
-	D3DXHANDLE			m_hTechnique;	// テクニック
-	D3DXHANDLE			m_hTexture;		// テクスチャ
-	D3DXHANDLE			m_hTime;		// 時間を渡す
+	bool m_isBlackFlash;
 };
 #endif

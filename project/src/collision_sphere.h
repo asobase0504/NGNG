@@ -22,7 +22,6 @@ public:
 
 	HRESULT Init();
 	void Update();
-	void Uninit();
 
 	//bool ToCylinder(CCollisionCylinder* inCyinder);
 	bool ToMesh(CCollisionMesh* inMesh);

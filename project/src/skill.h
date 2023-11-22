@@ -49,6 +49,7 @@ private:		// メンバ変数
 	CCollision*		m_Collision;		// 当たり判定
 	int				m_CT;				// クールタイム
 	float			m_Duration;			// 効果時間
+	float			m_atkSpd;			// 攻撃速度
 	bool			m_isCollision;		// 当たっているかどうか	
 	std::string		m_Name;				// スキル名
 };

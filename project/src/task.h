@@ -59,6 +59,7 @@ public:
 	const ERole& GetRole() const { return m_role; }
 
 	/* 優先順位 */
+	void SetPriority(CTaskGroup::EPriority pri) { m_priority = pri; }
 	CTaskGroup::EPriority GetPriority() { return m_priority; }
 
 	/* 更新する必要があるか */
@@ -69,15 +70,25 @@ public:
 	void PauseOn() { m_isUpdate = m_isPouseUpdate; }					// 更新を行うか行わないかポーズ状態で判断
 	void PauseOff() { if (!m_isPouseUpdate) { m_isUpdate = true; } }	// ポーズ状態で止まっていた更新を稼働させる
 
+	/* マップ遷移時 */
+	void MapChangeRelese() { m_isMapChangeDeleted = true; }
+	bool IsMapChangeRelese() { return m_isMapChangeDeleted; }
+
+	/* 親子関係(終了) */
+	void SetEndChildren(CTask* inTask) { m_childrensEnd.push_back(inTask); inTask->SetEndParent(this); }
+	int GetEndChildrenSize() { return m_childrensEnd.size(); }
+
+private:
+	void SetEndParent(CTask* inTask) { m_parentEnd = inTask; }
 private:
 	CTaskGroup::EPriority m_priority;
 
 	CTask* m_prev;		// 前のタスク
 	CTask* m_next;		// 後のタスク
 
-	// 親子関係
-	CTask* m_pearent;	// 親
-	std::list<CTask*> m_childrens;	// 子
+	// 親子関係(終了)
+	CTask* m_parentEnd;	// 親
+	std::list<CTask*> m_childrensEnd;	// 子
 
 	bool m_isDeleted;	// 破棄予定
 	bool m_isProtect;	// 全体破棄から保護する
@@ -86,5 +97,6 @@ private:
 
 	bool m_isUpdate;		// 更新を行うか
 	bool m_isPouseUpdate;	// ポーズ中に更新処理を行うか
+	bool m_isMapChangeDeleted;	// マップ遷移時に消すもの
 };
 #endif

@@ -23,6 +23,7 @@ class CObjectX;
 class CCollisionCylinder;
 class CSkill;
 class CAbnormal;
+class CSkinMesh;
 
 //==============================================================
 // プレイヤークラス
@@ -30,6 +31,8 @@ class CAbnormal;
 class CCharacter : public CObject
 {
 public:
+
+	static const int MAX_SKILL;
 
 	enum class ERelation
 	{
@@ -52,7 +55,6 @@ public:
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Uninit() override;
 	void	Update() override;
 	void	Draw() override;
 
@@ -62,20 +64,34 @@ public:
 	CCollisionCylinder* GetCollision() { return m_collision; }
 
 	std::vector<CObjectX*> GetModel() { return m_apModel; }
-
-	void Damage(const int inDamage);
-  
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
-	void AddUbnormalStack(const int id) { m_haveAbnormal[id].s_Time.push_back(0); m_haveAbnormal[id].s_stack++;}
+
+	// 攻撃
+	void Attack(CCharacter* pEnemy, float SkillMul);
+	void Damage(const int inDamage);
+	int CalDamage(float SkillAtkMul);
+
+	// スキルの取得
+	std::vector<CSkill*> GetSkill() { return m_skill; }	// 複数
+	CSkill* GetSkill(int num) { return m_skill[num]; }	// 単体
+
+	// 死亡状態か否か。
+	bool IsDied() { return m_isDied; }
+	void Died();
+
+	// 状態異常
+	int GetAbnormalTypeCount();	// 状態異常の種類のカウント
+	void AddAbnormalStack(const int id) { m_haveAbnormal[id].s_Time.push_back(0); m_haveAbnormal[id].s_stack++; }
 	void SetInterval(const int id, const int Time) { m_haveAbnormal[id].s_interval = Time; }
-	void SetUbnormalTime(const int id, const int Time) { m_haveAbnormal[id].s_effectTime = Time; }
+	void SetAbnormalTime(const int id, const int Time) { m_haveAbnormal[id].s_effectTime = Time; }
 	void SetTargetInterval(const int id, const int MAXTIME) { m_haveAbnormal[id].s_target_interval = MAXTIME; }
 	void SetAttackAbnormal(const int id, bool onoff) { m_attackAbnormal[id] = onoff; }
+	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }		// 受けてる状態異常
+	abnormal_attack GetAbnormalAttack() { return m_attackAbnormal; }	// 与える状態異常
+
 	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
 	void SetStun(bool isStun) { m_isStun = isStun; }
-
-	int CalDamage(float SkillAtkMul);
 
 	//==============================================================
 	// ゲッターとセッター
@@ -123,36 +139,31 @@ public:
 
 	// 所持金
 	CStatus<int>* GetMoney() { return &m_money; }
-
-	// スキルの取得
-	std::vector<CSkill*> GetSkill() { return m_Skill; }
-
-	// 状態異常
-	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }
-	// 与える状態異常
-	abnormal_attack GetAbnormalAttack() { return m_attackAbnormal; }
-
-	// 攻撃
-	void Attack(CCharacter* pEnemy, float SkillMul);
-
-	// 死亡状態か否か。
-	bool IsDied() { return m_isDied; }
-	void Died();
   
 	// 関係
 	ERelation GetRelation() { return m_relation; }
 
-
 	// シールド回復するかどうか
-	void SetShield() { m_isShield = true; }
 	bool GetIsShield() { return m_isShield; }
 
 	// クリティカルかどうか
-	void SetCritical() { m_isCritical = true; }
 	bool GetIsCritical() { return m_isCritical; }
 
 	// クリティカルヒットした数
 	int GetNumCritical() { return m_numCritical; }
+
+	// 非戦闘時かどうか
+	bool GetIsNonCombat() { return m_nonCombat; }
+
+	// 走っているかどうか
+	bool GetIsRunning() { return m_isRunning; }
+
+	// 回復
+	void Regenation();
+	void Heal(int heal);
+	void RatioHeal(float heal);
+	// エリートかどうか
+	bool GetIsElite() { return m_isElite; }
 
 private:
 	virtual void Move();
@@ -161,10 +172,13 @@ private:
 protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
 	CCollisionCylinder*	m_collision;			// 当たり判定
-private:		// メンバ変数
+	ERelation m_relation;
 
-protected:		// ステータス
+	std::vector<CSkill*> m_skill;
+private:		// ステータス
 
+
+protected:
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;
 	// 持っている状態異常の個数をそれぞれ管理
@@ -172,12 +186,17 @@ protected:		// ステータス
 	// 与える状態異常を管理
 	abnormal_attack m_attackAbnormal;
 
-	bool m_isDied;		// 死亡状態か否か。
-	bool m_isShield;	// シールドを回復するかどうか
-	bool m_isCritical;	// クリティカルかどうか
-	int m_numCritical;	// クリティカルヒットした数
-	bool m_isBlock;	// 防御できたかできてないか
-	bool m_isStun;	// スタン状態かそうでないか
+	bool m_isDied;			// 死亡状態か否か。
+	bool m_isShield;		// シールドを回復するかどうか
+	bool m_isCritical;		// クリティカルかどうか
+	int m_numCritical;		// クリティカルヒットした数
+	bool m_isBlock;			// 防御できたかできてないか
+	bool m_isStun;			// スタン状態かそうでないか
+	bool m_nonCombat;		// 非戦闘時
+	int m_nonCombatTime;	// 非戦闘時になる時間
+	bool m_isRunning;		// 走っているかどうか
+	bool m_isElite;			// エリート
+
 	STATE m_state;
 
 	CStatus<int> m_hp;							// 体力
@@ -194,9 +213,9 @@ protected:		// ステータス
 	CStatus<float> m_jumpPower;					// ジャンプ力
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 	CStatus<int> m_money;						// 所持金
+	CStatus<int> m_regenetionTime;				// 自動回復の間隔
+	CStatus<int> m_regenetion;					// 自動回復の値
 
-	ERelation m_relation;
-
-	std::vector<CSkill*> m_Skill;
+	int m_RegenetionCnt;
 };
 #endif

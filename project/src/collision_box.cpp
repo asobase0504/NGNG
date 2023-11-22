@@ -19,19 +19,10 @@ HRESULT CCollisionBox::Init()
 	for (int i = 0; i < 12; i++)
 	{
 		m_line[i] = CLine::Create();
+		SetEndChildren(m_line[i]);
 	}
 
 	return S_OK;
-}
-
-void CCollisionBox::Uninit()
-{
-	CCollision::Uninit();
-
-	for (int i = 0; i < 12; i++)
-	{
-		m_line[i]->Uninit();
-	}
 }
 
 void CCollisionBox::Update()

@@ -62,6 +62,10 @@ void CCamera::Uninit(void)
 //--------------------------------------------------------------
 void CCamera::Update(void)
 {
+	NormalizeAngle(m_rot.x);
+	NormalizeAngle(m_rot.y);
+	NormalizeAngle(m_rot.z);
+
 #ifdef _DEBUG
 	CDebugProc::Print("視点 : %0.2f, %0.2f, %0.2f\n", m_posV.x, m_posV.y, m_posV.z);
 	CDebugProc::Print("注視点 : %0.2f, %0.2f, %0.2f\n", m_posR.x, m_posR.y, m_posR.z);
@@ -126,7 +130,7 @@ void CCamera::Set(int Type)
 		D3DXMatrixOrthoLH(&m_mtxProject,	// プロジェクションマトリックス
 			(float)SCREEN_WIDTH,			// 幅
 			(float)SCREEN_HEIGHT,			// 高さ
-			10.0f,						// ニア
+			10.0f,							// ニア
 			2000.0f);						// ファー
 	}
 

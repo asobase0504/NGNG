@@ -47,7 +47,6 @@ public:
 private:
 	// アイテムのモデルデータ
 	int m_ID;
-	std::array<std::string,CItemDataBase::ITEM_MAX> m_ItemData;
 	CCollisionSphere* m_collisionTake;
 	CCollisionCylinder* m_collisionHit;
 	D3DXMATRIX m_mtx;

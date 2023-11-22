@@ -1,4 +1,4 @@
-//**************************************************************
+﻿//**************************************************************
 //
 // スキルデータベース
 // Author : Yuda Kaito
@@ -33,7 +33,7 @@ CSkillDataBase::CSkillDataBase()
 }
 
 //--------------------------------------------------------------
-// instanceの取得
+// instance縺ｮ蜿門ｾ・
 //--------------------------------------------------------------
 CSkillDataBase * CSkillDataBase::GetInstance()
 {
@@ -79,22 +79,22 @@ void CSkillDataBase::Init()
 	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,30,30,0.7,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{// 発動時の効果
+		CSkillEntity* entity = nullptr;
 		if (inusedCharacter != nullptr)
 		{
-			CYamatoSkill_1::Create(inusedCharacter);
+			entity = CYamatoSkill_1::Create(inusedCharacter);
 		}
-
-		return false;
+		return entity;
 	}};
 	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,5,1.0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{ // 発動時の効果
+		CSkillEntity* entity = nullptr;
 		if (inusedCharacter != nullptr)
 		{
-			CYamatoSkill_2::Create(inusedCharacter);
+			entity = CYamatoSkill_2::Create(inusedCharacter);
 		}
-
-		return false;
+		return entity;
 	}};
 	m_dates["YAMATO_SKILL_3"] = { 120,1,1,0,120,20,0.0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[](CCharacter* inusedCharacter)
@@ -109,15 +109,16 @@ void CSkillDataBase::Init()
 	m_dates["YAMATO_SKILL_4"] = { 0,1,1,0,5,0,1.0,D3DXVECTOR3(0.0f,0.0f,0.0f),
 		[](CCharacter* inusedCharacter)
 	{ // 発動時の効果
-		return false;
+		return nullptr;
 	}};
 	m_dates["GOLEM_SKILL_1"] = { 50,1,1,0,600,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
-	{// 発動時の効果
+	{ // 発動時の効果
+		CSkillEntity* entity = nullptr;
 		if (inusedCharacter != nullptr)
 		{
-			CGolemSkill_1::Create(inusedCharacter);
+			entity = CGolemSkill_1::Create(inusedCharacter);
 		}
-		return false;
+		return entity;
 	}};
 }

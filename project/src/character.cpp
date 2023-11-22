@@ -23,10 +23,16 @@
 #include "map.h"
 #include "map_model.h"
 #include "object_mesh.h"
+#include "utility.h"
 
 #include "item_manager.h"
 
 #include <thread>
+
+//==============================================================
+// 定数宣言
+//==============================================================
+const int CCharacter::MAX_SKILL(4);
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -38,6 +44,7 @@ CCharacter::CCharacter(int nPriority) : m_haveItem{}
 		CMap::GetMap()->InCharacterList(this);
 	}
 	m_apModel.clear();
+	m_skill.clear();
 }
 
 //--------------------------------------------------------------
@@ -45,7 +52,6 @@ CCharacter::CCharacter(int nPriority) : m_haveItem{}
 //--------------------------------------------------------------
 CCharacter::~CCharacter()
 {
-
 }
 
 //--------------------------------------------------------------
@@ -55,15 +61,26 @@ HRESULT CCharacter::Init()
 {
 	CObject::Init();
 	m_isDied = false;
+	m_isShield = false;
+	m_isCritical = false;
+	m_numCritical = 0;
+	m_isBlock = false;
+	m_isStun = false;
+	m_nonCombat = false;
+	m_nonCombatTime = 0;
+	m_isRunning = false;
+	m_isElite = false;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
 	m_apModel[0]->LoadModel("BOX");
 
 	m_hp.Init(100);
-	m_hp.SetCurrent(50);
+	m_hp.SetCurrent(100);
+	m_hp.AttachMax();
 	m_addHp.Init(100);
 	m_addHp.SetCurrent(100);
+	m_addHp.AttachMax();
 	m_addHpSubTime.Init(100);
 	m_addHpSubTime.SetCurrent(100);
 	m_barrier.Init(100);
@@ -86,9 +103,14 @@ HRESULT CCharacter::Init()
 	m_jumpPower.SetCurrent(3.0f);
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
+	m_jumpCount.AttachMax();
 	m_money.Init(100);
 	m_money.SetCurrent(50);
+	m_regenetionTime.Init(60);
+	m_regenetion.Init(1);
+	m_RegenetionCnt = 0;
 	m_isStun = false;
+	m_isBlock = false;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
@@ -106,19 +128,10 @@ HRESULT CCharacter::Init()
 
 	m_state = GROUND;
 
+	// 親子関係の構築
+	SetEndChildren(m_apModel[0]);
+
 	return S_OK;
-}
-
-//--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CCharacter::Uninit()
-{
-	// 破棄処理
-	CObject::Release();
-
-	m_apModel[0]->Uninit();
-	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------
@@ -130,7 +143,6 @@ void CCharacter::Update()
 	CObject::Update();
 
 	bool isGround = false;
-
 
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
@@ -154,6 +166,7 @@ void CCharacter::Update()
 		SetMoveXZ(0.0f, 0.0f);
 	}
 
+	// マップモデル
 	for (int i = 0; i < map->GetNumModel(); i++)
 	{
 		if (m_collision->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
@@ -167,6 +180,7 @@ void CCharacter::Update()
 		}
 	}
 
+	// マップメッシュ
 	for (int i = 0; i < map->GetNumMesh(); i++)
 	{
 		if (m_collision->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
@@ -198,7 +212,7 @@ void CCharacter::Update()
 	if (m_hp.GetCurrent() <= 0)
 	{
 		// 死亡処理
-		m_isDied = true;
+		Died();
 	}
 
 	// 重力
@@ -206,6 +220,9 @@ void CCharacter::Update()
 
 	// 付与されている状態異常を作動させる
 	Abnormal();
+
+	// 自動回復
+	Regenation();
 }
 
 //--------------------------------------------------------------
@@ -276,7 +293,7 @@ void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 
 	CObject::SetPos(inPos);
 }
-
+ 
 //--------------------------------------------------------------
 // 向きの設定
 //--------------------------------------------------------------
@@ -331,18 +348,24 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 
 	// プレイヤーのダメージを計算
 	int Damage = CalDamage(SkillMul);
+
+	if (IsSuccessRate(m_criticalRate.GetMax()))
+	{
+ 		Damage *= m_criticalDamage.GetMax();
+	}
+
 	// エネミーにダメージを与える。
 	pEnemy->Damage(Damage);
 
-	// 付与されている状態異常を作動させる
+	// 攻撃付与されている状態異常を作動させる
 	for (int i = 0; i < m_attackAbnormal.size(); i++)
 	{
-		if (m_attackAbnormal[i] != false)
+		if (!m_attackAbnormal[i])
 		{
 			return;
 		}
 
-		CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
+		CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
 
 		if (abnormalFunc != nullptr)
 		{
@@ -356,6 +379,7 @@ void CCharacter::Died()
 	m_isDied = true;
 	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
 	list.remove(this);
+	//Release();
 }
 
 void CCharacter::Move()
@@ -389,7 +413,7 @@ void CCharacter::Abnormal()
 			continue;
 		}
 
-		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
 
 		if (abnormalFunc != nullptr)
 		{
@@ -405,7 +429,7 @@ void CCharacter::Abnormal()
 			{
 				if (data >= m_haveAbnormal[i].s_effectTime)
 				{// 状態異常を削除する
-					CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetItemData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
+					CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
 
 					//if (Los)
 					{// 失った時の処理を呼び出す
@@ -428,5 +452,70 @@ void CCharacter::Abnormal()
 				abnormalFunc(this, i);
 			}
 		}
+	}
+}
+
+//--------------------------------------------------------------
+// 状態異常の種類の個数の獲得
+//--------------------------------------------------------------
+int CCharacter::GetAbnormalTypeCount()
+{
+	int abnormal_type_count = 0;
+	
+	// 付与されている状態異常をカウントする
+	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	{
+		if (m_haveAbnormal[i].s_stack <= 0)
+		{
+			continue;
+		}
+
+		abnormal_type_count++;
+	}
+
+	return abnormal_type_count;
+}
+
+//--------------------------------------------------------------
+// 回復
+//--------------------------------------------------------------
+void CCharacter::Heal(int heal)
+{
+	int HealHp = heal;
+	int HealHpCheck = m_hp.GetCurrent() + HealHp;
+
+	if (HealHpCheck >= m_hp.GetMax())
+	{
+		HealHp = m_hp.GetMax() - m_hp.GetCurrent();
+	}
+
+	m_hp.AddCurrent(HealHp);
+}
+
+//--------------------------------------------------------------
+// 割合回復
+//--------------------------------------------------------------
+void CCharacter::RatioHeal(float heal)
+{
+	float Raito = m_hp.GetCurrent() * heal;
+	if (Raito <= 1)
+	{
+		Raito = 1.0f;
+	}
+
+	Heal(Raito);
+}
+
+//--------------------------------------------------------------
+// 自動回復
+//--------------------------------------------------------------
+void CCharacter::Regenation()
+{
+	m_RegenetionCnt++;
+
+	if (m_regenetionTime.GetBase() <= m_RegenetionCnt)
+	{
+		m_RegenetionCnt = 0;
+		Heal(m_regenetion.GetBase());
 	}
 }
