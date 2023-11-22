@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// ƒXƒLƒ‹ƒf[ƒ^ƒx[ƒX
+// ã‚¹ã‚­ãƒ«ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹
 // Author : Yuda Kaito
 //
 //**************************************************************
@@ -13,24 +13,27 @@
 #include "character.h"
 #include "enemy_manager.h"
 #include "collision_sphere.h"
+
+// Skill
 #include "yamato_skill_1.h"
 #include "yamato_skill_2.h"
 #include "yamato_skill_3.h"
+#include "golem_skill_1.h"
 
 //==============================================================
-// Ã“Iƒƒ“ƒo[•Ï”‚ÌéŒ¾
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®å®£è¨€
 //==============================================================
 CSkillDataBase* CSkillDataBase::m_instance = nullptr;
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CSkillDataBase::CSkillDataBase()
 {
 }
 
 //--------------------------------------------------------------
-// instance‚Ìæ“¾
+// instanceã®å–å¾—
 //--------------------------------------------------------------
 CSkillDataBase * CSkillDataBase::GetInstance()
 {
@@ -47,14 +50,14 @@ CSkillDataBase * CSkillDataBase::GetInstance()
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CSkillDataBase::~CSkillDataBase()
 {
 }
 
 //--------------------------------------------------------------
-// I—¹
+// çµ‚äº†
 //--------------------------------------------------------------
 void CSkillDataBase::Uninit()
 {
@@ -69,65 +72,52 @@ void CSkillDataBase::Uninit()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»
+// åˆæœŸåŒ–
 //--------------------------------------------------------------
 void CSkillDataBase::Init()
 {
 	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,30,30,0.7,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
-	{// ”­“®‚ÌŒø‰Ê
+	{// ç™ºå‹•æ™‚ã®åŠ¹æœ
 		if (inusedCharacter != nullptr)
 		{
 			CYamatoSkill_1::Create(inusedCharacter);
 		}
 
 		return false;
-	},
-		[this](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
-	{// Hit‚ÌŒø‰Ê
-		//CStatus<unsigned int> atk = inusedCharacter->GetAtk();
-		//int nAtk = atk.GetCurrent();
-
-		inusedCharacter->Attack(inusedInTarget,2.0f);
-
-		return false;
-	} };
-
+	}};
 	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,5,1.0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
-	{ // ”­“®‚ÌŒø‰Ê
+	{ // ç™ºå‹•æ™‚ã®åŠ¹æœ
 		if (inusedCharacter != nullptr)
 		{
 			CYamatoSkill_2::Create(inusedCharacter);
 		}
 
 		return false;
-	},
-		[this](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
-	{ // Hit‚ÌŒø‰Ê
-		return false;
-	} };
+	}};
 	m_dates["YAMATO_SKILL_3"] = { 120,1,1,0,120,20,0.0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[](CCharacter* inusedCharacter)
-	{ // ”­“®‚ÌŒø‰Ê
+	{ // ç™ºå‹•æ™‚ã®åŠ¹æœ
 		if (inusedCharacter != nullptr)
 		{
 			CYamatoSkill_3::Create(inusedCharacter);
 		}
 
 		return false;
-	},
-		[](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
-	{ // Hit‚ÌŒø‰Ê
-		return false;
-	} };
+	}};
 	m_dates["YAMATO_SKILL_4"] = { 0,1,1,0,5,0,1.0,D3DXVECTOR3(0.0f,0.0f,0.0f),
 		[](CCharacter* inusedCharacter)
-	{ // ”­“®‚ÌŒø‰Ê
+	{ // ç™ºå‹•æ™‚ã®åŠ¹æœ
 		return false;
-	},
-		[](CCharacter* inusedCharacter,CCharacter* inusedInTarget)
-	{ // Hit‚ÌŒø‰Ê
+	}};
+	m_dates["GOLEM_SKILL_1"] = { 50,1,1,0,600,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+		[this](CCharacter* inusedCharacter)
+	{// ç™ºå‹•æ™‚ã®åŠ¹æœ
+		if (inusedCharacter != nullptr)
+		{
+			CGolemSkill_1::Create(inusedCharacter);
+		}
 		return false;
-	} };
+	}};
 }

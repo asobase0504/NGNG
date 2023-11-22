@@ -34,8 +34,9 @@ public:
 	void	Update() override;
 
 	// 静的メンバ関数
-	virtual void InitAbility() = 0;											// スキルが始まるとき
-	virtual void HitAbility(CCharacter* Target) = 0;						// スキルが当たった時の効果
+	virtual void InitAbility() = 0;							// スキルが始まるとき
+	virtual void AllWayAbility() = 0;						// 持続中
+	virtual void HitAbility(CCharacter* Target) = 0;		// スキルが当たった時の効果
 
 protected:		// メンバ変数
 	CCharacter*		m_apChara;			// キャラクターのインスタンス

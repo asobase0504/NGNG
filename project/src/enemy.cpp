@@ -21,6 +21,7 @@
 #include "collision_box.h"
 
 #include "enemy_data_base.h"
+#include "skill.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -46,19 +47,20 @@ HRESULT CEnemy::Init()
 	// 初期化処理
 	CCharacter::Init();
 
+	// 敵対状態
+	m_relation = ERelation::HOSTILE;
+
 	m_AttackCnt = 0;
 	m_apModel[0]->LoadModel("SKELETON");
 	m_apModel[0]->CalculationVtx();
 
-	D3DXVECTOR3 pos = GetPos();
-	D3DXVECTOR3 rot = GetRot();
-	D3DXVECTOR3 size = GetSize();
-	D3DXMATRIX mtx = GetMtxWorld();
-
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GROUND_GO_ATTACK));
+	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
 
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
+
+	m_Skill.push_back(CSkill::Create());
+	m_Skill[0]->SetSkill("YAMATO_SKILL_1",this);
 	return S_OK;
 }
 
@@ -86,20 +88,6 @@ void CEnemy::Update()
 
 //--------------------------------------------------------------
 // 生成
-//--------------------------------------------------------------
-CEnemy* CEnemy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
-{
-	CEnemy* pEnemy;
-	pEnemy = new CEnemy(CObject::ENEMY);
-	pEnemy->SetPos(pos);
-	pEnemy->SetSize(size);
-	pEnemy->Init();
-
-	return pEnemy;
-}
-
-//--------------------------------------------------------------
-// 移動
 //--------------------------------------------------------------
 void CEnemy::Move()
 {

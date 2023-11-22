@@ -147,6 +147,8 @@ void CGame::ChangeMap(std::string inPath)
 		m_map = nullptr;
 	}
 
-	CPlayerManager::GetInstance()->GetPlayer()->OnUpdate();
+	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
+	player->OnUpdate();
 	m_map = CMap::Create(inPath);
+	m_map->InCharacterList(player);
 }
