@@ -67,6 +67,12 @@ void CSkill::Update(void)
 	
 	m_atkSpd = m_apChara->GetAtkSpd()->GetCurrent();
 
+	// Entityが全部死んだ。
+	if (GetEndChildrenSize() == 0)
+	{
+
+	}
+
 #ifdef _DEBUG
 	CDebugProc::Print("%sのクールタイム : %d\n", m_Name.c_str(),m_CT);
 #endif // _DEBUG
