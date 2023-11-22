@@ -65,6 +65,8 @@ HRESULT CPlayer::Init()
 {
 	m_skill.resize(MAX_SKILL);
 
+	m_isdash = false;
+	m_isUpdate = true;
 	// 初期化処理
 	CCharacter::Init();
 
@@ -195,28 +197,28 @@ void CPlayer::PAttack()
 	if (m_controller->Skill_1())
 	{
 		// 発動時に生成
-		m_skill[0]->Skill1();
+		m_Skill[0]->Skill();
 	}
 
 	// スキル1(右クリック)
 	if(m_controller->Skill_2())
 	{
 		// 発動時に生成
-		m_skill[1]->Skill1();
+		m_Skill[1]->Skill();
 	}
 
 	// スキル2(シフト)
 	if (m_controller->Skill_3())
 	{
 		// 発動時に生成
-		m_skill[1]->Skill1();
+		m_Skill[1]->Skill();
 	}
 
 	// スキル3(R)
 	if (m_controller->Skill_4())
 	{
 		// 発動時に生成
-		m_skill[1]->Skill1();
+		m_Skill[2]->Skill();
 	}
 }
 
@@ -227,6 +229,8 @@ void CPlayer::Move()
 {
 	// 移動量
 	D3DXVECTOR3 move = m_controller->Move();
+
+	m_isskill = false;
 
 	if (D3DXVec3Length(&move) != 0.0f)
 	{
@@ -273,14 +277,14 @@ void CPlayer::Dash()
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 
-	// ダッシュ
-	m_isdash = m_controller->Dash();
+	// ダッシュ(ctrlを押すとダッシュと歩きを切り替える)
+	m_isdash = m_controller->Dash(m_isdash);
 
 	if (m_isdash)
 	{
 		// ダッシュ速度
-		move.x *= DASH_SPEED;
-		move.z *= DASH_SPEED;
+		/*move.x *= DASH_SPEED;
+		move.z *= DASH_SPEED;*/
 	}
 
 	// 移動量の設定

@@ -25,7 +25,7 @@ public:
 	D3DXVECTOR3 Move() override;
 
 	bool		Jump() override;
-	bool		Dash() override;
+	bool		Dash(bool dash) override;
 	bool		Skill_1() override;
 	bool		Skill_2() override;
 	bool		Skill_3() override;

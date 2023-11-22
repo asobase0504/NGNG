@@ -17,6 +17,7 @@
 // Skill
 #include "yamato_skill_1.h"
 #include "yamato_skill_2.h"
+#include "yamato_skill_3.h"
 #include "golem_skill_1.h"
 
 //==============================================================
@@ -75,7 +76,7 @@ void CSkillDataBase::Uninit()
 //--------------------------------------------------------------
 void CSkillDataBase::Init()
 {
-	m_dates["YAMATO_SKILL_1"] = { 60,1,1,0,60,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,30,30,0.7,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{// 発動時の効果
 		CSkillEntity* entity = nullptr;
@@ -85,7 +86,7 @@ void CSkillDataBase::Init()
 		}
 		return entity;
 	}};
-	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,5,1.0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{ // 発動時の効果
 		CSkillEntity* entity = nullptr;
@@ -95,12 +96,17 @@ void CSkillDataBase::Init()
 		}
 		return entity;
 	}};
-	m_dates["YAMATO_SKILL_3"] = { 0,1,1,0,5,0,D3DXVECTOR3(0.0f,0.0f,0.0f),
+	m_dates["YAMATO_SKILL_3"] = { 120,1,1,0,120,20,0.0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[](CCharacter* inusedCharacter)
 	{ // 発動時の効果
-		return nullptr;
+		if (inusedCharacter != nullptr)
+		{
+			CYamatoSkill_3::Create(inusedCharacter);
+		}
+
+		return false;
 	}};
-	m_dates["YAMATO_SKILL_4"] = { 0,1,1,0,5,0,D3DXVECTOR3(0.0f,0.0f,0.0f),
+	m_dates["YAMATO_SKILL_4"] = { 0,1,1,0,5,0,1.0,D3DXVECTOR3(0.0f,0.0f,0.0f),
 		[](CCharacter* inusedCharacter)
 	{ // 発動時の効果
 		return nullptr;
