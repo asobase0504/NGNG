@@ -99,11 +99,8 @@ void CSkillEntity::Update()
 			m_Collision->SetParent(&m_apChara->GetPos());
 		}
 
-		// 当たり判定
-		std::list<CEnemy*> enemyList = CMap::GetMap()->GetEnemyList();
-
 		// 自分とは違う関係を持ってるキャラクターに行なう
-		CMap::GetMap()->DoDifferentRelation(m_relation, [this, &collision](CCharacter* inChara)
+		CMap::GetMap()->DoDifferentRelation(m_relation, [this, &collision,&pSkillData](CCharacter* inChara)
 		{
 			// 当たり判定
 			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
