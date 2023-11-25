@@ -19,7 +19,7 @@
 // 定数
 //==============================================================
 const float CMesh::MOUNTAIN(50.0f);
-const float CMesh::MAX_SIZE(12000.0f);
+const float CMesh::RADIUS(1000.0f);
 const int CMesh::START_HORIZONTAL(30);
 const int CMesh::START_VERTICAL(15);
 
@@ -36,7 +36,10 @@ CMesh::CMesh(CTaskGroup::EPriority nPriority) :
 	m_index(0),			// インデックス
 	m_polygonCount(0),
 	m_isCollision(true),
-	m_collisionMesh(nullptr)
+	m_collisionMesh(nullptr),
+	m_sphereRange(D3DXVECTOR2(0.0f, 0.0f)),		// 球の描画範囲
+	m_fRadius(0.0f),// 半径
+	m_isCulling(false)
 {
 	m_meshSize = { 100.0f,0.0f,100.0f };
 }
@@ -58,7 +61,10 @@ HRESULT CMesh::Init()
 	// 初期化処理
 	m_vtxBuff = nullptr;		// 頂点バッファーへのポインタ
 	m_idxBuff = nullptr;		// インデックスバッファ
-	m_vtxBuffCone = nullptr;	// 円錐の頂点バッファへのポインタ
+
+	// 初期値の設定
+	m_sphereRange = D3DXVECTOR2(D3DX_PI * 2.0f, D3DX_PI * 0.5f);
+	m_fRadius = RADIUS;
 
 	return S_OK;
 }
@@ -112,6 +118,11 @@ void CMesh::Draw()
 	//ライト設定falseにするとライトと食らわない
 	//pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
+	if (m_isCulling)
+	{
+		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	}
+
 	// ワールドマトリックスの初期化
 	// 行列初期化関数(第1引数の行列を単位行列に初期化)
 	D3DXMatrixIdentity(&m_mtxWorld);
@@ -153,6 +164,8 @@ void CMesh::Draw()
 	pDevice->SetTexture(0, nullptr);
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	//pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
@@ -617,46 +630,36 @@ void CMesh::SetSkyMesh()
 
 	VERTEX_3D *pVtx = NULL;		// 頂点情報へのポインタ
 
-	// 頂点情報をロックし、頂点情報へのポインタを取得
+	// 頂点バッファをロック
 	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (int y = 0; y < yLine; y++)
 	{
-		float fYRot = (((D3DX_PI * 0.25f) / m_zsiz) * y) + (D3DX_PI * 0.25f);
-
-		float fYPos = cosf(fYRot) * MAX_SIZE;
-
 		for (int x = 0; x < xLine; x++)
-		{
-			float fRot = ((D3DX_PI * 2.0f) / m_xsiz) * x;
+		{// 変数宣言
+			int nCntVtx = x + (y *  xLine);
+			float fRot = (m_sphereRange.x / START_HORIZONTAL) * x;					// Y軸の角度の設定
+			float fHalfRot = (m_sphereRange.y / START_VERTICAL) * y;				// 半球のZ軸の角度の半分
 
-			//正規化
-			if (fRot > D3DX_PI)
-			{
-				fRot += D3DX_PI * 2;
-			}
-			if (fRot < -D3DX_PI)
-			{
-				fRot += -D3DX_PI * 2;
-			}
-
-			float fXPos = sinf(fRot) * sinf(fYRot) * MAX_SIZE;
-			float fZPos = cosf(fRot) * sinf(fYRot) * MAX_SIZE;
-			D3DXVECTOR3 pos = D3DXVECTOR3(fXPos, fYPos, fZPos);
+			// 高さと半径の設定
+			D3DXVECTOR2 radius = D3DXVECTOR2(sinf(fHalfRot) * m_fRadius, cosf(fHalfRot) * m_fRadius);
 
 			// 頂点座標の設定
-			pVtx[x + (y * xLine)].pos = pos;
+			pVtx[nCntVtx].pos.x = sinf(fRot) * radius.y;
+			pVtx[nCntVtx].pos.z = cosf(fRot) * radius.y;
+			pVtx[nCntVtx].pos.y = radius.x;
 
-			D3DXVECTOR3 vec;
+			// ワールド座標にキャスト
+			WorldCastVtx(pVtx[nCntVtx].pos, GetPos(), GetRot());
 
-			// 正規化する ( 大きさ 1 のベクトルにする )
-			D3DXVec3Normalize(&vec, &pos);
-
-			// 各頂点の法線の設定
-			pVtx[x + (y * xLine)].nor = vec;
+			// 各頂点の法線の設定(*ベクトルの大きさは1にする必要がある)
+			pVtx[nCntVtx].nor.x = pVtx[nCntVtx].pos.x;
+			pVtx[nCntVtx].nor.z = pVtx[nCntVtx].pos.z;
+			pVtx[nCntVtx].nor.y = 0.0f;
+			D3DXVec3Normalize(&pVtx[nCntVtx].nor, &pVtx[nCntVtx].nor);
 
 			// 頂点カラーの設定
-			pVtx[x + (y * xLine)].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[nCntVtx].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 			float fUTex = (1.0f / m_xsiz) * x;
 			float fVTex = (1.0f / m_zsiz) * y;
@@ -666,7 +669,7 @@ void CMesh::SetSkyMesh()
 		}
 	}
 
-	// 頂点バッファをアンロックする
+	// 頂点バッファのアンロック
 	m_vtxBuff->Unlock();
 
 	// インデックスバッファの生成
@@ -703,82 +706,6 @@ void CMesh::SetSkyMesh()
 
 	// インデックスバッファをアンロックする
 	m_idxBuff->Unlock();
-
-	// 円錐の頂点バッファの生成
-	pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_3D) * (m_xsiz + 2),
-		D3DUSAGE_WRITEONLY,
-		FVF_VERTEX_3D,
-		D3DPOOL_MANAGED,
-		&m_vtxBuffCone,
-		NULL);
-
-	// 頂点情報をロックし、頂点情報へのポインタを取得
-	m_vtxBuffCone->Lock(0, 0, (void**)&pVtx, 0);
-
-	for (int i = 0; i < xLine; i++)
-	{
-		float fYRot = D3DX_PI * 0.25f;
-		float fRot = ((D3DX_PI * 2.0f) / m_xsiz) * i;
-
-		//正規化
-		if (fRot > D3DX_PI)
-		{
-			fRot += D3DX_PI * 2;
-		}
-		if (fRot < -D3DX_PI)
-		{
-			fRot += -D3DX_PI * 2;
-		}
-
-		float fXPos = sinf(-fRot) * sinf(fYRot) * MAX_SIZE;
-		float fYPos = cosf(fYRot) * MAX_SIZE;
-		float fZPos = cosf(-fRot) * sinf(fYRot) * MAX_SIZE;
-		D3DXVECTOR3 pos = D3DXVECTOR3(fXPos, fYPos, fZPos);
-
-		// 頂点座標の設定
-		pVtx[i + 1].pos = pos;
-
-		D3DXVECTOR3 vec;
-
-		// 正規化する ( 大きさ 1 のベクトルにする )
-		D3DXVec3Normalize(&vec, &pos);
-
-		// 各頂点の法線の設定
-		pVtx[i + 1].nor = vec;
-
-		// 頂点カラーの設定
-		pVtx[i + 1].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
-
-		// テクスチャ座標の設定
-		pVtx[i + 1].tex = D3DXVECTOR2(0.0f, 0.0f);
-	}
-
-	float fYRot = ((D3DX_PI * 0.25f) / m_zsiz);
-
-	float fYPos = cosf(fYRot) * MAX_SIZE;
-
-	D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, fYPos, 0.0f);
-
-	// 頂点座標の設定
-	pVtx[0].pos = pos;
-
-	D3DXVECTOR3 vec;
-
-	// 正規化する ( 大きさ 1 のベクトルにする )
-	D3DXVec3Normalize(&vec, &pos);
-
-	// 各頂点の法線の設定
-	pVtx[0].nor = vec;
-
-	// 頂点カラーの設定
-	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-
-	// テクスチャ座標の設定
-	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-
-	// 頂点バッファをアンロックする
-	m_vtxBuffCone->Unlock();
 }
 
 //--------------------------------------------------------------

@@ -116,6 +116,13 @@ D3DXVECTOR3 WorldCastScreen(D3DXVECTOR3 *screenPos,			// スクリーン座標
 D3DXVECTOR3 ScreenCastWorld(const D3DXVECTOR3 &screenPos,			// スクリーン座標
 	D3DXVECTOR3 screenSize);
 
+//=============================================================================
+// ワールド座標へのキャスト処理
+// Author : 唐﨑結斗
+// 概要 : pos,rotの行列計算を行い、ローカル座標をワールド座標に変換する
+//=============================================================================
+D3DXVECTOR3 WorldCastVtx(D3DXVECTOR3 vtx, D3DXVECTOR3 FormerPos, D3DXVECTOR3 FormerRot);
+
 //--------------------------------------------------------------
 // ScreenCastWorld
 // Author : Hamada Ryuuga

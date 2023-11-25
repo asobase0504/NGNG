@@ -70,6 +70,7 @@ HRESULT CMap::Init()
 
 	CMesh* sky = CMesh::Create();
 	sky->SetSkyMesh();
+	sky->SetIsCulling(true);
 	sky->SetTexture("SKY");
 
 	return S_OK;
