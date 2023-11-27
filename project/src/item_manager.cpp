@@ -80,7 +80,7 @@ void CItemManager::Draw()
 
 void CItemManager::CreateRandomItem(const D3DXVECTOR3 & inPos, const D3DXMATRIX & boxmtx)
 {
-	int id = IntRandom(0, CItemDataBase::EItemType::ITEM_MAX);
+	int id = IntRandom(0, CItemDataBase::EItemType::ITEM_MAX - 1);
 	CreateItem(inPos, boxmtx,(CItemDataBase::EItemType)id);
 }
 

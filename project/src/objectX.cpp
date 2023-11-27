@@ -385,6 +385,7 @@ void CObjectX::LoadModel(std::string aFileName)
 	m_mesh = xGroup->GetMesh(aFileName);
 	m_numMat = xGroup->GetNumMat(aFileName);
 	m_size = xGroup->GetSize(aFileName);
+	modelKey = aFileName;
 }
 
 //--------------------------------------------------------------
