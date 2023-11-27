@@ -25,16 +25,6 @@ class CCharacter;
 class CItem : public CTask
 {
 public:
-	enum RARITY
-	{
-		RARITY_NONE = -1,
-		RARITY_COMMON,
-		RARITY_UNCOMMON,
-		RARITY_RARE,
-		RARITY_MAX
-	};
-
-public:
 	using ITEM_FUNC = void(*)(CCharacter*, int);
 	using ITEM_ACTION_FUNC = void(*)(CCharacter*, int, CCharacter*);
 public:
@@ -61,8 +51,8 @@ public:
 	std::string GetModel() { return m_itemModelData; }
 
 	// ƒŒƒAƒŠƒeƒB
-	void SetRerity(RARITY inRarity) { m_rarity = inRarity; }
-	RARITY GetRerity() { return m_rarity; }
+	void SetRerity(CItemDataBase::ERarity inRarity) { m_rarity = inRarity; }
+	CItemDataBase::ERarity GetRerity() { return m_rarity; }
 
 private:
 	ITEM_FUNC m_getFunc;
@@ -74,6 +64,6 @@ private:
 
 	std::string m_itemModelData;
 
-	RARITY m_rarity;
+	CItemDataBase::ERarity m_rarity;
 };
 #endif	// _ITEM_DATA_H_

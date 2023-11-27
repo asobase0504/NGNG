@@ -77,6 +77,25 @@ bool IsSuccessRate(float inRate)
 	return ((rand() / (float)RAND_MAX)) < inRate;
 }
 
+int IntRateRandom(std::vector<float> inRate)
+{
+	float random = FloatRandom(0.0f, 1.0f);
+	
+	int size = inRate.size();
+	float nowRate = 0.0f;
+	for (int i = 0; i < size; i++)
+	{
+		nowRate = inRate[i];
+		if (nowRate >= random)
+		{
+			return i;
+		}
+	}
+
+	std::sort(inRate.begin(), inRate.end());
+	return 0;
+}
+
 //--------------------------------------------------------------
 // sinカーブの値が1.0f～0.0fで帰ってくる
 //--------------------------------------------------------------

@@ -70,6 +70,13 @@ int IntRandom(int nMax, int nMin);
 bool IsSuccessRate(float inRate);
 
 //--------------------------------------------------------------
+// 確率の違うランダム
+// 引数1  : std::vector<float> / size = 個数 / value = 確率
+// 返値  : int / ランダム値
+//--------------------------------------------------------------
+int IntRateRandom(std::vector<float>);
+
+//--------------------------------------------------------------
 // sinカーブの値が1.0f～0.0fで帰ってくる
 // 引数1  : int nTime / タイム
 // 引数2  : float fCycle / 周期

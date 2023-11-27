@@ -84,6 +84,39 @@ void CItemManager::CreateRandomItem(const D3DXVECTOR3 & inPos, const D3DXMATRIX 
 	CreateItem(inPos, boxmtx,(CItemDataBase::EItemType)id);
 }
 
+void CItemManager::CreateRandomItemRarity(const D3DXVECTOR3 & inPos, const D3DXMATRIX & boxmtx, CItemDataBase::ERarity inRarity)
+{
+	CItemDataBase::EItemType id = (CItemDataBase::EItemType)IntRandom(0, CItemDataBase::EItemType::ITEM_MAX - 1);
+	CItemDataBase::ERarity rarity = CItemDataBase::GetInstance()->GetItemData(id)->GetRerity();
+
+	while (rarity != inRarity)
+	{
+		id = (CItemDataBase::EItemType)IntRandom(0, CItemDataBase::EItemType::ITEM_MAX - 1);
+		rarity = CItemDataBase::GetInstance()->GetItemData(id)->GetRerity();
+	}
+
+	CreateItem(inPos, boxmtx, (CItemDataBase::EItemType)id);
+}
+
+CItemDataBase::ERarity CItemManager::CreateRandomItemRarityRate(const D3DXVECTOR3 & inPos, const D3DXMATRIX & boxmtx, std::array<float, CItemDataBase::RARITY_MAX> rarityRate)
+{
+	std::vector<float> vec;
+	vec.resize(rarityRate.size());
+	for (int i = 0; i < (int)rarityRate.size(); i++)
+	{
+		vec[i] = rarityRate[i];
+	}
+	CItemDataBase::ERarity rarity = (CItemDataBase::ERarity)IntRateRandom(vec);
+
+	if (rarity == CItemDataBase::ERarity::RARITY_LOSE)
+	{ // ‚Í‚¸‚ê
+		return rarity;
+	}
+
+	CreateRandomItemRarity(inPos, boxmtx, rarity);
+	return rarity;
+}
+
 //--------------------------------------------------------------
 // ¶¬
 //--------------------------------------------------------------

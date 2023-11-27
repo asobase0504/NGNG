@@ -62,60 +62,39 @@ void CStatueLuck::Update()
 	
 	if (Touch())
 	{
-		if (!m_bOnce)
+		if (m_nItemCount < 2)
 		{
-			if (m_nItemCount < 2)
+			// プレイヤーお金を調整して設定
+			playerMoney->AddCurrent(-m_nUseMoney);
+
+			// アイテム確率計算
+			int randomCount = IntRandom(100, 1);
+
+			int answer = CItemManager::GetInstance()->CreateRandomItemRarityRate(D3DXVECTOR3(m_pos.x, m_pos.y + 30.0f, m_pos.z), GetMtxRot(),{ 0.05f,0.1f,0.2f,0.65f });
+
+			switch (answer)
 			{
-				// プレイヤーお金を調整して設定
-				playerMoney->AddCurrent(-m_nUseMoney);
-
-				// アイテム確率計算
-				int randomCount = IntRandom(100, 1);
-
-				if (randomCount <= 4)
-				{// レア
-
-				//--------------------------
-				//  アイテムドロップ関数
-				//--------------------------
-
-					m_nItemCount++;
-				}
-				else if (randomCount >= 5 && randomCount <= 12)
-				{// アンコモン
-
-				 //--------------------------
-				 //  アイテムドロップ関数
-				 //--------------------------
-
-					m_nItemCount++;
-				}
-				else if (randomCount >= 13 && randomCount <= 39)
-				{// コモン
-
-				 //--------------------------
-				 //  アイテムドロップ関数
-				 //--------------------------
-
-					m_nItemCount++;
-				}
-				else
-				{// ハズレ
-
-				}
-
-				// 次回ガチャする時用に必要お金数を増やして設定しておく
-				int randomNumber = rand() % 10;
-				m_nUseMoney += randomNumber;
-
-				m_bOnce = true;
+			case 0:	// レア
+				m_nItemCount++;
+				break;
+			case 1:	// アンコモン
+				m_nItemCount++;
+				break;
+			case 2:	// コモン
+				m_nItemCount++;
+				break;
+			case 3:	// ハズレ
+				break;
+			default:
+				break;
 			}
+
+			// 次回ガチャする時用に必要お金数を増やして設定しておく
+			int randomNumber = rand() % 10;
+			m_nUseMoney += randomNumber;
+
+			m_bOnce = true;
 		}
-	}
-	else
-	{
-		m_bOnce = false;
-		m_bChance = false;
 	}
 
 	// 更新処理
