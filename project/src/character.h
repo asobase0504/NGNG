@@ -41,6 +41,7 @@ public:
 		MAX
 	};
 
+	// 今いる場所
 	enum STATE
 	{
 		NONE = -1,
@@ -169,6 +170,7 @@ public:
 private:
 	virtual void Move();
 	void Abnormal();
+	void Collision();
 
 protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
