@@ -73,6 +73,11 @@ public:
 	void Damage(const int inDamage);
 	int CalDamage(float SkillAtkMul);
 
+	// 回復
+	void Regenation();
+	void Heal(int heal);
+	void RatioHeal(float heal);
+
 	// スキルの取得
 	std::vector<CSkill*> GetSkill() { return m_skill; }	// 複数
 	CSkill* GetSkill(int num) { return m_skill[num]; }	// 単体
@@ -159,10 +164,6 @@ public:
 	// 走っているかどうか
 	bool GetIsRunning() { return m_isRunning; }
 
-	// 回復
-	void Regenation();
-	void Heal(int heal);
-	void RatioHeal(float heal);
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
 

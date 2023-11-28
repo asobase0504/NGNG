@@ -76,6 +76,8 @@ void CGolemSkill_1::InitAbility()
 	m_chargeTime = 0;
 	m_isCharge = true;
 
+	m_aimCharacter = nullptr;
+
 	// ‘_‚¤æ‚ÌŒˆ’è
 	CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this](CCharacter* inChara)
 	{
