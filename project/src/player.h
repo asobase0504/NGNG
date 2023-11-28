@@ -34,7 +34,7 @@ public:
 	// コンストラクタとデストラクタ
 	explicit CPlayer(int nPriority = 5);
 	~CPlayer();
-	
+
 	//プロトタイプ宣言
 	HRESULT	Init() override;
 	void	Uninit() override;
@@ -47,7 +47,7 @@ public:
 	void SetController(CController* inOperate);
 	void SetPos(const D3DXVECTOR3& inPos);
 
-void OnUpdate() { m_isUpdate = true; }
+	void OnUpdate() { m_isUpdate = true; }
 	void OffUpdate() { m_isUpdate = false; }
 
 private:
