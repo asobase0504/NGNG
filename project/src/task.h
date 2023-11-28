@@ -76,6 +76,8 @@ public:
 
 	/* eŽqŠÖŒW(I—¹) */
 	void SetEndChildren(CTask* inTask) { m_childrensEnd.push_back(inTask); inTask->SetEndParent(this); }
+	int GetEndChildrenSize() { return m_childrensEnd.size(); }
+
 private:
 	void SetEndParent(CTask* inTask) { m_parentEnd = inTask; }
 private:

@@ -35,7 +35,6 @@ public:
 	HRESULT Init(int inId);
 	void Uninit() override;
 	void Update() override;
-	void Draw() override;
 
 	static CItemModel* Create(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx ,int inId);
 

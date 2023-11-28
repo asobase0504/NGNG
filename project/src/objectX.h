@@ -109,5 +109,7 @@ private:
 	bool m_isHasShadow;			// アウトラインを使うか
 
 	bool m_isBlackFlash;
+
+	std::string modelKey;
 };
 #endif

@@ -24,7 +24,7 @@ class CMesh : public CObjectPolygon3D
 {
 public:
 	static const float MOUNTAIN;
-	static const float MAX_SIZE;
+	static const float RADIUS;
 	static const int START_HORIZONTAL;
 	static const int START_VERTICAL;
 
@@ -60,13 +60,14 @@ public:
 	void SetY(std::vector<std::vector<float>> inY);
 	void SetSkyMesh();
 
+	void SetIsCulling(bool isCulling) { m_isCulling = isCulling; }
+
 private:
 	void SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx, int nCnt, bool isUp);
 	void SetVtxMeshSize(int Size);
 	void SetVtxMeshLight();
 
 	LPDIRECT3DINDEXBUFFER9 m_idxBuff;	// インデックスバッファ
-	LPDIRECT3DVERTEXBUFFER9 m_vtxBuffCone;	// 円錐の頂点バッファへのポインタ
 
 	int m_xsiz;				// 面数
 	int m_zsiz;				// 面数
@@ -79,6 +80,11 @@ private:
 	D3DXVECTOR3 m_meshSize;
 	bool m_isCollision;
 	CCollisionMesh* m_collisionMesh;
+
+	D3DXVECTOR2	m_sphereRange;		// 球の描画範囲
+	float m_fRadius;			// 半径
+
+	bool m_isCulling;
 };
 #endif
 

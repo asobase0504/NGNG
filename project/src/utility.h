@@ -70,6 +70,13 @@ int IntRandom(int nMax, int nMin);
 bool IsSuccessRate(float inRate);
 
 //--------------------------------------------------------------
+// 確率の違うランダム
+// 引数1  : std::vector<float> / size = 個数 / value = 確率
+// 返値  : int / ランダム値
+//--------------------------------------------------------------
+int IntRateRandom(std::vector<float>);
+
+//--------------------------------------------------------------
 // sinカーブの値が1.0f～0.0fで帰ってくる
 // 引数1  : int nTime / タイム
 // 引数2  : float fCycle / 周期
@@ -115,6 +122,13 @@ D3DXVECTOR3 WorldCastScreen(D3DXVECTOR3 *screenPos,			// スクリーン座標
 //--------------------------------------------------------------
 D3DXVECTOR3 ScreenCastWorld(const D3DXVECTOR3 &screenPos,			// スクリーン座標
 	D3DXVECTOR3 screenSize);
+
+//=============================================================================
+// ワールド座標へのキャスト処理
+// Author : 唐﨑結斗
+// 概要 : pos,rotの行列計算を行い、ローカル座標をワールド座標に変換する
+//=============================================================================
+D3DXVECTOR3 WorldCastVtx(D3DXVECTOR3 vtx, D3DXVECTOR3 FormerPos, D3DXVECTOR3 FormerRot);
 
 //--------------------------------------------------------------
 // ScreenCastWorld
