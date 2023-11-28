@@ -23,7 +23,7 @@ class CObjectX;
 class CCollisionCylinder;
 class CSkill;
 class CAbnormal;
-class CSkill;
+class CSkinMesh;
 
 //==============================================================
 // プレイヤークラス
@@ -41,6 +41,7 @@ public:
 		MAX
 	};
 
+	// 今いる場所
 	enum STATE
 	{
 		NONE = -1,
@@ -71,6 +72,11 @@ public:
 	void Attack(CCharacter* pEnemy, float SkillMul);
 	void Damage(const int inDamage);
 	int CalDamage(float SkillAtkMul);
+
+	// 回復
+	void Regenation();
+	void Heal(int heal);
+	void RatioHeal(float heal);
 
 	// スキルの取得
 	std::vector<CSkill*> GetSkill() { return m_skill; }	// 複数
@@ -158,17 +164,24 @@ public:
 	// 走っているかどうか
 	bool GetIsRunning() { return m_isRunning; }
 
+	// エリートかどうか
+	bool GetIsElite() { return m_isElite; }
+
 private:
 	virtual void Move();
 	void Abnormal();
+	void Collision();
 
 protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
 	CCollisionCylinder*	m_collision;			// 当たり判定
-private:		// メンバ変数
+	ERelation m_relation;
 
-protected:		// ステータス
+	std::vector<CSkill*> m_skill;
+private:		// ステータス
 
+
+protected:
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;
 	// 持っている状態異常の個数をそれぞれ管理
@@ -185,6 +198,8 @@ protected:		// ステータス
 	bool m_nonCombat;		// 非戦闘時
 	int m_nonCombatTime;	// 非戦闘時になる時間
 	bool m_isRunning;		// 走っているかどうか
+	bool m_isElite;			// エリート
+
 	STATE m_state;
 
 	CStatus<int> m_hp;							// 体力
@@ -201,9 +216,9 @@ protected:		// ステータス
 	CStatus<float> m_jumpPower;					// ジャンプ力
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 	CStatus<int> m_money;						// 所持金
+	CStatus<int> m_regenetionTime;				// 自動回復の間隔
+	CStatus<int> m_regenetion;					// 自動回復の値
 
-	std::vector<CSkill*> m_skill;
-	ERelation m_relation;
-
+	int m_RegenetionCnt;
 };
 #endif

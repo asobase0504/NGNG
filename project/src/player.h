@@ -16,7 +16,7 @@
 //==============================================================
 // マクロ宣言
 //==============================================================
-#define DASH_SPEED	(1.5f)
+#define DASH_SPEED	(1.2f)
 #define JUMP		(15.0f)
 
 //==============================================================
@@ -34,7 +34,7 @@ public:
 	// コンストラクタとデストラクタ
 	explicit CPlayer(int nPriority = 5);
 	~CPlayer();
-	
+
 	//プロトタイプ宣言
 	HRESULT	Init() override;
 	void	Uninit() override;
@@ -47,7 +47,7 @@ public:
 	void SetController(CController* inOperate);
 	void SetPos(const D3DXVECTOR3& inPos);
 
-void OnUpdate() { m_isUpdate = true; }
+	void OnUpdate() { m_isUpdate = true; }
 	void OffUpdate() { m_isUpdate = false; }
 
 private:
@@ -62,6 +62,7 @@ private:		// メンバ変数
 
 	bool			m_isjump;		// ジャンプしているかどうか
 	bool			m_isdash;		// ダッシュしているかどうか
+	bool			m_isskill;		// スキルを使用しているかどうか
 
 	bool			m_isUpdate;		// 更新を止めるか否か。
 

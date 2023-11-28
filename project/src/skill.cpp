@@ -64,6 +64,14 @@ void CSkill::Update(void)
 	{// クールタイムがあれば減少させる
 		m_CT--;
 	}
+	
+	m_atkSpd = m_apChara->GetAtkSpd()->GetCurrent();
+
+	// Entityが全部死んだ。
+	if (GetEndChildrenSize() == 0)
+	{
+
+	}
 
 #ifdef _DEBUG
 	CDebugProc::Print("%sのクールタイム : %d\n", m_Name.c_str(),m_CT);
@@ -85,7 +93,7 @@ CSkill *CSkill::Create()
 //--------------------------------------------------------------
 // スキル1
 //--------------------------------------------------------------
-void CSkill::Skill1()
+void CSkill::Skill()
 {
 	if (m_CT == 0)
 	{// クールタイムがなければ当たり判定を生成する
@@ -98,24 +106,7 @@ void CSkill::Skill1()
 		SetEndChildren(entity);
 
 		// クールタイムの設定
-		m_CT = pSkillData->GetCT(m_Name);
-	}
-}
-
-//--------------------------------------------------------------
-// スキル1
-//--------------------------------------------------------------
-void CSkill::Skill2()
-{
-	if (m_CT == 0)
-	{// クールタイムがなければ当たり判定を生成する
-	 // 当たり判定の持続時間の管理
-		CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
-		pSkillData->GetDuration(m_Name);
-		pSkillData->GetAbility(m_Name)(m_apChara);
-
-		// クールタイムの設定
-		m_CT = pSkillData->GetCT(m_Name);
+		m_CT = pSkillData->GetCT(m_Name) * m_atkSpd;
 	}
 }
 

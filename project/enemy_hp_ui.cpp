@@ -93,20 +93,19 @@ void CEnemy_HPUI::Update()
 
 	m_background->SetPos(D3DXVECTOR3(mtx._41, pos.y + size.y, mtx._43));
 
-	float max = m_pEnemy->GetHp()->GetMax();
-	float current = m_pEnemy->GetHp()->GetCurrent();
+	float max = (float)m_pEnemy->GetHp()->GetMax();
+	float current = (float)m_pEnemy->GetHp()->GetCurrent();
+
+	if (current <= 0)
+	{
+		m_background->SetDisplay(false);
+		m_gage->SetDisplay(false);
+		current = 0;
+	}
 
 	float per = current / max;
 
 	m_gage->SetSize(D3DXVECTOR3(10.0f * per, 1.0f, 0.0f));
-}
-
-//--------------------------------------------------------------
-// •`‰æ
-//--------------------------------------------------------------
-void CEnemy_HPUI::Draw()
-{
-	CObject::Draw();
 }
 
 //--------------------------------------------------------------

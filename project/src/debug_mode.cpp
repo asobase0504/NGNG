@@ -110,7 +110,7 @@ void CDebugMode::Update(void)
 
 	if (pInput->Trigger(DIK_F1))
 	{
-		pFade->NextMode(CApplication::MODE_DEBUG);
+	//	pFade->NextMode(CApplication::MODE_DEBUG);
 	}
 
 	// Tキーでタイトル

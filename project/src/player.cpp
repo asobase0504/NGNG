@@ -12,25 +12,33 @@
 #include "player_manager.h"
 #include "Controller.h"
 #include "utility.h"
+
 // 全体情報
 #include "game.h"
 #include "camera_game.h"
 #include "application.h"
+#include "result.h"
+
 // 見た目
 #include "objectX.h"
 #include "object_mesh.h"
+
 // 当たり判定
 #include "collision_cylinder.h"
 #include "collision_mesh.h"
+
 // 敵
 #include "enemy.h"
 #include "enemy_manager.h"
+
 // スキル
 #include "skill.h"
 #include "skill_data_base.h"
+
 // アイテム
 #include "item.h"
 #include "item_data_base.h"
+
 //像
 #include "statue.h"
 #include "statue_manager.h"
@@ -57,6 +65,8 @@ HRESULT CPlayer::Init()
 {
 	m_skill.resize(MAX_SKILL);
 
+	m_isdash = false;
+	m_isUpdate = true;
 	// 初期化処理
 	CCharacter::Init();
 
@@ -115,11 +125,6 @@ void CPlayer::Update()
 		return;
 	}
 
-	if (CInput::GetKey()->Trigger(DIK_O))
-	{
-
-	}
-
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 
@@ -128,7 +133,7 @@ void CPlayer::Update()
 		return;
 	}
 
-	if (!m_isStun)
+	if (!m_isStun && !IsDied())
 	{
 
 		// 移動
@@ -151,6 +156,11 @@ void CPlayer::Update()
 		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
+	if (IsDied())
+	{
+		CResult::Create();
+	}
+
 	// 更新処理
 	CCharacter::Update();
 
@@ -169,7 +179,6 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 	CPlayer* pPlayer = new CPlayer;
 	pPlayer->Init();
 	pPlayer->SetPos(pos);
-
 	return pPlayer;
 }
 
@@ -182,28 +191,28 @@ void CPlayer::PAttack()
 	if (m_controller->Skill_1())
 	{
 		// 発動時に生成
-		m_skill[0]->Skill1();
+		m_skill[0]->Skill();
 	}
 
 	// スキル1(右クリック)
 	if(m_controller->Skill_2())
 	{
 		// 発動時に生成
-		m_skill[1]->Skill1();
+		m_skill[1]->Skill();
 	}
 
 	// スキル2(シフト)
 	if (m_controller->Skill_3())
 	{
 		// 発動時に生成
-		m_skill[1]->Skill1();
+		m_skill[1]->Skill();
 	}
 
 	// スキル3(R)
 	if (m_controller->Skill_4())
 	{
 		// 発動時に生成
-		m_skill[1]->Skill1();
+		m_skill[2]->Skill();
 	}
 }
 
@@ -214,6 +223,8 @@ void CPlayer::Move()
 {
 	// 移動量
 	D3DXVECTOR3 move = m_controller->Move();
+
+	m_isskill = false;
 
 	if (D3DXVec3Length(&move) != 0.0f)
 	{
@@ -260,14 +271,14 @@ void CPlayer::Dash()
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 
-	// ダッシュ
-	m_isdash = m_controller->Dash();
+	// ダッシュ(ctrlを押すとダッシュと歩きを切り替える)
+	m_isdash = m_controller->Dash(m_isdash);
 
 	if (m_isdash)
 	{
 		// ダッシュ速度
-		move.x *= DASH_SPEED;
-		move.z *= DASH_SPEED;
+		/*move.x *= DASH_SPEED;
+		move.z *= DASH_SPEED;*/
 	}
 
 	// 移動量の設定

@@ -27,7 +27,7 @@ public:
 
 	virtual D3DXVECTOR3 Move() = 0;
 	virtual bool		Jump() = 0;
-	virtual bool		Dash() = 0;
+	virtual bool		Dash(bool dash) = 0;
 	virtual int			TakeItem() { return -1; }
 	virtual bool		Skill_1() = 0;
 	virtual bool		Skill_2() = 0;

@@ -50,7 +50,7 @@ void CRoad::Update()
 {
 	CObjectPolygon3D::Update();
 
-	if (m_shooter != nullptr && m_target != nullptr)
+	if (m_target != nullptr && !m_target->IsDied() && m_shooter != nullptr)
 	{
 		D3DXVECTOR3 pos = m_shooter->GetPos();
 		

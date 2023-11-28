@@ -33,6 +33,7 @@ CMap::CMap() :
 	CTask(CTaskGroup::EPriority::LEVEL_SYSTEM)
 {
 	m_SpawnCnt = 0;
+	m_characterList.clear();
 	m_model.clear();
 	m_mesh.clear();
 }
@@ -66,6 +67,11 @@ HRESULT CMap::Init()
 	{
 		m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
 	}
+
+	CMesh* sky = CMesh::Create();
+	sky->SetSkyMesh();
+	sky->SetIsCulling(true);
+	sky->SetTexture("SKY");
 
 	return S_OK;
 }

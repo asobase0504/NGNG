@@ -119,24 +119,29 @@ bool CPlayerController::Jump()
 //--------------------------------------------------------------
 // ダッシュ
 //--------------------------------------------------------------
-bool CPlayerController::Dash()
+bool CPlayerController::Dash(bool dash)
 {
 	CInput* input = CInput::GetKey();
 
-	bool isDash = false;
-
 	if (input == nullptr)
 	{
-		return isDash;
+		return dash;
 	}
 
 	// ダッシュ
-	if (input->Press(DIK_LCONTROL, -1))
+	if (input->Trigger(DIK_LCONTROL, -1))
 	{
-		isDash = true;
+		if (dash == false)
+		{
+			dash = true;
+		}
+		else
+		{
+			dash = false;
+		}
 	}
 
-	return isDash;
+	return dash;
 }
 
 //--------------------------------------------------------------
@@ -154,7 +159,7 @@ bool CPlayerController::Skill_1()
 	}
 
 	// スキルの使用
-	if (input->Trigger(MOUSE_INPUT_LEFT))
+	if (input->Press(MOUSE_INPUT_LEFT))
 	{
 		isSkill = true;
 	}
@@ -177,7 +182,7 @@ bool CPlayerController::Skill_2()
 	}
 
 	// スキルの使用
-	if (input->Trigger(MOUSE_INPUT_RIGHT, -1))
+	if (input->Press(MOUSE_INPUT_RIGHT))
 	{
 		isSkill = true;
 	}
@@ -200,7 +205,7 @@ bool CPlayerController::Skill_3()
 	}
 
 	// スキルの使用
-	if (input->Trigger(KEY_SHIFT, -1))
+	if (input->Press(KEY_SHIFT))
 	{
 		isSkill = true;
 	}
@@ -223,7 +228,7 @@ bool CPlayerController::Skill_4()
 	}
 
 	// スキルの使用
-	if (input->Trigger(DIK_R, -1))
+	if (input->Press(DIK_R, -1))
 	{
 		isSkill = true;
 	}

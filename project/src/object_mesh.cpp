@@ -19,6 +19,9 @@
 // 定数
 //==============================================================
 const float CMesh::MOUNTAIN(50.0f);
+const float CMesh::RADIUS(1000.0f);
+const int CMesh::START_HORIZONTAL(30);
+const int CMesh::START_VERTICAL(15);
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -33,7 +36,10 @@ CMesh::CMesh(CTaskGroup::EPriority nPriority) :
 	m_index(0),			// インデックス
 	m_polygonCount(0),
 	m_isCollision(true),
-	m_collisionMesh(nullptr)
+	m_collisionMesh(nullptr),
+	m_sphereRange(D3DXVECTOR2(0.0f, 0.0f)),		// 球の描画範囲
+	m_fRadius(0.0f),// 半径
+	m_isCulling(false)
 {
 	m_meshSize = { 100.0f,0.0f,100.0f };
 }
@@ -55,6 +61,10 @@ HRESULT CMesh::Init()
 	// 初期化処理
 	m_vtxBuff = nullptr;		// 頂点バッファーへのポインタ
 	m_idxBuff = nullptr;		// インデックスバッファ
+
+	// 初期値の設定
+	m_sphereRange = D3DXVECTOR2(D3DX_PI * 2.0f, D3DX_PI * 0.5f);
+	m_fRadius = RADIUS;
 
 	return S_OK;
 }
@@ -82,11 +92,36 @@ void CMesh::Draw()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 	D3DXMATRIX mtxRot, mtxTrans;	// 計算用マトリックス
 
+	//-------------------------------------------------
+	// シェーダの設定
+	//-------------------------------------------------
+	extern LPD3DXEFFECT pEffect;		// シェーダー
+
+	if (pEffect == nullptr)
+	{
+		assert(false);
+		return;
+	}
+
+	if (m_TimeCnt > 0)
+	{
+		m_TimeCnt--;
+	}
+	if (m_TimeCnt <= m_TimeTarget)
+	{
+		m_TimeCnt++;
+	}
+
 	// ワイヤーフレーム
 	//pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	
 	//ライト設定falseにするとライトと食らわない
 	//pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	if (m_isCulling)
+	{
+		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	}
 
 	// ワールドマトリックスの初期化
 	// 行列初期化関数(第1引数の行列を単位行列に初期化)
@@ -129,6 +164,8 @@ void CMesh::Draw()
 	pDevice->SetTexture(0, nullptr);
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	//pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
@@ -558,6 +595,116 @@ void CMesh::SetVtxMeshLight()
 
 	// 頂点座標をアンロック
 	m_vtxBuff->Unlock();
+	m_idxBuff->Unlock();
+}
+
+//--------------------------------------------------------------
+// メッシュ枚数の決定
+//--------------------------------------------------------------
+void CMesh::SetSkyMesh()
+{
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
+
+	m_xsiz = START_HORIZONTAL;
+	m_zsiz = START_VERTICAL;
+
+	int xLine = m_xsiz + 1;
+	int yLine = m_zsiz + 1;
+
+	// 頂点数を計算
+	m_vtx = xLine * yLine;
+
+	// インデックス数を計算
+	m_index = ((xLine * 2) * m_zsiz) + ((m_zsiz - 1) * 2);
+
+	// ポリゴン数を計算
+	m_polygonCount = (m_xsiz * m_zsiz * 2) + ((m_zsiz - 1) * 4);
+
+	// 頂点バッファの生成
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * m_vtx,
+		D3DUSAGE_WRITEONLY,
+		FVF_VERTEX_3D,
+		D3DPOOL_MANAGED,
+		&m_vtxBuff,
+		NULL);
+
+	VERTEX_3D *pVtx = NULL;		// 頂点情報へのポインタ
+
+	// 頂点バッファをロック
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	for (int y = 0; y < yLine; y++)
+	{
+		for (int x = 0; x < xLine; x++)
+		{// 変数宣言
+			int nCntVtx = x + (y *  xLine);
+			float fRot = (m_sphereRange.x / START_HORIZONTAL) * x;					// Y軸の角度の設定
+			float fHalfRot = (m_sphereRange.y / START_VERTICAL) * y;				// 半球のZ軸の角度の半分
+
+			// 高さと半径の設定
+			D3DXVECTOR2 radius = D3DXVECTOR2(sinf(fHalfRot) * m_fRadius, cosf(fHalfRot) * m_fRadius);
+
+			// 頂点座標の設定
+			pVtx[nCntVtx].pos.x = sinf(fRot) * radius.y;
+			pVtx[nCntVtx].pos.z = cosf(fRot) * radius.y;
+			pVtx[nCntVtx].pos.y = radius.x;
+
+			// ワールド座標にキャスト
+			WorldCastVtx(pVtx[nCntVtx].pos, GetPos(), GetRot());
+
+			// 各頂点の法線の設定(*ベクトルの大きさは1にする必要がある)
+			pVtx[nCntVtx].nor.x = pVtx[nCntVtx].pos.x;
+			pVtx[nCntVtx].nor.z = pVtx[nCntVtx].pos.z;
+			pVtx[nCntVtx].nor.y = 0.0f;
+			D3DXVec3Normalize(&pVtx[nCntVtx].nor, &pVtx[nCntVtx].nor);
+
+			// 頂点カラーの設定
+			pVtx[nCntVtx].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+			float fUTex = (1.0f / m_xsiz) * x;
+			float fVTex = (1.0f / m_zsiz) * y;
+
+			// テクスチャ座標の設定
+			pVtx[x + (y * xLine)].tex = D3DXVECTOR2(fUTex, fVTex);
+		}
+	}
+
+	// 頂点バッファのアンロック
+	m_vtxBuff->Unlock();
+
+	// インデックスバッファの生成
+	pDevice->CreateIndexBuffer(
+		sizeof(VERTEX_3D) * m_index,
+		D3DUSAGE_WRITEONLY,
+		D3DFMT_INDEX16,
+		D3DPOOL_MANAGED,
+		&m_idxBuff,
+		NULL);
+
+	WORD *pIdx = NULL;		// インデックス情報へのポインタ
+
+	// インデックスバッファをロック
+	m_idxBuff->Lock(0, 0, (void**)&pIdx, 0);
+
+	// インデックスの設定
+	for (int x = 0, y = 0; y < m_zsiz; x++, y++)
+	{
+		for (; x < (xLine * (y + 1)) + y; x++)
+		{
+			pIdx[x * 2] = (WORD)(x - y + xLine);
+			pIdx[(x * 2) + 1] = (WORD)(x - y);
+			x = x;
+		}
+
+		if (y < m_zsiz - 1)
+		{// これで終わりじゃないなら
+			pIdx[x * 2] = (WORD)(x - (y + 1));
+			pIdx[(x * 2) + 1] = (WORD)((x * 2) - (y * (m_xsiz + 3)));
+			x = x;
+		}
+	}
+
+	// インデックスバッファをアンロックする
 	m_idxBuff->Unlock();
 }
 

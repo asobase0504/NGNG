@@ -38,6 +38,9 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	void CreateRandomItem(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx);
+	void CreateRandomItemRarity(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx, CItemDataBase::ERarity);
+	CItemDataBase::ERarity CreateRandomItemRarityRate(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx, std::array<float, CItemDataBase::RARITY_MAX> rarityRate);
 	void CreateItem(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx, CItemDataBase::EItemType inId);
 
 	std::list<CItemModel*>& GetPopItemModel() { return m_itemModel; }

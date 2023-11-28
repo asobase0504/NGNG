@@ -31,6 +31,7 @@ public:
 		float			knockback;		// ノックバック量
 		float			duration;		// 持続時間
 		float			interval;		// 多段ヒットの場合次の当たり判定を出現させるまでの時間
+		float			deceleration;	// 減速率
 		D3DXVECTOR3		size;			// 当たり判定の大きさ
 	};
 
@@ -59,6 +60,7 @@ public:
 	float		GetKnockBack(std::string tag) { return m_dates[tag].baseInfo.knockback; }
 	float		GetDuration(std::string tag) { return m_dates[tag].baseInfo.duration; }
 	float		GetInterval(std::string tag) { return m_dates[tag].baseInfo.interval; }
+	float		GetDeceleration(std::string tag) { return m_dates[tag].baseInfo.deceleration; }
 	D3DXVECTOR3 GetSize(std::string tag) { return m_dates[tag].baseInfo.size; }
 
 private:	// メンバ変数

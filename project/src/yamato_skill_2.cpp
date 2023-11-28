@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// スキル
+// スキル(ブリンク)
 // Author : 髙野馨將
 //
 //**************************************************************
@@ -41,11 +41,12 @@ CYamatoSkill_2::~CYamatoSkill_2()
 //--------------------------------------------------------------
 void CYamatoSkill_2::InitAbility()
 {
-	// 当たり判定を取得
+	// データベースから情報を取得する
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	if (m_apChara != nullptr)
 	{
 		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_2");
+		// 当たり判定を取得
 		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("YAMATO_SKILL_2").x);
 		m_Collision->SetParent(&m_apChara->GetPos());
 

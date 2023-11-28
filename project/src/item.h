@@ -32,8 +32,6 @@ public:
 	~CItem();
 
 	HRESULT Init() override;
-	void Uninit() override;
-	void Update() override;
 	void Draw() override {}
 
 	static CItem* Create(CItemDataBase::EItemType inId);
@@ -51,6 +49,11 @@ public:
 	ITEM_ACTION_FUNC GetWhenDamageFunc() { return m_hitFunc; }
 	ITEM_ACTION_FUNC GetWhenHitFunc() { return m_hitFunc; }
 	std::string GetModel() { return m_itemModelData; }
+
+	// ƒŒƒAƒŠƒeƒB
+	void SetRerity(CItemDataBase::ERarity inRarity) { m_rarity = inRarity; }
+	CItemDataBase::ERarity GetRerity() { return m_rarity; }
+
 private:
 	ITEM_FUNC m_getFunc;
 	ITEM_FUNC m_lostFunc;
@@ -60,5 +63,7 @@ private:
 	ITEM_ACTION_FUNC m_hitFunc;
 
 	std::string m_itemModelData;
+
+	CItemDataBase::ERarity m_rarity;
 };
 #endif	// _ITEM_DATA_H_

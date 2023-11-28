@@ -24,6 +24,9 @@ class CMesh : public CObjectPolygon3D
 {
 public:
 	static const float MOUNTAIN;
+	static const float RADIUS;
+	static const int START_HORIZONTAL;
+	static const int START_VERTICAL;
 
 public:
 	virtual void OnHit() {}	// ƒƒbƒVƒ…‚Ì“–‚½‚Á‚½‚Ì”»’è
@@ -55,6 +58,9 @@ public:
 	CCollisionMesh* GetCollisionMesh() { return m_collisionMesh; }
 
 	void SetY(std::vector<std::vector<float>> inY);
+	void SetSkyMesh();
+
+	void SetIsCulling(bool isCulling) { m_isCulling = isCulling; }
 
 private:
 	void SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx, int nCnt, bool isUp);
@@ -74,6 +80,11 @@ private:
 	D3DXVECTOR3 m_meshSize;
 	bool m_isCollision;
 	CCollisionMesh* m_collisionMesh;
+
+	D3DXVECTOR2	m_sphereRange;		// ‹…‚Ì•`‰æ”ÍˆÍ
+	float m_fRadius;			// ”¼Œa
+
+	bool m_isCulling;
 };
 #endif
 

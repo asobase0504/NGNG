@@ -324,7 +324,7 @@ void CEnemyDataBase::Init()
 			{
 				// カウント開始
 				inEnemy->SetAttackCnt(0);
-				inEnemy->GetSkill()[0]->Skill1();
+				inEnemy->GetSkill()[0]->Skill();
 				move *= -0.5f;
 			}
 		}

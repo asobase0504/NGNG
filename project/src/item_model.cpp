@@ -40,6 +40,7 @@ CItemModel::~CItemModel()
 //--------------------------------------------------------------
 HRESULT CItemModel::Init()
 {
+	LoadModel("BOX");
 	CObjectX::Init();
 
 	return S_OK;
@@ -85,6 +86,9 @@ void CItemModel::Uninit()
 //--------------------------------------------------------------
 void CItemModel::Update()
 {
+	CItem *item = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)m_ID);
+	LoadModel(item->GetModel());
+
 	bool isGround = false;
 
 	CMap* map = CMap::GetMap();
@@ -116,13 +120,6 @@ void CItemModel::Update()
 	CObjectX::Update();
 }
 
-//--------------------------------------------------------------
-// ï`âÊ
-//--------------------------------------------------------------
-void CItemModel::Draw()
-{
-	CObjectX::Draw();
-}
 
 //--------------------------------------------------------------
 // ê∂ê¨
