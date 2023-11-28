@@ -25,7 +25,8 @@ CObject::CObject(CTaskGroup::EPriority inPriority, CTaskGroup::EPushMethod inMet
 	m_color(1.0f, 1.0f, 1.0f,1.0f),		// êF
 	m_type(NONE),
 	m_TimeTarget(120),
-	tex0(nullptr)
+	tex0(nullptr),
+	m_isDisplay(true)
 {
 	SetRole(ROLE_OBJECT);
 }

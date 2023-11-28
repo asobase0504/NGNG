@@ -34,7 +34,6 @@ public:
 
 	HRESULT Init() override;
 	void Update() override;
-	void Draw() override;
 
 	void SetEnemy(CCharacter* enemy) { m_pEnemy = enemy; }
 private:

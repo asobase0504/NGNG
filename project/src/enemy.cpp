@@ -78,6 +78,12 @@ HRESULT CEnemy::Init()
 //--------------------------------------------------------------
 void CEnemy::Update()
 {
+	if (m_isDied)
+	{
+		Uninit();
+		return;
+	}
+
 	if (m_isStun)
 	{
 		SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
