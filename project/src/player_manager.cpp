@@ -60,6 +60,10 @@ HRESULT CPlayerManager::Init()
 //--------------------------------------------------------------
 void CPlayerManager::Uninit()
 {
+	if (m_playerManager != nullptr)
+	{
+		m_playerManager = nullptr;
+	}
 }
 
 //--------------------------------------------------------------

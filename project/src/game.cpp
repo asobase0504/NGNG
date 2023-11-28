@@ -115,10 +115,6 @@ HRESULT CGame::Init()
 
 	//m_tcp = new CClient;
 	//m_tcp->Init("127.0.0.1", 13567);
-	// エネミーの生成
-	//CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
-
-	//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
 
 	return S_OK;
 }
@@ -138,6 +134,7 @@ void CGame::Uninit()
 
 	CSkinMeshGroup::GetInstance()->Unload("KENGOU");
 	CSkinMeshGroup::GetInstance()->Unload("SKE");
+	CItemDataBase::GetInstance()->Uninit();
 
 	CInput::GetKey()->SetCursorErase(true);
 	CInput::GetKey()->LockCursorPos(false);

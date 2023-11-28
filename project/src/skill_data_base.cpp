@@ -111,7 +111,7 @@ void CSkillDataBase::Init()
 	{ // 発動時の効果
 		return nullptr;
 	}};
-	m_dates["GOLEM_SKILL_1"] = { 50,1,1,0,600,0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	m_dates["GOLEM_SKILL_1"] = { 50,1,1,0,200,0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{ // 発動時の効果
 		CSkillEntity* entity = nullptr;

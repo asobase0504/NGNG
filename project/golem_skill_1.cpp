@@ -38,20 +38,6 @@ CGolemSkill_1::~CGolemSkill_1()
 }
 
 //--------------------------------------------------------------
-// I—¹
-//--------------------------------------------------------------
-void CGolemSkill_1::Uninit()
-{
-	CSkillEntity::Uninit();
-
-	if (m_road != nullptr)
-	{
-		m_road->Uninit();
-		m_road = nullptr;
-	}
-}
-
-//--------------------------------------------------------------
 // ì¬
 //--------------------------------------------------------------
 CGolemSkill_1 * CGolemSkill_1::Create(CCharacter * chara)
@@ -69,10 +55,6 @@ CGolemSkill_1 * CGolemSkill_1::Create(CCharacter * chara)
 //--------------------------------------------------------------
 void CGolemSkill_1::InitAbility()
 {
-	m_road = CRoad::Create(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-	m_road->SetShooter(m_apChara);
-	m_road->SetUse(true);
-
 	m_chargeTime = 0;
 	m_isCharge = true;
 
@@ -83,7 +65,17 @@ void CGolemSkill_1::InitAbility()
 	{
 		m_aimCharacter = inChara;
 	});
+
+	if (m_aimCharacter == nullptr)
+	{
+		return;
+	}
+
+	m_road = CRoad::Create(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	m_road->SetShooter(m_apChara);
+	m_road->SetUse(true);
 	m_road->SetTarget(m_aimCharacter);
+	SetEndChildren(m_road);
 }
 
 //--------------------------------------------------------------
@@ -91,6 +83,13 @@ void CGolemSkill_1::InitAbility()
 //--------------------------------------------------------------
 void CGolemSkill_1::AllWayAbility()
 {
+	CSkillEntity::AllWayAbility();
+
+	if (m_aimCharacter == nullptr)
+	{
+		return;
+	}
+
 	m_chargeTime++;
 	if (m_isCharge && m_chargeTime >= 180)
 	{
