@@ -243,35 +243,6 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 }
 
 //--------------------------------------------------------------
-// ダメージ
-//--------------------------------------------------------------
-void CCharacter::Damage(const int inDamage)
-{
-	int dmg = inDamage;
-
-	// ダメージ計算
-	CStatus<int>* hp = GetHp();
-
-	// 防御力算出
-	int def = m_defense.CalStatus();
-
-	dmg -= def;
-
-	if (dmg <= 1)
-	{// ダメージが1以下だった時1にする
-		dmg = 1;
-	}
-
-	if (m_isBlock)
-	{// ブロックがtrueの時にダメージを0にする
-		dmg = 0;
-		DamageBlock(false);
-	}
-
-	hp->AddCurrent(-dmg);
-}
-
-//--------------------------------------------------------------
 // 攻撃
 //--------------------------------------------------------------
 void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
@@ -310,18 +281,32 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 }
 
 //--------------------------------------------------------------
-// 死亡処理
+// ダメージ
 //--------------------------------------------------------------
-void CCharacter::Died()
+void CCharacter::Damage(const int inDamage)
 {
-	m_isDied = true;
-	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
-	list.remove(this);
-	CMap::GetMap()->SetCharacterList(list);
-}
+	int dmg = inDamage;
 
-void CCharacter::Move()
-{
+	// ダメージ計算
+	CStatus<int>* hp = GetHp();
+
+	// 防御力算出
+	int def = m_defense.CalStatus();
+
+	dmg -= def;
+
+	if (dmg <= 1)
+	{// ダメージが1以下だった時1にする
+		dmg = 1;
+	}
+
+	if (m_isBlock)
+	{// ブロックがtrueの時にダメージを0にする
+		dmg = 0;
+		DamageBlock(false);
+	}
+
+	hp->AddCurrent(-dmg);
 }
 
 //--------------------------------------------------------------
@@ -336,6 +321,68 @@ int CCharacter::CalDamage(float SkillAtkMul)
 
 
 	return CalDamage;
+}
+
+//--------------------------------------------------------------
+// 回復
+//--------------------------------------------------------------
+void CCharacter::Heal(int heal)
+{
+	int HealHp = heal;
+	int HealHpCheck = m_hp.GetCurrent() + HealHp;
+
+	if (HealHpCheck >= m_hp.GetMax())
+	{
+		HealHp = m_hp.GetMax() - m_hp.GetCurrent();
+	}
+
+	m_hp.AddCurrent(HealHp);
+}
+
+//--------------------------------------------------------------
+// 割合回復
+//--------------------------------------------------------------
+void CCharacter::RatioHeal(float heal)
+{
+	float ratio = m_hp.GetCurrent() * heal;
+	if (ratio <= 1)
+	{
+		ratio = 1.0f;
+	}
+
+	Heal(ratio);
+}
+
+//--------------------------------------------------------------
+// 自動回復
+//--------------------------------------------------------------
+void CCharacter::Regenation()
+{
+	m_RegenetionCnt++;
+
+	if (m_regenetionTime.GetBase() <= m_RegenetionCnt)
+	{
+		m_RegenetionCnt = 0;
+		Heal(m_regenetion.GetBase());
+	}
+}
+
+//--------------------------------------------------------------
+// 死亡処理
+//--------------------------------------------------------------
+void CCharacter::Died()
+{
+	m_isDied = true;
+	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
+	list.remove(this);
+	CMap::GetMap()->SetCharacterList(list);
+}
+
+//--------------------------------------------------------------
+// 移動量
+//--------------------------------------------------------------
+void CCharacter::Move()
+{
 }
 
 //--------------------------------------------------------------
@@ -486,48 +533,4 @@ int CCharacter::GetAbnormalTypeCount()
 	}
 
 	return abnormal_type_count;
-}
-
-//--------------------------------------------------------------
-// 回復
-//--------------------------------------------------------------
-void CCharacter::Heal(int heal)
-{
-	int HealHp = heal;
-	int HealHpCheck = m_hp.GetCurrent() + HealHp;
-
-	if (HealHpCheck >= m_hp.GetMax())
-	{
-		HealHp = m_hp.GetMax() - m_hp.GetCurrent();
-	}
-
-	m_hp.AddCurrent(HealHp);
-}
-
-//--------------------------------------------------------------
-// 割合回復
-//--------------------------------------------------------------
-void CCharacter::RatioHeal(float heal)
-{
-	float Raito = m_hp.GetCurrent() * heal;
-	if (Raito <= 1)
-	{
-		Raito = 1.0f;
-	}
-
-	Heal(Raito);
-}
-
-//--------------------------------------------------------------
-// 自動回復
-//--------------------------------------------------------------
-void CCharacter::Regenation()
-{
-	m_RegenetionCnt++;
-
-	if (m_regenetionTime.GetBase() <= m_RegenetionCnt)
-	{
-		m_RegenetionCnt = 0;
-		Heal(m_regenetion.GetBase());
-	}
 }
