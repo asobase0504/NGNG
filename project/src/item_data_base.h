@@ -26,9 +26,6 @@ public:
 	enum EItemType
 	{
 		ITEM_NONE = -1,
-		ITEM_POWER_UP,
-		ITEM_POWER_ON,
-		ITEM_POWER_TO,
 		ITEM_DANGO,				// ‚¾‚ñ‚²
 		ITEM_SHURIKEN,			// Žè— Œ•
 		ITEM_GETA,				// ‰º‘Ê
