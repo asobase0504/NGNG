@@ -8,18 +8,20 @@
 //==============================================================
 // include
 //==============================================================
+#include "map.h"
+
 #include "application.h"
 #include "renderer.h"
-#include "map.h"
 #include "input.h"
-#include "map_model.h"
-#include "object_mesh.h"
 #include "file.h"
-#include "statue.h"
 #include "utility.h"
 
+#include "object_mesh.h"
+#include "map_model.h"
+#include "statue.h"
 #include "statue_manager.h"
 #include "enemy_manager.h"
+#include "gold_nugget.h"
 
 //==============================================================
 // Ã“Iƒƒ“ƒo•Ï”éŒ¾

@@ -403,6 +403,9 @@
     <ClCompile Include="src\model_skin_group.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\arrow.cpp">
+      <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -704,6 +707,9 @@
     </ClInclude>
     <ClInclude Include="src\model_skin_group.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\arrow.h">
+      <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
