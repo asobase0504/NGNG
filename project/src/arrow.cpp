@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// item_data
+// arrow.cpp
 // Author: Buriya Kota
 //
 //**************************************************************
@@ -8,11 +8,11 @@
 //==============================================================
 // include
 //==============================================================
-#include "gold_nugget.h"
+#include "arrow.h"
 
 #include "application.h"
 #include "game.h"
-#include "player.h"
+#include "enemy.h"
 #include "PlayerController.h"
 
 #include "collision_box.h"
@@ -20,21 +20,21 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CGoldNugget::CGoldNugget(CTaskGroup::EPriority list)
+CArrow::CArrow(CTaskGroup::EPriority list)
 {
 }
 
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CGoldNugget::~CGoldNugget()
+CArrow::~CArrow()
 {
 }
 
 //--------------------------------------------------------------
 // 初期化
 //--------------------------------------------------------------
-HRESULT CGoldNugget::Init()
+HRESULT CArrow::Init()
 {
 	CObjectX::Init();
 
@@ -48,59 +48,38 @@ HRESULT CGoldNugget::Init()
 }
 
 //--------------------------------------------------------------
-// 終了
-//--------------------------------------------------------------
-void CGoldNugget::Uninit()
-{
-	CObjectX::Uninit();
-}
-
-//--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
-void CGoldNugget::Update()
+void CArrow::Update()
 {
-	Hit_();
-
 	CObjectX::Update();
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CGoldNugget* CGoldNugget::Create()
+CArrow* CArrow::Create()
 {
-	CGoldNugget* pGoldNugget = nullptr;
-	pGoldNugget = new CGoldNugget;
+	CArrow* arrow = nullptr;
+	arrow = new CArrow;
 
-	if (pGoldNugget != nullptr)
+	if (arrow != nullptr)
 	{
-		pGoldNugget->Init();
+		arrow->Init();
 	}
 	else
 	{
 		assert(false);
 	}
 
-	return pGoldNugget;
+	return arrow;
 }
 
 //--------------------------------------------------------------
-// 取得したとき
+// 当たったか
 //--------------------------------------------------------------
-void CGoldNugget::Hit_()
-{
-	CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
-	CPlayer* player = game->GetController()->GetToOrder();
-
-	CInput* input = CInput::GetKey();
-	if (player->GetCollision()->ToBox(m_collision, false))
-	{
-		if (input->Trigger(DIK_F))
-		{
-			player->GetMoney()->AddCurrent(30);
-
-			this->Uninit();
-		}
-	}
-}
+//bool CArrow::HitEnemy(CCharacter* enemy)
+//{
+//	//CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
+//	//return m_collision->ToCylinder(enemy->GetCollision());
+//}

@@ -180,7 +180,6 @@ protected:		// メンバ変数
 	std::vector<CSkill*> m_skill;
 private:		// ステータス
 
-
 protected:
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;

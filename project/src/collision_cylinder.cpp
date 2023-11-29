@@ -180,7 +180,13 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	SetIsUnder(false);
 
 	if (InOut[0] < 0.0f && InOut[1] < 0.0f && InOut[2] < 0.0f && InOut[3] < 0.0f)
-	{// Y‚Ì‰Ÿo
+	{
+		if (!isExtrusion)
+		{// ‰Ÿo‚ð‚µ‚È‚¢ê‡
+			isLanding = true;
+			return isLanding;
+		}
+
 		if (cylinderPosOld.y >= boxPos.y + boxSize.y && cylinderPos.y < boxPos.y + boxSize.y)
 		{// ã
 			extrusion.x = cylinderPos.x;
