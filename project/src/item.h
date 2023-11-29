@@ -32,6 +32,7 @@ public:
 	~CItem();
 
 	HRESULT Init() override;
+	void Uninit() override;
 	void Draw() override {}
 
 	static CItem* Create(CItemDataBase::EItemType inId);

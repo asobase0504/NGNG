@@ -134,6 +134,9 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 void CApplication::Uninit()
 {
 	CSkillDataBase::Uninit();
+	CEnemyDataBase::Uninit();
+	CItemDataBase::Uninit();
+	CAbnormalDataBase::Uninit();
 
 	if (m_taskGroup != nullptr)
 	{// I—¹ˆ—
@@ -174,11 +177,6 @@ void CApplication::Uninit()
 
 	//“ü—Íˆ—‚ÌI—¹ˆ—
 	CInput::GetKey()->Uninit();
-
-	CSkillDataBase::Uninit();
-	CEnemyDataBase::Uninit();
-	CItemDataBase::Uninit();
-	CAbnormalDataBase::Uninit();
 
 	CSkinMeshGroup* group = CSkinMeshGroup::GetInstance();
 	delete group;
