@@ -154,7 +154,7 @@ void CItemDataBase::Init()
 	item->SetModel("ITEM_BAKUTIKU");
 	item->SetRerity(RARITY_COMMON);
 	// ばくちく(保留)-----------------------------------------------
-	item->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
 		for (int Cnt = 0; Cnt <= cnt; Cnt++)
 		{
@@ -344,7 +344,8 @@ void CItemDataBase::Init()
 
 		if (IsSuccessRate(probability))
 		{
-			CGoldNugget::Create();
+			CGoldNugget* obj = CGoldNugget::Create();
+			obj->SetPos(outCharacter->GetPos());
 		}
 	});
 	//--------------------------------------------------------------

@@ -1,11 +1,11 @@
 //**************************************************************
 //
-// gold_nugget
+// arrow.h
 // Author: Buriya Kota
 //
 //**************************************************************
-#ifndef _GOLD_NUGGET_H_
-#define _GOLD_NUGGET_H_
+#ifndef _ARROW_H_
+#define _ARROW_H_
 
 //==============================================================
 // include
@@ -20,24 +20,23 @@ class CCollisionBox;
 //==============================================================
 // ƒNƒ‰ƒX
 //==============================================================
-class CGoldNugget : public CObjectX
+class CArrow : public CObjectX
 {
-private:
-
 public:
-	CGoldNugget(CTaskGroup::EPriority list = CTaskGroup::LEVEL_3D_1);
-	~CGoldNugget();
+	CArrow(CTaskGroup::EPriority list = CTaskGroup::LEVEL_3D_1);
+	~CArrow();
 
 	HRESULT Init() override;
-	void Uninit() override;
 	void Update() override;
 
-	static CGoldNugget* Create();
+	static CArrow* Create();
 
-private:
-	void Hit_();
+	bool GetIsHit() { return m_isHit; }
+
+	//bool HitEnemy(CCharacter* enemy);
 
 private:
 	CCollisionBox* m_collision;
+	bool m_isHit;
 };
 #endif	// _GOLD_NUGGET_H_

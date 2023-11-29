@@ -104,7 +104,7 @@ HRESULT CCharacter::Init()
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
 	m_jumpCount.AttachMax();
-	m_money.Init(100);
+	m_money.Init(999);
 	m_money.SetCurrent(50);
 	m_regenetionTime.Init(60);
 	m_regenetion.Init(1);
@@ -318,7 +318,6 @@ int CCharacter::CalDamage(float SkillAtkMul)
 	int CalDamage =
 		(int)(((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
 		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillAtkMul)));
-
 
 	return CalDamage;
 }
