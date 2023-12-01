@@ -138,6 +138,8 @@ public:
 	D3DXHANDLE			m_hParent;		// 親子関係
 	D3DXHANDLE			m_hScale;		// スケール
 	D3DXHANDLE			m_hCameraVec;	// カメラの向き
+	D3DXHANDLE			m_hMtxNum;		// マトリックスの数
+	D3DXHANDLE			m_hBoneStack;	// ボーンのマテリアル情報
 
 protected:
 	D3DXVECTOR3 m_pos;		// 位置
