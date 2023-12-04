@@ -41,6 +41,7 @@ public:
 		MAX
 	};
 
+	// 今いる場所
 	enum STATE
 	{
 		NONE = -1,
@@ -71,6 +72,11 @@ public:
 	void Attack(CCharacter* pEnemy, float SkillMul);
 	void Damage(const int inDamage);
 	int CalDamage(float SkillAtkMul);
+
+	// 回復
+	void Regenation();
+	void Heal(int heal);
+	void RatioHeal(float heal);
 
 	// スキルの取得
 	std::vector<CSkill*> GetSkill() { return m_skill; }	// 複数
@@ -158,16 +164,13 @@ public:
 	// 走っているかどうか
 	bool GetIsRunning() { return m_isRunning; }
 
-	// 回復
-	void Regenation();
-	void Heal(int heal);
-	void RatioHeal(float heal);
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
 
 private:
 	virtual void Move();
 	void Abnormal();
+	void Collision();
 
 protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
@@ -176,7 +179,6 @@ protected:		// メンバ変数
 
 	std::vector<CSkill*> m_skill;
 private:		// ステータス
-
 
 protected:
 	// 持っているアイテムの個数をそれぞれ管理

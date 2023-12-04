@@ -127,7 +127,7 @@ CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot)
 bool CStatue::Touch()
 {
 	CInput* input = CInput::GetKey();
-	if (input->Trigger(KEY_BACK, -1))
+	if (input->Trigger(DIK_E, -1))
 	{
 		CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
 		CPlayer* player = game->GetController()->GetToOrder();

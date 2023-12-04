@@ -79,7 +79,7 @@ void CTitle::Update(void)
 
 	CModeFade* pFade = CApplication::GetInstance()->GetFade();
 
-	if (pInput->Trigger(DIK_F1))
+	if (pInput->Trigger(DIK_RETURN))
 	{
 		pFade->NextMode(CApplication::MODE_GAME);
 	}

@@ -104,7 +104,7 @@ HRESULT CCharacter::Init()
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
 	m_jumpCount.AttachMax();
-	m_money.Init(100);
+	m_money.Init(999);
 	m_money.SetCurrent(50);
 	m_regenetionTime.Init(60);
 	m_regenetion.Init(1);
@@ -142,72 +142,7 @@ void CCharacter::Update()
 	// 更新処理
 	CObject::Update();
 
-	bool isGround = false;
-
-	CMap* map = CMap::GetMap();
-	D3DXVECTOR3 pos = GetPos();
-
-	// 像との押し出し当たり判定
-	std::list<CStatue*> list = map->GetStatueList();
-	for (CStatue* inStatue : list)
-	{
-		if (!(m_collision->ToBox(inStatue->GetCollisionBox(), true)))
-		{
-			continue;
-		}
-
-		if (m_collision->GetIsTop())
-		{
-			isGround = true;
-		}
-
-		D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
-		SetPos(extrusion);
-		SetMoveXZ(0.0f, 0.0f);
-	}
-
-	// マップモデル
-	for (int i = 0; i < map->GetNumModel(); i++)
-	{
-		if (m_collision->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
-		{// 押し出した位置
-			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
-			SetPos(extrusion);
-			if (m_collision->GetIsTop())
-			{
-				isGround = true;
-			}
-		}
-	}
-
-	// マップメッシュ
-	for (int i = 0; i < map->GetNumMesh(); i++)
-	{
-		if (m_collision->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
-		{// 押し出した位置
-			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
-			SetPos(extrusion);
-			isGround = true;
-		}
-	}
-
-	static STATE state;
-	state = m_state;
-
-	if (isGround)
-	{
-		m_state = GROUND;
-	}
-	else
-	{
-		m_state = SKY;
-	}
-
-	if (state == GROUND && m_state == GROUND)
-	{
-		SetMoveY(0.0f);
-		m_jumpCount.SetCurrent(0);
-	}
+	Collision();
 
 	if (m_hp.GetCurrent() <= 0)
 	{
@@ -308,35 +243,6 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 }
 
 //--------------------------------------------------------------
-// ダメージ
-//--------------------------------------------------------------
-void CCharacter::Damage(const int inDamage)
-{
-	int dmg = inDamage;
-
-	// ダメージ計算
-	CStatus<int>* hp = GetHp();
-
-	// 防御力算出
-	int def = m_defense.CalStatus();
-
-	dmg -= def;
-
-	if (dmg <= 1)
-	{// ダメージが1以下だった時1にする
-		dmg = 1;
-	}
-
-	if (m_isBlock)
-	{// ブロックがtrueの時にダメージを0にする
-		dmg = 0;
-		DamageBlock(false);
-	}
-
-	hp->AddCurrent(-dmg);
-}
-
-//--------------------------------------------------------------
 // 攻撃
 //--------------------------------------------------------------
 void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
@@ -374,16 +280,33 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	}
 }
 
-void CCharacter::Died()
+//--------------------------------------------------------------
+// ダメージ
+//--------------------------------------------------------------
+void CCharacter::Damage(const int inDamage)
 {
-	m_isDied = true;
-	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
-	list.remove(this);
-	//Release();
-}
+	int dmg = inDamage;
 
-void CCharacter::Move()
-{
+	// ダメージ計算
+	CStatus<int>* hp = GetHp();
+
+	// 防御力算出
+	int def = m_defense.CalStatus();
+
+	dmg -= def;
+
+	if (dmg <= 1)
+	{// ダメージが1以下だった時1にする
+		dmg = 1;
+	}
+
+	if (m_isBlock)
+	{// ブロックがtrueの時にダメージを0にする
+		dmg = 0;
+		DamageBlock(false);
+	}
+
+	hp->AddCurrent(-dmg);
 }
 
 //--------------------------------------------------------------
@@ -396,84 +319,7 @@ int CCharacter::CalDamage(float SkillAtkMul)
 		(int)(((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
 		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillAtkMul)));
 
-
 	return CalDamage;
-}
-
-//--------------------------------------------------------------
-// 状態異常
-//--------------------------------------------------------------
-void CCharacter::Abnormal()
-{
-	// 付与されている状態異常を作動させる
-	for (int i = 0; i < m_haveAbnormal.size(); i++)
-	{
-		if (m_haveAbnormal[i].s_stack <= 0)
-		{
-			continue;
-		}
-
-		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
-
-		if (abnormalFunc != nullptr)
-		{
-
-			for (int &data : m_haveAbnormal[i].s_Time)
-			{
-				data++;
-			}
-
-			m_haveAbnormal[i].s_interval++;
-
-			for (int data : m_haveAbnormal[i].s_Time)
-			{
-				if (data >= m_haveAbnormal[i].s_effectTime)
-				{// 状態異常を削除する
-					CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
-
-					//if (Los)
-					{// 失った時の処理を呼び出す
-					 // スタック数を減らす
-						LostFunc(this, i);
-						m_haveAbnormal[i].s_stack--;
-					}
-				}
-			}
-
-			// 付与されている状態異常の時間を減らす
-			m_haveAbnormal[i].s_Time.remove_if([this, i](int data)
-			{
-				return data >= m_haveAbnormal[i].s_effectTime;
-			});
-
-			if (m_haveAbnormal[i].s_interval >= m_haveAbnormal[i].s_target_interval)
-			{
-				m_haveAbnormal[i].s_interval = 0;
-				abnormalFunc(this, i);
-			}
-		}
-	}
-}
-
-//--------------------------------------------------------------
-// 状態異常の種類の個数の獲得
-//--------------------------------------------------------------
-int CCharacter::GetAbnormalTypeCount()
-{
-	int abnormal_type_count = 0;
-	
-	// 付与されている状態異常をカウントする
-	for (int i = 0; i < m_haveAbnormal.size(); i++)
-	{
-		if (m_haveAbnormal[i].s_stack <= 0)
-		{
-			continue;
-		}
-
-		abnormal_type_count++;
-	}
-
-	return abnormal_type_count;
 }
 
 //--------------------------------------------------------------
@@ -497,13 +343,13 @@ void CCharacter::Heal(int heal)
 //--------------------------------------------------------------
 void CCharacter::RatioHeal(float heal)
 {
-	float Raito = m_hp.GetCurrent() * heal;
-	if (Raito <= 1)
+	float ratio = m_hp.GetCurrent() * heal;
+	if (ratio <= 1)
 	{
-		Raito = 1.0f;
+		ratio = 1.0f;
 	}
 
-	Heal(Raito);
+	Heal(ratio);
 }
 
 //--------------------------------------------------------------
@@ -518,4 +364,172 @@ void CCharacter::Regenation()
 		m_RegenetionCnt = 0;
 		Heal(m_regenetion.GetBase());
 	}
+}
+
+//--------------------------------------------------------------
+// 死亡処理
+//--------------------------------------------------------------
+void CCharacter::Died()
+{
+	m_isDied = true;
+	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
+	list.remove(this);
+	CMap::GetMap()->SetCharacterList(list);
+}
+
+//--------------------------------------------------------------
+// 移動量
+//--------------------------------------------------------------
+void CCharacter::Move()
+{
+}
+
+//--------------------------------------------------------------
+// 状態異常
+//--------------------------------------------------------------
+void CCharacter::Abnormal()
+{
+	// 付与されている状態異常を作動させる
+	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	{
+		if (m_haveAbnormal[i].s_stack <= 0)
+		{
+			continue;
+		}
+
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
+
+		if (abnormalFunc == nullptr)
+		{
+			continue;
+		}
+
+		for (int &data : m_haveAbnormal[i].s_Time)
+		{
+			data++;
+		}
+
+		m_haveAbnormal[i].s_interval++;
+
+		for (int data : m_haveAbnormal[i].s_Time)
+		{
+			if (data >= m_haveAbnormal[i].s_effectTime)
+			{// 状態異常を削除する
+				CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
+
+				//if (Los)
+				{// 失った時の処理を呼び出す
+				 // スタック数を減らす
+					LostFunc(this, i);
+					m_haveAbnormal[i].s_stack--;
+				}
+			}
+		}
+
+		// 付与されている状態異常の時間を減らす
+		m_haveAbnormal[i].s_Time.remove_if([this, i](int data)
+		{
+			return data >= m_haveAbnormal[i].s_effectTime;
+		});
+
+		if (m_haveAbnormal[i].s_interval >= m_haveAbnormal[i].s_target_interval)
+		{
+			m_haveAbnormal[i].s_interval = 0;
+			abnormalFunc(this, i);
+		}
+	}
+}
+
+//--------------------------------------------------------------
+// 主に押し出しの当たり判定
+//--------------------------------------------------------------
+void CCharacter::Collision()
+{
+	bool isGround = false;
+
+	CMap* map = CMap::GetMap();
+	D3DXVECTOR3 pos = GetPos();
+
+	// 像との押し出し当たり判定
+	std::list<CStatue*> list = map->GetStatueList();
+	for (CStatue* inStatue : list)
+	{
+		if (!(m_collision->ToBox(inStatue->GetCollisionBox(), true)))
+		{
+			continue;
+		}
+
+		if (m_collision->GetIsTop())
+		{
+			isGround = true;
+		}
+
+		D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+		SetPos(extrusion);
+		SetMoveXZ(0.0f, 0.0f);
+	}
+
+	// マップモデル
+	for (int i = 0; i < map->GetNumModel(); i++)
+	{
+		if (m_collision->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
+		{// 押し出した位置
+			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+			SetPos(extrusion);
+			if (m_collision->GetIsTop())
+			{
+				isGround = true;
+			}
+		}
+	}
+
+	// マップメッシュ
+	for (int i = 0; i < map->GetNumMesh(); i++)
+	{
+		if (m_collision->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
+		{// 押し出した位置
+			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+			SetPos(extrusion);
+			isGround = true;
+		}
+	}
+
+	static STATE state;
+	state = m_state;
+
+	if (isGround)
+	{
+		m_state = GROUND;
+	}
+	else
+	{
+		m_state = SKY;
+	}
+
+	if (state == GROUND && m_state == GROUND)
+	{
+		SetMoveY(0.0f);
+		m_jumpCount.SetCurrent(0);
+	}
+}
+
+//--------------------------------------------------------------
+// 状態異常の種類の個数の獲得
+//--------------------------------------------------------------
+int CCharacter::GetAbnormalTypeCount()
+{
+	int abnormal_type_count = 0;
+	
+	// 付与されている状態異常をカウントする
+	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	{
+		if (m_haveAbnormal[i].s_stack <= 0)
+		{
+			continue;
+		}
+
+		abnormal_type_count++;
+	}
+
+	return abnormal_type_count;
 }

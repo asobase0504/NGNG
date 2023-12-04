@@ -29,9 +29,13 @@ public:
 	~CGoldNugget();
 
 	HRESULT Init() override;
+	void Uninit() override;
 	void Update() override;
 
 	static CGoldNugget* Create();
+
+private:
+	void Hit_();
 
 private:
 	CCollisionBox* m_collision;

@@ -66,7 +66,7 @@ void CStatueChest::Update()
 		// アイテムランダムドロップ関数追加
 		//---------------------------------------------------------------------------------
 		D3DXVECTOR3 pos = GetPos();
-		CItemManager::GetInstance()->CreateRandomItem(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot());
+		CItemManager::GetInstance()->CreateRandomItemRarityRate(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot(), {0.7f,0.25,0.5f,0.0f});
 
 		m_bOnce = true;
 	}
@@ -81,7 +81,7 @@ void CStatueChest::Update()
 #endif // _DEBUG
 }
 
-//--------------------------------------------------------------
+//--------------------------------------------------------------sdw
 // 生成
 //--------------------------------------------------------------
 CStatueChest* CStatueChest::Create(D3DXVECTOR3 pos)

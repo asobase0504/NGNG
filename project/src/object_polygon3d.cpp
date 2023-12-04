@@ -126,6 +126,11 @@ void CObjectPolygon3D::Update()
 //--------------------------------------------------------------
 void CObjectPolygon3D::Draw()
 {
+	if (!m_isDisplay)
+	{
+		return;
+	}
+
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CRenderer::GetInstance()->GetDevice();	//デバイスの取得
