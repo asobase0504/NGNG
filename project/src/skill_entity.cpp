@@ -110,7 +110,7 @@ void CSkillEntity::Update()
 			{// ダメージの判定
 				HitAbility(inChara);
 				collision = true;
-				m_Interval = pSkillData->GetInterval(m_Name);
+				m_Interval = pSkillData->GetInterval(m_Name);			
 			}
 		});
 
