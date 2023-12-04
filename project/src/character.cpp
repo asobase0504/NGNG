@@ -144,12 +144,6 @@ void CCharacter::Update()
 
 	Collision();
 
-	if (m_hp.GetCurrent() <= 0)
-	{
-		// 死亡処理
-		Died();
-	}
-
 	// 重力
 	AddMoveY(-0.18f);
 
@@ -251,7 +245,7 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	CItemManager::GetInstance()->AllWhenDamage(this, m_haveItem, pEnemy);
 	// ダメージを受けた処理
 	CItemManager::GetInstance()->AllWhenHit(pEnemy, pEnemy->m_haveItem, this);
-
+	
 	// プレイヤーのダメージを計算
 	int Damage = CalDamage(SkillMul);
 
@@ -262,6 +256,11 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 
 	// エネミーにダメージを与える。
 	pEnemy->Damage(Damage);
+
+	if (pEnemy->IsDied())
+	{// ダメージを受けた処理
+		CItemManager::GetInstance()->AllWhenDeath(this, m_haveItem, pEnemy);
+	}
 
 	// 攻撃付与されている状態異常を作動させる
 	for (int i = 0; i < m_attackAbnormal.size(); i++)
@@ -307,6 +306,12 @@ void CCharacter::Damage(const int inDamage)
 	}
 
 	hp->AddCurrent(-dmg);
+
+	if (m_hp.GetCurrent() <= 0)
+	{
+		// 死亡処理
+		Died();
+	}
 }
 
 //--------------------------------------------------------------

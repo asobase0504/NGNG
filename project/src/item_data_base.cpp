@@ -173,7 +173,13 @@ void CItemDataBase::Init()
 	// まきびし-----------------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 攻撃時に敵に移動速度-5%にする状態異常を付与する。
-		outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_SLOW, true);
+		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+		{
+			if (IsSuccessRate(0.05f))
+			{// 攻撃時に5%の確率でスロウさせる。
+				outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_SLOW, true);
+			}
+		}
 	});
 	//--------------------------------------------------------------
 
@@ -181,22 +187,19 @@ void CItemDataBase::Init()
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_COMMON);
 	// 首級---------------------------------------------------------
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒した時、HPの1%(+1%)を回復する。
-		if (outCharacter->IsDied())
-		{
-			int percent = 0;
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
-			{// 持ってる数、割合を増やす
-				percent += 1;
-			}
-
-			// 最大体力を取得
-			int hpMax = inCharacter->GetHp()->GetMax();
-			// 回復する値
-			int recovery = (int)(hpMax * (percent / 100));
-			inCharacter->GetHp()->AddItemEffect(recovery);
+		int percent = 0;
+		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+		{// 持ってる数、割合を増やす
+			percent += 1;
 		}
+
+		// 最大体力を取得
+		int hpMax = inCharacter->GetHp()->GetMax();
+		// 回復する値
+		int recovery = (int)(hpMax * (percent / 100));
+		inCharacter->GetHp()->AddItemEffect(recovery);
 	});
 	//--------------------------------------------------------------
 
@@ -300,19 +303,18 @@ void CItemDataBase::Init()
 	item->SetModel("ITEM_KAZAGURUMA");
 	item->SetRerity(RARITY_UNCOMMON);
 	// 風車---------------------------------------------------------
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒すと18%の確率で全てのクールダウンをリセットする
-		if (outCharacter->IsDied())
+		for (int i = 0; i < cnt; i++)
 		{
-			for (int i = 0; i < cnt; i++)
+			if (!IsSuccessRate(0.18f))
 			{
-				if (IsSuccessRate(0.18f))
-				{
-					for (int j = 0; j < CCharacter::MAX_SKILL; j++)
-					{
-						inCharacter->GetSkill(j)->SetCT(0);
-					}
-				}
+				continue;
+			}
+
+			for (int j = 0; j < CCharacter::MAX_SKILL; j++)
+			{
+				inCharacter->GetSkill(j)->SetCT(0);
 			}
 		}
 	});
@@ -322,7 +324,7 @@ void CItemDataBase::Init()
 	item->SetModel("ITEM_KOBAN");
 	item->SetRerity(RARITY_UNCOMMON);
 	// 小判---------------------------------------------------------
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒した際4%の確率で金塊が出現する (+4%)
 		float probability = 0.0f;
 
@@ -331,7 +333,7 @@ void CItemDataBase::Init()
 			probability += 0.04f;
 		}
 
-		if (IsSuccessRate(probability))
+		if (IsSuccessRate(1.0f))
 		{
 			CGoldNugget* obj = CGoldNugget::Create();
 			obj->SetPos(outCharacter->GetPos());
@@ -431,12 +433,9 @@ void CItemDataBase::Init()
 	item->SetRerity(RARITY_UNCOMMON);
 	// 点滴袋---------------------------------------------------------
 	// 敵を倒すごとに体力が永続的に1増える。最大100まで (最大 +100)TODO
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		if (outCharacter->IsDied())
-		{
-			inCharacter->GetHp()->AddItemEffect(1);
-		}
+		inCharacter->GetHp()->AddItemEffect(1);
 	});
 	//--------------------------------------------------------------
 
@@ -456,19 +455,16 @@ void CItemDataBase::Init()
 	item->SetRerity(RARITY_UNCOMMON);
 	// 草履---------------------------------------------------------
 	// 敵を倒すと移動速度が125%上がり、1(+0.5)秒間消える
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{
-		if (outCharacter->IsDied())
-		{// 敵が死んだら
-			// 現在の速度
-			float currentSpeed = inCharacter->GetSpeed()->GetCurrent();
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 敵が死んだら
+		// 現在の速度
+		float currentSpeed = inCharacter->GetSpeed()->GetCurrent();
 
-			// スピードが上がる割合を計算
-			currentSpeed *= (125 / 100);
-			
-			// 加算
-			inCharacter->GetSpeed()->AddItemEffect(currentSpeed);
-		}
+		// スピードが上がる割合を計算
+		currentSpeed *= (125 / 100);
+
+		// 加算
+		inCharacter->GetSpeed()->AddItemEffect(currentSpeed);
 	});
 	//--------------------------------------------------------------
 

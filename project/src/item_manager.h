@@ -48,6 +48,7 @@ public:
 	void AllWhenPick(CCharacter*,item_count);
 	void AllWhenLost(CCharacter*, item_count);
 	void AllWhenAllWay(CCharacter*, item_count);
+	void AllWhenDeath(CCharacter*, item_count, CCharacter*);
 	void AllWhenDamage(CCharacter*, item_count, CCharacter*);
 	void AllWhenHit(CCharacter*, item_count, CCharacter*);
 
