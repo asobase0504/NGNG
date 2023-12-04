@@ -585,7 +585,7 @@ void CItemDataBase::Init()
 
 	item = m_item[ITEM_HANNYA];
 	item->SetModel("BOX");
-	item->SetRerity(RARITY_UNCOMMON);
+	item->SetRerity(RARITY_RARE);
 	// 般若面---------------------------------------------------------
 	// 1秒以内に4体の敵を倒すと6秒間フレンジー状態になる。フレンジー発動中は移動速度が50%、攻撃速度が100%上昇する (+4秒)
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
@@ -595,7 +595,7 @@ void CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_ELITE];
-	item->SetRerity(RARITY_COMMON);
+	item->SetRerity(RARITY_NOSELECT);
 	// エリート---------------------------------------------------------
 	// 持っているものはエリートになる
 	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
