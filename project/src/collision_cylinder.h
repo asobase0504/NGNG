@@ -31,7 +31,10 @@ public:
 	// ‘æˆê: À•W ‘æ“ñ: ’·‚³ ‘æO : ‚‚³
 	static CCollisionCylinder* Create(const D3DXVECTOR3& pos, const float length ,const float height);
 
+	void SetLength(float inLength) { m_length = inLength; }
 	float GetLength() { return m_length; }
+
+	void SetHeight(float inHeight) { m_height = inHeight; }
 	float GetHeight() { return m_height; }
 
 private:

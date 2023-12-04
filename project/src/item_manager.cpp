@@ -78,12 +78,20 @@ void CItemManager::Draw()
 {
 }
 
-void CItemManager::CreateRandomItem(const D3DXVECTOR3 & inPos, const D3DXMATRIX & boxmtx)
+//--------------------------------------------------------------
+// 生成
+//--------------------------------------------------------------
+void CItemManager::CreateItem(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx, CItemDataBase::EItemType inId)
 {
-	int id = IntRandom(0, CItemDataBase::EItemType::ITEM_MAX - 1);
-	CreateItem(inPos, boxmtx,(CItemDataBase::EItemType)id);
+	m_itemType = inId;
+
+	m_itemData = CItem::Create(m_itemType);
+	m_itemModel.push_back(CItemModel::Create(inPos, boxmtx, inId));
 }
 
+//--------------------------------------------------------------
+// レアリティ指定でアイテムの生成
+//--------------------------------------------------------------
 void CItemManager::CreateRandomItemRarity(const D3DXVECTOR3 & inPos, const D3DXMATRIX & boxmtx, CItemDataBase::ERarity inRarity)
 {
 	CItemDataBase::EItemType id = (CItemDataBase::EItemType)IntRandom(0, CItemDataBase::EItemType::ITEM_MAX - 1);
@@ -95,9 +103,13 @@ void CItemManager::CreateRandomItemRarity(const D3DXVECTOR3 & inPos, const D3DXM
 		rarity = CItemDataBase::GetInstance()->GetItemData(id)->GetRerity();
 	}
 
-	CreateItem(inPos, boxmtx, CItemDataBase::ITEM_KOBAN/*(CItemDataBase::EItemType)id*/);
+	//CreateItem(inPos, boxmtx, CItemDataBase::ITEM_KOBAN);
+	CreateItem(inPos, boxmtx, (CItemDataBase::EItemType)id);
 }
 
+//--------------------------------------------------------------
+// レアリティごとの出現割合でアイテムの生成
+//--------------------------------------------------------------
 CItemDataBase::ERarity CItemManager::CreateRandomItemRarityRate(const D3DXVECTOR3 & inPos, const D3DXMATRIX & boxmtx, std::array<float, CItemDataBase::RARITY_MAX> rarityRate)
 {
 	std::vector<float> vec;
@@ -115,17 +127,6 @@ CItemDataBase::ERarity CItemManager::CreateRandomItemRarityRate(const D3DXVECTOR
 
 	CreateRandomItemRarity(inPos, boxmtx, rarity);
 	return rarity;
-}
-
-//--------------------------------------------------------------
-// 生成
-//--------------------------------------------------------------
-void CItemManager::CreateItem(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx, CItemDataBase::EItemType inId)
-{
-	m_itemType = inId;
-
-	m_itemData = CItem::Create(m_itemType);
-	m_itemModel.push_back(CItemModel::Create(inPos, boxmtx, inId));
 }
 
 //--------------------------------------------------------------

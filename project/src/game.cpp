@@ -147,6 +147,17 @@ void CGame::Uninit()
 //--------------------------------------------------------------
 void CGame::Update()
 {
+	if (CApplication::GetInstance()->IsActiveWindow())
+	{
+		CInput::GetKey()->SetCursorErase(false);
+		CInput::GetKey()->LockCursorPos(true);
+	}
+	else
+	{
+		CInput::GetKey()->SetCursorErase(true);
+		CInput::GetKey()->LockCursorPos(false);
+	}
+
 	CInput* pInput;
 	pInput = CInput::GetKey();
 
