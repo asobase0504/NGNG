@@ -132,6 +132,8 @@ void CGame::Uninit()
 		m_tcp = nullptr;
 	}*/
 
+	CItemDataBase::Uninit();
+
 	CSkinMeshGroup::GetInstance()->Unload("KENGOU");
 	CSkinMeshGroup::GetInstance()->Unload("SKE");
 
