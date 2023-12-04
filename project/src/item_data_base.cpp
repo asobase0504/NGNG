@@ -173,18 +173,7 @@ void CItemDataBase::Init()
 	// まきびし-----------------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 攻撃時に敵に移動速度-5%にする状態異常を付与する。
-		int parcent = 0;
-		for (int Cnt = 0; Cnt <= cnt; Cnt++)
-		{
-			parcent += 5;
-		}
-
-		// 敵の現在のスピード
-		float crrenrSpeed = outCharacter->GetSpeed()->GetCurrent();
-		// 遅くする値
-		float subSpeed = crrenrSpeed * (parcent / 100);
-		// 減速
-		outCharacter->GetSpeed()->AddItemEffect(-subSpeed);
+		outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_SLOW, true);
 	});
 	//--------------------------------------------------------------
 

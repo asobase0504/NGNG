@@ -96,11 +96,7 @@ void CGoldNugget::Hit_()
 	CInput* input = CInput::GetKey();
 	if (player->GetCollision()->ToBox(m_collision, false))
 	{
-		if (input->Trigger(DIK_F))
-		{
-			player->GetMoney()->AddCurrent(30);
-
-			this->Uninit();
-		}
+		player->GetMoney()->AddCurrent(30);
+		this->Uninit();
 	}
 }
