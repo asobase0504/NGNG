@@ -134,7 +134,6 @@ void CGame::Uninit()
 
 	CSkinMeshGroup::GetInstance()->Unload("KENGOU");
 	CSkinMeshGroup::GetInstance()->Unload("SKE");
-	CItemDataBase::GetInstance()->Uninit();
 
 	CInput::GetKey()->SetCursorErase(true);
 	CInput::GetKey()->LockCursorPos(false);
