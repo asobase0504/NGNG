@@ -152,12 +152,12 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	D3DXVECTOR3 cylinderPosOld = GetPosOld();
 	float radius = GetLength();
 
-	float left = -boxSize.x * 0.5f;		// 左
-	float right = boxSize.x * 0.5f;		// 右
-	float top = boxSize.y * 0.5f;		// 上
-	float bottum = -boxSize.y * 0.5f;	// 下
-	float back = boxSize.z * 0.5f;		// 奥
-	float front = -boxSize.z * 0.5f;	// 前
+	float left = -boxSize.x;		// 左
+	float right = boxSize.x;		// 右
+	float top = boxSize.y;		// 上
+	float bottum = -boxSize.y;	// 下
+	float back = boxSize.z;		// 奥
+	float front = -boxSize.z;	// 前
 
 	// ４つの頂点
 	D3DXVECTOR3 pos[4];

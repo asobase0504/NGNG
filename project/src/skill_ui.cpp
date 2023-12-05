@@ -44,12 +44,11 @@ HRESULT CSkillUI::Init()
 	m_ground = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	m_ground->SetAnchor(CObject2d::EAnchor::ANCHOR_TOP);
 	m_ground->SetSize(D3DXVECTOR3(UI_SIZE, UI_SIZE, 0.0f));
-	m_ground->SetColor(D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f));
 
 	m_display = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	m_display->SetAnchor(CObject2d::EAnchor::ANCHOR_TOP);
 	m_display->SetSize(D3DXVECTOR3(UI_SIZE, 0.0f, 0.0f));
-	m_display->SetColor(D3DXCOLOR(0.5f, 1.5f, 0.5f, 0.3f));
+	m_display->SetColor(D3DXCOLOR(0.15f, 0.15f, 0.15f, 0.75f));
 
 	m_procedure = CProcedure::Create(D3DXVECTOR3(m_ground->GetPos().x + (m_ground->GetSize().x),m_ground->GetPos().y,0.0f), D3DXVECTOR3(30.0f, 30.0f, 30.0f), 1);
 	m_ct = 0;
@@ -65,12 +64,14 @@ void CSkillUI::Update()
 	if (m_skill->GetCT() > 60)
 	{
 		m_ct = m_skill->GetCT() / 60;
+		m_procedure->SetDisplay(true);
 	}
 	else
 	{
 		m_ct = 0;
 		D3DXVECTOR3 size = D3DXVECTOR3(UI_SIZE, UI_SIZE, 0.0f);
 		m_display->SetSize(size);
+		m_procedure->SetDisplay(false);
 	}
 
 	int maxCT = CSkillDataBase::GetInstance()->GetCT(m_skill->GetName());
@@ -96,6 +97,7 @@ CSkillUI *CSkillUI::Create(const D3DXVECTOR3& inPos, CSkill* inSkill)
 	ui->Init();
 	ui->m_skill = inSkill;
 	ui->m_ground->SetPos(inPos);
+	ui->m_ground->SetTexture(CSkillDataBase::GetInstance()->GetInfo(ui->m_skill->GetName()).texKey);
 	ui->m_display->SetPos(inPos);
 	ui->m_procedure->SetPos(inPos);
 	//ui->m_ctText->SetPos(inPos);

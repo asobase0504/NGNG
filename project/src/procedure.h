@@ -45,6 +45,8 @@ public:
 	void AddNumber(int inNumber) { SetNumber(m_number + inNumber); }
 	int GetNumber() { return m_number; }
 
+	void SetDisplay(bool isDisplay) override;
+
 	static CProcedure* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int inNumber);
 
 private:

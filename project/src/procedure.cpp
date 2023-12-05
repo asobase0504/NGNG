@@ -77,6 +77,9 @@ void CProcedure::SetPos(const D3DXVECTOR3& inPos)
 	}
 }
 
+//--------------------------------------------------
+// F‚ÌÝ’è
+//--------------------------------------------------
 void CProcedure::SetColor(const D3DXCOLOR & inColor)
 {
 	for (CNumber* displayNumber : m_pNumber)
@@ -85,6 +88,9 @@ void CProcedure::SetColor(const D3DXCOLOR & inColor)
 	}
 }
 
+//--------------------------------------------------
+// F‚Ì‰ÁŽZ
+//--------------------------------------------------
 void CProcedure::AddColor(const D3DXCOLOR & inColor)
 {
 	for (CNumber* displayNumber : m_pNumber)
@@ -93,6 +99,9 @@ void CProcedure::AddColor(const D3DXCOLOR & inColor)
 	}
 }
 
+//--------------------------------------------------
+// ‘å‚«‚³‚ÌÝ’è
+//--------------------------------------------------
 void CProcedure::SetSize(const D3DXVECTOR3 & inSize)
 {
 	for (CNumber* displayNumber : m_pNumber)
@@ -102,6 +111,9 @@ void CProcedure::SetSize(const D3DXVECTOR3 & inSize)
 	SetPos(m_pos);
 }
 
+//--------------------------------------------------
+// ‘å‚«‚³‚Ì‰ÁŽZ
+//--------------------------------------------------
 void CProcedure::AddSize(const D3DXVECTOR3 & inSize)
 {
 	for (CNumber* displayNumber : m_pNumber)
@@ -110,6 +122,9 @@ void CProcedure::AddSize(const D3DXVECTOR3 & inSize)
 	}
 }
 
+//--------------------------------------------------
+// ’l‚ÌÝ’è
+//--------------------------------------------------
 void CProcedure::SetNumber(int inNumber)
 {
 	m_number = inNumber;
@@ -134,6 +149,17 @@ void CProcedure::SetNumber(int inNumber)
 		displayNumber->SetNumber(aPosTexU[cnt]);
 		displayNumber->SetTexPos(10.0f, (float)aPosTexU[cnt]);
 		cnt++;
+	}
+}
+
+//--------------------------------------------------
+// •`‰æ‚µ‚È‚¢‚ð‘I‘ð‚·‚é
+//--------------------------------------------------
+void CProcedure::SetDisplay(bool isDisplay)
+{
+	for (CNumber* displayNumber : m_pNumber)
+	{
+		displayNumber->SetDisplay(isDisplay);
 	}
 }
 
