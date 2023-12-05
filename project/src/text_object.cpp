@@ -5,7 +5,7 @@
 //
 //============================
 
-#include "text.h"
+#include "text_object.h"
 #include "renderer.h"
 #include "utility.h"
 #include "input.h"

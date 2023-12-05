@@ -104,9 +104,10 @@ HRESULT CGame::Init()
 	CHPUI::Create(pPlayer->GetHp());
 	CMONEYUI::Create(pPlayer->GetMoney());
 
-	CHPUI::Create(pPlayer->GetHp());
-	CMONEYUI::Create(pPlayer->GetMoney());
-	CSKILLUI::Create(pPlayer->GetSkill(0));
+	for (int i = 0; i < 4; i++)
+	{
+		CSkillUI::Create(D3DXVECTOR3(900.0f + 75.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), pPlayer->GetSkill(i));
+	}
 
 	CSkinMeshGroup::GetInstance()->LoadAll();
 

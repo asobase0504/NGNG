@@ -1,9 +1,9 @@
 {
 	"TEXTURE": [
+	["TEST","data\/TEXTURE\/test.jpg"],
 	["SKY","data\/TEXTURE\/Sky.jpg"],
 	["TITLE_LOGO","data\/TEXTURE\/TEXT\/title.png"],
-	["TEST","data\/TEXTURE\/test.jpg"],
-	["NUMBER","data\/TEXTURE\/number.png"],
-	[ "TOON","data\/TEXTURE\/toon.png"]
+	["NUMBER","data\/TEXTURE\/number002.png"],
+	["TOON","data\/TEXTURE\/toon.png"]
   ]
 }

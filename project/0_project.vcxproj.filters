@@ -233,9 +233,6 @@
     <ClCompile Include="src\words.cpp">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClCompile>
-    <ClCompile Include="src\text.cpp">
-      <Filter>ソース ファイル\00_Main\text</Filter>
-    </ClCompile>
     <ClCompile Include="src\map_model.cpp">
       <Filter>ソース ファイル\Mode\Game\map</Filter>
     </ClCompile>
@@ -316,8 +313,6 @@
     </ClCompile>
     <ClCompile Include="src\money_ui.cpp">
       <Filter>ソース ファイル\Mode\Game\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\procedure.cpp">
     </ClCompile>
     <ClCompile Include="src\road.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
@@ -405,6 +400,18 @@
     </ClCompile>
     <ClCompile Include="src\arrow.cpp">
       <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\procedure.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="player_abnormal_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text_font.cpp">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text_object.cpp">
+      <Filter>ソース ファイル\00_Main\text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -544,9 +551,6 @@
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClInclude>
     <ClInclude Include="src\words.h">
-      <Filter>ソース ファイル\00_Main\text</Filter>
-    </ClInclude>
-    <ClInclude Include="src\text.h">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClInclude>
     <ClInclude Include="src\map_model.h">
@@ -710,6 +714,15 @@
     </ClInclude>
     <ClInclude Include="src\arrow.h">
       <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
+    </ClInclude>
+    <ClInclude Include="player_abnormal_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\text_font.h">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\text_object.h">
+      <Filter>ソース ファイル\00_Main\text</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

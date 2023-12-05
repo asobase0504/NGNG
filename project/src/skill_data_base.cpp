@@ -76,7 +76,7 @@ void CSkillDataBase::Uninit()
 //--------------------------------------------------------------
 void CSkillDataBase::Init()
 {
-	m_dates["YAMATO_SKILL_1"] = { 120,1,1,0,30,30,0.7f,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	m_dates["YAMATO_SKILL_1"] = { 10,1,1,0,30,30,0.7f,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{// 発動時の効果
 		CSkillEntity* entity = nullptr;
@@ -86,7 +86,7 @@ void CSkillDataBase::Init()
 		}
 		return entity;
 	}};
-	m_dates["YAMATO_SKILL_2"] = { 120,1,1,0,5,5,1.0,D3DXVECTOR3(30.0f,30.0f,30.0f),
+	m_dates["YAMATO_SKILL_2"] = { 600,1,1,0,5,5,1.0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{// 発動時の効果
 		CSkillEntity* entity = nullptr;

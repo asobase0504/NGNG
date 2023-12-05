@@ -40,40 +40,19 @@ HRESULT CProcedure::Init()
 //--------------------------------------------------
 // 初期化　オーバーロード
 //--------------------------------------------------
-HRESULT CProcedure::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int digit)
+HRESULT CProcedure::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int inNumber)
 {
-	m_digit = digit;
-	m_pNumber.resize(m_digit);
+	m_number = inNumber;
 
-	for (int nCnt = 0; nCnt < m_digit; nCnt++)
-	{
-		m_pNumber[nCnt] = CNumber::Create();
-		m_pNumber[nCnt]->SetPos(D3DXVECTOR3(size.x * nCnt + pos.x, pos.y, 0.0f));
-		m_pNumber[nCnt]->SetSize(size);
-	}
+	m_size = size;
 
-	SetPos(pos);
+	// 桁数を数える
+	CalDigit();
+
+	m_pos = pos;
+	SetPos(m_pos);
 
 	return S_OK;
-}
-
-//--------------------------------------------------
-// 終了
-//--------------------------------------------------
-void CProcedure::Uninit()
-{
-	for (int nCnt = 0; nCnt < m_digit; nCnt++)
-	{
-		if (m_pNumber[nCnt] == nullptr)
-		{
-			continue;
-		}
-
-		m_pNumber[nCnt]->Release();
-		m_pNumber[nCnt] = nullptr;
-	}
-
-	CObject::Release();
 }
 
 //--------------------------------------------------
@@ -90,80 +69,119 @@ void CProcedure::SetPos(const D3DXVECTOR3& inPos)
 {
 	CObject::SetPos(inPos);
 
-	for (int nCnt = 0; nCnt < m_digit; nCnt++)
+	int cnt = 0;
+	for (CNumber* displayNumber : m_pNumber)
 	{
-		m_pNumber[nCnt]->SetPos(D3DXVECTOR3(m_pNumber[nCnt]->GetSize().x * 1.75f * ((float)nCnt - (m_digit - 1) * 0.5f) + inPos.x, inPos.y, 0.0f));
+		displayNumber->SetPos(D3DXVECTOR3(displayNumber->GetSize().x * 1.75f * ((float)cnt - (m_digit - 1) * 0.5f) + inPos.x, inPos.y, 0.0f));
+		cnt++;
 	}
 }
 
 void CProcedure::SetColor(const D3DXCOLOR & inColor)
 {
-	for (int nCnt = 0; nCnt < m_digit; nCnt++)
+	for (CNumber* displayNumber : m_pNumber)
 	{
-		m_pNumber[nCnt]->SetColor(inColor);
+		displayNumber->SetColor(inColor);
 	}
 }
 
 void CProcedure::AddColor(const D3DXCOLOR & inColor)
 {
-	for (int nCnt = 0; nCnt < m_digit; nCnt++)
+	for (CNumber* displayNumber : m_pNumber)
 	{
-		m_pNumber[nCnt]->SetColor(inColor + m_pNumber[nCnt]->GetColor());
+		displayNumber->SetColor(inColor + displayNumber->GetColor());
 	}
 }
 
 void CProcedure::SetSize(const D3DXVECTOR3 & inSize)
 {
-	for (int nCnt = 0; nCnt < m_digit; nCnt++)
+	for (CNumber* displayNumber : m_pNumber)
 	{
-		m_pNumber[nCnt]->SetSize(inSize);
+		displayNumber->SetSize(inSize);
 	}
 	SetPos(m_pos);
 }
 
 void CProcedure::AddSize(const D3DXVECTOR3 & inSize)
 {
-	for (int nCnt = 0; nCnt < m_digit; nCnt++)
+	for (CNumber* displayNumber : m_pNumber)
 	{
-		m_pNumber[nCnt]->AddSize(inSize);
+		displayNumber->AddSize(inSize);
 	}
 }
 
 void CProcedure::SetNumber(int inNumber)
 {
 	m_number = inNumber;
+	CalDigit();
 
 	std::vector<int> aPosTexU;		//各桁の数字を格納
 	aPosTexU.resize(m_digit);
 
 	{
-		int timer = inNumber;
+		int number = inNumber;
 		for (int i = m_digit - 1; i >= 0; --i)
 		{
-			aPosTexU[i] = timer % 10;
-			timer /= 10;
+			aPosTexU[i] = number % 10;
+			number /= 10;
 		}
 	}
 
 	// テクスチャ座標の設定
-	for (int nCnt = 0; nCnt < m_digit; nCnt++)
+	int cnt = 0;
+	for (CNumber* displayNumber : m_pNumber)
 	{
-		m_pNumber[nCnt]->SetNumber(aPosTexU[nCnt]);
-		m_pNumber[nCnt]->SetTexPos(10.0f, (float)aPosTexU[nCnt]);
+		displayNumber->SetNumber(aPosTexU[cnt]);
+		displayNumber->SetTexPos(10.0f, (float)aPosTexU[cnt]);
+		cnt++;
 	}
 }
 
 //--------------------------------------------------
 // 生成
 //--------------------------------------------------
-CProcedure *CProcedure::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int digit)
+CProcedure *CProcedure::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int number)
 {
-	CProcedure *pTimer;
-	pTimer = new CProcedure;
+	CProcedure *pProcedure;
+	pProcedure = new CProcedure;
 
-	assert(pTimer != nullptr);
+	assert(pProcedure != nullptr);
 
-	pTimer->Init(pos, size, digit);
+	pProcedure->Init(pos, size, number);
 
-	return pTimer;
+	return pProcedure;
+}
+
+//--------------------------------------------------
+// 桁数を数える
+//--------------------------------------------------
+void CProcedure::CalDigit()
+{
+	m_digit = 0;
+	int number = m_number;
+	do
+	{
+		m_digit++;
+		number *= 0.1f;
+	} while (number != 0);
+
+	int diff = m_digit - m_pNumber.size();
+	while (diff != 0)
+	{
+		if (diff < 0)
+		{ // 桁が過剰時
+			m_pNumber.back()->Uninit();
+			m_pNumber.pop_back();	// 削除
+			diff++;
+		}
+		else
+		{ // 桁が足りない時
+			CNumber* number = CNumber::Create();
+			m_pNumber.push_back(number);	// 追加
+			number->SetSize(m_size);
+			SetEndChildren(number);
+			diff--;
+		}
+	}
+	SetPos(m_pos);
 }

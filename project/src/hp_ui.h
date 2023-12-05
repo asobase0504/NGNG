@@ -16,8 +16,8 @@
 //==============================================================
 // ‘O•ûéŒ¾
 //==============================================================
-class CCharacter;
 class CObject2d;
+class CProcedure;
 
 //==============================================================
 // ƒNƒ‰ƒX
@@ -35,6 +35,8 @@ public:
 
 private:
 	CStatus<int>* m_hp;
+	CProcedure* m_current;
+	CProcedure* m_max;
 	CObject2d* m_ground;
 	CObject2d* m_bar;
 };

@@ -25,10 +25,16 @@ const D3DXVECTOR3 CObject2d::m_Vtx[ANCHOR_MAX][4] =
 	D3DXVECTOR3(+1.0f, +1.0f, 0.0f),
 	},
 	{
-	D3DXVECTOR3(0.0f, -1.0f, 0.0f),
-	D3DXVECTOR3(+2.0f, -1.0f, 0.0f),
-	D3DXVECTOR3(0.0f, +1.0f, 0.0f),
-	D3DXVECTOR3(+2.0f, +1.0f, 0.0f),
+		D3DXVECTOR3(0.0f, -1.0f, 0.0f),
+		D3DXVECTOR3(+2.0f, -1.0f, 0.0f),
+		D3DXVECTOR3(0.0f, +1.0f, 0.0f),
+		D3DXVECTOR3(+2.0f, +1.0f, 0.0f),
+	},
+	{
+		D3DXVECTOR3(-1.0f, -0.0f, 0.0f),
+		D3DXVECTOR3(+1.0f, -0.0f, 0.0f),
+		D3DXVECTOR3(-1.0f, +2.0f, 0.0f),
+		D3DXVECTOR3(+1.0f, +2.0f, 0.0f),
 	}
 };
 

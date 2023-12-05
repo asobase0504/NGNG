@@ -40,7 +40,7 @@ public:
 private:
 	float m_length;
 	float m_height;
-	CLine* m_line[4];
+	CLine* m_line[9];
 };
 
 #endif

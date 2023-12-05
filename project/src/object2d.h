@@ -37,6 +37,7 @@ public:
 	{
 		ANCHOR_CENTER,
 		ANCHOR_LEFT,
+		ANCHOR_TOP,
 		ANCHOR_MAX,
 	};
 

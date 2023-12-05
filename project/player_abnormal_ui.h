@@ -1,46 +1,42 @@
 //==================================================
-// skillUI.h
+// moneyUI.h
 // Author: 梶田大夢
 //==================================================
-#ifndef _SUKILLUI_H_
-#define _SUKILLUI_H_
+#ifndef _MONEYUI_H_
+#define _MONEYUI_H_
 
 //**************************************************
 // インクルード
 //**************************************************
 #include "object.h"
-#include "status.h"
-#include "skill.h"
+#include "abnormal_data_base.h"
 
 //**************************************************
 // 前方前言　実態はNG　ポインタだけならOK
 //**************************************************
-class CProcedure;
-class CObject2d;
+class CText;
+class CObject2D;
 
 //**************************************************
 // クラス
 //**************************************************
-class CSkillUI : public CObject
+class CPlayerAbnormalUI : public CObject
 {
-private:
-	static const float UI_SIZE;
-
 public:
-	CSkillUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
-	~CSkillUI();
+	CPlayerAbnormalUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	~CPlayerAbnormalUI();
 
 	HRESULT Init() override;
 	void Update() override;
 
-	static CSkillUI* Create(const D3DXVECTOR3& inPos, CSkill* inSkill);
+	static CPlayerAbnormalUI* Create(const int& inStock,CAbnormalDataBase::EAbnormalType inType);
 
 private:
-	CSkill* m_skill;
-	CProcedure* m_procedure;
-	CObject2d* m_ground;
-	CObject2d* m_display;
-	int m_ct;
+	CAbnormalDataBase::EAbnormalType inType;
+	bool m_isDisplayStack;
+	int* m_stackCnt;		// stack数のロゴ
+	CText* m_stack;
+	CObject2D* m_abnormalLogo;
 };
 
 #endif // _TIMER_H_
