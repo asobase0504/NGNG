@@ -128,6 +128,7 @@ public:
 		abnormal_data m_haveAbnormal;
 
 	};
+	
 	struct SSendData
 	{
 		enum EDATA
@@ -139,13 +140,24 @@ public:
 		SSendData(int id) :mId(id) {}
 		int mId;
 	};
+	
+	
 	struct SSendPack : public SSendData
 	{
 	public:
 		SSendPack();
 		~SSendPack();
 		SPlayerData Player[MaxPlayer];
-		//SEnemyData m_isPopEnemy[MaxModel];
+
+		void SetPlayer(SSendPack data)
+		{
+			for (int i = 0; i < MaxPlayer; i++)
+			{
+				Player[i] = data.Player[i];
+			}
+			
+		}
+
 
 	};
 

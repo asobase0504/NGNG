@@ -195,8 +195,12 @@ void CGame::Update()
 		CModelData::SSendEnemy sendData;
 		sendData.m_pos = Player->GetPos();
 		sendData.m_rot = Player->GetRot();
-		sendData.m_haveItemLeftId = 1;
-		sendData.m_haveItemRightId = 1;
+		for (int j = 0; j < 5; j++)
+		{
+			sendData.m_haveAbnormal.abnormalData[j] = 0;
+			sendData.m_haveItem.itemData[j] = 0;
+		}
+
 		sendData.m_motion = 0;
 		sendData.m_log = 2;
 		sendData.m_pushBomComands = 0;
