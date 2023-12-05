@@ -33,6 +33,7 @@ class CCharacter : public CObject
 public:
 
 	static const int MAX_SKILL;
+	static const int MAX_NON_COMBAT_TIME;
 
 	enum class ERelation
 	{

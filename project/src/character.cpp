@@ -33,6 +33,7 @@
 // 定数宣言
 //==============================================================
 const int CCharacter::MAX_SKILL(4);
+const int CCharacter::MAX_NON_COMBAT_TIME(300);
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -142,6 +143,9 @@ void CCharacter::Update()
 	// 更新処理
 	CObject::Update();
 
+	// 常に起動するアイテム
+	CItemManager::GetInstance()->AllWhenAllways(this, m_haveItem);
+
 	Collision();
 
 	// 重力
@@ -152,6 +156,17 @@ void CCharacter::Update()
 
 	// 自動回復
 	Regenation();
+
+	if (!m_nonCombat)
+	{
+		m_nonCombatTime++;
+
+		if (m_nonCombatTime > MAX_NON_COMBAT_TIME)
+		{
+			m_nonCombat = true;
+			m_nonCombatTime = 0;
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -241,12 +256,14 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 //--------------------------------------------------------------
 void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 {
-	if (IsSuccessRate(1.0f/*m_criticalRate.GetMax()*/))
+	m_nonCombat = false;
+
+	if (IsSuccessRate(m_criticalRate.GetMax()))
 	{// クリティカルかどうか
 		m_isCritical = true;
 	}
 
-	 // ダメージを与えた処理
+	// ダメージを与えた処理
 	CItemManager::GetInstance()->AllWhenReceive(pEnemy, pEnemy->m_haveItem, this);
 	// ダメージを受けた処理
 	CItemManager::GetInstance()->AllWhenInflict(this, m_haveItem, pEnemy);

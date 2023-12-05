@@ -199,7 +199,7 @@ void CItemDataBase::Init()
 		int hpMax = inCharacter->GetHp()->GetMax();
 		// 回復する値
 		int recovery = (int)(hpMax * (percent / 100));
-		inCharacter->GetHp()->AddItemEffect(recovery);
+		inCharacter->Heal(recovery);
 	});
 	//--------------------------------------------------------------
 
@@ -279,7 +279,7 @@ void CItemDataBase::Init()
 
 			int maxPercent = 0;
 
-			for (int i = 0; i < numCritical; i++)
+			for (int i = 0; i < cnt; i++)
 			{// アイテムの所持数分、足す
 				maxPercent += 36;
 			}
@@ -573,7 +573,7 @@ void CItemDataBase::Init()
 	item->SetRerity(RARITY_UNCOMMON);
 	// 鉄線---------------------------------------------------------
 	// ダメージを受けた際、周囲25m(+10m)以内にいる敵最大5体に160%のダメージを与える (+2体)
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// TODO
 		//inCharacter->GetCriticalRate()->AddItemEffect(5);
 	});

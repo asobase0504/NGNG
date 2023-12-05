@@ -47,7 +47,7 @@ public:
 
 	ITEM_FUNC GetWhenPickFunc() { return m_getFunc; }
 	ITEM_FUNC GetWhenLostFunc() { return m_lostFunc; }
-	ITEM_FUNC GetWhenAllWayFunc() { return m_allwayFunc; }
+	ITEM_FUNC GetWhenAllwaysFunc() { return m_allwayFunc; }
 	ITEM_ACTION_FUNC GetWhenDeathFunc() { return m_deathFunc; }
 	ITEM_ACTION_FUNC GetWhenReceiveFunc() { return m_receiveFunc; }
 	ITEM_ACTION_FUNC GetWhenInflictFunc() { return m_inflictFunc; }
