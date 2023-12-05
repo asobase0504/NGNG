@@ -41,16 +41,16 @@ public:
 	void SetWhenLostFunc(ITEM_FUNC inFunc) { m_lostFunc = inFunc; }				// 失ったときの処理
 	void SetWhenAlwaysFunc(ITEM_FUNC inFunc) { m_allwayFunc = inFunc; }			// 常時発動している処理
 	void SetWhenDeathFunc(ITEM_ACTION_FUNC inFunc) { m_deathFunc = inFunc; }	// 死亡させたときの処理
-	void SetWhenReceiveFunc(ITEM_ACTION_FUNC inFunc) { m_damageFunc = inFunc; }	// ダメージを受ける時の処理
-	void SetWhenInflictFunc(ITEM_ACTION_FUNC inFunc) { m_hitFunc = inFunc; }	// ダメージを与えた時の処理
+	void SetWhenReceiveFunc(ITEM_ACTION_FUNC inFunc) { m_receiveFunc = inFunc; }	// ダメージを受ける時の処理
+	void SetWhenInflictFunc(ITEM_ACTION_FUNC inFunc) { m_inflictFunc = inFunc; }	// ダメージを与えた時の処理
 	void SetModel(std::string str) { m_itemModelData = str; }
 
 	ITEM_FUNC GetWhenPickFunc() { return m_getFunc; }
 	ITEM_FUNC GetWhenLostFunc() { return m_lostFunc; }
 	ITEM_FUNC GetWhenAllWayFunc() { return m_allwayFunc; }
 	ITEM_ACTION_FUNC GetWhenDeathFunc() { return m_deathFunc; }
-	ITEM_ACTION_FUNC GetWhenDamageFunc() { return m_hitFunc; }
-	ITEM_ACTION_FUNC GetWhenHitFunc() { return m_hitFunc; }
+	ITEM_ACTION_FUNC GetWhenReceiveFunc() { return m_receiveFunc; }
+	ITEM_ACTION_FUNC GetWhenInflictFunc() { return m_inflictFunc; }
 	std::string GetModel() { return m_itemModelData; }
 
 	// レアリティ
@@ -63,8 +63,8 @@ private:
 	ITEM_FUNC m_allwayFunc;
 
 	ITEM_ACTION_FUNC m_deathFunc;
-	ITEM_ACTION_FUNC m_damageFunc;
-	ITEM_ACTION_FUNC m_hitFunc;
+	ITEM_ACTION_FUNC m_receiveFunc;
+	ITEM_ACTION_FUNC m_inflictFunc;
 
 	std::string m_itemModelData;
 

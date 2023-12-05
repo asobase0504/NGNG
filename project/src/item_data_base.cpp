@@ -139,7 +139,7 @@ void CItemDataBase::Init()
 	// 熊の木彫り---------------------------------------------
 	item->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{
 			if (IsSuccessRate(0.15f))
 			{// 15%の確率でブロックする。
@@ -156,7 +156,7 @@ void CItemDataBase::Init()
 	// ばくちく(保留)-----------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{
 			if (IsSuccessRate(0.05f))
 			{// 攻撃時に5%の確率でスタンさせる。
@@ -173,7 +173,7 @@ void CItemDataBase::Init()
 	// まきびし-----------------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 攻撃時に敵に移動速度-5%にする状態異常を付与する。
-		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{
 			if (IsSuccessRate(0.05f))
 			{// 攻撃時に5%の確率でスロウさせる。
@@ -190,7 +190,7 @@ void CItemDataBase::Init()
 	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒した時、HPの1%(+1%)を回復する。
 		int percent = 0;
-		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{// 持ってる数、割合を増やす
 			percent += 1;
 		}
@@ -221,7 +221,7 @@ void CItemDataBase::Init()
 		{// 相手の体力が90%以上だった時
 			int addParcent = 0;
 
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{// 持ってる数、割合を増やす
 				addParcent += 70;
 			}
@@ -248,7 +248,7 @@ void CItemDataBase::Init()
 			// 増やす割合
 			int percent = 0;
 
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{// 持ってる数、割合を増やす
 				percent += 8;
 			}
@@ -279,7 +279,7 @@ void CItemDataBase::Init()
 
 			int maxPercent = 0;
 
-			for (int i = 0; i <= numCritical; i++)
+			for (int i = 0; i < numCritical; i++)
 			{// アイテムの所持数分、足す
 				maxPercent += 36;
 			}
@@ -328,12 +328,12 @@ void CItemDataBase::Init()
 	{// 敵を倒した際4%の確率で金塊が出現する (+4%)
 		float probability = 0.0f;
 
-		for (int j = 0; j <= cnt; j++)
+		for (int j = 0; j < cnt; j++)
 		{
 			probability += 0.04f;
 		}
 
-		if (IsSuccessRate(1.0f))
+		if (IsSuccessRate(probability))
 		{
 			CGoldNugget* obj = CGoldNugget::Create();
 			obj->SetPos(outCharacter->GetPos());
@@ -367,7 +367,7 @@ void CItemDataBase::Init()
 		{
 			int parcent = 0;
 
-			for (int j = 0; j <= cnt; j++)
+			for (int j = 0; j < cnt; j++)
 			{
 				parcent += 13;
 			}
@@ -401,7 +401,7 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	item = m_item[ITEM_FLINT];
+	item = m_item[ITEM_TOISI];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
 	// 砥石---------------------------------------------------------
@@ -419,11 +419,11 @@ void CItemDataBase::Init()
 		if (inCharacter->GetIsCritical())
 		{
 			int healHp = 0;
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{
 				healHp += 8;
 			}
-			inCharacter->GetHp()->AddItemEffect(healHp);
+			inCharacter->Heal(healHp);
 		}
 	});
 	//--------------------------------------------------------------
@@ -513,7 +513,7 @@ void CItemDataBase::Init()
 		{
 			int armor = 0;
 
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{// 持ってる数、割合を増やす
 				armor += 30;
 			}
@@ -535,7 +535,7 @@ void CItemDataBase::Init()
 			float speed = inCharacter->GetSpeed()->GetCurrent();
 
 			int addParcent = 0;
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{
 				addParcent += 30;
 			}

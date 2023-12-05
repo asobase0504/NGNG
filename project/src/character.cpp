@@ -241,21 +241,26 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 //--------------------------------------------------------------
 void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 {
-	// ダメージを与えた処理
-	CItemManager::GetInstance()->AllWhenDamage(this, m_haveItem, pEnemy);
+	if (IsSuccessRate(1.0f/*m_criticalRate.GetMax()*/))
+	{// クリティカルかどうか
+		m_isCritical = true;
+	}
+
+	 // ダメージを与えた処理
+	CItemManager::GetInstance()->AllWhenReceive(pEnemy, pEnemy->m_haveItem, this);
 	// ダメージを受けた処理
-	CItemManager::GetInstance()->AllWhenHit(pEnemy, pEnemy->m_haveItem, this);
+	CItemManager::GetInstance()->AllWhenInflict(this, m_haveItem, pEnemy);
 	
 	// プレイヤーのダメージを計算
-	int Damage = CalDamage(SkillMul);
+	int damage = CalDamage(SkillMul);
 
-	if (IsSuccessRate(m_criticalRate.GetMax()))
+	if(m_isCritical)
 	{
- 		Damage *= m_criticalDamage.GetMax();
+		damage *= m_criticalDamage.GetMax();
 	}
 
 	// エネミーにダメージを与える。
-	pEnemy->Damage(Damage);
+	pEnemy->Damage(damage);
 
 	if (pEnemy->IsDied())
 	{// ダメージを受けた処理
@@ -308,8 +313,7 @@ void CCharacter::Damage(const int inDamage)
 	hp->AddCurrent(-dmg);
 
 	if (m_hp.GetCurrent() <= 0)
-	{
-		// 死亡処理
+	{// 死亡処理
 		Died();
 	}
 }

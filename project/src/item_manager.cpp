@@ -95,7 +95,7 @@ void CItemManager::CreateRandomItemRarity(const D3DXVECTOR3 & inPos, const D3DXM
 		rarity = CItemDataBase::GetInstance()->GetItemData(id)->GetRerity();
 	}
 
-	CreateItem(inPos, boxmtx, CItemDataBase::ITEM_ZOURI/*(CItemDataBase::EItemType)id*/);
+	CreateItem(inPos, boxmtx, CItemDataBase::ITEM_TOISI/*(CItemDataBase::EItemType)id*/);
 }
 
 CItemDataBase::ERarity CItemManager::CreateRandomItemRarityRate(const D3DXVECTOR3 & inPos, const D3DXMATRIX & boxmtx, std::array<float, CItemDataBase::RARITY_MAX> rarityRate)
@@ -235,7 +235,7 @@ void CItemManager::AllWhenDeath(CCharacter* inCharacter, item_count inItem, CCha
 //--------------------------------------------------------------
 // ダメージを受けた時全アイテム
 //--------------------------------------------------------------
-void CItemManager::AllWhenDamage(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
+void CItemManager::AllWhenReceive(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
 {
 	CItemDataBase* dataBase = CItemDataBase::GetInstance();
 
@@ -247,7 +247,7 @@ void CItemManager::AllWhenDamage(CCharacter* inCharacter, item_count inItem, CCh
 		}
 
 		CItem* item = dataBase->GetItemData((CItemDataBase::EItemType)i);
-		CItem::ITEM_ACTION_FUNC func = item->GetWhenDamageFunc();
+		CItem::ITEM_ACTION_FUNC func = item->GetWhenReceiveFunc();
 
 		if (func == nullptr)
 		{
@@ -258,7 +258,7 @@ void CItemManager::AllWhenDamage(CCharacter* inCharacter, item_count inItem, CCh
 	}
 }
 
-void CItemManager::AllWhenHit(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
+void CItemManager::AllWhenInflict(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
 {
 	CItemDataBase* dataBase = CItemDataBase::GetInstance();
 
@@ -270,7 +270,7 @@ void CItemManager::AllWhenHit(CCharacter* inCharacter, item_count inItem, CChara
 		}
 
 		CItem* item = dataBase->GetItemData((CItemDataBase::EItemType)i);
-		CItem::ITEM_ACTION_FUNC func = item->GetWhenHitFunc();
+		CItem::ITEM_ACTION_FUNC func = item->GetWhenInflictFunc();
 
 		if (func == nullptr)
 		{
