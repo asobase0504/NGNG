@@ -43,6 +43,7 @@ HRESULT CSkillEntity::Init()
 	// 初期化
 	m_Duration = 1;
 	m_Interval = 0;
+	m_Invincible = 0;
 	m_isSkill = false;
 	InitAbility();
 
@@ -86,17 +87,25 @@ void CSkillEntity::Update()
 
 		// 効果時間の減少
 		m_Duration--;
+		// 次の当たり判定を出現させるまでの時間を減少
 		m_Interval--;
+		// 無敵時間の減少
+		m_Invincible--;
 
-		if (m_Collision == nullptr)
-		{
-			return;
+		if (m_Interval > 0)
+		{// 無敵状態にする
 		}
+
 		// インターバル0以下で当たり判定がなかったら当たり判定を生成する
 		if (m_Interval <= 0 && m_Collision == nullptr)
 		{
 			m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize(m_Name).x);
 			m_Collision->SetParent(&m_apChara->GetPos());
+		}
+
+		if (m_Collision == nullptr)
+		{
+			return;
 		}
 
 		// 自分とは違う関係を持ってるキャラクターに行なう
@@ -124,6 +133,7 @@ void CSkillEntity::Update()
 	}
 
 #ifdef _DEBUG
-	CDebugProc::Print("Duration : %f\n", m_Duration);
+	CDebugProc::Print("スキルの効果時間 : %f\n", m_Duration);
+	CDebugProc::Print("当たり判定のインターバル: %f\n", m_Interval);
 #endif // _DEBUG
 }

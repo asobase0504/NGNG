@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// ƒXƒLƒ‹(‰ñ“]‚¬‚è)
+// ƒXƒLƒ‹(‰ñ“]Ø‚è)
 // Author : ûü–ìŠ]›’
 //
 //**************************************************************
@@ -54,7 +54,7 @@ void CYamatoSkill_3::InitAbility()
 		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
 		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
 		D3DXVec3Normalize(&vecNor, &vecNor);
-		vecNor *= 10.0f;			//ˆÚ“®‚³‚¹‚½‚¢’l‚ð“ü‚ê‚é
+		vecNor *= 15.0f;			//ˆÚ“®‚³‚¹‚½‚¢’l‚ð“ü‚ê‚é
 		m_apChara->SetMoveXZ(vecNor.x, vecNor.z);
 	}
 }

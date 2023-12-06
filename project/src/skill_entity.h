@@ -47,6 +47,7 @@ protected:		// メンバ変数
 	std::string		m_Name;				// スキル名
 	float			m_Duration;			// 効果時間
 	float			m_Interval;			// 多段ヒットの場合次の当たり判定を出現させるまでの時間
+	float			m_Invincible;		// 無敵時間
 	bool			m_isSkill;			// スキル発動中かどうか
 };
 #endif
