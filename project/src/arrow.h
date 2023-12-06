@@ -1,43 +1,42 @@
 //**************************************************************
 //
-// HP_BAR
-// Author: Yuda Kaito
+// arrow.h
+// Author: Buriya Kota
 //
 //**************************************************************
-#ifndef _HP_UI_H_
-#define _HP_UI_H_
+#ifndef _ARROW_H_
+#define _ARROW_H_
 
 //==============================================================
 // include
 //==============================================================
-#include "object.h"
-#include "status.h"
+#include "objectX.h"
 
 //==============================================================
 // ëOï˚êÈåæ
 //==============================================================
-class CObject2d;
-class CProcedure;
+class CCollisionBox;
 
 //==============================================================
 // ÉNÉâÉX
 //==============================================================
-class CHPUI : public CObject
+class CArrow : public CObjectX
 {
 public:
-	CHPUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
-	~CHPUI();
+	CArrow(CTaskGroup::EPriority list = CTaskGroup::LEVEL_3D_1);
+	~CArrow();
 
 	HRESULT Init() override;
 	void Update() override;
 
-	static CHPUI* Create(CStatus<int>* inHp);
+	static CArrow* Create();
+
+	bool GetIsHit() { return m_isHit; }
+
+	//bool HitEnemy(CCharacter* enemy);
 
 private:
-	CStatus<int>* m_hp;
-	CProcedure* m_current;
-	CProcedure* m_max;
-	CObject2d* m_ground;
-	CObject2d* m_bar;
+	CCollisionBox* m_collision;
+	bool m_isHit;
 };
-#endif	// _ITEM_DATA_H_
+#endif	// _GOLD_NUGGET_H_

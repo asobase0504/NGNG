@@ -7,7 +7,7 @@
 //-------------------------------
 // インクルード
 //-------------------------------
-#include "model_date.h"
+#include "model_data.h"
 
 //-------------------------------
 // デフォルトコンストラクタ
@@ -19,10 +19,7 @@ CModelData::CModelData()
 	m_CommuData.Player.m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_CommuData.Player.m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_CommuData.Player.m_motion = 0;
-	m_CommuData.Player.m_haveItemRightId = false;
-	m_CommuData.Player.m_haveItemLeftId = false;
-	m_CommuData.Player.m_popEnemy = 0;
-	m_CommuData.Player.m_popGimmick = 0;
+
 	m_CommuData.Player.m_pushBomComands = false;
 	for (int i = 0; i < MaxModel; i++)
 	{

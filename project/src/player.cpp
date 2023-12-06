@@ -156,8 +156,11 @@ void CPlayer::Update()
 		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
-	if (IsDied())
+	static bool a = false;
+
+	if (IsDied() && !a)
 	{
+		a = true;
 		CResult::Create();
 	}
 

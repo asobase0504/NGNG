@@ -39,9 +39,11 @@ CSkillEntity::~CSkillEntity()
 //--------------------------------------------------------------
 HRESULT CSkillEntity::Init()
 {
+	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
+
 	MapChangeRelese();
 	// 初期化
-	m_Duration = 1;
+	m_Duration = pSkillData->GetDuration(m_Name);
 	m_Interval = 0;
 	m_isSkill = false;
 	InitAbility();
@@ -55,13 +57,6 @@ HRESULT CSkillEntity::Init()
 //--------------------------------------------------------------
 void CSkillEntity::Uninit()
 {
-	// 当たり判定の削除
-	if (m_Collision != nullptr)
-	{
-		m_Collision->Uninit();
-		m_Collision = nullptr;
-	}
-
 	// 破棄処理
 	CTask::Uninit();
 }
@@ -88,15 +83,18 @@ void CSkillEntity::Update()
 		m_Duration--;
 		m_Interval--;
 
-		if (m_Collision == nullptr)
-		{
-			return;
-		}
+
 		// インターバル0以下で当たり判定がなかったら当たり判定を生成する
 		if (m_Interval <= 0 && m_Collision == nullptr)
 		{
 			m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize(m_Name).x);
 			m_Collision->SetParent(&m_apChara->GetPos());
+			SetEndChildren(m_Collision);
+		}
+
+		if (m_Collision == nullptr)
+		{
+			return;
 		}
 
 		// 自分とは違う関係を持ってるキャラクターに行なう
@@ -104,16 +102,16 @@ void CSkillEntity::Update()
 		{
 			// 当たり判定
 			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
-			if (hit && m_Interval <= 0.0f)
+			if (hit && m_Interval <= 0)
 			{// ダメージの判定
 				HitAbility(inChara);
 				collision = true;
-				m_Interval = pSkillData->GetInterval(m_Name);
 			}
 		});
 
-		if (collision)
+		if (collision && m_Collision != nullptr)
 		{// 敵に当たっていたら
+			m_Interval = pSkillData->GetInterval(m_Name);
 			m_Collision->Uninit();
 			m_Collision = nullptr;
 		}
@@ -124,6 +122,7 @@ void CSkillEntity::Update()
 	}
 
 #ifdef _DEBUG
+	CDebugProc::Print("Interval : %d\n", m_Interval);
 	CDebugProc::Print("Duration : %f\n", m_Duration);
 #endif // _DEBUG
 }

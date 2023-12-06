@@ -18,6 +18,7 @@
 #include "statue_manager.h"
 #include "application.h"
 #include "game.h"
+#include "utility.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -87,6 +88,8 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 		}
 	}
 	pCylinder->Uninit();
+
+	AddRot(D3DXVECTOR3(0.0f, FloatRandom(D3DX_PI, -D3DX_PI), 0.0f));
 
 	return S_OK;
 }

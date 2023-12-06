@@ -24,11 +24,13 @@
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="connect.cpp" />
     <ClCompile Include="golem_skill_1.cpp" />
+    <ClCompile Include="player_abnormal_ui.cpp" />
+    <ClCompile Include="src\arrow.cpp" />
     <ClCompile Include="src\gold_nugget.cpp" />
     <ClCompile Include="enemy_hp_ui.cpp" />
     <ClCompile Include="src\input\input_touch_panel.cpp" />
     <ClCompile Include="src\map_fade.cpp" />
-    <ClCompile Include="src\model_date.cpp" />
+    <ClCompile Include="src\model_data.cpp" />
     <ClCompile Include="src\model_skin.cpp" />
     <ClCompile Include="src\model_skin_group.cpp" />
     <ClCompile Include="src\mode_fade.cpp" />
@@ -111,8 +113,9 @@
     <ClCompile Include="src\task.cpp" />
     <ClCompile Include="src\task_group.cpp" />
     <ClCompile Include="src\tcp_client.cpp" />
-    <ClCompile Include="src\text.cpp" />
+    <ClCompile Include="src\text_object.cpp" />
     <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\text_font.cpp" />
     <ClCompile Include="src\title.cpp" />
     <ClCompile Include="src\utility.cpp" />
     <ClCompile Include="src\words.cpp" />
@@ -126,6 +129,8 @@
     <ClInclude Include="connect.h" />
     <ClInclude Include="golem_skill_1.h" />
     <ClInclude Include="enemy_hp_ui.h" />
+    <ClInclude Include="player_abnormal_ui.h" />
+    <ClInclude Include="src\arrow.h" />
     <ClInclude Include="src\character_select.h" />
     <ClInclude Include="src\debug_mode.h" />
     <ClInclude Include="src\bullet.h" />
@@ -168,7 +173,7 @@
     <ClInclude Include="src\map_model.h" />
     <ClInclude Include="src\melee_attack.h" />
     <ClInclude Include="src\mode.h" />
-    <ClInclude Include="src\model_date.h" />
+    <ClInclude Include="src\model_data.h" />
     <ClInclude Include="src\model_skin.h" />
     <ClInclude Include="src\model_skin_group.h" />
     <ClInclude Include="src\mode_fade.h" />
@@ -210,8 +215,9 @@
     <ClInclude Include="src\task.h" />
     <ClInclude Include="src\task_group.h" />
     <ClInclude Include="src\tcp_client.h" />
-    <ClInclude Include="src\text.h" />
+    <ClInclude Include="src\text_object.h" />
     <ClInclude Include="src\texture.h" />
+    <ClInclude Include="src\text_font.h" />
     <ClInclude Include="src\title.h" />
     <ClInclude Include="src\utility.h" />
     <ClInclude Include="src\words.h" />
@@ -337,7 +343,7 @@
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>precompile.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>precompile.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>input;nlohmann;/src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src/..</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

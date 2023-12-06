@@ -44,6 +44,8 @@ public:
 	void SetSkill(std::string tag, CCharacter *chara);			// スキルの設定
 	void SetCT(int ct) { m_CT = ct; }
 
+	std::string GetName() { return m_Name; }
+
 private:		// メンバ変数
 	CCharacter*		m_apChara;			// キャラクターのインスタンス
 	CCollision*		m_Collision;		// 当たり判定

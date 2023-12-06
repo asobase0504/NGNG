@@ -104,9 +104,10 @@ HRESULT CGame::Init()
 	CHPUI::Create(pPlayer->GetHp());
 	CMONEYUI::Create(pPlayer->GetMoney());
 
-	CHPUI::Create(pPlayer->GetHp());
-	CMONEYUI::Create(pPlayer->GetMoney());
-	CSKILLUI::Create(pPlayer->GetSkill(0));
+	for (int i = 0; i < 4; i++)
+	{
+		CSkillUI::Create(D3DXVECTOR3(900.0f + 75.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), pPlayer->GetSkill(i));
+	}
 
 	CSkinMeshGroup::GetInstance()->LoadAll();
 
@@ -115,10 +116,6 @@ HRESULT CGame::Init()
 
 	//m_tcp = new CClient;
 	//m_tcp->Init("127.0.0.1", 13567);
-	// エネミーの生成
-	//CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
-
-	//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
 
 	return S_OK;
 }
@@ -136,6 +133,8 @@ void CGame::Uninit()
 		m_tcp = nullptr;
 	}*/
 
+	CItemDataBase::Uninit();
+
 	CSkinMeshGroup::GetInstance()->Unload("KENGOU");
 	CSkinMeshGroup::GetInstance()->Unload("SKE");
 
@@ -149,6 +148,17 @@ void CGame::Uninit()
 //--------------------------------------------------------------
 void CGame::Update()
 {
+	if (CApplication::GetInstance()->IsActiveWindow())
+	{
+		CInput::GetKey()->SetCursorErase(false);
+		CInput::GetKey()->LockCursorPos(true);
+	}
+	else
+	{
+		CInput::GetKey()->SetCursorErase(true);
+		CInput::GetKey()->LockCursorPos(false);
+	}
+
 	CInput* pInput;
 	pInput = CInput::GetKey();
 
@@ -185,8 +195,12 @@ void CGame::Update()
 		CModelData::SSendEnemy sendData;
 		sendData.m_pos = Player->GetPos();
 		sendData.m_rot = Player->GetRot();
-		sendData.m_haveItemLeftId = 1;
-		sendData.m_haveItemRightId = 1;
+		for (int j = 0; j < 5; j++)
+		{
+			sendData.m_haveAbnormal.abnormalData[j] = 0;
+			sendData.m_haveItem.itemData[j] = 0;
+		}
+
 		sendData.m_motion = 0;
 		sendData.m_log = 2;
 		sendData.m_pushBomComands = 0;

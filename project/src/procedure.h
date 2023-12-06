@@ -29,7 +29,6 @@ public:
 
 	HRESULT Init() override;
 	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int digit);
-	void Uninit() override;
 	void Update() override;
 	void Draw() override {}
 
@@ -46,11 +45,15 @@ public:
 	void AddNumber(int inNumber) { SetNumber(m_number + inNumber); }
 	int GetNumber() { return m_number; }
 
-	static CProcedure* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int digit);
+	void SetDisplay(bool isDisplay) override;
+
+	static CProcedure* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int inNumber);
 
 private:
+	void CalDigit();
+private:
 	// NumberŒ^‚Ì”z—ñ
-	std::vector<CNumber*> m_pNumber;
+	std::list<CNumber*> m_pNumber;
 	// ŽžŠÔ
 	int m_number;
 	int m_digit;
