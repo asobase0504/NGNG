@@ -105,7 +105,6 @@ void CSkillDataBase::Init()
 		{
 			entity = CYamatoSkill_3::Create(inusedCharacter);
 		}
-
 		return entity;
 	}};
 	m_dates["YAMATO_SKILL_4"] = { 300,1,1,0,120,20,1.0f,120.0f,D3DXVECTOR3(40.0f,40.0f,40.0f),

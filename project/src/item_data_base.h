@@ -12,13 +12,20 @@ class CItem;
 class CItemDataBase
 {
 public:
+	enum ERarity
+	{
+		RARITY_NONE = -1,
+		RARITY_COMMON,
+		RARITY_UNCOMMON,
+		RARITY_RARE,
+		RARITY_LOSE,	// はずれ(運の祭壇用)
+		RARITY_MAX,
+		RARITY_NOSELECT, // 選ばれることのないアイテム(エリート用とか)
+	};
 
 	enum EItemType
 	{
 		ITEM_NONE = -1,
-		ITEM_POWER_UP,
-		ITEM_POWER_ON,
-		ITEM_POWER_TO,
 		ITEM_DANGO,				// だんご
 		ITEM_SHURIKEN,			// 手裏剣
 		ITEM_GETA,				// 下駄

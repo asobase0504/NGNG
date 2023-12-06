@@ -14,12 +14,13 @@
 // コンストラクタ
 //--------------------------------------------------------------
 CItem::CItem(CTaskGroup::EPriority list) : 
+	CTask(list),
 	m_getFunc(nullptr),
 	m_lostFunc(nullptr),
 	m_allwayFunc(nullptr),
 	m_damageFunc(nullptr),
 	m_hitFunc(nullptr),
-	m_rarity(RARITY_NONE)
+	m_rarity(CItemDataBase::RARITY_NONE)
 {
 }
 
@@ -36,6 +37,11 @@ CItem::~CItem()
 HRESULT CItem::Init()
 {
 	return S_OK;
+}
+
+void CItem::Uninit()
+{
+	CTask::Uninit();
 }
 
 //--------------------------------------------------------------

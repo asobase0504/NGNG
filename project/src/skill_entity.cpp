@@ -39,10 +39,12 @@ CSkillEntity::~CSkillEntity()
 //--------------------------------------------------------------
 HRESULT CSkillEntity::Init()
 {
+	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
+
 	MapChangeRelese();
 	// 初期化
-	m_Duration = 1;
-	m_Interval = 0;
+	m_Duration = pSkillData->GetDuration(m_Name);
+	m_Interval = pSkillData->GetInterval(m_Name);
 	m_Invincible = 0;
 	m_isSkill = false;
 	InitAbility();
@@ -59,7 +61,6 @@ void CSkillEntity::Uninit()
 	// 当たり判定の削除
 	if (m_Collision != nullptr)
 	{
-		m_Collision->Uninit();
 		m_Collision = nullptr;
 	}
 
@@ -101,6 +102,7 @@ void CSkillEntity::Update()
 		{
 			m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize(m_Name).x);
 			m_Collision->SetParent(&m_apChara->GetPos());
+			SetEndChildren(m_Collision);
 		}
 
 		if (m_Collision == nullptr)
@@ -121,7 +123,7 @@ void CSkillEntity::Update()
 			}
 		});
 
-		if (collision)
+		if (collision && m_Collision != nullptr)
 		{// 敵に当たっていたら
 			m_Collision->Uninit();
 			m_Collision = nullptr;

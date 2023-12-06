@@ -125,11 +125,6 @@ void CPlayer::Update()
 		return;
 	}
 
-	if (CInput::GetKey()->Trigger(DIK_O))
-	{
-
-	}
-
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 
@@ -161,8 +156,11 @@ void CPlayer::Update()
 		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
-	if (IsDied())
+	static bool a = false;
+
+	if (IsDied() && !a)
 	{
+		a = true;
 		CResult::Create();
 	}
 
@@ -184,7 +182,6 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 	CPlayer* pPlayer = new CPlayer;
 	pPlayer->Init();
 	pPlayer->SetPos(pos);
-
 	return pPlayer;
 }
 

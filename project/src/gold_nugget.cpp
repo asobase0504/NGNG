@@ -36,6 +36,8 @@ CGoldNugget::~CGoldNugget()
 //--------------------------------------------------------------
 HRESULT CGoldNugget::Init()
 {
+	CObjectX::Init();
+
 	LoadModel("BOX");
 
 	// “–‚½‚è”»’è
@@ -46,16 +48,21 @@ HRESULT CGoldNugget::Init()
 }
 
 //--------------------------------------------------------------
+// I—¹
+//--------------------------------------------------------------
+void CGoldNugget::Uninit()
+{
+	CObjectX::Uninit();
+}
+
+//--------------------------------------------------------------
 // XV
 //--------------------------------------------------------------
 void CGoldNugget::Update()
 {
-	CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
-	CPlayer* player = game->GetController()->GetToOrder();
-	if (m_collision->ToCylinder(player->GetCollision()))
-	{
-		player->GetMoney()->AddItemEffect(30);
-	}
+	Hit_();
+
+	CObjectX::Update();
 }
 
 //--------------------------------------------------------------
@@ -70,6 +77,30 @@ CGoldNugget* CGoldNugget::Create()
 	{
 		pGoldNugget->Init();
 	}
+	else
+	{
+		assert(false);
+	}
 
 	return pGoldNugget;
+}
+
+//--------------------------------------------------------------
+// Žæ“¾‚µ‚½‚Æ‚«
+//--------------------------------------------------------------
+void CGoldNugget::Hit_()
+{
+	CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
+	CPlayer* player = game->GetController()->GetToOrder();
+
+	CInput* input = CInput::GetKey();
+	if (player->GetCollision()->ToBox(m_collision, false))
+	{
+		if (input->Trigger(DIK_F))
+		{
+			player->GetMoney()->AddCurrent(30);
+
+			this->Uninit();
+		}
+	}
 }

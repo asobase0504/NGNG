@@ -116,6 +116,8 @@ public:
 	float m_TimeCnt;
 	float m_TimeTarget;
 
+	void SetDisplay(bool display) { m_isDisplay = display; }
+
 	//=========================================
 	//ハンドル一覧
 	//=========================================
@@ -151,5 +153,7 @@ protected:
 
 	EType m_type;	// 種別
 	std::string m_textureKey;	// テクスチャにアクセスするキー
+
+	bool m_isDisplay;
 };
 #endif
