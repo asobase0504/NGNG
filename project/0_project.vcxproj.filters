@@ -419,6 +419,9 @@
     <ClCompile Include="ui_3D.cpp">
       <Filter>ソース ファイル\Mode\Game\UI\3DUI</Filter>
     </ClCompile>
+    <ClCompile Include="yamato_skill_4.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -732,6 +735,9 @@
     </ClInclude>
     <ClInclude Include="ui_3D.h">
       <Filter>ソース ファイル\Mode\Game\UI\3DUI</Filter>
+    </ClInclude>
+    <ClInclude Include="yamato_skill_4.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
