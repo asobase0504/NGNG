@@ -71,7 +71,7 @@ HRESULT CCharacter::Init()
 	m_isRunning = false;
 	m_isElite = false;
 	m_isMoveLock = false;
-	m_isControl = false;
+	m_isControl = true;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
@@ -152,8 +152,11 @@ void CCharacter::Update()
 		Died();
 	}
 
-	// 重力
-	AddMoveY(-0.18f);
+	if (!m_isMoveLock)
+	{
+		// 重力
+		AddMoveY(-0.18f);
+	}
 
 	// 付与されている状態異常を作動させる
 	Abnormal();
