@@ -30,7 +30,7 @@
     <ClCompile Include="enemy_hp_ui.cpp" />
     <ClCompile Include="src\input\input_touch_panel.cpp" />
     <ClCompile Include="src\map_fade.cpp" />
-    <ClCompile Include="src\model_date.cpp" />
+    <ClCompile Include="src\model_data.cpp" />
     <ClCompile Include="src\model_skin.cpp" />
     <ClCompile Include="src\model_skin_group.cpp" />
     <ClCompile Include="src\mode_fade.cpp" />
@@ -174,7 +174,7 @@
     <ClInclude Include="src\map_model.h" />
     <ClInclude Include="src\melee_attack.h" />
     <ClInclude Include="src\mode.h" />
-    <ClInclude Include="src\model_date.h" />
+    <ClInclude Include="src\model_data.h" />
     <ClInclude Include="src\model_skin.h" />
     <ClInclude Include="src\model_skin_group.h" />
     <ClInclude Include="src\mode_fade.h" />
