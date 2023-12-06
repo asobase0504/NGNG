@@ -57,7 +57,7 @@ void CStatueChest::Update()
 	CStatus<int>* playerMoney = pPlayer->GetMoney();
 
 	// プレイヤーが触れている時
-	if (Touch() && !m_bOnce)
+	if (Touch() && !m_bOnce && playerMoney->GetCurrent() >= 10)
 	{
 		// プレイヤーお金を調整して設定
 		playerMoney->AddCurrent(-10);
@@ -68,6 +68,8 @@ void CStatueChest::Update()
 		D3DXVECTOR3 pos = GetPos();
 		CItemManager::GetInstance()->CreateRandomItemRarityRate(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot(), {0.7f,0.25,0.5f,0.0f});
 
+		m_collisionCylinder->Uninit();
+		m_collisionCylinder = nullptr;
 		m_bOnce = true;
 	}
 

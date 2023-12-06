@@ -127,8 +127,16 @@ CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot)
 	return pStatue;
 }
 
+//--------------------------------------------------------------
+// タッチ
+//--------------------------------------------------------------
 bool CStatue::Touch()
 {
+	if (m_collisionCylinder == nullptr)
+	{
+		return false;
+	}
+
 	CInput* input = CInput::GetKey();
 	if (input->Trigger(DIK_E, -1))
 	{

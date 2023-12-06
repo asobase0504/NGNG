@@ -61,16 +61,14 @@ HRESULT CSkillUI::Init()
 //--------------------------------------------------
 void CSkillUI::Update()
 {
-	if (m_skill->GetCT() > 60)
+	if (m_skill->GetCT() != 0)
 	{
-		m_ct = m_skill->GetCT() / 60;
+		m_ct = ceil((float)m_skill->GetCT() / 60.0f);
 		m_procedure->SetDisplay(true);
 	}
 	else
 	{
 		m_ct = 0;
-		D3DXVECTOR3 size = D3DXVECTOR3(UI_SIZE, UI_SIZE, 0.0f);
-		m_display->SetSize(size);
 		m_procedure->SetDisplay(false);
 	}
 

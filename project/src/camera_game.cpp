@@ -52,7 +52,7 @@ void CCameraGame::Update()
 		return;
 	}
 
-	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_posR = D3DXVECTOR3(0.0f, 100.0f, DISTANCE);
 	m_posV = D3DXVECTOR3(0.0f, 0.0f, -DISTANCE);
 
 	D3DXVECTOR3 mouseMove = CInput::GetKey()->GetMouseMove();

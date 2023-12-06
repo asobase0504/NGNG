@@ -117,6 +117,10 @@ HRESULT CGame::Init()
 	//m_tcp = new CClient;
 	//m_tcp->Init("127.0.0.1", 13567);
 
+	CObject2d* reticle = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	reticle->SetPos(CApplication::CENTER_POS);
+	reticle->SetSize(D3DXVECTOR3(32.f, 32.f,0.f));
+	reticle->SetTexture("RETICLE");
 	return S_OK;
 }
 

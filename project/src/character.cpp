@@ -70,6 +70,8 @@ HRESULT CCharacter::Init()
 	m_nonCombatTime = 0;
 	m_isRunning = false;
 	m_isElite = false;
+	m_isMoveLock = false;
+	m_isControl = false;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);

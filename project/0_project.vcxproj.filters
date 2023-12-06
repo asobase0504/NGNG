@@ -93,6 +93,9 @@
     <Filter Include="ソース ファイル\Mode\Result">
       <UniqueIdentifier>{035c48c2-e5de-40a8-99e7-3279f3f45b16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\UI\3DUI">
+      <UniqueIdentifier>{30b330ef-a34b-44fc-a31a-1816f3a1197a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -413,6 +416,9 @@
     <ClCompile Include="src\text_object.cpp">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClCompile>
+    <ClCompile Include="ui_3D.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI\3DUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -723,6 +729,9 @@
     </ClInclude>
     <ClInclude Include="src\text_object.h">
       <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_3D.h">
+      <Filter>ソース ファイル\Mode\Game\UI\3DUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
