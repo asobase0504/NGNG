@@ -95,7 +95,7 @@ void CItemManager::CreateRandomItemRarity(const D3DXVECTOR3 & inPos, const D3DXM
 		rarity = CItemDataBase::GetInstance()->GetItemData(id)->GetRerity();
 	}
 
-	CreateItem(inPos, boxmtx, CItemDataBase::ITEM_TABI/*(CItemDataBase::EItemType)id*/);
+	CreateItem(inPos, boxmtx, CItemDataBase::ITEM_DANGO/*(CItemDataBase::EItemType)id*/);
 }
 
 CItemDataBase::ERarity CItemManager::CreateRandomItemRarityRate(const D3DXVECTOR3 & inPos, const D3DXMATRIX & boxmtx, std::array<float, CItemDataBase::RARITY_MAX> rarityRate)
@@ -184,6 +184,29 @@ void CItemManager::AllWhenLost(CCharacter* inCharacter, item_count inItem)
 // 常時全アイテム
 //--------------------------------------------------------------
 void CItemManager::AllWhenAllways(CCharacter* inCharacter, item_count inItem)
+{
+	CItemDataBase* dataBase = CItemDataBase::GetInstance();
+
+	for (int i = 0; i < CItemDataBase::ITEM_MAX; i++)
+	{
+		if (inItem[i] == 0)
+		{
+			continue;
+		}
+
+		CItem* item = dataBase->GetItemData((CItemDataBase::EItemType)i);
+		CItem::ITEM_FUNC func = item->GetWhenAllwaysFunc();
+
+		if (func == nullptr)
+		{
+			continue;
+		}
+
+		func(inCharacter, inItem[i]);
+	}
+}
+
+void CItemManager::AllWhenUseSkill(CCharacter* inCharacter, item_count inItem)
 {
 	CItemDataBase* dataBase = CItemDataBase::GetInstance();
 

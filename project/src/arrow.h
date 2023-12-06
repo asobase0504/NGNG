@@ -33,7 +33,8 @@ public:
 
 	bool GetIsHit() { return m_isHit; }
 
-	//bool HitEnemy(CCharacter* enemy);
+private:
+	void HitEnemy_();
 
 private:
 	CCollisionBox* m_collision;

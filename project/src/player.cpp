@@ -38,6 +38,7 @@
 // アイテム
 #include "item.h"
 #include "item_data_base.h"
+#include "item_manager.h"
 
 //像
 #include "statue.h"
@@ -195,6 +196,9 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		m_skill[0]->Skill();
+
+		// 通常攻撃を行ったとき
+		CItemManager::GetInstance()->AllWhenUseSkill(this, m_haveItem);
 	}
 
 	// スキル1(右クリック)

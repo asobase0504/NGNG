@@ -76,10 +76,9 @@ CArrow* CArrow::Create()
 }
 
 //--------------------------------------------------------------
-// 当たったか
+// エネミーに当たったら
 //--------------------------------------------------------------
-//bool CArrow::HitEnemy(CCharacter* enemy)
-//{
-//	//CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
-//	//return m_collision->ToCylinder(enemy->GetCollision());
-//}
+void CArrow::HitEnemy_()
+{
+
+}

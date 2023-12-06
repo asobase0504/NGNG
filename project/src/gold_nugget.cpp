@@ -60,7 +60,7 @@ void CGoldNugget::Uninit()
 //--------------------------------------------------------------
 void CGoldNugget::Update()
 {
-	Hit_();
+	Get_();
 
 	CObjectX::Update();
 }
@@ -88,7 +88,7 @@ CGoldNugget* CGoldNugget::Create()
 //--------------------------------------------------------------
 // Žæ“¾‚µ‚½‚Æ‚«
 //--------------------------------------------------------------
-void CGoldNugget::Hit_()
+void CGoldNugget::Get_()
 {
 	CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
 	CPlayer* player = game->GetController()->GetToOrder();

@@ -48,6 +48,7 @@ public:
 	void AllWhenPick(CCharacter*,item_count);
 	void AllWhenLost(CCharacter*, item_count);
 	void AllWhenAllways(CCharacter*, item_count);
+	void AllWhenUseSkill(CCharacter*, item_count);
 	void AllWhenDeath(CCharacter*, item_count, CCharacter*);
 	void AllWhenReceive(CCharacter*, item_count, CCharacter*);
 	void AllWhenInflict(CCharacter*, item_count, CCharacter*);

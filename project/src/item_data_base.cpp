@@ -138,11 +138,11 @@ void CItemDataBase::Init()
 	item->SetRerity(RARITY_COMMON);
 	// 熊の木彫り---------------------------------------------
 	item->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{
+	{// 15%(+15%)の確率でブロックする。
 		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{
 			if (IsSuccessRate(0.15f))
-			{// 15%の確率でブロックする。
+			{// 15%の確率
 				inCharacter->DamageBlock(true);
 				break;
 			}
@@ -155,11 +155,11 @@ void CItemDataBase::Init()
 	item->SetRerity(RARITY_COMMON);
 	// ばくちく(保留)-----------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{
+	{// 攻撃時に5%の確率で敵を2秒間スタンさせる。
 		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{
 			if (IsSuccessRate(0.05f))
-			{// 攻撃時に5%の確率でスタンさせる。
+			{// 5%の確率
 				outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_STUN, true);
 				break;
 			}
@@ -307,14 +307,12 @@ void CItemDataBase::Init()
 	{// 敵を倒すと18%の確率で全てのクールダウンをリセットする
 		for (int i = 0; i < cnt; i++)
 		{
-			if (!IsSuccessRate(0.18f))
+			if (IsSuccessRate(0.18f))
 			{
-				continue;
-			}
-
-			for (int j = 0; j < CCharacter::MAX_SKILL; j++)
-			{
-				inCharacter->GetSkill(j)->SetCT(0);
+				for (int j = 0; j < CCharacter::MAX_SKILL; j++)
+				{
+					inCharacter->GetSkill(j)->SetCT(0);
+				}
 			}
 		}
 	});
@@ -474,7 +472,7 @@ void CItemDataBase::Init()
 	// 矢---------------------------------------------------------
 	// プライマリースキルを発動すると、矢も投げて、400%(+100%)の基礎ダメージを与える。
 	// 最大3(+1)個の矢を持つことができ、10秒経つとリロードされる
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenUseSkill([](CCharacter* inCharacter, int cnt)
 	{// TODO
 		//inCharacter->GetCriticalRate()->AddItemEffect(5);
 	});
@@ -527,7 +525,7 @@ void CItemDataBase::Init()
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
 	// たび---------------------------------------------------------
-	// 非戦闘時の移動速度 +30% (+30%)
+	// 非戦闘時の移動速度 +30% (+30%) // TODO
 	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
 	{
 		if (inCharacter->GetIsNonCombat())
