@@ -40,6 +40,7 @@ public:
 	{
 		BASE baseInfo;
 		ABILITY ability;
+		std::string texKey;
 	};
 
 private:

@@ -40,11 +40,6 @@ bool CClient::Init(const char*plPAddress, int nPortNum)
 
 	m_tcpClient = new CTcp_client;
 	m_tcpClient->Init(plPAddress, nPortNum);
-
-	for (int i = 0; i < MAX_PL; i++)
-	{
-		m_player[i] = new CDataPack;
-	}
 	m_myConnect.myConnect = false;
 	m_myConnect.enemyConnect = false;
 
@@ -71,11 +66,7 @@ void CClient::Uninit(void)
 		m_tcpClient = NULL;
 	}
 
-	for (int i = 0; i < MAX_PL; i++)
-	{
-		delete m_player[i];
-		m_player[i] = nullptr;
-	}
+
 	
 	WSACleanup();
 }
@@ -91,27 +82,28 @@ CClient::SConnectCheck CClient::ConnectTh(CTcp_client * tcp)
 	Connect.enemyConnect = false;
 	char aRecvData[1024];	// 受信データ
 	int Timer = 0;
+	bool myIs = false;
+	int ok = 4;
 	// つながるまでループ
-	while (!Connect.myConnect&&tcp->Connect())
+	while (!myIs)
 	{
 
-		Connect.myConnect = tcp->Connect();
-
-		Timer++;
-		if (Timer >= 2)
+		myIs = tcp->Connect();
+		if (myIs)
 		{
-			break;
+			tcp->Send((const char*)&ok, sizeof(int));
 		}
+	
 	}
 	// 敵がつながるまでループ
 	while (!Connect.enemyConnect)
 	{
-		int isRecv = tcp->Recv(&aRecvData[0], sizeof(bool));
-		if (isRecv == 0)
+		int isRecv = tcp->Recv(&aRecvData[0], sizeof(SConnectCheck));
+		if (isRecv == sizeof(SConnectCheck))
 		{
-			return Connect;
+			memcpy(&Connect, &aRecvData[0], sizeof(SConnectCheck));
 		}
-		memcpy(&Connect.enemyConnect, &aRecvData[0], sizeof(bool));
+		
 	}
 	return Connect;
 }
@@ -121,14 +113,10 @@ CClient::SConnectCheck CClient::ConnectTh(CTcp_client * tcp)
 //=============================================================================
 void CClient::Recv(CClient*data)
 {
-	//m_player[Num];
 	// 繋がっている間はループ
 	while (1)
 	{
-		if (!data->m_myConnect.enemyConnect)
-		{
-
-		}
+	
 		char aRecv[1024];	// 受信データ
 
 		// 受信
@@ -146,7 +134,7 @@ void CClient::Recv(CClient*data)
 		}
 		CDataPack::SSendPack Data;
 		memcpy(&Data, &aRecv[0], (int)sizeof(CDataPack::SSendPack));
-		data->m_player[0]->SetPlayer(Data);
+		data->m_player.SetPlayer(Data);
 	}
 }
 
@@ -155,10 +143,7 @@ void CClient::Recv(CClient*data)
 //=============================================================================
 void  CClient::SendPlayerData(CModelData::SSendEnemy data)
 {
-
 	CModelData::SSendEnemy sendData = data;
-
-	
 
 	m_tcpClient->Send((const char*)&sendData, sizeof(CModelData::SSendEnemy));
 }

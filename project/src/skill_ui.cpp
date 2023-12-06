@@ -11,41 +11,44 @@
 #include "skill_ui.h"
 #include "procedure.h"
 #include "debug_proc.h"
+#include "skill_data_base.h"
+#include "text_object.h"
 
 //**************************************************
 // 静的メンバ変数
 //**************************************************
+const float CSkillUI::UI_SIZE = 35.0f;
+
 
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-CSKILLUI::CSKILLUI(CTaskGroup::EPriority list)
+CSkillUI::CSkillUI(CTaskGroup::EPriority list)
 {
 }
 
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
-CSKILLUI::~CSKILLUI()
+CSkillUI::~CSkillUI()
 {
 }
 
 //--------------------------------------------------
 // 初期化
 //--------------------------------------------------
-HRESULT CSKILLUI::Init()
+HRESULT CSkillUI::Init()
 {
+	D3DXVECTOR3 pos(550.f, 250.f, 0.f);
+	D3DXVECTOR3 size(UI_SIZE, UI_SIZE,0.f);
 	m_ground = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
-	m_ground->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
-	m_ground->SetSize(D3DXVECTOR3(50.0f, 50.0f, 0.0f));
-	m_ground->SetPos(D3DXVECTOR3(980.0f, SCREEN_HEIGHT - 70.0f, 0.0f));
-	m_ground->SetColor(D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f));
+	m_ground->SetAnchor(CObject2d::EAnchor::ANCHOR_TOP);
+	m_ground->SetSize(D3DXVECTOR3(UI_SIZE, UI_SIZE, 0.0f));
 
 	m_display = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
-	m_display->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
-	m_display->SetSize(D3DXVECTOR3(50.0f, 0.0f, 0.0f));
-	m_display->SetPos(D3DXVECTOR3(980.0f, SCREEN_HEIGHT - 70.0f, 0.0f));
-	m_display->SetColor(D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.3f));
+	m_display->SetAnchor(CObject2d::EAnchor::ANCHOR_TOP);
+	m_display->SetSize(D3DXVECTOR3(UI_SIZE, 0.0f, 0.0f));
+	m_display->SetColor(D3DXCOLOR(0.15f, 0.15f, 0.15f, 0.75f));
 
 	m_procedure = CProcedure::Create(D3DXVECTOR3(m_ground->GetPos().x + (m_ground->GetSize().x),m_ground->GetPos().y,0.0f), D3DXVECTOR3(30.0f, 30.0f, 30.0f), 1);
 	m_ct = 0;
@@ -56,24 +59,25 @@ HRESULT CSKILLUI::Init()
 //--------------------------------------------------
 // 更新
 //--------------------------------------------------
-void CSKILLUI::Update()
+void CSkillUI::Update()
 {
-	if (m_skill->GetCT() > 60)
+	if (m_skill->GetCT() != 0)
 	{
-		m_ct = m_skill->GetCT() / 60;
+		m_ct = ceil((float)m_skill->GetCT() / 60.0f);
+		m_procedure->SetDisplay(true);
 	}
 	else
 	{
-		m_skill->SetCT(0);
 		m_ct = 0;
-		D3DXVECTOR3 size = D3DXVECTOR3(50.0f, 50.0f, 0.0f);
-		m_display->SetSize(size);
+		m_procedure->SetDisplay(false);
 	}
 
-	float rate = ((float)m_skill->GetCT() - 60.0f) / 240.0f;
+	int maxCT = CSkillDataBase::GetInstance()->GetCT(m_skill->GetName());
 
-	D3DXVECTOR3 size = D3DXVECTOR3(65.0f, 50.0f, 0.0f);
-	size.x *= rate;
+	float rate = ((float)m_skill->GetCT()) / maxCT;
+
+	D3DXVECTOR3 size = D3DXVECTOR3(UI_SIZE, UI_SIZE, 0.0f);
+	size.y *= rate;
 	m_display->SetSize(size);
 
 	m_procedure->SetNumber(m_ct);
@@ -82,14 +86,18 @@ void CSKILLUI::Update()
 //--------------------------------------------------
 // 生成
 //--------------------------------------------------
-CSKILLUI *CSKILLUI::Create(CSkill* inSkill)
+CSkillUI *CSkillUI::Create(const D3DXVECTOR3& inPos, CSkill* inSkill)
 {
-	CSKILLUI* ui = new CSKILLUI;
+	CSkillUI* ui = new CSkillUI;
 
 	assert(ui != nullptr);
 
 	ui->Init();
 	ui->m_skill = inSkill;
-
+	ui->m_ground->SetPos(inPos);
+	ui->m_ground->SetTexture(CSkillDataBase::GetInstance()->GetInfo(ui->m_skill->GetName()).texKey);
+	ui->m_display->SetPos(inPos);
+	ui->m_procedure->SetPos(inPos);
+	//ui->m_ctText->SetPos(inPos);
 	return ui;
 }

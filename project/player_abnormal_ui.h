@@ -9,30 +9,34 @@
 // インクルード
 //**************************************************
 #include "object.h"
-#include "status.h"
+#include "abnormal_data_base.h"
 
 //**************************************************
 // 前方前言　実態はNG　ポインタだけならOK
 //**************************************************
-class CProcedure;
+class CText;
+class CObject2D;
 
 //**************************************************
 // クラス
 //**************************************************
-class CMONEYUI: public CObject
+class CPlayerAbnormalUI : public CObject
 {
 public:
-	CMONEYUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
-	~CMONEYUI();
+	CPlayerAbnormalUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	~CPlayerAbnormalUI();
 
 	HRESULT Init() override;
 	void Update() override;
 
-	static CMONEYUI* Create(CStatus<int>* inMoney);
+	static CPlayerAbnormalUI* Create(const int& inStock,CAbnormalDataBase::EAbnormalType inType);
 
 private:
-	CStatus<int>* m_money;
-	CProcedure* m_procedure;
+	CAbnormalDataBase::EAbnormalType inType;
+	bool m_isDisplayStack;
+	int* m_stackCnt;		// stack数のロゴ
+	CText* m_stack;
+	CObject2D* m_abnormalLogo;
 };
 
 #endif // _TIMER_H_

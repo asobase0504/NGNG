@@ -229,6 +229,11 @@ void CPlayer::Move()
 
 	m_isskill = false;
 
+	if (m_isMoveLock | m_isControl)
+	{
+		return;
+	}
+
 	if (D3DXVec3Length(&move) != 0.0f)
 	{
 		SetMoveXZ(move.x, move.z);

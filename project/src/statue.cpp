@@ -18,6 +18,7 @@
 #include "statue_manager.h"
 #include "application.h"
 #include "game.h"
+#include "utility.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -88,6 +89,8 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 	}
 	pCylinder->Uninit();
 
+	AddRot(D3DXVECTOR3(0.0f, FloatRandom(D3DX_PI, -D3DX_PI), 0.0f));
+
 	return S_OK;
 }
 
@@ -124,8 +127,16 @@ CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot)
 	return pStatue;
 }
 
+//--------------------------------------------------------------
+// タッチ
+//--------------------------------------------------------------
 bool CStatue::Touch()
 {
+	if (m_collisionCylinder == nullptr)
+	{
+		return false;
+	}
+
 	CInput* input = CInput::GetKey();
 	if (input->Trigger(DIK_E, -1))
 	{

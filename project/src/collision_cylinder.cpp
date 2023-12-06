@@ -35,7 +35,7 @@ CCollisionCylinder::CCollisionCylinder() :
 //--------------------------------------------------------------
 CCollisionCylinder::~CCollisionCylinder()
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		m_line[i] = nullptr;
 	}
@@ -46,7 +46,7 @@ CCollisionCylinder::~CCollisionCylinder()
 //--------------------------------------------------------------
 HRESULT CCollisionCylinder::Init()
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		m_line[i] = CLine::Create();
 		SetEndChildren(m_line[i]);
@@ -71,18 +71,35 @@ void CCollisionCylinder::Update()
 	float bot = 0.0f;	// z2
 
 	// ４つの頂点
-	D3DXVECTOR3 posLine[6];
-	posLine[0] = D3DXVECTOR3(0.0f, 0.0f, left);
-	posLine[1] = D3DXVECTOR3(0.0f, 0.0f, right);
-	posLine[2] = D3DXVECTOR3(right, 0.0f, 0.0f);
-	posLine[3] = D3DXVECTOR3(left, 0.0f, 0.0f);
+	D3DXVECTOR3 posLine[8];
+	posLine[0] = D3DXVECTOR3(0.0f, bot, left);
+	posLine[1] = D3DXVECTOR3(0.0f, bot, right);
+	posLine[2] = D3DXVECTOR3(right, bot, 0.0f);
+	posLine[3] = D3DXVECTOR3(left, bot, 0.0f);
 	posLine[4] = D3DXVECTOR3(0.0f, top, 0.0f);
 	posLine[5] = D3DXVECTOR3(0.0f, bot, 0.0f);
 
-	m_line[0]->SetLine(pos, rot, posLine[0], posLine[1], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[1]->SetLine(pos, rot, posLine[2], posLine[3], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[2]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	//m_line[3]->SetLine(pos, rot, posLine[3], posLine[0], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[0]->SetLine(pos, rot, posLine[0], posLine[1], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
+	m_line[1]->SetLine(pos, rot, posLine[2], posLine[3], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
+
+	pos.x -= right;
+	m_line[2]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
+	pos.x += right * 2.0f;
+	m_line[3]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
+
+	pos = GetPosWorld();
+	pos.z -= right;
+	m_line[4]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
+	pos.z += right * 2.0f;
+	m_line[5]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
+
+	pos = GetPosWorld();
+	posLine[0].y = top;
+	posLine[1].y = top;
+	posLine[2].y = top;
+	posLine[3].y = top;
+	m_line[7]->SetLine(pos, rot, posLine[0], posLine[1], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
+	m_line[8]->SetLine(pos, rot, posLine[2], posLine[3], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
 }
 
 //--------------------------------------------------------------
@@ -135,12 +152,12 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	D3DXVECTOR3 cylinderPosOld = GetPosOld();
 	float radius = GetLength();
 
-	float left = -boxSize.x * 0.5f;		// 左
-	float right = boxSize.x * 0.5f;		// 右
-	float top = boxSize.y * 0.5f;		// 上
-	float bottum = -boxSize.y * 0.5f;	// 下
-	float back = boxSize.z * 0.5f;		// 奥
-	float front = -boxSize.z * 0.5f;	// 前
+	float left = -boxSize.x;		// 左
+	float right = boxSize.x;		// 右
+	float top = boxSize.y;		// 上
+	float bottum = -boxSize.y;	// 下
+	float back = boxSize.z;		// 奥
+	float front = -boxSize.z;	// 前
 
 	// ４つの頂点
 	D3DXVECTOR3 pos[4];

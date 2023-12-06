@@ -116,7 +116,7 @@ public:
 	float m_TimeCnt;
 	float m_TimeTarget;
 
-	void SetDisplay(bool display) { m_isDisplay = display; }
+	virtual void SetDisplay(bool display) { m_isDisplay = display; }
 
 	//=========================================
 	//ƒnƒ“ƒhƒ‹ˆê——

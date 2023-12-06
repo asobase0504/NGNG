@@ -47,6 +47,11 @@ HRESULT CStatueTeleporter::Init()
 	m_time = 0;
 
 	CStatue::Init(pos, rot);
+
+	m_collisionBox->SetSize(D3DXVECTOR3(50.0f, 40.0f, 40.0f));
+	m_collisionCylinder->SetLength(50.0f);
+	m_collisionCylinder->SetHeight(50.0f);
+
 	LoadModel("STATUE_SHRINE");
 	m_bOnce = false;
 	m_btimeAdd = false;

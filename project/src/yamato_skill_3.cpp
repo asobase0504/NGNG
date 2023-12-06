@@ -49,6 +49,7 @@ void CYamatoSkill_3::InitAbility()
 		// “–‚½‚è”»’è‚ðŽæ“¾
 		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("YAMATO_SKILL_3").x);
 		m_Collision->SetParent(&m_apChara->GetPos());
+		SetEndChildren(m_Collision);
 
 		// ƒJƒƒ‰‚Ì•ûŒü‚É‡‚í‚¹‚é
 		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();

@@ -58,12 +58,6 @@ HRESULT CSkillEntity::Init()
 //--------------------------------------------------------------
 void CSkillEntity::Uninit()
 {
-	// 当たり判定の削除
-	if (m_Collision != nullptr)
-	{
-		m_Collision = nullptr;
-	}
-
 	// 破棄処理
 	CTask::Uninit();
 }
@@ -115,16 +109,16 @@ void CSkillEntity::Update()
 		{
 			// 当たり判定
 			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
-			if (hit && m_Interval <= 0.0f)
+			if (hit && m_Interval <= 0)
 			{// ダメージの判定
 				HitAbility(inChara);
 				collision = true;
-				m_Interval = pSkillData->GetInterval(m_Name);			
 			}
 		});
 
 		if (collision && m_Collision != nullptr)
 		{// 敵に当たっていたら
+			m_Interval = pSkillData->GetInterval(m_Name);
 			m_Collision->Uninit();
 			m_Collision = nullptr;
 		}

@@ -87,6 +87,7 @@ void CSkillDataBase::Init()
 		}
 		return entity;
 	}};
+	m_dates["YAMATO_SKILL_1"].texKey = "SKILL_ICON_YAMATO1";
 	m_dates["YAMATO_SKILL_2"] = { 180,1,1,0,5,5,1.0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[this](CCharacter* inusedCharacter)
 	{// 発動時の効果
@@ -97,6 +98,7 @@ void CSkillDataBase::Init()
 		}
 		return entity;
 	}};
+	m_dates["YAMATO_SKILL_2"].texKey = "SKILL_ICON_YAMATO2";
 	m_dates["YAMATO_SKILL_3"] = { 120,1,1,0,120,20,1.0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
 		[](CCharacter* inusedCharacter)
 	{ // 発動時の効果
@@ -107,6 +109,7 @@ void CSkillDataBase::Init()
 		}
 		return entity;
 	}};
+	m_dates["YAMATO_SKILL_3"].texKey = "SKILL_ICON_YAMATO3";
 	m_dates["YAMATO_SKILL_4"] = { 300,1,1,0,120,20,1.0f,120.0f,D3DXVECTOR3(40.0f,40.0f,40.0f),
 		[](CCharacter* inusedCharacter)
 	{ // 発動時の効果
