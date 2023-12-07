@@ -65,6 +65,7 @@ void CSelectEntity::DisplayUI()
 	{
 		m_ui = new CSelectUI;
 		m_ui->Init();
+		m_ui->SetText(m_uiText);
 		SetEndChildren(m_ui);
 	}
 

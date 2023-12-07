@@ -24,6 +24,10 @@ class CText;
 class CSelectUI : public CObject
 {
 private:
+	static const D3DXVECTOR2 ICON_POS;	// アイコン位置
+	static const D3DXVECTOR2 NAME_POS;	// 名前位置
+	static const D3DXVECTOR2 TEXT_POS;	// テキスト位置
+	static const int DISPLAY_TIME;	// 表示時間
 public:
 	CSelectUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
 	~CSelectUI();

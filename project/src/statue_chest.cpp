@@ -41,6 +41,7 @@ HRESULT CStatueChest::Init()
 	m_collisionBox->SetPos(D3DXVECTOR3(0.0f, 5.0f, 0.0f));
 	m_collisionBox->SetSize(D3DXVECTOR3(2.5f, 5.0f, 2.5f));
 	LoadModel("STATUE_CHEST");
+	m_uiText = "•ó” ‚ðŠJ‚¯‚é [$10]";
 
 	return S_OK;
 }

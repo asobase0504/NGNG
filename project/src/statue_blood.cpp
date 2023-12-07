@@ -14,6 +14,7 @@
 #include "collision_mesh.h"
 #include "collision_box.h"
 #include "object_mesh.h"
+#include "select_ui.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -45,6 +46,8 @@ HRESULT CStatueBlood::Init()
 
 	m_hpSubRate = 0.1f;
 
+	m_uiText = "血を捧げろ。[" + std::to_string((int)(m_hpSubRate * 100)) + "%]";
+
 	return S_OK;
 }
 
@@ -64,6 +67,7 @@ bool CStatueBlood::Select(CCharacter* selectCharacter)
 	money->AddCurrent(point);
 
 	m_hpSubRate *= 2.5f;
+	m_uiText = "血を捧げろ。[" + std::to_string((int)(m_hpSubRate * 100)) + "%]";
 
 	if (m_hpSubRate >= 1.0f)
 	{

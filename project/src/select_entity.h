@@ -45,6 +45,7 @@ protected:
 	CCollisionCylinder* m_collisionCylinder;	// 選択できる当たり判定
 	CCollisionBox* m_collisionBox;				// 押し出しを行なう当たり判定
 	CSelectUI* m_ui;
+	std::string m_uiText;
 	bool m_isNearCharacter;		// キャラクターに一番近いエンティティであるか否か
 };
 #endif	// _ITEM_MODEL_H_

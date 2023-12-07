@@ -68,6 +68,9 @@ HRESULT CItemModel::Init(int inId)
 	m_collisionHit->SetParent(&m_pos);
 
 	m_ID = inId;
+
+	m_uiText = CItemDataBase::GetInstance()->GetItemName((CItemDataBase::EItemType)inId) + "‚ð“üŽè";
+
 	return S_OK;
 }
 

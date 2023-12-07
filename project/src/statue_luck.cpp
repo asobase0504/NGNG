@@ -47,6 +47,7 @@ HRESULT CStatueLuck::Init()
 
 	m_nUseMoney = 10;
 	m_nItemCount = 0;
+	m_uiText = "‰^‚ðŽŽ‚· [$" + std::to_string(m_nUseMoney) + "]";
 
 	return S_OK;
 }
@@ -83,6 +84,8 @@ bool CStatueLuck::Select(CCharacter * selectCharacter)
 	// ŽŸ‰ñƒKƒ`ƒƒ‚·‚éŽž—p‚É•K—v‚¨‹à”‚ð‘‚â‚µ‚ÄÝ’è‚µ‚Ä‚¨‚­
 	int randomNumber = rand() % 10;
 	m_nUseMoney += randomNumber;
+
+	m_uiText = "‰^‚ðŽŽ‚· [$" + std::to_string(m_nUseMoney) + "]";
 
 	if (m_nItemCount >= 2)
 	{

@@ -53,6 +53,7 @@ HRESULT CStatueTeleporter::Init()
 	m_collisionCylinder->SetHeight(50.0f);
 
 	LoadModel("STATUE_SHRINE");
+	m_uiText = "テレポート起動";
 	m_bOnce = false;
 	m_btimeAdd = false;
 

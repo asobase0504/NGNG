@@ -21,7 +21,8 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CSelectUI::CSelectUI(CTaskGroup::EPriority list)
+CSelectUI::CSelectUI(CTaskGroup::EPriority list) :
+	m_text(nullptr)
 {
 }
 
@@ -37,10 +38,12 @@ CSelectUI::~CSelectUI()
 //--------------------------------------------------------------
 HRESULT CSelectUI::Init()
 {
+	m_pos = D3DXVECTOR3(SCREEN_WIDTH - 310.0f, CApplication::CENTER_POS.y + 100.0f, 0.0f);
+
 	m_ground = CObject2d::Create(CTaskGroup::LEVEL_2D_UI);
-	m_ground->SetPos(D3DXVECTOR3(800.0f, CApplication::CENTER_POS.y, 0.0f));
-	m_ground->SetSize(D3DXVECTOR3(200.0f, 50.0f, 0.0f));
-	m_ground->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.15f));
+	m_ground->SetPos(m_pos);
+	m_ground->SetSize(D3DXVECTOR3(120.0f, 15.0f, 0.0f));
+	m_ground->SetColor(D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.15f));
 	SetEndChildren(m_ground);
 
 	return S_OK;
@@ -51,5 +54,17 @@ HRESULT CSelectUI::Init()
 //--------------------------------------------------------------
 void CSelectUI::Update()
 {
+}
+
+//--------------------------------------------------------------
+// 文字の登録
+//--------------------------------------------------------------
+void CSelectUI::SetText(std::string inText)
+{
+	assert(m_text == nullptr);
+
+	D3DXVECTOR3 textPos = m_pos + D3DXVECTOR3(-100.0f, 0.0f, 0.0f);
+	m_text = CText::Create(textPos, D3DXVECTOR3(7.5f, 7.5f, 0.0f), 0, 0, inText.c_str());
+	SetEndChildren(m_text);
 }
 
