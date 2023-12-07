@@ -66,6 +66,8 @@ private:		// メンバ変数
 
 	bool			m_isUpdate;		// 更新を止めるか否か。
 
+	bool			m_isResult;		// リザルト中か否か
+
 	CController*	m_controller;	// 命令を出す人
 };
 #endif

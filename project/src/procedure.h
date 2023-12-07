@@ -23,6 +23,15 @@ class CProcedure : public CObject
 private:
 	static const int NUM_DIGIT = 3;
 public:
+	// ëµÇ¶ï˚
+	enum EAlign
+	{
+		LEFT,	// ç∂ëµÇ¶
+		RIGHT,	// âEëµÇ¶
+		CENTER,	// íÜâõëµÇ¶
+
+	};
+
 public:
 	explicit CProcedure();
 	~CProcedure() override;
@@ -49,6 +58,8 @@ public:
 
 	static CProcedure* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int inNumber);
 
+	void SetAlign(EAlign inAlign) { m_align = inAlign; SetPos(m_pos); }
+
 private:
 	void CalDigit();
 private:
@@ -58,6 +69,8 @@ private:
 	int m_number;
 	int m_digit;
 	float m_interval;
+
+	EAlign m_align;	// ëµÇ¶ï˚
 };
 
 #endif // _TIMER_H_

@@ -21,15 +21,6 @@
 
 // 見た目
 #include "objectX.h"
-#include "object_mesh.h"
-
-// 当たり判定
-#include "collision_cylinder.h"
-#include "collision_mesh.h"
-
-// 敵
-#include "enemy.h"
-#include "enemy_manager.h"
 
 // スキル
 #include "skill.h"
@@ -39,14 +30,11 @@
 #include "item.h"
 #include "item_data_base.h"
 
-//像
-#include "statue.h"
-#include "statue_manager.h"
-
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CPlayer::CPlayer(int nPriority)
+CPlayer::CPlayer(int nPriority) :
+	m_isResult(false)
 {
 }
 
@@ -156,11 +144,9 @@ void CPlayer::Update()
 		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
-	static bool a = false;
-
-	if (IsDied() && !a)
+	if (IsDied() && !m_isResult)
 	{
-		a = true;
+		m_isResult = true;
 		CResult::Create();
 	}
 
