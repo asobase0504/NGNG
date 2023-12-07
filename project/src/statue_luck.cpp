@@ -12,10 +12,15 @@
 #include "input.h"
 #include "utility.h"
 
+namespace
+{
+std::array<float, CItemDataBase::RARITY_MAX> rate = { 0.05f,0.1f,0.2f,0.65f };
+};
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueLuck::CStatueLuck(int nPriority)
+CStatueLuck::CStatueLuck()
 {
 
 }
@@ -40,71 +45,52 @@ HRESULT CStatueLuck::Init()
 	CStatue::Init(pos,rot);
 	LoadModel("STATUE_LUCK");
 
-	m_bOnce = false;
-	m_bChance = false;
 	m_nUseMoney = 10;
 	m_nItemCount = 0;
 
 	return S_OK;
 }
 
-//--------------------------------------------------------------
-// 更新処理
-//--------------------------------------------------------------
-void CStatueLuck::Update()
+bool CStatueLuck::Select(CCharacter * selectCharacter)
 {
-	// プレイヤー情報取得
-	CInput* input = CInput::GetKey();
-	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int>* playerMoney = pPlayer->GetMoney();
+	CStatus<int>* money = selectCharacter->GetMoney();
 
-	// プレイヤーが触れている時
-	
-	if (Touch())
+	if (money->GetCurrent() < m_nUseMoney)
 	{
-		if (m_nItemCount < 2)
-		{
-			// プレイヤーお金を調整して設定
-			playerMoney->AddCurrent(-m_nUseMoney);
-
-			// アイテム確率計算
-			int randomCount = IntRandom(100, 1);
-
-			int answer = CItemManager::GetInstance()->CreateRandomItemRarityRate(D3DXVECTOR3(m_pos.x, m_pos.y + 30.0f, m_pos.z), GetMtxRot(),{ 0.05f,0.1f,0.2f,0.65f });
-
-			switch (answer)
-			{
-			case 0:	// レア
-				m_nItemCount++;
-				break;
-			case 1:	// アンコモン
-				m_nItemCount++;
-				break;
-			case 2:	// コモン
-				m_nItemCount++;
-				break;
-			case 3:	// ハズレ
-				break;
-			default:
-				break;
-			}
-
-			// 次回ガチャする時用に必要お金数を増やして設定しておく
-			int randomNumber = rand() % 10;
-			m_nUseMoney += randomNumber;
-
-			m_bOnce = true;
-		}
+		return false;
 	}
 
-	// 更新処理
-	CStatue::Update();
+	// プレイヤーお金を調整して設定
+	money->AddCurrent(-m_nUseMoney);
 
-#ifdef _DEBUG
-#if 0
-	CDebugProc::Print("LuckPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
-#endif // 0
-#endif // _DEBUG
+	D3DXVECTOR3 pos(m_pos.x, m_pos.y + 30.0f, m_pos.z);
+	int answer = CItemManager::GetInstance()->CreateRandomItemRarityRate(pos, GetMtxRot(), rate);
+
+	switch (answer)
+	{
+	case 0:	// レア
+	case 1:	// アンコモン
+	case 2:	// コモン
+		m_nItemCount++;
+		break;
+	case 3:	// ハズレ
+		break;
+	default:
+		assert(false);
+		break;
+	}
+
+	// 次回ガチャする時用に必要お金数を増やして設定しておく
+	int randomNumber = rand() % 10;
+	m_nUseMoney += randomNumber;
+
+	if (m_nItemCount >= 2)
+	{
+		m_collisionCylinder->Uninit();
+		m_collisionCylinder = nullptr;
+	}
+
+	return true;
 }
 
 //--------------------------------------------------------------

@@ -42,47 +42,36 @@ HRESULT CStatueBlood::Init()
 
 	CStatue::Init(pos, rot);
 	LoadModel("STATUE_BLOOD");
-	m_bOnce = false;
+
+	m_hpSubRate = 0.1f;
 
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// 更新処理
+// 選択されたとき
 //--------------------------------------------------------------
-void CStatueBlood::Update()
+bool CStatueBlood::Select(CCharacter* selectCharacter)
 {
-	// プレイヤー情報取得
-	CInput* input = CInput::GetKey();
-	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int>* playerHp = pPlayer->GetHp();
-	CStatus<int>* playerMoney = pPlayer->GetMoney();
+	CCharacter* character = selectCharacter;
+	CStatus<int>* hp = character->GetHp();
+	CStatus<int>* money = character->GetMoney();
+	// プレイヤーのHPとお金を調整して設定
 
-	// プレイヤーが触れている時
-	if (Touch())
+	int max = hp->GetMax();
+	int point = (int)(max * m_hpSubRate);
+	hp->AddCurrent(-point);
+	money->AddCurrent(point);
+
+	m_hpSubRate *= 2.5f;
+
+	if (m_hpSubRate >= 1.0f)
 	{
-		if (!m_bOnce)
-		{
-			// プレイヤーのHPとお金を調整して設定
-			playerHp->AddCurrent(-10);
-			playerMoney->AddCurrent(10);
-
-			m_bOnce = true;
-		}
-		else
-		{
-			m_bOnce = false;
-		}
+		m_collisionCylinder->Uninit();
+		m_collisionCylinder = nullptr;
 	}
 
-	// 更新処理
-	CStatue::Update();
-
-#ifdef _DEBUG
-#if 0
-	CDebugProc::Print("BloodPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
-#endif // 0
-#endif // _DEBUG
+	return true;
 }
 
 //--------------------------------------------------------------

@@ -434,7 +434,7 @@
     <ClCompile Include="src\select_ui.cpp">
       <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
     </ClCompile>
-    <ClCompile Include="src\select_object.cpp">
+    <ClCompile Include="src\select_entity.cpp">
       <Filter>ソース ファイル\Mode\Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -760,7 +760,7 @@
     <ClInclude Include="src\select_ui.h">
       <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
     </ClInclude>
-    <ClInclude Include="src\select_object.h">
+    <ClInclude Include="src\select_entity.h">
       <Filter>ソース ファイル\Mode\Game</Filter>
     </ClInclude>
   </ItemGroup>

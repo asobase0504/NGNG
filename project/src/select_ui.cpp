@@ -40,7 +40,7 @@ HRESULT CSelectUI::Init()
 	m_ground = CObject2d::Create(CTaskGroup::LEVEL_2D_UI);
 	m_ground->SetPos(D3DXVECTOR3(800.0f, CApplication::CENTER_POS.y, 0.0f));
 	m_ground->SetSize(D3DXVECTOR3(200.0f, 50.0f, 0.0f));
-	m_ground->SetColor(D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.15f));
+	m_ground->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.15f));
 	SetEndChildren(m_ground);
 
 	return S_OK;

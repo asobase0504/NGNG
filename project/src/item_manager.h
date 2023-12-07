@@ -43,8 +43,6 @@ public:
 	void CreateRandomItemRarity(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx, CItemDataBase::ERarity);
 	CItemDataBase::ERarity CreateRandomItemRarityRate(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx, std::array<float, CItemDataBase::RARITY_MAX> rarityRate);
 
-	std::list<CItemModel*>& GetPopItemModel() { return m_itemModel; }
-
 	void AllWhenPick(CCharacter*,item_count);
 	void AllWhenLost(CCharacter*, item_count);
 	void AllWhenAllWay(CCharacter*, item_count);
@@ -57,9 +55,6 @@ private:
 
 	// アイテムのデータ(ステータスアップするよ～とか)
 	CItem* m_itemData;
-
-	// 出現しているアイテムのモデルデータ
-	std::list<CItemModel*> m_itemModel;
 };
 #endif	// _ITEM_MANAGER_H_
 

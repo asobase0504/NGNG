@@ -1,44 +1,50 @@
 //**************************************************************
 //
-// 像
-// Author: 梶田 大夢
+// 選択できる実体
+// Author: Yuda Kaito
 //
 //**************************************************************
-#ifndef _STATUE_H_
-#define _STATUE_H_
+#ifndef _SELECT_ENTITY_H_
+#define _SELECT_ENTITY_H_
 
 //==============================================================
 // include
 //==============================================================
-#include "select_entity.h"
+#include "objectX.h"
 
 //==============================================================
 // 前方宣言
 //==============================================================
-class CCollisionBox;
 class CCollisionCylinder;
-class CPlayer;
+class CCollisionBox;
+class CCharacter;
+class CSelectUI;
 
 //==============================================================
 // クラス
 //==============================================================
-class CStatue : public CSelectEntity
+class CSelectEntity : public CObjectX
 {
 public:
-	CStatue();
-	~CStatue();
+	CSelectEntity();
+	~CSelectEntity();
 
 	HRESULT Init() override;
-	HRESULT Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot);
+
 	void Update() override;
 
+	CCollisionCylinder* GetSelectCollision() { return m_collisionCylinder; }
 	CCollisionBox* GetCollisionBox() { return m_collisionBox; }
 
-	bool Touch();
+	void DisplayUI();
+	void NoDisplayUI() { m_isNearCharacter = false; }
 
-	void SetRot(const D3DXVECTOR3& inRot) override;
+	virtual bool Select(CCharacter* selectCharacter) = 0;	// 選ばれた時の処理
 
-private:
-	void UpMesh();
+protected:
+	CCollisionCylinder* m_collisionCylinder;	// 選択できる当たり判定
+	CCollisionBox* m_collisionBox;				// 押し出しを行なう当たり判定
+	CSelectUI* m_ui;
+	bool m_isNearCharacter;		// キャラクターに一番近いエンティティであるか否か
 };
 #endif	// _ITEM_MODEL_H_

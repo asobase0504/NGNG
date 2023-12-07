@@ -37,7 +37,6 @@ CItemManager* CItemManager::GetInstance()
 CItemManager::CItemManager(CTaskGroup::EPriority list) : 
 	m_itemData(nullptr), m_itemType(CItemDataBase::ITEM_NONE)
 {
-	m_itemModel.clear();
 }
 
 //--------------------------------------------------------------
@@ -61,7 +60,6 @@ HRESULT CItemManager::Init()
 void CItemManager::Uninit()
 {
 	m_itemData = nullptr;
-	m_itemModel.clear();
 }
 
 //--------------------------------------------------------------
@@ -86,7 +84,7 @@ void CItemManager::CreateItem(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx
 	m_itemType = inId;
 
 	m_itemData = CItem::Create(m_itemType);
-	m_itemModel.push_back(CItemModel::Create(inPos, boxmtx, inId));
+	CItemModel::Create(inPos, boxmtx, inId);
 }
 
 //--------------------------------------------------------------

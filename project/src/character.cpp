@@ -457,11 +457,18 @@ void CCharacter::Collision()
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
 
-	// 像との押し出し当たり判定
-	std::list<CStatue*> list = map->GetStatueList();
-	for (CStatue* inStatue : list)
+	// 選択できる物体との押し出し当たり判定
+	std::list<CSelectEntity*> list = map->GetSelectEntityList();
+	for (CSelectEntity* inSelectEntity : list)
 	{
-		if (!(m_collision->ToBox(inStatue->GetCollisionBox(), true)))
+		CCollisionBox* collisionBox = inSelectEntity->GetCollisionBox();
+
+		if (collisionBox == nullptr)
+		{
+			continue;
+		}
+
+		if (!(m_collision->ToBox(collisionBox, true)))
 		{
 			continue;
 		}

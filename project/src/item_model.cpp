@@ -24,7 +24,7 @@ const float CItemModel::TAKE_RANGE(10.0f);
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemModel::CItemModel(CTaskGroup::EPriority list)
+CItemModel::CItemModel()
 {
 }
 
@@ -41,7 +41,7 @@ CItemModel::~CItemModel()
 HRESULT CItemModel::Init()
 {
 	LoadModel("BOX");
-	CObjectX::Init();
+	CSelectEntity::Init();
 
 	return S_OK;
 }
@@ -51,7 +51,7 @@ HRESULT CItemModel::Init()
 //--------------------------------------------------------------
 HRESULT CItemModel::Init(int inId)
 {
-	CObjectX::Init();
+	CSelectEntity::Init();
 	
 	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 1.0f, 1.0f);
 	D3DXVec3TransformCoord(&move, &move, &m_mtx);
@@ -62,8 +62,8 @@ HRESULT CItemModel::Init(int inId)
 
 	LoadModel(item->GetModel());
 
-	m_collisionTake = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 20.0f);
-	m_collisionTake->SetParent(&m_pos);
+	m_collisionCylinder->SetHeight(20.0f);
+	m_collisionCylinder->SetLength(20.0f);
 	m_collisionHit = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 20.0f,20.0f);
 	m_collisionHit->SetParent(&m_pos);
 
@@ -72,52 +72,49 @@ HRESULT CItemModel::Init(int inId)
 }
 
 //--------------------------------------------------------------
-// 終了
-//--------------------------------------------------------------
-void CItemModel::Uninit()
-{
-	m_collisionTake->Uninit();
-
-	CObjectX::Uninit();
-}
-
-//--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
 void CItemModel::Update()
 {
-	CItem *item = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)m_ID);
-	LoadModel(item->GetModel());
-
-	bool isGround = false;
-
-	CMap* map = CMap::GetMap();
-	D3DXVECTOR3 pos = GetPos();
-
-	for (int i = 0; i < map->GetNumMesh(); i++)
+	if (m_collisionHit != nullptr)
 	{
-		if (m_collisionHit->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
-		{// 押し出した位置
-			D3DXVECTOR3 extrusion = m_collisionHit->GetPosWorld();
-			SetPos(extrusion);
-			isGround = true;
+		bool isGround = false;
+		CMap* map = CMap::GetMap();
+
+		for (int i = 0; i < map->GetNumMesh(); i++)
+		{
+			if (m_collisionHit->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
+			{// 押し出した位置
+				D3DXVECTOR3 extrusion = m_collisionHit->GetPosWorld();
+				SetPos(extrusion);
+				isGround = true;
+			}
+		}
+
+		if (isGround)
+		{
+			m_collisionHit->Uninit();
+			m_collisionHit = nullptr;
+			SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		}
+		else
+		{
+			AddMove(D3DXVECTOR3(0.0f, -0.1f, 0.0f));
 		}
 	}
 
-	D3DXVECTOR3 move = GetMove();
+	CSelectEntity::Update();
+}
 
-	if (!isGround)
-	{
-		move.y -= 0.1f;
-	}
-	else
-	{
-		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	}
-
-	SetMove(move);
-
-	CObjectX::Update();
+//--------------------------------------------------------------
+// 選択したとき
+//--------------------------------------------------------------
+bool CItemModel::Select(CCharacter * selectCharacter)
+{
+	selectCharacter->TakeItem(m_ID);
+	CMap::GetMap()->RemoveSelectEntityList(this);
+	Uninit();
+	return false;
 }
 
 

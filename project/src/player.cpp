@@ -18,6 +18,7 @@
 #include "camera_game.h"
 #include "application.h"
 #include "result.h"
+#include "map.h"
 
 // 見た目
 #include "objectX.h"
@@ -29,6 +30,8 @@
 // アイテム
 #include "item.h"
 #include "item_data_base.h"
+
+#include "select_entity.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -124,7 +127,8 @@ void CPlayer::Update()
 
 	if (!m_isStun && !IsDied())
 	{
-
+		// 選択
+		Select();
 		// 移動
 		Move();
 
@@ -136,9 +140,6 @@ void CPlayer::Update()
 
 		// 攻撃
 		PAttack();
-
-		// アイテムの取得
-		TakeItem();
 	}
 	else
 	{
@@ -302,21 +303,55 @@ void CPlayer::Dash()
 //--------------------------------------------------------------
 // アイテムの取得
 //--------------------------------------------------------------
-void CPlayer::TakeItem()
+void CPlayer::TakeItem(int id)
 {
-	int id = m_controller->TakeItem();
-
-	if (id < 0)
-	{
-		return;
-	}
-
 	m_haveItem[id]++;
 	CItem::ITEM_FUNC itemFunc = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)id)->GetWhenPickFunc();
 
 	if (itemFunc != nullptr)
 	{
 		itemFunc(this, m_haveItem[id]);
+	}
+}
+
+//--------------------------------------------------------------
+// 選ぶ
+//--------------------------------------------------------------
+void CPlayer::Select()
+{
+	CMap* map = CMap::GetMap();
+
+	std::list<CSelectEntity*> list = map->GetSelectEntityList();
+
+	CSelectEntity* nearEntity;
+	float nearLength = FLT_MAX;
+
+	for (CSelectEntity* entity : list)
+	{
+		entity->NoDisplayUI();
+
+		if (entity->GetSelectCollision() == nullptr)
+		{
+			continue;
+		}
+
+		D3DXVECTOR3 diffPos = m_pos - entity->GetPos();
+		float diff = D3DXVec3Length(&diffPos);
+		if (nearLength > diff)
+		{
+			nearLength = diff;
+			nearEntity = entity;
+		}
+	}
+
+	if (nearEntity->GetSelectCollision()->ToCylinder(GetCollision()))
+	{
+		nearEntity->DisplayUI();
+
+		if (m_controller->Select())
+		{
+			nearEntity->Select(this);
+		}
 	}
 }
 

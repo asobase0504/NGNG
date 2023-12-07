@@ -23,10 +23,7 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatue::CStatue() :
-	CObjectX(CTaskGroup::EPriority::LEVEL_3D_1),
-	m_modelData("BOX"),
-	m_player(nullptr)
+CStatue::CStatue()
 {
 }
 
@@ -42,15 +39,7 @@ CStatue::~CStatue()
 //--------------------------------------------------------------
 HRESULT CStatue::Init()
 {
-	MapChangeRelese();
-	CObjectX::Init();
-
-	D3DXMATRIX mtx = GetMtxWorld();
-	m_collisionBox = CCollisionBox::Create(GetPos(), GetRot(),D3DXVECTOR3(10.0f, 10.0f, 10.0f), mtx);
-	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 15.0f, 15.0f);
-
-	LoadModel(m_modelData);
-
+	CSelectEntity::Init();
 	return S_OK;
 }
 
@@ -59,35 +48,15 @@ HRESULT CStatue::Init()
 //--------------------------------------------------------------
 HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 {
-	MapChangeRelese();
-	CObjectX::Init();
-	LoadModel(m_modelData);
+	CSelectEntity::Init();
 
 	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 25.0f, 0.0f), inRot, D3DXVECTOR3(10.0f, 25.0f, 10.0f), GetMtxWorld());
 	m_collisionBox->SetParent(&m_pos);
 	SetEndChildren(m_collisionBox);
-	m_collisionCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 20.0f, 20.0f);
-	m_collisionCylinder->SetParent(&m_pos);
-	SetEndChildren(m_collisionCylinder);
+	m_collisionCylinder->SetHeight(20.0f);
+	m_collisionCylinder->SetLength(20.0f);
 
-	CMap* map = CMap::GetMap();
-	D3DXVECTOR3 pos = GetPos();
-
-	// 上に上げる処理
-	CCollisionCylinder* pCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f, 30.0f);
-	pCylinder->SetParent(&m_pos);
-
-	for (int i = 0; i < map->GetNumMesh(); i++)
-	{
-		bool hit = pCylinder->ToMesh(map->GetMapMesh(i)->GetCollisionMesh());
-
-		if (hit)
-		{// 押し出した位置
-			float extrusion = ((CCollisionCylinder*)pCylinder)->GetPosWorld().y;
-			SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
-		}
-	}
-	pCylinder->Uninit();
+	UpMesh();
 
 	// 向きの設定
 	AddRot(D3DXVECTOR3(0.0f, FloatRandom(D3DX_PI, -D3DX_PI), 0.0f));
@@ -100,7 +69,7 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 //--------------------------------------------------------------
 void CStatue::Update()
 {
-	CObjectX::Update();
+	CSelectEntity::Update();
 
 	m_collisionBox->SetMtxWorld(GetMtxWorld());
 
@@ -110,22 +79,6 @@ void CStatue::Update()
 	CDebugProc::Print("StatueCollisionCylinder:pos(%f,%f,%f)\n", m_collisionCylinder->GetPosWorld().x, m_collisionCylinder->GetPosWorld().y, m_collisionCylinder->GetPosWorld().z);
 #endif
 #endif // _DEBUG
-}
-
-//--------------------------------------------------------------
-// 生成
-//--------------------------------------------------------------
-CStatue* CStatue::Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot)
-{
-	CStatue* pStatue = nullptr;
-	pStatue = new CStatue;
-
-	if (pStatue != nullptr)
-	{
-		pStatue->Init(inPos,inRot);
-	}
-
-	return pStatue;
 }
 
 //--------------------------------------------------------------
@@ -156,6 +109,32 @@ bool CStatue::Touch()
 //--------------------------------------------------------------
 void CStatue::SetRot(const D3DXVECTOR3 & inRot)
 {
-	CObjectX::SetRot(inRot);
+	CSelectEntity::SetRot(inRot);
 	m_collisionBox->SetRot(inRot);
+}
+
+//--------------------------------------------------------------
+// 上に上げる処理
+//--------------------------------------------------------------
+void CStatue::UpMesh()
+{
+	CMap* map = CMap::GetMap();
+	D3DXVECTOR3 pos = GetPos();
+
+	// 上に上げる処理
+	CCollisionCylinder* pCylinder = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f, 30.0f);
+	pCylinder->SetParent(&m_pos);
+
+	for (int i = 0; i < map->GetNumMesh(); i++)
+	{
+		bool hit = pCylinder->ToMesh(map->GetMapMesh(i)->GetCollisionMesh());
+
+		if (hit)
+		{// 押し出した位置
+			float extrusion = ((CCollisionCylinder*)pCylinder)->GetPosWorld().y;
+			SetPos(D3DXVECTOR3(pos.x, extrusion, pos.z));
+		}
+	}
+	pCylinder->Uninit();
+
 }

@@ -30,12 +30,13 @@ class CStatueLuck : public CStatue
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CStatueLuck(int nPriority = 3);
+	explicit CStatueLuck();
 	~CStatueLuck();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Update() override;
+
+	bool Select(CCharacter* selectCharacter) override;
 
 	// 静的メンバ関数
 	static CStatueLuck *Create(D3DXVECTOR3 pos);			// 血の祭壇の生成

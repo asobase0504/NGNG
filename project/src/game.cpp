@@ -81,7 +81,7 @@ HRESULT CGame::Init()
 	CInput::GetKey()->LockCursorPos(false);
 
 	// 虚無マップ
-	m_map = CMap::Create("data/FILE/map/map01.json");
+	m_map = CMap::GetMap("data/FILE/map/map01.json");
 
 	m_mapFade = CMapFade::Create();
 	m_mapFade->NextMap("data/FILE/map/map01.json");
@@ -245,6 +245,6 @@ void CGame::ChangeMap(std::string inPath)
 
 	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
 	player->OnUpdate();
-	m_map = CMap::Create(inPath);
+	m_map = CMap::GetMap(inPath);
 	m_map->InCharacterList(player);
 }

@@ -33,6 +33,7 @@ public:
 	virtual bool		Skill_2() = 0;
 	virtual bool		Skill_3() = 0;
 	virtual bool		Skill_4() = 0;
+	virtual bool		Select() { return false; }
 
 	// Setter
 	void SetToOrder(CPlayer* inOrder) { m_toOrder = inOrder; }
