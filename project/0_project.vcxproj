@@ -97,6 +97,8 @@
     </ClCompile>
     <ClCompile Include="src\procedure.cpp" />
     <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\select_object.cpp" />
+    <ClCompile Include="src\select_ui.cpp" />
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\skill_entity.cpp" />
@@ -110,6 +112,7 @@
     <ClCompile Include="src\statue_manager.cpp" />
     <ClCompile Include="src\statue_teleporter.cpp" />
     <ClCompile Include="src\status.cpp" />
+    <ClCompile Include="src\take_item_ui.cpp" />
     <ClCompile Include="src\task.cpp" />
     <ClCompile Include="src\task_group.cpp" />
     <ClCompile Include="src\tcp_client.cpp" />
@@ -201,6 +204,8 @@
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\result.h" />
     <ClInclude Include="src\road.h" />
+    <ClInclude Include="src\select_object.h" />
+    <ClInclude Include="src\select_ui.h" />
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\skill_entity.h" />
@@ -214,6 +219,7 @@
     <ClInclude Include="src\statue_manager.h" />
     <ClInclude Include="src\statue_teleporter.h" />
     <ClInclude Include="src\status.h" />
+    <ClInclude Include="src\take_item_ui.h" />
     <ClInclude Include="src\task.h" />
     <ClInclude Include="src\task_group.h" />
     <ClInclude Include="src\tcp_client.h" />

@@ -39,10 +39,13 @@ void CItemDataBase::Init()
 	for (int i = 0; i < ITEM_MAX; i++)
 	{
 		m_item[i] = CItem::Create((EItemType)i);
+		m_itemInfo[i][0] = "だんご";
+		m_itemInfo[i][1] = "ＨＰが増える";
+		m_itemInfo[i][2] = "ITEM_DANGO_O1";
 	}
 
 	item = m_item[ITEM_DANGO];
-	item->SetModel("ITEM_DANGO");
+	item->SetModel("BOX");
 	item->SetRerity(RARITY_COMMON);
 	// だんごの設定-------------------------------------------------
 	/* HP+50(+50)増加 */

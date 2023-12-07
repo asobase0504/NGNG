@@ -16,6 +16,8 @@
 #include "item_model.h"
 #include "collision.h"
 
+#include "take_item_ui.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -252,6 +254,12 @@ int CPlayerController::TakeItem()
 
 			itemModel->Uninit();	// 消去
 			item.erase(it);
+
+			// 取得UIの表示
+			CTakeItemUI*	m_ui;
+			m_ui = new CTakeItemUI;
+			m_ui->Init();
+			m_ui->SetTakeItem((CItemDataBase::EItemType)itemModel->GetID());
 
 			return itemModel->GetID();
 		}

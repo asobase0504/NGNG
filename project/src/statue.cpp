@@ -89,6 +89,7 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 	}
 	pCylinder->Uninit();
 
+	// 向きの設定
 	AddRot(D3DXVECTOR3(0.0f, FloatRandom(D3DX_PI, -D3DX_PI), 0.0f));
 
 	return S_OK;
@@ -138,7 +139,7 @@ bool CStatue::Touch()
 	}
 
 	CInput* input = CInput::GetKey();
-	if (input->Trigger(DIK_E, -1))
+	if (input->Trigger(DIK_E))
 	{
 		CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
 		CPlayer* player = game->GetController()->GetToOrder();
@@ -150,6 +151,9 @@ bool CStatue::Touch()
 	return false;
 }
 
+//--------------------------------------------------------------
+// 向きの設定
+//--------------------------------------------------------------
 void CStatue::SetRot(const D3DXVECTOR3 & inRot)
 {
 	CObjectX::SetRot(inRot);

@@ -74,9 +74,13 @@ public:
 
 public:
 	CItem* GetItemData(EItemType inState) { return m_item[inState]; }
+	std::string GetItemName(EItemType inState) { return m_itemInfo[inState][0]; }
+	std::string GetItemMemo(EItemType inState) { return m_itemInfo[inState][1]; }
+	std::string GetItemIconTextureKey(EItemType inState) { return m_itemInfo[inState][2]; }
 
 private:	// ƒƒ“ƒo•Ï”
 	std::array<CItem*, ITEM_MAX> m_item;
+	std::array<std::string[3], ITEM_MAX> m_itemInfo;	// î•ñ‘Ì
 };
 
 using item_count = std::array<unsigned int, CItemDataBase::ITEM_MAX>;

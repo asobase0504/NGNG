@@ -17,7 +17,7 @@
 //**************************************************
 // Ã“Iƒƒ“ƒo•Ï”
 //**************************************************
-const float CSkillUI::UI_SIZE = 35.0f;
+const float CSkillUI::UI_SIZE = 25.0f;
 
 
 //--------------------------------------------------
@@ -63,7 +63,7 @@ void CSkillUI::Update()
 {
 	if (m_skill->GetCT() != 0)
 	{
-		m_ct = ceil((float)m_skill->GetCT() / 60.0f);
+		m_ct = (int)ceil((float)m_skill->GetCT() / 60.0f);
 		m_procedure->SetDisplay(true);
 	}
 	else

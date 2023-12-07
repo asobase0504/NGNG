@@ -84,6 +84,7 @@ HRESULT CPlayer::Init()
 	// 当たり判定
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 55.0f);
 	m_collision->SetParent(&m_pos);
+
 	return S_OK;
 }
 

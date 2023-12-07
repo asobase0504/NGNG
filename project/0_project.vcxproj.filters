@@ -48,9 +48,6 @@
     <Filter Include="ソース ファイル\Mode\Game\Item">
       <UniqueIdentifier>{4963ad8a-ec04-4e0e-b854-ad931565ddc4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\3D\Shader">
-      <UniqueIdentifier>{c70ada01-af2e-491c-accc-46cd316aae73}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Mode\Game\UI">
       <UniqueIdentifier>{a6fb7bdb-faf6-463e-83e8-6e0915814541}</UniqueIdentifier>
     </Filter>
@@ -98,6 +95,12 @@
     </Filter>
     <Filter Include="ソース ファイル\Mode\Game\UI\2D">
       <UniqueIdentifier>{5c88fe5f-b14a-4a82-aa59-b46146ce64b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{c25ca3ea-d346-40d7-ae4b-3795212b1f3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{c70ada01-af2e-491c-accc-46cd316aae73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -425,6 +428,15 @@
     <ClCompile Include="player_abnormal_ui.cpp">
       <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
     </ClCompile>
+    <ClCompile Include="src\take_item_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\select_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\select_object.cpp">
+      <Filter>ソース ファイル\Mode\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -742,10 +754,19 @@
     <ClInclude Include="src\money_ui.h">
       <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
     </ClInclude>
+    <ClInclude Include="src\take_item_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\select_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\select_object.h">
+      <Filter>ソース ファイル\Mode\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
-      <Filter>ソース ファイル\3D\Shader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -755,7 +776,11 @@
     <None Include="data\FILE\map\map02.json">
       <Filter>ソース ファイル\Mode\Game\map\json</Filter>
     </None>
-    <None Include="data\FILE\model.json" />
-    <None Include="data\FILE\texture.json" />
+    <None Include="data\FILE\texture.json">
+      <Filter>json</Filter>
+    </None>
+    <None Include="data\FILE\model.json">
+      <Filter>json</Filter>
+    </None>
   </ItemGroup>
 </Project>

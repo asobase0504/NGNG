@@ -66,7 +66,8 @@ void CStatueChest::Update()
 		// アイテムランダムドロップ関数追加
 		//---------------------------------------------------------------------------------
 		D3DXVECTOR3 pos = GetPos();
-		CItemManager::GetInstance()->CreateRandomItemRarityRate(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot(), {0.7f,0.25,0.5f,0.0f});
+		CItemManager::GetInstance()->CreateRandomItemRarityRate(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot(), { 0.7f,0.25,0.5f,0.0f });
+		//CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot(), CItemDataBase::EItemType::ITEM_DANGO);
 
 		m_collisionCylinder->Uninit();
 		m_collisionCylinder = nullptr;

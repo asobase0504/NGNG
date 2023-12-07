@@ -123,7 +123,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	CEnemyDataBase::GetInstance();
 	CItemDataBase::GetInstance();
 
-	CFont::Load(CFont::FONT_MEIRIO);
+	CFont::Load(CFont::FONT_MYOUTYOU);
 
 	return S_OK;
 }
