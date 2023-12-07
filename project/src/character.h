@@ -221,6 +221,7 @@ protected:
 	CStatus<float> m_criticalRate;				// クリティカル率
 	CStatus<float> m_criticalDamage;			// クリティカルダメージ
 	CStatus<float> m_movePower;					// 移動力
+	CStatus<float> m_dashPower;					// 走る力
 	CStatus<float> m_jumpPower;					// ジャンプ力
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 	CStatus<int> m_money;						// 所持金

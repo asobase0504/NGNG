@@ -229,22 +229,34 @@ void CPlayer::Move()
 
 	m_isskill = false;
 
-	if (m_isMoveLock | m_isControl)
+	if (m_isMoveLock)
+	{
+		SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
+	}
+
+	if (m_isMoveLock)
 	{
 		return;
 	}
 
 	if (D3DXVec3Length(&move) != 0.0f)
 	{
-		SetMoveXZ(move.x, move.z);
+		if (!m_isControl)
+		{
+			SetMoveXZ(move.x, move.z);
 
-		// カメラの方向に合わせる
-		D3DXVECTOR3 cameraVec = GetMove();
-		cameraVec.y = 0.0f;
-		cameraVec = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->VectorCombinedRot(cameraVec);
-		cameraVec *= m_movePower.GetCurrent();
-		CDebugProc::Print("Player : cameraVec(%f, %f, %f)\n", cameraVec.x, cameraVec.y, cameraVec.z);
-		SetMoveXZ(cameraVec.x, cameraVec.z);
+			// カメラの方向に合わせる
+			D3DXVECTOR3 cameraVec = GetMove();
+			cameraVec.y = 0.0f;
+			cameraVec = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->VectorCombinedRot(cameraVec);
+			cameraVec *= m_movePower.GetCurrent();
+			if (m_isdash)
+			{
+				cameraVec *= m_dashPower.GetCurrent();
+			}
+			CDebugProc::Print("Player : cameraVec(%f, %f, %f)\n", cameraVec.x, cameraVec.y, cameraVec.z);
+			SetMoveXZ(cameraVec.x, cameraVec.z);
+		}
 	}
 	else
 	{
