@@ -52,6 +52,9 @@ public:
 	void AddAttackCnt(int Cnt) { m_AttackCnt += Cnt; }
 	int GetAttackCnt() { return m_AttackCnt; }
 
+	// 死亡時の処理
+	void Died() override;
+
 private:
 	void Move();		// 移動
 
@@ -59,5 +62,6 @@ private:	// メンバ変数
 	ACTIVITY_FUNC	m_Activity;
 	int				m_AttackCnt;
 	CEnemy_HPUI*	m_pEHPUI;
+	int				m_dropMoney;
 };
 #endif

@@ -15,6 +15,7 @@
 #include "enemy.h"
 #include "player.h"
 #include "player_manager.h"
+#include "status.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
@@ -66,6 +67,7 @@ HRESULT CEnemy::Init()
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
 	SetEndChildren(m_collision);
+	m_dropMoney = 5;
 
 	m_skill.push_back(CSkill::Create());
 	m_skill[0]->SetSkill("GOLEM_SKILL_1",this);
@@ -99,6 +101,12 @@ void CEnemy::Update()
 #ifdef ENEMY_DEBUG
 	CDebugProc::Print("EnemyFmove3(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
 #endif // _DEBUG
+}
+
+void CEnemy::Died()
+{
+	CPlayerManager::GetInstance()->GetPlayer()->GetMoney()->AddCurrent(m_dropMoney);
+	CCharacter::Died();
 }
 
 //--------------------------------------------------------------

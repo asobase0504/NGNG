@@ -90,7 +90,7 @@ public:
 
 	// 死亡状態か否か。
 	bool IsDied() { return m_isDied; }
-	void Died();
+	virtual void Died();
 
 	// 状態異常
 	int GetAbnormalTypeCount();	// 状態異常の種類のカウント
