@@ -131,14 +131,7 @@ bool CPlayerController::Dash(bool dash)
 	// ƒ_ƒbƒVƒ…
 	if (input->Trigger(DIK_LCONTROL, -1))
 	{
-		if (dash == false)
-		{
-			dash = true;
-		}
-		else
-		{
-			dash = false;
-		}
+		dash = !dash;
 	}
 
 	return dash;

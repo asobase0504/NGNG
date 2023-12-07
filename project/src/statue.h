@@ -37,6 +37,8 @@ public:
 	CCollisionCylinder* GetCollisionCylinder() { return m_collisionCylinder; }
 
 	bool Touch();
+
+	void SetRot(const D3DXVECTOR3& inRot) override;
 protected:
 	std::string m_modelData;
 	CCollisionBox* m_collisionBox;

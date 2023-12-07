@@ -149,3 +149,9 @@ bool CStatue::Touch()
 	}
 	return false;
 }
+
+void CStatue::SetRot(const D3DXVECTOR3 & inRot)
+{
+	CObjectX::SetRot(inRot);
+	m_collisionBox->SetRot(inRot);
+}

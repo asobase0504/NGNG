@@ -176,32 +176,39 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 //--------------------------------------------------------------
 void CPlayer::PAttack()
 {
+	bool isSuccess = false;
+
 	// 通常攻撃(左クリック)
 	if (m_controller->Skill_1())
 	{
 		// 発動時に生成
-		m_skill[0]->Skill();
+		isSuccess = m_skill[0]->Skill();
 	}
 
 	// スキル1(右クリック)
 	if(m_controller->Skill_2())
 	{
 		// 発動時に生成
-		m_skill[2]->Skill();
+		isSuccess = m_skill[2]->Skill();
 	}
 
 	// スキル2(シフト)
 	if (m_controller->Skill_3())
 	{
 		// 発動時に生成
-		m_skill[1]->Skill();
+		isSuccess = m_skill[1]->Skill();
 	}
 
 	// スキル3(R)
 	if (m_controller->Skill_4())
 	{
 		// 発動時に生成
-		m_skill[3]->Skill();
+		isSuccess = m_skill[3]->Skill();
+	}
+
+	if (isSuccess)
+	{
+		m_isdash = false;
 	}
 }
 

@@ -103,15 +103,15 @@ HRESULT CCharacter::Init()
 	m_movePower.SetCurrent(2.0f);
 	m_dashPower.Init(1.25f);
 	m_dashPower.SetCurrent(1.25f);
-	m_jumpPower.Init(FLT_MAX);
-	m_jumpPower.SetCurrent(3.0f);
+	m_jumpPower.Init();
+	m_jumpPower.SetCurrent(5.0f);
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
 	m_jumpCount.AttachMax();
 	m_money.Init();
 	m_money.SetCurrent(5);
 	m_regenetionTime.Init(60);
-	m_regenetion.Init(60);
+	m_regenetion.Init(1);
 	m_RegenetionCnt = 0;
 	m_isStun = false;
 	m_isBlock = false;

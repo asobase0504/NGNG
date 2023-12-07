@@ -93,8 +93,11 @@
     <Filter Include="ソース ファイル\Mode\Result">
       <UniqueIdentifier>{035c48c2-e5de-40a8-99e7-3279f3f45b16}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Mode\Game\UI\3DUI">
+    <Filter Include="ソース ファイル\Mode\Game\UI\3D">
       <UniqueIdentifier>{30b330ef-a34b-44fc-a31a-1816f3a1197a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\Game\UI\2D">
+      <UniqueIdentifier>{5c88fe5f-b14a-4a82-aa59-b46146ce64b6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +245,6 @@
     <ClCompile Include="src\map.cpp">
       <Filter>ソース ファイル\Mode\Game\map</Filter>
     </ClCompile>
-    <ClCompile Include="src\hp_ui.cpp">
-      <Filter>ソース ファイル\Mode\Game\UI</Filter>
-    </ClCompile>
     <ClCompile Include="src\statue.cpp">
       <Filter>ソース ファイル\Statue</Filter>
     </ClCompile>
@@ -314,9 +314,6 @@
     <ClCompile Include="src\debug_mode.cpp">
       <Filter>ソース ファイル\Mode</Filter>
     </ClCompile>
-    <ClCompile Include="src\money_ui.cpp">
-      <Filter>ソース ファイル\Mode\Game\UI</Filter>
-    </ClCompile>
     <ClCompile Include="src\road.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
@@ -325,9 +322,6 @@
     </ClCompile>
     <ClCompile Include="abnormal.cpp">
       <Filter>ソース ファイル\Mode\Game\character\abnormality</Filter>
-    </ClCompile>
-    <ClCompile Include="src\skill_ui.cpp">
-      <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClCompile>
     <ClCompile Include="src\mode_fade.cpp">
       <Filter>ソース ファイル\Mode</Filter>
@@ -377,9 +371,6 @@
     <ClCompile Include="src\gold_nugget.cpp">
       <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
     </ClCompile>
-    <ClCompile Include="enemy_hp_ui.cpp">
-      <Filter>ソース ファイル\Mode\Game\UI</Filter>
-    </ClCompile>
     <ClCompile Include="connect.cpp">
       <Filter>ソース ファイル\Server</Filter>
     </ClCompile>
@@ -404,9 +395,6 @@
     <ClCompile Include="src\procedure.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
-    <ClCompile Include="player_abnormal_ui.cpp">
-      <Filter>ソース ファイル\Mode\Game\UI</Filter>
-    </ClCompile>
     <ClCompile Include="src\text_font.cpp">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClCompile>
@@ -417,10 +405,25 @@
       <Filter>ソース ファイル\Server</Filter>
     </ClCompile>
     <ClCompile Include="ui_3D.cpp">
-      <Filter>ソース ファイル\Mode\Game\UI\3DUI</Filter>
+      <Filter>ソース ファイル\Mode\Game\UI\3D</Filter>
     </ClCompile>
     <ClCompile Include="yamato_skill_4.cpp">
       <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_hp_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hp_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\money_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="player_abnormal_ui.cpp">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -568,9 +571,6 @@
     <ClInclude Include="src\map.h">
       <Filter>ソース ファイル\Mode\Game\map</Filter>
     </ClInclude>
-    <ClInclude Include="src\hp_ui.h">
-      <Filter>ソース ファイル\Mode\Game\UI</Filter>
-    </ClInclude>
     <ClInclude Include="src\statue.h">
       <Filter>ソース ファイル\Statue</Filter>
     </ClInclude>
@@ -637,14 +637,8 @@
     <ClInclude Include="src\debug_mode.h">
       <Filter>ソース ファイル\Mode</Filter>
     </ClInclude>
-    <ClInclude Include="src\money_ui.h">
-      <Filter>ソース ファイル\Mode\Game\UI</Filter>
-    </ClInclude>
     <ClInclude Include="src\procedure.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\skill_ui.h">
-      <Filter>ソース ファイル\Mode\Game\UI</Filter>
     </ClInclude>
     <ClInclude Include="src\mode_fade.h">
       <Filter>ソース ファイル\Mode</Filter>
@@ -697,9 +691,6 @@
     <ClInclude Include="src\gold_nugget.h">
       <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
     </ClInclude>
-    <ClInclude Include="enemy_hp_ui.h">
-      <Filter>ソース ファイル\Mode\Game\UI</Filter>
-    </ClInclude>
     <ClInclude Include="connect.h">
       <Filter>ソース ファイル\Server</Filter>
     </ClInclude>
@@ -721,9 +712,6 @@
     <ClInclude Include="src\arrow.h">
       <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
     </ClInclude>
-    <ClInclude Include="player_abnormal_ui.h">
-      <Filter>ソース ファイル\Mode\Game\UI</Filter>
-    </ClInclude>
     <ClInclude Include="src\text_font.h">
       <Filter>ソース ファイル\00_Main\text</Filter>
     </ClInclude>
@@ -734,10 +722,25 @@
       <Filter>ソース ファイル\Server</Filter>
     </ClInclude>
     <ClInclude Include="ui_3D.h">
-      <Filter>ソース ファイル\Mode\Game\UI\3DUI</Filter>
+      <Filter>ソース ファイル\Mode\Game\UI\3D</Filter>
     </ClInclude>
     <ClInclude Include="yamato_skill_4.h">
       <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_hp_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hp_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="player_abnormal_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\money_ui.h">
+      <Filter>ソース ファイル\Mode\Game\UI\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
