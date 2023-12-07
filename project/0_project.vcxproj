@@ -123,6 +123,7 @@
     <ClCompile Include="src\yamato_skill_2.cpp" />
     <ClCompile Include="src\yamato_skill_3.cpp" />
     <ClCompile Include="ui_3D.cpp" />
+    <ClCompile Include="yamato_skill_4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="abnormal.h" />
@@ -226,6 +227,7 @@
     <ClInclude Include="src\yamato_skill_2.h" />
     <ClInclude Include="src\yamato_skill_3.h" />
     <ClInclude Include="ui_3D.h" />
+    <ClInclude Include="yamato_skill_4.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">

@@ -201,7 +201,7 @@ void CPlayer::PAttack()
 	if(m_controller->Skill_2())
 	{
 		// 発動時に生成
-		m_skill[1]->Skill();
+		m_skill[2]->Skill();
 	}
 
 	// スキル2(シフト)
@@ -215,7 +215,7 @@ void CPlayer::PAttack()
 	if (m_controller->Skill_4())
 	{
 		// 発動時に生成
-		m_skill[2]->Skill();
+		m_skill[3]->Skill();
 	}
 }
 
@@ -297,8 +297,8 @@ void CPlayer::Dash()
 	if (m_isdash)
 	{
 		// ダッシュ速度
-		/*move.x *= DASH_SPEED;
-		move.z *= DASH_SPEED;*/
+		move.x *= DASH_SPEED;
+		move.z *= DASH_SPEED;
 	}
 
 	// 移動量の設定
