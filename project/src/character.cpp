@@ -117,6 +117,7 @@ HRESULT CCharacter::Init()
 	m_RegenetionCnt = 0;
 	m_isStun = false;
 	m_isBlock = false;
+	m_isAtkCollision = false;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
