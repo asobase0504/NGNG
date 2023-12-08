@@ -175,6 +175,7 @@ public:
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
 
+	// 攻撃の当たり判定を行なうかどうか
 	void SetIsAtkCollision(bool is) { m_isAtkCollision = is; }
 	bool GetIsAtkCollision() { return m_isAtkCollision; }
 
