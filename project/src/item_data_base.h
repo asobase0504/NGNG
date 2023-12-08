@@ -81,6 +81,9 @@ public:
 private:	// ƒƒ“ƒo•Ï”
 	std::array<CItem*, ITEM_MAX> m_item;
 	std::array<std::string[3], ITEM_MAX> m_itemInfo;	// î•ñ‘Ì
+
+	int m_countKill;	// E‚µ‚½”
+	int m_maxAddLife;	// ‘‚â‚¹‚éÅ‘å’l
 };
 
 using item_count = std::array<unsigned int, CItemDataBase::ITEM_MAX>;

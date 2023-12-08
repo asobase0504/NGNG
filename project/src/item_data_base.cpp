@@ -26,7 +26,7 @@ CItemDataBase* CItemDataBase::m_instance(nullptr);
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemDataBase::CItemDataBase()
+CItemDataBase::CItemDataBase() : m_countKill(0), m_maxAddLife(0)
 {
 }
 
@@ -49,6 +49,9 @@ void CItemDataBase::Init()
 	item = m_item[ITEM_DANGO];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_DANGO][0] = "だんご";
+	m_itemInfo[ITEM_DANGO][1] = "ＨＰが増える";
+	m_itemInfo[ITEM_DANGO][2] = "ITEM_DANGO_O1";
 	// だんごの設定-------------------------------------------------
 	/* HP+50(+50)増加 */
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
@@ -435,9 +438,19 @@ void CItemDataBase::Init()
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
 	// 点滴袋---------------------------------------------------------
-	// 敵を倒すごとに体力が永続的に1増える。最大100まで (最大 +100)TODO
-	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	// 敵を倒すごとに体力が永続的に1増える。最大100まで (最大 +100)
+	item->SetWhenDeathFunc([this](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
+		// 最大値を決める
+		m_maxAddLife = cnt * 100;
+		// 敵を倒した数をカウント
+		m_countKill++;
+
+		if (m_countKill > m_maxAddLife)
+		{// 最大値を超えたら増やさない
+			return;
+		}
+
 		inCharacter->GetHp()->AddMaxEffect(1);
 	});
 	//--------------------------------------------------------------

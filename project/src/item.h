@@ -25,8 +25,8 @@ class CCharacter;
 class CItem : public CTask
 {
 public:
-	using ITEM_FUNC = void(*)(CCharacter*, int);
-	using ITEM_ACTION_FUNC = void(*)(CCharacter*, int, CCharacter*);
+	using ITEM_FUNC = std::function<void(CCharacter*, int)>;
+	using ITEM_ACTION_FUNC = std::function<void(CCharacter*, int, CCharacter*)>;
 public:
 	CItem(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
 	~CItem();
@@ -40,7 +40,7 @@ public:
 	void SetWhenPickFunc(ITEM_FUNC inFunc) { m_getFunc = inFunc; }					// 入手したときの処理
 	void SetWhenLostFunc(ITEM_FUNC inFunc) { m_lostFunc = inFunc; }					// 失ったときの処理
 	void SetWhenAlwaysFunc(ITEM_FUNC inFunc) { m_allwayFunc = inFunc; }				// 常時発動している処理
-	void SetWhenUseSkill(ITEM_ACTION_FUNC inFunc) { m_useSkillFunc = inFunc; }				// スキルを使った時
+	void SetWhenUseSkill(ITEM_ACTION_FUNC inFunc) { m_useSkillFunc = inFunc; }		// スキルを使った時
 	void SetWhenDeathFunc(ITEM_ACTION_FUNC inFunc) { m_deathFunc = inFunc; }		// 死亡させたときの処理
 	void SetWhenReceiveFunc(ITEM_ACTION_FUNC inFunc) { m_receiveFunc = inFunc; }	// ダメージを受ける時の処理
 	void SetWhenInflictFunc(ITEM_ACTION_FUNC inFunc) { m_inflictFunc = inFunc; }	// ダメージを与えた時の処理
