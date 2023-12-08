@@ -44,8 +44,6 @@ public:
 private:	// メンバ変数
 	int m_nUseMoney;		// 初期必要お金数
 	int m_nItemCount;		// アイテム数
-	bool m_bChance;			// 成功確率
-	bool m_bOnce;			// 一回処理用
 };
 #endif
 

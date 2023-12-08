@@ -68,7 +68,7 @@ public:
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
 
-	void TakeItem(int id) {}	// アイテムを拾う
+	virtual void TakeItem(int id) {}	// アイテムを拾う
 
 	// 移動制御
 	void SetMoveLock(bool isLock) { m_isMoveLock = isLock; }

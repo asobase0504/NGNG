@@ -33,6 +33,8 @@
 
 #include "select_entity.h"
 
+#include "take_item_ui.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -307,6 +309,10 @@ void CPlayer::TakeItem(int id)
 {
 	m_haveItem[id]++;
 	CItem::ITEM_FUNC itemFunc = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)id)->GetWhenPickFunc();
+
+	CTakeItemUI* ui = new CTakeItemUI;
+	ui->Init();
+	ui->SetTakeItem((CItemDataBase::EItemType)id);
 
 	if (itemFunc != nullptr)
 	{

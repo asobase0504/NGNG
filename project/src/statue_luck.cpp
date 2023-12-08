@@ -7,7 +7,8 @@
 
 // include
 #include "statue_luck.h"
-#include "player_manager.h"
+#include "character.h"
+#include "collision_cylinder.h"
 #include "item_manager.h"
 #include "input.h"
 #include "utility.h"
@@ -34,7 +35,7 @@ CStatueLuck::~CStatueLuck()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»ˆ—
+// ‰Šú‰»
 //--------------------------------------------------------------
 HRESULT CStatueLuck::Init()
 {
@@ -52,6 +53,9 @@ HRESULT CStatueLuck::Init()
 	return S_OK;
 }
 
+//--------------------------------------------------------------
+// ‘I‘ğ
+//--------------------------------------------------------------
 bool CStatueLuck::Select(CCharacter * selectCharacter)
 {
 	CStatus<int>* money = selectCharacter->GetMoney();

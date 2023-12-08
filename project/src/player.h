@@ -50,7 +50,7 @@ public:
 	void OnUpdate() { m_isUpdate = true; }
 	void OffUpdate() { m_isUpdate = false; }
 
-	void TakeItem(int id);	// アイテムを拾う
+	void TakeItem(int id) override;	// アイテムを拾う
 
 private:
 	void PAttack();		// 攻撃
