@@ -69,6 +69,14 @@ public:
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
 
+	virtual void TakeItem(int id) {}	// アイテムを拾う
+
+	// 移動制御
+	void SetMoveLock(bool isLock) { m_isMoveLock = isLock; }
+	bool GetMoveLock() { return m_isMoveLock; }
+	void SetControlLock(bool isLock) { m_isControl = isLock; }
+	bool GetControlLock() { return m_isControl; }
+
 	// 攻撃
 	void Attack(CCharacter* pEnemy, float SkillMul);
 	void Damage(const int inDamage);
@@ -85,7 +93,7 @@ public:
 
 	// 死亡状態か否か。
 	bool IsDied() { return m_isDied; }
-	void Died();
+	virtual void Died();
 
 	// 状態異常
 	int GetAbnormalTypeCount();	// 状態異常の種類のカウント
@@ -169,9 +177,9 @@ public:
 	bool GetIsElite() { return m_isElite; }
 
 private:
-	virtual void Move();
-	void Abnormal();
-	void Collision();
+	virtual void Move();	// 移動
+	void Abnormal();		// 状態異常
+	void Collision();		// 当たり判定
 
 protected:		// メンバ変数
 	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
@@ -188,6 +196,9 @@ protected:
 	abnormal_count m_haveAbnormal;
 	// 与える状態異常を管理
 	abnormal_attack m_attackAbnormal;
+
+	bool m_isMoveLock;		// 移動停止状態か否か。
+	bool m_isControl;		// コントロールを受け付けるか否か。
 
 	bool m_isDied;			// 死亡状態か否か。
 	bool m_isShield;		// シールドを回復するかどうか
@@ -213,6 +224,7 @@ protected:
 	CStatus<float> m_criticalRate;				// クリティカル率
 	CStatus<float> m_criticalDamage;			// クリティカルダメージ
 	CStatus<float> m_movePower;					// 移動力
+	CStatus<float> m_dashPower;					// 走る力
 	CStatus<float> m_jumpPower;					// ジャンプ力
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 	CStatus<int> m_money;						// 所持金

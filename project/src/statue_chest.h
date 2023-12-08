@@ -35,13 +35,13 @@ public:
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Update() override;
+
+	bool Select(CCharacter* selectCharacter) override;
 
 	// 静的メンバ関数
 	static CStatueChest *Create(D3DXVECTOR3 pos);			// 宝箱の祭壇の生成
 
 private:	// メンバ変数
-	bool m_bOnce;
 };
 #endif
 

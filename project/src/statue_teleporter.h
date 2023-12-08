@@ -38,6 +38,8 @@ public:
 	HRESULT	Init() override;
 	void	Update() override;
 
+	bool Select(CCharacter* selectCharacter) override;
+
 	// 静的メンバ関数
 	static CStatueTeleporter *Create(D3DXVECTOR3 pos);			// テレポーターの生成
 

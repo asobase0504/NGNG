@@ -21,16 +21,19 @@ class CObject2d;
 //**************************************************
 // ƒNƒ‰ƒX
 //**************************************************
-class CSKILLUI : public CObject
+class CSkillUI : public CObject
 {
+private:
+	static const float UI_SIZE;
+
 public:
-	CSKILLUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
-	~CSKILLUI();
+	CSkillUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	~CSkillUI();
 
 	HRESULT Init() override;
 	void Update() override;
 
-	static CSKILLUI* Create(CSkill* inSkill);
+	static CSkillUI* Create(const D3DXVECTOR3& inPos, CSkill* inSkill);
 
 private:
 	CSkill* m_skill;

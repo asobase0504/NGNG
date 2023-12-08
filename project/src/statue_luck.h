@@ -30,12 +30,13 @@ class CStatueLuck : public CStatue
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CStatueLuck(int nPriority = 3);
+	explicit CStatueLuck();
 	~CStatueLuck();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Update() override;
+
+	bool Select(CCharacter* selectCharacter) override;
 
 	// 静的メンバ関数
 	static CStatueLuck *Create(D3DXVECTOR3 pos);			// 血の祭壇の生成
@@ -43,8 +44,6 @@ public:
 private:	// メンバ変数
 	int m_nUseMoney;		// 初期必要お金数
 	int m_nItemCount;		// アイテム数
-	bool m_bChance;			// 成功確率
-	bool m_bOnce;			// 一回処理用
 };
 #endif
 

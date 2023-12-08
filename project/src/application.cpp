@@ -123,7 +123,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	CEnemyDataBase::GetInstance();
 	CItemDataBase::GetInstance();
 
-	CFont::Load(CFont::FONT_MEIRIO);
+	CFont::Load(CFont::FONT_MYOUTYOU);
 
 	return S_OK;
 }
@@ -200,6 +200,20 @@ void CApplication::Update()
 		ppp = !ppp;
 	}
 #endif // _DEBUG
+
+	// Œ»Ý‚ÌÅ‘O–Ê‚ð•Û‘¶
+	HWND activeWindowHandle;
+	
+	activeWindowHandle = GetForegroundWindow();
+	if (m_window != activeWindowHandle && m_isActiveWindowThis)
+	{ // Ž©•ª‚ªÅ‘O‚É‚¢‚È‚¢‚È‚ç
+		m_isActiveWindowThis = false;
+	}
+	if (m_window == activeWindowHandle && !m_isActiveWindowThis)
+	{ // Ž©•ª‚ªÅ‘O‚È‚ç
+		m_isActiveWindowThis = true;
+	}
+
 
 	m_renderer->Update();
 }

@@ -23,13 +23,21 @@ class CProcedure : public CObject
 private:
 	static const int NUM_DIGIT = 3;
 public:
+	// ‘µ‚¦•û
+	enum EAlign
+	{
+		LEFT,	// ¶‘µ‚¦
+		RIGHT,	// ‰E‘µ‚¦
+		CENTER,	// ’†‰›‘µ‚¦
+
+	};
+
 public:
 	explicit CProcedure();
 	~CProcedure() override;
 
 	HRESULT Init() override;
 	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int digit);
-	void Uninit() override;
 	void Update() override;
 	void Draw() override {}
 
@@ -46,15 +54,23 @@ public:
 	void AddNumber(int inNumber) { SetNumber(m_number + inNumber); }
 	int GetNumber() { return m_number; }
 
-	static CProcedure* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int digit);
+	void SetDisplay(bool isDisplay) override;
+
+	static CProcedure* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int inNumber);
+
+	void SetAlign(EAlign inAlign) { m_align = inAlign; SetPos(m_pos); }
 
 private:
+	void CalDigit();
+private:
 	// NumberŒ^‚Ì”z—ñ
-	std::vector<CNumber*> m_pNumber;
+	std::list<CNumber*> m_pNumber;
 	// ŠÔ
 	int m_number;
 	int m_digit;
 	float m_interval;
+
+	EAlign m_align;	// ‘µ‚¦•û
 };
 
 #endif // _TIMER_H_

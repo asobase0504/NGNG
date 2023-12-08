@@ -54,7 +54,7 @@ public:
 	// 現在の値の変更
 	void SetCurrent(const T& inNumber)
 	{
-		if (m_max < inNumber)
+		if (m_max < inNumber && m_isMax)
 		{
 			m_current = m_max;
 			return;
@@ -66,6 +66,7 @@ public:
 	void AddCurrent(T inNumber) { SetCurrent(m_current + inNumber); }
 	void MulCurrent(float inNumber) { SetCurrent(m_current * inNumber); }
 	T GetCurrent() { return m_current; }
+	void SetMax(T inMax) { m_max = inMax; }
 	T GetMax() { return m_max; }
 	T GetBase() { return m_base; }
 	T GetAddItem() { return m_addItem; }

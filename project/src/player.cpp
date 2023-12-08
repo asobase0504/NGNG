@@ -18,18 +18,10 @@
 #include "camera_game.h"
 #include "application.h"
 #include "result.h"
+#include "map.h"
 
 // 見た目
 #include "objectX.h"
-#include "object_mesh.h"
-
-// 当たり判定
-#include "collision_cylinder.h"
-#include "collision_mesh.h"
-
-// 敵
-#include "enemy.h"
-#include "enemy_manager.h"
 
 // スキル
 #include "skill.h"
@@ -40,14 +32,15 @@
 #include "item_data_base.h"
 #include "item_manager.h"
 
-//像
-#include "statue.h"
-#include "statue_manager.h"
+#include "select_entity.h"
+
+#include "take_item_ui.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CPlayer::CPlayer(int nPriority)
+CPlayer::CPlayer(int nPriority) :
+	m_isResult(false)
 {
 }
 
@@ -97,6 +90,7 @@ HRESULT CPlayer::Init()
 	// 当たり判定
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 55.0f);
 	m_collision->SetParent(&m_pos);
+
 	return S_OK;
 }
 
@@ -136,7 +130,8 @@ void CPlayer::Update()
 
 	if (!m_isStun && !IsDied())
 	{
-
+		// 選択
+		Select();
 		// 移動
 		Move();
 
@@ -148,20 +143,15 @@ void CPlayer::Update()
 
 		// 攻撃
 		PAttack();
-
-		// アイテムの取得
-		TakeItem();
 	}
 	else
 	{
 		SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 
-	static bool a = false;
-
-	if (IsDied() && !a)
+	if (IsDied() && !m_isResult)
 	{
-		a = true;
+		m_isResult = true;
 		CResult::Create();
 	}
 
@@ -191,32 +181,39 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 //--------------------------------------------------------------
 void CPlayer::PAttack()
 {
+	bool isSuccess = false;
+
 	// 通常攻撃(左クリック)
 	if (m_controller->Skill_1())
 	{
 		// 発動時に生成
-		m_skill[0]->Skill();
+		isSuccess = m_skill[0]->Skill();
 	}
 
 	// スキル1(右クリック)
 	if(m_controller->Skill_2())
 	{
 		// 発動時に生成
-		m_skill[1]->Skill();
+		isSuccess = m_skill[2]->Skill();
 	}
 
 	// スキル2(シフト)
 	if (m_controller->Skill_3())
 	{
 		// 発動時に生成
-		m_skill[1]->Skill();
+		isSuccess = m_skill[1]->Skill();
 	}
 
 	// スキル3(R)
 	if (m_controller->Skill_4())
 	{
 		// 発動時に生成
-		m_skill[2]->Skill();
+		isSuccess = m_skill[3]->Skill();
+	}
+
+	if (isSuccess)
+	{
+		m_isdash = false;
 	}
 }
 
@@ -230,17 +227,34 @@ void CPlayer::Move()
 
 	m_isskill = false;
 
+	if (m_isMoveLock)
+	{
+		SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
+	}
+
+	if (m_isMoveLock)
+	{
+		return;
+	}
+
 	if (D3DXVec3Length(&move) != 0.0f)
 	{
-		SetMoveXZ(move.x, move.z);
+		if (!m_isControl)
+		{
+			SetMoveXZ(move.x, move.z);
 
-		// カメラの方向に合わせる
-		D3DXVECTOR3 cameraVec = GetMove();
-		cameraVec.y = 0.0f;
-		cameraVec = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->VectorCombinedRot(cameraVec);
-		cameraVec *= m_movePower.GetCurrent();
-		CDebugProc::Print("Player : cameraVec(%f, %f, %f)\n", cameraVec.x, cameraVec.y, cameraVec.z);
-		SetMoveXZ(cameraVec.x, cameraVec.z);
+			// カメラの方向に合わせる
+			D3DXVECTOR3 cameraVec = GetMove();
+			cameraVec.y = 0.0f;
+			cameraVec = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->VectorCombinedRot(cameraVec);
+			cameraVec *= m_movePower.GetCurrent();
+			if (m_isdash)
+			{
+				cameraVec *= m_dashPower.GetCurrent();
+			}
+			CDebugProc::Print("Player : cameraVec(%f, %f, %f)\n", cameraVec.x, cameraVec.y, cameraVec.z);
+			SetMoveXZ(cameraVec.x, cameraVec.z);
+		}
 	}
 	else
 	{
@@ -281,8 +295,8 @@ void CPlayer::Dash()
 	if (m_isdash)
 	{
 		// ダッシュ速度
-		/*move.x *= DASH_SPEED;
-		move.z *= DASH_SPEED;*/
+		move.x *= DASH_SPEED;
+		move.z *= DASH_SPEED;
 	}
 
 	// 移動量の設定
@@ -292,21 +306,59 @@ void CPlayer::Dash()
 //--------------------------------------------------------------
 // アイテムの取得
 //--------------------------------------------------------------
-void CPlayer::TakeItem()
+void CPlayer::TakeItem(int id)
 {
-	int id = m_controller->TakeItem();
-
-	if (id < 0)
-	{
-		return;
-	}
-
 	m_haveItem[id]++;
 	CItem::ITEM_FUNC itemFunc = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)id)->GetWhenPickFunc();
+
+	CTakeItemUI* ui = new CTakeItemUI;
+	ui->Init();
+	ui->SetTakeItem((CItemDataBase::EItemType)id);
 
 	if (itemFunc != nullptr)
 	{
 		itemFunc(this, m_haveItem[id]);
+	}
+}
+
+//--------------------------------------------------------------
+// 選ぶ
+//--------------------------------------------------------------
+void CPlayer::Select()
+{
+	CMap* map = CMap::GetMap();
+
+	std::list<CSelectEntity*> list = map->GetSelectEntityList();
+
+	CSelectEntity* nearEntity;
+	float nearLength = FLT_MAX;
+
+	for (CSelectEntity* entity : list)
+	{
+		entity->NoDisplayUI();
+
+		if (entity->GetSelectCollision() == nullptr)
+		{
+			continue;
+		}
+
+		D3DXVECTOR3 diffPos = m_pos - entity->GetPos();
+		float diff = D3DXVec3Length(&diffPos);
+		if (nearLength > diff)
+		{
+			nearLength = diff;
+			nearEntity = entity;
+		}
+	}
+
+	if (nearEntity->GetSelectCollision()->ToCylinder(GetCollision()))
+	{
+		nearEntity->DisplayUI();
+
+		if (m_controller->Select())
+		{
+			nearEntity->Select(this);
+		}
 	}
 }
 

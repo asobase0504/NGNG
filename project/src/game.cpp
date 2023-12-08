@@ -81,7 +81,7 @@ HRESULT CGame::Init()
 	CInput::GetKey()->LockCursorPos(true);
 
 	// 虚無マップ
-	m_map = CMap::Create("data/FILE/map/map01.json");
+	m_map = CMap::GetMap("data/FILE/map/map01.json");
 
 	m_mapFade = CMapFade::Create();
 	m_mapFade->NextMap("data/FILE/map/map01.json");
@@ -104,9 +104,10 @@ HRESULT CGame::Init()
 	CHPUI::Create(pPlayer->GetHp());
 	CMONEYUI::Create(pPlayer->GetMoney());
 
-	CHPUI::Create(pPlayer->GetHp());
-	CMONEYUI::Create(pPlayer->GetMoney());
-	CSKILLUI::Create(pPlayer->GetSkill(0));
+	for (int i = 0; i < 4; i++)
+	{
+		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), pPlayer->GetSkill(i));
+	}
 
 	CSkinMeshGroup::GetInstance()->LoadAll();
 
@@ -116,6 +117,10 @@ HRESULT CGame::Init()
 	//m_tcp = new CClient;
 	//m_tcp->Init("127.0.0.1", 13567);
 
+	CObject2d* reticle = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	reticle->SetPos(CApplication::CENTER_POS);
+	reticle->SetSize(D3DXVECTOR3(32.f, 32.f,0.f));
+	reticle->SetTexture("RETICLE");
 	return S_OK;
 }
 
@@ -147,6 +152,17 @@ void CGame::Uninit()
 //--------------------------------------------------------------
 void CGame::Update()
 {
+	if (CApplication::GetInstance()->IsActiveWindow())
+	{
+		CInput::GetKey()->SetCursorErase(false);
+		CInput::GetKey()->LockCursorPos(true);
+	}
+	else
+	{
+		CInput::GetKey()->SetCursorErase(true);
+		CInput::GetKey()->LockCursorPos(false);
+	}
+
 	CInput* pInput;
 	pInput = CInput::GetKey();
 
@@ -183,8 +199,12 @@ void CGame::Update()
 		CModelData::SSendEnemy sendData;
 		sendData.m_pos = Player->GetPos();
 		sendData.m_rot = Player->GetRot();
-		sendData.m_haveItemLeftId = 1;
-		sendData.m_haveItemRightId = 1;
+		for (int j = 0; j < 5; j++)
+		{
+			sendData.m_haveAbnormal.abnormalData[j] = 0;
+			sendData.m_haveItem.itemData[j] = 0;
+		}
+
 		sendData.m_motion = 0;
 		sendData.m_log = 2;
 		sendData.m_pushBomComands = 0;
@@ -225,6 +245,6 @@ void CGame::ChangeMap(std::string inPath)
 
 	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
 	player->OnUpdate();
-	m_map = CMap::Create(inPath);
+	m_map = CMap::GetMap(inPath);
 	m_map->InCharacterList(player);
 }
