@@ -34,6 +34,8 @@
     <ClCompile Include="src\model_skin.cpp" />
     <ClCompile Include="src\model_skin_group.cpp" />
     <ClCompile Include="src\mode_fade.cpp" />
+    <ClCompile Include="src\number3D.cpp" />
+    <ClCompile Include="src\procedure3D.cpp" />
     <ClCompile Include="src\result.cpp" />
     <ClCompile Include="src\road.cpp" />
     <ClCompile Include="src\character_select.cpp" />
@@ -186,6 +188,7 @@
     <ClInclude Include="src\motion.h" />
     <ClInclude Include="src\motion_model3D.h" />
     <ClInclude Include="src\number.h" />
+    <ClInclude Include="src\number3D.h" />
     <ClInclude Include="src\object.h" />
     <ClInclude Include="src\object2d.h" />
     <ClInclude Include="src\objectX.h" />
@@ -201,6 +204,7 @@
     <ClInclude Include="src\player_manager.h" />
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\procedure.h" />
+    <ClInclude Include="src\procedure3D.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\result.h" />
     <ClInclude Include="src\road.h" />

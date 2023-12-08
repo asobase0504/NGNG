@@ -41,7 +41,8 @@ const D3DXVECTOR3 CObjectPolygon3D::m_Vtx[ANCHOR_MAX][4] =
 //--------------------------------------------------------------
 CObjectPolygon3D::CObjectPolygon3D(CTaskGroup::EPriority list) :
 	CObject(list,CTaskGroup::EPushMethod::PUSH_CURRENT),
-	m_vtxBuff(nullptr)
+	m_vtxBuff(nullptr),
+	m_anchor(ANCHOR_CENTER)
 {
 	D3DXMatrixIdentity(&m_mtxWorld);
 }
@@ -165,6 +166,11 @@ void CObjectPolygon3D::Draw()
 	//位置を反映
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+
+	if (m_mtxWorldParent != nullptr)
+	{
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, m_mtxWorldParent);
+	}
 
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
@@ -317,3 +323,21 @@ void CObjectPolygon3D::SetColor(const D3DXCOLOR& Collar)
 	//頂点バッファをアンロック
 	m_vtxBuff->Unlock();
 }
+
+void CObjectPolygon3D::SetTexPos(float BesideSplit, float nNumIndex)
+{
+	//頂点座標へのポインタ
+	VERTEX_3D *pVtx;
+
+	//頂点バッファをロックし頂点情報へのポインタを取得
+	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	pVtx[0].tex = D3DXVECTOR2(nNumIndex / BesideSplit, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2((nNumIndex + 1) / BesideSplit, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(nNumIndex / BesideSplit, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2((nNumIndex + 1) / BesideSplit, 1.0f);
+
+	//頂点バッファをアンロック
+	m_vtxBuff->Unlock();
+}
+

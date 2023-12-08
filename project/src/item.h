@@ -25,7 +25,7 @@ class CCharacter;
 class CItem : public CTask
 {
 public:
-	using ITEM_FUNC = void(*)(CCharacter*, int);
+	using ITEM_FUNC = std::function<void(CCharacter*, int)>;
 	using ITEM_ACTION_FUNC = void(*)(CCharacter*, int, CCharacter*);
 public:
 	CItem(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
