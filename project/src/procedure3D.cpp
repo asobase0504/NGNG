@@ -37,6 +37,7 @@ CProcedure3D::~CProcedure3D()
 //--------------------------------------------------
 HRESULT CProcedure3D::Init()
 {
+	CObject::Init();
 	return S_OK;
 }
 
@@ -45,6 +46,7 @@ HRESULT CProcedure3D::Init()
 //--------------------------------------------------
 HRESULT CProcedure3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int inNumber)
 {
+	CObject::Init();
 	m_size = size;
 
 	// 番号の設定
@@ -61,6 +63,8 @@ HRESULT CProcedure3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int inNumber
 //--------------------------------------------------
 void CProcedure3D::Update()
 {
+	CObject::Update();
+
 	//ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
 
