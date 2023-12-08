@@ -175,6 +175,9 @@ public:
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
 
+	void SetIsAtkCollision(bool is) { m_isAtkCollision = is; }
+	bool GetIsAtkCollision() { return m_isAtkCollision; }
+
 private:
 	virtual void Move();	// 移動
 	void Abnormal();		// 状態異常
@@ -209,6 +212,8 @@ protected:
 	int m_nonCombatTime;	// 非戦闘時になる時間
 	bool m_isRunning;		// 走っているかどうか
 	bool m_isElite;			// エリート
+
+	bool m_isAtkCollision;		// 攻撃を受けなくなる
 
 	STATE m_state;
 
