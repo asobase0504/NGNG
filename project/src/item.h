@@ -40,7 +40,7 @@ public:
 	void SetWhenPickFunc(ITEM_FUNC inFunc) { m_getFunc = inFunc; }					// 入手したときの処理
 	void SetWhenLostFunc(ITEM_FUNC inFunc) { m_lostFunc = inFunc; }					// 失ったときの処理
 	void SetWhenAlwaysFunc(ITEM_FUNC inFunc) { m_allwayFunc = inFunc; }				// 常時発動している処理
-	void SetWhenUseSkill(ITEM_FUNC inFunc) { m_useSkillFunc = inFunc; }				// スキルを使った時
+	void SetWhenUseSkill(ITEM_ACTION_FUNC inFunc) { m_useSkillFunc = inFunc; }				// スキルを使った時
 	void SetWhenDeathFunc(ITEM_ACTION_FUNC inFunc) { m_deathFunc = inFunc; }		// 死亡させたときの処理
 	void SetWhenReceiveFunc(ITEM_ACTION_FUNC inFunc) { m_receiveFunc = inFunc; }	// ダメージを受ける時の処理
 	void SetWhenInflictFunc(ITEM_ACTION_FUNC inFunc) { m_inflictFunc = inFunc; }	// ダメージを与えた時の処理
@@ -49,7 +49,7 @@ public:
 	ITEM_FUNC GetWhenPickFunc() { return m_getFunc; }
 	ITEM_FUNC GetWhenLostFunc() { return m_lostFunc; }
 	ITEM_FUNC GetWhenAllwaysFunc() { return m_allwayFunc; }
-	ITEM_FUNC GetWhenUseSkillFunc() { return m_useSkillFunc; }
+	ITEM_ACTION_FUNC GetWhenUseSkillFunc() { return m_useSkillFunc; }
 	ITEM_ACTION_FUNC GetWhenDeathFunc() { return m_deathFunc; }
 	ITEM_ACTION_FUNC GetWhenReceiveFunc() { return m_receiveFunc; }
 	ITEM_ACTION_FUNC GetWhenInflictFunc() { return m_inflictFunc; }
@@ -63,8 +63,8 @@ private:
 	ITEM_FUNC m_getFunc;
 	ITEM_FUNC m_lostFunc;
 	ITEM_FUNC m_allwayFunc;
-	ITEM_FUNC m_useSkillFunc;
 
+	ITEM_ACTION_FUNC m_useSkillFunc;
 	ITEM_ACTION_FUNC m_deathFunc;
 	ITEM_ACTION_FUNC m_receiveFunc;
 	ITEM_ACTION_FUNC m_inflictFunc;

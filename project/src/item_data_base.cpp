@@ -14,6 +14,8 @@
 #include "character.h"
 #include "skill.h"
 #include "gold_nugget.h"
+#include "arrow.h"
+
 #include "utility.h"
 
 //==============================================================
@@ -433,7 +435,7 @@ void CItemDataBase::Init()
 	// 敵を倒すごとに体力が永続的に1増える。最大100まで (最大 +100)TODO
 	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		inCharacter->GetHp()->AddItemEffect(1);
+		inCharacter->GetHp()->AddMaxEffect(1);
 	});
 	//--------------------------------------------------------------
 
@@ -472,9 +474,10 @@ void CItemDataBase::Init()
 	// 矢---------------------------------------------------------
 	// プライマリースキルを発動すると、矢も投げて、400%(+100%)の基礎ダメージを与える。
 	// 最大3(+1)個の矢を持つことができ、10秒経つとリロードされる
-	item->SetWhenUseSkill([](CCharacter* inCharacter, int cnt)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
+	item->SetWhenUseSkill([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 矢を発射 TODO
+		//inCharacter->GetRot()
+		//CArrow* obj = CArrow::Create();
 	});
 	//--------------------------------------------------------------
 

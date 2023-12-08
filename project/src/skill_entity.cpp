@@ -98,7 +98,7 @@ void CSkillEntity::Update()
 		}
 
 		// 自分とは違う関係を持ってるキャラクターに行なう
-		CMap::GetMap()->DoDifferentRelation(m_relation, [this, &collision,&pSkillData](CCharacter* inChara)
+		CMap::GetMap()->DoDifferentRelation(m_relation, [this, &collision, &pSkillData](CCharacter* inChara)
 		{
 			// 当たり判定
 			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
@@ -116,7 +116,7 @@ void CSkillEntity::Update()
 			m_Collision = nullptr;
 		}
 	}
-	else if(m_Duration <= 0)
+	else if (m_Duration <= 0)
 	{// 効果時間が0以下になったら消す
 		Uninit();
 	}

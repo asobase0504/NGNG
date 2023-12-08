@@ -196,9 +196,6 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		m_skill[0]->Skill();
-
-		// 通常攻撃を行ったとき
-		CItemManager::GetInstance()->AllWhenUseSkill(this, m_haveItem);
 	}
 
 	// スキル1(右クリック)
