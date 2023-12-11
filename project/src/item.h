@@ -1,4 +1,4 @@
-//**************************************************************
+ï»¿//**************************************************************
 //
 // item
 // Author: Buriya Kota
@@ -15,18 +15,19 @@
 #include "item_data_base.h"
 
 //==============================================================
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 //==============================================================
 class CCharacter;
 
 //==============================================================
-// ƒNƒ‰ƒX
+// ã‚¯ãƒ©ã‚¹
 //==============================================================
 class CItem : public CTask
 {
 public:
 	using ITEM_FUNC = std::function<void(CCharacter*, int)>;
 	using ITEM_ACTION_FUNC = std::function<void(CCharacter*, int, CCharacter*)>;
+
 public:
 	CItem(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
 	~CItem();
@@ -37,13 +38,13 @@ public:
 
 	static CItem* Create(CItemDataBase::EItemType inId);
 
-	void SetWhenPickFunc(ITEM_FUNC inFunc) { m_getFunc = inFunc; }					// “üè‚µ‚½‚Æ‚«‚Ìˆ—
-	void SetWhenLostFunc(ITEM_FUNC inFunc) { m_lostFunc = inFunc; }					// ¸‚Á‚½‚Æ‚«‚Ìˆ—
-	void SetWhenAlwaysFunc(ITEM_FUNC inFunc) { m_allwayFunc = inFunc; }				// í”­“®‚µ‚Ä‚¢‚éˆ—
-	void SetWhenUseSkill(ITEM_ACTION_FUNC inFunc) { m_useSkillFunc = inFunc; }		// ƒXƒLƒ‹‚ğg‚Á‚½
-	void SetWhenDeathFunc(ITEM_ACTION_FUNC inFunc) { m_deathFunc = inFunc; }		// €–S‚³‚¹‚½‚Æ‚«‚Ìˆ—
-	void SetWhenReceiveFunc(ITEM_ACTION_FUNC inFunc) { m_receiveFunc = inFunc; }	// ƒ_ƒ[ƒW‚ğó‚¯‚é‚Ìˆ—
-	void SetWhenInflictFunc(ITEM_ACTION_FUNC inFunc) { m_inflictFunc = inFunc; }	// ƒ_ƒ[ƒW‚ğ—^‚¦‚½‚Ìˆ—
+	void SetWhenPickFunc(ITEM_FUNC inFunc) { m_getFunc = inFunc; }					// å…¥æ‰‹ã—ãŸã¨ãã®å‡¦ç†
+	void SetWhenLostFunc(ITEM_FUNC inFunc) { m_lostFunc = inFunc; }					// å¤±ã£ãŸã¨ãã®å‡¦ç†
+	void SetWhenAlwaysFunc(ITEM_FUNC inFunc) { m_allwayFunc = inFunc; }				// å¸¸æ™‚ç™ºå‹•ã—ã¦ã„ã‚‹å‡¦ç†
+	void SetWhenUseSkill(ITEM_ACTION_FUNC inFunc) { m_useSkillFunc = inFunc; }		// ã‚¹ã‚­ãƒ«ã‚’ä½¿ã£ãŸæ™‚
+	void SetWhenDeathFunc(ITEM_ACTION_FUNC inFunc) { m_deathFunc = inFunc; }		// æ­»äº¡ã•ã›ãŸã¨ãã®å‡¦ç†
+	void SetWhenReceiveFunc(ITEM_ACTION_FUNC inFunc) { m_receiveFunc = inFunc; }	// ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ã‚‹æ™‚ã®å‡¦ç†
+	void SetWhenInflictFunc(ITEM_ACTION_FUNC inFunc) { m_inflictFunc = inFunc; }	// ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ä¸ãˆãŸæ™‚ã®å‡¦ç†
 	void SetModel(std::string str) { m_itemModelData = str; }
 
 	ITEM_FUNC GetWhenPickFunc() { return m_getFunc; }
@@ -55,7 +56,7 @@ public:
 	ITEM_ACTION_FUNC GetWhenInflictFunc() { return m_inflictFunc; }
 	std::string GetModel() { return m_itemModelData; }
 
-	// ƒŒƒAƒŠƒeƒB
+	// ãƒ¬ã‚¢ãƒªãƒ†ã‚£
 	void SetRerity(CItemDataBase::ERarity inRarity) { m_rarity = inRarity; }
 	CItemDataBase::ERarity GetRerity() { return m_rarity; }
 

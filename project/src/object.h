@@ -109,6 +109,8 @@ public:
 	void SetMtxWorld(D3DXMATRIX mtxWorld) { m_mtxWorld = mtxWorld; }	// 設定
 	const D3DXMATRIX& GetMtxWorld() { return m_mtxWorld; }				// 取得
 
+	void SetMtxWorldParent(D3DXMATRIX* mtxWorld) { m_mtxWorldParent = mtxWorld; }	// 親設定
+
 	/* テスクチャ系 */
 	void SetTexture(std::string inKey) { m_textureKey = inKey; }
 	std::string GetTexture() { return m_textureKey; }
@@ -142,14 +144,15 @@ public:
 	D3DXHANDLE			m_hCameraVec;	// カメラの向き
 
 protected:
-	D3DXVECTOR3 m_pos;		// 位置
-	D3DXVECTOR3 m_posOld;	// 過去の位置
-	D3DXVECTOR3 m_move;		// 移動量
-	D3DXVECTOR3 m_rot;		// 向き
-	D3DXVECTOR3 m_moveRot;	// 回転量
-	D3DXVECTOR3 m_size;		// 大きさ
-	D3DXCOLOR m_color;		// 色
-	D3DXMATRIX m_mtxWorld;	// ワールドマトリックス
+	D3DXVECTOR3 m_pos;				// 位置
+	D3DXVECTOR3 m_posOld;			// 過去の位置
+	D3DXVECTOR3 m_move;				// 移動量
+	D3DXVECTOR3 m_rot;				// 向き
+	D3DXVECTOR3 m_moveRot;			// 回転量
+	D3DXVECTOR3 m_size;				// 大きさ
+	D3DXCOLOR m_color;				// 色
+	D3DXMATRIX m_mtxWorld;			// ワールドマトリックス
+	D3DXMATRIX* m_mtxWorldParent;	// 親のワールドマトリックス
 
 	EType m_type;	// 種別
 	std::string m_textureKey;	// テクスチャにアクセスするキー

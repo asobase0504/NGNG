@@ -15,7 +15,7 @@
 //==============================================================
 // 前方宣言
 //==============================================================
-class CCharacter;
+class CProcedure3D;
 
 //==============================================================
 // 敵クラス
@@ -24,7 +24,7 @@ class CStatueBlood : public CStatue
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CStatueBlood(int nPriority = 3);
+	explicit CStatueBlood();
 	~CStatueBlood();
 
 	//プロトタイプ宣言
@@ -35,7 +35,11 @@ public:
 	// 静的メンバ関数
 	static CStatueBlood *Create(D3DXVECTOR3 pos);			// 血の祭壇の生成
 
+	void SetPos(const D3DXVECTOR3& inPos) override;
+
 private:	// メンバ変数
 	float m_hpSubRate;	// HPを削る割合
+	CProcedure3D* m_subRateUI;	// 必要HP割合を3D空間状に描画
+
 };
 #endif

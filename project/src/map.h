@@ -47,6 +47,7 @@ public:
 			if (m_map != nullptr)
 			{
 				m_map->Uninit();
+				m_map = nullptr;
 			}
 
 			m_map = new CMap;

@@ -63,6 +63,8 @@ public:
 	void SetColor(const D3DXCOLOR& inColor) override;
 	void SetBillboard(bool bBill) { m_bBill = bBill; }
 
+	void SetTexPos(float BesideSplit, float nNumIndex);
+
 	LPDIRECT3DVERTEXBUFFER9 GetVtx() { return m_vtxBuff; }	// 頂点バッファの取得
 	const D3DXVECTOR3& GetNormal() const { return m_normal; }
 

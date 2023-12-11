@@ -12,6 +12,7 @@
 #include "debug_proc.h"
 #include "application.h"
 #include "renderer.h"
+#include "input.h"
 
 //==============================================================
 // 静的メンバ変数の定義
@@ -51,9 +52,23 @@ void CDebugProc::Print(const char *pFormat, ...)
 //--------------------------------------------------------------
 void CDebugProc::Draw(void)
 {
+	if (CInput::GetKey()->Trigger(DIK_0, -1))
+	{
+		m_use = !m_use;
+	}
+
 	if (!m_use)
 	{
+#ifdef _DEBUG
+		// テキスト描画
+		RECT rect = { 0, 0, 1280, 720 };
+		m_font->DrawText(NULL, "【 0 】 : 表示\n", -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0x00, 0xff, 0x00));
+#endif // _DEBUG
 		return;
+	}
+	else
+	{
+		m_str = "【 0 】 : 非表示\n" + m_str;
 	}
 
 	RECT rect = { 0, 0, 1280, 720 };

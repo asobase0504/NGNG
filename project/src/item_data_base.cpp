@@ -42,8 +42,8 @@ void CItemDataBase::Init()
 	for (int i = 0; i < ITEM_MAX; i++)
 	{
 		m_item[i] = CItem::Create((EItemType)i);
-		m_itemInfo[i][0] = "だんご";
-		m_itemInfo[i][1] = "ＨＰが増える";
+		m_itemInfo[i][0] = "未記入----";
+		m_itemInfo[i][1] = "--効果--\n改行";
 		m_itemInfo[i][2] = "ITEM_DANGO_O1";
 	}
 
