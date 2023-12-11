@@ -45,9 +45,11 @@ public:
 
 	void AllWhenPick(CCharacter*,item_count);
 	void AllWhenLost(CCharacter*, item_count);
-	void AllWhenAllWay(CCharacter*, item_count);
-	void AllWhenDamage(CCharacter*, item_count, CCharacter*);
-	void AllWhenHit(CCharacter*, item_count, CCharacter*);
+	void AllWhenAllways(CCharacter*, item_count);
+	void AllWhenUseSkill(CCharacter*, item_count, CCharacter*);
+	void AllWhenDeath(CCharacter*, item_count, CCharacter*);
+	void AllWhenReceive(CCharacter*, item_count, CCharacter*);
+	void AllWhenInflict(CCharacter*, item_count, CCharacter*);
 
 private:
 	// アイテムのタイプ

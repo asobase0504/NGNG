@@ -30,6 +30,7 @@
 // アイテム
 #include "item.h"
 #include "item_data_base.h"
+#include "item_manager.h"
 
 #include "select_entity.h"
 

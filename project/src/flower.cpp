@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// item_data
+// arrow.cpp
 // Author: Buriya Kota
 //
 //**************************************************************
@@ -8,41 +8,57 @@
 //==============================================================
 // include
 //==============================================================
-#include "gold_nugget.h"
+#include "flower.h"
 
+// main
 #include "application.h"
+
+// mode
 #include "game.h"
+
+// collision
+#include "collision_sphere.h"
+
+// object
 #include "player.h"
 #include "PlayerController.h"
 
-#include "collision_box.h"
+//==============================================================
+// 定数宣言
+//==============================================================
+const int CFlower::INTERVAL(300);
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CGoldNugget::CGoldNugget(CTaskGroup::EPriority list)
+CFlower::CFlower(CTaskGroup::EPriority list) : m_collision(nullptr), m_healingCount(0)
 {
 }
 
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CGoldNugget::~CGoldNugget()
+CFlower::~CFlower()
 {
 }
 
 //--------------------------------------------------------------
 // 初期化
 //--------------------------------------------------------------
-HRESULT CGoldNugget::Init()
+HRESULT CFlower::Init()
+{
+	return S_OK;
+}
+
+//--------------------------------------------------------------
+// 初期化(オーバーロード)
+//--------------------------------------------------------------
+HRESULT CFlower::Init(const D3DXVECTOR3& inPos, const float& inHeight)
 {
 	CObjectX::Init();
 
 	LoadModel("BOX");
-
-	// 当たり判定
-	m_collision = CCollisionBox::Create(GetPos(), GetRot(), D3DXVECTOR3(10.0f, 10.0f, 10.0f), GetMtxWorld());
-	m_collision->SetParent(&m_pos);
+	m_collision = CCollisionSphere::Create(inPos, inHeight);
 
 	return S_OK;
 }
@@ -50,7 +66,7 @@ HRESULT CGoldNugget::Init()
 //--------------------------------------------------------------
 // 終了
 //--------------------------------------------------------------
-void CGoldNugget::Uninit()
+void CFlower::Uninit()
 {
 	CObjectX::Uninit();
 }
@@ -58,45 +74,50 @@ void CGoldNugget::Uninit()
 //--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
-void CGoldNugget::Update()
+void CFlower::Update()
 {
-	Get_();
-
 	CObjectX::Update();
+
+	m_healingCount++;
+	if (m_healingCount > INTERVAL)
+	{
+		HealingArea_();
+		m_healingCount = 0;
+	}
 }
 
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CGoldNugget* CGoldNugget::Create()
+CFlower* CFlower::Create(const D3DXVECTOR3& inPos, const float& inHeight)
 {
-	CGoldNugget* pGoldNugget = nullptr;
-	pGoldNugget = new CGoldNugget;
+	CFlower* pFlower = nullptr;
+	pFlower = new CFlower;
 
-	if (pGoldNugget != nullptr)
+	if (pFlower != nullptr)
 	{
-		pGoldNugget->Init();
+		pFlower->Init(inPos, inHeight);
+		pFlower->SetPos(inPos);
 	}
 	else
 	{
 		assert(false);
 	}
 
-	return pGoldNugget;
+	return pFlower;
 }
 
 //--------------------------------------------------------------
-// 取得したとき
+// 回復するエリア
 //--------------------------------------------------------------
-void CGoldNugget::Get_()
+void CFlower::HealingArea_()
 {
 	CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
 	CPlayer* player = game->GetController()->GetToOrder();
 
 	CInput* input = CInput::GetKey();
-	if (player->GetCollision()->ToBox(m_collision, false))
+	if (player->GetCollision()->ToSphere(m_collision))
 	{
-		player->GetMoney()->AddCurrent(30);
-		this->Uninit();
+		player->Heal(20);
 	}
 }

@@ -101,8 +101,8 @@ void CItemManager::CreateRandomItemRarity(const D3DXVECTOR3 & inPos, const D3DXM
 		rarity = CItemDataBase::GetInstance()->GetItemData(id)->GetRerity();
 	}
 
-	//CreateItem(inPos, boxmtx, CItemDataBase::ITEM_KOBAN);
-	CreateItem(inPos, boxmtx, (CItemDataBase::EItemType)id);
+	CreateItem(inPos, boxmtx, CItemDataBase::ITEM_FLOWER);
+	//CreateItem(inPos, boxmtx, (CItemDataBase::EItemType)id);
 }
 
 //--------------------------------------------------------------
@@ -182,7 +182,7 @@ void CItemManager::AllWhenLost(CCharacter* inCharacter, item_count inItem)
 //--------------------------------------------------------------
 // 常時全アイテム
 //--------------------------------------------------------------
-void CItemManager::AllWhenAllWay(CCharacter* inCharacter, item_count inItem)
+void CItemManager::AllWhenAllways(CCharacter* inCharacter, item_count inItem)
 {
 	CItemDataBase* dataBase = CItemDataBase::GetInstance();
 
@@ -194,7 +194,7 @@ void CItemManager::AllWhenAllWay(CCharacter* inCharacter, item_count inItem)
 		}
 
 		CItem* item = dataBase->GetItemData((CItemDataBase::EItemType)i);
-		CItem::ITEM_FUNC func = item->GetWhenAllWayFunc();
+		CItem::ITEM_FUNC func = item->GetWhenAllwaysFunc();
 
 		if (func == nullptr)
 		{
@@ -205,10 +205,7 @@ void CItemManager::AllWhenAllWay(CCharacter* inCharacter, item_count inItem)
 	}
 }
 
-//--------------------------------------------------------------
-// ダメージを受けた時全アイテム
-//--------------------------------------------------------------
-void CItemManager::AllWhenDamage(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
+void CItemManager::AllWhenUseSkill(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
 {
 	CItemDataBase* dataBase = CItemDataBase::GetInstance();
 
@@ -220,7 +217,59 @@ void CItemManager::AllWhenDamage(CCharacter* inCharacter, item_count inItem, CCh
 		}
 
 		CItem* item = dataBase->GetItemData((CItemDataBase::EItemType)i);
-		CItem::ITEM_ACTION_FUNC func = item->GetWhenDamageFunc();
+		CItem::ITEM_ACTION_FUNC func = item->GetWhenDeathFunc();
+
+		if (func == nullptr)
+		{
+			continue;
+		}
+
+		func(inCharacter, inItem[i], outCharacter);
+	}
+}
+
+//--------------------------------------------------------------
+// 死亡させたときに発動するアイテム
+//--------------------------------------------------------------
+void CItemManager::AllWhenDeath(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
+{
+	CItemDataBase* dataBase = CItemDataBase::GetInstance();
+
+	for (int i = 0; i < CItemDataBase::ITEM_MAX; i++)
+	{
+		if (inItem[i] == 0)
+		{
+			continue;
+		}
+
+		CItem* item = dataBase->GetItemData((CItemDataBase::EItemType)i);
+		CItem::ITEM_ACTION_FUNC func = item->GetWhenDeathFunc();
+
+		if (func == nullptr)
+		{
+			continue;
+		}
+
+		func(inCharacter, inItem[i], outCharacter);
+	}
+}
+
+//--------------------------------------------------------------
+// ダメージを受けた時全アイテム
+//--------------------------------------------------------------
+void CItemManager::AllWhenReceive(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
+{
+	CItemDataBase* dataBase = CItemDataBase::GetInstance();
+
+	for (int i = 0; i < CItemDataBase::ITEM_MAX; i++)
+	{
+		if (inItem[i] == 0)
+		{
+			continue;
+		}
+
+		CItem* item = dataBase->GetItemData((CItemDataBase::EItemType)i);
+		CItem::ITEM_ACTION_FUNC func = item->GetWhenReceiveFunc();
 
 		if (func == nullptr)
 		{
@@ -231,7 +280,7 @@ void CItemManager::AllWhenDamage(CCharacter* inCharacter, item_count inItem, CCh
 	}
 }
 
-void CItemManager::AllWhenHit(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
+void CItemManager::AllWhenInflict(CCharacter* inCharacter, item_count inItem, CCharacter* outCharacter)
 {
 	CItemDataBase* dataBase = CItemDataBase::GetInstance();
 
@@ -243,7 +292,7 @@ void CItemManager::AllWhenHit(CCharacter* inCharacter, item_count inItem, CChara
 		}
 
 		CItem* item = dataBase->GetItemData((CItemDataBase::EItemType)i);
-		CItem::ITEM_ACTION_FUNC func = item->GetWhenHitFunc();
+		CItem::ITEM_ACTION_FUNC func = item->GetWhenInflictFunc();
 
 		if (func == nullptr)
 		{

@@ -1,11 +1,11 @@
 //**************************************************************
 //
-// arrow.h
+// flower
 // Author: Buriya Kota
 //
 //**************************************************************
-#ifndef _ARROW_H_
-#define _ARROW_H_
+#ifndef _FLOWER_H_
+#define _FLOWER_H_
 
 //==============================================================
 // include
@@ -15,29 +15,34 @@
 //==============================================================
 // ëOï˚êÈåæ
 //==============================================================
-class CCollisionBox;
-class CCharacter;
+class CCollisionSphere;
 
 //==============================================================
 // ÉNÉâÉX
 //==============================================================
-class CArrow : public CObjectX
+class CFlower : public CObjectX
 {
 public:
-	CArrow(CTaskGroup::EPriority list = CTaskGroup::LEVEL_3D_1);
-	~CArrow();
+	static const int INTERVAL;
+public:
+	CFlower(CTaskGroup::EPriority list = CTaskGroup::LEVEL_3D_1);
+	~CFlower();
 
 	HRESULT Init() override;
+	HRESULT Init(const D3DXVECTOR3& inPos, const float& inHeight);
+
+	void Uninit() override;
 	void Update() override;
 
-	static CArrow* Create(const D3DXVECTOR3& move);
-
-	bool GetIsHit() { return m_isHit; }
-
-	//void HitEnemy_(CCharacter* inEnemy, int damage);
+	static CFlower* Create(const D3DXVECTOR3& inPos, const float& inHeight);
 
 private:
-	CCollisionBox* m_collision;
-	bool m_isHit;
+	void HealingArea_();
+
+private:
+	CCollisionSphere* m_collision;
+
+	// âÒïúÇ∑ÇÈä‘äu
+	int m_healingCount;
 };
-#endif	// _GOLD_NUGGET_H_
+#endif	// _FLOWER_H_

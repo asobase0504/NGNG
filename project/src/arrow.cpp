@@ -58,7 +58,7 @@ void CArrow::Update()
 //--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
-CArrow* CArrow::Create()
+CArrow* CArrow::Create(const D3DXVECTOR3& move)
 {
 	CArrow* arrow = nullptr;
 	arrow = new CArrow;
@@ -66,6 +66,7 @@ CArrow* CArrow::Create()
 	if (arrow != nullptr)
 	{
 		arrow->Init();
+		arrow->SetMove(move);
 	}
 	else
 	{
@@ -76,10 +77,13 @@ CArrow* CArrow::Create()
 }
 
 //--------------------------------------------------------------
-// 当たったか
+// エネミーに当たったら
 //--------------------------------------------------------------
-//bool CArrow::HitEnemy(CCharacter* enemy)
+//void CArrow::HitEnemy_(CCharacter* inEnemy,int damage)
 //{
-//	//CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
-//	//return m_collision->ToCylinder(enemy->GetCollision());
+//	if (inEnemy->GetCollision->ToBox(m_collision, false))
+//	{
+//		inEnemy->Damage(damage);
+//		this->Uninit();
+//	}
 //}

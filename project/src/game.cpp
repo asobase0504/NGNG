@@ -77,8 +77,8 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init()
 {
-	//CInput::GetKey()->SetCursorErase(false);
-	CInput::GetKey()->LockCursorPos(false);
+	CInput::GetKey()->SetCursorErase(false);
+	CInput::GetKey()->LockCursorPos(true);
 
 	// 虚無マップ
 	m_map = CMap::GetMap("data/FILE/map/map01.json");

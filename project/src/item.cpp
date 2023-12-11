@@ -18,8 +18,9 @@ CItem::CItem(CTaskGroup::EPriority list) :
 	m_getFunc(nullptr),
 	m_lostFunc(nullptr),
 	m_allwayFunc(nullptr),
-	m_damageFunc(nullptr),
-	m_hitFunc(nullptr),
+	m_deathFunc(nullptr),
+	m_receiveFunc(nullptr),
+	m_inflictFunc(nullptr),
 	m_rarity(CItemDataBase::RARITY_NONE)
 {
 }

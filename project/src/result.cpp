@@ -38,6 +38,9 @@ CResult::~CResult()
 //--------------------------------------------------------------
 HRESULT CResult::Init()
 {
+	CInput::GetKey()->SetCursorErase(true);
+	CInput::GetKey()->LockCursorPos(false);
+
 	D3DXVECTOR3 center = CApplication::CENTER_POS;
 
 	{// タイトルへ行くボタンの位置
