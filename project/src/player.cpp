@@ -155,6 +155,8 @@ void CPlayer::Update()
 		CResult::Create();
 	}
 
+	SetRot(D3DXVECTOR3(0.0f, ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot().y, 0.0f));
+
 	// 更新処理
 	CCharacter::Update();
 

@@ -421,6 +421,12 @@ void CCharacter::Died()
 	CMap::GetMap()->SetCharacterList(list);
 }
 
+void CCharacter::SetDisplay(bool display)
+{
+	CObject::SetDisplay(display);
+	m_apModel[0]->SetDisplay(display);
+}
+
 //--------------------------------------------------------------
 // 移動量
 //--------------------------------------------------------------

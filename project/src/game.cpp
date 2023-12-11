@@ -119,7 +119,7 @@ HRESULT CGame::Init()
 
 	CObject2d* reticle = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	reticle->SetPos(CApplication::CENTER_POS);
-	reticle->SetSize(D3DXVECTOR3(32.f, 32.f,0.f));
+	reticle->SetSize(D3DXVECTOR3(16.f, 16.f,0.f));
 	reticle->SetTexture("RETICLE");
 	return S_OK;
 }
