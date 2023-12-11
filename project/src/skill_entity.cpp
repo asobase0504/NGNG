@@ -87,8 +87,9 @@ void CSkillEntity::Update()
 		// 無敵時間の減少
 		m_Invincible--;
 
-		if (m_Interval > 0)
-		{// 無敵状態にする
+		if (m_Invincible > 0)
+		{// 無敵状態にする(プレイヤーが見えなくなり、ダメージを受けなくなる)
+			m_apChara->SetDisplay(false);
 		}
 
 		// インターバル0以下で当たり判定がなかったら当たり判定を生成する
@@ -124,7 +125,21 @@ void CSkillEntity::Update()
 		}
 	}
 	else if(m_Duration <= 0)
-	{// 効果時間が0以下になったら消す
+	{// 効果時間が0以下になったら
+		if (m_apChara->GetControlLock())
+		{//	プレイヤーの操作が無効化されていたら有効化
+			m_apChara->SetControlLock(false);
+		}
+		if (m_apChara->GetMoveLock())
+		{//	プレイヤーの移動が無効化されていたら有効化
+			m_apChara->SetMoveLock(false);
+		}
+
+		if (m_Collision != nullptr)
+		{// 当たり判定が残っていたら
+			m_Collision->Uninit();
+			m_Collision = nullptr;
+		}
 		Uninit();
 	}
 

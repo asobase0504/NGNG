@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// スキル(回転切り)
+// スキル(マーセナリーのR)
 // Author : 髙野馨將
 //
 //**************************************************************
@@ -56,6 +56,12 @@ void CYamatoSkill_4::InitAbility()
 		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
 		vecNor *= 1.5f;			// 移動させたい値を入れる
 		m_apChara->SetPos(m_apChara->GetPos() + vecNor);
+
+		// プレイヤーの位置を固定
+		m_apChara->SetMoveLock(true);
+		// プレイヤーの操作を無効化
+		m_apChara->SetControlLock(true);
+		m_apChara->SetMove(D3DXVECTOR3(0.0f,0.0f, 0.0f));
 	}
 }
 
