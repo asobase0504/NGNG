@@ -35,6 +35,7 @@
 // 定数宣言
 //==============================================================
 const int CCharacter::MAX_SKILL(4);
+const int CCharacter::MAX_NON_COMBAT_TIME(300);
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -74,6 +75,7 @@ HRESULT CCharacter::Init()
 	m_isElite = false;
 	m_isMoveLock = false;
 	m_isControl = false;
+	m_isTeleporter = false;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
@@ -149,13 +151,10 @@ void CCharacter::Update()
 	// 更新処理
 	CObject::Update();
 
-	Collision();
+	// 常に起動するアイテム
+	CItemManager::GetInstance()->AllWhenAllways(this, m_haveItem);
 
-	if (m_hp.GetCurrent() <= 0)
-	{
-		// 死亡処理
-		Died();
-	}
+	Collision();
 
 	if (!m_isMoveLock)
 	{
@@ -168,6 +167,17 @@ void CCharacter::Update()
 
 	// 自動回復
 	Regenation();
+
+	if (!m_nonCombat)
+	{// 非戦闘時にする
+		m_nonCombatTime++;
+
+		if (m_nonCombatTime > MAX_NON_COMBAT_TIME)
+		{
+			m_nonCombat = true;
+			m_nonCombatTime = 0;
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -257,21 +267,33 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 //--------------------------------------------------------------
 void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 {
-	// ダメージを与えた処理
-	CItemManager::GetInstance()->AllWhenDamage(this, m_haveItem, pEnemy);
-	// ダメージを受けた処理
-	CItemManager::GetInstance()->AllWhenHit(pEnemy, pEnemy->m_haveItem, this);
-
-	// プレイヤーのダメージを計算
-	int Damage = CalDamage(SkillMul);
+	m_nonCombat = false;
 
 	if (IsSuccessRate(m_criticalRate.GetMax()))
+	{// クリティカルかどうか
+		m_isCritical = true;
+	}
+
+	// ダメージを与えた処理
+	CItemManager::GetInstance()->AllWhenReceive(pEnemy, pEnemy->m_haveItem, this);
+	// ダメージを受けた処理
+	CItemManager::GetInstance()->AllWhenInflict(this, m_haveItem, pEnemy);
+	
+	// プレイヤーのダメージを計算
+	int damage = CalDamage(SkillMul);
+
+	if(m_isCritical)
 	{
- 		Damage *= m_criticalDamage.GetMax();
+		damage *= m_criticalDamage.GetMax();
 	}
 
 	// エネミーにダメージを与える。
-	pEnemy->Damage(Damage);
+	pEnemy->Damage(damage);
+
+	if (pEnemy->IsDied())
+	{// ダメージを受けた処理
+		CItemManager::GetInstance()->AllWhenDeath(this, m_haveItem, pEnemy);
+	}
 
 	// 攻撃付与されている状態異常を作動させる
 	for (int i = 0; i < m_attackAbnormal.size(); i++)
@@ -324,6 +346,11 @@ void CCharacter::Damage(const int inDamage)
 	CDamegeUI::Create(pos,D3DXCOLOR(1.0f,1.0f,1.0f,1.0f),dmg);
 
 	hp->AddCurrent(-dmg);
+
+	if (m_hp.GetCurrent() <= 0)
+	{// 死亡処理
+		Died();
+	}
 }
 
 //--------------------------------------------------------------

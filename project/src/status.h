@@ -83,6 +83,8 @@ public:
 	void ResetItemEffect(T inAdd) { m_addItem = 0; CalStatus(); }
 	void AddBuffEffect(T inAdd) { m_addBuff += inAdd; CalStatus(); }
 	void ResetBuffEffect(T inAdd) { m_addBuff = 0; CalStatus(); }
+	void AddMaxEffect(T inAdd) { m_max += inAdd; CalStatus(); }
+	void ResetMaxEffect(T inAdd) { m_max = 0; CalStatus(); }
 
 	void AttachMax() { m_isMax = true; }
 private:	// メンバ変数
