@@ -40,7 +40,7 @@ void CItemDataBase::Init()
 	{
 		m_item[i] = CItem::Create((EItemType)i);
 		m_itemInfo[i][0] = "未記入----";
-		m_itemInfo[i][1] = "--効果--";
+		m_itemInfo[i][1] = "--効果--\n改行";
 		m_itemInfo[i][2] = "ITEM_DANGO_O1";
 	}
 
