@@ -60,7 +60,7 @@ void CGoldNugget::Uninit()
 //--------------------------------------------------------------
 void CGoldNugget::Update()
 {
-	Hit_();
+	Get_();
 
 	CObjectX::Update();
 }
@@ -88,7 +88,7 @@ CGoldNugget* CGoldNugget::Create()
 //--------------------------------------------------------------
 // Žæ“¾‚µ‚½‚Æ‚«
 //--------------------------------------------------------------
-void CGoldNugget::Hit_()
+void CGoldNugget::Get_()
 {
 	CGame* game = (CGame*)CApplication::GetInstance()->GetModeClass();
 	CPlayer* player = game->GetController()->GetToOrder();
@@ -96,11 +96,7 @@ void CGoldNugget::Hit_()
 	CInput* input = CInput::GetKey();
 	if (player->GetCollision()->ToBox(m_collision, false))
 	{
-		if (input->Trigger(DIK_F))
-		{
-			player->GetMoney()->AddCurrent(30);
-
-			this->Uninit();
-		}
+		player->GetMoney()->AddCurrent(30);
+		this->Uninit();
 	}
 }

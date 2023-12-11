@@ -35,7 +35,7 @@ public:
 	static CGoldNugget* Create();
 
 private:
-	void Hit_();
+	void Get_();
 
 private:
 	CCollisionBox* m_collision;

@@ -33,6 +33,7 @@ class CCharacter : public CObject
 public:
 
 	static const int MAX_SKILL;
+	static const int MAX_NON_COMBAT_TIME;
 
 	enum class ERelation
 	{
@@ -68,6 +69,8 @@ public:
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
 
+	virtual void TakeItem(int id) {}	// アイテムを拾う
+
 	// 移動制御
 	void SetMoveLock(bool isLock) { m_isMoveLock = isLock; }
 	bool GetMoveLock() { return m_isMoveLock; }
@@ -90,7 +93,7 @@ public:
 
 	// 死亡状態か否か。
 	bool IsDied() { return m_isDied; }
-	void Died();
+	virtual void Died();
 
 	// 状態異常
 	int GetAbnormalTypeCount();	// 状態異常の種類のカウント
@@ -173,6 +176,14 @@ public:
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
 
+	// テレポーターを起動したかどうか
+	bool GetIsTeleporter() { return m_isTeleporter; }
+	void SetIsTeleporter(bool isTeleporter) { m_isTeleporter = isTeleporter; }
+  
+	// 攻撃の当たり判定を行なうかどうか
+	void SetIsAtkCollision(bool is) { m_isAtkCollision = is; }
+	bool GetIsAtkCollision() { return m_isAtkCollision; }
+
 private:
 	virtual void Move();	// 移動
 	void Abnormal();		// 状態異常
@@ -207,6 +218,9 @@ protected:
 	int m_nonCombatTime;	// 非戦闘時になる時間
 	bool m_isRunning;		// 走っているかどうか
 	bool m_isElite;			// エリート
+	bool m_isTeleporter;	// テレポーターを起動したかどうか
+
+	bool m_isAtkCollision;		// 攻撃を受けなくなる
 
 	STATE m_state;
 

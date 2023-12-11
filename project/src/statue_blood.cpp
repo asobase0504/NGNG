@@ -5,20 +5,20 @@
 //
 //**************************************************************
 
+//==============================================================
 // include
+//==============================================================
 #include "statue_blood.h"
 #include "statue_manager.h"
 #include "player_manager.h"
-#include "input.h"
-#include "map.h"
-#include "collision_mesh.h"
-#include "collision_box.h"
-#include "object_mesh.h"
+#include "select_ui.h"
+#include "procedure3D.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueBlood::CStatueBlood(int nPriority)
+CStatueBlood::CStatueBlood():
+	m_subRateUI(nullptr)
 {
 
 }
@@ -42,47 +42,51 @@ HRESULT CStatueBlood::Init()
 
 	CStatue::Init(pos, rot);
 	LoadModel("STATUE_BLOOD");
-	m_bOnce = false;
+
+	m_hpSubRate = 0.1f;
+
+	int percent = (int)(m_hpSubRate * 100);
+
+	m_uiText = "血を捧げろ。[" + std::to_string(percent) + "%]";
+
+	m_subRateUI = CProcedure3D::Create(pos, D3DXVECTOR3(4.0f, 4.0f, 0.0f), percent);
+	SetEndChildren(m_subRateUI);
+	m_subRateUI->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+
 
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// 更新処理
+// 選択されたとき
 //--------------------------------------------------------------
-void CStatueBlood::Update()
+bool CStatueBlood::Select(CCharacter* selectCharacter)
 {
-	// プレイヤー情報取得
-	CInput* input = CInput::GetKey();
-	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int>* playerHp = pPlayer->GetHp();
-	CStatus<int>* playerMoney = pPlayer->GetMoney();
+	CCharacter* character = selectCharacter;
+	CStatus<int>* hp = character->GetHp();
+	CStatus<int>* money = character->GetMoney();
+	// プレイヤーのHPとお金を調整して設定
 
-	// プレイヤーが触れている時
-	if (Touch())
+	int max = hp->GetMax();
+	int point = (int)(max * m_hpSubRate);
+	hp->AddCurrent(-point);
+	money->AddCurrent(point);
+
+	m_hpSubRate *= 2.5f;
+	int percent = (int)(m_hpSubRate * 100);
+	m_uiText = "血を捧げろ。[" + std::to_string(percent) + "%]";
+
+	m_subRateUI->SetNumber(percent);
+
+	if (m_hpSubRate >= 1.0f)
 	{
-		if (!m_bOnce)
-		{
-			// プレイヤーのHPとお金を調整して設定
-			playerHp->AddCurrent(-10);
-			playerMoney->AddCurrent(10);
-
-			m_bOnce = true;
-		}
-		else
-		{
-			m_bOnce = false;
-		}
+		m_collisionCylinder->Uninit();
+		m_collisionCylinder = nullptr;
+		m_subRateUI->Uninit();
+		m_subRateUI = nullptr;
 	}
 
-	// 更新処理
-	CStatue::Update();
-
-#ifdef _DEBUG
-#if 0
-	CDebugProc::Print("BloodPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
-#endif // 0
-#endif // _DEBUG
+	return true;
 }
 
 //--------------------------------------------------------------
@@ -96,4 +100,24 @@ CStatueBlood* CStatueBlood::Create(D3DXVECTOR3 pos)
 	pStatueblood->Init();
 
 	return pStatueblood;
+}
+
+
+//--------------------------------------------------------------
+// 位置
+//--------------------------------------------------------------
+void CStatueBlood::SetPos(const D3DXVECTOR3 & inPos)
+{
+	if (m_subRateUI != nullptr)
+	{
+		m_subRateUI->SetPos(inPos);
+
+		D3DXVECTOR3 vector = D3DXVECTOR3(0.0f, 0.0f, 10.0f);
+		D3DXMATRIX mtxRot;
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+		D3DXVec3TransformCoord(&vector, &vector, &mtxRot);
+		m_subRateUI->AddPos(vector);
+		m_subRateUI->AddPos(D3DXVECTOR3(0.0f, 10.0f, 0.0f));
+	}
+	CStatue::SetPos(inPos);
 }

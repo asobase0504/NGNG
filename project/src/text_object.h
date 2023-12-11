@@ -19,7 +19,7 @@ public:
 	HRESULT Init() override;
 	void Uninit() override;
 	void Update() override;
-	static CText* Create(D3DXVECTOR3 setPos, D3DXVECTOR3 SetSize, int DeleteTime, int SpeedText, const char * Text, CFont::FONT Type = CFont::FONT_GON, int wordsPopCountX = 0, bool Nottimerdelete = false);
+	static CText* Create(D3DXVECTOR3 setPos, D3DXVECTOR3 SetSize, int DeleteTime, int SpeedText, const char * Text, CFont::FONT Type = CFont::FONT_MYOUTYOU, int wordsPopCountX = 0, bool Nottimerdelete = false);
 	static CText* Create(const D3DXVECTOR2& inPos, const D3DXVECTOR2& inSize,const char * Text);
 	void Releasetimer(int nTimar);
 	void CText::Setfunc(std::function<void(void) > func);

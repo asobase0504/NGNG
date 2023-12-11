@@ -14,6 +14,9 @@
 #include "character.h"
 #include "skill.h"
 #include "gold_nugget.h"
+#include "arrow.h"
+#include "flower.h"
+
 #include "utility.h"
 
 //==============================================================
@@ -24,7 +27,7 @@ CItemDataBase* CItemDataBase::m_instance(nullptr);
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemDataBase::CItemDataBase()
+CItemDataBase::CItemDataBase() : m_countKill(0), m_maxAddLife(0)
 {
 }
 
@@ -39,11 +42,17 @@ void CItemDataBase::Init()
 	for (int i = 0; i < ITEM_MAX; i++)
 	{
 		m_item[i] = CItem::Create((EItemType)i);
+		m_itemInfo[i][0] = "未記入----";
+		m_itemInfo[i][1] = "--効果--\n改行";
+		m_itemInfo[i][2] = "ITEM_DANGO_O1";
 	}
 
 	item = m_item[ITEM_DANGO];
-	item->SetModel("ITEM_DANGO");
+	item->SetModel("BOX");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_DANGO][0] = "だんご";
+	m_itemInfo[ITEM_DANGO][1] = "ＨＰが増える";
+	m_itemInfo[ITEM_DANGO][2] = "ITEM_DANGO_O1";
 	// だんごの設定-------------------------------------------------
 	/* HP+50(+50)増加 */
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
@@ -59,6 +68,9 @@ void CItemDataBase::Init()
 	item = m_item[ITEM_GETA];
 	item->SetModel("ITEM_GETA");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_GETA][0] = "下駄";
+	m_itemInfo[ITEM_GETA][1] = "移動速度が増える";
+	m_itemInfo[ITEM_GETA][2] = "ITEM_DANGO_O1";
 	// 下駄の設定----------------------------------------------------
 	/* 移動速度増加+0.15(0.15) */
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
@@ -74,6 +86,9 @@ void CItemDataBase::Init()
 	item = m_item[ITEM_UMBRELLA];
 	item->SetModel("ITEM_UMBRELLA");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_UMBRELLA][0] = "傘";
+	m_itemInfo[ITEM_UMBRELLA][1] = "防御力が増える";
+	m_itemInfo[ITEM_UMBRELLA][2] = "ITEM_DANGO_O1";
 	// 傘の設定-----------------------------------------------------
 	/* 防御力を+5(+5)する */
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
@@ -89,6 +104,9 @@ void CItemDataBase::Init()
 	item = m_item[ITEM_HYOUTAN];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_HYOUTAN][0] = "ひょうたん";
+	m_itemInfo[ITEM_HYOUTAN][1] = "攻撃速度と移動速度が増える";
+	m_itemInfo[ITEM_HYOUTAN][2] = "ITEM_DANGO_O1";
 	// ひょうたん---------------------------------------------------
 	/* 攻撃速度と移動速度を +0.075%(0.075)ずつする */
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
@@ -106,6 +124,9 @@ void CItemDataBase::Init()
 	item = m_item[ITEM_BANBOO_WATERBOX];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_BANBOO_WATERBOX][0] = "竹の水筒";
+	m_itemInfo[ITEM_BANBOO_WATERBOX][1] = "攻撃速度が増える";
+	m_itemInfo[ITEM_BANBOO_WATERBOX][2] = "ITEM_DANGO_O1";
 	// 竹の水筒-----------------------------------------------------
 	/* 攻撃速度を+0.15%(0.15)ずつする */
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
@@ -121,28 +142,34 @@ void CItemDataBase::Init()
 	item = m_item[ITEM_OMAMORI];
 	item->SetModel("ITEM_OMAMORI");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_OMAMORI][0] = "お守り";
+	m_itemInfo[ITEM_OMAMORI][1] = "クリティカル率が増える";
+	m_itemInfo[ITEM_OMAMORI][2] = "ITEM_DANGO_O1";
 	// お守り-------------------------------------------------------
-	/* 攻撃速度を+0.1%(0.1%)する */
+	/* クリティカル率を10%(+10%)上昇させる。 */
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	
-		inCharacter->GetAtkSpd()->AddItemEffect(0.1f);
+		inCharacter->GetCriticalRate()->AddItemEffect(0.1f);
 	});
 	item->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	
-		inCharacter->GetAtkSpd()->AddItemEffect(-0.1f);
+		inCharacter->GetCriticalRate()->AddItemEffect(-0.1f);
 	});
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_KIBORI];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_KIBORI][0] = "熊の木彫り";
+	m_itemInfo[ITEM_KIBORI][1] = "確率でブロックする";
+	m_itemInfo[ITEM_KIBORI][2] = "ITEM_DANGO_O1";
 	// 熊の木彫り---------------------------------------------
 	item->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{
-		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+	{// 15%(+15%)の確率でブロックする。
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{
 			if (IsSuccessRate(0.15f))
-			{// 15%の確率でブロックする。
+			{// 15%の確率
 				inCharacter->DamageBlock(true);
 				break;
 			}
@@ -153,13 +180,16 @@ void CItemDataBase::Init()
 	item = m_item[ITEM_BAKUTIKU];
 	item->SetModel("ITEM_BAKUTIKU");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_BAKUTIKU][0] = "ばくちく";
+	m_itemInfo[ITEM_BAKUTIKU][1] = "スタンさせる";
+	m_itemInfo[ITEM_BAKUTIKU][2] = "ITEM_DANGO_O1";
 	// ばくちく(保留)-----------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{
-		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+	{// 攻撃時に5%の確率で敵を2秒間スタンさせる。
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{
 			if (IsSuccessRate(0.05f))
-			{// 攻撃時に5%の確率でスタンさせる。
+			{// 5%の確率
 				outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_STUN, true);
 				break;
 			}
@@ -170,50 +200,51 @@ void CItemDataBase::Init()
 	item = m_item[ITEM_MAKIBISI];
 	item->SetModel("ITEM_MAKIBISI");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_MAKIBISI][0] = "まきびし";
+	m_itemInfo[ITEM_MAKIBISI][1] = "移動速度を低下させる";
+	m_itemInfo[ITEM_MAKIBISI][2] = "ITEM_DANGO_O1";
 	// まきびし-----------------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 攻撃時に敵に移動速度-5%にする状態異常を付与する。
-		int parcent = 0;
-		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{
-			parcent += 5;
+			if (IsSuccessRate(0.05f))
+			{// 攻撃時に5%の確率でスロウさせる。
+				outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_SLOW, true);
+			}
 		}
-
-		// 敵の現在のスピード
-		float crrenrSpeed = outCharacter->GetSpeed()->GetCurrent();
-		// 遅くする値
-		float subSpeed = crrenrSpeed * (parcent / 100);
-		// 減速
-		outCharacter->GetSpeed()->AddItemEffect(-subSpeed);
 	});
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_HEAD];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_HEAD][0] = "首級";
+	m_itemInfo[ITEM_HEAD][1] = "敵を倒した時、回復する";
+	m_itemInfo[ITEM_HEAD][2] = "ITEM_DANGO_O1";
 	// 首級---------------------------------------------------------
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒した時、HPの1%(+1%)を回復する。
-		if (outCharacter->IsDied())
-		{
-			int percent = 0;
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
-			{// 持ってる数、割合を増やす
-				percent += 1;
-			}
-
-			// 最大体力を取得
-			int hpMax = inCharacter->GetHp()->GetMax();
-			// 回復する値
-			int recovery = (int)(hpMax * (percent / 100));
-			inCharacter->GetHp()->AddItemEffect(recovery);
+		int percent = 0;
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
+		{// 持ってる数、割合を増やす
+			percent += 1;
 		}
+
+		// 最大体力を取得
+		int hpMax = inCharacter->GetHp()->GetMax();
+		// 回復する値
+		int recovery = (int)(hpMax * (percent / 100));
+		inCharacter->Heal(recovery);
 	});
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_KUNAI];
 	item->SetModel("ITEM_KUNAI");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_KUNAI][0] = "クナイ";
+	m_itemInfo[ITEM_KUNAI][1] = "体力が90%以上の敵に対してダメージが増加する";
+	m_itemInfo[ITEM_KUNAI][2] = "ITEM_DANGO_O1";
 	// クナイ---------------------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 体力が90%以上の敵に対して70%(+70%)ダメージが増加する。
@@ -229,7 +260,7 @@ void CItemDataBase::Init()
 		{// 相手の体力が90%以上だった時
 			int addParcent = 0;
 
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{// 持ってる数、割合を増やす
 				addParcent += 70;
 			}
@@ -245,6 +276,9 @@ void CItemDataBase::Init()
 	item = m_item[ITEM_FUR];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_FUR][0] = "毛皮";
+	m_itemInfo[ITEM_FUR][1] = "シールドを得る";
+	m_itemInfo[ITEM_FUR][2] = "ITEM_DANGO_O1";
 	// 毛皮---------------------------------------------------------
 	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
 	{// 最大体力の8%のシールドを得る。
@@ -256,7 +290,7 @@ void CItemDataBase::Init()
 			// 増やす割合
 			int percent = 0;
 
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{// 持ってる数、割合を増やす
 				percent += 8;
 			}
@@ -272,6 +306,9 @@ void CItemDataBase::Init()
 	item = m_item[ITEM_KITUNEMEN];
 	item->SetModel("ITEM_KITUNENOOMEN");
 	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_KITUNEMEN][0] = "狐面";
+	m_itemInfo[ITEM_KITUNEMEN][1] = "クリティカルヒットで攻撃速度が上昇する";
+	m_itemInfo[ITEM_KITUNEMEN][2] = "ITEM_DANGO_O1";
 	// 狐面---------------------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// クリティカルヒットで攻撃速度が12%上昇する。最大値は36% (+36%)。
@@ -287,7 +324,7 @@ void CItemDataBase::Init()
 
 			int maxPercent = 0;
 
-			for (int i = 0; i <= numCritical; i++)
+			for (int i = 0; i < cnt; i++)
 			{// アイテムの所持数分、足す
 				maxPercent += 36;
 			}
@@ -311,18 +348,15 @@ void CItemDataBase::Init()
 	item->SetModel("ITEM_KAZAGURUMA");
 	item->SetRerity(RARITY_UNCOMMON);
 	// 風車---------------------------------------------------------
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒すと18%の確率で全てのクールダウンをリセットする
-		if (outCharacter->IsDied())
+		for (int i = 0; i < cnt; i++)
 		{
-			for (int i = 0; i < cnt; i++)
+			if (IsSuccessRate(0.18f))
 			{
-				if (IsSuccessRate(0.18f))
+				for (int j = 0; j < CCharacter::MAX_SKILL; j++)
 				{
-					for (int j = 0; j < CCharacter::MAX_SKILL; j++)
-					{
-						inCharacter->GetSkill(j)->SetCT(0);
-					}
+					inCharacter->GetSkill(j)->SetCT(0);
 				}
 			}
 		}
@@ -333,11 +367,11 @@ void CItemDataBase::Init()
 	item->SetModel("ITEM_KOBAN");
 	item->SetRerity(RARITY_UNCOMMON);
 	// 小判---------------------------------------------------------
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒した際4%の確率で金塊が出現する (+4%)
 		float probability = 0.0f;
 
-		for (int j = 0; j <= cnt; j++)
+		for (int j = 0; j < cnt; j++)
 		{
 			probability += 0.04f;
 		}
@@ -376,7 +410,7 @@ void CItemDataBase::Init()
 		{
 			int parcent = 0;
 
-			for (int j = 0; j <= cnt; j++)
+			for (int j = 0; j < cnt; j++)
 			{
 				parcent += 13;
 			}
@@ -410,7 +444,7 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	item = m_item[ITEM_FLINT];
+	item = m_item[ITEM_TOISI];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
 	// 砥石---------------------------------------------------------
@@ -428,11 +462,11 @@ void CItemDataBase::Init()
 		if (inCharacter->GetIsCritical())
 		{
 			int healHp = 0;
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{
 				healHp += 8;
 			}
-			inCharacter->GetHp()->AddItemEffect(healHp);
+			inCharacter->Heal(healHp);
 		}
 	});
 	//--------------------------------------------------------------
@@ -441,13 +475,20 @@ void CItemDataBase::Init()
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
 	// 点滴袋---------------------------------------------------------
-	// 敵を倒すごとに体力が永続的に1増える。最大100まで (最大 +100)TODO
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	// 敵を倒すごとに体力が永続的に1増える。最大100まで (最大 +100)
+	item->SetWhenDeathFunc([this](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		if (outCharacter->IsDied())
-		{
-			inCharacter->GetHp()->AddItemEffect(1);
+		// 最大値を決める
+		m_maxAddLife = cnt * 100;
+		// 敵を倒した数をカウント
+		m_countKill++;
+
+		if (m_countKill > m_maxAddLife)
+		{// 最大値を超えたら増やさない
+			return;
 		}
+
+		inCharacter->GetHp()->AddMaxEffect(1);
 	});
 	//--------------------------------------------------------------
 
@@ -467,19 +508,16 @@ void CItemDataBase::Init()
 	item->SetRerity(RARITY_UNCOMMON);
 	// 草履---------------------------------------------------------
 	// 敵を倒すと移動速度が125%上がり、1(+0.5)秒間消える
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{
-		if (outCharacter->IsDied())
-		{// 敵が死んだら
-			// 現在の速度
-			float currentSpeed = inCharacter->GetSpeed()->GetCurrent();
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 敵が死んだら
+		// 現在の速度
+		float currentSpeed = inCharacter->GetSpeed()->GetCurrent();
 
-			// スピードが上がる割合を計算
-			currentSpeed *= (125 / 100);
-			
-			// 加算
-			inCharacter->GetSpeed()->AddItemEffect(currentSpeed);
-		}
+		// スピードが上がる割合を計算
+		currentSpeed *= (125 / 100);
+
+		// 加算
+		inCharacter->GetSpeed()->AddItemEffect(currentSpeed);
 	});
 	//--------------------------------------------------------------
 
@@ -489,9 +527,10 @@ void CItemDataBase::Init()
 	// 矢---------------------------------------------------------
 	// プライマリースキルを発動すると、矢も投げて、400%(+100%)の基礎ダメージを与える。
 	// 最大3(+1)個の矢を持つことができ、10秒経つとリロードされる
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
+	item->SetWhenUseSkill([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 矢を発射 TODO
+		//inCharacter->GetRot()
+		//CArrow* obj = CArrow::Create();
 	});
 	//--------------------------------------------------------------
 
@@ -528,7 +567,7 @@ void CItemDataBase::Init()
 		{
 			int armor = 0;
 
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{// 持ってる数、割合を増やす
 				armor += 30;
 			}
@@ -542,7 +581,7 @@ void CItemDataBase::Init()
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
 	// たび---------------------------------------------------------
-	// 非戦闘時の移動速度 +30% (+30%)
+	// 非戦闘時の移動速度 +30% (+30%) // TODO
 	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
 	{
 		if (inCharacter->GetIsNonCombat())
@@ -550,7 +589,7 @@ void CItemDataBase::Init()
 			float speed = inCharacter->GetSpeed()->GetCurrent();
 
 			int addParcent = 0;
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{
 				addParcent += 30;
 			}
@@ -577,9 +616,14 @@ void CItemDataBase::Init()
 	item->SetRerity(RARITY_UNCOMMON);
 	// 花---------------------------------------------------------
 	// テレポーターイベント中近くの味方を50%回復するヒーリングノヴァを発する (+1回) 
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
+	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
+	{
+		if (inCharacter->GetIsTeleporter())
+		{// 起動したら
+			float radius = cnt * 300;	// 値調整　TODO
+			CFlower* obj = CFlower::Create(inCharacter->GetPos(), radius);
+			inCharacter->SetIsTeleporter(false);
+		}
 	});
 	//--------------------------------------------------------------
 
@@ -588,7 +632,7 @@ void CItemDataBase::Init()
 	item->SetRerity(RARITY_UNCOMMON);
 	// 鉄線---------------------------------------------------------
 	// ダメージを受けた際、周囲25m(+10m)以内にいる敵最大5体に160%のダメージを与える (+2体)
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// TODO
 		//inCharacter->GetCriticalRate()->AddItemEffect(5);
 	});

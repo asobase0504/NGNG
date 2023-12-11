@@ -7,15 +7,23 @@
 
 // include
 #include "statue_luck.h"
-#include "player_manager.h"
+#include "character.h"
+#include "collision_cylinder.h"
 #include "item_manager.h"
 #include "input.h"
 #include "utility.h"
+#include "procedure3D.h"
+
+namespace
+{
+std::array<float, CItemDataBase::RARITY_MAX> rate = { 0.05f,0.1f,0.2f,0.65f };
+};
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueLuck::CStatueLuck(int nPriority)
+CStatueLuck::CStatueLuck() :
+	m_useMoneyUI(nullptr)
 {
 
 }
@@ -29,7 +37,7 @@ CStatueLuck::~CStatueLuck()
 }
 
 //--------------------------------------------------------------
-// 初期化処理
+// 初期化
 //--------------------------------------------------------------
 HRESULT CStatueLuck::Init()
 {
@@ -37,74 +45,69 @@ HRESULT CStatueLuck::Init()
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 rot = GetRot();
 
+	m_nUseMoney = 10;
+	m_useMoneyUI = CProcedure3D::Create(pos, D3DXVECTOR3(4.0f, 4.0f, 0.0f), m_nUseMoney);
+	SetEndChildren(m_useMoneyUI);
+	m_useMoneyUI->SetColor(D3DXCOLOR(1.0f, 1.0f, 0.5f, 1.0f));
+
 	CStatue::Init(pos,rot);
 	LoadModel("STATUE_LUCK");
 
-	m_bOnce = false;
-	m_bChance = false;
-	m_nUseMoney = 10;
 	m_nItemCount = 0;
+	m_uiText = "運を試す [$" + std::to_string(m_nUseMoney) + "]";
 
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// 更新処理
+// 選択
 //--------------------------------------------------------------
-void CStatueLuck::Update()
+bool CStatueLuck::Select(CCharacter * selectCharacter)
 {
-	// プレイヤー情報取得
-	CInput* input = CInput::GetKey();
-	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int>* playerMoney = pPlayer->GetMoney();
+	CStatus<int>* money = selectCharacter->GetMoney();
 
-	// プレイヤーが触れている時
-	
-	if (Touch())
+	if (money->GetCurrent() < m_nUseMoney)
 	{
-		if (m_nItemCount < 2)
-		{
-			// プレイヤーお金を調整して設定
-			playerMoney->AddCurrent(-m_nUseMoney);
-
-			// アイテム確率計算
-			int randomCount = IntRandom(100, 1);
-
-			int answer = CItemManager::GetInstance()->CreateRandomItemRarityRate(D3DXVECTOR3(m_pos.x, m_pos.y + 30.0f, m_pos.z), GetMtxRot(),{ 0.05f,0.1f,0.2f,0.65f });
-
-			switch (answer)
-			{
-			case 0:	// レア
-				m_nItemCount++;
-				break;
-			case 1:	// アンコモン
-				m_nItemCount++;
-				break;
-			case 2:	// コモン
-				m_nItemCount++;
-				break;
-			case 3:	// ハズレ
-				break;
-			default:
-				break;
-			}
-
-			// 次回ガチャする時用に必要お金数を増やして設定しておく
-			int randomNumber = rand() % 10;
-			m_nUseMoney += randomNumber;
-
-			m_bOnce = true;
-		}
+		return false;
 	}
 
-	// 更新処理
-	CStatue::Update();
+	// プレイヤーお金を調整して設定
+	money->AddCurrent(-m_nUseMoney);
 
-#ifdef _DEBUG
-#if 0
-	CDebugProc::Print("LuckPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
-#endif // 0
-#endif // _DEBUG
+	D3DXVECTOR3 pos(m_pos.x, m_pos.y + 30.0f, m_pos.z);
+	int answer = CItemManager::GetInstance()->CreateRandomItemRarityRate(pos, GetMtxRot(), rate);
+
+	switch (answer)
+	{
+	case 0:	// レア
+	case 1:	// アンコモン
+	case 2:	// コモン
+		m_nItemCount++;
+		break;
+	case 3:	// ハズレ
+		break;
+	default:
+		assert(false);
+		break;
+	}
+
+	// 次回ガチャする時用に必要お金数を増やして設定しておく
+	int randomNumber = rand() % 10;
+	m_nUseMoney += randomNumber;
+
+	m_useMoneyUI->SetNumber(m_nUseMoney);
+
+	m_uiText = "運を試す [$" + std::to_string(m_nUseMoney) + "]";
+
+	if (m_nItemCount >= 2)
+	{
+		m_collisionCylinder->Uninit();
+		m_collisionCylinder = nullptr;
+		m_useMoneyUI->Uninit();
+		m_useMoneyUI = nullptr;
+	}
+
+	return true;
 }
 
 //--------------------------------------------------------------
@@ -118,4 +121,23 @@ CStatueLuck* CStatueLuck::Create(D3DXVECTOR3 pos)
 	pStatuechest->Init();
 
 	return pStatuechest;
+}
+
+//--------------------------------------------------------------
+// 位置
+//--------------------------------------------------------------
+void CStatueLuck::SetPos(const D3DXVECTOR3 & inPos)
+{
+	if (m_useMoneyUI != nullptr)
+	{
+		m_useMoneyUI->SetPos(inPos);
+
+		D3DXVECTOR3 vector = D3DXVECTOR3(0.0f, 0.0f, 10.0f);
+		D3DXMATRIX mtxRot;
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+		D3DXVec3TransformCoord(&vector, &vector, &mtxRot);
+		m_useMoneyUI->AddPos(vector);
+		m_useMoneyUI->AddPos(D3DXVECTOR3(0.0f,10.0f,0.0f));
+	}
+	CStatue::SetPos(inPos);
 }

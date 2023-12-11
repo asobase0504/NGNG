@@ -15,7 +15,7 @@
 //==============================================================
 // マクロ宣言
 //==============================================================
-#define MAX_TIME	(300)
+#define MAX_TIME	(3000)
 
 //==============================================================
 // 前方宣言
@@ -37,6 +37,8 @@ public:
 	//プロトタイプ宣言
 	HRESULT	Init() override;
 	void	Update() override;
+
+	bool Select(CCharacter* selectCharacter) override;
 
 	// 静的メンバ関数
 	static CStatueTeleporter *Create(D3DXVECTOR3 pos);			// テレポーターの生成

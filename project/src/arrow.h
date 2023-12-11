@@ -16,6 +16,7 @@
 // ‘O•ûéŒ¾
 //==============================================================
 class CCollisionBox;
+class CCharacter;
 
 //==============================================================
 // ƒNƒ‰ƒX
@@ -29,11 +30,11 @@ public:
 	HRESULT Init() override;
 	void Update() override;
 
-	static CArrow* Create();
+	static CArrow* Create(const D3DXVECTOR3& move);
 
 	bool GetIsHit() { return m_isHit; }
 
-	//bool HitEnemy(CCharacter* enemy);
+	//void HitEnemy_(CCharacter* inEnemy, int damage);
 
 private:
 	CCollisionBox* m_collision;

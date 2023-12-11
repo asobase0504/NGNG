@@ -77,11 +77,11 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init()
 {
-	//CInput::GetKey()->SetCursorErase(false);
-	CInput::GetKey()->LockCursorPos(false);
+	CInput::GetKey()->SetCursorErase(false);
+	CInput::GetKey()->LockCursorPos(true);
 
 	// 虚無マップ
-	m_map = CMap::Create("data/FILE/map/map01.json");
+	m_map = CMap::GetMap("data/FILE/map/map01.json");
 
 	m_mapFade = CMapFade::Create();
 	m_mapFade->NextMap("data/FILE/map/map01.json");
@@ -106,7 +106,7 @@ HRESULT CGame::Init()
 
 	for (int i = 0; i < 4; i++)
 	{
-		CSkillUI::Create(D3DXVECTOR3(900.0f + 75.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), pPlayer->GetSkill(i));
+		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), pPlayer->GetSkill(i));
 	}
 
 	CSkinMeshGroup::GetInstance()->LoadAll();
@@ -245,6 +245,6 @@ void CGame::ChangeMap(std::string inPath)
 
 	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
 	player->OnUpdate();
-	m_map = CMap::Create(inPath);
+	m_map = CMap::GetMap(inPath);
 	m_map->InCharacterList(player);
 }

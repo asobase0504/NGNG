@@ -1,7 +1,7 @@
-//**************************************************************
+ï»¿//**************************************************************
 //
-// ƒ|ƒŠƒSƒ“ƒoƒŒƒbƒg
-// Author : •yŠ’m¶
+// ãƒãƒªã‚´ãƒ³ãƒãƒ¬ãƒƒãƒˆ
+// Author : å†¨æ‰€çŸ¥ç”Ÿ
 //
 //**************************************************************
 
@@ -14,27 +14,32 @@
 #include "application.h"
 #include "collision.h"
 #include "collision_cylinder.h"
+#include "abnormal.h"
+#include "abnormal_data_base.h"
+#include "player.h"
 #include "player_manager.h"
+#include "map.h"
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CBullet::CBullet() : m_life(100)
 {
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CBullet::~CBullet()
 {
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»
+// åˆæœŸåŒ–
 //--------------------------------------------------------------
 HRESULT CBullet::Init()
 {
+	MapChangeRelese();
 	CObjectPolygon3D::Init();
 	SetAnchor(CObjectPolygon3D::ANCHOR_CENTER);
 	SetBillboard(true);
@@ -43,19 +48,26 @@ HRESULT CBullet::Init()
 	
 	m_collision = CCollisionCylinder::Create(GetPos(),10.0f,10.0f);
 
+	int size = m_abnormal.size();
+	for (int i = 0; i < size; i++)
+	{
+		m_abnormal[i] = false;
+	}
+
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// I—¹
+// çµ‚äº†
 //--------------------------------------------------------------
 void CBullet::Uninit()
 {
 	CObjectPolygon3D::Uninit();
+	m_collision->Uninit();
 }
 
 //--------------------------------------------------------------
-// XV
+// æ›´æ–°
 //--------------------------------------------------------------
 void CBullet::Update()
 {
@@ -67,7 +79,7 @@ void CBullet::Update()
 	D3DXVec3Normalize(&move,&GetMove());
 	move *= m_speed;
 
-	// ˆÚ“®
+	// ç§»å‹•
 	AddPos(move);
 
 	m_life--;
@@ -77,18 +89,32 @@ void CBullet::Update()
 		Uninit();
 	}
 
-	// ƒvƒŒƒCƒ„[‚ÌŠl“¾
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç²å¾—
 	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
 	
-	if (m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
+	if (!pPlayer->IsDied() && m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
 	{
-		pPlayer->Damage(50.0f);
+		int size = m_abnormal.size();
+		for (int i = 0; i < size; i++)
+		{
+			if (!m_abnormal[i])
+			{
+				continue;
+			}
+
+			CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
+
+			if (abnormalFunc != nullptr)
+			{
+				abnormalFunc(pPlayer, i,pPlayer);
+			}
+		}
 		Uninit();
 	}
 }
 
 //--------------------------------------------------------------
-// •`‰æ
+// æç”»
 //--------------------------------------------------------------
 void CBullet::Draw()
 {
@@ -96,9 +122,9 @@ void CBullet::Draw()
 }
 
 //--------------------------------------------------------------
-// ¶¬
+// ç”Ÿæˆ
 //--------------------------------------------------------------
-CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move,float speed)
+CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, float speed, abnormal_attack abnormal)
 {
 	CBullet* pObject = nullptr;
 	pObject = new CBullet();
@@ -109,6 +135,7 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move,float speed)
 		pObject->SetPos(pos);
 		pObject->SetMove(move);
 		pObject->SetSpeed(speed);
+		pObject->SetAbnormal(abnormal);
 	}
 
 	return pObject;

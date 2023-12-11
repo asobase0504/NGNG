@@ -469,7 +469,7 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 			}
 			else
 			{
-				return isLanding;
+				break;
 			}
 
 			isLanding = true;

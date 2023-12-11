@@ -16,8 +16,7 @@ class CFont
 public: /* ’è‹` */
 	enum FONT
 	{
-		FONT_GON = 0,
-		FONT_MEIRIO,
+		FONT_MYOUTYOU = 0,
 		FONT_SOUEIKAKU,
 		FONT_MAX,
 		FONT_NONE,	// Žg—p‚µ‚È‚¢
