@@ -95,6 +95,9 @@ public:
 	bool IsDied() { return m_isDied; }
 	virtual void Died();
 
+	// 描画をきる
+	void SetDisplay(bool display) override;
+
 	// 状態異常
 	int GetAbnormalTypeCount();	// 状態異常の種類のカウント
 	void AddAbnormalStack(const int id) { m_haveAbnormal[id].s_Time.push_back(0); m_haveAbnormal[id].s_stack++; }
