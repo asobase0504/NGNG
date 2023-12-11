@@ -100,6 +100,7 @@ bool CStatueTeleporter::Select(CCharacter * selectCharacter)
 		//m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(randX, 0.0f, randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
 
 		//CStatus<int>* enemyHp = m_pEnemy->GetHp();
+		selectCharacter->SetIsTeleporter(true);
 		m_bOnce = true;
 	}
 

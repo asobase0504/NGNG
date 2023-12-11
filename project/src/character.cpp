@@ -73,6 +73,7 @@ HRESULT CCharacter::Init()
 	m_isElite = false;
 	m_isMoveLock = false;
 	m_isControl = false;
+	m_isTeleporter = false;
 
 	m_apModel.resize(1);
 	m_apModel[0] = CObjectX::Create(m_pos);
@@ -165,7 +166,7 @@ void CCharacter::Update()
 	Regenation();
 
 	if (!m_nonCombat)
-	{
+	{// 非戦闘時にする
 		m_nonCombatTime++;
 
 		if (m_nonCombatTime > MAX_NON_COMBAT_TIME)

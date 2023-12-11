@@ -176,6 +176,10 @@ public:
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
 
+	// テレポーターを起動したかどうか
+	bool GetIsTeleporter() { return m_isTeleporter; }
+	void SetIsTeleporter(bool isTeleporter) { m_isTeleporter = isTeleporter; }
+
 private:
 	virtual void Move();	// 移動
 	void Abnormal();		// 状態異常
@@ -210,6 +214,7 @@ protected:
 	int m_nonCombatTime;	// 非戦闘時になる時間
 	bool m_isRunning;		// 走っているかどうか
 	bool m_isElite;			// エリート
+	bool m_isTeleporter;	// テレポーターを起動したかどうか
 
 	STATE m_state;
 

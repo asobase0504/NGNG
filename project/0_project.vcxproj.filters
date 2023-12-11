@@ -437,6 +437,9 @@
     <ClCompile Include="src\select_entity.cpp">
       <Filter>ソース ファイル\Mode\Game</Filter>
     </ClCompile>
+    <ClCompile Include="src\flower.cpp">
+      <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -762,6 +765,9 @@
     </ClInclude>
     <ClInclude Include="src\select_entity.h">
       <Filter>ソース ファイル\Mode\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\flower.h">
+      <Filter>ソース ファイル\Mode\Game\Item\item_object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
