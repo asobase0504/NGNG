@@ -11,6 +11,7 @@
 #include "enemy.h"
 #include "application.h"
 #include "objectX.h"
+#include "model_skin.h"
 #include "PlayerController.h"
 #include "collision_sphere.h"
 #include "road.h"
@@ -46,7 +47,6 @@ CCharacter::CCharacter(int nPriority) : m_haveItem{}
 	{
 		CMap::GetMap()->InCharacterList(this);
 	}
-	m_apModel.clear();
 	m_skill.clear();
 }
 
@@ -76,10 +76,6 @@ HRESULT CCharacter::Init()
 	m_isMoveLock = false;
 	m_isControl = false;
 	m_isTeleporter = false;
-
-	m_apModel.resize(1);
-	m_apModel[0] = CObjectX::Create(m_pos);
-	m_apModel[0]->LoadModel("BOX");
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(100);
@@ -136,9 +132,6 @@ HRESULT CCharacter::Init()
 	}
 
 	m_state = GROUND;
-
-	// 親子関係の構築
-	SetEndChildren(m_apModel[0]);
 
 	return S_OK;
 }
@@ -208,13 +201,7 @@ void CCharacter::Draw()
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	for (int i = 0; i < (int)m_apModel.size(); i++)
-	{
-		if (m_apModel[i]->GetParent() == nullptr)
-		{
-			m_apModel[i]->SetMtxWorld(m_mtxWorld);
-		}
-	}
+	m_skinModel->SetMtxWorld(m_mtxWorld);
 }
 
 //--------------------------------------------------------------
@@ -240,12 +227,7 @@ CCharacter* CCharacter::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //--------------------------------------------------------------
 void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 {
-	std::vector<CObjectX*> objectX = GetModel();
-	if (objectX.size() > 0)
-	{
-		GetModel()[0]->SetPos(inPos);
-	}
-
+	m_skinModel->SetPos(inPos);
 	CObject::SetPos(inPos);
 }
  
@@ -254,11 +236,7 @@ void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 //--------------------------------------------------------------
 void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 {
-	if (m_apModel.size() > 0)
-	{
-		GetModel()[0]->SetRot(inRot);
-	}
-
+	m_skinModel->SetRot(inRot);
 	CObject::SetRot(inRot);
 }
 
@@ -424,7 +402,7 @@ void CCharacter::Died()
 void CCharacter::SetDisplay(bool display)
 {
 	CObject::SetDisplay(display);
-	m_apModel[0]->SetDisplay(display);
+	m_skinModel->SetDisplay(display);
 }
 
 //--------------------------------------------------------------

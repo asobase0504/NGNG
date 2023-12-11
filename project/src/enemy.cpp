@@ -21,6 +21,7 @@
 #include "objectX.h"
 #include "collision_box.h"
 #include "enemy_hp_ui.h"
+#include "model_skin.h"
 
 #include "enemy_data_base.h"
 #include "skill.h"
@@ -54,10 +55,9 @@ HRESULT CEnemy::Init()
 	m_relation = ERelation::HOSTILE;
 
 	m_AttackCnt = 0;
-	m_apModel[0]->LoadModel("SKELETON");
-	m_apModel[0]->CalculationVtx();
-
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
+	// ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
+	m_skinModel = CSkinMesh::Create("KENGOU");
+	SetEndChildren(m_skinModel);
 
 	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
 
@@ -103,6 +103,9 @@ void CEnemy::Update()
 #endif // _DEBUG
 }
 
+//--------------------------------------------------------------
+// Ž€–S”»’è
+//--------------------------------------------------------------
 void CEnemy::Died()
 {
 	CPlayerManager::GetInstance()->GetPlayer()->GetMoney()->AddCurrent(m_dropMoney);

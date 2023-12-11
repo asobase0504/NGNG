@@ -22,6 +22,7 @@
 
 // 見た目
 #include "objectX.h"
+#include "model_skin.h"
 
 // スキル
 #include "skill.h"
@@ -81,8 +82,10 @@ HRESULT CPlayer::Init()
 	}
 
 	// モデルの読み込み
-	m_apModel[0]->LoadModel("PLAYER01");
-	m_apModel[0]->CalculationVtx();
+	m_skinModel = CSkinMesh::Create("KENGOU");
+
+	// 親子関係の構築
+	SetEndChildren(m_skinModel);
 
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();

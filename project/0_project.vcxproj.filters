@@ -806,5 +806,8 @@
     <None Include="data\FILE\model.json">
       <Filter>json</Filter>
     </None>
+    <None Include="data\FILE\skinmesh.json">
+      <Filter>json</Filter>
+    </None>
   </ItemGroup>
 </Project>

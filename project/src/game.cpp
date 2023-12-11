@@ -77,6 +77,8 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init()
 {
+	CSkinMeshGroup::GetInstance()->LoadAll();
+
 	CInput::GetKey()->SetCursorErase(false);
 	CInput::GetKey()->LockCursorPos(true);
 
@@ -108,11 +110,6 @@ HRESULT CGame::Init()
 	{
 		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), pPlayer->GetSkill(i));
 	}
-
-	CSkinMeshGroup::GetInstance()->LoadAll();
-
-	m_skin = CSkinMesh::Create("KENGOU");
-	m_skin->SetPos(D3DXVECTOR3(50.f, 0.f, 0.f));
 
 	//m_tcp = new CClient;
 	//m_tcp->Init("127.0.0.1", 13567);

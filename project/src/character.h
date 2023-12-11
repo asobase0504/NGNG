@@ -65,7 +65,7 @@ public:
 
 	CCollisionCylinder* GetCollision() { return m_collision; }
 
-	std::vector<CObjectX*> GetModel() { return m_apModel; }
+	CSkinMesh* GetModel() { return m_skinModel; }
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
 
@@ -193,7 +193,7 @@ private:
 	void Collision();		// 当たり判定
 
 protected:		// メンバ変数
-	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
+	CSkinMesh*		m_skinModel;			// モデルのインスタンス
 	CCollisionCylinder*	m_collision;			// 当たり判定
 	ERelation m_relation;
 
