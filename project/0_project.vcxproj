@@ -23,6 +23,7 @@
     <ClCompile Include="abnormal_data_base.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="connect.cpp" />
+    <ClCompile Include="damege_ui.cpp" />
     <ClCompile Include="golem_skill_1.cpp" />
     <ClCompile Include="player_abnormal_ui.cpp" />
     <ClCompile Include="src\arrow.cpp" />
@@ -35,6 +36,8 @@
     <ClCompile Include="src\model_skin.cpp" />
     <ClCompile Include="src\model_skin_group.cpp" />
     <ClCompile Include="src\mode_fade.cpp" />
+    <ClCompile Include="src\number3D.cpp" />
+    <ClCompile Include="src\procedure3D.cpp" />
     <ClCompile Include="src\result.cpp" />
     <ClCompile Include="src\road.cpp" />
     <ClCompile Include="src\character_select.cpp" />
@@ -126,13 +129,13 @@
     <ClCompile Include="src\yamato_skill_1.cpp" />
     <ClCompile Include="src\yamato_skill_2.cpp" />
     <ClCompile Include="src\yamato_skill_3.cpp" />
-    <ClCompile Include="ui_3D.cpp" />
     <ClCompile Include="yamato_skill_4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="abnormal.h" />
     <ClInclude Include="abnormal_data_base.h" />
     <ClInclude Include="connect.h" />
+    <ClInclude Include="damege_ui.h" />
     <ClInclude Include="golem_skill_1.h" />
     <ClInclude Include="enemy_hp_ui.h" />
     <ClInclude Include="player_abnormal_ui.h" />
@@ -188,6 +191,7 @@
     <ClInclude Include="src\motion.h" />
     <ClInclude Include="src\motion_model3D.h" />
     <ClInclude Include="src\number.h" />
+    <ClInclude Include="src\number3D.h" />
     <ClInclude Include="src\object.h" />
     <ClInclude Include="src\object2d.h" />
     <ClInclude Include="src\objectX.h" />
@@ -203,6 +207,7 @@
     <ClInclude Include="src\player_manager.h" />
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\procedure.h" />
+    <ClInclude Include="src\procedure3D.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\result.h" />
     <ClInclude Include="src\road.h" />
@@ -234,7 +239,6 @@
     <ClInclude Include="src\yamato_skill_1.h" />
     <ClInclude Include="src\yamato_skill_2.h" />
     <ClInclude Include="src\yamato_skill_3.h" />
-    <ClInclude Include="ui_3D.h" />
     <ClInclude Include="yamato_skill_4.h" />
   </ItemGroup>
   <ItemGroup>

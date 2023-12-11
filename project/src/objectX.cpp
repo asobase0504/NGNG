@@ -71,6 +71,11 @@ HRESULT CObjectX::Init()
 //--------------------------------------------------------------
 void CObjectX::Draw()
 {
+	if (!m_isDisplay)
+	{
+		return;
+	}
+
 	extern LPD3DXEFFECT pEffect;		// シェーダー
 
 	// デバイスの取得

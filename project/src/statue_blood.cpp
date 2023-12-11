@@ -5,21 +5,20 @@
 //
 //**************************************************************
 
+//==============================================================
 // include
+//==============================================================
 #include "statue_blood.h"
 #include "statue_manager.h"
 #include "player_manager.h"
-#include "input.h"
-#include "map.h"
-#include "collision_mesh.h"
-#include "collision_box.h"
-#include "object_mesh.h"
 #include "select_ui.h"
+#include "procedure3D.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueBlood::CStatueBlood(int nPriority)
+CStatueBlood::CStatueBlood():
+	m_subRateUI(nullptr)
 {
 
 }
@@ -46,7 +45,14 @@ HRESULT CStatueBlood::Init()
 
 	m_hpSubRate = 0.1f;
 
-	m_uiText = "血を捧げろ。[" + std::to_string((int)(m_hpSubRate * 100)) + "%]";
+	int percent = (int)(m_hpSubRate * 100);
+
+	m_uiText = "血を捧げろ。[" + std::to_string(percent) + "%]";
+
+	m_subRateUI = CProcedure3D::Create(pos, D3DXVECTOR3(4.0f, 4.0f, 0.0f), percent);
+	SetEndChildren(m_subRateUI);
+	m_subRateUI->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+
 
 	return S_OK;
 }
@@ -67,12 +73,17 @@ bool CStatueBlood::Select(CCharacter* selectCharacter)
 	money->AddCurrent(point);
 
 	m_hpSubRate *= 2.5f;
-	m_uiText = "血を捧げろ。[" + std::to_string((int)(m_hpSubRate * 100)) + "%]";
+	int percent = (int)(m_hpSubRate * 100);
+	m_uiText = "血を捧げろ。[" + std::to_string(percent) + "%]";
+
+	m_subRateUI->SetNumber(percent);
 
 	if (m_hpSubRate >= 1.0f)
 	{
 		m_collisionCylinder->Uninit();
 		m_collisionCylinder = nullptr;
+		m_subRateUI->Uninit();
+		m_subRateUI = nullptr;
 	}
 
 	return true;
@@ -89,4 +100,24 @@ CStatueBlood* CStatueBlood::Create(D3DXVECTOR3 pos)
 	pStatueblood->Init();
 
 	return pStatueblood;
+}
+
+
+//--------------------------------------------------------------
+// 位置
+//--------------------------------------------------------------
+void CStatueBlood::SetPos(const D3DXVECTOR3 & inPos)
+{
+	if (m_subRateUI != nullptr)
+	{
+		m_subRateUI->SetPos(inPos);
+
+		D3DXVECTOR3 vector = D3DXVECTOR3(0.0f, 0.0f, 10.0f);
+		D3DXMATRIX mtxRot;
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+		D3DXVec3TransformCoord(&vector, &vector, &mtxRot);
+		m_subRateUI->AddPos(vector);
+		m_subRateUI->AddPos(D3DXVECTOR3(0.0f, 10.0f, 0.0f));
+	}
+	CStatue::SetPos(inPos);
 }

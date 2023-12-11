@@ -22,6 +22,7 @@
 class CPlayer;
 class CCollisionBox;
 class CCollisionCylinder;
+class CProcedure3D;
 
 //==============================================================
 // 敵クラス
@@ -39,11 +40,14 @@ public:
 	bool Select(CCharacter* selectCharacter) override;
 
 	// 静的メンバ関数
-	static CStatueLuck *Create(D3DXVECTOR3 pos);			// 血の祭壇の生成
+	static CStatueLuck *Create(D3DXVECTOR3 pos);	// 運の祭壇の生成
+
+	void SetPos(const D3DXVECTOR3& inPos) override;
 
 private:	// メンバ変数
 	int m_nUseMoney;		// 初期必要お金数
 	int m_nItemCount;		// アイテム数
+	CProcedure3D* m_useMoneyUI;	// 必要金額を3D空間状に描画
 };
 #endif
 

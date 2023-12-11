@@ -179,6 +179,10 @@ public:
 	// テレポーターを起動したかどうか
 	bool GetIsTeleporter() { return m_isTeleporter; }
 	void SetIsTeleporter(bool isTeleporter) { m_isTeleporter = isTeleporter; }
+  
+	// 攻撃の当たり判定を行なうかどうか
+	void SetIsAtkCollision(bool is) { m_isAtkCollision = is; }
+	bool GetIsAtkCollision() { return m_isAtkCollision; }
 
 private:
 	virtual void Move();	// 移動
@@ -215,6 +219,8 @@ protected:
 	bool m_isRunning;		// 走っているかどうか
 	bool m_isElite;			// エリート
 	bool m_isTeleporter;	// テレポーターを起動したかどうか
+
+	bool m_isAtkCollision;		// 攻撃を受けなくなる
 
 	STATE m_state;
 

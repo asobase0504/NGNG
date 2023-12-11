@@ -29,6 +29,8 @@
 
 #include <thread>
 
+#include "damege_ui.h"
+
 //==============================================================
 // 定数宣言
 //==============================================================
@@ -117,6 +119,7 @@ HRESULT CCharacter::Init()
 	m_RegenetionCnt = 0;
 	m_isStun = false;
 	m_isBlock = false;
+	m_isAtkCollision = false;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
@@ -334,6 +337,13 @@ void CCharacter::Damage(const int inDamage)
 		dmg = 0;
 		DamageBlock(false);
 	}
+
+	// UI生成
+	D3DXVECTOR3 pos = m_pos;
+	pos.x += FloatRandom(20.0f, -20.0f);
+	pos.y += FloatRandom(40.0f, 0.0f);
+	pos.z += FloatRandom(20.0f, -20.0f);
+	CDamegeUI::Create(pos,D3DXCOLOR(1.0f,1.0f,1.0f,1.0f),dmg);
 
 	hp->AddCurrent(-dmg);
 
