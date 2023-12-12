@@ -1,6 +1,6 @@
 {
 	"MODEL": [
-		[ "KENGOU", "data\/default3.x" ],
-		[ "SKE", "data\/ske3.x" ]
+		[ "KENGOU", "data\/SKIN_MESH\/default3.x" ],
+		[ "SKE", "data\/SKIN_MESH\/ske3.x" ]
 	]
 }
