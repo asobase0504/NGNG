@@ -57,10 +57,12 @@ void CItemDataBase::Init()
 	/* HP+50(+50)増加 */
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	
+		inCharacter->GetHp()->AddMaxEffect(50);
 		inCharacter->GetHp()->AddItemEffect(50);
 	});
 	item->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	
+		inCharacter->GetHp()->AddMaxEffect(-50);
 		inCharacter->GetHp()->AddItemEffect(-50);
 	});
 	//--------------------------------------------------------------
@@ -462,7 +464,7 @@ void CItemDataBase::Init()
 	item = m_item[ITEM_TOISI];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
-	m_itemInfo[ITEM_TOISI][0] = "砥石羽";
+	m_itemInfo[ITEM_TOISI][0] = "砥石";
 	m_itemInfo[ITEM_TOISI][1] = "クリティカル確率が上昇し、クリティカルが発生するごとに体力が8回復する";
 	m_itemInfo[ITEM_TOISI][2] = "ITEM_DANGO_O1";
 	// 砥石---------------------------------------------------------
@@ -660,7 +662,7 @@ void CItemDataBase::Init()
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_FLOWER][0] = "花";
-	m_itemInfo[ITEM_FLOWER][1] = "テレポーターイベント中近くの味方を回復するヒーリングノヴァを発する";
+	m_itemInfo[ITEM_FLOWER][1] = "テレポーターイベント中近くの味方を\n回復するヒーリングノヴァを生成する";
 	m_itemInfo[ITEM_FLOWER][2] = "ITEM_DANGO_O1";
 	// 花---------------------------------------------------------
 	// テレポーターイベント中近くの味方を50%回復するヒーリングノヴァを発する (+1回) 

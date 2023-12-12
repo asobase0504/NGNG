@@ -274,11 +274,9 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 		m_isCritical = true;
 	}
 
-	// ダメージを与えた処理
-	CItemManager::GetInstance()->AllWhenReceive(pEnemy, pEnemy->m_haveItem, this);
-	// ダメージを受けた処理
+	// ダメージを与えた処理	
 	CItemManager::GetInstance()->AllWhenInflict(this, m_haveItem, pEnemy);
-	
+
 	// プレイヤーのダメージを計算
 	int damage = CalDamage(SkillMul);
 
@@ -288,10 +286,10 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	}
 
 	// エネミーにダメージを与える。
-	pEnemy->Damage(damage);
+	pEnemy->Damage(damage, pEnemy);
 
 	if (pEnemy->IsDied())
-	{// ダメージを受けた処理
+	{// エネミーが死んだとき
 		CItemManager::GetInstance()->AllWhenDeath(this, m_haveItem, pEnemy);
 	}
 
@@ -315,8 +313,11 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 //--------------------------------------------------------------
 // ダメージ
 //--------------------------------------------------------------
-void CCharacter::Damage(const int inDamage)
+void CCharacter::Damage(const int inDamage, CCharacter* inCharacter)
 {
+	// ダメージを受けた処理
+	CItemManager::GetInstance()->AllWhenReceive(inCharacter, inCharacter->m_haveItem, this);
+
 	int dmg = inDamage;
 
 	// ダメージ計算

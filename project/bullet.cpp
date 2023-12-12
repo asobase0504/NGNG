@@ -88,29 +88,6 @@ void CBullet::Update()
 	{
 		Uninit();
 	}
-
-	// プレイヤーの獲得
-	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	
-	if (!pPlayer->IsDied() && m_collision->ToCylinder((CCollisionCylinder*)pPlayer->GetCollision()))
-	{
-		int size = m_abnormal.size();
-		for (int i = 0; i < size; i++)
-		{
-			if (!m_abnormal[i])
-			{
-				continue;
-			}
-
-			CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
-
-			if (abnormalFunc != nullptr)
-			{
-				abnormalFunc(pPlayer, i,pPlayer);
-			}
-		}
-		Uninit();
-	}
 }
 
 //--------------------------------------------------------------

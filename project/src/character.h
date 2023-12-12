@@ -79,7 +79,7 @@ public:
 
 	// 攻撃
 	void Attack(CCharacter* pEnemy, float SkillMul);
-	void Damage(const int inDamage);
+	void Damage(const int inDamage, CCharacter* inCharacter);	// 与えたいダメージ、与えたいキャラクター
 	int CalDamage(float SkillAtkMul);
 
 	// 回復
