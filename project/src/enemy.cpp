@@ -47,7 +47,6 @@ CEnemy::~CEnemy()
 //--------------------------------------------------------------
 HRESULT CEnemy::Init()
 {
-	MapChangeRelese();
 	// ‰Šú‰»ˆ—
 	CCharacter::Init();
 

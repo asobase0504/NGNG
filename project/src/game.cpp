@@ -225,18 +225,9 @@ void CGame::SetChangeMap()
 //--------------------------------------------------------------
 void CGame::ChangeMap(std::string inPath)
 {
-	CApplication::GetInstance()->GetTaskGroup()->AllProcess([](CTask* inTask)
-	{
-		if (!inTask->IsMapChangeRelese())
-		{
-			return;
-		}
-
-		inTask->Uninit();
-	});
-
 	if (m_map != nullptr)
 	{
+		m_map->Uninit();
 		m_map = nullptr;
 	}
 

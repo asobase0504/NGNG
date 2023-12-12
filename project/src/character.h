@@ -19,7 +19,6 @@
 //==============================================================
 // 前方宣言
 //==============================================================
-class CObjectX;
 class CCollisionCylinder;
 class CSkill;
 class CAbnormal;
@@ -104,9 +103,7 @@ public:
 	void SetInterval(const int id, const int Time) { m_haveAbnormal[id].s_interval = Time; }
 	void SetAbnormalTime(const int id, const int Time) { m_haveAbnormal[id].s_effectTime = Time; }
 	void SetTargetInterval(const int id, const int MAXTIME) { m_haveAbnormal[id].s_target_interval = MAXTIME; }
-	void SetAttackAbnormal(const int id, bool onoff) { m_attackAbnormal[id] = onoff; }
 	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }		// 受けてる状態異常
-	abnormal_attack GetAbnormalAttack() { return m_attackAbnormal; }	// 与える状態異常
 
 	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
 	void SetStun(bool isStun) { m_isStun = isStun; }
@@ -205,8 +202,6 @@ protected:
 	item_count m_haveItem;
 	// 持っている状態異常の個数をそれぞれ管理
 	abnormal_count m_haveAbnormal;
-	// 与える状態異常を管理
-	abnormal_attack m_attackAbnormal;
 
 	bool m_isMoveLock;		// 移動停止状態か否か。
 	bool m_isControl;		// コントロールを受け付けるか否か。

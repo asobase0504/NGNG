@@ -56,8 +56,6 @@ CMesh::~CMesh()
 //--------------------------------------------------------------
 HRESULT CMesh::Init()
 {
-	MapChangeRelese();
-
 	// 初期化処理
 	m_vtxBuff = nullptr;		// 頂点バッファーへのポインタ
 	m_idxBuff = nullptr;		// インデックスバッファ

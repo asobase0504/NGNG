@@ -119,7 +119,6 @@ HRESULT CCharacter::Init()
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
-		m_attackAbnormal[i] = false;
 		m_haveAbnormal[i].s_stack = 0;
 		m_haveAbnormal[i].s_effectTime = 0;
 		m_haveAbnormal[i].s_target_interval = 0;
@@ -271,22 +270,6 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	if (pEnemy->IsDied())
 	{// ダメージを受けた処理
 		CItemManager::GetInstance()->AllWhenDeath(this, m_haveItem, pEnemy);
-	}
-
-	// 攻撃付与されている状態異常を作動させる
-	for (int i = 0; i < m_attackAbnormal.size(); i++)
-	{
-		if (!m_attackAbnormal[i])
-		{
-			return;
-		}
-
-		CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
-
-		if (abnormalFunc != nullptr)
-		{
-			abnormalFunc(this, i, pEnemy);
-		}
 	}
 }
 

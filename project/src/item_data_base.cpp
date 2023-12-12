@@ -190,7 +190,7 @@ void CItemDataBase::Init()
 		{
 			if (IsSuccessRate(0.05f))
 			{// 5%の確率
-				outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_STUN, true);
+				outCharacter->AddAbnormalStack(CAbnormalDataBase::ABNORMAL_STUN);
 				break;
 			}
 		}
@@ -210,7 +210,7 @@ void CItemDataBase::Init()
 		{
 			if (IsSuccessRate(0.05f))
 			{// 攻撃時に5%の確率でスロウさせる。
-				outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_SLOW, true);
+				outCharacter->AddAbnormalStack(CAbnormalDataBase::ABNORMAL_SLOW);
 			}
 		}
 	});
@@ -488,7 +488,7 @@ void CItemDataBase::Init()
 			return;
 		}
 
-		inCharacter->GetHp()->AddMaxEffect(1);
+		inCharacter->GetHp()->AddMax(1);
 	});
 	//--------------------------------------------------------------
 
@@ -552,7 +552,7 @@ void CItemDataBase::Init()
 	// 攻撃を当てた敵の移動速度が2秒間60%減少する (秒数 +2)
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 
-		outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_SLOW, true);
+		outCharacter->AddAbnormalStack(CAbnormalDataBase::ABNORMAL_SLOW);
 	});
 	//--------------------------------------------------------------
 

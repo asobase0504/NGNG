@@ -97,8 +97,7 @@ void CGolemSkill_1::AllWayAbility()
 
 		D3DXVECTOR3 pos = m_apChara->GetPos();
 		D3DXVECTOR3 move = m_aimCharacter->GetPos() - pos;
-		m_bullet = CBullet::Create(pos, move * 0.01f, 10.0f, m_apChara->GetAbnormalAttack());
-		m_bullet->SetRelation(m_apChara->GetRelation());
+		m_bullet = CBullet::Create(pos, move * 0.01f, 10.0f);
 		SetEndChildren(m_bullet);
 
 		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 10.0f);
