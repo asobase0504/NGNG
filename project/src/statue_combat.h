@@ -30,12 +30,13 @@ class CStatueCombat : public CStatue
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CStatueCombat(int nPriority = 3);
+	explicit CStatueCombat();
 	~CStatueCombat();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Update() override;
+
+	bool Select(CCharacter* selectCharacter) override;
 
 	// 静的メンバ関数
 	static CStatueCombat *Create(D3DXVECTOR3 pos);			// 生成

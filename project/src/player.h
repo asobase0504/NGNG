@@ -50,12 +50,14 @@ public:
 	void OnUpdate() { m_isUpdate = true; }
 	void OffUpdate() { m_isUpdate = false; }
 
+	void TakeItem(int id) override;	// アイテムを拾う
+
 private:
 	void PAttack();		// 攻撃
 	void Move();		// 移動
 	void Jump();		// ジャンプ
 	void Dash();		// ダッシュ
-	void TakeItem();	// アイテムを拾う
+	void Select();		// 選ぶ
 
 private:		// メンバ変数
 	int				m_skillStock;	// スキルストック数
@@ -65,6 +67,8 @@ private:		// メンバ変数
 	bool			m_isskill;		// スキルを使用しているかどうか
 
 	bool			m_isUpdate;		// 更新を止めるか否か。
+
+	bool			m_isResult;		// リザルト中か否か
 
 	CController*	m_controller;	// 命令を出す人
 };

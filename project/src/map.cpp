@@ -55,19 +55,19 @@ HRESULT CMap::Init()
 {
 	MapChangeRelese();
 	CStatueManager* manager = CStatueManager::GetInstance();
-	m_statue.push_back(manager->RandomCreate());
-	m_statue.push_back(manager->RandomCreate());
-	m_statue.push_back(manager->RandomCreate());
-	m_statue.push_back(manager->RandomCreate());
-	m_statue.push_back(manager->CreateStatue(CStatueManager::BLOOD));
-	m_statue.push_back(manager->CreateStatue(CStatueManager::LUCK));
-	m_statue.push_back(manager->CreateStatue(CStatueManager::TELEPORTER));
-	m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
-	m_statue.push_back(manager->CreateStatue(CStatueManager::COMBAT));
+	(manager->RandomCreate());
+	(manager->RandomCreate());
+	(manager->RandomCreate());
+	(manager->RandomCreate());
+	(manager->CreateStatue(CStatueManager::BLOOD));
+	(manager->CreateStatue(CStatueManager::LUCK));
+	(manager->CreateStatue(CStatueManager::TELEPORTER));
+	(manager->CreateStatue(CStatueManager::CHEST));
+	(manager->CreateStatue(CStatueManager::COMBAT));
 
 	for (int i = 0; i < 10; i++)
 	{
-		m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
+		(manager->CreateStatue(CStatueManager::CHEST));
 	}
 
 	CMesh* sky = CMesh::Create();
@@ -83,10 +83,10 @@ HRESULT CMap::Init()
 //--------------------------------------------------------------
 void CMap::Uninit()
 {
-	m_statue.clear();
 	m_mesh.clear();
 	m_model.clear();
 	m_characterList.clear();
+	m_selectEntity.clear();
 
 	CTask::Uninit();
 }
@@ -104,25 +104,6 @@ void CMap::Update()
 		m_SpawnCnt = 0;
 		CEnemyManager::GetInstance()->RandomSpawn();
 	}
-}
-
-//--------------------------------------------------------------
-// 生成
-//--------------------------------------------------------------
-CMap* CMap::Create(std::string path)
-{
-	//キャラクター生成
-	m_map = new CMap;
-
-	if (m_map != nullptr)
-	{//NULLチェック
-	 //メンバ変数に代入
-	 //初期化
-		m_map->Load(path);
-		m_map->Init();
-	}
-
-	return m_map;
 }
 
 //--------------------------------------------------------------

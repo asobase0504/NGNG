@@ -54,7 +54,7 @@ public:
 	// 現在の値の変更
 	void SetCurrent(const T& inNumber)
 	{
-		if (m_max < inNumber)
+		if (m_max < inNumber && m_isMax)
 		{
 			m_current = m_max;
 			return;
@@ -66,6 +66,7 @@ public:
 	void AddCurrent(T inNumber) { SetCurrent(m_current + inNumber); }
 	void MulCurrent(float inNumber) { SetCurrent(m_current * inNumber); }
 	T GetCurrent() { return m_current; }
+	void SetMax(T inMax) { m_max = inMax; }
 	T GetMax() { return m_max; }
 	T GetBase() { return m_base; }
 	T GetAddItem() { return m_addItem; }
@@ -82,6 +83,8 @@ public:
 	void ResetItemEffect(T inAdd) { m_addItem = 0; CalStatus(); }
 	void AddBuffEffect(T inAdd) { m_addBuff += inAdd; CalStatus(); }
 	void ResetBuffEffect(T inAdd) { m_addBuff = 0; CalStatus(); }
+	void AddMaxEffect(T inAdd) { m_max += inAdd; CalStatus(); }
+	void ResetMaxEffect(T inAdd) { m_max = 0; CalStatus(); }
 
 	void AttachMax() { m_isMax = true; }
 private:	// メンバ変数

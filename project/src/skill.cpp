@@ -85,11 +85,11 @@ CSkill *CSkill::Create()
 //--------------------------------------------------------------
 // スキル1
 //--------------------------------------------------------------
-void CSkill::Skill()
+bool CSkill::Skill()
 {
 	if (m_CT != 0)
 	{
-		return;
+		return false;
 	}
 
 	// クールタイムがなければ当たり判定を生成する
@@ -103,6 +103,8 @@ void CSkill::Skill()
 	// クールタイムの設定
 	m_atkSpd = m_apChara->GetAtkSpd()->GetCurrent();
 	m_CT = pSkillData->GetCT(m_Name) * m_atkSpd;
+
+	return true;
 }
 
 //--------------------------------------------------------------

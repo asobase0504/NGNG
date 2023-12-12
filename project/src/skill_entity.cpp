@@ -44,7 +44,8 @@ HRESULT CSkillEntity::Init()
 	MapChangeRelese();
 	// 初期化
 	m_Duration = pSkillData->GetDuration(m_Name);
-	m_Interval = 0;
+	m_Interval = pSkillData->GetInterval(m_Name);
+	m_Invincible = 0;
 	m_isSkill = false;
 	InitAbility();
 
@@ -81,8 +82,14 @@ void CSkillEntity::Update()
 
 		// 効果時間の減少
 		m_Duration--;
+		// 次の当たり判定を出現させるまでの時間を減少
 		m_Interval--;
+		// 無敵時間の減少
+		m_Invincible--;
 
+		if (m_Interval > 0)
+		{// 無敵状態にする
+		}
 
 		// インターバル0以下で当たり判定がなかったら当たり判定を生成する
 		if (m_Interval <= 0 && m_Collision == nullptr)
@@ -98,8 +105,13 @@ void CSkillEntity::Update()
 		}
 
 		// 自分とは違う関係を持ってるキャラクターに行なう
-		CMap::GetMap()->DoDifferentRelation(m_relation, [this, &collision,&pSkillData](CCharacter* inChara)
+		CMap::GetMap()->DoDifferentRelation(m_relation, [this, &collision, &pSkillData](CCharacter* inChara)
 		{
+			if (inChara->GetIsAtkCollision())
+			{
+				return;
+			}
+
 			// 当たり判定
 			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
 			if (hit && m_Interval <= 0)
@@ -116,13 +128,13 @@ void CSkillEntity::Update()
 			m_Collision = nullptr;
 		}
 	}
-	else if(m_Duration <= 0)
+	else if (m_Duration <= 0)
 	{// 効果時間が0以下になったら消す
 		Uninit();
 	}
 
 #ifdef _DEBUG
-	CDebugProc::Print("Interval : %d\n", m_Interval);
-	CDebugProc::Print("Duration : %f\n", m_Duration);
+	CDebugProc::Print("スキルの効果時間 : %f\n", m_Duration);
+	CDebugProc::Print("当たり判定のインターバル: %f\n", m_Interval);
 #endif // _DEBUG
 }

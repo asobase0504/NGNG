@@ -17,8 +17,7 @@
 //==============================================================
 const char* CFont::s_FileName[] =
 {// フォントのパス
-	"data/font/FZゴンタかな.otf",
-	"data/font/meiryob.ttc",
+	"data/font/HGRME.ttc",
 	"data/font/HGRPP1.TTC",
 };
 static_assert(sizeof(CFont::s_FileName) / sizeof(CFont::s_FileName[0]) == CFont::FONT_MAX, "aho");
@@ -28,8 +27,7 @@ static_assert(sizeof(CFont::s_FileName) / sizeof(CFont::s_FileName[0]) == CFont:
 //==============================================================
 const char* CFont::s_FontName[] =
 {// フォントのなまえ
-	"FZゴンタかな",
-	"メイリオ",
+	"HG明朝E",
 	"HG創英角ポップ体",
 };
 static_assert(sizeof(CFont::s_FontName) / sizeof(CFont::s_FontName[0]) == CFont::FONT_MAX, "aho");

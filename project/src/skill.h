@@ -36,7 +36,7 @@ public:
 	// 静的メンバ関数
 	static CSkill	*Create();									// スキルの生成
 
-	void Skill();												// スキル
+	bool Skill();												// スキル
 	// Getter
 	int	GetCT() { return m_CT; }
 

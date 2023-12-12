@@ -33,6 +33,7 @@ class CCharacter : public CObject
 public:
 
 	static const int MAX_SKILL;
+	static const int MAX_NON_COMBAT_TIME;
 
 	enum class ERelation
 	{
@@ -64,9 +65,17 @@ public:
 
 	CCollisionCylinder* GetCollision() { return m_collision; }
 
-	std::vector<CObjectX*> GetModel() { return m_apModel; }
+	CSkinMesh* GetModel() { return m_skinModel; }
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
+
+	virtual void TakeItem(int id) {}	// アイテムを拾う
+
+	// 移動制御
+	void SetMoveLock(bool isLock) { m_isMoveLock = isLock; }
+	bool GetMoveLock() { return m_isMoveLock; }
+	void SetControlLock(bool isLock) { m_isControl = isLock; }
+	bool GetControlLock() { return m_isControl; }
 
 	// 攻撃
 	void Attack(CCharacter* pEnemy, float SkillMul);
@@ -84,7 +93,10 @@ public:
 
 	// 死亡状態か否か。
 	bool IsDied() { return m_isDied; }
-	void Died();
+	virtual void Died();
+
+	// 描画をきる
+	void SetDisplay(bool display) override;
 
 	// 状態異常
 	int GetAbnormalTypeCount();	// 状態異常の種類のカウント
@@ -167,13 +179,21 @@ public:
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
 
+	// テレポーターを起動したかどうか
+	bool GetIsTeleporter() { return m_isTeleporter; }
+	void SetIsTeleporter(bool isTeleporter) { m_isTeleporter = isTeleporter; }
+  
+	// 攻撃の当たり判定を行なうかどうか
+	void SetIsAtkCollision(bool is) { m_isAtkCollision = is; }
+	bool GetIsAtkCollision() { return m_isAtkCollision; }
+
 private:
-	virtual void Move();
-	void Abnormal();
-	void Collision();
+	virtual void Move();	// 移動
+	void Abnormal();		// 状態異常
+	void Collision();		// 当たり判定
 
 protected:		// メンバ変数
-	std::vector<CObjectX*>		m_apModel;		// モデルのインスタンス
+	CSkinMesh*		m_skinModel;			// モデルのインスタンス
 	CCollisionCylinder*	m_collision;			// 当たり判定
 	ERelation m_relation;
 
@@ -188,6 +208,9 @@ protected:
 	// 与える状態異常を管理
 	abnormal_attack m_attackAbnormal;
 
+	bool m_isMoveLock;		// 移動停止状態か否か。
+	bool m_isControl;		// コントロールを受け付けるか否か。
+
 	bool m_isDied;			// 死亡状態か否か。
 	bool m_isShield;		// シールドを回復するかどうか
 	bool m_isCritical;		// クリティカルかどうか
@@ -198,6 +221,9 @@ protected:
 	int m_nonCombatTime;	// 非戦闘時になる時間
 	bool m_isRunning;		// 走っているかどうか
 	bool m_isElite;			// エリート
+	bool m_isTeleporter;	// テレポーターを起動したかどうか
+
+	bool m_isAtkCollision;		// 攻撃を受けなくなる
 
 	STATE m_state;
 
@@ -212,6 +238,7 @@ protected:
 	CStatus<float> m_criticalRate;				// クリティカル率
 	CStatus<float> m_criticalDamage;			// クリティカルダメージ
 	CStatus<float> m_movePower;					// 移動力
+	CStatus<float> m_dashPower;					// 走る力
 	CStatus<float> m_jumpPower;					// ジャンプ力
 	CStatus<unsigned int> m_jumpCount;			// ジャンプ回数
 	CStatus<int> m_money;						// 所持金

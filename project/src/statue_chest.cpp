@@ -9,13 +9,15 @@
 #include "statue_chest.h"
 #include "player_manager.h"
 #include "item_manager.h"
+#include "collision_cylinder.h"
 #include "collision_box.h"
-#include "input.h"
+#include "procedure3D.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueChest::CStatueChest(int nPriority)
+CStatueChest::CStatueChest(int nPriority):
+	m_useMoneyUI(nullptr)
 {
 
 }
@@ -40,48 +42,50 @@ HRESULT CStatueChest::Init()
 	CStatue::Init(pos, rot);
 	m_collisionBox->SetPos(D3DXVECTOR3(0.0f, 5.0f, 0.0f));
 	m_collisionBox->SetSize(D3DXVECTOR3(2.5f, 5.0f, 2.5f));
+
+	m_useMoneyUI = CProcedure3D::Create(pos, D3DXVECTOR3(4.0f, 4.0f, 0.0f), 10);
+	SetEndChildren(m_useMoneyUI);
+	m_useMoneyUI->SetColor(D3DXCOLOR(1.0f, 1.0f, 0.5f, 1.0f));
+
 	LoadModel("STATUE_CHEST");
-	m_bOnce = false;
+	m_uiText = "宝箱を開ける [$10]";
 
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// 更新処理
+// 選択時
 //--------------------------------------------------------------
-void CStatueChest::Update()
+bool CStatueChest::Select(CCharacter * selectCharacter)
 {
-	// プレイヤー情報取得
-	CInput* input = CInput::GetKey();
-	CPlayer* pPlayer = CPlayerManager::GetInstance()->GetPlayer();
-	CStatus<int>* playerMoney = pPlayer->GetMoney();
+	CStatus<int>* money = selectCharacter->GetMoney();
 
-	// プレイヤーが触れている時
-	if (Touch() && !m_bOnce)
+	// お金が足りないなら支払いができない
+	if (money->GetCurrent() < 10)
 	{
-		// プレイヤーお金を調整して設定
-		playerMoney->AddCurrent(-10);
-
-		//-------------------------------------------------------------------------------
-		// アイテムランダムドロップ関数追加
-		//---------------------------------------------------------------------------------
-		D3DXVECTOR3 pos = GetPos();
-		CItemManager::GetInstance()->CreateRandomItemRarityRate(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot(), {0.7f,0.25,0.5f,0.0f});
-
-		m_bOnce = true;
+		return false;
 	}
 
-	// 更新処理
-	CStatue::Update();
+	// プレイヤーお金を調整して設定
+	money->AddCurrent(-10);
 
-#ifdef _DEBUG
-#if 0
-	CDebugProc::Print("ChestPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
-#endif // 0
-#endif // _DEBUG
+	//-------------------------------------------------------------------------------
+	// アイテムランダムドロップ関数追加
+	//---------------------------------------------------------------------------------
+	D3DXVECTOR3 pos = GetPos();
+	CItemManager::GetInstance()->CreateRandomItemRarityRate(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot(), { 0.7f,0.25,0.5f,0.0f });
+	//CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z), GetMtxRot(), CItemDataBase::EItemType::ITEM_DANGO);
+
+	m_useMoneyUI->Uninit();
+	m_useMoneyUI = nullptr;
+
+	m_collisionCylinder->Uninit();
+	m_collisionCylinder = nullptr;
+
+	return true;
 }
 
-//--------------------------------------------------------------sdw
+//--------------------------------------------------------------
 // 生成
 //--------------------------------------------------------------
 CStatueChest* CStatueChest::Create(D3DXVECTOR3 pos)
@@ -92,4 +96,17 @@ CStatueChest* CStatueChest::Create(D3DXVECTOR3 pos)
 	pStatuechest->Init();
 
 	return pStatuechest;
+}
+
+//--------------------------------------------------------------
+// 位置
+//--------------------------------------------------------------
+void CStatueChest::SetPos(const D3DXVECTOR3 & inPos)
+{
+	if (m_useMoneyUI != nullptr)
+	{
+		m_useMoneyUI->SetPos(inPos);
+		m_useMoneyUI->AddPos(D3DXVECTOR3(0.0f, 15.0f, 0.0f));
+	}
+	CStatue::SetPos(inPos);
 }

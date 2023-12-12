@@ -72,8 +72,8 @@ void CText::Update()
 		if (m_AddLetter < m_TextSize)
 		{
 			m_Text += m_ALLText[m_AddLetter];
-			std::string Txt = m_Text;
-			if (Txt != "")
+			std::string txt = m_Text;
+			if (txt != "")
 			{//空白チェック
 				if (IsSjisLeadByte(m_ALLText[m_AddLetter]) && m_AddLetter < m_TextSize)
 				{
@@ -82,7 +82,7 @@ void CText::Update()
 					m_Text += m_ALLText[m_AddLetter];
 					m_AddLetter++;
 					m_words[m_wordsPopCount] = CWords::Create(m_Text.c_str(),
-						D3DXVECTOR3((50.0f * (m_wordsPopCountX + 1)), Pos.y + m_newlineCount * 100.0f, Pos.z),
+						D3DXVECTOR3(Pos.x + (m_size.x * 2.15f * (m_wordsPopCountX + 1)), Pos.y + m_newlineCount * m_size.y * 2.15f, Pos.z),
 						m_size,
 						m_FontType);
 					m_wordsPopCount++;
@@ -94,8 +94,8 @@ void CText::Update()
 					{	//じゃなかったとき
 						m_AddLetter++;
 						m_words[m_wordsPopCount] = CWords::Create(m_Text.c_str(),
-							D3DXVECTOR3(50.0f * (m_wordsPopCountX + 1), Pos.y + m_newlineCount * 100.0f, Pos.z),
-							m_size,
+							D3DXVECTOR3(Pos.x + m_size.x * 2.15f * (m_wordsPopCountX + 1), Pos.y + m_newlineCount * 100.0f, Pos.z),
+							m_size * 0.75f,	// 半角文字だし小さくした。値は適当
 							m_FontType);
 						m_wordsPopCount++;
 						m_wordsPopCountX++;

@@ -1,9 +1,13 @@
 {
 	"TEXTURE": [
 	["SKY","data\/TEXTURE\/Sky.jpg"],
-	["TITLE_LOGO","data\/TEXTURE\/TEXT\/title.png"],
-	["NUMBER","data\/TEXTURE\/number002.png"],
 	["TOON","data\/TEXTURE\/toon.png"],
+	["TITLE_LOGO","data\/TEXTURE\/TEXT\/title.png"],
+	["NUMBER","data\/TEXTURE\/number002_1.png"],
+	["RETICLE","data\/TEXTURE\/reticle.png"],
+	["ITEM_DANGO_O1","data\/TEXTURE\/item\/dango_white.png"],
+	["ITEM_DANGO_O2","data\/TEXTURE\/item\/dango_green.png"],
+	["ITEM_DANGO_O3","data\/TEXTURE\/item\/dango_red.png"],
 	["SKILL_ICON_YAMATO1","data\/TEXTURE\/skill\/skill0.jpg"],
 	["SKILL_ICON_YAMATO2","data\/TEXTURE\/skill\/skill1.jpg"],
 	["SKILL_ICON_YAMATO3","data\/TEXTURE\/skill\/skill2.jpg"],

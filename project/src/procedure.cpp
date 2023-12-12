@@ -18,7 +18,9 @@
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-CProcedure::CProcedure() : CObject(CTaskGroup::LEVEL_SYSTEM)
+CProcedure::CProcedure() :
+	CObject(CTaskGroup::LEVEL_SYSTEM),
+	m_align(LEFT)
 {
 }
 
@@ -72,7 +74,24 @@ void CProcedure::SetPos(const D3DXVECTOR3& inPos)
 	int cnt = 0;
 	for (CNumber* displayNumber : m_pNumber)
 	{
-		displayNumber->SetPos(D3DXVECTOR3(displayNumber->GetSize().x * 1.75f * ((float)cnt - (m_digit - 1) * 0.5f) + inPos.x, inPos.y, 0.0f));
+		float posX = 0.0f;
+		switch (m_align)
+		{
+		case CProcedure::LEFT:
+			posX = inPos.x + displayNumber->GetSize().x * 1.75f * cnt;
+			break;
+		case CProcedure::RIGHT:
+			posX = inPos.x + displayNumber->GetSize().x * 1.75f * (cnt - m_digit);
+			break;
+		case CProcedure::CENTER:
+			posX = inPos.x + displayNumber->GetSize().x * 1.75f * ((float)cnt - (m_digit - 1) * 0.5f);
+			break;
+		default:
+			assert(false);
+			break;
+		}
+
+		displayNumber->SetPos(D3DXVECTOR3(posX, inPos.y, 0.0f));
 		cnt++;
 	}
 }

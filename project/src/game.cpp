@@ -77,11 +77,13 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init()
 {
-	//CInput::GetKey()->SetCursorErase(false);
-	CInput::GetKey()->LockCursorPos(false);
+	CSkinMeshGroup::GetInstance()->LoadAll();
+
+	CInput::GetKey()->SetCursorErase(false);
+	CInput::GetKey()->LockCursorPos(true);
 
 	// 虚無マップ
-	m_map = CMap::Create("data/FILE/map/map01.json");
+	m_map = CMap::GetMap("data/FILE/map/map01.json");
 
 	m_mapFade = CMapFade::Create();
 	m_mapFade->NextMap("data/FILE/map/map01.json");
@@ -106,17 +108,16 @@ HRESULT CGame::Init()
 
 	for (int i = 0; i < 4; i++)
 	{
-		CSkillUI::Create(D3DXVECTOR3(900.0f + 75.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), pPlayer->GetSkill(i));
+		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), pPlayer->GetSkill(i));
 	}
-
-	CSkinMeshGroup::GetInstance()->LoadAll();
-
-	m_skin = CSkinMesh::Create("KENGOU");
-	m_skin->SetPos(D3DXVECTOR3(50.f, 0.f, 0.f));
 
 	//m_tcp = new CClient;
 	//m_tcp->Init("127.0.0.1", 13567);
 
+	CObject2d* reticle = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	reticle->SetPos(CApplication::CENTER_POS);
+	reticle->SetSize(D3DXVECTOR3(16.f, 16.f,0.f));
+	reticle->SetTexture("RETICLE");
 	return S_OK;
 }
 
@@ -241,6 +242,6 @@ void CGame::ChangeMap(std::string inPath)
 
 	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
 	player->OnUpdate();
-	m_map = CMap::Create(inPath);
+	m_map = CMap::GetMap(inPath);
 	m_map->InCharacterList(player);
 }

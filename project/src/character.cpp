@@ -11,6 +11,7 @@
 #include "enemy.h"
 #include "application.h"
 #include "objectX.h"
+#include "model_skin.h"
 #include "PlayerController.h"
 #include "collision_sphere.h"
 #include "road.h"
@@ -29,10 +30,13 @@
 
 #include <thread>
 
+#include "damege_ui.h"
+
 //==============================================================
 // 定数宣言
 //==============================================================
 const int CCharacter::MAX_SKILL(4);
+const int CCharacter::MAX_NON_COMBAT_TIME(300);
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -43,7 +47,6 @@ CCharacter::CCharacter(int nPriority) : m_haveItem{}
 	{
 		CMap::GetMap()->InCharacterList(this);
 	}
-	m_apModel.clear();
 	m_skill.clear();
 }
 
@@ -70,10 +73,9 @@ HRESULT CCharacter::Init()
 	m_nonCombatTime = 0;
 	m_isRunning = false;
 	m_isElite = false;
-
-	m_apModel.resize(1);
-	m_apModel[0] = CObjectX::Create(m_pos);
-	m_apModel[0]->LoadModel("BOX");
+	m_isMoveLock = false;
+	m_isControl = false;
+	m_isTeleporter = false;
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(100);
@@ -99,18 +101,21 @@ HRESULT CCharacter::Init()
 	m_criticalDamage.SetCurrent(2.0f);
 	m_movePower.Init(2.0f);
 	m_movePower.SetCurrent(2.0f);
-	m_jumpPower.Init(FLT_MAX);
-	m_jumpPower.SetCurrent(3.0f);
+	m_dashPower.Init(1.25f);
+	m_dashPower.SetCurrent(1.25f);
+	m_jumpPower.Init();
+	m_jumpPower.SetCurrent(5.0f);
 	m_jumpCount.Init(1);
 	m_jumpCount.SetCurrent(0);
 	m_jumpCount.AttachMax();
-	m_money.Init(999);
+	m_money.Init();
 	m_money.SetCurrent(50);
 	m_regenetionTime.Init(60);
 	m_regenetion.Init(1);
 	m_RegenetionCnt = 0;
 	m_isStun = false;
 	m_isBlock = false;
+	m_isAtkCollision = false;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
@@ -128,9 +133,6 @@ HRESULT CCharacter::Init()
 
 	m_state = GROUND;
 
-	// 親子関係の構築
-	SetEndChildren(m_apModel[0]);
-
 	return S_OK;
 }
 
@@ -142,22 +144,33 @@ void CCharacter::Update()
 	// 更新処理
 	CObject::Update();
 
+	// 常に起動するアイテム
+	CItemManager::GetInstance()->AllWhenAllways(this, m_haveItem);
+
 	Collision();
 
-	if (m_hp.GetCurrent() <= 0)
+	if (!m_isMoveLock)
 	{
-		// 死亡処理
-		Died();
+		// 重力
+		AddMoveY(-0.18f);
 	}
-
-	// 重力
-	AddMoveY(-0.18f);
 
 	// 付与されている状態異常を作動させる
 	Abnormal();
 
 	// 自動回復
 	Regenation();
+
+	if (!m_nonCombat)
+	{// 非戦闘時にする
+		m_nonCombatTime++;
+
+		if (m_nonCombatTime > MAX_NON_COMBAT_TIME)
+		{
+			m_nonCombat = true;
+			m_nonCombatTime = 0;
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -188,13 +201,7 @@ void CCharacter::Draw()
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	for (int i = 0; i < (int)m_apModel.size(); i++)
-	{
-		if (m_apModel[i]->GetParent() == nullptr)
-		{
-			m_apModel[i]->SetMtxWorld(m_mtxWorld);
-		}
-	}
+	m_skinModel->SetMtxWorld(m_mtxWorld);
 }
 
 //--------------------------------------------------------------
@@ -220,12 +227,7 @@ CCharacter* CCharacter::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //--------------------------------------------------------------
 void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 {
-	std::vector<CObjectX*> objectX = GetModel();
-	if (objectX.size() > 0)
-	{
-		GetModel()[0]->SetPos(inPos);
-	}
-
+	m_skinModel->SetPos(inPos);
 	CObject::SetPos(inPos);
 }
  
@@ -234,11 +236,7 @@ void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 //--------------------------------------------------------------
 void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 {
-	if (m_apModel.size() > 0)
-	{
-		GetModel()[0]->SetRot(inRot);
-	}
-
+	m_skinModel->SetRot(inRot);
 	CObject::SetRot(inRot);
 }
 
@@ -247,21 +245,33 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 //--------------------------------------------------------------
 void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 {
-	// ダメージを与えた処理
-	CItemManager::GetInstance()->AllWhenDamage(this, m_haveItem, pEnemy);
-	// ダメージを受けた処理
-	CItemManager::GetInstance()->AllWhenHit(pEnemy, pEnemy->m_haveItem, this);
-
-	// プレイヤーのダメージを計算
-	int Damage = CalDamage(SkillMul);
+	m_nonCombat = false;
 
 	if (IsSuccessRate(m_criticalRate.GetMax()))
+	{// クリティカルかどうか
+		m_isCritical = true;
+	}
+
+	// ダメージを与えた処理
+	CItemManager::GetInstance()->AllWhenReceive(pEnemy, pEnemy->m_haveItem, this);
+	// ダメージを受けた処理
+	CItemManager::GetInstance()->AllWhenInflict(this, m_haveItem, pEnemy);
+	
+	// プレイヤーのダメージを計算
+	int damage = CalDamage(SkillMul);
+
+	if(m_isCritical)
 	{
- 		Damage *= m_criticalDamage.GetMax();
+		damage *= m_criticalDamage.GetMax();
 	}
 
 	// エネミーにダメージを与える。
-	pEnemy->Damage(Damage);
+	pEnemy->Damage(damage);
+
+	if (pEnemy->IsDied())
+	{// ダメージを受けた処理
+		CItemManager::GetInstance()->AllWhenDeath(this, m_haveItem, pEnemy);
+	}
 
 	// 攻撃付与されている状態異常を作動させる
 	for (int i = 0; i < m_attackAbnormal.size(); i++)
@@ -306,7 +316,19 @@ void CCharacter::Damage(const int inDamage)
 		DamageBlock(false);
 	}
 
+	// UI生成
+	D3DXVECTOR3 pos = m_pos;
+	pos.x += FloatRandom(20.0f, -20.0f);
+	pos.y += FloatRandom(40.0f, 0.0f);
+	pos.z += FloatRandom(20.0f, -20.0f);
+	CDamegeUI::Create(pos,D3DXCOLOR(1.0f,1.0f,1.0f,1.0f),dmg);
+
 	hp->AddCurrent(-dmg);
+
+	if (m_hp.GetCurrent() <= 0)
+	{// 死亡処理
+		Died();
+	}
 }
 
 //--------------------------------------------------------------
@@ -375,6 +397,12 @@ void CCharacter::Died()
 	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
 	list.remove(this);
 	CMap::GetMap()->SetCharacterList(list);
+}
+
+void CCharacter::SetDisplay(bool display)
+{
+	CObject::SetDisplay(display);
+	m_skinModel->SetDisplay(display);
 }
 
 //--------------------------------------------------------------
@@ -450,11 +478,18 @@ void CCharacter::Collision()
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
 
-	// 像との押し出し当たり判定
-	std::list<CStatue*> list = map->GetStatueList();
-	for (CStatue* inStatue : list)
+	// 選択できる物体との押し出し当たり判定
+	std::list<CSelectEntity*> list = map->GetSelectEntityList();
+	for (CSelectEntity* inSelectEntity : list)
 	{
-		if (!(m_collision->ToBox(inStatue->GetCollisionBox(), true)))
+		CCollisionBox* collisionBox = inSelectEntity->GetCollisionBox();
+
+		if (collisionBox == nullptr)
+		{
+			continue;
+		}
+
+		if (!(m_collision->ToBox(collisionBox, true)))
 		{
 			continue;
 		}

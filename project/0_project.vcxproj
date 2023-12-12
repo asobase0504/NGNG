@@ -23,9 +23,11 @@
     <ClCompile Include="abnormal_data_base.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="connect.cpp" />
+    <ClCompile Include="damege_ui.cpp" />
     <ClCompile Include="golem_skill_1.cpp" />
     <ClCompile Include="player_abnormal_ui.cpp" />
     <ClCompile Include="src\arrow.cpp" />
+    <ClCompile Include="src\flower.cpp" />
     <ClCompile Include="src\gold_nugget.cpp" />
     <ClCompile Include="enemy_hp_ui.cpp" />
     <ClCompile Include="src\input\input_touch_panel.cpp" />
@@ -34,6 +36,8 @@
     <ClCompile Include="src\model_skin.cpp" />
     <ClCompile Include="src\model_skin_group.cpp" />
     <ClCompile Include="src\mode_fade.cpp" />
+    <ClCompile Include="src\number3D.cpp" />
+    <ClCompile Include="src\procedure3D.cpp" />
     <ClCompile Include="src\result.cpp" />
     <ClCompile Include="src\road.cpp" />
     <ClCompile Include="src\character_select.cpp" />
@@ -97,6 +101,8 @@
     </ClCompile>
     <ClCompile Include="src\procedure.cpp" />
     <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\select_entity.cpp" />
+    <ClCompile Include="src\select_ui.cpp" />
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\skill_entity.cpp" />
@@ -110,6 +116,7 @@
     <ClCompile Include="src\statue_manager.cpp" />
     <ClCompile Include="src\statue_teleporter.cpp" />
     <ClCompile Include="src\status.cpp" />
+    <ClCompile Include="src\take_item_ui.cpp" />
     <ClCompile Include="src\task.cpp" />
     <ClCompile Include="src\task_group.cpp" />
     <ClCompile Include="src\tcp_client.cpp" />
@@ -122,11 +129,13 @@
     <ClCompile Include="src\yamato_skill_1.cpp" />
     <ClCompile Include="src\yamato_skill_2.cpp" />
     <ClCompile Include="src\yamato_skill_3.cpp" />
+    <ClCompile Include="yamato_skill_4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="abnormal.h" />
     <ClInclude Include="abnormal_data_base.h" />
     <ClInclude Include="connect.h" />
+    <ClInclude Include="damege_ui.h" />
     <ClInclude Include="golem_skill_1.h" />
     <ClInclude Include="enemy_hp_ui.h" />
     <ClInclude Include="player_abnormal_ui.h" />
@@ -150,6 +159,7 @@
     <ClInclude Include="src\enemy.h" />
     <ClInclude Include="src\fade.h" />
     <ClInclude Include="src\file.h" />
+    <ClInclude Include="src\flower.h" />
     <ClInclude Include="src\font.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\gold_nugget.h" />
@@ -181,6 +191,7 @@
     <ClInclude Include="src\motion.h" />
     <ClInclude Include="src\motion_model3D.h" />
     <ClInclude Include="src\number.h" />
+    <ClInclude Include="src\number3D.h" />
     <ClInclude Include="src\object.h" />
     <ClInclude Include="src\object2d.h" />
     <ClInclude Include="src\objectX.h" />
@@ -196,9 +207,12 @@
     <ClInclude Include="src\player_manager.h" />
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\procedure.h" />
+    <ClInclude Include="src\procedure3D.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\result.h" />
     <ClInclude Include="src\road.h" />
+    <ClInclude Include="src\select_entity.h" />
+    <ClInclude Include="src\select_ui.h" />
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\skill_entity.h" />
@@ -212,6 +226,7 @@
     <ClInclude Include="src\statue_manager.h" />
     <ClInclude Include="src\statue_teleporter.h" />
     <ClInclude Include="src\status.h" />
+    <ClInclude Include="src\take_item_ui.h" />
     <ClInclude Include="src\task.h" />
     <ClInclude Include="src\task_group.h" />
     <ClInclude Include="src\tcp_client.h" />
@@ -224,6 +239,7 @@
     <ClInclude Include="src\yamato_skill_1.h" />
     <ClInclude Include="src\yamato_skill_2.h" />
     <ClInclude Include="src\yamato_skill_3.h" />
+    <ClInclude Include="yamato_skill_4.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
@@ -235,6 +251,7 @@
     <None Include="data\FILE\map\map01.json" />
     <None Include="data\FILE\map\map02.json" />
     <None Include="data\FILE\model.json" />
+    <None Include="data\FILE\skinmesh.json" />
     <None Include="data\FILE\texture.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

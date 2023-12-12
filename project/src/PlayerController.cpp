@@ -16,6 +16,8 @@
 #include "item_model.h"
 #include "collision.h"
 
+#include "take_item_ui.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -131,14 +133,7 @@ bool CPlayerController::Dash(bool dash)
 	// ダッシュ
 	if (input->Trigger(DIK_LCONTROL, -1))
 	{
-		if (dash == false)
-		{
-			dash = true;
-		}
-		else
-		{
-			dash = false;
-		}
+		dash = !dash;
 	}
 
 	return dash;
@@ -241,28 +236,39 @@ bool CPlayerController::Skill_4()
 //--------------------------------------------------------------
 int CPlayerController::TakeItem()
 {
-	CInput* input = CInput::GetKey();
+	//CInput* input = CInput::GetKey();
 
-	if (input->Trigger(DIK_F, -1))
-	{
-		std::list<CItemModel*>& item = CItemManager::GetInstance()->GetPopItemModel();
-		int size = item.size();
+	//if (input->Trigger(DIK_E, -1))
+	//{
+	//	std::list<CItemModel*>& item = CItemManager::GetInstance()->GetPopItemModel();
+	//	int size = item.size();
 
-		for (auto it = item.begin(); it != item.end();)
-		{
-			CItemModel* itemModel = *it;
-			if (!((CCollisionCylinder*)(m_toOrder->GetCollision())->ToSphere(itemModel->GetCollision())))
-			{
-				it++;
-				continue;
-			}
+	//	for (auto it = item.begin(); it != item.end();)
+	//	{
+	//		CItemModel* itemModel = *it;
+	//		if (!((CCollisionCylinder*)(m_toOrder->GetCollision())->ToSphere(itemModel->GetCollision())))
+	//		{
+	//			it++;
+	//			continue;
+	//		}
 
-			itemModel->Uninit();	// 消去
-			item.erase(it);
+	//		itemModel->Uninit();	// 消去
+	//		item.erase(it);
 
-			return itemModel->GetID();
-		}
-	}
+	//		// 取得UIの表示
+	//		CTakeItemUI*	m_ui;
+	//		m_ui = new CTakeItemUI;
+	//		m_ui->Init();
+	//		m_ui->SetTakeItem((CItemDataBase::EItemType)itemModel->GetID());
+
+	//		return itemModel->GetID();
+	//	}
+	//}
 
 	return -1;
+}
+
+bool CPlayerController::Select()
+{
+	return CInput::GetKey()->Trigger(DIK_E, -1);
 }

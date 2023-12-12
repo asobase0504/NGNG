@@ -10,7 +10,7 @@
 //==============================================================
 // include
 //==============================================================
-#include "objectX.h"
+#include "select_entity.h"
 #include "item_data_base.h"
 
 //==============================================================
@@ -23,22 +23,21 @@ class CCollision;
 //==============================================================
 // クラス
 //==============================================================
-class CItemModel : public CObjectX
+class CItemModel : public CSelectEntity
 {
 private:
 	static const float TAKE_RANGE;
 public:
-	CItemModel(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	CItemModel();
 	~CItemModel();
 
 	HRESULT Init() override;
 	HRESULT Init(int inId);
-	void Uninit() override;
 	void Update() override;
 
-	static CItemModel* Create(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx ,int inId);
+	bool Select(CCharacter* selectCharacter);
 
-	CCollisionSphere* GetCollision() { return m_collisionTake; }
+	static CItemModel* Create(const D3DXVECTOR3& inPos, const D3DXMATRIX& boxmtx ,int inId);
 
 	int GetID() { return m_ID; }
 
@@ -46,7 +45,6 @@ public:
 private:
 	// アイテムのモデルデータ
 	int m_ID;
-	CCollisionSphere* m_collisionTake;
 	CCollisionCylinder* m_collisionHit;
 	D3DXMATRIX m_mtx;
 };

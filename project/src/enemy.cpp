@@ -15,11 +15,13 @@
 #include "enemy.h"
 #include "player.h"
 #include "player_manager.h"
+#include "status.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
 #include "collision_box.h"
 #include "enemy_hp_ui.h"
+#include "model_skin.h"
 
 #include "enemy_data_base.h"
 #include "skill.h"
@@ -53,10 +55,9 @@ HRESULT CEnemy::Init()
 	m_relation = ERelation::HOSTILE;
 
 	m_AttackCnt = 0;
-	m_apModel[0]->LoadModel("SKELETON");
-	m_apModel[0]->CalculationVtx();
-
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
+	// ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
+	m_skinModel = CSkinMesh::Create("KENGOU");
+	SetEndChildren(m_skinModel);
 
 	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
 
@@ -66,6 +67,7 @@ HRESULT CEnemy::Init()
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
 	SetEndChildren(m_collision);
+	m_dropMoney = 5;
 
 	m_skill.push_back(CSkill::Create());
 	m_skill[0]->SetSkill("GOLEM_SKILL_1",this);
@@ -99,6 +101,15 @@ void CEnemy::Update()
 #ifdef ENEMY_DEBUG
 	CDebugProc::Print("EnemyFmove3(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
 #endif // _DEBUG
+}
+
+//--------------------------------------------------------------
+// Ž€–S”»’è
+//--------------------------------------------------------------
+void CEnemy::Died()
+{
+	CPlayerManager::GetInstance()->GetPlayer()->GetMoney()->AddCurrent(m_dropMoney);
+	CCharacter::Died();
 }
 
 //--------------------------------------------------------------
