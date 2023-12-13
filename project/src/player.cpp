@@ -141,9 +141,6 @@ void CPlayer::Update()
 		// ジャンプ
 		Jump();
 
-		// ダッシュ
-		Dash();
-
 		// 攻撃
 		PAttack();
 	}
@@ -232,6 +229,17 @@ void CPlayer::Move()
 
 	m_isskill = false;
 
+	if (m_isdash)
+	{
+		D3DXVECTOR3 charaMove = GetMove();
+		charaMove.y = 0;
+
+		if (D3DXVec3Length(&move) == 0.0f)
+		{
+			m_isdash = false;
+		}
+	}
+
 	if (m_isMoveLock)
 	{
 		SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
@@ -246,6 +254,9 @@ void CPlayer::Move()
 	{
 		if (!m_isControl)
 		{
+			// ダッシュ(ctrlを押すとダッシュと歩きを切り替える)
+			m_isdash = m_controller->Dash(m_isdash);
+
 			SetMoveXZ(move.x, move.z);
 
 			// カメラの方向に合わせる
@@ -284,28 +295,6 @@ void CPlayer::Jump()
 		SetMoveY(m_jumpPower.GetCurrent());
 		m_state = SKY;
 	}
-}
-
-//--------------------------------------------------------------
-// ダッシュ
-//--------------------------------------------------------------
-void CPlayer::Dash()
-{
-	// 移動量の取得
-	D3DXVECTOR3 move = GetMove();
-
-	// ダッシュ(ctrlを押すとダッシュと歩きを切り替える)
-	m_isdash = m_controller->Dash(m_isdash);
-
-	if (m_isdash)
-	{
-		// ダッシュ速度
-		move.x *= DASH_SPEED;
-		move.z *= DASH_SPEED;
-	}
-
-	// 移動量の設定
-	SetMove(move);
 }
 
 //--------------------------------------------------------------

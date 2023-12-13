@@ -53,7 +53,6 @@ public:
 	~CObjectPolygon3D() override;
 	HRESULT Init() override;
 	void Uninit() override;
-	void Update() override;
 	void Draw() override;
 
 	void SetTex(PositionVec4 inTex);

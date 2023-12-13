@@ -93,16 +93,16 @@ HRESULT CCharacter::Init()
 	m_attack.SetCurrent(100);
 	m_attackSpeed.Init(1.0f);
 	m_attackSpeed.SetCurrent(1.0f);
-	m_defense.Init(0);
-	m_defense.SetCurrent(0);
+	m_defense.Init(10);
+	m_defense.SetCurrent(10);
 	m_criticalRate.Init(0.0f);
 	m_criticalRate.SetCurrent(0.0f);
 	m_criticalDamage.Init(2.0f);
 	m_criticalDamage.SetCurrent(2.0f);
 	m_movePower.Init(2.0f);
 	m_movePower.SetCurrent(2.0f);
-	m_dashPower.Init(1.25f);
-	m_dashPower.SetCurrent(1.25f);
+	m_dashPower.Init(1.55f);
+	m_dashPower.SetCurrent(1.55f);
 	m_jumpPower.Init();
 	m_jumpPower.SetCurrent(5.0f);
 	m_jumpCount.Init(1);
@@ -240,9 +240,9 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 }
 
 //--------------------------------------------------------------
-// 攻撃
+// ダメージを与える
 //--------------------------------------------------------------
-void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
+void CCharacter::DealDamage(CCharacter* pEnemy, float SkillMul)
 {
 	m_nonCombat = false;
 
@@ -265,7 +265,7 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	}
 
 	// エネミーにダメージを与える。
-	pEnemy->Damage(damage);
+	pEnemy->TakeDamage(damage);
 
 	if (pEnemy->IsDied())
 	{// ダメージを受けた処理
@@ -274,14 +274,11 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 }
 
 //--------------------------------------------------------------
-// ダメージ
+// ダメージを受ける
 //--------------------------------------------------------------
-void CCharacter::Damage(const int inDamage)
+void CCharacter::TakeDamage(const int inDamage)
 {
 	int dmg = inDamage;
-
-	// ダメージ計算
-	CStatus<int>* hp = GetHp();
 
 	// 防御力算出
 	int def = m_defense.CalStatus();
@@ -299,12 +296,15 @@ void CCharacter::Damage(const int inDamage)
 		DamageBlock(false);
 	}
 
-	// UI生成
+	// ダメージUI生成
 	D3DXVECTOR3 pos = m_pos;
 	pos.x += FloatRandom(20.0f, -20.0f);
 	pos.y += FloatRandom(40.0f, 0.0f);
 	pos.z += FloatRandom(20.0f, -20.0f);
 	CDamegeUI::Create(pos,D3DXCOLOR(1.0f,1.0f,1.0f,1.0f),dmg);
+
+	// ダメージ計算
+	CStatus<int>* hp = GetHp();
 
 	hp->AddCurrent(-dmg);
 
@@ -339,6 +339,19 @@ void CCharacter::Heal(int heal)
 	{
 		HealHp = m_hp.GetMax() - m_hp.GetCurrent();
 	}
+
+	// 回復しなかったら
+	if (HealHp <= 0)
+	{
+		return;
+	}
+
+	// ダメージUI生成
+	D3DXVECTOR3 pos = m_pos;
+	pos.x += FloatRandom(20.0f, -20.0f);
+	pos.y += FloatRandom(40.0f, 0.0f);
+	pos.z += FloatRandom(20.0f, -20.0f);
+	CDamegeUI::Create(pos, D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f), HealHp);
 
 	m_hp.AddCurrent(HealHp);
 }
@@ -401,7 +414,7 @@ void CCharacter::Move()
 void CCharacter::Abnormal()
 {
 	// 付与されている状態異常を作動させる
-	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	for (size_t i = 0; i < m_haveAbnormal.size(); i++)
 	{
 		if (m_haveAbnormal[i].s_stack <= 0)
 		{
@@ -539,7 +552,7 @@ int CCharacter::GetAbnormalTypeCount()
 	int abnormal_type_count = 0;
 	
 	// 付与されている状態異常をカウントする
-	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	for (size_t i = 0; i < m_haveAbnormal.size(); i++)
 	{
 		if (m_haveAbnormal[i].s_stack <= 0)
 		{
