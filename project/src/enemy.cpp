@@ -29,7 +29,7 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CEnemy::CEnemy(int nPriority)
+CEnemy::CEnemy()
 {
 
 }
@@ -63,14 +63,17 @@ HRESULT CEnemy::Init()
 	m_pEHPUI = CEnemy_HPUI::Create(this);
 	SetEndChildren(m_pEHPUI);
 
+	// 当たり判定の作成
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
 	SetEndChildren(m_collision);
-	m_dropMoney = 5;
 
+	// SKILLの作成
 	m_skill.push_back(CSkill::Create());
 	m_skill[0]->SetSkill("GOLEM_SKILL_1",this);
 	SetEndChildren(m_skill[0]);
+
+	m_dropMoney = 5;
 	return S_OK;
 }
 
