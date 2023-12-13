@@ -14,7 +14,9 @@
 //--------------------------------------------------------------
 // コンストラクト関数
 //--------------------------------------------------------------
-CNumber3D::CNumber3D(CTaskGroup::EPriority list) : CObjectPolygon3D(list)
+CNumber3D::CNumber3D(CTaskGroup::EPriority list) : 
+	CObjectPolygon3D(list),
+	m_myNumber(0)
 {
 }
 

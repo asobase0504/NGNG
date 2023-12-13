@@ -348,9 +348,9 @@ void CCharacter::Heal(int heal)
 
 	// ダメージUI生成
 	D3DXVECTOR3 pos = m_pos;
-	pos.x += FloatRandom(20.0f, -20.0f);
-	pos.y += FloatRandom(40.0f, 0.0f);
-	pos.z += FloatRandom(20.0f, -20.0f);
+	//pos.x += FloatRandom(20.0f, -20.0f);
+	//pos.y += FloatRandom(40.0f, 0.0f);
+	//pos.z += FloatRandom(20.0f, -20.0f);
 	CDamegeUI::Create(pos, D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f), HealHp);
 
 	m_hp.AddCurrent(HealHp);

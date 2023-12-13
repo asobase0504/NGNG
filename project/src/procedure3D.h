@@ -37,7 +37,7 @@ public:
 	~CProcedure3D() override;
 
 	HRESULT Init() override;
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int digit);
+	void Uninit() override;
 	void Update() override;
 	void Draw() override {}
 
