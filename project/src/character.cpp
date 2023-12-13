@@ -120,6 +120,7 @@ HRESULT CCharacter::Init()
 	m_isStun = false;
 	m_isBlock = false;
 	m_isAtkCollision = false;
+	m_addDamage = 0.0f;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
@@ -272,6 +273,7 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	if (IsSuccessRate(m_criticalRate.GetMax()))
 	{// クリティカルかどうか
 		m_isCritical = true;
+		m_numCritical++;
 	}
 
 	// ダメージを与えた処理	
@@ -279,6 +281,9 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 
 	// プレイヤーのダメージを計算
 	int damage = CalDamage(SkillMul);
+
+	// アイテムによるダメージの加算
+	damage += m_addDamage;
 
 	if(m_isCritical)
 	{
@@ -347,6 +352,9 @@ void CCharacter::Damage(const int inDamage, CCharacter* inCharacter)
 	CDamegeUI::Create(pos,D3DXCOLOR(1.0f,1.0f,1.0f,1.0f),dmg);
 
 	hp->AddCurrent(-dmg);
+
+	// アイテムによるダメージンの加算の初期化
+	m_addDamage = 0.0f;
 
 	if (m_hp.GetCurrent() <= 0)
 	{// 死亡処理

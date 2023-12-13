@@ -56,7 +56,7 @@ void CYamatoSkill_1::InitAbility()
 void CYamatoSkill_1::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	m_apChara->Attack(Target,1.5f);
+	m_apChara->Attack(Target, 1.5f);
 }
 
 //--------------------------------------------------------------

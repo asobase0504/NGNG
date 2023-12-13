@@ -81,6 +81,7 @@ public:
 	void Attack(CCharacter* pEnemy, float SkillMul);
 	void Damage(const int inDamage, CCharacter* inCharacter);	// 与えたいダメージ、与えたいキャラクター
 	int CalDamage(float SkillAtkMul);
+	void AddDamage(float inDamage) { m_addDamage = inDamage; }
 
 	// 回復
 	void Regenation();
@@ -221,6 +222,8 @@ protected:
 	bool m_isTeleporter;	// テレポーターを起動したかどうか
 
 	bool m_isAtkCollision;		// 攻撃を受けなくなる
+
+	float m_addDamage;
 
 	STATE m_state;
 

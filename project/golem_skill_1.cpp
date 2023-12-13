@@ -112,7 +112,7 @@ void CGolemSkill_1::AllWayAbility()
 //--------------------------------------------------------------
 void CGolemSkill_1::HitAbility(CCharacter * Target)
 {
-	Target->Damage(50, Target);
+	Target->Damage(5, Target);
 
 	if (m_bullet != nullptr)
 	{

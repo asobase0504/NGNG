@@ -101,7 +101,7 @@ void CItemManager::CreateRandomItemRarity(const D3DXVECTOR3 & inPos, const D3DXM
 		rarity = CItemDataBase::GetInstance()->GetItemData(id)->GetRerity();
 	}
 
-	CreateItem(inPos, boxmtx, CItemDataBase::ITEM_KIBORI);
+	CreateItem(inPos, boxmtx, CItemDataBase::ITEM_KITUNEMEN);
 	//CreateItem(inPos, boxmtx, (CItemDataBase::EItemType)id);
 }
 

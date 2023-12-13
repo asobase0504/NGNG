@@ -227,16 +227,16 @@ void CItemDataBase::Init()
 	// 首級---------------------------------------------------------
 	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒した時、HPの1%(+1%)を回復する。
-		int percent = 0;
+		float percent = 0;
 		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{// 持ってる数、割合を増やす
 			percent += 1;
 		}
 
 		// 最大体力を取得
-		int hpMax = inCharacter->GetHp()->GetMax();
+		float hpMax = inCharacter->GetHp()->GetMax();
 		// 回復する値
-		int recovery = (int)(hpMax * (percent / 100));
+		float recovery = hpMax * (percent / 100.0f);
 		inCharacter->Heal(recovery);
 	});
 	//--------------------------------------------------------------
@@ -245,32 +245,34 @@ void CItemDataBase::Init()
 	item->SetModel("ITEM_KUNAI");
 	item->SetRerity(RARITY_COMMON);
 	m_itemInfo[ITEM_KUNAI][0] = "クナイ";
-	m_itemInfo[ITEM_KUNAI][1] = "体力が90%以上の敵に対してダメージが増加する";
+	m_itemInfo[ITEM_KUNAI][1] = "体力が90%以上の敵に対して\nダメージが増加する";
 	m_itemInfo[ITEM_KUNAI][2] = "ITEM_DANGO_O1";
 	// クナイ---------------------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 体力が90%以上の敵に対して70%(+70%)ダメージが増加する。
 		// 最大体力を取得
-		int hpMax = outCharacter->GetHp()->GetMax();
+		float hpMax = outCharacter->GetHp()->GetMax();
 		// 現在の体力
-		int hpCurrent = outCharacter->GetHp()->GetCurrent();
+		float hpCurrent = outCharacter->GetHp()->GetCurrent();
 
 		// 体力の割合を計算
-		int percent = (int)(hpCurrent / hpMax * 100);
+		float percent = (hpCurrent / hpMax * 100.0f);
 
-		if (percent >= 90)
+		if (percent >= 90.0f)
 		{// 相手の体力が90%以上だった時
-			int addParcent = 0;
+			float addParcent = 0;
 
 			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{// 持ってる数、割合を増やす
 				addParcent += 70;
 			}
-			int nowAtk = inCharacter->GetAtk()->GetCurrent();
-			nowAtk += nowAtk * (addParcent / 100);
+			float nowAtk = inCharacter->GetAtk()->GetCurrent();
+			float total = nowAtk * (addParcent / 100.0f);
 
-			// ダメージ計算
-			inCharacter->GetAtk()->SetCurrent(nowAtk);
+			nowAtk += total;
+
+			// ダメージの加算
+			inCharacter->AddDamage(nowAtk);
 		}
 	});
 	//--------------------------------------------------------------
@@ -283,7 +285,7 @@ void CItemDataBase::Init()
 	m_itemInfo[ITEM_FUR][2] = "ITEM_DANGO_O1";
 	// 毛皮---------------------------------------------------------
 	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
-	{// 最大体力の8%のシールドを得る。
+	{// 最大体力の8%のシールドを得る。	// TODO　未検証
 		if (inCharacter->GetIsShield())
 		{// シールドを回復する状態の時
 			// 最大体力を取得
@@ -309,26 +311,26 @@ void CItemDataBase::Init()
 	item->SetModel("ITEM_KITUNENOOMEN");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_KITUNEMEN][0] = "狐面";
-	m_itemInfo[ITEM_KITUNEMEN][1] = "クリティカルヒットで攻撃速度が上昇する";
+	m_itemInfo[ITEM_KITUNEMEN][1] = "クリティカルヒットで攻撃速度が\n上昇する";
 	m_itemInfo[ITEM_KITUNEMEN][2] = "ITEM_DANGO_O1";
 	// 狐面---------------------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// クリティカルヒットで攻撃速度が12%上昇する。最大値は36% (+36%)。
+	{// クリティカルヒットで攻撃速度が12%上昇する。最大値は36% (+36%)。// TODO　未検証
 		if (inCharacter->GetIsCritical())
 		{
-			int addAtkSpdPercent = 0;
-			int numCritical = inCharacter->GetNumCritical();
+			float addAtkSpdPercent = 0;
+			float numCritical = inCharacter->GetNumCritical();
 
 			for (int i = 0; i < numCritical; i++)
 			{// ヒットした数足す
-				addAtkSpdPercent += 12;
+				addAtkSpdPercent += 12.0f;
 			}
 
-			int maxPercent = 0;
+			float maxPercent = 0;
 
 			for (int i = 0; i < cnt; i++)
 			{// アイテムの所持数分、足す
-				maxPercent += 36;
+				maxPercent += 36.0f;
 			}
 
 			if (maxPercent < addAtkSpdPercent)
@@ -339,7 +341,10 @@ void CItemDataBase::Init()
 			// 現在のスピードを取得
 			float currentAtkSpd = inCharacter->GetAtkSpd()->GetCurrent();
 			// 増やす割合の計算
-			currentAtkSpd += currentAtkSpd * (addAtkSpdPercent / 100);
+			float total = currentAtkSpd * (addAtkSpdPercent / 100.0f);
+			
+			currentAtkSpd += total;
+
 			// 設定
 			inCharacter->GetAtkSpd()->SetCurrent(currentAtkSpd);
 		}
@@ -350,7 +355,7 @@ void CItemDataBase::Init()
 	item->SetModel("ITEM_KAZAGURUMA");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_KAZAGURUMA][0] = "風車";
-	m_itemInfo[ITEM_KAZAGURUMA][1] = "敵を倒すと確率で全てのクールダウンをリセットする";
+	m_itemInfo[ITEM_KAZAGURUMA][1] = "敵を倒すと確率で全てのクールダウンを\nリセットする";
 	m_itemInfo[ITEM_KAZAGURUMA][2] = "ITEM_DANGO_O1";
 	// 風車---------------------------------------------------------
 	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
@@ -396,7 +401,7 @@ void CItemDataBase::Init()
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_ONIMEN][0] = "鬼面";
-	m_itemInfo[ITEM_ONIMEN][1] = "4つ以上のデバフがついた敵に死の印が付き、受けるダメージが7秒間(+7秒)50%増加する";
+	m_itemInfo[ITEM_ONIMEN][1] = "4つ以上のデバフがついた敵に死の印が付き、\n受けるダメージが増加する";
 	m_itemInfo[ITEM_ONIMEN][2] = "ITEM_DANGO_O1";
 	// 鬼面---------------------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
@@ -415,11 +420,11 @@ void CItemDataBase::Init()
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_BROKEN_KABUTO][0] = "壊れた兜";
-	m_itemInfo[ITEM_BROKEN_KABUTO][1] = "体力が一定以下になったエリートモンスターを即死させる";
+	m_itemInfo[ITEM_BROKEN_KABUTO][1] = "体力が一定以下になったエリートモンスターを\n即死させる";
 	m_itemInfo[ITEM_BROKEN_KABUTO][2] = "ITEM_DANGO_O1";
 	// 壊れた兜---------------------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// 体力が13%以下になったエリートモンスターを即死させる (+13%)
+	{// 体力が13%以下になったエリートモンスターを即死させる (+13%)	// TODO　未検証
 		if (outCharacter->GetIsElite())
 		{
 			int parcent = 0;
@@ -465,7 +470,7 @@ void CItemDataBase::Init()
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_TOISI][0] = "砥石";
-	m_itemInfo[ITEM_TOISI][1] = "クリティカル確率が上昇し、クリティカルが発生するごとに体力が8回復する";
+	m_itemInfo[ITEM_TOISI][1] = "クリティカル確率が上昇し、クリティカルが発生するごとに\n体力が回復する";
 	m_itemInfo[ITEM_TOISI][2] = "ITEM_DANGO_O1";
 	// 砥石---------------------------------------------------------
 	// クリティカル確率が5%上昇し、クリティカルが発生するごとに体力が8回復する (回復量 +8)
