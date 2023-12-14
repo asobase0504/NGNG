@@ -461,6 +461,9 @@
     <ClCompile Include="src\fade.cpp">
       <Filter>ソース ファイル\Mode\99_Fade</Filter>
     </ClCompile>
+    <ClCompile Include="src\server_player.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\00_player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -795,6 +798,9 @@
     </ClInclude>
     <ClInclude Include="src\fade.h">
       <Filter>ソース ファイル\Mode\99_Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="src\server_player.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\00_player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

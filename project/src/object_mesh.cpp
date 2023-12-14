@@ -377,7 +377,7 @@ bool CMesh::CreateMesh(D3DXVECTOR3* pPos)
 
 void CMesh::SetY(std::vector<std::vector<float>> inY)
 {
-	SetVtxMeshSize(inY.size());	// サイズ決定
+	SetVtxMeshSize(inY.size(), inY[0].size());	// サイズ決定
 	SetVtxMeshLight();		// 法線設定
 
 	VERTEX_3D* pVtx = NULL;
@@ -422,15 +422,15 @@ void CMesh::SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx,int nCnt,bool isUp)
 //--------------------------------------------------------------
 // 面の数を設定
 //--------------------------------------------------------------
-void CMesh::SetVtxMeshSize(int Size)
+void CMesh::SetVtxMeshSize(int sizeX,int sizeZ)
 {
 	//CMesh::Uninit();
 	//NotRelease();
 
-	m_vtxCountX = Size;	// 頂点数
-	m_vtxCountZ = Size;	// 頂点数
-	m_xsiz = Size - 1;				// 面の数
-	m_zsiz = Size - 1;				// 面の数
+	m_vtxCountX = sizeX;	// 頂点数
+	m_vtxCountZ = sizeZ;	// 頂点数
+	m_xsiz = sizeX - 1;				// 面の数
+	m_zsiz = sizeZ - 1;				// 面の数
 
 	// 頂点数
 	m_vtx = m_vtxCountX * m_vtxCountZ;	// 頂点数を使ってるよ
@@ -480,7 +480,7 @@ void CMesh::SetVtxMeshSize(int Size)
 	for (int i = 0; i < m_vtx; i++)
 	{
 		float posx = (float)((i % m_vtxCountX));
-		float posz = ((i / m_vtxCountZ)) * -1.0f;
+		float posz = ((i / m_vtxCountX)) * -1.0f;
 
 		float texU = 1.0f / m_xsiz * (i % m_vtxCountX);
 		float texV = 1.0f / m_zsiz * (i / m_vtxCountZ);
@@ -704,15 +704,6 @@ void CMesh::SetSkyMesh()
 
 	// インデックスバッファをアンロックする
 	m_idxBuff->Unlock();
-}
-
-//--------------------------------------------------------------
-// メッシュ枚数の決定
-//--------------------------------------------------------------
-void CMesh::SetMesh(const int Size)
-{
-	SetVtxMeshSize(Size);	// サイズ決定
-	SetVtxMeshLight();		// 法線設定
 }
 
 //--------------------------------------------------------------
