@@ -279,7 +279,7 @@ void CCharacter::DealDamage(CCharacter* pEnemy, float SkillMul)
 	}
 
 	// エネミーにダメージを与える。
-	pEnemy->TakeDamage(damage);
+	pEnemy->TakeDamage(damage,this);
 
 	if (pEnemy->IsDied())
 	{// エネミーが死んだとき
@@ -290,10 +290,10 @@ void CCharacter::DealDamage(CCharacter* pEnemy, float SkillMul)
 //--------------------------------------------------------------
 // ダメージを受ける
 //--------------------------------------------------------------
-void CCharacter::TakeDamage(const int inDamage)
+void CCharacter::TakeDamage(const int inDamage, CCharacter* inChara)
 {
 	// ダメージを受けた処理
-	CItemManager::GetInstance()->AllWhenReceive(inCharacter, inCharacter->m_haveItem, this);
+	CItemManager::GetInstance()->AllWhenReceive(this, m_haveItem, inChara);
 
 	int dmg = inDamage;
 

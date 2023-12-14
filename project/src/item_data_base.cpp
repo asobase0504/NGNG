@@ -57,12 +57,12 @@ void CItemDataBase::Init()
 	/* HP+50(+50)増加 */
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	
-		inCharacter->GetHp()->AddMaxEffect(50);
+		inCharacter->GetHp()->AddMax(50);
 		inCharacter->GetHp()->AddItemEffect(50);
 	});
 	item->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	
-		inCharacter->GetHp()->AddMaxEffect(-50);
+		inCharacter->GetHp()->AddMax(-50);
 		inCharacter->GetHp()->AddItemEffect(-50);
 	});
 	//--------------------------------------------------------------
@@ -234,10 +234,10 @@ void CItemDataBase::Init()
 		}
 
 		// 最大体力を取得
-		float hpMax = inCharacter->GetHp()->GetMax();
+		float hpMax = (float)inCharacter->GetHp()->GetMax();
 		// 回復する値
 		float recovery = hpMax * (percent / 100.0f);
-		inCharacter->Heal(recovery);
+		inCharacter->Heal((int)recovery);
 	});
 	//--------------------------------------------------------------
 
@@ -251,9 +251,9 @@ void CItemDataBase::Init()
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 体力が90%以上の敵に対して70%(+70%)ダメージが増加する。
 		// 最大体力を取得
-		float hpMax = outCharacter->GetHp()->GetMax();
+		float hpMax = (float)outCharacter->GetHp()->GetMax();
 		// 現在の体力
-		float hpCurrent = outCharacter->GetHp()->GetCurrent();
+		float hpCurrent = (float)outCharacter->GetHp()->GetCurrent();
 
 		// 体力の割合を計算
 		float percent = (hpCurrent / hpMax * 100.0f);
@@ -266,7 +266,7 @@ void CItemDataBase::Init()
 			{// 持ってる数、割合を増やす
 				addParcent += 70;
 			}
-			float nowAtk = inCharacter->GetAtk()->GetCurrent();
+			float nowAtk = (float)inCharacter->GetAtk()->GetCurrent();
 			float total = nowAtk * (addParcent / 100.0f);
 
 			nowAtk += total;
@@ -319,7 +319,7 @@ void CItemDataBase::Init()
 		if (inCharacter->GetIsCritical())
 		{
 			float addAtkSpdPercent = 0;
-			float numCritical = inCharacter->GetNumCritical();
+			float numCritical = (float)inCharacter->GetNumCritical();
 
 			for (int i = 0; i < numCritical; i++)
 			{// ヒットした数足す
@@ -436,10 +436,10 @@ void CItemDataBase::Init()
 			}
 
 			// 一定の体力以下になった敵を殺す
-			float hp = outCharacter->GetHp()->GetMax();
+			float hp = (float)outCharacter->GetHp()->GetMax();
 			hp *= (parcent / 100.0f);
 
-			float hpCurrent = outCharacter->GetHp()->GetCurrent();
+			float hpCurrent = (float)outCharacter->GetHp()->GetCurrent();
 
 			if (hpCurrent <= hp)
 			{// 現在の体力が規定値以下だったら
@@ -676,7 +676,7 @@ void CItemDataBase::Init()
 	{
 		if (inCharacter->GetIsTeleporter())
 		{// 起動したら
-			float radius = cnt * 300;	// 値調整　TODO
+			float radius = (float)cnt * 300;	// 値調整　TODO
 			CFlower* obj = CFlower::Create(inCharacter->GetPos(), radius);
 			inCharacter->SetIsTeleporter(false);
 		}

@@ -77,8 +77,8 @@ public:
 	bool GetControlLock() { return m_isControl; }
 
 	// 攻撃
-	void DealDamage(CCharacter* pEnemy, float SkillMul);
-	void TakeDamage(const int inDamage);
+	void DealDamage(CCharacter* inChara, float SkillMul);
+	void TakeDamage(const int inDamage, CCharacter* inChara);
 	int CalDamage(float SkillAtkMul);
 	void AddDamage(float inDamage) { m_addDamage = inDamage; }
 
