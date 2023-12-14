@@ -116,6 +116,7 @@ HRESULT CCharacter::Init()
 	m_isStun = false;
 	m_isBlock = false;
 	m_isAtkCollision = false;
+	m_addDamage = 0.0f;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
@@ -240,6 +241,17 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 	CObject::SetRot(inRot);
 }
 
+void CCharacter::TakeItem(int id)
+{
+	m_haveItem[id]++;
+	CItem::ITEM_FUNC itemFunc = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)id)->GetWhenPickFunc();
+
+	if (itemFunc != nullptr)
+	{
+		itemFunc(this, m_haveItem[id]);
+	}
+}
+
 //--------------------------------------------------------------
 // 攻撃
 //--------------------------------------------------------------
@@ -250,15 +262,17 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	if (IsSuccessRate(m_criticalRate.GetMax()))
 	{// クリティカルかどうか
 		m_isCritical = true;
+		m_numCritical++;
 	}
 
-	// ダメージを与えた処理
-	CItemManager::GetInstance()->AllWhenReceive(pEnemy, pEnemy->m_haveItem, this);
-	// ダメージを受けた処理
+	// ダメージを与えた処理	
 	CItemManager::GetInstance()->AllWhenInflict(this, m_haveItem, pEnemy);
-	
+
 	// プレイヤーのダメージを計算
 	int damage = CalDamage(SkillMul);
+
+	// アイテムによるダメージの加算
+	damage += m_addDamage;
 
 	if(m_isCritical)
 	{
@@ -266,10 +280,10 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	}
 
 	// エネミーにダメージを与える。
-	pEnemy->Damage(damage);
+	pEnemy->Damage(damage, pEnemy);
 
 	if (pEnemy->IsDied())
-	{// ダメージを受けた処理
+	{// エネミーが死んだとき
 		CItemManager::GetInstance()->AllWhenDeath(this, m_haveItem, pEnemy);
 	}
 
@@ -293,8 +307,11 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 //--------------------------------------------------------------
 // ダメージ
 //--------------------------------------------------------------
-void CCharacter::Damage(const int inDamage)
+void CCharacter::Damage(const int inDamage, CCharacter* inCharacter)
 {
+	// ダメージを受けた処理
+	CItemManager::GetInstance()->AllWhenReceive(inCharacter, inCharacter->m_haveItem, this);
+
 	int dmg = inDamage;
 
 	// ダメージ計算
@@ -325,6 +342,9 @@ void CCharacter::Damage(const int inDamage)
 
 	hp->AddCurrent(-dmg);
 
+	// アイテムによるダメージンの加算の初期化
+	m_addDamage = 0.0f;
+
 	if (m_hp.GetCurrent() <= 0)
 	{// 死亡処理
 		Died();
@@ -339,7 +359,7 @@ int CCharacter::CalDamage(float SkillAtkMul)
 
 	int CalDamage =
 		(int)(((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
-		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillAtkMul)));
+		(m_attack.GetMulBuff() * m_attack.GetMulItem() * SkillAtkMul)));
 
 	return CalDamage;
 }

@@ -313,17 +313,12 @@ void CPlayer::Dash()
 //--------------------------------------------------------------
 void CPlayer::TakeItem(int id)
 {
-	m_haveItem[id]++;
-	CItem::ITEM_FUNC itemFunc = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)id)->GetWhenPickFunc();
+	CCharacter::TakeItem(id);
 
 	CTakeItemUI* ui = new CTakeItemUI;
 	ui->Init();
 	ui->SetTakeItem((CItemDataBase::EItemType)id);
 
-	if (itemFunc != nullptr)
-	{
-		itemFunc(this, m_haveItem[id]);
-	}
 }
 
 //--------------------------------------------------------------

@@ -65,7 +65,7 @@ void CYamatoSkill_4::InitAbility()
 void CYamatoSkill_4::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	Target->Damage(50);
+	Target->Damage(50, Target);
 }
 
 //--------------------------------------------------------------
