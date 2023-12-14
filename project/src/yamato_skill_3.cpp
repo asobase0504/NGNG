@@ -66,9 +66,8 @@ void CYamatoSkill_3::InitAbility()
 void CYamatoSkill_3::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	Target->TakeDamage(50);
+	Target->TakeDamage(50, Target);
 }
-
 
 //--------------------------------------------------------------
 // スキル生成処理

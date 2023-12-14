@@ -68,7 +68,7 @@ public:
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
 
-	virtual void TakeItem(int id) {}	// アイテムを拾う
+	virtual void TakeItem(int id);	// アイテムを拾う
 
 	// 移動制御
 	void SetMoveLock(bool isLock) { m_isMoveLock = isLock; }
@@ -80,6 +80,7 @@ public:
 	void DealDamage(CCharacter* pEnemy, float SkillMul);
 	void TakeDamage(const int inDamage);
 	int CalDamage(float SkillAtkMul);
+	void AddDamage(float inDamage) { m_addDamage = inDamage; }
 
 	// 回復
 	void Regenation();
@@ -219,6 +220,8 @@ protected:
 	bool m_isTeleporter;	// テレポーターを起動したかどうか
 
 	bool m_isAtkCollision;		// 攻撃を受けなくなる
+
+	float m_addDamage;
 
 	STATE m_state;
 
