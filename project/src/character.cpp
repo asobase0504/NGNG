@@ -263,6 +263,17 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 	CObject::SetRot(inRot);
 }
 
+void CCharacter::TakeItem(int id)
+{
+	m_haveItem[id]++;
+	CItem::ITEM_FUNC itemFunc = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)id)->GetWhenPickFunc();
+
+	if (itemFunc != nullptr)
+	{
+		itemFunc(this, m_haveItem[id]);
+	}
+}
+
 //--------------------------------------------------------------
 // 攻撃
 //--------------------------------------------------------------
