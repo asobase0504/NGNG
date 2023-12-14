@@ -133,6 +133,11 @@ void CLine::Update()
 //--------------------------------------------------------------
 void CLine::Draw()
 {
+	if (!m_isDisplay)
+	{
+		return;
+	}
+
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();		//デバイスへのポインタ
 

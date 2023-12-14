@@ -14,8 +14,8 @@
 //**************************************************
 // 前方前言　実態はNG　ポインタだけならOK
 //**************************************************
-class CText;
 class CObject2D;
+class CProcedure;
 
 //**************************************************
 // クラス
@@ -35,8 +35,8 @@ private:
 	CAbnormalDataBase::EAbnormalType inType;
 	bool m_isDisplayStack;
 	int* m_stackCnt;		// stack数のロゴ
-	CText* m_stack;
 	CObject2D* m_abnormalLogo;
+	CProcedure* m_stack;
 };
 
 #endif // _TIMER_H_
