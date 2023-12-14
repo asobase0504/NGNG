@@ -416,6 +416,7 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
+	// ↑チェック済み-----------------------------------------------
 	item = m_item[ITEM_BROKEN_KABUTO];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
@@ -427,18 +428,18 @@ void CItemDataBase::Init()
 	{// 体力が13%以下になったエリートモンスターを即死させる (+13%)	// TODO　未検証
 		if (outCharacter->GetIsElite())
 		{
-			int parcent = 0;
+			float parcent = 0.0f;
 
 			for (int j = 0; j < cnt; j++)
 			{
-				parcent += 13;
+				parcent += 13.0f;
 			}
 
 			// 一定の体力以下になった敵を殺す
-			int hp = outCharacter->GetHp()->GetMax();
-			hp *= (parcent / 100);
+			float hp = outCharacter->GetHp()->GetMax();
+			hp *= (parcent / 100.0f);
 
-			int hpCurrent = outCharacter->GetHp()->GetCurrent();
+			float hpCurrent = outCharacter->GetHp()->GetCurrent();
 
 			if (hpCurrent <= hp)
 			{// 現在の体力が規定値以下だったら

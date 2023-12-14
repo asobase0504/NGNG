@@ -370,7 +370,7 @@ int CCharacter::CalDamage(float SkillAtkMul)
 
 	int CalDamage =
 		(int)(((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
-		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillAtkMul)));
+		(m_attack.GetMulBuff() * m_attack.GetMulItem() * SkillAtkMul)));
 
 	return CalDamage;
 }
