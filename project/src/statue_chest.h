@@ -31,7 +31,7 @@ class CStatueChest : public CStatue
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CStatueChest(int nPriority = 3);
+	explicit CStatueChest();
 	~CStatueChest();
 
 	//プロトタイプ宣言
@@ -45,7 +45,6 @@ public:
 	void SetPos(const D3DXVECTOR3& inPos) override;
 
 private:	// メンバ変数
-	CProcedure3D* m_useMoneyUI;	// 必要金額を3D空間状に描画
 };
 #endif
 

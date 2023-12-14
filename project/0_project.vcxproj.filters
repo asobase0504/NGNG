@@ -275,12 +275,6 @@
     <ClCompile Include="src\character.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\Controller.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PlayerController.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\status.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -464,6 +458,12 @@
     <ClCompile Include="src\server_player.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\00_player</Filter>
     </ClCompile>
+    <ClCompile Include="src\Controller.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerController.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -622,8 +622,6 @@
     <ClInclude Include="src\statue_teleporter.h">
       <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
     </ClInclude>
-    <ClInclude Include="src\Controller.h" />
-    <ClInclude Include="src\PlayerController.h" />
     <ClInclude Include="src\status.h" />
     <ClInclude Include="src\camera_game.h">
       <Filter>ソース ファイル\3D\camera</Filter>
@@ -801,6 +799,12 @@
     </ClInclude>
     <ClInclude Include="src\server_player.h">
       <Filter>ソース ファイル\Mode\01_Game\character\00_player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerController.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Controller.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

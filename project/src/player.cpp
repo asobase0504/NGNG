@@ -34,8 +34,16 @@
 #include "item_manager.h"
 
 #include "select_entity.h"
-
 #include "take_item_ui.h"
+
+/* UI系統 */
+#include "hp_ui.h"
+#include "money_ui.h"
+#include "skill_ui.h"
+#include "player_abnormal_ui.h"
+
+/**/
+#include "procedure3D.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -93,6 +101,14 @@ HRESULT CPlayer::Init()
 	// 当たり判定
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 55.0f);
 	m_collision->SetParent(&m_pos);
+
+	// UI作成
+	CHPUI::Create(GetHp());
+	CMONEYUI::Create(GetMoney());
+	for (int i = 0; i < 4; i++)
+	{
+		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i));
+	}
 
 	return S_OK;
 }
@@ -337,7 +353,14 @@ void CPlayer::Select()
 		}
 
 		D3DXVECTOR3 diffPos = m_pos - entity->GetPos();
+
 		float diff = D3DXVec3Length(&diffPos);
+
+		if (entity->GetCostUI() != nullptr)
+		{
+			entity->GetCostUI()->SetDisplay(300.0f > diff);
+		}
+
 		if (nearLength > diff)
 		{
 			nearLength = diff;
