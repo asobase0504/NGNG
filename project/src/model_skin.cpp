@@ -112,6 +112,11 @@ void CSkinMesh::Update()
 //--------------------------------------------------------------
 void CSkinMesh::Draw()
 {
+	if (!m_isDisplay)
+	{
+		return;
+	}
+
 	//現在のアニメーション番号を適応
 	m_pAnimController->SetTrackAnimationSet(0, m_pAnimSet[m_CurrentTrack]);
 	//0(再生中の)トラックからトラックデスクをセットする

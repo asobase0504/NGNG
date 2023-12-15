@@ -57,7 +57,7 @@ HRESULT CEnemy::Init()
 
 	m_AttackCnt = 0;
 	// ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
-	m_skinModel = CSkinMesh::Create("KENGOU");
+	m_skinModel = CSkinMesh::Create("SKE");
 	SetEndChildren(m_skinModel);
 
 	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
