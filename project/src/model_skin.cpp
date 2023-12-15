@@ -112,6 +112,11 @@ void CSkinMesh::Update()
 //--------------------------------------------------------------
 void CSkinMesh::Draw()
 {
+	if (!m_isDisplay)
+	{
+		return;
+	}
+
 	//現在のアニメーション番号を適応
 	m_pAnimController->SetTrackAnimationSet(0, m_pAnimSet[m_CurrentTrack]);
 	//0(再生中の)トラックからトラックデスクをセットする
@@ -417,12 +422,12 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 		// テクスチャの設定
 		pEffect->SetTexture(m_hTexture, tex0);
 		// 通常モデルの描画
-		pEffect->BeginPass(1);
+		pEffect->BeginPass(5);
 		pMeshContainer->MeshData.pMesh->DrawSubset(i);
 		pEffect->EndPass();
 
 		// 黒モデルの描画
-		pEffect->BeginPass(3);
+		pEffect->BeginPass(5);
 		pMeshContainer->MeshData.pMesh->DrawSubset(i);
 		pEffect->EndPass();
 

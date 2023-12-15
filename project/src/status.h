@@ -77,13 +77,14 @@ public:
 	// 現在の値が上限を越しているか否か
 	bool MaxCurrentSame() { return m_isMax ? m_current >= m_max : false; }
 
+	void AddMax(T inAdd) { m_max += inAdd; CalStatus(); }
+	void AddBaseState(T inAdd) { m_base += inAdd; CalStatus(); }
 	void AddItemEffect(T inAdd) { m_addItem += inAdd; CalStatus(); }
 	void ResetItemEffect(T inAdd) { m_addItem = 0; CalStatus(); }
 	void AddBuffEffect(T inAdd) { m_addBuff += inAdd; CalStatus(); }
 	void ResetBuffEffect(T inAdd) { m_addBuff = 0; CalStatus(); }
 
 	// 最大値
-	void AddMax(T inAdd) { m_max += inAdd;}
 	void ResetMax(T inAdd) { m_max = 0;}
 	T GetMax() { return m_max; }
 	void AttachMax() { m_isMax = true; }

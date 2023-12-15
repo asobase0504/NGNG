@@ -25,6 +25,8 @@
 
 #include "enemy_data_base.h"
 #include "skill.h"
+#include "game.h"
+#include "difficult.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -55,7 +57,7 @@ HRESULT CEnemy::Init()
 
 	m_AttackCnt = 0;
 	// モデルの読み込み
-	m_skinModel = CSkinMesh::Create("KENGOU");
+	m_skinModel = CSkinMesh::Create("SKE");
 	SetEndChildren(m_skinModel);
 
 	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
@@ -96,6 +98,11 @@ void CEnemy::Update()
 
 	// 現在のactivityに設定する。
 	m_Activity(this);
+
+	CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
+	int exp = pDiff->GetLevel();
+
+	AddExp(exp);
 
 	// 更新処理
 	CCharacter::Update();
