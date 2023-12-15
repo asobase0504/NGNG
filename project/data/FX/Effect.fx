@@ -97,7 +97,7 @@ VS_OUTPUT VS(
 	float3 N = normalize(Normal.xyz);
 
 	Out.Normal = N;
-	Out.Color = vDiffuse *(max(vAmbient, dot(N, N)));
+	Out.Color = vDiffuse *(max(vAmbient, dot(N, N)));;
 
 	return Out;
 }
@@ -136,6 +136,8 @@ VS_OUTPUT OUTLINE_VS(
 	//法線ベクトル。
 	float3 N = -normalize(Normal.xyz);
 
+	Out.Color = float4(1.0f,0.0f,0.0f,1.0f);
+
 	Out.Normal = N;
 
 	return Out;
@@ -146,8 +148,6 @@ VS_OUTPUT OUTLINE_VS(
 //=========================================
 float4 PS(VS_OUTPUT In) : COLOR
 {
-	In.Color = In.Color * tex2D(Samp,In.Tex);
-
 	return In.Color;		// 拡散光＋環境光(テクスチャの色)
 }
 

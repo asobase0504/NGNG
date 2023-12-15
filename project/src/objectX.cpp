@@ -233,7 +233,6 @@ void CObjectX::Draw()
 
 			pEffect->SetVector(m_hvDiffuse, &Diffuse);
 		}
-
 		{
 			D3DXVECTOR4 Ambient;
 			//Ambient = D3DXVECTOR4(pMat[nCntMat].MatD3D.Ambient.r, pMat[nCntMat].MatD3D.Ambient.g, pMat[nCntMat].MatD3D.Ambient.b, pMat[nCntMat].MatD3D.Ambient.a);

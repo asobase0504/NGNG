@@ -6,7 +6,6 @@
 //**************************************************************
 
 // include
-#include "game.h"
 #include "enemy_manager.h"
 #include "enemy.h"
 #include "collision_sphere.h"
@@ -14,7 +13,6 @@
 #include "application.h"
 #include "objectX.h"
 #include "utility.h"
-#include "difficult.h"
 
 //--------------------------------------------------------------
 //静的メンバ変数宣言
@@ -67,13 +65,12 @@ void CEnemyManager::Uninit(void)
 //--------------------------------------------------------------
 // 敵の作成
 //--------------------------------------------------------------
-CEnemy* CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type, int level)
+CEnemy* CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type)
 {
 	CEnemy* enemy = new CEnemy;
 	enemy->Init();
 	enemy->SetPos(pos);
 	enemy->SetSize(size);
-	enemy->SetLevel(level);
 	return enemy;
 }
 
@@ -90,7 +87,5 @@ CEnemy* CEnemyManager::RandomSpawn()
 	// エネミータイプのランダム化
 	int enemyType = IntRandom(1, 1);
 
-	CDifficult *pDiff =  ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
-
-	return CreateEnemy(D3DXVECTOR3(randomPosX, 0.0f, randomPosZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), (EType)enemyType, pDiff->GetEnemyLevel());
+ 	return CreateEnemy(D3DXVECTOR3(randomPosX, 0.0f, randomPosZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), (EType)enemyType);
 }

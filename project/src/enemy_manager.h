@@ -48,7 +48,7 @@ public:
 	void	Uninit() override;
 
 	// 静的メンバ関数
-	CEnemy* CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type, int level);			// エネミーの生成
+	CEnemy* CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type);			// エネミーの生成
 	// ランダムスポーン
 	CEnemy* RandomSpawn();
 

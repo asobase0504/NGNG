@@ -39,7 +39,7 @@ void CAbnormalDataBase::Init()
 		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
 
 		inCharacter->SetInterval(id, 0);
-		inCharacter->AbDamage(-1 * ab_ct[id].s_stack);
+		inCharacter->GetHp()->AddCurrent(-1 * ab_ct[id].s_stack);
 	});
 	// “–‚½‚Á‚½Žž
 	m_abnormal[ABNORMAL_FIRE]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
@@ -70,7 +70,7 @@ void CAbnormalDataBase::Init()
 		abnormal_count ab_ct = inCharacter->GetAbnormalCount();
 
 		inCharacter->SetInterval(id, 0);
-		inCharacter->AbDamage((int)((inCharacter->GetHp()->GetMax() * 0.1f)) * ab_ct[id].s_stack);
+		inCharacter->GetHp()->AddCurrent((int)((inCharacter->GetHp()->GetMax() * 0.1f)) * ab_ct[id].s_stack);
 	});
 	// UŒ‚
 	m_abnormal[ABNORMAL_BURN]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
@@ -104,7 +104,7 @@ void CAbnormalDataBase::Init()
 		
 		// •t—^‚³‚ê‚Ä‚¢‚éó‘ÔˆÙí‚Ìtik‚ð‘‚â‚·
 		inCharacter->SetInterval(id, 0);
-		inCharacter->AbDamage(-2 * ab_ct[id].s_stack);
+		inCharacter->GetHp()->AddCurrent(-2 * ab_ct[id].s_stack);
 	});
 	// UŒ‚
 	m_abnormal[ABNORMAL_BLEED]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
@@ -210,7 +210,7 @@ void CAbnormalDataBase::Init()
 
 		// •t—^‚³‚ê‚Ä‚¢‚éó‘ÔˆÙí‚Ìtik‚ð‘‚â‚·
 		inCharacter->SetInterval(id, 0);
-		inCharacter->AbDamage((int)((inCharacter->GetHp()->GetMax() * 0.05f) * ab_ct[id].s_stack));
+		inCharacter->GetHp()->AddCurrent((int)((inCharacter->GetHp()->GetMax() * 0.05f) * ab_ct[id].s_stack));
 	});
 	// UŒ‚
 	m_abnormal[ABNORMAL_POISON]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)
@@ -244,7 +244,7 @@ void CAbnormalDataBase::Init()
 
 		// •t—^‚³‚ê‚Ä‚¢‚éó‘ÔˆÙí‚Ìtik‚ð‘‚â‚·
 		inCharacter->SetInterval(id, 0);
-		inCharacter->AbDamage((-2 * ab_ct[id].s_stack) * ab_ct[id].s_stack);
+		inCharacter->GetHp()->AddCurrent((-2 * ab_ct[id].s_stack) * ab_ct[id].s_stack);
 	});
 	// UŒ‚
 	m_abnormal[ABNORMAL_PLAGUE]->SetWhenAttackFunc([](CCharacter* inCharacter, int id, CCharacter* outCharacter)

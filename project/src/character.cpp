@@ -117,10 +117,6 @@ HRESULT CCharacter::Init()
 	m_regenetionTime.Init(60);
 	m_regenetion.Init(1);
 	m_RegenetionCnt = 0;
-	m_exp = 0;
-	m_level = 1;
-	m_reqExp = m_level * 100;
-
 	m_isStun = false;
 	m_isBlock = false;
 	m_isAtkCollision = false;
@@ -358,43 +354,6 @@ void CCharacter::Damage(const int inDamage)
 }
 
 //--------------------------------------------------------------
-// ダメージ(防御なし)
-//--------------------------------------------------------------
-void CCharacter::AbDamage(const int inDamage)
-{
-	int dmg = inDamage;
-
-	// ダメージ計算
-	CStatus<int>* hp = GetHp();
-
-	if (dmg <= 1)
-	{// ダメージが1以下だった時1にする
-		dmg = 1;
-	}
-
-	if (m_isBlock)
-	{// ブロックがtrueの時にダメージを0にする
-		dmg = 0;
-		DamageBlock(false);
-	}
-
-	// UI生成
-	D3DXVECTOR3 pos = m_pos;
-	pos.x += FloatRandom(20.0f, -20.0f);
-	pos.y += FloatRandom(40.0f, 0.0f);
-	pos.z += FloatRandom(20.0f, -20.0f);
-	CDamegeUI::Create(pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), dmg);
-
-	hp->AddCurrent(-dmg);
-
-	if (m_hp.GetCurrent() <= 0)
-	{// 死亡処理
-		Died();
-	}
-}
-
-
-//--------------------------------------------------------------
 // ダメージ計算関数
 //--------------------------------------------------------------
 int CCharacter::CalDamage(float SkillAtkMul)
@@ -624,35 +583,4 @@ int CCharacter::GetAbnormalTypeCount()
 	}
 
 	return abnormal_type_count;
-}
-
-//-----------------------------------------
-// レベルの加算処理
-//-----------------------------------------
-void CCharacter::AddLevel()
-{
-	m_exp = 0;
-	m_level++;
-
-	// 必要経験値の設定
-	m_reqExp = m_level * 100;
-
-	// 各種ステータスの調整
-	m_hp.AddMax(m_hp.GetBase() * (1.0f + (m_level * 0.1f)));
-	m_attack.AddBaseState(m_attack.GetBase() * (1.0f + (m_level * 0.1f)));
-	m_attackSpeed.AddBaseState(m_attackSpeed.GetBase() * (1.0f + (m_level * 0.1f)));
-	m_movePower.AddBaseState(m_movePower.GetBase() * (1.0f + (m_level * 0.01f)));
-}
-
-//-----------------------------------------
-// ExPの加算処理
-//-----------------------------------------
-void CCharacter::AddExp(int exp)
-{
-	m_exp++;
-
-	if (m_exp >= m_reqExp)
-	{
-		AddLevel();
-	}
 }
