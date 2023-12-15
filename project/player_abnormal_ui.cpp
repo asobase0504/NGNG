@@ -35,9 +35,9 @@ void CPlayerAbnormalUI::Update()
 CPlayerAbnormalUI * CPlayerAbnormalUI::Create(const int* inStock, CAbnormalDataBase::EAbnormalType inType)
 {
 	CPlayerAbnormalUI* ui = new CPlayerAbnormalUI;
-	ui->Init();
 	ui->m_stackCnt = inStock;
 	ui->m_inType = inType;
+	ui->Init();
 
 	return ui;
 }

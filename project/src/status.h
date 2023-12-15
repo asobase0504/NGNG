@@ -85,7 +85,6 @@ public:
 	void ResetBuffEffect(T inAdd) { m_addBuff = 0; CalStatus(); }
 
 	// 最大値
-	void AddMax(T inAdd) { m_max += inAdd;}
 	void ResetMax(T inAdd) { m_max = 0;}
 	T GetMax() { return m_max; }
 	void AttachMax() { m_isMax = true; }
