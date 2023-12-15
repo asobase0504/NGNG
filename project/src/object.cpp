@@ -62,6 +62,8 @@ HRESULT CObject::Init()
 	m_hScale = pEffect->GetParameterByName(NULL, "mScale");
 	m_hCameraVec = pEffect->GetParameterByName(NULL, "vEyeVec");
 	m_hvEyePos = pEffect->GetParameterByName(NULL, "mEyePos");
+	m_hMtxNum = pEffect->GetParameterByName(NULL, "iMtxNum");
+	m_hBoneStack = pEffect->GetParameterByName(NULL, "mBoneStack");
 
 	m_TimeCnt = m_TimeTarget;
 	
