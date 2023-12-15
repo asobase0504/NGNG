@@ -16,6 +16,8 @@
 #include "item_model.h"
 #include "collision.h"
 
+#include "take_item_ui.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -119,24 +121,22 @@ bool CPlayerController::Jump()
 //--------------------------------------------------------------
 // ダッシュ
 //--------------------------------------------------------------
-bool CPlayerController::Dash()
+bool CPlayerController::Dash(bool dash)
 {
 	CInput* input = CInput::GetKey();
 
-	bool isDash = false;
-
 	if (input == nullptr)
 	{
-		return isDash;
+		return dash;
 	}
 
 	// ダッシュ
-	if (input->Press(DIK_LCONTROL, -1))
+	if (input->Trigger(DIK_LCONTROL, -1))
 	{
-		isDash = true;
+		dash = !dash;
 	}
 
-	return isDash;
+	return dash;
 }
 
 //--------------------------------------------------------------
@@ -154,7 +154,7 @@ bool CPlayerController::Skill_1()
 	}
 
 	// スキルの使用
-	if (input->Trigger(MOUSE_INPUT_LEFT))
+	if (input->Press(MOUSE_INPUT_LEFT))
 	{
 		isSkill = true;
 	}
@@ -177,7 +177,7 @@ bool CPlayerController::Skill_2()
 	}
 
 	// スキルの使用
-	if (input->Trigger(MOUSE_INPUT_RIGHT))
+	if (input->Press(MOUSE_INPUT_RIGHT))
 	{
 		isSkill = true;
 	}
@@ -200,7 +200,7 @@ bool CPlayerController::Skill_3()
 	}
 
 	// スキルの使用
-	if (input->Trigger(KEY_SHIFT))
+	if (input->Press(KEY_SHIFT))
 	{
 		isSkill = true;
 	}
@@ -223,7 +223,7 @@ bool CPlayerController::Skill_4()
 	}
 
 	// スキルの使用
-	if (input->Trigger(DIK_R, -1))
+	if (input->Press(DIK_R, -1))
 	{
 		isSkill = true;
 	}
@@ -236,28 +236,39 @@ bool CPlayerController::Skill_4()
 //--------------------------------------------------------------
 int CPlayerController::TakeItem()
 {
-	CInput* input = CInput::GetKey();
+	//CInput* input = CInput::GetKey();
 
-	if (input->Trigger(DIK_F, -1))
-	{
-		std::list<CItemModel*>& item = CItemManager::GetInstance()->GetPopItemModel();
-		int size = item.size();
+	//if (input->Trigger(DIK_E, -1))
+	//{
+	//	std::list<CItemModel*>& item = CItemManager::GetInstance()->GetPopItemModel();
+	//	int size = item.size();
 
-		for (auto it = item.begin(); it != item.end();)
-		{
-			CItemModel* itemModel = *it;
-			if (!((CCollisionCylinder*)(m_toOrder->GetCollision())->ToSphere(itemModel->GetCollision())))
-			{
-				it++;
-				continue;
-			}
+	//	for (auto it = item.begin(); it != item.end();)
+	//	{
+	//		CItemModel* itemModel = *it;
+	//		if (!((CCollisionCylinder*)(m_toOrder->GetCollision())->ToSphere(itemModel->GetCollision())))
+	//		{
+	//			it++;
+	//			continue;
+	//		}
 
-			itemModel->Uninit();	// 消去
-			item.erase(it);
+	//		itemModel->Uninit();	// 消去
+	//		item.erase(it);
 
-			return itemModel->GetID();
-		}
-	}
+	//		// 取得UIの表示
+	//		CTakeItemUI*	m_ui;
+	//		m_ui = new CTakeItemUI;
+	//		m_ui->Init();
+	//		m_ui->SetTakeItem((CItemDataBase::EItemType)itemModel->GetID());
+
+	//		return itemModel->GetID();
+	//	}
+	//}
 
 	return -1;
+}
+
+bool CPlayerController::Select()
+{
+	return CInput::GetKey()->Trigger(DIK_E, -1);
 }

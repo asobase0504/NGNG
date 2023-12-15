@@ -18,32 +18,12 @@ HRESULT CCollisionSphere::Init()
 	{
 		m_line[i] = CLine::Create();
 		SetEndChildren(m_line[i]);
+		m_line[i]->SetColor(D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
+		m_line[i]->SetPosTarget(&GetPosWorld());
+		m_line[i]->SetRotTarget(&GetRot());
 	}
 
 	return S_OK;
-}
-
-void CCollisionSphere::Update()
-{
-	CCollision::Update();
-
-	// ‚S‚Â‚Ì’¸“_
-	D3DXVECTOR3 posLine[6];
-	posLine[0] = D3DXVECTOR3(m_length, 0.0f, 0.0f);
-	posLine[1] = D3DXVECTOR3(-m_length, 0.0f, 0.0f);
-	posLine[2] = D3DXVECTOR3(0.0f, m_length, 0.0f);
-	posLine[3] = D3DXVECTOR3(0.0f, -m_length, 0.0f);
-	posLine[4] = D3DXVECTOR3(0.0f, 0.0f, m_length);
-	posLine[5] = D3DXVECTOR3(0.0f, 0.0f, -m_length);
-
-	m_line[0]->SetLine(GetPosWorld(), GetRot(), posLine[2], posLine[0], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[1]->SetLine(GetPosWorld(), GetRot(), posLine[2], posLine[1], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[2]->SetLine(GetPosWorld(), GetRot(), posLine[2], posLine[4], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[3]->SetLine(GetPosWorld(), GetRot(), posLine[2], posLine[5], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[4]->SetLine(GetPosWorld(), GetRot(), posLine[3], posLine[0], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[5]->SetLine(GetPosWorld(), GetRot(), posLine[3], posLine[1], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[6]->SetLine(GetPosWorld(), GetRot(), posLine[3], posLine[4], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
-	m_line[7]->SetLine(GetPosWorld(), GetRot(), posLine[3], posLine[5], D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f));
 }
 
 bool CCollisionSphere::ToMesh(CCollisionMesh* inMesh)
@@ -178,6 +158,27 @@ CCollisionSphere * CCollisionSphere::Create(const D3DXVECTOR3 & pos, const float
 	collision->Init();
 	collision->SetPos(pos);
 	collision->m_length = length;
-
+	collision->SetLine();
 	return collision;
+}
+
+void CCollisionSphere::SetLine()
+{
+	// ‚S‚Â‚Ì’¸“_
+	D3DXVECTOR3 posLine[6];
+	posLine[0] = D3DXVECTOR3(m_length, 0.0f, 0.0f);
+	posLine[1] = D3DXVECTOR3(-m_length, 0.0f, 0.0f);
+	posLine[2] = D3DXVECTOR3(0.0f, m_length, 0.0f);
+	posLine[3] = D3DXVECTOR3(0.0f, -m_length, 0.0f);
+	posLine[4] = D3DXVECTOR3(0.0f, 0.0f, m_length);
+	posLine[5] = D3DXVECTOR3(0.0f, 0.0f, -m_length);
+
+	m_line[0]->SetLine(posLine[2], posLine[0]);
+	m_line[1]->SetLine(posLine[2], posLine[1]);
+	m_line[2]->SetLine(posLine[2], posLine[4]);
+	m_line[3]->SetLine(posLine[2], posLine[5]);
+	m_line[4]->SetLine(posLine[3], posLine[0]);
+	m_line[5]->SetLine(posLine[3], posLine[1]);
+	m_line[6]->SetLine(posLine[3], posLine[4]);
+	m_line[7]->SetLine(posLine[3], posLine[5]);
 }

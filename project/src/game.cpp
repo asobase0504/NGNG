@@ -44,6 +44,7 @@
 #include "hp_ui.h"
 #include "money_ui.h"
 #include "skill_ui.h"
+#include "difficult.h"
 
 /* サーバー */
 #include "connect.h"
@@ -77,11 +78,13 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init()
 {
-	//CInput::GetKey()->SetCursorErase(false);
-	CInput::GetKey()->LockCursorPos(false);
+	CSkinMeshGroup::GetInstance()->LoadAll();
+
+	CInput::GetKey()->SetCursorErase(false);
+	CInput::GetKey()->LockCursorPos(true);
 
 	// 虚無マップ
-	m_map = CMap::Create("data/FILE/map/map01.json");
+	m_map = CMap::GetMap("data/FILE/map/map01.json");
 
 	m_mapFade = CMapFade::Create();
 	m_mapFade->NextMap("data/FILE/map/map01.json");
@@ -101,24 +104,15 @@ HRESULT CGame::Init()
 	pPlayer->OffUpdate();
 	m_camera->SetTargetPos(pPlayer->GetPos());
 
-	CHPUI::Create(pPlayer->GetHp());
-	CMONEYUI::Create(pPlayer->GetMoney());
-
-	CHPUI::Create(pPlayer->GetHp());
-	CMONEYUI::Create(pPlayer->GetMoney());
-	CSKILLUI::Create(pPlayer->GetSkill(0));
-
-	CSkinMeshGroup::GetInstance()->LoadAll();
-
-	m_skin = CSkinMesh::Create("KENGOU");
-	m_skin->SetPos(D3DXVECTOR3(50.f, 0.f, 0.f));
-
 	//m_tcp = new CClient;
 	//m_tcp->Init("127.0.0.1", 13567);
-	// エネミーの生成
-	//CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
 
-	//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), CItemDataBase::ITEM_POWER_UP);
+	CObject2d* reticle = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	reticle->SetPos(CApplication::CENTER_POS);
+	reticle->SetSize(D3DXVECTOR3(16.f, 16.f,0.f));
+	reticle->SetTexture("RETICLE");
+
+	m_difficult = CDifficult::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
 
 	return S_OK;
 }
@@ -136,6 +130,8 @@ void CGame::Uninit()
 		m_tcp = nullptr;
 	}*/
 
+	CItemDataBase::Uninit();
+
 	CSkinMeshGroup::GetInstance()->Unload("KENGOU");
 	CSkinMeshGroup::GetInstance()->Unload("SKE");
 
@@ -149,13 +145,24 @@ void CGame::Uninit()
 //--------------------------------------------------------------
 void CGame::Update()
 {
+	if (CApplication::GetInstance()->IsActiveWindow())
+	{
+		CInput::GetKey()->SetCursorErase(false);
+		CInput::GetKey()->LockCursorPos(true);
+	}
+	else
+	{
+		CInput::GetKey()->SetCursorErase(true);
+		CInput::GetKey()->LockCursorPos(false);
+	}
+
 	CInput* pInput;
 	pInput = CInput::GetKey();
 
 	CModeFade* pFade = CApplication::GetInstance()->GetFade();
 	if (pInput->Trigger(DIK_F1))
 	{
-		pFade->NextMode(CApplication::MODE_DEBUG);
+		//pFade->NextMode(CApplication::MODE_DEBUG);
 	}
 	if (pInput->Trigger(DIK_F5))
 	{
@@ -185,8 +192,12 @@ void CGame::Update()
 		CModelData::SSendEnemy sendData;
 		sendData.m_pos = Player->GetPos();
 		sendData.m_rot = Player->GetRot();
-		sendData.m_haveItemLeftId = 1;
-		sendData.m_haveItemRightId = 1;
+		for (int j = 0; j < 5; j++)
+		{
+			sendData.m_haveAbnormal.abnormalData[j] = 0;
+			sendData.m_haveItem.itemData[j] = 0;
+		}
+
 		sendData.m_motion = 0;
 		sendData.m_log = 2;
 		sendData.m_pushBomComands = 0;
@@ -194,8 +205,6 @@ void CGame::Update()
 
 		m_tcp->SendPlayerData(sendData);
 	}*/
-	
-
 }
 
 void CGame::SetChangeMap()
@@ -210,23 +219,14 @@ void CGame::SetChangeMap()
 //--------------------------------------------------------------
 void CGame::ChangeMap(std::string inPath)
 {
-	CApplication::GetInstance()->GetTaskGroup()->AllProcess([](CTask* inTask)
-	{
-		if (!inTask->IsMapChangeRelese())
-		{
-			return;
-		}
-
-		inTask->Uninit();
-	});
-
 	if (m_map != nullptr)
 	{
+		m_map->Uninit();
 		m_map = nullptr;
 	}
 
 	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
 	player->OnUpdate();
-	m_map = CMap::Create(inPath);
+	m_map = CMap::GetMap(inPath);
 	m_map->InCharacterList(player);
 }

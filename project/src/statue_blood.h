@@ -13,15 +13,9 @@
 #include "statue.h"
 
 //==============================================================
-// マクロ宣言
-//==============================================================
-
-//==============================================================
 // 前方宣言
 //==============================================================
-class CPlayer;
-class CCollisionBox;
-class CCollisionCylinder;
+class CProcedure3D;
 
 //==============================================================
 // 敵クラス
@@ -30,17 +24,21 @@ class CStatueBlood : public CStatue
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CStatueBlood(int nPriority = 3);
+	explicit CStatueBlood();
 	~CStatueBlood();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Update() override;
+
+	bool Select(CCharacter* selectCharacter) override;
 
 	// 静的メンバ関数
 	static CStatueBlood *Create(D3DXVECTOR3 pos);			// 血の祭壇の生成
 
+	void SetPos(const D3DXVECTOR3& inPos) override;
+
 private:	// メンバ変数
-	bool m_bOnce;
+	float m_hpSubRate;	// HPを削る割合
+
 };
 #endif

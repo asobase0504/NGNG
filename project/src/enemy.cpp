@@ -15,19 +15,23 @@
 #include "enemy.h"
 #include "player.h"
 #include "player_manager.h"
+#include "status.h"
 #include "Controller.h"
 #include "application.h"
 #include "objectX.h"
 #include "collision_box.h"
 #include "enemy_hp_ui.h"
+#include "model_skin.h"
 
 #include "enemy_data_base.h"
 #include "skill.h"
+#include "game.h"
+#include "difficult.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CEnemy::CEnemy(int nPriority)
+CEnemy::CEnemy()
 {
 
 }
@@ -45,7 +49,6 @@ CEnemy::~CEnemy()
 //--------------------------------------------------------------
 HRESULT CEnemy::Init()
 {
-	MapChangeRelese();
 	// 初期化処理
 	CCharacter::Init();
 
@@ -53,23 +56,26 @@ HRESULT CEnemy::Init()
 	m_relation = ERelation::HOSTILE;
 
 	m_AttackCnt = 0;
-	m_apModel[0]->LoadModel("SKELETON");
-	m_apModel[0]->CalculationVtx();
-
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
+	// モデルの読み込み
+	m_skinModel = CSkinMesh::Create("KENGOU");
+	SetEndChildren(m_skinModel);
 
 	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
 
 	m_pEHPUI = CEnemy_HPUI::Create(this);
 	SetEndChildren(m_pEHPUI);
 
+	// 当たり判定の作成
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
 	SetEndChildren(m_collision);
 
+	// SKILLの作成
 	m_skill.push_back(CSkill::Create());
 	m_skill[0]->SetSkill("GOLEM_SKILL_1",this);
 	SetEndChildren(m_skill[0]);
+
+	m_dropMoney = 5;
 	return S_OK;
 }
 
@@ -78,6 +84,12 @@ HRESULT CEnemy::Init()
 //--------------------------------------------------------------
 void CEnemy::Update()
 {
+	if (m_isDied)
+	{
+		Uninit();
+		return;
+	}
+
 	if (m_isStun)
 	{
 		SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
@@ -87,12 +99,26 @@ void CEnemy::Update()
 	// 現在のactivityに設定する。
 	m_Activity(this);
 
+	CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
+	int exp = pDiff->GetLevel();
+
+	AddExp(exp);
+
 	// 更新処理
 	CCharacter::Update();
 
 #ifdef ENEMY_DEBUG
 	CDebugProc::Print("Enemy：move3(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
 #endif // _DEBUG
+}
+
+//--------------------------------------------------------------
+// 死亡判定
+//--------------------------------------------------------------
+void CEnemy::Died()
+{
+	CPlayerManager::GetInstance()->GetPlayer()->GetMoney()->AddCurrent(m_dropMoney);
+	CCharacter::Died();
 }
 
 //--------------------------------------------------------------

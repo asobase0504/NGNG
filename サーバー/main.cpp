@@ -11,7 +11,7 @@
 
 using namespace std;
 
-struct SSetUp
+struct SConnectCheck
 {
 	int m_Num;
 	bool bConnect;
@@ -33,42 +33,46 @@ void ThreadA(CTcp_client*pClient)
 	int Data2 = 0;
 	char aRecvData[50] = {};
 	char aRecvData2[50] = {};
-	pClient->Recv(&aRecvData[0], sizeof(int));
-	
-	memcpy(&Data, &aRecvData[0], (int)sizeof(int));
 
 	CTcp_client*pClient2;
+	pClient->Recv(&aRecvData2[0], sizeof(int));
+	memcpy(&Data, &aRecvData2[0], sizeof(int));
+	printf("1つつながった%d", Data);
 
 	pClient2 = pListenr->Accept();
-
+	pClient2->Recv(&aRecvData2[0], sizeof(int));
+	memcpy(&Data, &aRecvData2[0], (sizeof(int)));
+	printf("2つつながった%d", Data);
 	CTcp_client*pClient3;
 	pClient3 = pListenr->Accept();
-
+	pClient3->Recv(&aRecvData2[0], sizeof(int));
+	memcpy(&Data, &aRecvData2[0], (sizeof(int)));
+	printf("3つつながった%d", Data);
 	CTcp_client*pClient4;
 	pClient4 = pListenr->Accept();
+	pClient4->Recv(&aRecvData2[0], sizeof(int));
+	memcpy(&Data, &aRecvData2[0], (sizeof(int)));
+	printf("4つつながった%d", Data);
 
 
-
-	printf("二つつながった");
-
-	SSetUp SetUp;
+	SConnectCheck SetUp;
 	SetUp.bConnect = true;
 	SetUp.m_Num = 0;
 
 	// プレイヤー1にsend
-	pClient->Send((const char*)&SetUp, sizeof(SSetUp));
+	pClient->Send((const char*)&SetUp, sizeof(SConnectCheck));
 	SetUp.m_Num++;
 	// プレイヤー2にsend
 
-	pClient2->Send((const char*)&SetUp, sizeof(SSetUp));
+	pClient2->Send((const char*)&SetUp, sizeof(SConnectCheck));
 	SetUp.m_Num++;
 	// プレイヤー3にsend
 
-	pClient3->Send((const char*)&SetUp, sizeof(SSetUp));
+	pClient3->Send((const char*)&SetUp, sizeof(SConnectCheck));
 	SetUp.m_Num++;
 	// プレイヤー4にsend
 
-	pClient4->Send((const char*)&SetUp, sizeof(SSetUp));
+	pClient4->Send((const char*)&SetUp, sizeof(SConnectCheck));
 	SetUp.m_Num++;
 
 	// スレッド生成
@@ -162,7 +166,7 @@ void CommuniCationClient(CTcp_client *pSendRecvP1, CTcp_client *pSendRecvP2, CTc
 		memcpy(&fds, &readfds, sizeof(fd_set));
 
 		// ソケットの監視
-		select(maxfd + 1, &fds, NULL, NULL, NULL);
+		select(maxfd + 3, &fds, NULL, NULL, NULL);
 		
 		// プレイヤー1にsendされていたら
 		if (FD_ISSET(sock[0], &fds))
@@ -211,12 +215,18 @@ void CommuniCationClient(CTcp_client *pSendRecvP1, CTcp_client *pSendRecvP2, CTc
 		}
 
 		nSendTimer++;
-		if (nSendTimer >= 10)
+		if (nSendTimer >= 1)
 		{
 			for (int i = 0; i < 4; i++)
 			{
 				model.Player[i].m_pos = player[i].Player.m_pos;
 				model.Player[i].m_rot = player[i].Player.m_rot;
+
+				for (int j = 0; j < 5; j++)
+				{
+					model.Player[i].m_haveAbnormal.abnormalData[j] = player[i].Player.m_haveAbnormal.abnormalData[j];
+					model.Player[i].m_haveItem.itemData[j] = player[i].Player.m_haveItem.itemData[j];
+				}
 			}
 			
 			pSendRecvP1->Send((const char*)&model, sizeof(CDataPack::SSendPack));

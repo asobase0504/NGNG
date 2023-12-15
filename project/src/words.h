@@ -16,7 +16,7 @@ public:
 	CWords(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
 	~CWords() override;
 
-	HRESULT Init()override;	// ‰Šú‰»
+	HRESULT Init()override;		// ‰Šú‰»
 	void Draw()override;		// •`‰æ
 	static CWords *CWords::Create(const char * Text, D3DXVECTOR3 pos, D3DXVECTOR3 Size, CFont::FONT Type);
 

@@ -12,13 +12,20 @@ class CItem;
 class CItemDataBase
 {
 public:
+	enum ERarity
+	{
+		RARITY_NONE = -1,
+		RARITY_COMMON,
+		RARITY_UNCOMMON,
+		RARITY_RARE,
+		RARITY_LOSE,	// はずれ(運の祭壇用)
+		RARITY_MAX,
+		RARITY_NOSELECT, // 選ばれることのないアイテム(エリート用とか)
+	};
 
 	enum EItemType
 	{
 		ITEM_NONE = -1,
-		ITEM_POWER_UP,
-		ITEM_POWER_ON,
-		ITEM_POWER_TO,
 		ITEM_DANGO,				// だんご
 		ITEM_SHURIKEN,			// 手裏剣
 		ITEM_GETA,				// 下駄
@@ -67,9 +74,16 @@ public:
 
 public:
 	CItem* GetItemData(EItemType inState) { return m_item[inState]; }
+	std::string GetItemName(EItemType inState) { return m_itemInfo[inState][0]; }
+	std::string GetItemMemo(EItemType inState) { return m_itemInfo[inState][1]; }
+	std::string GetItemIconTextureKey(EItemType inState) { return m_itemInfo[inState][2]; }
 
 private:	// メンバ変数
 	std::array<CItem*, ITEM_MAX> m_item;
+	std::array<std::string[3], ITEM_MAX> m_itemInfo;	// 情報体
+
+	int m_countKill;	// 殺した数
+	int m_maxAddLife;	// 増やせる最大値
 };
 
 using item_count = std::array<unsigned int, CItemDataBase::ITEM_MAX>;

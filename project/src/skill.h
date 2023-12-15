@@ -36,14 +36,15 @@ public:
 	// 静的メンバ関数
 	static CSkill	*Create();									// スキルの生成
 
-	void Skill1();												// スキル1
-	void Skill2();												// スキル2
+	bool Skill();												// スキル
 	// Getter
 	int	GetCT() { return m_CT; }
 
 	// Setter
 	void SetSkill(std::string tag, CCharacter *chara);			// スキルの設定
 	void SetCT(int ct) { m_CT = ct; }
+
+	std::string GetName() { return m_Name; }
 
 private:		// メンバ変数
 	CCharacter*		m_apChara;			// キャラクターのインスタンス

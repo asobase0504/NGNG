@@ -53,7 +53,6 @@ public:
 	~CObjectPolygon3D() override;
 	HRESULT Init() override;
 	void Uninit() override;
-	void Update() override;
 	void Draw() override;
 
 	void SetTex(PositionVec4 inTex);
@@ -62,6 +61,8 @@ public:
 	void SetSize(const D3DXVECTOR3& inSize) override;
 	void SetColor(const D3DXCOLOR& inColor) override;
 	void SetBillboard(bool bBill) { m_bBill = bBill; }
+
+	void SetTexPos(float BesideSplit, float nNumIndex);
 
 	LPDIRECT3DVERTEXBUFFER9 GetVtx() { return m_vtxBuff; }	// 頂点バッファの取得
 	const D3DXVECTOR3& GetNormal() const { return m_normal; }

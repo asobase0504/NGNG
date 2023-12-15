@@ -14,7 +14,7 @@
 //==============================================================
 // 定数
 //==============================================================
-const float CCameraGame::DISTANCE = 145.0f;
+const float CCameraGame::DISTANCE = 195.0f;
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -52,8 +52,7 @@ void CCameraGame::Update()
 		return;
 	}
 
-	m_posR = *m_targetPos;
-	//m_posR.z += 50.0f;
+	m_posR = D3DXVECTOR3(0.0f, 100.0f, DISTANCE);
 	m_posV = D3DXVECTOR3(0.0f, 0.0f, -DISTANCE);
 
 	D3DXVECTOR3 mouseMove = CInput::GetKey()->GetMouseMove();
@@ -81,9 +80,12 @@ void CCameraGame::Update()
 	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);						// 行列掛け算関数 
 
 	// 位置を反映
-	D3DXMatrixTranslation(&mtxTrans, m_posR.x, m_posR.y, m_posR.z);	// 行列移動関数
+	D3DXVECTOR3 targetPos = *m_targetPos;
+	D3DXMatrixTranslation(&mtxTrans, targetPos.x, targetPos.y, targetPos.z);	// 行列移動関数
 	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);	// 行列掛け算関数
 
 	// D3DXVECTOR3に反映
 	D3DXVec3TransformCoord(&m_posV, &m_posV, &mtxWorld);
+	// D3DXVECTOR3に反映
+	D3DXVec3TransformCoord(&m_posR, &m_posR, &mtxWorld);
 }

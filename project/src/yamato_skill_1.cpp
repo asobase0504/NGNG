@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// スキル
+// スキル(通常攻撃)
 // Author : 髙野馨將
 //
 //**************************************************************
@@ -38,14 +38,15 @@ CYamatoSkill_1::~CYamatoSkill_1()
 //--------------------------------------------------------------
 void CYamatoSkill_1::InitAbility()
 {
-	// 当たり判定を取得
+	// データベースから情報を取得する
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	if (m_apChara != nullptr)
 	{
 		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_1");
+		// 当たり判定を取得
 		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), pSkillData->GetSize("YAMATO_SKILL_1").x);
 		m_Collision->SetParent(&m_apChara->GetPos());
-
+		SetEndChildren(m_Collision);
 	}
 }
 
@@ -55,7 +56,7 @@ void CYamatoSkill_1::InitAbility()
 void CYamatoSkill_1::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	m_apChara->Attack(Target,1.5f);
+	m_apChara->DealDamage(Target,1.5f);
 }
 
 //--------------------------------------------------------------

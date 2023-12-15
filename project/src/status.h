@@ -54,7 +54,7 @@ public:
 	// 現在の値の変更
 	void SetCurrent(const T& inNumber)
 	{
-		if (m_max < inNumber)
+		if (m_max < inNumber && m_isMax)
 		{
 			m_current = m_max;
 			return;
@@ -66,11 +66,10 @@ public:
 	void AddCurrent(T inNumber) { SetCurrent(m_current + inNumber); }
 	void MulCurrent(float inNumber) { SetCurrent(m_current * inNumber); }
 	T GetCurrent() { return m_current; }
-	T GetMax() { return m_max; }
 	T GetBase() { return m_base; }
 	T GetAddItem() { return m_addItem; }
 	T GetBuffItem() { return m_addBuff; }
-	T CalStatus() { return ((m_current + m_addBuff + m_addItem) * (T)(m_mulBuff * m_mulItem)); }
+	T CalStatus() { return m_current = ((m_base + m_addBuff + m_addItem) * (T)(m_mulBuff * m_mulItem)); }
 
 	float GetMulItem() { return m_mulItem; }
 	float GetMulBuff() { return m_mulBuff; }
@@ -78,12 +77,18 @@ public:
 	// 現在の値が上限を越しているか否か
 	bool MaxCurrentSame() { return m_isMax ? m_current >= m_max : false; }
 
-	void AddItemEffect(T inAdd) { m_addItem += inAdd; }
-	void ResetItemEffect(T inAdd) { m_addItem = 0; }
-	void AddBuffEffect(T inAdd) { m_addBuff += inAdd; }
-	void ResetBuffEffect(T inAdd) { m_addBuff = 0; }
+	void AddMax(T inAdd) { m_max += inAdd; CalStatus(); }
+	void AddBaseState(T inAdd) { m_base += inAdd; CalStatus(); }
+	void AddItemEffect(T inAdd) { m_addItem += inAdd; CalStatus(); }
+	void ResetItemEffect(T inAdd) { m_addItem = 0; CalStatus(); }
+	void AddBuffEffect(T inAdd) { m_addBuff += inAdd; CalStatus(); }
+	void ResetBuffEffect(T inAdd) { m_addBuff = 0; CalStatus(); }
 
+	// 最大値
+	void ResetMax(T inAdd) { m_max = 0;}
+	T GetMax() { return m_max; }
 	void AttachMax() { m_isMax = true; }
+
 private:	// メンバ変数
 	T m_max;			// 最大値
 	T m_current;		// 現在値

@@ -30,8 +30,6 @@ public:
 	explicit CGolemSkill_1();
 	~CGolemSkill_1();
 
-	void Uninit();
-
 	// 静的メンバ関数
 	static CGolemSkill_1 *Create(CCharacter* chara);	// スキルの生成
 

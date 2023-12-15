@@ -22,6 +22,7 @@
 class CPlayer;
 class CCollisionBox;
 class CCollisionCylinder;
+class CProcedure3D;
 
 //==============================================================
 // 敵クラス
@@ -30,18 +31,20 @@ class CStatueChest : public CStatue
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CStatueChest(int nPriority = 3);
+	explicit CStatueChest();
 	~CStatueChest();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Update() override;
+
+	bool Select(CCharacter* selectCharacter) override;
 
 	// 静的メンバ関数
 	static CStatueChest *Create(D3DXVECTOR3 pos);			// 宝箱の祭壇の生成
 
+	void SetPos(const D3DXVECTOR3& inPos) override;
+
 private:	// メンバ変数
-	bool m_bOnce;
 };
 #endif
 

@@ -8,18 +8,20 @@
 //==============================================================
 // include
 //==============================================================
+#include "map.h"
+
 #include "application.h"
 #include "renderer.h"
-#include "map.h"
 #include "input.h"
-#include "map_model.h"
-#include "object_mesh.h"
 #include "file.h"
-#include "statue.h"
 #include "utility.h"
 
+#include "object_mesh.h"
+#include "map_model.h"
+#include "statue.h"
 #include "statue_manager.h"
 #include "enemy_manager.h"
+#include "gold_nugget.h"
 
 //==============================================================
 // 静的メンバ変数宣言
@@ -51,25 +53,25 @@ CMap::~CMap()
 //--------------------------------------------------------------
 HRESULT CMap::Init()
 {
-	MapChangeRelese();
 	CStatueManager* manager = CStatueManager::GetInstance();
-	m_statue.push_back(manager->RandomCreate());
-	m_statue.push_back(manager->RandomCreate());
-	m_statue.push_back(manager->RandomCreate());
-	m_statue.push_back(manager->RandomCreate());
-	m_statue.push_back(manager->CreateStatue(CStatueManager::BLOOD));
-	m_statue.push_back(manager->CreateStatue(CStatueManager::LUCK));
-	m_statue.push_back(manager->CreateStatue(CStatueManager::TELEPORTER));
-	m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
-	m_statue.push_back(manager->CreateStatue(CStatueManager::COMBAT));
+	(manager->RandomCreate());
+	(manager->RandomCreate());
+	(manager->RandomCreate());
+	(manager->RandomCreate());
+	(manager->CreateStatue(CStatueManager::BLOOD));
+	(manager->CreateStatue(CStatueManager::LUCK));
+	(manager->CreateStatue(CStatueManager::TELEPORTER));
+	(manager->CreateStatue(CStatueManager::CHEST));
+	(manager->CreateStatue(CStatueManager::COMBAT));
 
 	for (int i = 0; i < 10; i++)
 	{
-		m_statue.push_back(manager->CreateStatue(CStatueManager::CHEST));
+		(manager->CreateStatue(CStatueManager::CHEST));
 	}
 
 	CMesh* sky = CMesh::Create();
 	sky->SetSkyMesh();
+	sky->SetIsCulling(true);
 	sky->SetTexture("SKY");
 
 	return S_OK;
@@ -80,10 +82,10 @@ HRESULT CMap::Init()
 //--------------------------------------------------------------
 void CMap::Uninit()
 {
-	m_statue.clear();
 	m_mesh.clear();
 	m_model.clear();
 	m_characterList.clear();
+	m_selectEntity.clear();
 
 	CTask::Uninit();
 }
@@ -99,27 +101,8 @@ void CMap::Update()
 	if (m_SpawnCnt >= 600)
 	{
 		m_SpawnCnt = 0;
-		CEnemyManager::GetInstance()->RandomSpawn();
+		SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
 	}
-}
-
-//--------------------------------------------------------------
-// 生成
-//--------------------------------------------------------------
-CMap* CMap::Create(std::string path)
-{
-	//キャラクター生成
-	m_map = new CMap;
-
-	if (m_map != nullptr)
-	{//NULLチェック
-	 //メンバ変数に代入
-	 //初期化
-		m_map->Load(path);
-		m_map->Init();
-	}
-
-	return m_map;
 }
 
 //--------------------------------------------------------------
@@ -138,6 +121,7 @@ void CMap::Load(std::string path)
 		CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
 		object->LoadModel(model["TAG"]);
 		m_model.push_back(object);
+		SetEndChildren(object);
 	}
 
 	size = map["MESH"].size();
@@ -149,8 +133,8 @@ void CMap::Load(std::string path)
 		D3DXVECTOR3 pos(mesh["POS"][0], mesh["POS"][1], mesh["POS"][2]);
 		object->SetPos(pos);
 		object->SetOneMeshSize(D3DXVECTOR3(100.0f,100.0f,100.0f));
-
 		m_mesh.push_back(object);
+		SetEndChildren(object);
 	}
 
 	m_nextMapPath = map["NEXT_MAP"];

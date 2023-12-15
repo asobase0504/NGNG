@@ -31,13 +31,18 @@ public:
 	// ‘æˆê: À•W ‘æ“ñ: ’·‚³ ‘æO : ‚‚³
 	static CCollisionCylinder* Create(const D3DXVECTOR3& pos, const float length ,const float height);
 
+	void SetLength(float inLength) { m_length = inLength; SetLine(); }
 	float GetLength() { return m_length; }
+
+	void SetHeight(float inHeight) { m_height = inHeight; SetLine(); }
 	float GetHeight() { return m_height; }
 
 private:
+	void SetLine() override;
+private:
 	float m_length;
 	float m_height;
-	CLine* m_line[4];
+	CLine* m_line[9];
 };
 
 #endif

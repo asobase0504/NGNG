@@ -12,9 +12,21 @@
 static const int Max = 1024;
 static const int MaxModel = 15;
 static const int MaxPlayer = 4;
+
+
+struct item_data
+{
+	int itemData[5];
+};
+
+struct abnormal_data
+{
+	int abnormalData[5];
+};
+
 class CModelData
 {
-	
+
 public:
 	struct SEnemyData
 	{
@@ -41,28 +53,26 @@ public:
 		D3DXVECTOR3 m_rot;
 		int m_motion;
 		int m_log;
-		int m_haveItemRightId;
-		int m_haveItemLeftId;
-		int m_popEnemy;
-		int m_popGimmick;
+		item_data m_haveItem;
+		abnormal_data m_haveAbnormal;
 		bool m_pushBomComands;
 		SEnemyData m_isPopEnemy[MaxModel];
 		bool m_isPopGimmick[MaxModel];
 
 		SSendEnemy() : SSendData(ESENDDATA_ENEMY)
-		{ 
+		{
 			for (int i = 0; i < MaxModel; i++)
 			{
 				m_isPopEnemy[i].isDiscovery = false;
 				m_isPopEnemy[i].isUse = false;
 				m_isPopGimmick[i] = false;
 			}
-			
+
 
 		}
 		void SetList(std::string modelList)
 		{
-			
+
 			if (modelList.size() != Max)
 			{
 				return;
@@ -71,12 +81,12 @@ public:
 			m_rot = D3DXVECTOR3(modelList[3], modelList[4], modelList[5]);
 			m_motion = modelList[6];
 		}
-	
+
 	};
 	struct SPlayerDate
 	{
 		SSendEnemy Player;
-		
+
 		void SetPlayer(SSendEnemy data)
 		{
 			Player = data;
@@ -92,7 +102,7 @@ public:
 	~CModelData();
 
 	SPlayerDate* GetCommu() { return &m_CommuData; };
-	void SetCommu(SPlayerDate Set) {  m_CommuData = Set; };
+	void SetCommu(SPlayerDate Set) { m_CommuData = Set; };
 	bool IsUse;
 	SPlayerDate m_CommuData;
 };
@@ -114,6 +124,8 @@ public:
 		bool isDiscovery;
 		D3DXVECTOR3 m_rot;
 		D3DXVECTOR3 m_pos;
+		item_data m_haveItem;
+		abnormal_data m_haveAbnormal;
 
 	};
 	struct SSendData
@@ -133,10 +145,10 @@ public:
 		SSendPack();
 		~SSendPack();
 		SPlayerData Player[MaxPlayer];
-		SEnemyData m_isPopEnemy[MaxModel];
+		//SEnemyData m_isPopEnemy[MaxModel];
 
 	};
-		
+
 
 
 };

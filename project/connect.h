@@ -8,19 +8,19 @@
 #ifndef _CONNECT_H_
 #define _CONNECT_H_
 
-#include "model_date.h"
+#include "model_data.h"
 
 
 //構造体
 
 class CTcp_client;
-
+class CDataPack;
 class  CClient
 {
 
 	struct SConnectCheck
 	{
-		bool myConnect;
+		int myConnect;
 		bool enemyConnect;
 	};
 
@@ -38,7 +38,7 @@ public:
 private:
 	CTcp_client *m_tcpClient;
 	SConnectCheck m_myConnect;		//自分に接続する
-	CDataPack *m_player[4];	//保存するプレイヤーデータの保存先
+	CDataPack::SSendPack m_player;	//保存するプレイヤーデータの保存先
 
 };
 

@@ -58,21 +58,25 @@ HRESULT CPlayerManager::Init()
 //--------------------------------------------------------------
 // I—¹ˆ—
 //--------------------------------------------------------------
-void CPlayerManager::Uninit(void)
+void CPlayerManager::Uninit()
 {
+	if (m_playerManager != nullptr)
+	{
+		m_playerManager = nullptr;
+	}
 }
 
 //--------------------------------------------------------------
 // XVˆ—
 //--------------------------------------------------------------
-void CPlayerManager::Update(void)
+void CPlayerManager::Update()
 {
 }
 
 //--------------------------------------------------------------
 // •`‰æˆ—
 //--------------------------------------------------------------
-void CPlayerManager::Draw(void)
+void CPlayerManager::Draw()
 {
 }
 

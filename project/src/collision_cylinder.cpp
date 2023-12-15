@@ -35,7 +35,7 @@ CCollisionCylinder::CCollisionCylinder() :
 //--------------------------------------------------------------
 CCollisionCylinder::~CCollisionCylinder()
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		m_line[i] = nullptr;
 	}
@@ -46,10 +46,13 @@ CCollisionCylinder::~CCollisionCylinder()
 //--------------------------------------------------------------
 HRESULT CCollisionCylinder::Init()
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		m_line[i] = CLine::Create();
 		SetEndChildren(m_line[i]);
+		m_line[i]->SetColor(D3DXCOLOR(0.0f,1.0f,0.0f,1.0f));
+		m_line[i]->SetPosTarget(&GetPosWorld());
+		m_line[i]->SetRotTarget(&GetRot());
 	}
 	return S_OK;
 }
@@ -64,25 +67,6 @@ void CCollisionCylinder::Update()
 	D3DXVECTOR3 pos = GetPosWorld();
 	D3DXVECTOR3 size = GetSize();
 	D3DXVECTOR3 rot = GetRot();
-
-	float left = -m_length;	// x1
-	float right = m_length;	// x2
-	float top = m_height;		// z1
-	float bot = 0.0f;	// z2
-
-	// ４つの頂点
-	D3DXVECTOR3 posLine[6];
-	posLine[0] = D3DXVECTOR3(0.0f, 0.0f, left);
-	posLine[1] = D3DXVECTOR3(0.0f, 0.0f, right);
-	posLine[2] = D3DXVECTOR3(right, 0.0f, 0.0f);
-	posLine[3] = D3DXVECTOR3(left, 0.0f, 0.0f);
-	posLine[4] = D3DXVECTOR3(0.0f, top, 0.0f);
-	posLine[5] = D3DXVECTOR3(0.0f, bot, 0.0f);
-
-	m_line[0]->SetLine(pos, rot, posLine[0], posLine[1], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[1]->SetLine(pos, rot, posLine[2], posLine[3], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[2]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	//m_line[3]->SetLine(pos, rot, posLine[3], posLine[0], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 //--------------------------------------------------------------
@@ -135,12 +119,12 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	D3DXVECTOR3 cylinderPosOld = GetPosOld();
 	float radius = GetLength();
 
-	float left = -boxSize.x * 0.5f;		// 左
-	float right = boxSize.x * 0.5f;		// 右
-	float top = boxSize.y * 0.5f;		// 上
-	float bottum = -boxSize.y * 0.5f;	// 下
-	float back = boxSize.z * 0.5f;		// 奥
-	float front = -boxSize.z * 0.5f;	// 前
+	float left = -boxSize.x;		// 左
+	float right = boxSize.x;		// 右
+	float top = boxSize.y;		// 上
+	float bottum = -boxSize.y;	// 下
+	float back = boxSize.z;		// 奥
+	float front = -boxSize.z;	// 前
 
 	// ４つの頂点
 	D3DXVECTOR3 pos[4];
@@ -180,7 +164,13 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	SetIsUnder(false);
 
 	if (InOut[0] < 0.0f && InOut[1] < 0.0f && InOut[2] < 0.0f && InOut[3] < 0.0f)
-	{// Yの押出
+	{
+		if (!isExtrusion)
+		{// 押出をしない場合
+			isLanding = true;
+			return isLanding;
+		}
+
 		if (cylinderPosOld.y >= boxPos.y + boxSize.y && cylinderPos.y < boxPos.y + boxSize.y)
 		{// 上
 			extrusion.x = cylinderPos.x;
@@ -446,7 +436,7 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 			}
 			else
 			{
-				return isLanding;
+				break;
 			}
 
 			isLanding = true;
@@ -474,6 +464,37 @@ CCollisionCylinder* CCollisionCylinder::Create(const D3DXVECTOR3 & pos, const fl
 	collision->SetPos(pos);
 	collision->m_length = length;
 	collision->m_height = height;
-
+	collision->SetLine();
 	return collision;
+}
+
+void CCollisionCylinder::SetLine()
+{
+	float left = -m_length;	// x1
+	float right = m_length;	// x2
+	float top = m_height;		// z1
+	float bot = 0.0f;	// z2
+
+						// ４つの頂点
+	D3DXVECTOR3 posLine[10];
+	posLine[0] = D3DXVECTOR3(0.0f, bot, left);
+	posLine[1] = D3DXVECTOR3(0.0f, bot, right);
+	posLine[2] = D3DXVECTOR3(right, bot, 0.0f);
+	posLine[3] = D3DXVECTOR3(left, bot, 0.0f);
+	posLine[4] = D3DXVECTOR3(0.0f, top, 0.0f);
+	posLine[5] = D3DXVECTOR3(0.0f, bot, 0.0f);
+
+	posLine[6] = D3DXVECTOR3(0.0f, top, left);
+	posLine[7] = D3DXVECTOR3(0.0f, top, right);
+	posLine[8] = D3DXVECTOR3(right, top, 0.0f);
+	posLine[9] = D3DXVECTOR3(left, top, 0.0f);
+
+	m_line[0]->SetLine(posLine[0], posLine[1]);
+	m_line[1]->SetLine(posLine[2], posLine[3]);
+	m_line[2]->SetLine(posLine[8], posLine[2]);
+	m_line[3]->SetLine(posLine[9], posLine[3]);
+	m_line[4]->SetLine(posLine[6], posLine[0]);
+	m_line[5]->SetLine(posLine[7], posLine[1]);
+	m_line[7]->SetLine(posLine[6], posLine[7]);
+	m_line[8]->SetLine(posLine[8], posLine[9]);
 }

@@ -12,11 +12,14 @@
 #include "input.h"
 #include "utility.h"
 #include "map.h"
+#include "game.h"
+#include "application.h"
+#include "difficult.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueCombat::CStatueCombat(int nPriority)
+CStatueCombat::CStatueCombat()
 {
 
 }
@@ -37,27 +40,18 @@ HRESULT CStatueCombat::Init()
 	// 初期化処理
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 rot = GetRot();
-
 	CStatue::Init(pos, rot);
 	LoadModel("STATUE_COMBAT");
+	m_uiText = "戦いを始める";
 
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// 更新処理
+// 選択時
 //--------------------------------------------------------------
-void CStatueCombat::Update()
+bool CStatueCombat::Select(CCharacter * selectCharacter)
 {
-	// 更新処理
-	CStatue::Update();
-
-	// プレイヤーが触れている時
-	if (!Touch())
-	{
-		return;
-	}
-
 	D3DXVECTOR3 pos = GetPos();
 
 	for (int nCnt = 0; nCnt < 4; nCnt++)
@@ -66,14 +60,18 @@ void CStatueCombat::Update()
 		float randX = FloatRandom(1.5f, 0.5f);
 		float randZ = FloatRandom(1.5f, 0.5f);
 
-		CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
+
+		CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
+		int exp = pDiff->GetEnemyLevel();
+
+		CEnemy *enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE, exp);
+		enemy->TakeItem(CItemDataBase::ITEM_ELITE);
 	}
 
-#ifdef _DEBUG
-#if 0
-	CDebugProc::Print("CombatPos(%f,%f,%f)\n", GetPos().x, GetPos().y, GetPos().z);
-#endif // 0
-#endif // _DEBUG
+	m_collisionCylinder->Uninit();
+	m_collisionCylinder = nullptr;
+
+	return true;
 }
 
 //--------------------------------------------------------------

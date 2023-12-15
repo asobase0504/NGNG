@@ -14,6 +14,9 @@
 #include "character.h"
 #include "skill.h"
 #include "gold_nugget.h"
+#include "arrow.h"
+#include "flower.h"
+
 #include "utility.h"
 
 //==============================================================
@@ -24,7 +27,7 @@ CItemDataBase* CItemDataBase::m_instance(nullptr);
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CItemDataBase::CItemDataBase()
+CItemDataBase::CItemDataBase() : m_countKill(0), m_maxAddLife(0)
 {
 }
 
@@ -33,108 +36,142 @@ CItemDataBase::CItemDataBase()
 //--------------------------------------------------------------
 void CItemDataBase::Init()
 {
-	m_item[ITEM_DANGO] = CItem::Create(ITEM_DANGO);
-	m_item[ITEM_DANGO]->SetModel("ITEM_DANGO");
-	m_item[ITEM_DANGO]->SetRerity(CItem::RARITY_COMMON);
+	CItem* item;
+
+	// 全て生成だけしとく
+	for (int i = 0; i < ITEM_MAX; i++)
+	{
+		m_item[i] = CItem::Create((EItemType)i);
+		m_itemInfo[i][0] = "未記入----";
+		m_itemInfo[i][1] = "--効果--\n改行";
+		m_itemInfo[i][2] = "ITEM_DANGO_O1";
+	}
+
+	item = m_item[ITEM_DANGO];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_DANGO][0] = "だんご";
+	m_itemInfo[ITEM_DANGO][1] = "ＨＰが増える";
+	m_itemInfo[ITEM_DANGO][2] = "ITEM_DANGO_O1";
 	// だんごの設定-------------------------------------------------
 	/* HP+50(+50)増加 */
-	m_item[ITEM_DANGO]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	
+		inCharacter->GetHp()->AddMax(50);
 		inCharacter->GetHp()->AddItemEffect(50);
 	});
-	m_item[ITEM_DANGO]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	
+		inCharacter->GetHp()->AddMax(-50);
 		inCharacter->GetHp()->AddItemEffect(-50);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_GETA] = CItem::Create(ITEM_GETA);
-	m_item[ITEM_GETA]->SetModel("ITEM_DANGO");
-	m_item[ITEM_GETA]->SetRerity(CItem::RARITY_COMMON);
+	item = m_item[ITEM_GETA];
+	item->SetModel("ITEM_GETA");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_GETA][0] = "下駄";
+	m_itemInfo[ITEM_GETA][1] = "移動速度が増える";
+	m_itemInfo[ITEM_GETA][2] = "ITEM_DANGO_O1";
 	// 下駄の設定----------------------------------------------------
 	/* 移動速度増加+0.15(0.15) */
-	m_item[ITEM_GETA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	
 		inCharacter->GetSpeed()->AddItemEffect(0.15f);
 	});
-	m_item[ITEM_GETA]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	
 		inCharacter->GetSpeed()->AddItemEffect(-0.15f);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_UMBRELLA] = CItem::Create(ITEM_UMBRELLA);
-	m_item[ITEM_UMBRELLA]->SetModel("ITEM_DANGO");
-	m_item[ITEM_UMBRELLA]->SetRerity(CItem::RARITY_COMMON);
+	item = m_item[ITEM_UMBRELLA];
+	item->SetModel("ITEM_UMBRELLA");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_UMBRELLA][0] = "傘";
+	m_itemInfo[ITEM_UMBRELLA][1] = "防御力が増える";
+	m_itemInfo[ITEM_UMBRELLA][2] = "ITEM_DANGO_O1";
 	// 傘の設定-----------------------------------------------------
 	/* 防御力を+5(+5)する */
-	m_item[ITEM_UMBRELLA]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	
 		inCharacter->GetDefense()->AddItemEffect(5);
 	});
-	m_item[ITEM_UMBRELLA]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	
 		inCharacter->GetDefense()->AddItemEffect(-5);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_HYOUTAN] = CItem::Create(ITEM_HYOUTAN);
-	m_item[ITEM_HYOUTAN]->SetModel("ITEM_DANGO");
-	m_item[ITEM_HYOUTAN]->SetRerity(CItem::RARITY_COMMON);
+	item = m_item[ITEM_HYOUTAN];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_HYOUTAN][0] = "ひょうたん";
+	m_itemInfo[ITEM_HYOUTAN][1] = "攻撃速度と移動速度が増える";
+	m_itemInfo[ITEM_HYOUTAN][2] = "ITEM_DANGO_O1";
 	// ひょうたん---------------------------------------------------
 	/* 攻撃速度と移動速度を +0.075%(0.075)ずつする */
-	m_item[ITEM_HYOUTAN]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	
 		inCharacter->GetAtkSpd()->AddItemEffect(0.075f);
 		inCharacter->GetSpeed()->AddItemEffect(0.075f);
 	});
-	m_item[ITEM_HYOUTAN]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	
 		inCharacter->GetAtkSpd()->AddItemEffect(-0.075f);
 		inCharacter->GetSpeed()->AddItemEffect(-0.075f);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_BANBOO_WATERBOX] = CItem::Create(ITEM_BANBOO_WATERBOX);
-	m_item[ITEM_BANBOO_WATERBOX]->SetModel("ITEM_DANGO");
-	m_item[ITEM_BANBOO_WATERBOX]->SetRerity(CItem::RARITY_COMMON);
+	item = m_item[ITEM_BANBOO_WATERBOX];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_BANBOO_WATERBOX][0] = "竹の水筒";
+	m_itemInfo[ITEM_BANBOO_WATERBOX][1] = "攻撃速度が増える";
+	m_itemInfo[ITEM_BANBOO_WATERBOX][2] = "ITEM_DANGO_O1";
 	// 竹の水筒-----------------------------------------------------
 	/* 攻撃速度を+0.15%(0.15)ずつする */
-	m_item[ITEM_BANBOO_WATERBOX]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	
 		inCharacter->GetAtkSpd()->AddItemEffect(0.15f);
 	});
-	m_item[ITEM_BANBOO_WATERBOX]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	
 		inCharacter->GetAtkSpd()->AddItemEffect(-0.15f);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_OMAMORI] = CItem::Create(ITEM_OMAMORI);
-	m_item[ITEM_OMAMORI]->SetModel("ITEM_DANGO");
-	m_item[ITEM_OMAMORI]->SetRerity(CItem::RARITY_COMMON);
+	item = m_item[ITEM_OMAMORI];
+	item->SetModel("ITEM_OMAMORI");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_OMAMORI][0] = "お守り";
+	m_itemInfo[ITEM_OMAMORI][1] = "クリティカル率が増える";
+	m_itemInfo[ITEM_OMAMORI][2] = "ITEM_DANGO_O1";
 	// お守り-------------------------------------------------------
-	/* 攻撃速度を+0.1%(0.1%)する */
-	m_item[ITEM_OMAMORI]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	/* クリティカル率を10%(+10%)上昇させる。 */
+	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{	
-		inCharacter->GetAtkSpd()->AddItemEffect(0.1f);
+		inCharacter->GetCriticalRate()->AddItemEffect(0.1f);
 	});
-	m_item[ITEM_OMAMORI]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{	
-		inCharacter->GetAtkSpd()->AddItemEffect(-0.1f);
+		inCharacter->GetCriticalRate()->AddItemEffect(-0.1f);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_KIBORI] = CItem::Create(ITEM_KIBORI);
-	m_item[ITEM_KIBORI]->SetModel("BOX");
-	m_item[ITEM_KIBORI]->SetRerity(CItem::RARITY_COMMON);
+	item = m_item[ITEM_KIBORI];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_KIBORI][0] = "熊の木彫り";
+	m_itemInfo[ITEM_KIBORI][1] = "確率でブロックする";
+	m_itemInfo[ITEM_KIBORI][2] = "ITEM_DANGO_O1";
 	// 熊の木彫り---------------------------------------------
-	m_item[ITEM_KIBORI]->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{
-		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+	item->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 15%(+15%)の確率でブロックする。
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{
 			if (IsSuccessRate(0.15f))
-			{// 15%の確率でブロックする。
+			{// 15%の確率
 				inCharacter->DamageBlock(true);
 				break;
 			}
@@ -142,105 +179,113 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_BAKUTIKU] = CItem::Create(ITEM_BAKUTIKU);
-	m_item[ITEM_BAKUTIKU]->SetModel("ITEM_DANGO");
-	m_item[ITEM_BAKUTIKU]->SetRerity(CItem::RARITY_COMMON);
+	item = m_item[ITEM_BAKUTIKU];
+	item->SetModel("ITEM_BAKUTIKU");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_BAKUTIKU][0] = "ばくちく";
+	m_itemInfo[ITEM_BAKUTIKU][1] = "スタンさせる";
+	m_itemInfo[ITEM_BAKUTIKU][2] = "ITEM_DANGO_O1";
 	// ばくちく(保留)-----------------------------------------------
-	m_item[ITEM_BAKUTIKU]->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{
-		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 攻撃時に5%の確率で敵を2秒間スタンさせる。
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{
 			if (IsSuccessRate(0.05f))
-			{// 攻撃時に5%の確率でスタンさせる。
-				outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_STUN, true);
+			{// 5%の確率
+				outCharacter->AddAbnormalStack(CAbnormalDataBase::ABNORMAL_STUN);
 				break;
 			}
 		}
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_MAKIBISI] = CItem::Create(ITEM_MAKIBISI);
-	m_item[ITEM_MAKIBISI]->SetModel("ITEM_DANGO");
-	m_item[ITEM_MAKIBISI]->SetRerity(CItem::RARITY_COMMON);
+	item = m_item[ITEM_MAKIBISI];
+	item->SetModel("ITEM_MAKIBISI");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_MAKIBISI][0] = "まきびし";
+	m_itemInfo[ITEM_MAKIBISI][1] = "移動速度を低下させる";
+	m_itemInfo[ITEM_MAKIBISI][2] = "ITEM_DANGO_O1";
 	// まきびし-----------------------------------------------------
-	m_item[ITEM_MAKIBISI]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 攻撃時に敵に移動速度-5%にする状態異常を付与する。
-		int parcent = 0;
-		for (int Cnt = 0; Cnt <= cnt; Cnt++)
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
 		{
-			parcent += 5;
-		}
-
-		// 敵の現在のスピード
-		float crrenrSpeed = outCharacter->GetSpeed()->GetCurrent();
-		// 遅くする値
-		float subSpeed = crrenrSpeed * (parcent / 100);
-		// 減速
-		outCharacter->GetSpeed()->AddItemEffect(-subSpeed);
-	});
-	//--------------------------------------------------------------
-
-	m_item[ITEM_HEAD] = CItem::Create(ITEM_HEAD);
-	m_item[ITEM_HEAD]->SetModel("ITEM_DANGO");
-	m_item[ITEM_HEAD]->SetRerity(CItem::RARITY_COMMON);
-	// 首級---------------------------------------------------------
-	m_item[ITEM_HEAD]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// 敵を倒した時、HPの1%(+1%)を回復する。
-		if (outCharacter->IsDied())
-		{
-			int percent = 0;
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
-			{// 持ってる数、割合を増やす
-				percent += 1;
+			if (IsSuccessRate(0.05f))
+			{// 攻撃時に5%の確率でスロウさせる。
+				outCharacter->AddAbnormalStack(CAbnormalDataBase::ABNORMAL_SLOW);
 			}
-
-			// 最大体力を取得
-			int hpMax = inCharacter->GetHp()->GetMax();
-			// 回復する値
-			int recovery = (int)(hpMax * (percent / 100));
-			inCharacter->GetHp()->AddItemEffect(recovery);
 		}
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_KUNAI] = CItem::Create(ITEM_KUNAI);
-	m_item[ITEM_KUNAI]->SetModel("ITEM_DANGO");
+	item = m_item[ITEM_HEAD];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_HEAD][0] = "首級";
+	m_itemInfo[ITEM_HEAD][1] = "敵を倒した時、回復する";
+	m_itemInfo[ITEM_HEAD][2] = "ITEM_DANGO_O1";
 	// 首級---------------------------------------------------------
-	m_item[ITEM_KUNAI]->SetRerity(CItem::RARITY_COMMON);
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 敵を倒した時、HPの1%(+1%)を回復する。
+		float percent = 0;
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
+		{// 持ってる数、割合を増やす
+			percent += 1;
+		}
+
+		// 最大体力を取得
+		float hpMax = (float)inCharacter->GetHp()->GetMax();
+		// 回復する値
+		float recovery = hpMax * (percent / 100.0f);
+		inCharacter->Heal((int)recovery);
+	});
+	//--------------------------------------------------------------
+
+	item = m_item[ITEM_KUNAI];
+	item->SetModel("ITEM_KUNAI");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_KUNAI][0] = "クナイ";
+	m_itemInfo[ITEM_KUNAI][1] = "体力が90%以上の敵に対して\nダメージが増加する";
+	m_itemInfo[ITEM_KUNAI][2] = "ITEM_DANGO_O1";
 	// クナイ---------------------------------------------------------
-	m_item[ITEM_KUNAI]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 体力が90%以上の敵に対して70%(+70%)ダメージが増加する。
 		// 最大体力を取得
-		int hpMax = outCharacter->GetHp()->GetMax();
+		float hpMax = (float)outCharacter->GetHp()->GetMax();
 		// 現在の体力
-		int hpCurrent = outCharacter->GetHp()->GetCurrent();
+		float hpCurrent = (float)outCharacter->GetHp()->GetCurrent();
 
 		// 体力の割合を計算
-		int percent = (int)(hpCurrent / hpMax * 100);
+		float percent = (hpCurrent / hpMax * 100.0f);
 
-		if (percent >= 90)
+		if (percent >= 90.0f)
 		{// 相手の体力が90%以上だった時
-			int addParcent = 0;
+			float addParcent = 0;
 
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{// 持ってる数、割合を増やす
 				addParcent += 70;
 			}
-			int nowAtk = inCharacter->GetAtk()->GetCurrent();
-			nowAtk += nowAtk * (addParcent / 100);
+			float nowAtk = (float)inCharacter->GetAtk()->GetCurrent();
+			float total = nowAtk * (addParcent / 100.0f);
 
-			// ダメージ計算
-			inCharacter->GetAtk()->SetCurrent(nowAtk);
+			nowAtk += total;
+
+			// ダメージの加算
+			inCharacter->AddDamage(nowAtk);
 		}
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_FUR] = CItem::Create(ITEM_FUR);
-	m_item[ITEM_FUR]->SetModel("ITEM_DANGO");
-	m_item[ITEM_FUR]->SetRerity(CItem::RARITY_COMMON);
+	item = m_item[ITEM_FUR];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_COMMON);
+	m_itemInfo[ITEM_FUR][0] = "毛皮";
+	m_itemInfo[ITEM_FUR][1] = "シールドを得る";
+	m_itemInfo[ITEM_FUR][2] = "ITEM_DANGO_O1";
 	// 毛皮---------------------------------------------------------
-	m_item[ITEM_FUR]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
-	{// 最大体力の8%のシールドを得る。
+	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
+	{// 最大体力の8%のシールドを得る。	// TODO　未検証
 		if (inCharacter->GetIsShield())
 		{// シールドを回復する状態の時
 			// 最大体力を取得
@@ -249,7 +294,7 @@ void CItemDataBase::Init()
 			// 増やす割合
 			int percent = 0;
 
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{// 持ってる数、割合を増やす
 				percent += 8;
 			}
@@ -262,27 +307,30 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_KITUNEMEN] = CItem::Create(ITEM_KITUNEMEN);
-	m_item[ITEM_KITUNEMEN]->SetModel("ITEM_DANGO");
-	m_item[ITEM_KITUNEMEN]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_KITUNEMEN];
+	item->SetModel("ITEM_KITUNENOOMEN");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_KITUNEMEN][0] = "狐面";
+	m_itemInfo[ITEM_KITUNEMEN][1] = "クリティカルヒットで攻撃速度が\n上昇する";
+	m_itemInfo[ITEM_KITUNEMEN][2] = "ITEM_DANGO_O1";
 	// 狐面---------------------------------------------------------
-	m_item[ITEM_KITUNEMEN]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// クリティカルヒットで攻撃速度が12%上昇する。最大値は36% (+36%)。
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// クリティカルヒットで攻撃速度が12%上昇する。最大値は36% (+36%)。// TODO　未検証
 		if (inCharacter->GetIsCritical())
 		{
-			int addAtkSpdPercent = 0;
-			int numCritical = inCharacter->GetNumCritical();
+			float addAtkSpdPercent = 0;
+			float numCritical = (float)inCharacter->GetNumCritical();
 
 			for (int i = 0; i < numCritical; i++)
 			{// ヒットした数足す
-				addAtkSpdPercent += 12;
+				addAtkSpdPercent += 12.0f;
 			}
 
-			int maxPercent = 0;
+			float maxPercent = 0;
 
-			for (int i = 0; i <= numCritical; i++)
+			for (int i = 0; i < cnt; i++)
 			{// アイテムの所持数分、足す
-				maxPercent += 36;
+				maxPercent += 36.0f;
 			}
 
 			if (maxPercent < addAtkSpdPercent)
@@ -293,60 +341,70 @@ void CItemDataBase::Init()
 			// 現在のスピードを取得
 			float currentAtkSpd = inCharacter->GetAtkSpd()->GetCurrent();
 			// 増やす割合の計算
-			currentAtkSpd += currentAtkSpd * (addAtkSpdPercent / 100);
+			float total = currentAtkSpd * (addAtkSpdPercent / 100.0f);
+			
+			currentAtkSpd += total;
+
 			// 設定
 			inCharacter->GetAtkSpd()->SetCurrent(currentAtkSpd);
 		}
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_KAZAGURUMA] = CItem::Create(ITEM_KAZAGURUMA);
-	m_item[ITEM_KAZAGURUMA]->SetModel("ITEM_DANGO");
-	m_item[ITEM_KAZAGURUMA]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_KAZAGURUMA];
+	item->SetModel("ITEM_KAZAGURUMA");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_KAZAGURUMA][0] = "風車";
+	m_itemInfo[ITEM_KAZAGURUMA][1] = "敵を倒すと確率で全てのクールダウンを\nリセットする";
+	m_itemInfo[ITEM_KAZAGURUMA][2] = "ITEM_DANGO_O1";
 	// 風車---------------------------------------------------------
-	m_item[ITEM_KAZAGURUMA]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒すと18%の確率で全てのクールダウンをリセットする
-		if (outCharacter->IsDied())
+		for (int i = 0; i < cnt; i++)
 		{
-			for (int i = 0; i < cnt; i++)
+			if (IsSuccessRate(0.18f))
 			{
-				if (IsSuccessRate(0.18f))
+				for (int j = 0; j < CCharacter::MAX_SKILL; j++)
 				{
-					for (int j = 0; j < CCharacter::MAX_SKILL; j++)
-					{
-						inCharacter->GetSkill(j)->SetCT(0);
-					}
+					inCharacter->GetSkill(j)->SetCT(0);
 				}
 			}
 		}
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_KOBAN] = CItem::Create(ITEM_KOBAN);
-	m_item[ITEM_KOBAN]->SetModel("ITEM_DANGO");
-	m_item[ITEM_KOBAN]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_KOBAN];
+	item->SetModel("ITEM_KOBAN");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_KOBAN][0] = "小判";
+	m_itemInfo[ITEM_KOBAN][1] = "敵を倒すと確率で金塊が出現する";
+	m_itemInfo[ITEM_KOBAN][2] = "ITEM_DANGO_O1";
 	// 小判---------------------------------------------------------
-	m_item[ITEM_KOBAN]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵を倒した際4%の確率で金塊が出現する (+4%)
 		float probability = 0.0f;
 
-		for (int j = 0; j <= cnt; j++)
+		for (int j = 0; j < cnt; j++)
 		{
 			probability += 0.04f;
 		}
 
 		if (IsSuccessRate(probability))
 		{
-			CGoldNugget::Create();
+			CGoldNugget* obj = CGoldNugget::Create();
+			obj->SetPos(outCharacter->GetPos());
 		}
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_ONIMEN] = CItem::Create(ITEM_ONIMEN);
-	m_item[ITEM_ONIMEN]->SetModel("ITEM_DANGO");
-	m_item[ITEM_ONIMEN]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_ONIMEN];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_ONIMEN][0] = "鬼面";
+	m_itemInfo[ITEM_ONIMEN][1] = "4つ以上のデバフがついた敵に死の印が付き、\n受けるダメージが増加する";
+	m_itemInfo[ITEM_ONIMEN][2] = "ITEM_DANGO_O1";
 	// 鬼面---------------------------------------------------------
-	m_item[ITEM_ONIMEN]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 4つ以上のデバフがついた敵に死の印が付き、受けるダメージが7秒間(+7秒)50%増加する
 		int numDebuff = outCharacter->GetAbnormalTypeCount();
 
@@ -358,26 +416,30 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_BROKEN_KABUTO] = CItem::Create(ITEM_BROKEN_KABUTO);
-	m_item[ITEM_BROKEN_KABUTO]->SetModel("ITEM_DANGO");
-	m_item[ITEM_BROKEN_KABUTO]->SetRerity(CItem::RARITY_UNCOMMON);
+	// ↑チェック済み-----------------------------------------------
+	item = m_item[ITEM_BROKEN_KABUTO];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_BROKEN_KABUTO][0] = "壊れた兜";
+	m_itemInfo[ITEM_BROKEN_KABUTO][1] = "体力が一定以下になったエリートモンスターを\n即死させる";
+	m_itemInfo[ITEM_BROKEN_KABUTO][2] = "ITEM_DANGO_O1";
 	// 壊れた兜---------------------------------------------------------
-	m_item[ITEM_BROKEN_KABUTO]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// 体力が13%以下になったエリートモンスターを即死させる (+13%)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 体力が13%以下になったエリートモンスターを即死させる (+13%)	// TODO　未検証
 		if (outCharacter->GetIsElite())
 		{
-			int parcent = 0;
+			float parcent = 0.0f;
 
-			for (int j = 0; j <= cnt; j++)
+			for (int j = 0; j < cnt; j++)
 			{
-				parcent += 13;
+				parcent += 13.0f;
 			}
 
 			// 一定の体力以下になった敵を殺す
-			int hp = outCharacter->GetHp()->GetMax();
-			hp *= (parcent / 100);
+			float hp = (float)outCharacter->GetHp()->GetMax();
+			hp *= (parcent / 100.0f);
 
-			int hpCurrent = outCharacter->GetHp()->GetCurrent();
+			float hpCurrent = (float)outCharacter->GetHp()->GetCurrent();
 
 			if (hpCurrent <= hp)
 			{// 現在の体力が規定値以下だったら
@@ -387,140 +449,172 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_CROW_FEATHER] = CItem::Create(ITEM_CROW_FEATHER);
-	m_item[ITEM_CROW_FEATHER]->SetModel("ITEM_DANGO");
-	m_item[ITEM_CROW_FEATHER]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_CROW_FEATHER];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_CROW_FEATHER][0] = "カラスの羽";
+	m_itemInfo[ITEM_CROW_FEATHER][1] = "ジャンプ回数が増える";
+	m_itemInfo[ITEM_CROW_FEATHER][2] = "ITEM_DANGO_O1";
 	// カラスの羽---------------------------------------------------------
 	// ジャンプ回数 +1 (+1)
-	m_item[ITEM_CROW_FEATHER]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{
 		inCharacter->GetJumpCount()->AddItemEffect(1);
 	});
-	m_item[ITEM_CROW_FEATHER]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{ 
 		inCharacter->GetJumpCount()->AddItemEffect(-1);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_FLINT] = CItem::Create(ITEM_FLINT);
-	m_item[ITEM_FLINT]->SetModel("ITEM_DANGO");
-	m_item[ITEM_FLINT]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_TOISI];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_TOISI][0] = "砥石";
+	m_itemInfo[ITEM_TOISI][1] = "クリティカル確率が上昇し、クリティカルが発生するごとに\n体力が回復する";
+	m_itemInfo[ITEM_TOISI][2] = "ITEM_DANGO_O1";
 	// 砥石---------------------------------------------------------
 	// クリティカル確率が5%上昇し、クリティカルが発生するごとに体力が8回復する (回復量 +8)
-	m_item[ITEM_FLINT]->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{// 取得時
 		inCharacter->GetCriticalRate()->AddItemEffect(5);
 	});
-	m_item[ITEM_FLINT]->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenLostFunc([](CCharacter* inCharacter, int cnt)
 	{// なくしたとき
 		inCharacter->GetCriticalRate()->AddItemEffect(-5);
 	});
-	m_item[ITEM_FLINT]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// クリティカル発生時
 		if (inCharacter->GetIsCritical())
 		{
 			int healHp = 0;
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{
 				healHp += 8;
 			}
-			inCharacter->GetHp()->AddItemEffect(healHp);
+			inCharacter->Heal(healHp);
 		}
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_DRIP_BAG] = CItem::Create(ITEM_DRIP_BAG);
-	m_item[ITEM_DRIP_BAG]->SetModel("ITEM_DANGO");
-	m_item[ITEM_DRIP_BAG]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_DRIP_BAG];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_DRIP_BAG][0] = "点滴袋";
+	m_itemInfo[ITEM_DRIP_BAG][1] = "敵を倒すごとに体力が永続的に1増える";
+	m_itemInfo[ITEM_DRIP_BAG][2] = "ITEM_DANGO_O1";
 	// 点滴袋---------------------------------------------------------
-	// 敵を倒すごとに体力が永続的に1増える。最大100まで (最大 +100)TODO
-	m_item[ITEM_DRIP_BAG]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	// 敵を倒すごとに体力が永続的に1増える。最大100まで (最大 +100)
+	item->SetWhenDeathFunc([this](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		if (outCharacter->IsDied())
-		{
-			inCharacter->GetHp()->AddItemEffect(1);
+		// 最大値を決める
+		m_maxAddLife = cnt * 100;
+		// 敵を倒した数をカウント
+		m_countKill++;
+
+		if (m_countKill > m_maxAddLife)
+		{// 最大値を超えたら増やさない
+			return;
 		}
+
+		inCharacter->GetHp()->AddMax(1);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_CHICK] = CItem::Create(ITEM_CHICK);
-	m_item[ITEM_CHICK]->SetModel("ITEM_DANGO");
-	m_item[ITEM_CHICK]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_CHICK];
+	item->SetModel("ITEM_HIYOKO");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_CHICK][0] = "ひよこ";
+	m_itemInfo[ITEM_CHICK][1] = "走りながらジャンプすると前方に飛び出す";
+	m_itemInfo[ITEM_CHICK][2] = "ITEM_DANGO_O1";
 	// ひよこ---------------------------------------------------------
 	// 走りながらジャンプすると前方に10m飛び出す (+10m)TODO
-	m_item[ITEM_CHICK]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
 		//inCharacter->GetCriticalRate()->AddItemEffect(5);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_ZOURI] = CItem::Create(ITEM_ZOURI);
-	m_item[ITEM_ZOURI]->SetModel("ITEM_DANGO");
-	m_item[ITEM_ZOURI]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_ZOURI];
+	item->SetModel("ITEM_ZOURI");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_ZOURI][0] = "草履";
+	m_itemInfo[ITEM_ZOURI][1] = "敵を倒すと移動速度が一定時間上がる";
+	m_itemInfo[ITEM_ZOURI][2] = "ITEM_DANGO_O1";
 	// 草履---------------------------------------------------------
 	// 敵を倒すと移動速度が125%上がり、1(+0.5)秒間消える
-	m_item[ITEM_ZOURI]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{
-		if (outCharacter->IsDied())
-		{// 敵が死んだら
-			// 現在の速度
-			float currentSpeed = inCharacter->GetSpeed()->GetCurrent();
+	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 敵が死んだら
+		// 現在の速度
+		float currentSpeed = inCharacter->GetSpeed()->GetCurrent();
 
-			// スピードが上がる割合を計算
-			currentSpeed *= (125 / 100);
-			
-			// 加算
-			inCharacter->GetSpeed()->AddItemEffect(currentSpeed);
-		}
+		// スピードが上がる割合を計算
+		currentSpeed *= (125 / 100);
+
+		// 加算
+		inCharacter->GetSpeed()->AddItemEffect(currentSpeed);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_ARROW] = CItem::Create(ITEM_ARROW);
-	m_item[ITEM_ARROW]->SetModel("ITEM_DANGO");
-	m_item[ITEM_ARROW]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_ARROW];
+	item->SetModel("ITEM_ARROW");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_ARROW][0] = "矢";
+	m_itemInfo[ITEM_ARROW][1] = "敵を倒すと移動速度が一定時間上がる";
+	m_itemInfo[ITEM_ARROW][2] = "ITEM_DANGO_O1";
 	// 矢---------------------------------------------------------
 	// プライマリースキルを発動すると、矢も投げて、400%(+100%)の基礎ダメージを与える。
 	// 最大3(+1)個の矢を持つことができ、10秒経つとリロードされる
-	m_item[ITEM_ARROW]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
+	item->SetWhenUseSkill([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	{// 矢を発射 TODO
+		//inCharacter->GetRot()
+		//CArrow* obj = CArrow::Create();
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_SEED] = CItem::Create(ITEM_SEED);
-	m_item[ITEM_SEED]->SetModel("ITEM_DANGO");
-	m_item[ITEM_SEED]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_SEED];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_SEED][0] = "種子";
+	m_itemInfo[ITEM_SEED][1] = "攻撃ヒット時に体力を回復する";
+	m_itemInfo[ITEM_SEED][2] = "ITEM_DANGO_O1";
 	// 種子---------------------------------------------------------
 	// 攻撃ヒット時に体力を1回復する (回復量+1)
-	m_item[ITEM_SEED]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		inCharacter->GetHp()->AddItemEffect(1);
+		inCharacter->Heal(1);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_FETTERS] = CItem::Create(ITEM_FETTERS);
-	m_item[ITEM_FETTERS]->SetModel("ITEM_DANGO");
-	m_item[ITEM_FETTERS]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_FETTERS];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_FETTERS][0] = "足枷";
+	m_itemInfo[ITEM_FETTERS][1] = "攻撃を当てた敵の移動速度が減少する";
+	m_itemInfo[ITEM_FETTERS][2] = "ITEM_DANGO_O1";
 	// 足枷---------------------------------------------------------
 	// 攻撃を当てた敵の移動速度が2秒間60%減少する (秒数 +2)
-	m_item[ITEM_FETTERS]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 
-		outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_SLOW, true);
+		outCharacter->AddAbnormalStack(CAbnormalDataBase::ABNORMAL_SLOW);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_SHIELD] = CItem::Create(ITEM_SHIELD);
-	m_item[ITEM_SHIELD]->SetModel("ITEM_DANGO");
-	m_item[ITEM_SHIELD]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_SHIELD];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_SHIELD][0] = "盾";
+	m_itemInfo[ITEM_SHIELD][1] = "走っている間はアーマーが増加する";
+	m_itemInfo[ITEM_SHIELD][2] = "ITEM_DANGO_O1";
 	// 盾---------------------------------------------------------
 	// 走っている間はアーマーが30増加する (+30)
-	m_item[ITEM_SHIELD]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
 		if (inCharacter->GetIsRunning())
 		{
 			int armor = 0;
 
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{// 持ってる数、割合を増やす
 				armor += 30;
 			}
@@ -530,19 +624,22 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_TABI] = CItem::Create(ITEM_TABI);
-	m_item[ITEM_TABI]->SetModel("ITEM_DANGO");
-	m_item[ITEM_TABI]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_TABI];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_TABI][0] = "たび";
+	m_itemInfo[ITEM_TABI][1] = "非戦闘時の移動速度があがる";
+	m_itemInfo[ITEM_TABI][2] = "ITEM_DANGO_O1";
 	// たび---------------------------------------------------------
-	// 非戦闘時の移動速度 +30% (+30%)
-	m_item[ITEM_TABI]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
+	// 非戦闘時の移動速度 +30% (+30%) // TODO
+	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
 	{
 		if (inCharacter->GetIsNonCombat())
 		{
 			float speed = inCharacter->GetSpeed()->GetCurrent();
 
 			int addParcent = 0;
-			for (int Cnt = 0; Cnt <= cnt; Cnt++)
+			for (int Cnt = 0; Cnt < cnt; Cnt++)
 			{
 				addParcent += 30;
 			}
@@ -553,57 +650,77 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_FLINT] = CItem::Create(ITEM_FLINT);
-	m_item[ITEM_FLINT]->SetModel("ITEM_DANGO");
-	m_item[ITEM_FLINT]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_FLINT];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_FLINT][0] = "火打石";
+	m_itemInfo[ITEM_FLINT][1] = "発火の効果で、与えるダメージが時間の経過とともに増える";
+	m_itemInfo[ITEM_FLINT][2] = "ITEM_DANGO_O1";
 	// 火打石---------------------------------------------------------
 	// 発火の効果で、与えるダメージが時間の経過とともに+300%(+300%)以上増える
-	m_item[ITEM_FLINT]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// TODO
 		//inCharacter->GetCriticalRate()->AddItemEffect(5);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_FLOWER] = CItem::Create(ITEM_FLOWER);
-	m_item[ITEM_FLOWER]->SetModel("ITEM_DANGO");
-	m_item[ITEM_FLOWER]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_FLOWER];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_FLOWER][0] = "花";
+	m_itemInfo[ITEM_FLOWER][1] = "テレポーターイベント中近くの味方を\n回復するヒーリングノヴァを生成する";
+	m_itemInfo[ITEM_FLOWER][2] = "ITEM_DANGO_O1";
 	// 花---------------------------------------------------------
 	// テレポーターイベント中近くの味方を50%回復するヒーリングノヴァを発する (+1回) 
-	m_item[ITEM_FLOWER]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
+	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
+	{
+		if (inCharacter->GetIsTeleporter())
+		{// 起動したら
+			float radius = (float)cnt * 300;	// 値調整　TODO
+			CFlower* obj = CFlower::Create(inCharacter->GetPos(), radius);
+			inCharacter->SetIsTeleporter(false);
+		}
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_IRON_WIRE] = CItem::Create(ITEM_IRON_WIRE);
-	m_item[ITEM_IRON_WIRE]->SetModel("ITEM_DANGO");
-	m_item[ITEM_IRON_WIRE]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_IRON_WIRE];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_UNCOMMON);
+	m_itemInfo[ITEM_IRON_WIRE][0] = "鉄線";
+	m_itemInfo[ITEM_IRON_WIRE][1] = "ダメージを受けた際、周囲の敵にダメージを与える";
+	m_itemInfo[ITEM_IRON_WIRE][2] = "ITEM_DANGO_O1";
 	// 鉄線---------------------------------------------------------
 	// ダメージを受けた際、周囲25m(+10m)以内にいる敵最大5体に160%のダメージを与える (+2体)
-	m_item[ITEM_IRON_WIRE]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// TODO
 		//inCharacter->GetCriticalRate()->AddItemEffect(5);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_HANNYA] = CItem::Create(ITEM_HANNYA);
-	m_item[ITEM_HANNYA]->SetModel("ITEM_DANGO");
-	m_item[ITEM_HANNYA]->SetRerity(CItem::RARITY_UNCOMMON);
+	item = m_item[ITEM_HANNYA];
+	item->SetModel("BOX");
+	item->SetRerity(RARITY_RARE);
+	m_itemInfo[ITEM_IRON_WIRE][0] = "般若面";
+	m_itemInfo[ITEM_IRON_WIRE][1] = "1秒以内に4体の敵を倒すと6秒間フレンジー状態になる";
+	m_itemInfo[ITEM_IRON_WIRE][2] = "ITEM_DANGO_O1";
 	// 般若面---------------------------------------------------------
 	// 1秒以内に4体の敵を倒すと6秒間フレンジー状態になる。フレンジー発動中は移動速度が50%、攻撃速度が100%上昇する (+4秒)
-	m_item[ITEM_HANNYA]->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// TODO
 		//inCharacter->GetCriticalRate()->AddItemEffect(5);
 	});
 	//--------------------------------------------------------------
 
-	m_item[ITEM_ELITE] = CItem::Create(ITEM_ELITE);
-	m_item[ITEM_ELITE]->SetRerity(CItem::RARITY_COMMON);
+	item = m_item[ITEM_ELITE];
+	item->SetRerity(RARITY_NOSELECT);
+	m_itemInfo[ITEM_ELITE][0] = "エリート";
+	m_itemInfo[ITEM_ELITE][1] = "持っているものはエリートになる";
+	m_itemInfo[ITEM_ELITE][2] = "ITEM_DANGO_O1";
 	// エリート---------------------------------------------------------
 	// 持っているものはエリートになる
-	m_item[ITEM_ELITE]->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
 	{// 倍率の設定
-		float magnification = 2.0f;
+		int magnification = 2;
 		int hp = inCharacter->GetHp()->GetCurrent();
 		hp *= magnification;
 		inCharacter->GetHp()->SetCurrent(hp);

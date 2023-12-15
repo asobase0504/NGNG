@@ -28,7 +28,6 @@ public:
 
 	HRESULT Init() override;
 	HRESULT Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot, const D3DXVECTOR3& inSize);
-	void Uninit() override;
 	void Update() override;
 	void Draw() override;
 

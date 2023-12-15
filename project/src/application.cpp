@@ -123,7 +123,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	CEnemyDataBase::GetInstance();
 	CItemDataBase::GetInstance();
 
-	CFont::Load(CFont::FONT_MEIRIO);
+	CFont::Load(CFont::FONT_MYOUTYOU);
 
 	return S_OK;
 }
@@ -134,6 +134,9 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 void CApplication::Uninit()
 {
 	CSkillDataBase::Uninit();
+	CEnemyDataBase::Uninit();
+	CItemDataBase::Uninit();
+	CAbnormalDataBase::Uninit();
 
 	if (m_taskGroup != nullptr)
 	{// 終了処理
@@ -175,11 +178,6 @@ void CApplication::Uninit()
 	//入力処理の終了処理
 	CInput::GetKey()->Uninit();
 
-	CSkillDataBase::Uninit();
-	CEnemyDataBase::Uninit();
-	CItemDataBase::Uninit();
-	CAbnormalDataBase::Uninit();
-
 	CSkinMeshGroup* group = CSkinMeshGroup::GetInstance();
 	delete group;
 	group = nullptr;
@@ -202,6 +200,20 @@ void CApplication::Update()
 		ppp = !ppp;
 	}
 #endif // _DEBUG
+
+	// 現在の最前面を保存
+	HWND activeWindowHandle;
+	
+	activeWindowHandle = GetForegroundWindow();
+	if (m_window != activeWindowHandle && m_isActiveWindowThis)
+	{ // 自分が最前にいないなら
+		m_isActiveWindowThis = false;
+	}
+	if (m_window == activeWindowHandle && !m_isActiveWindowThis)
+	{ // 自分が最前なら
+		m_isActiveWindowThis = true;
+	}
+
 
 	m_renderer->Update();
 }

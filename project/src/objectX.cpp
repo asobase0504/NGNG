@@ -71,6 +71,11 @@ HRESULT CObjectX::Init()
 //--------------------------------------------------------------
 void CObjectX::Draw()
 {
+	if (!m_isDisplay)
+	{
+		return;
+	}
+
 	extern LPD3DXEFFECT pEffect;		// シェーダー
 
 	// デバイスの取得
@@ -207,6 +212,8 @@ void CObjectX::Draw()
 	//マテリアルデータのポインタを取得する
 	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
 
+	LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
+
 	for (int nCntMat = 0; nCntMat < (int)m_numMat; nCntMat++)
 	{
 		// モデルの色の設定 
@@ -226,6 +233,7 @@ void CObjectX::Draw()
 
 			pEffect->SetVector(m_hvDiffuse, &Diffuse);
 		}
+
 		{
 			D3DXVECTOR4 Ambient;
 			//Ambient = D3DXVECTOR4(pMat[nCntMat].MatD3D.Ambient.r, pMat[nCntMat].MatD3D.Ambient.g, pMat[nCntMat].MatD3D.Ambient.b, pMat[nCntMat].MatD3D.Ambient.a);
@@ -233,7 +241,6 @@ void CObjectX::Draw()
 			pEffect->SetVector(m_hvAmbient, &Ambient);
 		}
 
-		LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
 		if (texture != nullptr)
 		{// テクスチャの適応
 			tex0 = texture;
@@ -262,11 +269,11 @@ void CObjectX::Draw()
 //--------------------------------------------------------------
 void CObjectX::DrawMaterial()
 {
-	extern LPD3DXEFFECT pEffect;		// 繧ｷ繧ｧ繝ｼ繝繝ｼ
+	extern LPD3DXEFFECT pEffect;		// シェーダー
 }
 
 //--------------------------------------------------------------
-// scale縺ｮ險ｭ螳・
+// scaleの設定
 //--------------------------------------------------------------
 void CObjectX::SetScale(const D3DXVECTOR3& inScale)
 {
@@ -315,8 +322,8 @@ void CObjectX::CalculationVtx()
 
 	D3DXMatrixIdentity(&mtxWorld);
 
-	// 蜷代″縺ｮ蜿肴丐
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &m_mtxRot);		// 陦悟・謗帙￠邂鈴未謨ｰ
+	// 向きの反映
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &m_mtxRot);		// 行�E掛け算関数
 
 	D3DXVec3TransformCoord(&m_maxVtx, &m_maxVtx, &mtxWorld);
 	D3DXVec3TransformCoord(&m_minVtx, &m_minVtx, &mtxWorld);
@@ -385,6 +392,7 @@ void CObjectX::LoadModel(std::string aFileName)
 	m_mesh = xGroup->GetMesh(aFileName);
 	m_numMat = xGroup->GetNumMat(aFileName);
 	m_size = xGroup->GetSize(aFileName);
+	modelKey = aFileName;
 }
 
 //--------------------------------------------------------------

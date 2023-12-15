@@ -22,7 +22,7 @@
 class CCharacter;
 
 //==============================================================
-// 道ポリゴンの設定
+// エネミーHPUI
 //==============================================================
 class  CEnemy_HPUI : public CObject
 {
@@ -34,7 +34,6 @@ public:
 
 	HRESULT Init() override;
 	void Update() override;
-	void Draw() override;
 
 	void SetEnemy(CCharacter* enemy) { m_pEnemy = enemy; }
 private:

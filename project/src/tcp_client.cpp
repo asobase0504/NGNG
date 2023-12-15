@@ -30,9 +30,6 @@ CTcp_client::~CTcp_client()
 //--------------------------
 bool CTcp_client::Init(const char*plPAddress, int nPortNum)
 {
-
-	
-
 	m_nPortNum = nPortNum;
 
 	m_Ip = plPAddress;
@@ -53,10 +50,6 @@ bool CTcp_client::Init(const char*plPAddress, int nPortNum)
 //--------------------------
 int CTcp_client::Send(const char*pSendData, int nSendDataSize)
 {
-	if (m_sock == INVALID_SOCKET)
-	{
-		return 0;
-	}
 	send(m_sock, &pSendData[0], nSendDataSize, 0);
 	return strlen(&pSendData[0]) + 1;
 }

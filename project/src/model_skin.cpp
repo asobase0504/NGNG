@@ -420,7 +420,7 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 		// テクスチャの設定
 		pEffect->SetTexture(m_hTexture, tex0);
 		// 通常モデルの描画
-		pEffect->BeginPass(4);
+		pEffect->BeginPass(1);
 		pMeshContainer->MeshData.pMesh->DrawSubset(i);
 		pEffect->EndPass();
 

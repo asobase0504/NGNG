@@ -68,6 +68,7 @@ public:	// ƒƒ“ƒo[ŠÖ”
 	WNDCLASSEX GetWcex() { return m_wcex; }
 
 	HWND GetWindow() { return m_window; }
+	bool IsActiveWindow() { return m_isActiveWindowThis; }
 
 	CRenderer* GetRenderer() { return m_renderer; }
 	CTexture* GetTexture() { return m_texture; }
@@ -95,6 +96,7 @@ private:
 	MODE m_modeType;
 
 	HWND m_window;
+	bool m_isActiveWindowThis;
 	WNDCLASSEX m_wcex;
 };
 #endif

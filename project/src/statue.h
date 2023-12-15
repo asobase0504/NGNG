@@ -10,7 +10,7 @@
 //==============================================================
 // include
 //==============================================================
-#include "objectX.h"
+#include "select_entity.h"
 
 //==============================================================
 // ëOï˚êÈåæ
@@ -22,7 +22,7 @@ class CPlayer;
 //==============================================================
 // ÉNÉâÉX
 //==============================================================
-class CStatue : public CObjectX
+class CStatue : public CSelectEntity
 {
 public:
 	CStatue();
@@ -32,16 +32,13 @@ public:
 	HRESULT Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot);
 	void Update() override;
 
-	static CStatue* Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3 & inRot);
 	CCollisionBox* GetCollisionBox() { return m_collisionBox; }
-	CCollisionCylinder* GetCollisionCylinder() { return m_collisionCylinder; }
 
 	bool Touch();
-protected:
-	std::string m_modelData;
-	CCollisionBox* m_collisionBox;
-	CCollisionCylinder* m_collisionCylinder;
 
-	CPlayer* m_player;
+	void SetRot(const D3DXVECTOR3& inRot) override;
+
+private:
+	void UpMesh();
 };
 #endif	// _ITEM_MODEL_H_
