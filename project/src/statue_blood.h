@@ -39,7 +39,6 @@ public:
 
 private:	// ƒƒ“ƒo•Ï”
 	float m_hpSubRate;	// HP‚ğí‚éŠ„‡
-	CProcedure3D* m_subRateUI;	// •K—vHPŠ„‡‚ğ3D‹óŠÔó‚É•`‰æ
 
 };
 #endif

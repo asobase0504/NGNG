@@ -79,6 +79,8 @@ HRESULT CLine::Init()
 		&m_vtxBuff,
 		NULL);
 
+	assert(m_vtxBuff != nullptr);
+
 	// ポリゴン情報の設定
 	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	// 位置
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	// 向き
@@ -88,7 +90,7 @@ HRESULT CLine::Init()
 	SetVtx();
 
 	// 色の設定
-	SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	return S_OK;
 }
@@ -118,6 +120,10 @@ void CLine::Uninit()
 //--------------------------------------------------------------
 void CLine::Update()
 {
+	CObject::Update();
+	m_pos = *m_targetPos;
+	m_rot = *m_targetRot;
+	SetVtx();
 }
 
 //--------------------------------------------------------------
@@ -127,6 +133,11 @@ void CLine::Update()
 //--------------------------------------------------------------
 void CLine::Draw()
 {
+	if (!m_isDisplay)
+	{
+		return;
+	}
+
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();		//デバイスへのポインタ
 
@@ -191,48 +202,6 @@ void CLine::Draw()
 }
 
 //--------------------------------------------------------------
-// 位置のセッター
-// Author : 唐﨑結斗
-// 概要 : 位置のメンバ変数に引数を代入
-//--------------------------------------------------------------
-void CLine::SetPos(const D3DXVECTOR3& pos)
-{
-	// 位置の設定
-	m_pos = pos;
-
-	// 頂点座標などの設定
-	SetVtx();
-}
-
-//--------------------------------------------------------------
-// 向きのセッター
-// Author : 唐﨑結斗
-// 概要 : 向きのメンバ変数に引数を代入
-//--------------------------------------------------------------
-void CLine::SetRot(const D3DXVECTOR3& rot)
-{
-	// 位置の設定
-	m_rot = rot;
-
-	// 頂点座標などの設定
-	SetVtx();
-}
-
-//--------------------------------------------------------------
-// 大きさのセッター
-// Author : 唐﨑結斗
-// 概要 : 大きさのメンバ変数に引数を代入
-//--------------------------------------------------------------
-void CLine::SetSize(const D3DXVECTOR3& size)
-{
-	// 大きさの設定
-	m_size = size;
-
-	// 頂点座標などの設定
-	SetVtx();
-}
-
-//--------------------------------------------------------------
 // 頂点座標などの設定
 // Author : 唐﨑結斗
 // 概要 : 3D頂点座標、rhw、頂点カラーを設定する
@@ -262,8 +231,10 @@ void CLine::SetVtx()
 // Author : 唐﨑結斗
 // 概要 : 頂点カラーを設定する
 //--------------------------------------------------------------
-void CLine::SetCol(const D3DXCOLOR color)
+void CLine::SetColor(const D3DXCOLOR& color)
 {
+	CObject::SetColor(color);
+
 	//頂点情報へのポインタを生成
 	VERTEX_3D *pVtx;
 
@@ -271,8 +242,8 @@ void CLine::SetCol(const D3DXCOLOR color)
 	m_vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点カラーの設定
-	pVtx[0].col = color;
-	pVtx[1].col = color;
+	pVtx[0].col = m_color;
+	pVtx[1].col = m_color;
 
 	//頂点バッファをアンロック
 	m_vtxBuff->Unlock();
@@ -283,14 +254,8 @@ void CLine::SetCol(const D3DXCOLOR color)
 // Author : 唐﨑結斗
 // 概要 : 頂点カラーを設定する
 //--------------------------------------------------------------
-void CLine::SetLine(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 start, D3DXVECTOR3 goal, D3DXCOLOR col)
+void CLine::SetLine(D3DXVECTOR3 start, D3DXVECTOR3 goal)
 {
-	// 位置の設定
-	SetPos(pos);
-
-	// 向きの設定
-	SetRot(rot);
-
 	// 始点
 	m_start = start;
 
@@ -299,7 +264,4 @@ void CLine::SetLine(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 start, D3DXVEC
 
 	// 頂点座標の設定
 	SetVtx();
-
-	// 色の設定
-	SetCol(col);
 }

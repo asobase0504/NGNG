@@ -82,7 +82,7 @@ void CText::Update()
 					m_Text += m_ALLText[m_AddLetter];
 					m_AddLetter++;
 					m_words[m_wordsPopCount] = CWords::Create(m_Text.c_str(),
-						D3DXVECTOR3(Pos.x + (m_size.x * 2.15f * (m_wordsPopCountX + 1)), Pos.y + m_newlineCount * 100.0f, Pos.z),
+						D3DXVECTOR3(Pos.x + (m_size.x * 2.15f * (m_wordsPopCountX + 1)), Pos.y + m_newlineCount * m_size.y * 2.15f, Pos.z),
 						m_size,
 						m_FontType);
 					m_wordsPopCount++;

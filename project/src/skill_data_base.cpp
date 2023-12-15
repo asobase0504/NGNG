@@ -77,57 +77,12 @@ void CSkillDataBase::Uninit()
 //--------------------------------------------------------------
 void CSkillDataBase::Init()
 {
-	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,30,30,0.7f,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
-		[this](CCharacter* inusedCharacter)
-	{// 発動時の効果
-		CSkillEntity* entity = nullptr;
-		if (inusedCharacter != nullptr)
-		{
-			entity = CYamatoSkill_1::Create(inusedCharacter);
-		}
-		return entity;
-	}};
+	m_dates["YAMATO_SKILL_1"] = { 0,1,1,0,30,30,0.7f,0,D3DXVECTOR3(30.0f,30.0f,30.0f),CYamatoSkill_1::Create };
 	m_dates["YAMATO_SKILL_1"].texKey = "SKILL_ICON_YAMATO1";
-	m_dates["YAMATO_SKILL_2"] = { 180,1,1,0,5,5,1.0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
-		[this](CCharacter* inusedCharacter)
-	{// 発動時の効果
-		CSkillEntity* entity = nullptr;
-		if (inusedCharacter != nullptr)
-		{
-			entity = CYamatoSkill_2::Create(inusedCharacter);
-		}
-		return entity;
-	}};
+	m_dates["YAMATO_SKILL_2"] = { 180,1,1,0,5,5,1.0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),CYamatoSkill_2::Create };
 	m_dates["YAMATO_SKILL_2"].texKey = "SKILL_ICON_YAMATO2";
-	m_dates["YAMATO_SKILL_3"] = { 120,1,1,0,120,20,1.0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
-		[](CCharacter* inusedCharacter)
-	{ // 発動時の効果
-		CSkillEntity* entity = nullptr;
-		if (inusedCharacter != nullptr)
-		{
-			entity = CYamatoSkill_3::Create(inusedCharacter);
-		}
-		return entity;
-	}};
+	m_dates["YAMATO_SKILL_3"] = { 120,1,1,0,120,20,1.0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),CYamatoSkill_3::Create };
 	m_dates["YAMATO_SKILL_3"].texKey = "SKILL_ICON_YAMATO3";
-	m_dates["YAMATO_SKILL_4"] = { 300,1,1,0,120,20,1.0f,120.0f,D3DXVECTOR3(40.0f,40.0f,40.0f),
-		[](CCharacter* inusedCharacter)
-	{ // 発動時の効果
-		CSkillEntity* entity = nullptr;
-		if (inusedCharacter != nullptr)
-		{
-			entity = CYamatoSkill_4::Create(inusedCharacter);
-		}
-		return entity;
-	}};
-	m_dates["GOLEM_SKILL_1"] = { 50,1,1,0,600,0,0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),
-		[this](CCharacter* inusedCharacter)
-	{ // 発動時の効果
-		CSkillEntity* entity = nullptr;
-		if (inusedCharacter != nullptr)
-		{
-			entity = CGolemSkill_1::Create(inusedCharacter);
-		}
-		return entity;
-	}};
+	m_dates["YAMATO_SKILL_4"] = { 300,1,1,0,120,20,1.0f,120.0f,D3DXVECTOR3(40.0f,40.0f,40.0f),CYamatoSkill_4::Create };
+	m_dates["GOLEM_SKILL_1"] = { 50,1,1,0,600,0,0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),CGolemSkill_1::Create };
 }

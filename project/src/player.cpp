@@ -22,6 +22,7 @@
 
 // 見た目
 #include "objectX.h"
+#include "model_skin.h"
 
 // スキル
 #include "skill.h"
@@ -33,8 +34,16 @@
 #include "item_manager.h"
 
 #include "select_entity.h"
-
 #include "take_item_ui.h"
+
+/* UI系統 */
+#include "hp_ui.h"
+#include "money_ui.h"
+#include "skill_ui.h"
+#include "player_abnormal_ui.h"
+
+/**/
+#include "procedure3D.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -81,8 +90,10 @@ HRESULT CPlayer::Init()
 	}
 
 	// モデルの読み込み
-	m_apModel[0]->LoadModel("PLAYER01");
-	m_apModel[0]->CalculationVtx();
+	m_skinModel = CSkinMesh::Create("KENGOU");
+
+	// 親子関係の構築
+	SetEndChildren(m_skinModel);
 
 	// 座標の取得
 	D3DXVECTOR3 pos = GetPos();
@@ -90,6 +101,14 @@ HRESULT CPlayer::Init()
 	// 当たり判定
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 55.0f);
 	m_collision->SetParent(&m_pos);
+
+	// UI作成
+	CHPUI::Create(GetHp());
+	CMONEYUI::Create(GetMoney());
+	for (int i = 0; i < 4; i++)
+	{
+		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i));
+	}
 
 	return S_OK;
 }
@@ -138,9 +157,6 @@ void CPlayer::Update()
 		// ジャンプ
 		Jump();
 
-		// ダッシュ
-		Dash();
-
 		// 攻撃
 		PAttack();
 	}
@@ -154,6 +170,8 @@ void CPlayer::Update()
 		m_isResult = true;
 		CResult::Create();
 	}
+
+	SetRot(D3DXVECTOR3(0.0f, ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot().y, 0.0f));
 
 	// 更新処理
 	CCharacter::Update();
@@ -227,6 +245,17 @@ void CPlayer::Move()
 
 	m_isskill = false;
 
+	if (m_isdash)
+	{
+		D3DXVECTOR3 charaMove = GetMove();
+		charaMove.y = 0;
+
+		if (D3DXVec3Length(&move) == 0.0f)
+		{
+			m_isdash = false;
+		}
+	}
+
 	if (m_isMoveLock)
 	{
 		SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
@@ -241,6 +270,9 @@ void CPlayer::Move()
 	{
 		if (!m_isControl)
 		{
+			// ダッシュ(ctrlを押すとダッシュと歩きを切り替える)
+			m_isdash = m_controller->Dash(m_isdash);
+
 			SetMoveXZ(move.x, move.z);
 
 			// カメラの方向に合わせる
@@ -258,8 +290,11 @@ void CPlayer::Move()
 	}
 	else
 	{
-		D3DXVECTOR3 nowMove = GetMove();
-		AddMoveXZ(nowMove.x * -0.15f, nowMove.z * -0.15f);
+		if (!m_isInertiaMoveLock)
+		{
+			D3DXVECTOR3 nowMove = GetMove();
+			AddMoveXZ(nowMove.x * -0.15f, nowMove.z * -0.15f);
+		}
 	}
 }
 
@@ -282,43 +317,33 @@ void CPlayer::Jump()
 }
 
 //--------------------------------------------------------------
-// ダッシュ
-//--------------------------------------------------------------
-void CPlayer::Dash()
-{
-	// 移動量の取得
-	D3DXVECTOR3 move = GetMove();
-
-	// ダッシュ(ctrlを押すとダッシュと歩きを切り替える)
-	m_isdash = m_controller->Dash(m_isdash);
-
-	if (m_isdash)
-	{
-		// ダッシュ速度
-		move.x *= DASH_SPEED;
-		move.z *= DASH_SPEED;
-	}
-
-	// 移動量の設定
-	SetMove(move);
-}
-
-//--------------------------------------------------------------
 // アイテムの取得
 //--------------------------------------------------------------
 void CPlayer::TakeItem(int id)
 {
-	m_haveItem[id]++;
-	CItem::ITEM_FUNC itemFunc = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)id)->GetWhenPickFunc();
+	CCharacter::TakeItem(id);
 
 	CTakeItemUI* ui = new CTakeItemUI;
 	ui->Init();
 	ui->SetTakeItem((CItemDataBase::EItemType)id);
 
-	if (itemFunc != nullptr)
+}
+
+//--------------------------------------------------------------
+// 状態異常の加算
+//--------------------------------------------------------------
+void CPlayer::AddAbnormalStack(const int id, const int cnt)
+{
+	if (GetAbnormalCount()[id].s_stack == 0)
 	{
-		itemFunc(this, m_haveItem[id]);
+		m_abnormalUI.push_back(CPlayerAbnormalUI::Create(&m_haveAbnormal[id].s_stack, (CAbnormalDataBase::EAbnormalType)id));
+		for (CPlayerAbnormalUI* ui : m_abnormalUI)
+		{
+			//ui->SetPos(D3DXVECTOR3());
+		}
 	}
+
+	CCharacter::AddAbnormalStack(id, cnt);
 }
 
 //--------------------------------------------------------------
@@ -343,7 +368,14 @@ void CPlayer::Select()
 		}
 
 		D3DXVECTOR3 diffPos = m_pos - entity->GetPos();
+
 		float diff = D3DXVec3Length(&diffPos);
+
+		if (entity->GetCostUI() != nullptr)
+		{
+			entity->GetCostUI()->SetDisplay(300.0f > diff);
+		}
+
 		if (nearLength > diff)
 		{
 			nearLength = diff;

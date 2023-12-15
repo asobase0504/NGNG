@@ -53,7 +53,7 @@ public:
 	const D3DXVECTOR3 &GetRot() const { return m_rot; }
 
 	/* 大きさ系 */
-	void SetSize(const D3DXVECTOR3& inSize) { m_size = inSize; }
+	void SetSize(const D3DXVECTOR3& inSize) { m_size = inSize; SetLine(); }
 	const D3DXVECTOR3 &GetSize() const { return m_size; }
 
 	/* ワールドマトリックス */
@@ -68,6 +68,8 @@ public:
 	void SetIsUnder(bool isUnder) { m_isUnder = isUnder; }
 	bool GetIsUnder() { return m_isUnder; }
 
+private:
+	virtual void SetLine() = 0;
 private:
 	D3DXVECTOR3* m_posParent;
 	D3DXVECTOR3 m_posWorld;

@@ -20,6 +20,9 @@ HRESULT CCollisionBox::Init()
 	{
 		m_line[i] = CLine::Create();
 		SetEndChildren(m_line[i]);
+		m_line[i]->SetColor(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+		m_line[i]->SetPosTarget(&GetPosWorld());
+		m_line[i]->SetRotTarget(&GetRot());
 	}
 
 	return S_OK;
@@ -29,9 +32,28 @@ void CCollisionBox::Update()
 {
 	CCollision::Update();
 
-	D3DXVECTOR3 pos = GetPosWorld();
+}
+
+CCollisionBox* CCollisionBox::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const D3DXVECTOR3& size, const D3DXMATRIX& mtx)
+{
+	CCollisionBox* collision = new CCollisionBox;
+
+	assert(collision != nullptr);
+
+	collision->Init();
+	collision->SetPos(pos);
+	collision->SetRot(rot);
+	collision->SetMtxWorld(mtx);
+	collision->SetSize(size);
+	collision->SetLine();
+
+	return collision;
+}
+
+void CCollisionBox::SetLine()
+{
+
 	D3DXVECTOR3 size = GetSize();
-	D3DXVECTOR3 rot = GetRot();
 
 	float left = -size.x;	// x1
 	float right = size.x;	// x2
@@ -51,34 +73,18 @@ void CCollisionBox::Update()
 	posLine[6] = D3DXVECTOR3(right, bot, front);
 	posLine[7] = D3DXVECTOR3(left, bot, front);
 
-	m_line[0]->SetLine(pos, rot, posLine[0], posLine[1], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[1]->SetLine(pos, rot, posLine[1], posLine[2], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[2]->SetLine(pos, rot, posLine[2], posLine[3], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[3]->SetLine(pos, rot, posLine[3], posLine[0], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[0]->SetLine(posLine[0], posLine[1]);
+	m_line[1]->SetLine(posLine[1], posLine[2]);
+	m_line[2]->SetLine(posLine[2], posLine[3]);
+	m_line[3]->SetLine(posLine[3], posLine[0]);
 
-	m_line[4]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[5]->SetLine(pos, rot, posLine[5], posLine[6], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[6]->SetLine(pos, rot, posLine[6], posLine[7], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[7]->SetLine(pos, rot, posLine[7], posLine[4], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_line[4]->SetLine(posLine[4], posLine[5]);
+	m_line[5]->SetLine(posLine[5], posLine[6]);
+	m_line[6]->SetLine(posLine[6], posLine[7]);
+	m_line[7]->SetLine(posLine[7], posLine[4]);
 
-	m_line[8]->SetLine(pos, rot, posLine[0], posLine[4], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[9]->SetLine(pos, rot, posLine[1], posLine[5], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[10]->SetLine(pos, rot, posLine[2], posLine[6], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	m_line[11]->SetLine(pos, rot, posLine[3], posLine[7], D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-
-}
-
-CCollisionBox* CCollisionBox::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const D3DXVECTOR3& size, const D3DXMATRIX& mtx)
-{
-	CCollisionBox* collision = new CCollisionBox;
-
-	assert(collision != nullptr);
-
-	collision->Init();
-	collision->SetPos(pos);
-	collision->SetRot(rot);
-	collision->SetMtxWorld(mtx);
-	collision->SetSize(size);
-
-	return collision;
+	m_line[8]->SetLine(posLine[0], posLine[4]);
+	m_line[9]->SetLine(posLine[1], posLine[5]);
+	m_line[10]->SetLine(posLine[2], posLine[6]);
+	m_line[11]->SetLine(posLine[3], posLine[7]);
 }

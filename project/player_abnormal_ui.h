@@ -2,8 +2,8 @@
 // moneyUI.h
 // Author: 梶田大夢
 //==================================================
-#ifndef _MONEYUI_H_
-#define _MONEYUI_H_
+#ifndef _PLAYER_ABNORMAL_UI_H_
+#define _PLAYER_ABNORMAL_UI_H_
 
 //**************************************************
 // インクルード
@@ -14,8 +14,8 @@
 //**************************************************
 // 前方前言　実態はNG　ポインタだけならOK
 //**************************************************
-class CText;
-class CObject2D;
+class CObject2d;
+class CProcedure;
 
 //**************************************************
 // クラス
@@ -29,14 +29,18 @@ public:
 	HRESULT Init() override;
 	void Update() override;
 
-	static CPlayerAbnormalUI* Create(const int& inStock,CAbnormalDataBase::EAbnormalType inType);
+	static CPlayerAbnormalUI* Create(const int* inStock,CAbnormalDataBase::EAbnormalType inType);
+
+	CAbnormalDataBase::EAbnormalType GetType() { return m_inType; }
+
+	void SetPos(const D3DXVECTOR3&) override;
 
 private:
-	CAbnormalDataBase::EAbnormalType inType;
+	CAbnormalDataBase::EAbnormalType m_inType;
 	bool m_isDisplayStack;
-	int* m_stackCnt;		// stack数のロゴ
-	CText* m_stack;
-	CObject2D* m_abnormalLogo;
+	const int* m_stackCnt;		// stack数のロゴ
+	CObject2d* m_abnormalLogo;
+	CProcedure* m_stack;
 };
 
 #endif // _TIMER_H_

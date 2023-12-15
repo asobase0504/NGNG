@@ -32,7 +32,6 @@ CMapModel::~CMapModel()
 //--------------------------------------------------------------
 HRESULT CMapModel::Init()
 {
-	MapChangeRelese();
 	CObjectX::Init();
 
 	return S_OK;
@@ -43,27 +42,13 @@ HRESULT CMapModel::Init()
 //--------------------------------------------------------------
 HRESULT CMapModel::Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot, const D3DXVECTOR3& inSize)
 {
-	MapChangeRelese();
 	CObjectX::Init();
 
 	D3DXMATRIX mtx = GetMtxWorld();
 	m_collisionBox = CCollisionBox::Create(inPos, inRot, inSize, mtx);
+	SetEndChildren(m_collisionBox);
 
 	return S_OK;
-}
-
-//--------------------------------------------------------------
-// I—¹
-//--------------------------------------------------------------
-void CMapModel::Uninit()
-{
-	if (m_collisionBox != nullptr)
-	{
-		m_collisionBox->Uninit();
-		m_collisionBox = nullptr;
-	}
-
-	CObjectX::Uninit();
 }
 
 //--------------------------------------------------------------

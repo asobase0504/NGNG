@@ -64,7 +64,7 @@ public:
 
 private:
 	void SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx, int nCnt, bool isUp);
-	void SetVtxMeshSize(int Size);
+	void SetVtxMeshSize(int sizeX, int sizeZ);
 	void SetVtxMeshLight();
 
 	LPDIRECT3DINDEXBUFFER9 m_idxBuff;	// インデックスバッファ

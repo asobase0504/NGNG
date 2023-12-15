@@ -21,6 +21,7 @@
 #include "objectX.h"
 #include "collision_box.h"
 #include "enemy_hp_ui.h"
+#include "model_skin.h"
 
 #include "enemy_data_base.h"
 #include "skill.h"
@@ -30,7 +31,7 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CEnemy::CEnemy(int nPriority)
+CEnemy::CEnemy()
 {
 
 }
@@ -48,7 +49,6 @@ CEnemy::~CEnemy()
 //--------------------------------------------------------------
 HRESULT CEnemy::Init()
 {
-	MapChangeRelese();
 	// 初期化処理
 	CCharacter::Init();
 
@@ -56,24 +56,26 @@ HRESULT CEnemy::Init()
 	m_relation = ERelation::HOSTILE;
 
 	m_AttackCnt = 0;
-	m_apModel[0]->LoadModel("SKELETON");
-	m_apModel[0]->CalculationVtx();
-
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
+	// モデルの読み込み
+	m_skinModel = CSkinMesh::Create("KENGOU");
+	SetEndChildren(m_skinModel);
 
 	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
 
 	m_pEHPUI = CEnemy_HPUI::Create(this);
 	SetEndChildren(m_pEHPUI);
 
+	// 当たり判定の作成
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
 	SetEndChildren(m_collision);
-	m_dropMoney = 5;
 
+	// SKILLの作成
 	m_skill.push_back(CSkill::Create());
 	m_skill[0]->SetSkill("GOLEM_SKILL_1",this);
 	SetEndChildren(m_skill[0]);
+
+	m_dropMoney = 5;
 	return S_OK;
 }
 
@@ -110,6 +112,9 @@ void CEnemy::Update()
 #endif // _DEBUG
 }
 
+//--------------------------------------------------------------
+// 死亡判定
+//--------------------------------------------------------------
 void CEnemy::Died()
 {
 	CPlayerManager::GetInstance()->GetPlayer()->GetMoney()->AddCurrent(m_dropMoney);

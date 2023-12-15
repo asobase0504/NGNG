@@ -1,4 +1,4 @@
-//**************************************************************
+﻿//**************************************************************
 //
 // item
 // Author: Buriya Kota
@@ -47,13 +47,13 @@ public:
 	void SetWhenInflictFunc(ITEM_ACTION_FUNC inFunc) { m_inflictFunc = inFunc; }	// ダメージを与えた時の処理
 	void SetModel(std::string str) { m_itemModelData = str; }
 
-	ITEM_FUNC GetWhenPickFunc() { return m_getFunc; }
-	ITEM_FUNC GetWhenLostFunc() { return m_lostFunc; }
-	ITEM_FUNC GetWhenAllwaysFunc() { return m_allwayFunc; }
-	ITEM_ACTION_FUNC GetWhenUseSkillFunc() { return m_useSkillFunc; }
-	ITEM_ACTION_FUNC GetWhenDeathFunc() { return m_deathFunc; }
-	ITEM_ACTION_FUNC GetWhenReceiveFunc() { return m_receiveFunc; }
-	ITEM_ACTION_FUNC GetWhenInflictFunc() { return m_inflictFunc; }
+	ITEM_FUNC GetWhenPickFunc() { return m_getFunc; }								// 入手したときの処理
+	ITEM_FUNC GetWhenLostFunc() { return m_lostFunc; }								// 失ったときの処理
+	ITEM_FUNC GetWhenAllwaysFunc() { return m_allwayFunc; }							// 常時発動している処理
+	ITEM_ACTION_FUNC GetWhenUseSkillFunc() { return m_useSkillFunc; }				// スキルを使った時
+	ITEM_ACTION_FUNC GetWhenDeathFunc() { return m_deathFunc; }						// 死亡させたときの処理
+	ITEM_ACTION_FUNC GetWhenReceiveFunc() { return m_receiveFunc; }					// ダメージを受ける時の処理
+	ITEM_ACTION_FUNC GetWhenInflictFunc() { return m_inflictFunc; }					// ダメージを与えた時の処理
 	std::string GetModel() { return m_itemModelData; }
 
 	// レアリティ

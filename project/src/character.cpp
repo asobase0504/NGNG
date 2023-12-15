@@ -11,6 +11,7 @@
 #include "enemy.h"
 #include "application.h"
 #include "objectX.h"
+#include "model_skin.h"
 #include "PlayerController.h"
 #include "collision_sphere.h"
 #include "road.h"
@@ -46,7 +47,6 @@ CCharacter::CCharacter(int nPriority) : m_haveItem{}
 	{
 		CMap::GetMap()->InCharacterList(this);
 	}
-	m_apModel.clear();
 	m_skill.clear();
 }
 
@@ -76,10 +76,7 @@ HRESULT CCharacter::Init()
 	m_isMoveLock = false;
 	m_isControl = false;
 	m_isTeleporter = false;
-
-	m_apModel.resize(1);
-	m_apModel[0] = CObjectX::Create(m_pos);
-	m_apModel[0]->LoadModel("BOX");
+	m_isInertiaMoveLock = false;
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(100);
@@ -97,16 +94,16 @@ HRESULT CCharacter::Init()
 	m_attack.SetCurrent(100);
 	m_attackSpeed.Init(1.0f);
 	m_attackSpeed.SetCurrent(1.0f);
-	m_defense.Init(0);
-	m_defense.SetCurrent(0);
+	m_defense.Init(10);
+	m_defense.SetCurrent(10);
 	m_criticalRate.Init(0.0f);
 	m_criticalRate.SetCurrent(0.0f);
 	m_criticalDamage.Init(2.0f);
 	m_criticalDamage.SetCurrent(2.0f);
 	m_movePower.Init(2.0f);
 	m_movePower.SetCurrent(2.0f);
-	m_dashPower.Init(1.25f);
-	m_dashPower.SetCurrent(1.25f);
+	m_dashPower.Init(1.55f);
+	m_dashPower.SetCurrent(1.55f);
 	m_jumpPower.Init();
 	m_jumpPower.SetCurrent(5.0f);
 	m_jumpCount.Init(1);
@@ -124,10 +121,10 @@ HRESULT CCharacter::Init()
 	m_isStun = false;
 	m_isBlock = false;
 	m_isAtkCollision = false;
+	m_addDamage = 0.0f;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
-		m_attackAbnormal[i] = false;
 		m_haveAbnormal[i].s_stack = 0;
 		m_haveAbnormal[i].s_effectTime = 0;
 		m_haveAbnormal[i].s_target_interval = 0;
@@ -140,9 +137,6 @@ HRESULT CCharacter::Init()
 	}
 
 	m_state = GROUND;
-
-	// 親子関係の構築
-	SetEndChildren(m_apModel[0]);
 
 	return S_OK;
 }
@@ -160,7 +154,7 @@ void CCharacter::Update()
 
 	Collision();
 
-	if (!m_isMoveLock)
+	if (!m_isMoveLock && !m_isInertiaMoveLock)
 	{
 		// 重力
 		AddMoveY(-0.18f);
@@ -212,13 +206,7 @@ void CCharacter::Draw()
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	for (int i = 0; i < (int)m_apModel.size(); i++)
-	{
-		if (m_apModel[i]->GetParent() == nullptr)
-		{
-			m_apModel[i]->SetMtxWorld(m_mtxWorld);
-		}
-	}
+	m_skinModel->SetMtxWorld(m_mtxWorld);
 }
 
 //--------------------------------------------------------------
@@ -244,12 +232,7 @@ CCharacter* CCharacter::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //--------------------------------------------------------------
 void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 {
-	std::vector<CObjectX*> objectX = GetModel();
-	if (objectX.size() > 0)
-	{
-		GetModel()[0]->SetPos(inPos);
-	}
-
+	m_skinModel->SetPos(inPos);
 	CObject::SetPos(inPos);
 }
  
@@ -258,33 +241,42 @@ void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
 //--------------------------------------------------------------
 void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 {
-	if (m_apModel.size() > 0)
-	{
-		GetModel()[0]->SetRot(inRot);
-	}
-
+	m_skinModel->SetRot(inRot);
 	CObject::SetRot(inRot);
 }
 
+void CCharacter::TakeItem(int id)
+{
+	m_haveItem[id]++;
+	CItem::ITEM_FUNC itemFunc = CItemDataBase::GetInstance()->GetItemData((CItemDataBase::EItemType)id)->GetWhenPickFunc();
+
+	if (itemFunc != nullptr)
+	{
+		itemFunc(this, m_haveItem[id]);
+	}
+}
+
 //--------------------------------------------------------------
-// 攻撃
+// ダメージを与える
 //--------------------------------------------------------------
-void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
+void CCharacter::DealDamage(CCharacter* pEnemy, float SkillMul)
 {
 	m_nonCombat = false;
 
 	if (IsSuccessRate(m_criticalRate.GetMax()))
 	{// クリティカルかどうか
 		m_isCritical = true;
+		m_numCritical++;
 	}
 
-	// ダメージを与えた処理
-	CItemManager::GetInstance()->AllWhenReceive(pEnemy, pEnemy->m_haveItem, this);
-	// ダメージを受けた処理
+	// ダメージを与えた処理	
 	CItemManager::GetInstance()->AllWhenInflict(this, m_haveItem, pEnemy);
-	
+
 	// プレイヤーのダメージを計算
 	int damage = CalDamage(SkillMul);
+
+	// アイテムによるダメージの加算
+	damage += m_addDamage;
 
 	if(m_isCritical)
 	{
@@ -292,39 +284,23 @@ void CCharacter::Attack(CCharacter* pEnemy, float SkillMul)
 	}
 
 	// エネミーにダメージを与える。
-	pEnemy->Damage(damage);
+	pEnemy->TakeDamage(damage,this);
 
 	if (pEnemy->IsDied())
-	{// ダメージを受けた処理
+	{// エネミーが死んだとき
 		CItemManager::GetInstance()->AllWhenDeath(this, m_haveItem, pEnemy);
-	}
-
-	// 攻撃付与されている状態異常を作動させる
-	for (int i = 0; i < m_attackAbnormal.size(); i++)
-	{
-		if (!m_attackAbnormal[i])
-		{
-			return;
-		}
-
-		CAbnormal::ABNORMAL_ACTION_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAttackFunc();
-
-		if (abnormalFunc != nullptr)
-		{
-			abnormalFunc(this, i, pEnemy);
-		}
 	}
 }
 
 //--------------------------------------------------------------
-// ダメージ
+// ダメージを受ける
 //--------------------------------------------------------------
-void CCharacter::Damage(const int inDamage)
+void CCharacter::TakeDamage(const int inDamage, CCharacter* inChara)
 {
-	int dmg = inDamage;
+	// ダメージを受けた処理
+	CItemManager::GetInstance()->AllWhenReceive(this, m_haveItem, inChara);
 
-	// ダメージ計算
-	CStatus<int>* hp = GetHp();
+	int dmg = inDamage;
 
 	// 防御力算出
 	int def = m_defense.CalStatus();
@@ -342,14 +318,20 @@ void CCharacter::Damage(const int inDamage)
 		DamageBlock(false);
 	}
 
-	// UI生成
+	// ダメージUI生成
 	D3DXVECTOR3 pos = m_pos;
 	pos.x += FloatRandom(20.0f, -20.0f);
 	pos.y += FloatRandom(40.0f, 0.0f);
 	pos.z += FloatRandom(20.0f, -20.0f);
 	CDamegeUI::Create(pos,D3DXCOLOR(1.0f,1.0f,1.0f,1.0f),dmg);
 
+	// ダメージ計算
+	CStatus<int>* hp = GetHp();
+
 	hp->AddCurrent(-dmg);
+
+	// アイテムによるダメージンの加算の初期化
+	m_addDamage = 0.0f;
 
 	if (m_hp.GetCurrent() <= 0)
 	{// 死亡処理
@@ -402,7 +384,7 @@ int CCharacter::CalDamage(float SkillAtkMul)
 
 	int CalDamage =
 		(int)(((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
-		(m_attack.GetMulBuff() + m_attack.GetMulItem() + SkillAtkMul)));
+		(m_attack.GetMulBuff() * m_attack.GetMulItem() * SkillAtkMul)));
 
 	return CalDamage;
 }
@@ -419,6 +401,19 @@ void CCharacter::Heal(int heal)
 	{
 		HealHp = m_hp.GetMax() - m_hp.GetCurrent();
 	}
+
+	// 回復しなかったら
+	if (HealHp <= 0)
+	{
+		return;
+	}
+
+	// ダメージUI生成
+	D3DXVECTOR3 pos = m_pos;
+	//pos.x += FloatRandom(20.0f, -20.0f);
+	//pos.y += FloatRandom(40.0f, 0.0f);
+	//pos.z += FloatRandom(20.0f, -20.0f);
+	CDamegeUI::Create(pos, D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f), HealHp);
 
 	m_hp.AddCurrent(HealHp);
 }
@@ -462,6 +457,12 @@ void CCharacter::Died()
 	CMap::GetMap()->SetCharacterList(list);
 }
 
+void CCharacter::SetDisplay(bool display)
+{
+	CObject::SetDisplay(display);
+	m_skinModel->SetDisplay(display);
+}
+
 //--------------------------------------------------------------
 // 移動量
 //--------------------------------------------------------------
@@ -475,7 +476,7 @@ void CCharacter::Move()
 void CCharacter::Abnormal()
 {
 	// 付与されている状態異常を作動させる
-	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	for (size_t i = 0; i < m_haveAbnormal.size(); i++)
 	{
 		if (m_haveAbnormal[i].s_stack <= 0)
 		{
@@ -613,7 +614,7 @@ int CCharacter::GetAbnormalTypeCount()
 	int abnormal_type_count = 0;
 	
 	// 付与されている状態異常をカウントする
-	for (int i = 0; i < m_haveAbnormal.size(); i++)
+	for (size_t i = 0; i < m_haveAbnormal.size(); i++)
 	{
 		if (m_haveAbnormal[i].s_stack <= 0)
 		{

@@ -66,8 +66,6 @@ public:
 	void AddCurrent(T inNumber) { SetCurrent(m_current + inNumber); }
 	void MulCurrent(float inNumber) { SetCurrent(m_current * inNumber); }
 	T GetCurrent() { return m_current; }
-	void SetMax(T inMax) { m_max = inMax; }
-	T GetMax() { return m_max; }
 	T GetBase() { return m_base; }
 	T GetAddItem() { return m_addItem; }
 	T GetBuffItem() { return m_addBuff; }
@@ -85,10 +83,13 @@ public:
 	void ResetItemEffect(T inAdd) { m_addItem = 0; CalStatus(); }
 	void AddBuffEffect(T inAdd) { m_addBuff += inAdd; CalStatus(); }
 	void ResetBuffEffect(T inAdd) { m_addBuff = 0; CalStatus(); }
-	void AddMaxEffect(T inAdd) { m_max += inAdd; CalStatus(); }
-	void ResetMaxEffect(T inAdd) { m_max = 0; CalStatus(); }
 
+	// 最大値
+	void AddMax(T inAdd) { m_max += inAdd;}
+	void ResetMax(T inAdd) { m_max = 0;}
+	T GetMax() { return m_max; }
 	void AttachMax() { m_isMax = true; }
+
 private:	// メンバ変数
 	T m_max;			// 最大値
 	T m_current;		// 現在値

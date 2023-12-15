@@ -33,10 +33,19 @@ class CEnemy_HPUI;
 class CEnemy : public CCharacter
 {
 public:
+
+	// AI状態
+	enum EAIState
+	{
+		WANDER,		// 彷徨う
+		STAY,		// 待機
+		COMBAT		// 戦闘状態
+	};
+
 	using ACTIVITY_FUNC = std::function<void(CEnemy*)>;
 public:
 	// コンストラクタとデストラクタ
-	explicit CEnemy(int nPriority = 3);
+	explicit CEnemy();
 	~CEnemy();
 
 	//プロトタイプ宣言
