@@ -47,22 +47,49 @@ void CYamatoSkill_4::InitAbility()
 	{
 		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_4");
 		m_Invincible = pSkillData->GetInvincible("YAMATO_SKILL_4");
+		m_Time = 0;
 		// 当たり判定を取得
 		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("YAMATO_SKILL_4").x);
 		m_Collision->SetParent(&m_apChara->GetPos());
 
 		// カメラの方向に合わせる
+		//CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
+		//D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
+		//vecNor *= 1.5f;			// 移動させたい値を入れる
+		//m_apChara->SetPos(m_apChara->GetPos() + vecNor);
+
+		// カメラの方向に合わせる
 		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
 		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
-		vecNor *= 1.5f;			// 移動させたい値を入れる
-		m_apChara->SetPos(m_apChara->GetPos() + vecNor);
+		D3DXVec3Normalize(&vecNor, &vecNor);
+		vecNor *= 15.0f;			//移動させたい値を入れる
+		m_apChara->SetMove(vecNor);
+	}
+}
 
+//--------------------------------------------------------------
+// 持続する効果
+//--------------------------------------------------------------
+void CYamatoSkill_4::AllWayAbility()
+{
+	// 時間の加算
+	m_Time++;
+	if (m_Time > 30)
+	{
 		// プレイヤーの位置を固定
 		m_apChara->SetMoveLock(true);
 		// プレイヤーの操作を無効化
 		m_apChara->SetControlLock(true);
-		m_apChara->SetMove(D3DXVECTOR3(0.0f,0.0f, 0.0f));
+		m_apChara->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
+}
+
+//--------------------------------------------------------------
+// 終了処理
+//--------------------------------------------------------------
+void CYamatoSkill_4::UninitAbility()
+{
+
 }
 
 //--------------------------------------------------------------

@@ -452,6 +452,9 @@
     <ClCompile Include="damege_ui.cpp">
       <Filter>ソース ファイル\Mode\Game\UI\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Skill5.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -786,6 +789,9 @@
     </ClInclude>
     <ClInclude Include="damege_ui.h">
       <Filter>ソース ファイル\Mode\Game\UI\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill5.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

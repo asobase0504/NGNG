@@ -91,10 +91,13 @@ void CSkillEntity::Update()
 		{// 無敵状態にする(プレイヤーが見えなくなり、ダメージを受けなくなる)
 			m_apChara->SetDisplay(false);
 		}
+		else
+		{// もとに戻す
+			m_apChara->SetDisplay(true);
+		}
 
-		// インターバル0以下で当たり判定がなかったら当たり判定を生成する
 		if (m_Interval <= 0 && m_Collision == nullptr)
-		{
+		{// インターバル0以下で当たり判定がなかったら当たり判定を生成する
 			m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize(m_Name).x);
 			m_Collision->SetParent(&m_apChara->GetPos());
 			SetEndChildren(m_Collision);
@@ -131,6 +134,8 @@ void CSkillEntity::Update()
 	}
 	else if(m_Duration <= 0)
 	{// 効果時間が0以下になったら
+
+		UninitAbility();
 		if (m_apChara->GetControlLock())
 		{//	プレイヤーの操作が無効化されていたら有効化
 			m_apChara->SetControlLock(false);

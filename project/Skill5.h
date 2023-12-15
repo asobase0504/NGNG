@@ -1,11 +1,11 @@
 //**************************************************************
 //
-// スキル(マーセナリーのR)
+// スキル(リキャスト)
 // Author : 髙野馨將
 //
 //**************************************************************
-#ifndef _YAMATO_SKILL_4_H_			// このマクロ定義がされてなかったら
-#define _YAMATO_SKILL_4_H_			// 二重インクルード防止のマクロ定義
+#ifndef _SKILL5_H_			// このマクロ定義がされてなかったら
+#define _SKILL5_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
@@ -21,22 +21,21 @@ class CCollision;
 //==============================================================
 // スキルクラス
 //==============================================================
-class CYamatoSkill_4 : public CSkillEntity
+class CSkill5 : public CSkillEntity
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CYamatoSkill_4(int nPriority = 3);
-	~CYamatoSkill_4();
+	explicit CSkill5(int nPriority = 3);
+	~CSkill5();
 
 	// 静的メンバ関数
-	static CYamatoSkill_4	*Create(CCharacter* chara);					// スキルの生成
+	static CSkill5* Create(CCharacter* chara);		// スキルの生成
 
-	void InitAbility() override;										// スキルが始まるとき
-	void AllWayAbility() override;										// 持続中
-	void UninitAbility() override;										// 終了
-	void HitAbility(CCharacter* Target) override;						// スキルが当たった時の効果
+	void InitAbility() override;					// スキルが始まるとき
+	void AllWayAbility() override {}				// スキル中
+	void HitAbility(CCharacter* Target) override;	// スキルが当たった時の効果
 
 private:		// メンバ変数
-	int m_Time;															
+
 };
 #endif
