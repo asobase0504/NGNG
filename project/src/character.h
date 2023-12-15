@@ -75,6 +75,8 @@ public:
 	bool GetMoveLock() { return m_isMoveLock; }
 	void SetControlLock(bool isLock) { m_isControl = isLock; }
 	bool GetControlLock() { return m_isControl; }
+	void SetInertiaMoveLock(bool isLock) { m_isControl = isLock; }	// 慣性・重力
+	bool GetInertiaMoveLock() { return m_isControl; }				// 慣性・重力
 
 	// 攻撃
 	void DealDamage(CCharacter* inChara, float SkillMul);
@@ -100,7 +102,7 @@ public:
 
 	// 状態異常
 	int GetAbnormalTypeCount();	// 状態異常の種類のカウント
-	void AddAbnormalStack(const int id) { m_haveAbnormal[id].s_Time.push_back(0); m_haveAbnormal[id].s_stack++; }
+	virtual void AddAbnormalStack(const int id,const int cnt = 1) { m_haveAbnormal[id].s_Time.push_back(0); m_haveAbnormal[id].s_stack += cnt; }
 	void SetInterval(const int id, const int Time) { m_haveAbnormal[id].s_interval = Time; }
 	void SetAbnormalTime(const int id, const int Time) { m_haveAbnormal[id].s_effectTime = Time; }
 	void SetTargetInterval(const int id, const int MAXTIME) { m_haveAbnormal[id].s_target_interval = MAXTIME; }
@@ -206,6 +208,7 @@ protected:
 
 	bool m_isMoveLock;		// 移動停止状態か否か。
 	bool m_isControl;		// コントロールを受け付けるか否か。
+	bool m_isInertiaMoveLock;	// 慣性・重力停止状態か否か
 
 	bool m_isDied;			// 死亡状態か否か。
 	bool m_isShield;		// シールドを回復するかどうか

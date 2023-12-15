@@ -290,8 +290,11 @@ void CPlayer::Move()
 	}
 	else
 	{
-		D3DXVECTOR3 nowMove = GetMove();
-		AddMoveXZ(nowMove.x * -0.15f, nowMove.z * -0.15f);
+		if (!m_isInertiaMoveLock)
+		{
+			D3DXVECTOR3 nowMove = GetMove();
+			AddMoveXZ(nowMove.x * -0.15f, nowMove.z * -0.15f);
+		}
 	}
 }
 
@@ -324,6 +327,23 @@ void CPlayer::TakeItem(int id)
 	ui->Init();
 	ui->SetTakeItem((CItemDataBase::EItemType)id);
 
+}
+
+//--------------------------------------------------------------
+// 状態異常の加算
+//--------------------------------------------------------------
+void CPlayer::AddAbnormalStack(const int id, const int cnt)
+{
+	if (GetAbnormalCount()[id].s_stack == 0)
+	{
+		m_abnormalUI.push_back(CPlayerAbnormalUI::Create(&m_haveAbnormal[id].s_stack, (CAbnormalDataBase::EAbnormalType)id));
+		for (CPlayerAbnormalUI* ui : m_abnormalUI)
+		{
+			//ui->SetPos(D3DXVECTOR3());
+		}
+	}
+
+	CCharacter::AddAbnormalStack(id, cnt);
 }
 
 //--------------------------------------------------------------

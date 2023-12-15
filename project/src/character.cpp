@@ -149,7 +149,7 @@ void CCharacter::Update()
 
 	Collision();
 
-	if (!m_isMoveLock)
+	if (!m_isMoveLock && !m_isInertiaMoveLock)
 	{
 		// 重力
 		AddMoveY(-0.18f);

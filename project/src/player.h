@@ -18,6 +18,7 @@
 //==============================================================
 class CController;
 class CCollisionCylinder;
+class CPlayerAbnormalUI;
 
 //==============================================================
 // プレイヤークラス
@@ -46,6 +47,8 @@ public:
 
 	void TakeItem(int id) override;	// アイテムを拾う
 
+	void AddAbnormalStack(const int id, const int cnt = 1) override;
+
 private:
 	void PAttack();		// 攻撃
 	void Move();		// 移動
@@ -60,5 +63,8 @@ private:		// メンバ変数
 	bool			m_isResult;		// リザルト中か否か
 
 	CController*	m_controller;	// 命令を出す人
+
+	// UI
+	std::list<CPlayerAbnormalUI*> m_abnormalUI;	// 状態異常やバフなどのアイコンを表示
 };
 #endif
