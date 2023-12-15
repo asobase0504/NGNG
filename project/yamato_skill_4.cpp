@@ -53,17 +53,15 @@ void CYamatoSkill_4::InitAbility()
 		m_Collision->SetParent(&m_apChara->GetPos());
 
 		// カメラの方向に合わせる
-		//CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
-		//D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
-		//vecNor *= 1.5f;			// 移動させたい値を入れる
-		//m_apChara->SetPos(m_apChara->GetPos() + vecNor);
-
-		// カメラの方向に合わせる
 		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
 		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
 		D3DXVec3Normalize(&vecNor, &vecNor);
-		vecNor *= 15.0f;			//移動させたい値を入れる
+		vecNor *= 25.0f;			//移動させたい値を入れる
 		m_apChara->SetMove(vecNor);
+		// プレイヤーの操作を無効化
+		m_apChara->SetControlLock(true);
+		// 重力・慣性を切る
+		m_apChara->SetInertiaMoveLock(true);
 	}
 }
 
@@ -78,8 +76,6 @@ void CYamatoSkill_4::AllWayAbility()
 	{
 		// プレイヤーの位置を固定
 		m_apChara->SetMoveLock(true);
-		// プレイヤーの操作を無効化
-		m_apChara->SetControlLock(true);
 		m_apChara->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
 }
@@ -89,7 +85,18 @@ void CYamatoSkill_4::AllWayAbility()
 //--------------------------------------------------------------
 void CYamatoSkill_4::UninitAbility()
 {
-
+	if (m_apChara->GetControlLock())
+	{//	プレイヤーの操作が無効化されていたら有効化
+		m_apChara->SetControlLock(false);
+	}
+	if (m_apChara->GetMoveLock())
+	{//	プレイヤーの移動が無効化されていたら有効化
+		m_apChara->SetMoveLock(false);
+	}
+	if (m_apChara->GetInertiaMoveLock())
+	{//	慣性・重力が無効化されていたら有効化
+		m_apChara->SetInertiaMoveLock(false);
+	}
 }
 
 //--------------------------------------------------------------

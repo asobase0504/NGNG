@@ -56,7 +56,7 @@ void CSkill5::InitAbility()
 void CSkill5::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	m_apChara->Attack(Target, 1.5f);
+	m_apChara->DealDamage(Target, 1.5f);
 
 	if (Target->GetHp()->GetCurrent() <= 0)
 	{// CTを0にする

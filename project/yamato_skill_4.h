@@ -37,6 +37,6 @@ public:
 	void HitAbility(CCharacter* Target) override;						// ƒXƒLƒ‹‚ª“–‚½‚Á‚½‚ÌŒø‰Ê
 
 private:		// ƒƒ“ƒo•Ï”
-	int m_Time;															
+	int m_Time;															// ŠÔ												
 };
 #endif

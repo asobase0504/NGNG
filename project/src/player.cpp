@@ -70,6 +70,7 @@ HRESULT CPlayer::Init()
 
 	m_isdash = false;
 	m_isUpdate = true;
+	m_isInertiaMoveLock = false;
 	// 初期化処理
 	CCharacter::Init();
 
