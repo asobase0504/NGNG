@@ -814,6 +814,7 @@
     </ClInclude>
     <ClInclude Include="Skill5.h">
       <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClInclude>
     <ClInclude Include="src\difficult.h">
       <Filter>ソース ファイル\Mode\Game\map</Filter>
     </ClInclude>
