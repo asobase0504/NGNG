@@ -27,6 +27,7 @@
     <ClCompile Include="golem_skill_1.cpp" />
     <ClCompile Include="player_abnormal_ui.cpp" />
     <ClCompile Include="src\arrow.cpp" />
+    <ClCompile Include="src\difficult.cpp" />
     <ClCompile Include="src\flower.cpp" />
     <ClCompile Include="src\gold_nugget.cpp" />
     <ClCompile Include="enemy_hp_ui.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="src\character_select.h" />
     <ClInclude Include="src\debug_mode.h" />
     <ClInclude Include="src\bullet.h" />
+    <ClInclude Include="src\difficult.h" />
     <ClInclude Include="src\enemy_data_base.h" />
     <ClInclude Include="src\enemy_manager.h" />
     <ClInclude Include="src\application.h" />

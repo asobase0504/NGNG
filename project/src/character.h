@@ -81,6 +81,9 @@ public:
 	// 攻撃
 	void DealDamage(CCharacter* inChara, float SkillMul);
 	void TakeDamage(const int inDamage, CCharacter* inChara);
+	void Attack(CCharacter* pEnemy, float SkillMul);
+	void Damage(const int inDamage);
+	void AbDamage(const int inDamage);
 	int CalDamage(float SkillAtkMul);
 	void AddDamage(float inDamage) { m_addDamage = inDamage; }
 
@@ -108,8 +111,13 @@ public:
 	void SetTargetInterval(const int id, const int MAXTIME) { m_haveAbnormal[id].s_target_interval = MAXTIME; }
 	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }		// 受けてる状態異常
 
+	// レベル
+	void SetLevel(int level) { m_level = level; }
 	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
 	void SetStun(bool isStun) { m_isStun = isStun; }
+	void AddExp(int exp);
+	void AddLevel();
+	int GetLevel() { return m_level; }
 
 	//==============================================================
 	// ゲッターとセッター
@@ -247,5 +255,8 @@ protected:
 	CStatus<int> m_regenetion;					// 自動回復の値
 
 	int m_RegenetionCnt;
+	int m_level;
+	float m_exp;
+	float m_reqExp;
 };
 #endif
