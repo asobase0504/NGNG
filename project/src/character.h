@@ -80,6 +80,7 @@ public:
 	// 攻撃
 	void Attack(CCharacter* pEnemy, float SkillMul);
 	void Damage(const int inDamage);
+	void AbDamage(const int inDamage);
 	int CalDamage(float SkillAtkMul);
 
 	// 回復
@@ -105,8 +106,13 @@ public:
 	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }		// 受けてる状態異常
 	abnormal_attack GetAbnormalAttack() { return m_attackAbnormal; }	// 与える状態異常
 
+	// レベル
+	void SetLevel(int level) { m_level = level; }
 	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
 	void SetStun(bool isStun) { m_isStun = isStun; }
+	void AddExp(int exp);
+	void AddLevel();
+	int GetLevel() { return m_level; }
 
 	//==============================================================
 	// ゲッターとセッター
@@ -243,5 +249,8 @@ protected:
 	CStatus<int> m_regenetion;					// 自動回復の値
 
 	int m_RegenetionCnt;
+	int m_level;
+	float m_exp;
+	float m_reqExp;
 };
 #endif
