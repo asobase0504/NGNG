@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// スキル(回転切り)
+// スキル(リキャスト)
 // Author : 髙野馨將
 //
 //**************************************************************
@@ -15,15 +15,12 @@
 #include "enemy_manager.h"
 #include "enemy.h"
 #include "collision_sphere.h"
-#include "yamato_skill_3.h"
-#include "game.h"
-#include "application.h"
-#include "camera_game.h"
+#include "Skill5.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CYamatoSkill_3::CYamatoSkill_3(int nPriority)
+CSkill5::CSkill5(int nPriority)
 {
 
 }
@@ -31,7 +28,7 @@ CYamatoSkill_3::CYamatoSkill_3(int nPriority)
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CYamatoSkill_3::~CYamatoSkill_3()
+CSkill5::~CSkill5()
 {
 
 }
@@ -39,51 +36,46 @@ CYamatoSkill_3::~CYamatoSkill_3()
 //--------------------------------------------------------------
 // スキルが始まるとき
 //--------------------------------------------------------------
-void CYamatoSkill_3::InitAbility()
+void CSkill5::InitAbility()
 {
 	// データベースから情報を取得する
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	if (m_apChara != nullptr)
 	{
-		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_3");
+		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_5");
 		// 当たり判定を取得
-		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("YAMATO_SKILL_3").x);
+		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("YAMATO_SKILL_5").x);
 		m_Collision->SetParent(&m_apChara->GetPos());
 		SetEndChildren(m_Collision);
-
-		// プレイヤーの操作を無効化
-		m_apChara->SetControlLock(true);
-		m_apChara->SetMoveXZ(0.0f, 0.0f);
-
-		// カメラの方向に合わせる
-		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
-		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
-		D3DXVec3Normalize(&vecNor, &vecNor);
-		vecNor *= 15.0f;			//移動させたい値を入れる
-		m_apChara->SetMoveXZ(vecNor.x, vecNor.z);
 	}
 }
 
 //--------------------------------------------------------------
 // スキルが当たった時の効果
 //--------------------------------------------------------------
-void CYamatoSkill_3::HitAbility(CCharacter * Target)
+void CSkill5::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	Target->TakeDamage(50, Target);
+	m_apChara->DealDamage(Target, 1.5f);
+
+	if (Target->GetHp()->GetCurrent() <= 0)
+	{// CTを0にする
+		m_apChara->GetSkill()[5]->SetCT(0);
+	}
+
 }
 
 //--------------------------------------------------------------
 // スキル生成処理
 //--------------------------------------------------------------
-CYamatoSkill_3 *CYamatoSkill_3::Create(CCharacter* chara)
+CSkill5 *CSkill5::Create(CCharacter* chara)
 {
 	// 生成処理
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 
-	CYamatoSkill_3* pSkill = new CYamatoSkill_3;
+	CSkill5* pSkill = new CSkill5;
 	pSkill->m_apChara = chara;
-	pSkill->m_Name = "YAMATO_SKILL_3";
+	pSkill->m_Name = "YAMATO_SKILL_5";
 	pSkill->Init();
 
 	return pSkill;

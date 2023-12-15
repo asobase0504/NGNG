@@ -70,6 +70,7 @@ HRESULT CPlayer::Init()
 
 	m_isdash = false;
 	m_isUpdate = true;
+	m_isInertiaMoveLock = false;
 	// 初期化処理
 	CCharacter::Init();
 
@@ -271,9 +272,9 @@ void CPlayer::Move()
 		}
 	}
 
-	if (m_isMoveLock)
+	if (m_isMoveLock || m_isControl)
 	{
-		SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
+		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	}
 
 	if (m_isMoveLock)

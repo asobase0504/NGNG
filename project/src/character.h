@@ -75,8 +75,8 @@ public:
 	bool GetMoveLock() { return m_isMoveLock; }
 	void SetControlLock(bool isLock) { m_isControl = isLock; }
 	bool GetControlLock() { return m_isControl; }
-	void SetInertiaMoveLock(bool isLock) { m_isControl = isLock; }	// 慣性・重力
-	bool GetInertiaMoveLock() { return m_isControl; }				// 慣性・重力
+	void SetInertiaMoveLock(bool isLock) { m_isInertiaMoveLock = isLock; }	// 慣性・重力
+	bool GetInertiaMoveLock() { return m_isInertiaMoveLock; }				// 慣性・重力
 
 	// 攻撃
 	void DealDamage(CCharacter* inChara, float SkillMul);

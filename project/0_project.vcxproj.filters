@@ -464,6 +464,9 @@
     <ClCompile Include="src\PlayerController.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
     </ClCompile>
+    <ClCompile Include="Skill5.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+    </ClCompile>
     <ClCompile Include="src\difficult.cpp">
       <Filter>ソース ファイル\Mode\Game\map</Filter>
     </ClCompile>
@@ -809,6 +812,8 @@
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
     </ClInclude>
+    <ClInclude Include="Skill5.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
     <ClInclude Include="src\difficult.h">
       <Filter>ソース ファイル\Mode\Game\map</Filter>
     </ClInclude>
