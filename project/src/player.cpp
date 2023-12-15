@@ -119,7 +119,7 @@ void CPlayer::Update()
 	{
 		return;
 	}
-
+	
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 

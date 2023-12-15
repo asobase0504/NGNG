@@ -12,6 +12,9 @@
 #include "input.h"
 #include "utility.h"
 #include "map.h"
+#include "game.h"
+#include "application.h"
+#include "difficult.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -57,7 +60,11 @@ bool CStatueCombat::Select(CCharacter * selectCharacter)
 		float randX = FloatRandom(1.5f, 0.5f);
 		float randZ = FloatRandom(1.5f, 0.5f);
 
-		CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
+
+		CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
+		int exp = pDiff->GetEnemyLevel();
+
+		CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE, exp);
 	}
 
 	m_collisionCylinder->Uninit();
