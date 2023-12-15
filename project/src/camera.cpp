@@ -130,7 +130,7 @@ void CCamera::Set(int Type)
 		D3DXMatrixOrthoLH(&m_mtxProject,	// プロジェクションマトリックス
 			(float)SCREEN_WIDTH,			// 幅
 			(float)SCREEN_HEIGHT,			// 高さ
-			10.0f,							// ニア
+			20.0f,							// ニア
 			2000.0f);						// ファー
 	}
 

@@ -40,11 +40,6 @@
 #include "map.h"
 #include "PlayerController.h"
 
-/* UI系統 */
-#include "hp_ui.h"
-#include "money_ui.h"
-#include "skill_ui.h"
-
 /* サーバー */
 #include "connect.h"
 
@@ -77,6 +72,8 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init()
 {
+	CSkinMeshGroup::GetInstance()->LoadAll();
+
 	CInput::GetKey()->SetCursorErase(false);
 	CInput::GetKey()->LockCursorPos(true);
 
@@ -100,19 +97,6 @@ HRESULT CGame::Init()
 	pPlayer->SetController(m_controller);
 	pPlayer->OffUpdate();
 	m_camera->SetTargetPos(pPlayer->GetPos());
-
-	CHPUI::Create(pPlayer->GetHp());
-	CMONEYUI::Create(pPlayer->GetMoney());
-
-	for (int i = 0; i < 4; i++)
-	{
-		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), pPlayer->GetSkill(i));
-	}
-
-	CSkinMeshGroup::GetInstance()->LoadAll();
-
-	m_skin = CSkinMesh::Create("KENGOU");
-	m_skin->SetPos(D3DXVECTOR3(50.f, 0.f, 0.f));
 
 	//m_tcp = new CClient;
 	//m_tcp->Init("127.0.0.1", 13567);
@@ -228,18 +212,9 @@ void CGame::SetChangeMap()
 //--------------------------------------------------------------
 void CGame::ChangeMap(std::string inPath)
 {
-	CApplication::GetInstance()->GetTaskGroup()->AllProcess([](CTask* inTask)
-	{
-		if (!inTask->IsMapChangeRelese())
-		{
-			return;
-		}
-
-		inTask->Uninit();
-	});
-
 	if (m_map != nullptr)
 	{
+		m_map->Uninit();
 		m_map = nullptr;
 	}
 

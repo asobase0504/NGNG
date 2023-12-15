@@ -104,6 +104,7 @@
     <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="src\select_entity.cpp" />
     <ClCompile Include="src\select_ui.cpp" />
+    <ClCompile Include="src\server_player.cpp" />
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\skill_data_base.cpp" />
     <ClCompile Include="src\skill_entity.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="src\road.h" />
     <ClInclude Include="src\select_entity.h" />
     <ClInclude Include="src\select_ui.h" />
+    <ClInclude Include="src\server_player.h" />
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\skill_data_base.h" />
     <ClInclude Include="src\skill_entity.h" />
@@ -253,6 +255,7 @@
     <None Include="data\FILE\map\map01.json" />
     <None Include="data\FILE\map\map02.json" />
     <None Include="data\FILE\model.json" />
+    <None Include="data\FILE\skinmesh.json" />
     <None Include="data\FILE\texture.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

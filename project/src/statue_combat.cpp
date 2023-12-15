@@ -57,7 +57,8 @@ bool CStatueCombat::Select(CCharacter * selectCharacter)
 		float randX = FloatRandom(1.5f, 0.5f);
 		float randZ = FloatRandom(1.5f, 0.5f);
 
-		CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
+		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE);
+		enemy->TakeItem(CItemDataBase::ITEM_ELITE);
 	}
 
 	m_collisionCylinder->Uninit();

@@ -50,6 +50,9 @@ HRESULT CCollisionCylinder::Init()
 	{
 		m_line[i] = CLine::Create();
 		SetEndChildren(m_line[i]);
+		m_line[i]->SetColor(D3DXCOLOR(0.0f,1.0f,0.0f,1.0f));
+		m_line[i]->SetPosTarget(&GetPosWorld());
+		m_line[i]->SetRotTarget(&GetRot());
 	}
 	return S_OK;
 }
@@ -64,42 +67,6 @@ void CCollisionCylinder::Update()
 	D3DXVECTOR3 pos = GetPosWorld();
 	D3DXVECTOR3 size = GetSize();
 	D3DXVECTOR3 rot = GetRot();
-
-	float left = -m_length;	// x1
-	float right = m_length;	// x2
-	float top = m_height;		// z1
-	float bot = 0.0f;	// z2
-
-	// ‚S‚Â‚Ì’¸“_
-	D3DXVECTOR3 posLine[8];
-	posLine[0] = D3DXVECTOR3(0.0f, bot, left);
-	posLine[1] = D3DXVECTOR3(0.0f, bot, right);
-	posLine[2] = D3DXVECTOR3(right, bot, 0.0f);
-	posLine[3] = D3DXVECTOR3(left, bot, 0.0f);
-	posLine[4] = D3DXVECTOR3(0.0f, top, 0.0f);
-	posLine[5] = D3DXVECTOR3(0.0f, bot, 0.0f);
-
-	m_line[0]->SetLine(pos, rot, posLine[0], posLine[1], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
-	m_line[1]->SetLine(pos, rot, posLine[2], posLine[3], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
-
-	pos.x -= right;
-	m_line[2]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
-	pos.x += right * 2.0f;
-	m_line[3]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
-
-	pos = GetPosWorld();
-	pos.z -= right;
-	m_line[4]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
-	pos.z += right * 2.0f;
-	m_line[5]->SetLine(pos, rot, posLine[4], posLine[5], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
-
-	pos = GetPosWorld();
-	posLine[0].y = top;
-	posLine[1].y = top;
-	posLine[2].y = top;
-	posLine[3].y = top;
-	m_line[7]->SetLine(pos, rot, posLine[0], posLine[1], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
-	m_line[8]->SetLine(pos, rot, posLine[2], posLine[3], D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
 }
 
 //--------------------------------------------------------------
@@ -497,6 +464,37 @@ CCollisionCylinder* CCollisionCylinder::Create(const D3DXVECTOR3 & pos, const fl
 	collision->SetPos(pos);
 	collision->m_length = length;
 	collision->m_height = height;
-
+	collision->SetLine();
 	return collision;
+}
+
+void CCollisionCylinder::SetLine()
+{
+	float left = -m_length;	// x1
+	float right = m_length;	// x2
+	float top = m_height;		// z1
+	float bot = 0.0f;	// z2
+
+						// ‚S‚Â‚Ì’¸“_
+	D3DXVECTOR3 posLine[10];
+	posLine[0] = D3DXVECTOR3(0.0f, bot, left);
+	posLine[1] = D3DXVECTOR3(0.0f, bot, right);
+	posLine[2] = D3DXVECTOR3(right, bot, 0.0f);
+	posLine[3] = D3DXVECTOR3(left, bot, 0.0f);
+	posLine[4] = D3DXVECTOR3(0.0f, top, 0.0f);
+	posLine[5] = D3DXVECTOR3(0.0f, bot, 0.0f);
+
+	posLine[6] = D3DXVECTOR3(0.0f, top, left);
+	posLine[7] = D3DXVECTOR3(0.0f, top, right);
+	posLine[8] = D3DXVECTOR3(right, top, 0.0f);
+	posLine[9] = D3DXVECTOR3(left, top, 0.0f);
+
+	m_line[0]->SetLine(posLine[0], posLine[1]);
+	m_line[1]->SetLine(posLine[2], posLine[3]);
+	m_line[2]->SetLine(posLine[8], posLine[2]);
+	m_line[3]->SetLine(posLine[9], posLine[3]);
+	m_line[4]->SetLine(posLine[6], posLine[0]);
+	m_line[5]->SetLine(posLine[7], posLine[1]);
+	m_line[7]->SetLine(posLine[6], posLine[7]);
+	m_line[8]->SetLine(posLine[8], posLine[9]);
 }

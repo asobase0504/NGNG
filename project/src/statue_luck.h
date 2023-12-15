@@ -47,7 +47,6 @@ public:
 private:	// メンバ変数
 	int m_nUseMoney;		// 初期必要お金数
 	int m_nItemCount;		// アイテム数
-	CProcedure3D* m_useMoneyUI;	// 必要金額を3D空間状に描画
 };
 #endif
 

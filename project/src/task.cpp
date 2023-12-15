@@ -22,7 +22,6 @@ CTask::CTask(CTaskGroup::EPriority inPriority, CTaskGroup::EPushMethod inMethod,
 	m_isProtect(false),
 	m_isUpdate(true),
 	m_isPouseUpdate(false),
-	m_isMapChangeDeleted(false),
 	m_parentEnd(nullptr)
 {
 	m_childrensEnd.clear();

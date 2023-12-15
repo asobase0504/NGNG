@@ -32,6 +32,13 @@ public:
 		PATTERN_GOLEM_LASER,
 		MAX_PATTERN
 	};
+
+	enum EEnemyType
+	{
+		SKELTON,
+		MAX_TYPE
+	};
+
 private:
 	explicit CEnemyDataBase();
 	static CEnemyDataBase* m_instance;

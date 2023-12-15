@@ -40,8 +40,6 @@ CSkillEntity::~CSkillEntity()
 HRESULT CSkillEntity::Init()
 {
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
-
-	MapChangeRelese();
 	// 初期化
 	m_Duration = pSkillData->GetDuration(m_Name);
 	m_Interval = pSkillData->GetInterval(m_Name);

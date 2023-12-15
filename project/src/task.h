@@ -70,10 +70,6 @@ public:
 	void PauseOn() { m_isUpdate = m_isPouseUpdate; }					// 更新を行うか行わないかポーズ状態で判断
 	void PauseOff() { if (!m_isPouseUpdate) { m_isUpdate = true; } }	// ポーズ状態で止まっていた更新を稼働させる
 
-	/* マップ遷移時 */
-	void MapChangeRelese() { m_isMapChangeDeleted = true; }
-	bool IsMapChangeRelese() { return m_isMapChangeDeleted; }
-
 	/* 親子関係(終了) */
 	void SetEndChildren(CTask* inTask) { m_childrensEnd.push_back(inTask); inTask->SetEndParent(this); }
 	int GetEndChildrenSize() { return m_childrensEnd.size(); }
@@ -97,6 +93,5 @@ private:
 
 	bool m_isUpdate;		// 更新を行うか
 	bool m_isPouseUpdate;	// ポーズ中に更新処理を行うか
-	bool m_isMapChangeDeleted;	// マップ遷移時に消すもの
 };
 #endif
