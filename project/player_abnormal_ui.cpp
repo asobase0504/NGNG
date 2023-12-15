@@ -2,8 +2,8 @@
 #include "object2d.h"
 #include "procedure.h"
 
-CPlayerAbnormalUI::CPlayerAbnormalUI(CTaskGroup::EPriority list):
-	CObject(list)
+CPlayerAbnormalUI::CPlayerAbnormalUI():
+	CObject(CTaskGroup::EPriority::LEVEL_2D_UI)
 {
 }
 
@@ -13,12 +13,13 @@ CPlayerAbnormalUI::~CPlayerAbnormalUI()
 
 HRESULT CPlayerAbnormalUI::Init()
 {
-	m_abnormalLogo = new CObject2d;
+	m_abnormalLogo = CObject2d::Create(CTaskGroup::LEVEL_2D_UI);
 	SetEndChildren(m_abnormalLogo);
-	m_abnormalLogo->Init();
-	m_abnormalLogo->SetSize(D3DXVECTOR3(50.0f,50.0f,0.0f));
+	m_abnormalLogo->SetSize(D3DXVECTOR3(25.0f,25.0f,0.0f));
+	m_abnormalLogo->SetTexture("ABNORMAL_ICON_FIRE");
 
-	m_stack = CProcedure::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(5.0f, 5.0f, 0.0f), *m_stackCnt);
+	m_stack = CProcedure::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), *m_stackCnt);
+	SetEndChildren(m_stack);
 
 	return E_NOTIMPL;
 }
@@ -26,29 +27,31 @@ HRESULT CPlayerAbnormalUI::Init()
 void CPlayerAbnormalUI::Update()
 {
 	m_stack->SetNumber(*m_stackCnt);
-	if (*m_stackCnt == 0)
-	{
-		Uninit();
-	}
 }
 
+//--------------------------------------------------
+// ¶¬
+//--------------------------------------------------
 CPlayerAbnormalUI * CPlayerAbnormalUI::Create(const int* inStock, CAbnormalDataBase::EAbnormalType inType)
 {
 	CPlayerAbnormalUI* ui = new CPlayerAbnormalUI;
-	ui->Init();
 	ui->m_stackCnt = inStock;
 	ui->m_inType = inType;
+	ui->Init();
 
 	return ui;
 }
 
+//--------------------------------------------------
+// ˆÊ’u‚Ì’²®
+//--------------------------------------------------
 void CPlayerAbnormalUI::SetPos(const D3DXVECTOR3& inPos)
 {
 	CObject::SetPos(inPos);
 
 	m_abnormalLogo->SetPos(inPos);
 	D3DXVECTOR3 pos = inPos;
-	pos.x += 5.0f;
-	pos.y -= 5.0f;
+	pos.x += 15.0f;
+	pos.y -= 15.0f;
 	m_stack->SetPos(pos);
 }

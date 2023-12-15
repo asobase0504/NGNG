@@ -139,6 +139,21 @@ void CPlayer::Update()
 		return;
 	}
 
+	for (CPlayerAbnormalUI* ui : m_abnormalUI)
+	{
+		if (m_haveAbnormal[ui->GetType()].s_stack <= 0)
+		{
+			ui->Uninit();
+		}
+	}
+	m_abnormalUI.remove_if([this](CPlayerAbnormalUI* ui) {return (m_haveAbnormal[ui->GetType()].s_stack <= 0); });
+	int cnt = 0;
+	for (CPlayerAbnormalUI* ui : m_abnormalUI)
+	{
+		ui->SetPos(D3DXVECTOR3(80.0f + cnt * 60.0f, SCREEN_HEIGHT - 120.0f, 0.0f));
+		cnt++;
+	}
+
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 
@@ -337,9 +352,11 @@ void CPlayer::AddAbnormalStack(const int id, const int cnt)
 	if (GetAbnormalCount()[id].s_stack == 0)
 	{
 		m_abnormalUI.push_back(CPlayerAbnormalUI::Create(&m_haveAbnormal[id].s_stack, (CAbnormalDataBase::EAbnormalType)id));
+		int cnt = 0;
 		for (CPlayerAbnormalUI* ui : m_abnormalUI)
 		{
-			//ui->SetPos(D3DXVECTOR3());
+			ui->SetPos(D3DXVECTOR3(80.0f + cnt * 60.0f, SCREEN_HEIGHT - 120.0f,0.0f));
+			cnt++;
 		}
 	}
 

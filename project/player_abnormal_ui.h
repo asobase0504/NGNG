@@ -23,7 +23,7 @@ class CProcedure;
 class CPlayerAbnormalUI : public CObject
 {
 public:
-	CPlayerAbnormalUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
+	CPlayerAbnormalUI();
 	~CPlayerAbnormalUI();
 
 	HRESULT Init() override;
