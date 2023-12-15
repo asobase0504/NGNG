@@ -25,6 +25,7 @@ HRESULT CPlayerAbnormalUI::Init()
 
 void CPlayerAbnormalUI::Update()
 {
+	m_stack->SetNumber(*m_stackCnt);
 	if (*m_stackCnt == 0)
 	{
 		Uninit();
@@ -46,5 +47,8 @@ void CPlayerAbnormalUI::SetPos(const D3DXVECTOR3& inPos)
 	CObject::SetPos(inPos);
 
 	m_abnormalLogo->SetPos(inPos);
-	m_stack->SetPos(inPos);
+	D3DXVECTOR3 pos = inPos;
+	pos.x += 5.0f;
+	pos.y -= 5.0f;
+	m_stack->SetPos(pos);
 }

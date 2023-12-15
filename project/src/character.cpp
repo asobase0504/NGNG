@@ -76,6 +76,7 @@ HRESULT CCharacter::Init()
 	m_isMoveLock = false;
 	m_isControl = false;
 	m_isTeleporter = false;
+	m_isInertiaMoveLock = false;
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(100);
