@@ -45,7 +45,7 @@ HRESULT CStatueLuck::Init()
 	D3DXVECTOR3 rot = GetRot();
 
 	m_nUseMoney = 10;
-	m_costUI = CProcedure3D::Create(pos, D3DXVECTOR3(4.0f, 4.0f, 0.0f), m_nUseMoney);
+	m_costUI = CProcedure3D::Create(pos, D3DXVECTOR3(5.0f, 5.0f, 0.0f), m_nUseMoney);
 	SetEndChildren(m_costUI);
 	m_costUI->SetColor(D3DXCOLOR(1.0f, 1.0f, 0.5f, 1.0f));
 
@@ -131,12 +131,12 @@ void CStatueLuck::SetPos(const D3DXVECTOR3 & inPos)
 	{
 		m_costUI->SetPos(inPos);
 
-		D3DXVECTOR3 vector = D3DXVECTOR3(0.0f, 0.0f, 10.0f);
+		D3DXVECTOR3 vector = D3DXVECTOR3(0.0f, 0.0f, 20.0f);
 		D3DXMATRIX mtxRot;
 		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
 		D3DXVec3TransformCoord(&vector, &vector, &mtxRot);
 		m_costUI->AddPos(vector);
-		m_costUI->AddPos(D3DXVECTOR3(0.0f,10.0f,0.0f));
+		m_costUI->AddPos(D3DXVECTOR3(0.0f, 20.0f,0.0f));
 	}
 	CStatue::SetPos(inPos);
 }

@@ -42,7 +42,7 @@ HRESULT CStatueChest::Init()
 	m_collisionBox->SetPos(D3DXVECTOR3(0.0f, 5.0f, 0.0f));
 	m_collisionBox->SetSize(D3DXVECTOR3(2.5f, 5.0f, 2.5f));
 
-	m_costUI = CProcedure3D::Create(pos, D3DXVECTOR3(4.0f, 4.0f, 0.0f), 10);
+	m_costUI = CProcedure3D::Create(pos, D3DXVECTOR3(5.0f, 5.0f, 0.0f), 10);
 	SetEndChildren(m_costUI);
 	m_costUI->SetColor(D3DXCOLOR(1.0f, 1.0f, 0.5f, 1.0f));
 
@@ -106,7 +106,7 @@ void CStatueChest::SetPos(const D3DXVECTOR3 & inPos)
 	if (m_costUI != nullptr)
 	{
 		m_costUI->SetPos(inPos);
-		m_costUI->AddPos(D3DXVECTOR3(0.0f, 15.0f, 0.0f));
+		m_costUI->AddPos(D3DXVECTOR3(0.0f, 25.0f, 0.0f));
 	}
 	CStatue::SetPos(inPos);
 }
