@@ -37,8 +37,8 @@ HRESULT CDifficult::Init()
 {
 	m_bar = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	m_bar->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
-	m_bar->SetSize(D3DXVECTOR3(200.0f, 30.0f, 0.0f));
-	m_bar->SetPos(D3DXVECTOR3(SCREEN_WIDTH - 500.0f, 70.0f, 0.0f));
+	m_bar->SetSize(D3DXVECTOR3(70.0f, 15.0f, 0.0f));
+	m_bar->SetPos(D3DXVECTOR3(SCREEN_WIDTH - 200.0f, 100.0f, 0.0f));
 	m_bar->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	m_bar->SetTexture("DIFFICULT");
 	m_bar->SetTex(PositionVec4(0.0f,0.2f,0.0f,1.0f));
