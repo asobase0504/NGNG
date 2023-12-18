@@ -83,8 +83,8 @@ void CReceiveData::SReceiveList::Init()
 	for (int i = 0; i < MaxModel; i++)
 	{
 		m_isPopGimmick[i].isUse = false;
-		m_isPopGimmick[i].isMap = false;
-		m_isPopEnemy[i].isUse = false;
+		m_isPopGimmick[i].isMap = false;	
+		m_isPopEnemy[i].isUse = false;	
 		m_isPopEnemy[i].isMap = false;
 		m_isPopEnemy[i].isDiscovery = false;
 		m_isPopEnemy[i].Pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -95,7 +95,7 @@ void CReceiveData::SReceiveList::Init()
 
 }
 
-void CReceiveData::SReceiveList::SetListPlayr(CModelData::SPlayerList player, int playerId)
+void CReceiveData::SReceiveList::SetListPlayr(CModelData::SPlayerList player,int playerId)
 {
 	m_PlayrData[playerId] = player;
 }
@@ -118,7 +118,7 @@ void CReceiveData::SReceiveList::SetListEnemy(CModelData::SEnemyData* Enemy)
 		}
 		m_isPopEnemy[i].Pos = Enemy[i].Pos;
 	}
-
+	
 }
 
 void CReceiveData::SReceiveList::SetListGimmick(CModelData::SGimmickData* Gimmick)

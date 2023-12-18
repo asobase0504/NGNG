@@ -470,6 +470,12 @@
     <ClCompile Include="abnormal_2dui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClCompile>
+    <ClCompile Include="src\udp_client.cpp">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="src\client.cpp">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -813,6 +819,13 @@
     <ClInclude Include="src\difficult.h" />
     <ClInclude Include="abnormal_2dui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    <ClInclude Include="Skill5.h" />
+    <ClInclude Include="src\difficult.h" />
+    <ClInclude Include="src\udp_client.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="src\client.h">
+      <Filter>ソース ファイル\Server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

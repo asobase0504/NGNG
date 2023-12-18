@@ -8,24 +8,22 @@
 #ifndef _TCP_CKIENT_H_
 #define _TCP_CKIENT_H_
 
-#define _WINSOCK_DEPRECATED_NO_WARNINGE
-#include <winsock2.h>
-#include <stdio.h>
-#include <string>
+class CUdp_Client;
 
-#pragma comment (lib,"ws2_32.lib")
-
-
-class  CTcp_client
+class  CTcp_Client
 {
 public:
-	CTcp_client();
-	~CTcp_client();
-	bool Init(const char*plPAddress,int nPortNum);
+	CTcp_Client();
+	~CTcp_Client();
+	bool Init(const char*plPAddress, int nPortNum);
+	bool Init(SOCKET sock);
 	int Send(const char*pSendData, int nSendDataSize);
 	int Recv(char*pRecvData, int nRecvDataSize);
 	void Uninit();
 	bool Connect();
+	SOCKET GetSock() { return m_sock; }
+
+
 	//void ConnectTh();
 private:
 	std::string m_Ip;
@@ -33,7 +31,7 @@ private:
 	SOCKET m_sock;
 	bool m_sockOk;
 
-	
+
 };
 
 #endif
