@@ -106,6 +106,9 @@ void CEnemy::Update()
 #endif // _DEBUG
 }
 
+//--------------------------------------------------------------
+// ì«çûÇ›
+//--------------------------------------------------------------
 void CEnemy::Load(const CEnemyDataBase::SStatus & status)
 {
 	m_size = D3DXVECTOR3(status.s_size, status.s_size, status.s_size);

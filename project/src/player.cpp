@@ -319,6 +319,11 @@ void CPlayer::Move()
 //--------------------------------------------------------------
 void CPlayer::Jump()
 {
+	if (m_isMoveLock || m_isControl)
+	{
+		return;
+	}
+
 	// ジャンプ
 	bool jump = m_controller->Jump();
 
