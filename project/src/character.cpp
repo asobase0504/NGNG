@@ -138,6 +138,7 @@ HRESULT CCharacter::Init()
 
 	m_state = GROUND;
 
+	m_skinModel = CSkinMesh::Create();
 	return S_OK;
 }
 
@@ -320,9 +321,9 @@ void CCharacter::TakeDamage(const int inDamage, CCharacter* inChara)
 
 	// ダメージUI生成
 	D3DXVECTOR3 pos = m_pos;
-	pos.x += FloatRandom(20.0f, -20.0f);
-	pos.y += FloatRandom(40.0f, 0.0f);
-	pos.z += FloatRandom(20.0f, -20.0f);
+	pos.x += FloatRandom(m_size.x, -m_size.x);
+	pos.y += FloatRandom(m_size.y, 0.0f);
+	pos.z += FloatRandom(m_size.x, -m_size.x);
 	CDamegeUI::Create(pos,D3DXCOLOR(1.0f,1.0f,1.0f,1.0f),dmg);
 
 	// ダメージ計算
@@ -365,7 +366,7 @@ void CCharacter::AbDamage(const int inDamage)
 	pos.x += FloatRandom(20.0f, -20.0f);
 	pos.y += FloatRandom(40.0f, 0.0f);
 	pos.z += FloatRandom(20.0f, -20.0f);
-	CDamegeUI::Create(pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), dmg);
+	CDamegeUI::Create(pos, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), dmg);
 
 	hp->AddCurrent(-dmg);
 
@@ -640,6 +641,21 @@ void CCharacter::AddLevel()
 
 	// 各種ステータスの調整
 	m_hp.AddMax(m_hp.GetBase() * (1.0f + (m_level * 0.1f)));
+	m_attack.AddBaseState(m_attack.GetBase() * (1.0f + (m_level * 0.1f)));
+	m_attackSpeed.AddBaseState(m_attackSpeed.GetBase() * (1.0f + (m_level * 0.1f)));
+	m_movePower.AddBaseState(m_movePower.GetBase() * (1.0f + (m_level * 0.01f)));
+}
+
+//-----------------------------------------
+// レベルの設定処理
+//-----------------------------------------
+void CCharacter::SetLevel(int level)
+{
+	m_level = level;
+
+	// 各種ステータスの調整
+	m_hp.AddMax(m_hp.GetBase() * (1.0f + (m_level * 0.1f)));
+	m_hp.SetCurrent(m_hp.GetMax());
 	m_attack.AddBaseState(m_attack.GetBase() * (1.0f + (m_level * 0.1f)));
 	m_attackSpeed.AddBaseState(m_attackSpeed.GetBase() * (1.0f + (m_level * 0.1f)));
 	m_movePower.AddBaseState(m_movePower.GetBase() * (1.0f + (m_level * 0.01f)));

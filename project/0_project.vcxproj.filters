@@ -386,9 +386,6 @@
     <ClCompile Include="src\money_ui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClCompile>
-    <ClCompile Include="player_abnormal_ui.cpp">
-      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
-    </ClCompile>
     <ClCompile Include="src\take_item_ui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClCompile>
@@ -469,6 +466,9 @@
     </ClCompile>
     <ClCompile Include="src\difficult.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="abnormal_2dui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClCompile>
     <ClCompile Include="src\udp_client.cpp">
       <Filter>ソース ファイル\Server</Filter>
@@ -737,9 +737,6 @@
     <ClInclude Include="src\hp_ui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
-    <ClInclude Include="player_abnormal_ui.h">
-      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
-    </ClInclude>
     <ClInclude Include="src\money_ui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
@@ -818,6 +815,10 @@
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
     </ClInclude>
+    <ClInclude Include="Skill5.h" />
+    <ClInclude Include="src\difficult.h" />
+    <ClInclude Include="abnormal_2dui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     <ClInclude Include="Skill5.h" />
     <ClInclude Include="src\difficult.h" />
     <ClInclude Include="src\udp_client.h">

@@ -25,7 +25,7 @@
     <ClCompile Include="connect.cpp" />
     <ClCompile Include="damege_ui.cpp" />
     <ClCompile Include="golem_skill_1.cpp" />
-    <ClCompile Include="player_abnormal_ui.cpp" />
+    <ClCompile Include="abnormal_2dui.cpp" />
     <ClCompile Include="Skill5.cpp" />
     <ClCompile Include="src\arrow.cpp" />
     <ClCompile Include="src\client.cpp" />
@@ -143,7 +143,7 @@
     <ClInclude Include="damege_ui.h" />
     <ClInclude Include="golem_skill_1.h" />
     <ClInclude Include="enemy_hp_ui.h" />
-    <ClInclude Include="player_abnormal_ui.h" />
+    <ClInclude Include="abnormal_2dui.h" />
     <ClInclude Include="Skill5.h" />
     <ClInclude Include="src\arrow.h" />
     <ClInclude Include="src\character_select.h" />

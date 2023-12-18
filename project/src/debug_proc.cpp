@@ -13,6 +13,7 @@
 #include "application.h"
 #include "renderer.h"
 #include "input.h"
+#include "line.h"
 
 //==============================================================
 // Ã“Iƒƒ“ƒo•Ï”‚Ì’è‹`
@@ -54,6 +55,7 @@ void CDebugProc::Draw(void)
 {
 	if (CInput::GetKey()->Trigger(DIK_0, -1))
 	{
+		CLine::m_alldisplay = !CLine::m_alldisplay;
 		m_use = !m_use;
 	}
 

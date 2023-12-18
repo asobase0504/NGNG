@@ -81,8 +81,6 @@ public:
 	// 攻撃
 	void DealDamage(CCharacter* inChara, float SkillMul);
 	void TakeDamage(const int inDamage, CCharacter* inChara);
-	void Attack(CCharacter* pEnemy, float SkillMul);
-	void Damage(const int inDamage);
 	void AbDamage(const int inDamage);
 	int CalDamage(float SkillAtkMul);
 	void AddDamage(float inDamage) { m_addDamage = inDamage; }
@@ -112,7 +110,7 @@ public:
 	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }		// 受けてる状態異常
 
 	// レベル
-	void SetLevel(int level) { m_level = level; }
+	void SetLevel(int level);
 	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
 	void SetStun(bool isStun) { m_isStun = isStun; }
 	void AddExp(int exp);

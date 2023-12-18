@@ -20,27 +20,29 @@ class CProcedure;
 //**************************************************
 // ƒNƒ‰ƒX
 //**************************************************
-class CPlayerAbnormalUI : public CObject
+class CAbnormal2DUI : public CObject
 {
 public:
-	CPlayerAbnormalUI();
-	~CPlayerAbnormalUI();
+	CAbnormal2DUI();
+	~CAbnormal2DUI();
 
 	HRESULT Init() override;
 	void Update() override;
 
-	static CPlayerAbnormalUI* Create(const int* inStock,CAbnormalDataBase::EAbnormalType inType);
+	static CAbnormal2DUI* Create(const int* inStock,CAbnormalDataBase::EAbnormalType inType);
 
 	CAbnormalDataBase::EAbnormalType GetType() { return m_inType; }
 
 	void SetPos(const D3DXVECTOR3&) override;
 
 private:
+	// •`‰æ•¨
+	CObject2d* m_abnormalLogo;	// ó‘ÔˆÙíƒƒS
+	CProcedure* m_stack;		// ”š
+
 	CAbnormalDataBase::EAbnormalType m_inType;
 	bool m_isDisplayStack;
-	const int* m_stackCnt;		// stack”‚ÌƒƒS
-	CObject2d* m_abnormalLogo;
-	CProcedure* m_stack;
+	const int* m_stackCnt;		// stack”
 };
 
 #endif // _TIMER_H_

@@ -18,7 +18,7 @@
 //==============================================================
 class CController;
 class CCollisionCylinder;
-class CPlayerAbnormalUI;
+class CAbnormal2DUI;
 
 //==============================================================
 // プレイヤークラス
@@ -65,6 +65,6 @@ private:		// メンバ変数
 	CController*	m_controller;	// 命令を出す人
 
 	// UI
-	std::list<CPlayerAbnormalUI*> m_abnormalUI;	// 状態異常やバフなどのアイコンを表示
+	std::list<CAbnormal2DUI*> m_abnormalUI;	// 状態異常やバフなどのアイコンを表示
 };
 #endif

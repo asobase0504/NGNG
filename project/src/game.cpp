@@ -78,6 +78,8 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init()
 {
+	CAbnormalDataBase::GetInstance();
+
 	CSkinMeshGroup::GetInstance()->LoadAll();
 
 	CInput::GetKey()->SetCursorErase(false);
@@ -131,9 +133,9 @@ void CGame::Uninit()
 	}*/
 
 	CItemDataBase::Uninit();
+	CAbnormalDataBase::Uninit();
 
-	CSkinMeshGroup::GetInstance()->Unload("KENGOU");
-	CSkinMeshGroup::GetInstance()->Unload("SKE");
+	CSkinMeshGroup::GetInstance()->UnloadAll();
 
 	CInput::GetKey()->SetCursorErase(true);
 	CInput::GetKey()->LockCursorPos(false);
