@@ -48,7 +48,7 @@ HRESULT CStatueChest::Init()
 
 	LoadModel("STATUE_CHEST");
 	m_uiText = "•ó” ‚ðŠJ‚¯‚é [$10]";
-
+	
 	return S_OK;
 }
 
@@ -81,6 +81,7 @@ bool CStatueChest::Select(CCharacter * selectCharacter)
 	m_collisionCylinder->Uninit();
 	m_collisionCylinder = nullptr;
 
+	LoadModel("STATUE_CHEST_OPEN");
 	return true;
 }
 

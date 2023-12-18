@@ -4,8 +4,6 @@
 		[ "KYUU2", "data\/MODEL\/kyuu2.x" ],
 		[ "CUBOID", "data\/MODEL\/cuboid.x" ],
 		[ "SKELETON", "data\/MODEL\/skeleton.x" ],
-		[ "STATUE_BLOOD", "data\/MODEL\/statue\/statue_blood.x" ],
-		[ "STATUE_LUCK", "data\/MODEL\/statue\/statue_luck.x" ],
 		[ "PLAYER01", "data\/MODEL\/kengou.x" ],
 		[ "ITEM_POWER_UP", "data\/MODEL\/box.x"],
 		[ "ITEM_ARROW", "data\/MODEL\/item\/arrow.x"],
@@ -31,7 +29,10 @@
 		[ "ITEM_UMBRELLA", "data\/MODEL\/item\/umbrella.x"],
 		[ "ITEM_WADAIKO", "data\/MODEL\/item\/wadaiko.x"],
 		[ "ITEM_ZOURI", "data\/MODEL\/item\/zouri.x"],
+		[ "STATUE_BLOOD", "data\/MODEL\/statue\/statue_blood.x" ],
+		[ "STATUE_LUCK", "data\/MODEL\/statue\/statue_luck.x" ],
 		[ "STATUE_CHEST", "data\/MODEL\/statue\/statue_chest.x"],
+		[ "STATUE_CHEST_OPEN", "data\/MODEL\/statue\/statue_chest_open.x"],
 		[ "STATUE_COMBAT", "data\/MODEL\/statue\/statue_combat.x"],
 		[ "STATUE_SHRINE", "data\/MODEL\/statue\/statue_shrine.x"]
 	]
