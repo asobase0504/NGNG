@@ -27,7 +27,6 @@ class CMap;
 class CPlayerController;
 class CMapFade;
 class ConnectManager;
-class CSkinMesh;
 class CDifficult;
 
 //==============================================================
@@ -59,7 +58,5 @@ private:
 	CMapFade* m_mapFade;
 	ConnectManager*m_tcp;
 	CDifficult* m_difficult;
-
-	CSkinMesh* m_skin;
 };
 #endif
