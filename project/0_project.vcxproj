@@ -22,6 +22,7 @@
     <ClCompile Include="abnormal.cpp" />
     <ClCompile Include="abnormal_data_base.cpp" />
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="carrying_item_ui.cpp" />
     <ClCompile Include="connect.cpp" />
     <ClCompile Include="damege_ui.cpp" />
     <ClCompile Include="golem_skill_1.cpp" />
@@ -139,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="abnormal.h" />
     <ClInclude Include="abnormal_data_base.h" />
+    <ClInclude Include="carrying_item_ui.h" />
     <ClInclude Include="connect.h" />
     <ClInclude Include="damege_ui.h" />
     <ClInclude Include="golem_skill_1.h" />

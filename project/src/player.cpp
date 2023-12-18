@@ -187,8 +187,6 @@ void CPlayer::Update()
 		CResult::Create();
 	}
 
-	SetRot(D3DXVECTOR3(0.0f, ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot().y, 0.0f));
-
 	// 更新処理
 	CCharacter::Update();
 
@@ -216,6 +214,11 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos)
 void CPlayer::PAttack()
 {
 	bool isSuccess = false;
+
+	if (m_isControl)
+	{
+		return;
+	}
 
 	// 通常攻撃(左クリック)
 	if (m_controller->Skill_1())
