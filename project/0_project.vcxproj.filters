@@ -465,13 +465,16 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="abnormal_2dui.cpp">
-      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\udp_client.cpp">
-      <Filter>ソース ファイル\Server</Filter>
+    <ClCompile Include="Skill5.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\client.cpp">
-      <Filter>ソース ファイル\Server</Filter>
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\udp_client.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="carrying_item_ui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
@@ -818,11 +821,17 @@
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
     </ClInclude>
+    <ClInclude Include="src\difficult.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="src\difficult.h" />
     <ClInclude Include="abnormal_2dui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
+    <ClInclude Include="abnormal_2dui.h" />
     <ClInclude Include="Skill5.h" />
+    <ClInclude Include="src\client.h" />
+    <ClInclude Include="src\udp_client.h" />
     <ClInclude Include="src\difficult.h" />
     <ClInclude Include="src\udp_client.h">
       <Filter>ソース ファイル\Server</Filter>

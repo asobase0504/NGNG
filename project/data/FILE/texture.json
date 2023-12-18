@@ -12,7 +12,8 @@
 	["SKILL_ICON_YAMATO2","data\/TEXTURE\/skill\/skill1.jpg"],
 	["SKILL_ICON_YAMATO3","data\/TEXTURE\/skill\/skill2.jpg"],
 	["SKILL_ICON_YAMATO4","data\/TEXTURE\/skill\/skill2.jpg"],
-	["ABNORMAL_ICON_FIRE","data\/TEXTURE\/abnormal\/Status_OnFire.png"],
-	["TEST","data\/TEXTURE\/test.jpg"]
+	["TEST","data\/TEXTURE\/test.jpg"],
+	["DIFFICULT","data\/TEXTURE\/difficult.png"],
+	["ABNORMAL_ICON_FIRE","data\/TEXTURE\/abnormal\/Status_OnFire.png"]
   ]
 }

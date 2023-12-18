@@ -15,6 +15,7 @@
 //==============================================================
 // ƒNƒ‰ƒX
 //==============================================================
+class CObject2d;
 class CDifficult : public CObject
 {
 public:
@@ -22,7 +23,6 @@ public:
 	~CDifficult();
 
 	HRESULT Init() override;
-	HRESULT Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot, const D3DXVECTOR3& inSize);
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
@@ -37,5 +37,8 @@ private:
 	int m_enemyLevel;
 	float m_gameLevel;
 	bool m_isCount;
+
+	CObject2d* m_ground;
+	CObject2d* m_bar;
 };
 #endif	// _MAP_MODEL_H_
