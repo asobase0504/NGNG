@@ -48,6 +48,7 @@ void CYamatoSkill_4::InitAbility()
 		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_4");
 		m_Invincible = pSkillData->GetInvincible("YAMATO_SKILL_4");
 		m_Time = 0;
+
 		// 当たり判定を取得
 		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("YAMATO_SKILL_4").x);
 		m_Collision->SetParent(&m_apChara->GetPos());
@@ -106,6 +107,8 @@ void CYamatoSkill_4::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
 	Target->TakeDamage(50, Target);
+	
+	m_apChara->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 }
 
 //--------------------------------------------------------------
