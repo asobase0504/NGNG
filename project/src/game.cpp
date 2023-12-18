@@ -188,25 +188,25 @@ void CGame::Update()
 		skin->SetPos(D3DXVECTOR3(50.f, 0.f, 50.f));
 	}
 
-	if (m_tcp->GetIsConnect())
-	{
-		CPlayer* Player = CPlayerManager::GetInstance()->GetPlayer();
-		CModelData::SSendPack sendData;
-		sendData.m_PlayData.m_pos = Player->GetPos();
-		sendData.m_PlayData.m_rot = Player->GetRot();
-		for (int j = 0; j < 5; j++)
-		{
-			sendData.m_haveAbnormal.abnormalData[j] = 0;
-			sendData.m_haveItem.itemData[j] = 0;
-		}
+	//if (m_tcp->GetIsConnect())
+	//{
+	//	CPlayer* Player = CPlayerManager::GetInstance()->GetPlayer();
+	//	CModelData::SSendPack sendData;
+	//	sendData.m_PlayData.m_pos = Player->GetPos();
+	//	sendData.m_PlayData.m_rot = Player->GetRot();
+	//	for (int j = 0; j < 5; j++)
+	//	{
+	//		sendData.m_haveAbnormal.abnormalData[j] = 0;
+	//		sendData.m_haveItem.itemData[j] = 0;
+	//	}
 
-		sendData.m_PlayData.m_motion = 0;
-		sendData.m_log = 2;
-		sendData.m_PlayData.m_pushBomComands = 0;
+	//	sendData.m_PlayData.m_motion = 0;
+	//	sendData.m_log = 2;
+	//	sendData.m_PlayData.m_pushBomComands = 0;
 
 
-		m_tcp->SendPlayerData(sendData);
-	}
+	//	m_tcp->SendPlayerData(sendData);
+	//}
 }
 
 void CGame::SetChangeMap()
