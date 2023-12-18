@@ -100,7 +100,7 @@ bool CStatueTeleporter::Select(CCharacter * selectCharacter)
 		popPos.x += FloatRandom(100.0f, -100.0f);
 		popPos.z += FloatRandom(100.0f, -100.0f);
 
-		m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(popPos, D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE,1);
+		m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(popPos, CEnemyDataBase::NINE_FOX,5);
 		CBossHPUI* ui = new CBossHPUI;
 		ui->Init();
 		ui->SetHP(m_pEnemy->GetHp());

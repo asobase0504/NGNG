@@ -67,13 +67,14 @@ void CEnemyManager::Uninit(void)
 //--------------------------------------------------------------
 // “G‚Ìì¬
 //--------------------------------------------------------------
-CEnemy* CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type, int level)
+CEnemy* CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, CEnemyDataBase::EEnemyType type, int level)
 {
 	CEnemy* enemy = new CEnemy;
 	enemy->Init();
 	enemy->SetPos(pos);
-	enemy->SetSize(size);
+	enemy->Load(CEnemyDataBase::GetInstance()->GetBaseStatus(type));
 	enemy->SetLevel(level);
+
 	return enemy;
 }
 
@@ -91,6 +92,5 @@ CEnemy* CEnemyManager::RandomSpawn()
 	int enemyType = IntRandom(1, 1);
 
 	CDifficult *pDiff =  ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
-
-	return CreateEnemy(D3DXVECTOR3(randomPosX, 0.0f, randomPosZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), (EType)enemyType, pDiff->GetEnemyLevel());
+	return CreateEnemy(D3DXVECTOR3(randomPosX, 0.0f, randomPosZ), (CEnemyDataBase::EEnemyType)enemyType, pDiff->GetEnemyLevel());
 }

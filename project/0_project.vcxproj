@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="abnormal.cpp" />
     <ClCompile Include="abnormal_data_base.cpp" />
-    <ClCompile Include="boss_enemy.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="connect.cpp" />
     <ClCompile Include="damege_ui.cpp" />
@@ -138,7 +137,6 @@
   <ItemGroup>
     <ClInclude Include="abnormal.h" />
     <ClInclude Include="abnormal_data_base.h" />
-    <ClInclude Include="boss_enemy.h" />
     <ClInclude Include="connect.h" />
     <ClInclude Include="damege_ui.h" />
     <ClInclude Include="golem_skill_1.h" />

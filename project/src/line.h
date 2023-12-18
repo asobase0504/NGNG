@@ -61,6 +61,9 @@ public:
 	void SetColor(const D3DXCOLOR& color) override;			// 頂点カラーの設定
 	void SetLine(D3DXVECTOR3 start, D3DXVECTOR3 goal);	// ラインの設置
 
+
+	static bool m_alldisplay;
+
 private:
 	//--------------------------------------------------------------------
 	// メンバ変数

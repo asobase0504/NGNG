@@ -112,7 +112,7 @@ public:
 	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }		// 受けてる状態異常
 
 	// レベル
-	void SetLevel(int level) { m_level = level; }
+	void SetLevel(int level);
 	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
 	void SetStun(bool isStun) { m_isStun = isStun; }
 	void AddExp(int exp);

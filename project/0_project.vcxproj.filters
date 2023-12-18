@@ -467,9 +467,6 @@
     <ClCompile Include="src\difficult.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="boss_enemy.cpp">
-      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
-    </ClCompile>
     <ClCompile Include="abnormal_2dui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClCompile>
@@ -814,9 +811,6 @@
     </ClInclude>
     <ClInclude Include="Skill5.h" />
     <ClInclude Include="src\difficult.h" />
-    <ClInclude Include="boss_enemy.h">
-      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
-    </ClInclude>
     <ClInclude Include="abnormal_2dui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>

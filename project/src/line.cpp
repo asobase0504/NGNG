@@ -13,6 +13,9 @@
 #include "renderer.h"
 #include "application.h"
 
+
+bool CLine::m_alldisplay = true;
+
 //--------------------------------------------------------------
 // インスタンス生成
 // Author : 唐﨑結斗
@@ -133,7 +136,7 @@ void CLine::Update()
 //--------------------------------------------------------------
 void CLine::Draw()
 {
-	if (!m_isDisplay)
+	if (!m_isDisplay || !m_alldisplay)
 	{
 		return;
 	}
