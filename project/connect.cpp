@@ -68,8 +68,14 @@ bool ConnectManager::Init(const char*plPAddress, int nPortNum)
 //--------------------------
 void ConnectManager::Uninit(void)
 {
-	
 
+	if (m_client != nullptr)
+	{
+		m_client->Uninit();
+		// メモリの解放
+		delete m_client;
+		m_client = nullptr;
+	}
 
 	
 	WSACleanup();
@@ -152,7 +158,7 @@ void  ConnectManager::SendPlayerData(CModelData::SSendPack data)
 //=============================================================================
 // Send スレット
 //=============================================================================
-void  ConnectManager::Send(const char*send,int Size, CClient::CONNECT_TYPE Tipe)
+void  ConnectManager::CharSend(const char*send,int Size, CClient::CONNECT_TYPE Tipe)
 {
 	//CModelData::SSendPack sendData = data;
 
@@ -162,7 +168,7 @@ void  ConnectManager::Send(const char*send,int Size, CClient::CONNECT_TYPE Tipe)
 //=============================================================================
 // Recv スレット
 //=============================================================================
-int ConnectManager::Recv(char*Recv, int Size, CClient::CONNECT_TYPE Tipe)
+int ConnectManager::CharRecv(char*Recv, int Size, CClient::CONNECT_TYPE Tipe)
 {
 	//CModelData::SSendPack sendData = data;
 
