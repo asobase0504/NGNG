@@ -151,29 +151,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="event.cpp" />
+    <ClCompile Include="client.cpp" />
     <ClCompile Include="letter.cpp" />
+    <ClCompile Include="listener.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model.cpp" />
-    <ClCompile Include="model_date.cpp" />
+    <ClCompile Include="model_data.cpp" />
     <ClCompile Include="precompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="tcp_client.cpp" />
     <ClCompile Include="tcp_listener.cpp" />
-    <ClCompile Include="utc_socket.cpp" />
+    <ClCompile Include="udp_client.cpp" />
+    <ClCompile Include="udp_listener.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="event.h" />
+    <ClInclude Include="client.h" />
     <ClInclude Include="letter.h" />
+    <ClInclude Include="listener.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="model.h" />
-    <ClInclude Include="model_date.h" />
+    <ClInclude Include="model_data.h" />
     <ClInclude Include="precompile.h" />
     <ClInclude Include="protocol.h" />
     <ClInclude Include="tcp_client.h" />
     <ClInclude Include="tcp_listener.h" />
-    <ClInclude Include="utc_socket.h" />
+    <ClInclude Include="udp_client.h" />
+    <ClInclude Include="udp_listener.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

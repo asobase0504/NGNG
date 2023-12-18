@@ -4,52 +4,62 @@
 // Author:hamada ryuuga
 //
 //============================
-
 #include "tcp_client.h"
-
-
-std::string EndAccess = "exit";
-
+#include "udp_client.h"
 
 //--------------------------
 //コンスト
 //--------------------------
-CTcp_client::CTcp_client()
+CTcp_Client::CTcp_Client()
 {
 	m_sock = INVALID_SOCKET;
 }
 //--------------------------
 //デストラクト
 //--------------------------
-CTcp_client::~CTcp_client()
+CTcp_Client::~CTcp_Client()
 {
 }
 
 //--------------------------
 //初期化
 //--------------------------
-bool CTcp_client::Init(const char*plPAddress, int nPortNum)
+bool CTcp_Client::Init(const char*plPAddress, int nPortNum)
 {
+
 	m_nPortNum = nPortNum;
 
 	m_Ip = plPAddress;
-	
+
 	m_sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (m_sock == INVALID_SOCKET)
 	{
 		printf("socket　error");
 		return false;
 	}
-	
+
 	m_sockOk = true;
+	return true;
+}
+
+//--------------------------
+//オーバーロード初期化
+//--------------------------
+bool CTcp_Client::Init(SOCKET sock)
+{
+	m_sock = sock;
 	return true;
 }
 
 //--------------------------
 //接続
 //--------------------------
-int CTcp_client::Send(const char*pSendData, int nSendDataSize)
+int CTcp_Client::Send(const char*pSendData, int nSendDataSize)
 {
+	if (m_sock == INVALID_SOCKET)
+	{
+		return 0;
+	}
 	send(m_sock, &pSendData[0], nSendDataSize, 0);
 	return strlen(&pSendData[0]) + 1;
 }
@@ -57,7 +67,7 @@ int CTcp_client::Send(const char*pSendData, int nSendDataSize)
 //--------------------------
 //返信
 //--------------------------
-int CTcp_client::Recv(char*pRecvData, int nRecvDataSize)
+int CTcp_Client::Recv(char*pRecvData, int nRecvDataSize)
 {
 	if (m_sock == INVALID_SOCKET)
 	{
@@ -70,15 +80,14 @@ int CTcp_client::Recv(char*pRecvData, int nRecvDataSize)
 	{
 		Uninit();
 	}
-	printf("%s", &pRecvData[0]);
-
+	
 	return nRecvByte;
 }
 
 //--------------------------
 //破棄
 //--------------------------
-void CTcp_client::Uninit() 
+void CTcp_Client::Uninit()
 {
 	m_sockOk = false;
 	closesocket(m_sock);
@@ -88,9 +97,8 @@ void CTcp_client::Uninit()
 //-------------------------------
 // 通信
 //-------------------------------
-bool CTcp_client::Connect()
+bool CTcp_Client::Connect()
 {
-
 	if (!m_sockOk)
 	{
 		return false;
@@ -115,6 +123,7 @@ bool CTcp_client::Connect()
 	}
 	else
 	{
+	
 		printf("接続出来ました。\n");
 		return true;
 	}

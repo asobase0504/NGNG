@@ -11,26 +11,30 @@
 #include "main.h"
 
 
-//ç\ë¢ëÃ
+class CUdp_Client;
 
-
-class  CTcp_client
+class  CTcp_Client
 {
 public:
-	CTcp_client();
-	~CTcp_client();
-	bool Init(const char*plPAddress, int nPortNum); bool Init(SOCKET sock);
+	CTcp_Client();
+	~CTcp_Client();
+	bool Init(const char*plPAddress, int nPortNum);
+	bool Init(SOCKET sock);
 	int Send(const char*pSendData, int nSendDataSize);
 	int Recv(char*pRecvData, int nRecvDataSize);
-	int Sendto(const char*pSendData, int nSendDataSize);
-	int Recvfrom(char*pRecvData, int nRecvDataSize);
-	void Uninit(void);
-	SOCKET GetSock() {return m_sock;}
-	sockaddr_in GetSockAdd() { return m_clientAddr; }
+	void Uninit();
+	bool Connect();
+	SOCKET GetSock() { return m_sock; }
+
+
+	//void ConnectTh();
 private:
+	std::string m_Ip;
+	int m_nPortNum;
 	SOCKET m_sock;
-	sockaddr_in m_serverAddr;
-	sockaddr_in m_clientAddr;
+	bool m_sockOk;
+
+
 };
 
 #endif
