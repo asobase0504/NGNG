@@ -75,14 +75,12 @@ public:
 	bool GetMoveLock() { return m_isMoveLock; }
 	void SetControlLock(bool isLock) { m_isControl = isLock; }
 	bool GetControlLock() { return m_isControl; }
-	void SetInertiaMoveLock(bool isLock) { m_isControl = isLock; }	// 慣性・重力
-	bool GetInertiaMoveLock() { return m_isControl; }				// 慣性・重力
+	void SetInertiaMoveLock(bool isLock) { m_isInertiaMoveLock = isLock; }	// 慣性・重力
+	bool GetInertiaMoveLock() { return m_isInertiaMoveLock; }				// 慣性・重力
 
 	// 攻撃
 	void DealDamage(CCharacter* inChara, float SkillMul);
 	void TakeDamage(const int inDamage, CCharacter* inChara);
-	void Attack(CCharacter* pEnemy, float SkillMul);
-	void Damage(const int inDamage);
 	void AbDamage(const int inDamage);
 	int CalDamage(float SkillAtkMul);
 	void AddDamage(float inDamage) { m_addDamage = inDamage; }
@@ -112,7 +110,7 @@ public:
 	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }		// 受けてる状態異常
 
 	// レベル
-	void SetLevel(int level) { m_level = level; }
+	void SetLevel(int level);
 	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
 	void SetStun(bool isStun) { m_isStun = isStun; }
 	void AddExp(int exp);

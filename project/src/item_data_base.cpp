@@ -718,7 +718,7 @@ void CItemDataBase::Init()
 	m_itemInfo[ITEM_ELITE][2] = "ITEM_DANGO_O1";
 	// エリート---------------------------------------------------------
 	// 持っているものはエリートになる
-	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
+	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{// 倍率の設定
 		int magnification = 2;
 		int hp = inCharacter->GetHp()->GetCurrent();

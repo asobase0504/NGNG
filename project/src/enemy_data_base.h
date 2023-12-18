@@ -36,7 +36,19 @@ public:
 	enum EEnemyType
 	{
 		SKELTON,
+		NINE_FOX,
 		MAX_TYPE
+	};
+
+	struct SStatus
+	{
+		int s_hp;
+		int s_attack;
+		float s_size;
+
+		float s_collisionLength;
+		float s_collisionHeight;
+		std::string s_modelKey;
 	};
 
 private:
@@ -50,10 +62,13 @@ public:
 	static void Uninit();
 public:
 	ACTIVITY_FUNC GetActivityFunc(EActivityPattern inState) { return m_activityFunc[inState]; }
+	SStatus GetBaseStatus(EEnemyType inType) { return m_status[inType]; }
 private:
 	
 private:	// ƒƒ“ƒo•Ï”
 	std::vector<ACTIVITY_FUNC> m_activityFunc;
+
+	std::array<SStatus, MAX_TYPE> m_status;
 
 };
 #endif

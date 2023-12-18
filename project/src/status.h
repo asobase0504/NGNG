@@ -77,7 +77,7 @@ public:
 	// 現在の値が上限を越しているか否か
 	bool MaxCurrentSame() { return m_isMax ? m_current >= m_max : false; }
 
-	void AddMax(T inAdd) { m_max += inAdd; CalStatus(); }
+	void AddMax(T inAdd) { m_max += inAdd; }
 	void AddBaseState(T inAdd) { m_base += inAdd; CalStatus(); }
 	void AddItemEffect(T inAdd) { m_addItem += inAdd; CalStatus(); }
 	void ResetItemEffect(T inAdd) { m_addItem = 0; CalStatus(); }

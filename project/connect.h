@@ -1,3 +1,4 @@
+
 //============================
 //
 // client設定
@@ -9,36 +10,42 @@
 #define _CONNECT_H_
 
 #include "model_data.h"
-
+#include "client.h"
 
 //構造体
 
-class CTcp_client;
-class CDataPack;
-class  CClient
-{
 
+class CDataPack;
+class  ConnectManager
+{
 	struct SConnectCheck
 	{
 		int myConnect;
 		bool enemyConnect;
 	};
-
 public:
 	const int MAX_PL = 4;
 public:
-	CClient();
-	~CClient();
+	ConnectManager();
+	~ConnectManager();
 	bool Init(const char*plPAddress, int nPortNum);
 	void Uninit(void);
-	static SConnectCheck ConnectTh(CTcp_client * tcp);
-	static void Recv(CClient*data);
-	void SendPlayerData(CModelData::SSendEnemy Data);
+	static SConnectCheck ConnectTh(CClient * Client);
+
+	static void RecvPlayerData(ConnectManager *list);
+	void SendPlayerData(CModelData::SSendPack Data);
+
+	int CharRecv(char*Recv, int Size, CClient::CONNECT_TYPE Tipe);
+	void CharSend(const char*send, int Size, CClient::CONNECT_TYPE Tipe);
+
+
 	bool GetIsConnect() { return m_myConnect.enemyConnect; }
+	CClient *GetClient() { return m_client; }
+
 private:
-	CTcp_client *m_tcpClient;
+	CClient *m_client;				//クライアント統合マネージャー
 	SConnectCheck m_myConnect;		//自分に接続する
-	CDataPack::SSendPack m_player;	//保存するプレイヤーデータの保存先
+	CReceiveData::SReceiveList m_player;	//保存するプレイヤーデータの保存先
 
 };
 

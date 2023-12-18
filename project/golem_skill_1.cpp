@@ -112,14 +112,5 @@ void CGolemSkill_1::AllWayAbility()
 void CGolemSkill_1::HitAbility(CCharacter * Target)
 {
 	m_apChara->DealDamage(Target,0.25f);
-
-	if (m_bullet != nullptr)
-	{
-		m_bullet->Uninit();
-		m_bullet = nullptr;
-	}
-
-	CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData(CAbnormalDataBase::ABNORMAL_FIRE)->GetWhenAddFunc();
-	abnormalFunc(Target, CAbnormalDataBase::ABNORMAL_FIRE);
 	Uninit();
 }

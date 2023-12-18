@@ -349,4 +349,26 @@ void CEnemyDataBase::Init()
 
 		inEnemy->SetMoveXZ(move.x,move.z);
 	};
+
+	EEnemyType type;
+
+	{// ä[çú
+		type = SKELTON;
+		m_status[type].s_hp = 100;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 50.0f;
+		m_status[type].s_collisionLength = 10.0f;
+		m_status[type].s_collisionHeight = 50.0f;
+		m_status[type].s_modelKey = "SKE";
+	}
+
+	{// ã„îˆ
+		type = NINE_FOX;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "NINE_FOX";
+	}
 }

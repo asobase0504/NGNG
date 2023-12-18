@@ -12,6 +12,7 @@
 //==============================================================
 #include "task.h"
 #include "enemy.h"
+#include "enemy_data_base.h"
 
 //==============================================================
 // 前方宣言
@@ -33,13 +34,6 @@ private:
 	static CEnemyManager* m_enemyManager;
 
 public:
-	enum EType
-	{
-		NONE = 0,
-		SKELETON,
-		MAX
-	};
-
 	// コンストラクタとデストラクタ
 	~CEnemyManager();
 
@@ -48,11 +42,10 @@ public:
 	void	Uninit() override;
 
 	// 静的メンバ関数
-	CEnemy* CreateEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 size, EType type, int level);			// エネミーの生成
+	CEnemy* CreateEnemy(D3DXVECTOR3 pos, CEnemyDataBase::EEnemyType type, int level);			// エネミーの生成
 	// ランダムスポーン
 	CEnemy* RandomSpawn();
 
 private:		// メンバ変数
-	EType m_type;
 };
 #endif

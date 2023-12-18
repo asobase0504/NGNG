@@ -64,7 +64,7 @@ bool CStatueCombat::Select(CCharacter * selectCharacter)
 		CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
 		int exp = pDiff->GetEnemyLevel();
 
-		CEnemy *enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE, exp);
+		CEnemy *enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), CEnemyDataBase::SKELTON, exp);
 		enemy->TakeItem(CItemDataBase::ITEM_ELITE);
 	}
 

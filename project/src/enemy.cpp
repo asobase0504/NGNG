@@ -57,7 +57,7 @@ HRESULT CEnemy::Init()
 
 	m_AttackCnt = 0;
 	// モデルの読み込み
-	m_skinModel = CSkinMesh::Create("KENGOU");
+	m_skinModel->Load("SKE");
 	SetEndChildren(m_skinModel);
 
 	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
@@ -86,7 +86,6 @@ void CEnemy::Update()
 {
 	if (m_isDied)
 	{
-		Uninit();
 		return;
 	}
 
@@ -99,17 +98,26 @@ void CEnemy::Update()
 	// 現在のactivityに設定する。
 	m_Activity(this);
 
-	CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
-	int exp = pDiff->GetLevel();
-
-	AddExp(exp);
-
 	// 更新処理
 	CCharacter::Update();
 
 #ifdef ENEMY_DEBUG
 	CDebugProc::Print("Enemy：move3(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
 #endif // _DEBUG
+}
+
+//--------------------------------------------------------------
+// 読込み
+//--------------------------------------------------------------
+void CEnemy::Load(const CEnemyDataBase::SStatus & status)
+{
+	m_size = D3DXVECTOR3(status.s_size, status.s_size, status.s_size);
+	m_collision->SetHeight(status.s_collisionHeight);
+	m_collision->SetLength(status.s_collisionLength);
+	m_skinModel->Load(status.s_modelKey);
+	m_attack.SetCurrent(status.s_attack);
+	m_hp.SetCurrent(status.s_hp);
+	m_hp.AddMax(status.s_hp);
 }
 
 //--------------------------------------------------------------

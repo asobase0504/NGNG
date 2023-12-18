@@ -11,6 +11,7 @@
 // include
 //==============================================================
 #include "character.h"
+#include "enemy_data_base.h"
 
 //==============================================================
 // マクロ宣言
@@ -51,6 +52,8 @@ public:
 	//プロトタイプ宣言
 	HRESULT	Init() override;
 	void	Update() override;
+
+	void Load(const CEnemyDataBase::SStatus& status);
 
 	// 静的メンバ関数
 	void SetActivity(ACTIVITY_FUNC NowAct) { m_Activity = NowAct; }

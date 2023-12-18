@@ -51,6 +51,10 @@ void CYamatoSkill_3::InitAbility()
 		m_Collision->SetParent(&m_apChara->GetPos());
 		SetEndChildren(m_Collision);
 
+		// プレイヤーの操作を無効化
+		m_apChara->SetControlLock(true);
+		m_apChara->SetMoveXZ(0.0f, 0.0f);
+
 		// カメラの方向に合わせる
 		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
 		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();

@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// スキル()
+// スキル(マーセナリーのR)
 // Author : 髙野馨將
 //
 //**************************************************************
@@ -32,9 +32,11 @@ public:
 	static CYamatoSkill_4	*Create(CCharacter* chara);					// スキルの生成
 
 	void InitAbility() override;										// スキルが始まるとき
+	void AllWayAbility() override;										// 持続中
+	void UninitAbility() override;										// 終了
 	void HitAbility(CCharacter* Target) override;						// スキルが当たった時の効果
 
 private:		// メンバ変数
-
+	int m_Time;															// 時間												
 };
 #endif

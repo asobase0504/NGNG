@@ -40,7 +40,7 @@
 #include "hp_ui.h"
 #include "money_ui.h"
 #include "skill_ui.h"
-#include "player_abnormal_ui.h"
+#include "abnormal_2dui.h"
 
 /**/
 #include "procedure3D.h"
@@ -70,6 +70,7 @@ HRESULT CPlayer::Init()
 
 	m_isdash = false;
 	m_isUpdate = true;
+	m_isInertiaMoveLock = false;
 	// 初期化処理
 	CCharacter::Init();
 
@@ -90,7 +91,7 @@ HRESULT CPlayer::Init()
 	}
 
 	// モデルの読み込み
-	m_skinModel = CSkinMesh::Create("KENGOU");
+	m_skinModel->Load("KENGOU");
 
 	// 親子関係の構築
 	SetEndChildren(m_skinModel);
@@ -138,7 +139,22 @@ void CPlayer::Update()
 	{
 		return;
 	}
-	
+
+	for (CAbnormal2DUI* ui : m_abnormalUI)
+	{
+		if (m_haveAbnormal[ui->GetType()].s_stack <= 0)
+		{
+			ui->Uninit();
+		}
+	}
+	m_abnormalUI.remove_if([this](CAbnormal2DUI* ui) {return (m_haveAbnormal[ui->GetType()].s_stack <= 0); });
+	int cnt = 0;
+	for (CAbnormal2DUI* ui : m_abnormalUI)
+	{
+		ui->SetPos(D3DXVECTOR3(80.0f + cnt * 60.0f, SCREEN_HEIGHT - 120.0f, 0.0f));
+		cnt++;
+	}
+
 	// 移動量の取得
 	D3DXVECTOR3 move = GetMove();
 
@@ -256,9 +272,9 @@ void CPlayer::Move()
 		}
 	}
 
-	if (m_isMoveLock)
+	if (m_isMoveLock || m_isControl)
 	{
-		SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
+		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	}
 
 	if (m_isMoveLock)
@@ -303,6 +319,11 @@ void CPlayer::Move()
 //--------------------------------------------------------------
 void CPlayer::Jump()
 {
+	if (m_isMoveLock || m_isControl)
+	{
+		return;
+	}
+
 	// ジャンプ
 	bool jump = m_controller->Jump();
 
@@ -336,10 +357,12 @@ void CPlayer::AddAbnormalStack(const int id, const int cnt)
 {
 	if (GetAbnormalCount()[id].s_stack == 0)
 	{
-		m_abnormalUI.push_back(CPlayerAbnormalUI::Create(&m_haveAbnormal[id].s_stack, (CAbnormalDataBase::EAbnormalType)id));
-		for (CPlayerAbnormalUI* ui : m_abnormalUI)
+		m_abnormalUI.push_back(CAbnormal2DUI::Create(&m_haveAbnormal[id].s_stack, (CAbnormalDataBase::EAbnormalType)id));
+		int cnt = 0;
+		for (CAbnormal2DUI* ui : m_abnormalUI)
 		{
-			//ui->SetPos(D3DXVECTOR3());
+			ui->SetPos(D3DXVECTOR3(80.0f + cnt * 60.0f, SCREEN_HEIGHT - 120.0f,0.0f));
+			cnt++;
 		}
 	}
 

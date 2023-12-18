@@ -20,27 +20,29 @@ class CProcedure;
 //**************************************************
 // ÉNÉâÉX
 //**************************************************
-class CPlayerAbnormalUI : public CObject
+class CAbnormal2DUI : public CObject
 {
 public:
-	CPlayerAbnormalUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI);
-	~CPlayerAbnormalUI();
+	CAbnormal2DUI();
+	~CAbnormal2DUI();
 
 	HRESULT Init() override;
 	void Update() override;
 
-	static CPlayerAbnormalUI* Create(const int* inStock,CAbnormalDataBase::EAbnormalType inType);
+	static CAbnormal2DUI* Create(const int* inStock,CAbnormalDataBase::EAbnormalType inType);
 
 	CAbnormalDataBase::EAbnormalType GetType() { return m_inType; }
 
 	void SetPos(const D3DXVECTOR3&) override;
 
 private:
+	// ï`âÊï®
+	CObject2d* m_abnormalLogo;	// èÛë‘àŸèÌÉçÉS
+	CProcedure* m_stack;		// êîéö
+
 	CAbnormalDataBase::EAbnormalType m_inType;
 	bool m_isDisplayStack;
-	const int* m_stackCnt;		// stackêîÇÃÉçÉS
-	CObject2d* m_abnormalLogo;
-	CProcedure* m_stack;
+	const int* m_stackCnt;		// stackêî
 };
 
 #endif // _TIMER_H_

@@ -33,11 +33,25 @@ public:
 
 	static CHPUI* Create(CStatus<int>* inHp);
 
-private:
-	CStatus<int>* m_hp;
+	void SetHP(CStatus<int>* inHp) { m_hp = inHp; }
+
+protected:
+	// •`‰æ•¨
 	CProcedure* m_current;
 	CProcedure* m_max;
 	CObject2d* m_ground;
 	CObject2d* m_bar;
+
+	CStatus<int>* m_hp;
+};
+
+class CBossHPUI : public CHPUI
+{
+public:
+	CBossHPUI(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_UI) {}
+	~CBossHPUI() {}
+
+	HRESULT Init() override;
+
 };
 #endif	// _ITEM_DATA_H_
