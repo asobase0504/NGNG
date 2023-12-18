@@ -118,7 +118,7 @@ void CSkillEntity::Update()
 			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
 			if (hit && m_Interval <= 0)
 			{// ダメージの判定
-				this->HitAbility(inChara);
+				HitAbility(inChara);
 				collision = true;
 			}
 		});

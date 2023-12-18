@@ -1,17 +1,17 @@
-#include "player_abnormal_ui.h"
+#include "abnormal_2dui.h"
 #include "object2d.h"
 #include "procedure.h"
 
-CPlayerAbnormalUI::CPlayerAbnormalUI():
+CAbnormal2DUI::CAbnormal2DUI():
 	CObject(CTaskGroup::EPriority::LEVEL_2D_UI)
 {
 }
 
-CPlayerAbnormalUI::~CPlayerAbnormalUI()
+CAbnormal2DUI::~CAbnormal2DUI()
 {
 }
 
-HRESULT CPlayerAbnormalUI::Init()
+HRESULT CAbnormal2DUI::Init()
 {
 	m_abnormalLogo = CObject2d::Create(CTaskGroup::LEVEL_2D_UI);
 	SetEndChildren(m_abnormalLogo);
@@ -24,7 +24,7 @@ HRESULT CPlayerAbnormalUI::Init()
 	return E_NOTIMPL;
 }
 
-void CPlayerAbnormalUI::Update()
+void CAbnormal2DUI::Update()
 {
 	m_stack->SetNumber(*m_stackCnt);
 }
@@ -32,9 +32,9 @@ void CPlayerAbnormalUI::Update()
 //--------------------------------------------------
 // ê∂ê¨
 //--------------------------------------------------
-CPlayerAbnormalUI * CPlayerAbnormalUI::Create(const int* inStock, CAbnormalDataBase::EAbnormalType inType)
+CAbnormal2DUI * CAbnormal2DUI::Create(const int* inStock, CAbnormalDataBase::EAbnormalType inType)
 {
-	CPlayerAbnormalUI* ui = new CPlayerAbnormalUI;
+	CAbnormal2DUI* ui = new CAbnormal2DUI;
 	ui->m_stackCnt = inStock;
 	ui->m_inType = inType;
 	ui->Init();
@@ -45,7 +45,7 @@ CPlayerAbnormalUI * CPlayerAbnormalUI::Create(const int* inStock, CAbnormalDataB
 //--------------------------------------------------
 // à íuÇÃí≤êÆ
 //--------------------------------------------------
-void CPlayerAbnormalUI::SetPos(const D3DXVECTOR3& inPos)
+void CAbnormal2DUI::SetPos(const D3DXVECTOR3& inPos)
 {
 	CObject::SetPos(inPos);
 

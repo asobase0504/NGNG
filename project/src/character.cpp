@@ -138,6 +138,7 @@ HRESULT CCharacter::Init()
 
 	m_state = GROUND;
 
+	m_skinModel = CSkinMesh::Create();
 	return S_OK;
 }
 

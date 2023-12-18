@@ -28,24 +28,25 @@ public:
 	//--------------------------------------------------------------------
 	// 静的メンバ関数
 	//--------------------------------------------------------------------
-	static CSkinMesh *Create(std::string Name);		// 3Dモデルの生成
+	static CSkinMesh *Create(std::string Name = "");		// 3Dモデルの生成
 
 	CSkinMesh();
 	~CSkinMesh() {
 		Release();
 	}
-	HRESULT Init() override { return S_OK; }
 	void Uninit() override { CObject::Uninit(); }
 	void Update() override;
 
 	//スキンメッシュ内部処理
-	HRESULT Init(std::string pMeshPass);
 	HRESULT AllocateBoneMatrix(LPD3DXFRAME pFrameRoot, LPD3DXMESHCONTAINER pMeshContainerBase);
 	HRESULT AllocateAllBoneMatrices(LPD3DXFRAME pFrameRoot, LPD3DXFRAME pFrameBase);
 	void ShaderDraw(MYMESHCONTAINER*, MYFRAME*);
 	void RenderMeshContainer(MYMESHCONTAINER*, MYFRAME*);
 	void UpdateFrameMatrices(LPD3DXFRAME pFrameBase, LPD3DXMATRIX pParentMatrix);
 	void DrawFrame(LPD3DXFRAME);
+
+	void Load(std::string pMeshPass);
+
 	//解放処理
 	void Release();
 

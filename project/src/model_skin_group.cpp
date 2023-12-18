@@ -335,6 +335,8 @@ void CSkinMeshGroup::Load(std::string inKey, std::string inFileName)
 {
 	std::string fileName = inFileName;
 
+	m_keyList.push_back(inKey);
+
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 
@@ -352,6 +354,12 @@ void CSkinMeshGroup::Load(std::string inKey, std::string inFileName)
 //--------------------------------------------------------------
 void CSkinMeshGroup::UnloadAll()
 {
+	for (std::string key : m_keyList)
+	{
+		Unload(key);
+	}
+
+	m_keyList.clear();
 	m_skinMesh.clear();
 }
 
