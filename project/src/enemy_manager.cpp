@@ -89,7 +89,7 @@ CEnemy* CEnemyManager::RandomSpawn()
 	float randomPosZ = FloatRandom(500.0f, -415.0f);
 
 	// エネミータイプのランダム化
-	int enemyType = IntRandom(1, 1);
+	int enemyType = IntRandom(0, 0);
 
 	CDifficult *pDiff =  ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
 	return CreateEnemy(D3DXVECTOR3(randomPosX, 0.0f, randomPosZ), (CEnemyDataBase::EEnemyType)enemyType, pDiff->GetEnemyLevel());
