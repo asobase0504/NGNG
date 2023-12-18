@@ -1,7 +1,9 @@
 // -------------------------------------------------------------
 // グローバル変数
 // -------------------------------------------------------------
+int		 iMtxNum;
 
+float4x4 mBoneStack[128];
 float4x4 mWorld;
 float4x4 mProj;
 float4x4 mView;
@@ -21,6 +23,9 @@ float3 vEyeDir;		// カメラの向き
 float Test;
 float TimeTarget;
 
+static const int MAX_MATRICES = 26;
+float4x3    mWorldMatrixArray[MAX_MATRICES] : WORLDMATRIXARRAY;
+
 // -------------------------------------------------------------
 // 頂点シェーダからピクセルシェーダに渡すデータ
 // -------------------------------------------------------------
@@ -30,6 +35,15 @@ struct VS_OUTPUT
 	float4 Color		: COLOR0;			// 色
 	float2 Tex			: TEXCOORD0;		// テクスチャ
 	float3 Normal		: TEXCOORD1;
+};
+
+struct VS_INPUT
+{
+	float4  Pos             : POSITION;
+	float4  BlendWeights    : BLENDWEIGHT;
+	float4  BlendIndices    : BLENDINDICES;
+	float3  Normal          : NORMAL;
+	float3  Tex0            : TEXCOORD0;
 };
 
 // -------------------------------------------------------------
@@ -97,7 +111,7 @@ VS_OUTPUT VS(
 	float3 N = normalize(Normal.xyz);
 
 	Out.Normal = N;
-	Out.Color = vDiffuse *(max(vAmbient, dot(N, N)));;
+	Out.Color = vDiffuse *(max(vAmbient, dot(N, N)));
 
 	return Out;
 }
@@ -136,8 +150,6 @@ VS_OUTPUT OUTLINE_VS(
 	//法線ベクトル。
 	float3 N = -normalize(Normal.xyz);
 
-	Out.Color = float4(1.0f,0.0f,0.0f,1.0f);
-
 	Out.Normal = N;
 
 	return Out;
@@ -148,6 +160,8 @@ VS_OUTPUT OUTLINE_VS(
 //=========================================
 float4 PS(VS_OUTPUT In) : COLOR
 {
+	In.Color = In.Color * tex2D(Samp,In.Tex);
+
 	return In.Color;		// 拡散光＋環境光(テクスチャの色)
 }
 
@@ -238,6 +252,48 @@ float4 ToonPS(VS_OUTPUT In) : COLOR0
 	return Out;
 }
 
+// -------------------------------------------------------------
+// スキンメッシュ
+// -------------------------------------------------------------
+VS_OUTPUT SK_VS(
+	float4 Pos    : POSITION,	// ローカル位置座標
+	float4 Normal : NORMAL,		// 法線ベクトル
+	float2 Tex : TEXCOORD		// テクスチャの法線ベクトル
+)
+{
+	VS_OUTPUT Out = (VS_OUTPUT)0;		// 出力データ
+	float4x4 result;
+
+	for (int i = 0; i < iMtxNum; i++)
+	{
+		result += mBoneStack[i] * 1.0f;
+	}
+
+	float4x4 WVP = mul(mWorld, result);
+	WVP = mul(WVP, mScale);
+	WVP = mul(WVP, mRot);
+	WVP = mul(WVP, mTrans);
+
+	float4x4 MVP = mul(WVP, mView);
+	MVP = mul(MVP, mProj);
+
+	// 座標変換
+	Out.Pos = mul(Pos, MVP);
+
+	// テクスチャ座標
+	Out.Tex = Tex;
+
+	// 拡散光＋環境光
+	float3 L = (vLightDir.xyz);		// ローカル座標系でのライトベクトル
+
+	//法線ベクトル。
+	float3 N = normalize(Normal.xyz);
+
+	Out.Normal = N;
+	Out.Color = float4(1.0f,1.0f,1.0f,1.0f);
+
+	return Out;
+}
 
 // -------------------------------------------------------------
 // テクニック
@@ -266,7 +322,7 @@ technique Diffuse
 	}
 	pass P4
 	{
-		VertexShader = compile vs_2_0 MATRIX_VS();
+		VertexShader = compile vs_2_0 SK_VS();
 		PixelShader = compile ps_2_0 PS();
 	}
 	pass P5

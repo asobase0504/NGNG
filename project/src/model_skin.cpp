@@ -112,6 +112,11 @@ void CSkinMesh::Update()
 //--------------------------------------------------------------
 void CSkinMesh::Draw()
 {
+	if (!m_isDisplay)
+	{
+		return;
+	}
+
 	//現在のアニメーション番号を適応
 	m_pAnimController->SetTrackAnimationSet(0, m_pAnimSet[m_CurrentTrack]);
 	//0(再生中の)トラックからトラックデスクをセットする
@@ -367,6 +372,8 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 		}
 		//ジオメトリブレンディングを使用するために行列の個数を指定
 		pDevice->SetRenderState(D3DRS_VERTEXBLEND, dwBlendMatrixNum);
+		pEffect->SetInt(m_hMtxNum, (int)&dwBlendMatrixNum);
+	
 		//影響している行列の検索
 		for (k = 0; k < pMeshContainer->dwWeight; k++)
 		{
@@ -384,6 +391,7 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 				//行列スタックに格納
 				pDevice->SetTransform(D3DTS_WORLDMATRIX(k), &mStack);
 			}
+			pEffect->SetMatrixArray(m_hBoneStack, &mStack, i);
 		}
 
 		D3DMATERIAL9 TmpMat = pMeshContainer->pMaterials[pBoneCombination[i].AttribId].MatD3D;
@@ -421,11 +429,6 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 		pMeshContainer->MeshData.pMesh->DrawSubset(i);
 		pEffect->EndPass();
 
-		// 黒モデルの描画
-		pEffect->BeginPass(3);
-		pMeshContainer->MeshData.pMesh->DrawSubset(i);
-		pEffect->EndPass();
-
 	}
 	pEffect->End();
 
@@ -436,6 +439,15 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 //--------------------------------------------------------------
 void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 {
+	extern LPD3DXEFFECT pEffect;		// シェーダー
+	if (pEffect == nullptr)
+	{
+		assert(false);
+		return;
+	}
+
+	/* pEffectに値が入ってる */
+
 	//スキンメッシュの描画
 	if (pMeshContainer->pSkinInfo == NULL)
 	{
@@ -511,7 +523,7 @@ void CSkinMesh::DrawFrame(LPD3DXFRAME pFrameBase)
 		//if( GetpShader() != NULL && GetpShader()->GetShaderKind() == SHADER_KIND_LAMBERT ){
 		// ShaderDraw( pDevice, ControlNum, pMeshContainer, pFrame ); 
 		//}else{
-		RenderMeshContainer(pMeshContainer, pFrame);
+		ShaderDraw(pMeshContainer, pFrame);
 		// }
 		//次のメッシュコンテナへアクティブを移す
 		pMeshContainer = (MYMESHCONTAINER*)pMeshContainer->pNextMeshContainer;

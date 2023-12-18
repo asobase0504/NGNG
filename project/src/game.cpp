@@ -40,6 +40,12 @@
 #include "map.h"
 #include "PlayerController.h"
 
+/* UI系統 */
+#include "hp_ui.h"
+#include "money_ui.h"
+#include "skill_ui.h"
+#include "difficult.h"
+
 /* サーバー */
 #include "connect.h"
 
@@ -105,6 +111,9 @@ HRESULT CGame::Init()
 	reticle->SetPos(CApplication::CENTER_POS);
 	reticle->SetSize(D3DXVECTOR3(16.f, 16.f,0.f));
 	reticle->SetTexture("RETICLE");
+
+	m_difficult = CDifficult::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
+
 	return S_OK;
 }
 
@@ -196,8 +205,6 @@ void CGame::Update()
 
 		m_tcp->SendPlayerData(sendData);
 	}*/
-	
-
 }
 
 void CGame::SetChangeMap()
