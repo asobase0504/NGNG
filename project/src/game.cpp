@@ -174,19 +174,6 @@ void CGame::Update()
 	{
 		SetChangeMap();
 	}
-	if (pInput->Trigger(DIK_C))
-	{
-		m_skin->ChangeAnim(1);
-	}
-	if (pInput->Trigger(DIK_V))
-	{
-		m_skin->ChangeAnim(0);
-	}
-	if (pInput->Trigger(DIK_X))
-	{
-		CSkinMesh* skin = CSkinMesh::Create("KENGOU");
-		skin->SetPos(D3DXVECTOR3(50.f, 0.f, 50.f));
-	}
 
 	//if (m_tcp->GetIsConnect())
 	//{

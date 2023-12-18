@@ -476,6 +476,12 @@
     <ClCompile Include="src\udp_client.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="carrying_item_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill5.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -818,10 +824,27 @@
     <ClInclude Include="src\difficult.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="src\difficult.h" />
+    <ClInclude Include="abnormal_2dui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
     <ClInclude Include="abnormal_2dui.h" />
     <ClInclude Include="Skill5.h" />
     <ClInclude Include="src\client.h" />
     <ClInclude Include="src\udp_client.h" />
+    <ClInclude Include="src\difficult.h" />
+    <ClInclude Include="src\udp_client.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="src\client.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="carrying_item_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill5.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">

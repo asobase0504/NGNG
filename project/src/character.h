@@ -256,5 +256,7 @@ protected:
 	int m_level;
 	float m_exp;
 	float m_reqExp;
+
+	float m_destRot;
 };
 #endif

@@ -117,6 +117,7 @@ HRESULT CCharacter::Init()
 	m_exp = 0;
 	m_level = 1;
 	m_reqExp = m_level * 100;
+	m_destRot = 0.0f;
 
 	m_isStun = false;
 	m_isBlock = false;
@@ -152,6 +153,19 @@ void CCharacter::Update()
 
 	// 常に起動するアイテム
 	CItemManager::GetInstance()->AllWhenAllways(this, m_haveItem);
+
+	D3DXVECTOR3 move = GetMove();
+	move.y = 0.0f;
+	if (D3DXVec3Length(&move) != 0.0f)
+	{
+		D3DXVec3Normalize(&move, &move);
+		m_destRot = atan2f(move.x, move.z);
+	}
+
+	float dest = m_destRot - m_rot.y;
+	dest *= 0.1f;
+
+	AddRot(D3DXVECTOR3(0.0f, dest, 0.0f));
 
 	Collision();
 
