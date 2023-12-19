@@ -25,11 +25,13 @@
 
 #include "enemy_data_base.h"
 #include "skill.h"
+#include "game.h"
+#include "difficult.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CEnemy::CEnemy(int nPriority)
+CEnemy::CEnemy()
 {
 
 }
@@ -47,7 +49,6 @@ CEnemy::~CEnemy()
 //--------------------------------------------------------------
 HRESULT CEnemy::Init()
 {
-	MapChangeRelese();
 	// 初期化処理
 	CCharacter::Init();
 
@@ -56,7 +57,7 @@ HRESULT CEnemy::Init()
 
 	m_AttackCnt = 0;
 	// モデルの読み込み
-	m_skinModel = CSkinMesh::Create("KENGOU");
+	m_skinModel->Load("SKE");
 	SetEndChildren(m_skinModel);
 
 	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
@@ -64,14 +65,17 @@ HRESULT CEnemy::Init()
 	m_pEHPUI = CEnemy_HPUI::Create(this);
 	SetEndChildren(m_pEHPUI);
 
+	// 当たり判定の作成
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
 	SetEndChildren(m_collision);
-	m_dropMoney = 5;
 
+	// SKILLの作成
 	m_skill.push_back(CSkill::Create());
 	m_skill[0]->SetSkill("GOLEM_SKILL_1",this);
 	SetEndChildren(m_skill[0]);
+
+	m_dropMoney = 5;
 	return S_OK;
 }
 
@@ -82,7 +86,6 @@ void CEnemy::Update()
 {
 	if (m_isDied)
 	{
-		Uninit();
 		return;
 	}
 
@@ -101,6 +104,20 @@ void CEnemy::Update()
 #ifdef ENEMY_DEBUG
 	CDebugProc::Print("Enemy：move3(%f,%f,%f)\n", m_move.x, m_move.y, m_move.z);
 #endif // _DEBUG
+}
+
+//--------------------------------------------------------------
+// 読込み
+//--------------------------------------------------------------
+void CEnemy::Load(const CEnemyDataBase::SStatus & status)
+{
+	m_size = D3DXVECTOR3(status.s_size, status.s_size, status.s_size);
+	m_collision->SetHeight(status.s_collisionHeight);
+	m_collision->SetLength(status.s_collisionLength);
+	m_skinModel->Load(status.s_modelKey);
+	m_attack.SetCurrent(status.s_attack);
+	m_hp.SetCurrent(status.s_hp);
+	m_hp.AddMax(status.s_hp);
 }
 
 //--------------------------------------------------------------

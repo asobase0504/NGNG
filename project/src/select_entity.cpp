@@ -17,7 +17,8 @@
 CSelectEntity::CSelectEntity() :
 	m_collisionCylinder(nullptr),
 	m_collisionBox(nullptr),
-	m_ui(nullptr)
+	m_ui(nullptr),
+	m_costUI(nullptr)
 {
 	CMap* map = CMap::GetMap();
 	map->InSelectEntityList(this);

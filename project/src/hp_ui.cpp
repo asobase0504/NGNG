@@ -29,15 +29,16 @@ CHPUI::~CHPUI()
 //--------------------------------------------------
 HRESULT CHPUI::Init()
 {
+	m_size = D3DXVECTOR3(200.0f, 15.0f, 0.0f);
 	m_ground = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	m_ground->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
-	m_ground->SetSize(D3DXVECTOR3(200.0f, 15.0f, 0.0f));
+	m_ground->SetSize(m_size);
 	m_ground->SetPos(D3DXVECTOR3(50.0f, SCREEN_HEIGHT - 70.0f, 0.0f));
 	m_ground->SetColor(D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f));
 
 	m_bar = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	m_bar->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
-	m_bar->SetSize(D3DXVECTOR3(200.0f,15.0f,0.0f));
+	m_bar->SetSize(m_size);
 	m_bar->SetPos(D3DXVECTOR3(50.0f, SCREEN_HEIGHT - 70.0f,0.0f));
 	m_bar->SetColor(D3DXCOLOR(0.0f,1.0f,0.0f,1.0f));
 
@@ -45,17 +46,23 @@ HRESULT CHPUI::Init()
 	m_current->SetAlign(CProcedure::EAlign::RIGHT);
 	m_max = CProcedure::Create(D3DXVECTOR3(210.0f + 50.0f, SCREEN_HEIGHT - 70.0f, 0.0f), D3DXVECTOR3(15.0f, 15.0f, 0.0f), 0);
 	m_max->SetAlign(CProcedure::EAlign::LEFT);
+
+	SetEndChildren(m_bar);
+	SetEndChildren(m_ground);
+	SetEndChildren(m_current);
+	SetEndChildren(m_max);
+
 	return S_OK;
 }
 
-//--------------------------------------------------
+//--------------------------------------------------w
 // XV
 //--------------------------------------------------
 void CHPUI::Update()
 {
 	float rate = (float)m_hp->GetCurrent() / (float)m_hp->GetMax();
 
-	D3DXVECTOR3 size = D3DXVECTOR3(200.0f, 15.0f, 0.0f);
+	D3DXVECTOR3 size = m_size;
 	size.x *= rate;
 	m_bar->SetSize(size);
 
@@ -77,4 +84,32 @@ CHPUI* CHPUI::Create(CStatus<int>* inHp)
 	ui->m_hp = inHp;
 
 	return ui;
+}
+
+HRESULT CBossHPUI::Init()
+{
+	m_size = D3DXVECTOR3(300.0f, 10.0f, 0.0f);
+	m_pos = D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 70.0f, 0.0f);
+	m_ground = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	m_ground->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
+	m_ground->SetSize(m_size);
+	m_ground->SetPos(D3DXVECTOR3(m_pos.x - m_size.x, m_pos.y, 0.0f));
+	m_ground->SetColor(D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f));
+	SetEndChildren(m_ground);
+
+	m_bar = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	m_bar->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
+	m_bar->SetSize(m_size);
+	m_bar->SetPos(D3DXVECTOR3(m_pos.x - m_size.x, m_pos.y, 0.0f));
+	m_bar->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	SetEndChildren(m_bar);
+
+	m_current = CProcedure::Create(D3DXVECTOR3(m_pos.x - 10.0f, 70.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 0);
+	m_current->SetAlign(CProcedure::EAlign::RIGHT);
+	SetEndChildren(m_current);
+	m_max = CProcedure::Create(D3DXVECTOR3(m_pos.x + 10.0f, 70.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 0);
+	m_max->SetAlign(CProcedure::EAlign::LEFT);
+	SetEndChildren(m_max);
+
+	return S_OK;
 }

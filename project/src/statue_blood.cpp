@@ -17,8 +17,7 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CStatueBlood::CStatueBlood():
-	m_subRateUI(nullptr)
+CStatueBlood::CStatueBlood()
 {
 
 }
@@ -49,9 +48,9 @@ HRESULT CStatueBlood::Init()
 
 	m_uiText = "血を捧げろ。[" + std::to_string(percent) + "%]";
 
-	m_subRateUI = CProcedure3D::Create(pos, D3DXVECTOR3(4.0f, 4.0f, 0.0f), percent);
-	SetEndChildren(m_subRateUI);
-	m_subRateUI->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+	m_costUI = CProcedure3D::Create(pos, D3DXVECTOR3(5.0f, 5.0f, 0.0f), percent);
+	SetEndChildren(m_costUI);
+	m_costUI->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 
 
 	return S_OK;
@@ -76,14 +75,14 @@ bool CStatueBlood::Select(CCharacter* selectCharacter)
 	int percent = (int)(m_hpSubRate * 100);
 	m_uiText = "血を捧げろ。[" + std::to_string(percent) + "%]";
 
-	m_subRateUI->SetNumber(percent);
+	m_costUI->SetNumber(percent);
 
 	if (m_hpSubRate >= 1.0f)
 	{
 		m_collisionCylinder->Uninit();
 		m_collisionCylinder = nullptr;
-		m_subRateUI->Uninit();
-		m_subRateUI = nullptr;
+		m_costUI->Uninit();
+		m_costUI = nullptr;
 	}
 
 	return true;
@@ -102,22 +101,21 @@ CStatueBlood* CStatueBlood::Create(D3DXVECTOR3 pos)
 	return pStatueblood;
 }
 
-
 //--------------------------------------------------------------
 // 位置
 //--------------------------------------------------------------
 void CStatueBlood::SetPos(const D3DXVECTOR3 & inPos)
 {
-	if (m_subRateUI != nullptr)
+	if (m_costUI != nullptr)
 	{
-		m_subRateUI->SetPos(inPos);
+		m_costUI->SetPos(inPos);
 
-		D3DXVECTOR3 vector = D3DXVECTOR3(0.0f, 0.0f, 10.0f);
+		D3DXVECTOR3 vector = D3DXVECTOR3(0.0f, 0.0f, 20.0f);
 		D3DXMATRIX mtxRot;
 		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
 		D3DXVec3TransformCoord(&vector, &vector, &mtxRot);
-		m_subRateUI->AddPos(vector);
-		m_subRateUI->AddPos(D3DXVECTOR3(0.0f, 10.0f, 0.0f));
+		m_costUI->AddPos(vector);
+		m_costUI->AddPos(D3DXVECTOR3(0.0f, 20.0f, 0.0f));
 	}
 	CStatue::SetPos(inPos);
 }

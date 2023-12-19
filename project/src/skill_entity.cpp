@@ -40,8 +40,6 @@ CSkillEntity::~CSkillEntity()
 HRESULT CSkillEntity::Init()
 {
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
-
-	MapChangeRelese();
 	// 初期化
 	m_Duration = pSkillData->GetDuration(m_Name);
 	m_Interval = pSkillData->GetInterval(m_Name);
@@ -87,13 +85,17 @@ void CSkillEntity::Update()
 		// 無敵時間の減少
 		m_Invincible--;
 
-		if (m_Interval > 0)
-		{// 無敵状態にする
+		if (m_Invincible > 0)
+		{// 無敵状態にする(プレイヤーが見えなくなり、ダメージを受けなくなる)
+			m_apChara->SetDisplay(false);
+		}
+		else
+		{// もとに戻す
+			m_apChara->SetDisplay(true);
 		}
 
-		// インターバル0以下で当たり判定がなかったら当たり判定を生成する
 		if (m_Interval <= 0 && m_Collision == nullptr)
-		{
+		{// インターバル0以下で当たり判定がなかったら当たり判定を生成する
 			m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize(m_Name).x);
 			m_Collision->SetParent(&m_apChara->GetPos());
 			SetEndChildren(m_Collision);
@@ -116,7 +118,7 @@ void CSkillEntity::Update()
 			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
 			if (hit && m_Interval <= 0)
 			{// ダメージの判定
-				HitAbility(inChara);
+				this->HitAbility(inChara);
 				collision = true;
 			}
 		});
@@ -128,8 +130,24 @@ void CSkillEntity::Update()
 			m_Collision = nullptr;
 		}
 	}
-	else if (m_Duration <= 0)
-	{// 効果時間が0以下になったら消す
+	else if(m_Duration <= 0)
+	{// 効果時間が0以下になったら
+
+		UninitAbility();
+		if (m_apChara->GetControlLock())
+		{//	プレイヤーの操作が無効化されていたら有効化
+			m_apChara->SetControlLock(false);
+		}
+		if (m_apChara->GetMoveLock())
+		{//	プレイヤーの移動が無効化されていたら有効化
+			m_apChara->SetMoveLock(false);
+		}
+
+		if (m_Collision != nullptr)
+		{// 当たり判定が残っていたら
+			m_Collision->Uninit();
+			m_Collision = nullptr;
+		}
 		Uninit();
 	}
 

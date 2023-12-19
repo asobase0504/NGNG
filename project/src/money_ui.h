@@ -33,6 +33,7 @@ public:
 private:
 	CStatus<int>* m_money;
 	CProcedure* m_procedure;
+	int max_difficult;
 };
 
 #endif // _TIMER_H_

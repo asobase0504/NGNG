@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\server">
+      <UniqueIdentifier>{3d62c0ef-6743-46a0-b7b8-d075b90769ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\client">
+      <UniqueIdentifier>{bd0459ed-9ada-4e0e-8b08-0ffba9db981b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\data">
+      <UniqueIdentifier>{c447ebff-d474-415c-af30-d426324368ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,42 +30,39 @@
     <ClCompile Include="letter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="tcp_client.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="tcp_listener.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="event.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="precompile.cpp">
       <Filter>ヘッダー ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="model_date.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="utc_socket.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="model.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="client.cpp">
+      <Filter>ソース ファイル\client</Filter>
+    </ClCompile>
+    <ClCompile Include="tcp_client.cpp">
+      <Filter>ソース ファイル\client</Filter>
+    </ClCompile>
+    <ClCompile Include="udp_client.cpp">
+      <Filter>ソース ファイル\client</Filter>
+    </ClCompile>
+    <ClCompile Include="listener.cpp">
+      <Filter>ソース ファイル\server</Filter>
+    </ClCompile>
+    <ClCompile Include="tcp_listener.cpp">
+      <Filter>ソース ファイル\server</Filter>
+    </ClCompile>
+    <ClCompile Include="udp_listener.cpp">
+      <Filter>ソース ファイル\server</Filter>
+    </ClCompile>
+    <ClCompile Include="model_data.cpp">
+      <Filter>ソース ファイル\data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="event.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="letter.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="main.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="tcp_client.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="tcp_listener.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="precompile.h">
@@ -65,14 +71,29 @@
     <ClInclude Include="protocol.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="model_date.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="utc_socket.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="model.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="tcp_client.h">
+      <Filter>ソース ファイル\client</Filter>
+    </ClInclude>
+    <ClInclude Include="udp_client.h">
+      <Filter>ソース ファイル\client</Filter>
+    </ClInclude>
+    <ClInclude Include="client.h">
+      <Filter>ソース ファイル\client</Filter>
+    </ClInclude>
+    <ClInclude Include="tcp_listener.h">
+      <Filter>ソース ファイル\server</Filter>
+    </ClInclude>
+    <ClInclude Include="udp_listener.h">
+      <Filter>ソース ファイル\server</Filter>
+    </ClInclude>
+    <ClInclude Include="listener.h">
+      <Filter>ソース ファイル\server</Filter>
+    </ClInclude>
+    <ClInclude Include="model_data.h">
+      <Filter>ソース ファイル\data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

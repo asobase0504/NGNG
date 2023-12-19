@@ -19,7 +19,6 @@
 //==============================================================
 // 前方宣言
 //==============================================================
-class CObjectX;
 class CCollisionCylinder;
 class CSkill;
 class CAbnormal;
@@ -69,18 +68,22 @@ public:
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
 
-	virtual void TakeItem(int id) {}	// アイテムを拾う
+	virtual void TakeItem(int id);	// アイテムを拾う
 
 	// 移動制御
 	void SetMoveLock(bool isLock) { m_isMoveLock = isLock; }
 	bool GetMoveLock() { return m_isMoveLock; }
 	void SetControlLock(bool isLock) { m_isControl = isLock; }
 	bool GetControlLock() { return m_isControl; }
+	void SetInertiaMoveLock(bool isLock) { m_isInertiaMoveLock = isLock; }	// 慣性・重力
+	bool GetInertiaMoveLock() { return m_isInertiaMoveLock; }				// 慣性・重力
 
 	// 攻撃
-	void Attack(CCharacter* pEnemy, float SkillMul);
-	void Damage(const int inDamage);
+	void DealDamage(CCharacter* inChara, float SkillMul);
+	void TakeDamage(const int inDamage, CCharacter* inChara);
+	void AbDamage(const int inDamage);
 	int CalDamage(float SkillAtkMul);
+	void AddDamage(float inDamage) { m_addDamage = inDamage; }
 
 	// 回復
 	void Regenation();
@@ -100,16 +103,19 @@ public:
 
 	// 状態異常
 	int GetAbnormalTypeCount();	// 状態異常の種類のカウント
-	void AddAbnormalStack(const int id) { m_haveAbnormal[id].s_Time.push_back(0); m_haveAbnormal[id].s_stack++; }
+	virtual void AddAbnormalStack(const int id,const int cnt = 1) { m_haveAbnormal[id].s_Time.push_back(0); m_haveAbnormal[id].s_stack += cnt; }
 	void SetInterval(const int id, const int Time) { m_haveAbnormal[id].s_interval = Time; }
 	void SetAbnormalTime(const int id, const int Time) { m_haveAbnormal[id].s_effectTime = Time; }
 	void SetTargetInterval(const int id, const int MAXTIME) { m_haveAbnormal[id].s_target_interval = MAXTIME; }
-	void SetAttackAbnormal(const int id, bool onoff) { m_attackAbnormal[id] = onoff; }
 	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }		// 受けてる状態異常
-	abnormal_attack GetAbnormalAttack() { return m_attackAbnormal; }	// 与える状態異常
 
+	// レベル
+	void SetLevel(int level);
 	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
 	void SetStun(bool isStun) { m_isStun = isStun; }
+	void AddExp(int exp);
+	void AddLevel();
+	int GetLevel() { return m_level; }
 
 	//==============================================================
 	// ゲッターとセッター
@@ -205,11 +211,10 @@ protected:
 	item_count m_haveItem;
 	// 持っている状態異常の個数をそれぞれ管理
 	abnormal_count m_haveAbnormal;
-	// 与える状態異常を管理
-	abnormal_attack m_attackAbnormal;
 
 	bool m_isMoveLock;		// 移動停止状態か否か。
 	bool m_isControl;		// コントロールを受け付けるか否か。
+	bool m_isInertiaMoveLock;	// 慣性・重力停止状態か否か
 
 	bool m_isDied;			// 死亡状態か否か。
 	bool m_isShield;		// シールドを回復するかどうか
@@ -224,6 +229,8 @@ protected:
 	bool m_isTeleporter;	// テレポーターを起動したかどうか
 
 	bool m_isAtkCollision;		// 攻撃を受けなくなる
+
+	float m_addDamage;
 
 	STATE m_state;
 
@@ -246,5 +253,10 @@ protected:
 	CStatus<int> m_regenetion;					// 自動回復の値
 
 	int m_RegenetionCnt;
+	int m_level;
+	float m_exp;
+	float m_reqExp;
+
+	float m_destRot;
 };
 #endif

@@ -48,39 +48,6 @@ CSkinMesh::CSkinMesh() :
 }
 
 //--------------------------------------------------------------
-// 初期化
-//--------------------------------------------------------------
-HRESULT CSkinMesh::Init(std::string pMeshPass)
-{
-	CObject::Init();
-	// デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
-	std::string TmpMeshPass;
-	TmpMeshPass = pMeshPass;
-
-	CSkinMeshGroup::SSkinMeshInfo info = CSkinMeshGroup::GetInstance()->GetSkinMeshInfo(pMeshPass);
-
-	m_pFrameRoot = info.frameRoot;
-	m_pAnimController = info.pAnimController;
-
-	//ボーン行列初期化
-	AllocateAllBoneMatrices(m_pFrameRoot, m_pFrameRoot);
-
-	m_pAnimSet.resize(m_pAnimController->GetNumAnimationSets());
-
-	//アニメーショントラックの取得
-	for (DWORD i = 0; i < m_pAnimController->GetNumAnimationSets(); i++)
-	{
-		//アニメーション取得
-		m_pAnimController->GetAnimationSet(i, &(m_pAnimSet[i]));
-	}
-
-	//すべてのフレーム参照変数の生成
-	CreateFrameArray(m_pFrameRoot);
-	return S_OK;
-}
-
-//--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
 void CSkinMesh::Update()
@@ -112,6 +79,11 @@ void CSkinMesh::Update()
 //--------------------------------------------------------------
 void CSkinMesh::Draw()
 {
+	if (!m_isDisplay)
+	{
+		return;
+	}
+
 	//現在のアニメーション番号を適応
 	m_pAnimController->SetTrackAnimationSet(0, m_pAnimSet[m_CurrentTrack]);
 	//0(再生中の)トラックからトラックデスクをセットする
@@ -131,7 +103,7 @@ void CSkinMesh::Draw()
 // Author : 唐﨑結斗
 // 概要 : モーションキャラクター3Dを生成する
 //--------------------------------------------------------------
-CSkinMesh * CSkinMesh::Create(std::string Name)
+CSkinMesh * CSkinMesh::Create(std::string str)
 {
 	// オブジェクトインスタンス
 	CSkinMesh *pSkinMesh = nullptr;
@@ -143,7 +115,12 @@ CSkinMesh * CSkinMesh::Create(std::string Name)
 	assert(pSkinMesh != nullptr);
 
 	// 数値の初期化
-	pSkinMesh->Init(Name);
+	pSkinMesh->Init();
+
+	if (str != "")
+	{
+		pSkinMesh->Load(str);
+	}
 
 	// インスタンスを返す
 	return pSkinMesh;
@@ -367,6 +344,8 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 		}
 		//ジオメトリブレンディングを使用するために行列の個数を指定
 		pDevice->SetRenderState(D3DRS_VERTEXBLEND, dwBlendMatrixNum);
+		pEffect->SetInt(m_hMtxNum, (int)&dwBlendMatrixNum);
+	
 		//影響している行列の検索
 		for (k = 0; k < pMeshContainer->dwWeight; k++)
 		{
@@ -384,6 +363,7 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 				//行列スタックに格納
 				pDevice->SetTransform(D3DTS_WORLDMATRIX(k), &mStack);
 			}
+			pEffect->SetMatrixArray(m_hBoneStack, &mStack, i);
 		}
 
 		D3DMATERIAL9 TmpMat = pMeshContainer->pMaterials[pBoneCombination[i].AttribId].MatD3D;
@@ -421,11 +401,6 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 		pMeshContainer->MeshData.pMesh->DrawSubset(i);
 		pEffect->EndPass();
 
-		// 黒モデルの描画
-		pEffect->BeginPass(3);
-		pMeshContainer->MeshData.pMesh->DrawSubset(i);
-		pEffect->EndPass();
-
 	}
 	pEffect->End();
 
@@ -436,6 +411,15 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 //--------------------------------------------------------------
 void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 {
+	extern LPD3DXEFFECT pEffect;		// シェーダー
+	if (pEffect == nullptr)
+	{
+		assert(false);
+		return;
+	}
+
+	/* pEffectに値が入ってる */
+
 	//スキンメッシュの描画
 	if (pMeshContainer->pSkinInfo == NULL)
 	{
@@ -511,7 +495,7 @@ void CSkinMesh::DrawFrame(LPD3DXFRAME pFrameBase)
 		//if( GetpShader() != NULL && GetpShader()->GetShaderKind() == SHADER_KIND_LAMBERT ){
 		// ShaderDraw( pDevice, ControlNum, pMeshContainer, pFrame ); 
 		//}else{
-		RenderMeshContainer(pMeshContainer, pFrame);
+		ShaderDraw(pMeshContainer, pFrame);
 		// }
 		//次のメッシュコンテナへアクティブを移す
 		pMeshContainer = (MYMESHCONTAINER*)pMeshContainer->pNextMeshContainer;
@@ -524,6 +508,32 @@ void CSkinMesh::DrawFrame(LPD3DXFRAME pFrameBase)
 	{
 		DrawFrame(pFrame->pFrameFirstChild);
 	}
+}
+
+void CSkinMesh::Load(std::string pMeshPass)
+{
+	// デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
+
+	CSkinMeshGroup::SSkinMeshInfo info = CSkinMeshGroup::GetInstance()->GetSkinMeshInfo(pMeshPass);
+
+	m_pFrameRoot = info.frameRoot;
+	m_pAnimController = info.pAnimController;
+
+	//ボーン行列初期化
+	AllocateAllBoneMatrices(m_pFrameRoot, m_pFrameRoot);
+
+	m_pAnimSet.resize(m_pAnimController->GetNumAnimationSets());
+
+	//アニメーショントラックの取得
+	for (DWORD i = 0; i < m_pAnimController->GetNumAnimationSets(); i++)
+	{
+		//アニメーション取得
+		m_pAnimController->GetAnimationSet(i, &(m_pAnimSet[i]));
+	}
+
+	//すべてのフレーム参照変数の生成
+	CreateFrameArray(m_pFrameRoot);
 }
 
 //--------------------------------------------------------------

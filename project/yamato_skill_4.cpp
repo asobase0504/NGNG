@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// スキル(回転切り)
+// スキル(マーセナリーのR)
 // Author : 髙野馨將
 //
 //**************************************************************
@@ -47,6 +47,7 @@ void CYamatoSkill_4::InitAbility()
 	{
 		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_4");
 		m_Invincible = pSkillData->GetInvincible("YAMATO_SKILL_4");
+		m_Time = 0;
 		// 当たり判定を取得
 		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("YAMATO_SKILL_4").x);
 		m_Collision->SetParent(&m_apChara->GetPos());
@@ -54,8 +55,47 @@ void CYamatoSkill_4::InitAbility()
 		// カメラの方向に合わせる
 		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
 		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
-		vecNor *= 1.5f;			// 移動させたい値を入れる
-		m_apChara->SetPos(m_apChara->GetPos() + vecNor);
+		D3DXVec3Normalize(&vecNor, &vecNor);
+		vecNor *= 25.0f;			//移動させたい値を入れる
+		m_apChara->SetMove(vecNor);
+		// プレイヤーの操作を無効化
+		m_apChara->SetControlLock(true);
+		// 重力・慣性を切る
+		m_apChara->SetInertiaMoveLock(true);
+	}
+}
+
+//--------------------------------------------------------------
+// 持続する効果
+//--------------------------------------------------------------
+void CYamatoSkill_4::AllWayAbility()
+{
+	// 時間の加算
+	m_Time++;
+	if (m_Time > 30)
+	{
+		// プレイヤーの位置を固定
+		m_apChara->SetMoveLock(true);
+		m_apChara->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	}
+}
+
+//--------------------------------------------------------------
+// 終了処理
+//--------------------------------------------------------------
+void CYamatoSkill_4::UninitAbility()
+{
+	if (m_apChara->GetControlLock())
+	{//	プレイヤーの操作が無効化されていたら有効化
+		m_apChara->SetControlLock(false);
+	}
+	if (m_apChara->GetMoveLock())
+	{//	プレイヤーの移動が無効化されていたら有効化
+		m_apChara->SetMoveLock(false);
+	}
+	if (m_apChara->GetInertiaMoveLock())
+	{//	慣性・重力が無効化されていたら有効化
+		m_apChara->SetInertiaMoveLock(false);
 	}
 }
 
@@ -65,7 +105,7 @@ void CYamatoSkill_4::InitAbility()
 void CYamatoSkill_4::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	Target->Damage(50);
+	Target->TakeDamage(50, Target);
 }
 
 //--------------------------------------------------------------

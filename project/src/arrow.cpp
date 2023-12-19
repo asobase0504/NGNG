@@ -83,7 +83,7 @@ CArrow* CArrow::Create(const D3DXVECTOR3& move)
 //{
 //	if (inEnemy->GetCollision->ToBox(m_collision, false))
 //	{
-//		inEnemy->Damage(damage);
+//		inEnemy->TakeDamage(damage);
 //		this->Uninit();
 //	}
 //}

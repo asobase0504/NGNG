@@ -26,8 +26,8 @@ class CLight;
 class CMap;
 class CPlayerController;
 class CMapFade;
-class CClient;
-class CSkinMesh;
+class ConnectManager;
+class CDifficult;
 
 //==============================================================
 // ÉQÅ[ÉÄÉNÉâÉX
@@ -44,6 +44,7 @@ public:
 
 	CCameraGame* GetCamera() { return m_camera; }
 	CPlayerController* GetController() { return m_controller; }
+	CDifficult* GetDifficult() { return m_difficult; }
 
 	void SetChangeMap();
 	void ChangeMap(std::string);
@@ -55,8 +56,7 @@ private:
 	CMap* m_map;
 	CLight* m_light;
 	CMapFade* m_mapFade;
-	CClient*m_tcp;
-
-	CSkinMesh* m_skin;
+	ConnectManager*m_tcp;
+	CDifficult* m_difficult;
 };
 #endif

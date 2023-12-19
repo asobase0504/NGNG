@@ -30,8 +30,28 @@ public:
 		PATTERN_GROUND_GO_ATTACK,
 		PATTERN_GOLEM,
 		PATTERN_GOLEM_LASER,
+		PATTERN_NINEFOX_BLAST,
 		MAX_PATTERN
 	};
+
+	enum EEnemyType
+	{
+		SKELTON,
+		NINE_FOX,
+		MAX_TYPE
+	};
+
+	struct SStatus
+	{
+		int s_hp;
+		int s_attack;
+		float s_size;
+
+		float s_collisionLength;
+		float s_collisionHeight;
+		std::string s_modelKey;
+	};
+
 private:
 	explicit CEnemyDataBase();
 	static CEnemyDataBase* m_instance;
@@ -43,10 +63,13 @@ public:
 	static void Uninit();
 public:
 	ACTIVITY_FUNC GetActivityFunc(EActivityPattern inState) { return m_activityFunc[inState]; }
+	SStatus GetBaseStatus(EEnemyType inType) { return m_status[inType]; }
 private:
 	
 private:	// ÉÅÉìÉoïœêî
 	std::vector<ACTIVITY_FUNC> m_activityFunc;
+
+	std::array<SStatus, MAX_TYPE> m_status;
 
 };
 #endif

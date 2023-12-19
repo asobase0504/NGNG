@@ -11,6 +11,7 @@
 // include
 //==============================================================
 #include "character.h"
+#include "enemy_data_base.h"
 
 //==============================================================
 // マクロ宣言
@@ -33,15 +34,26 @@ class CEnemy_HPUI;
 class CEnemy : public CCharacter
 {
 public:
+
+	// AI状態
+	enum EAIState
+	{
+		WANDER,		// 彷徨う
+		STAY,		// 待機
+		COMBAT		// 戦闘状態
+	};
+
 	using ACTIVITY_FUNC = std::function<void(CEnemy*)>;
 public:
 	// コンストラクタとデストラクタ
-	explicit CEnemy(int nPriority = 3);
+	explicit CEnemy();
 	~CEnemy();
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
 	void	Update() override;
+
+	void Load(const CEnemyDataBase::SStatus& status);
 
 	// 静的メンバ関数
 	void SetActivity(ACTIVITY_FUNC NowAct) { m_Activity = NowAct; }

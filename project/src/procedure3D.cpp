@@ -21,8 +21,11 @@
 //--------------------------------------------------
 CProcedure3D::CProcedure3D() :
 	CObject(CTaskGroup::LEVEL_SYSTEM),
+	m_number(0),
+	m_digit(0),
 	m_align(CENTER)
 {
+	m_pNumber.clear();
 }
 
 //--------------------------------------------------
@@ -38,24 +41,21 @@ CProcedure3D::~CProcedure3D()
 HRESULT CProcedure3D::Init()
 {
 	CObject::Init();
+	D3DXMatrixIdentity(&m_mtxTrans);
+	Update();			// 初回更新
 	return S_OK;
 }
 
 //--------------------------------------------------
-// 初期化　オーバーロード
+// 終了
 //--------------------------------------------------
-HRESULT CProcedure3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int inNumber)
+void CProcedure3D::Uninit()
 {
-	CObject::Init();
-	m_size = size;
-
-	// 番号の設定
-	SetNumber(inNumber);
-
-	m_pos = pos;
-	SetPos(m_pos);
-
-	return S_OK;
+	for (CNumber3D* displayNumber : m_pNumber)
+	{
+		displayNumber->SetMtxWorldParent(nullptr);
+	}
+	CObject::Uninit();
 }
 
 //--------------------------------------------------
@@ -153,6 +153,7 @@ void CProcedure3D::AddColor(const D3DXCOLOR & inColor)
 //--------------------------------------------------
 void CProcedure3D::SetSize(const D3DXVECTOR3 & inSize)
 {
+	CObject::SetSize(inSize);
 	for (CNumber3D* displayNumber : m_pNumber)
 	{
 		displayNumber->SetSize(inSize);
@@ -222,7 +223,10 @@ CProcedure3D *CProcedure3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int number
 
 	assert(pProcedure != nullptr);
 
-	pProcedure->Init(pos, size, number);
+	pProcedure->Init();
+	pProcedure->SetSize(size);
+	pProcedure->SetNumber(number);
+	pProcedure->SetPos(pos);
 
 	return pProcedure;
 }

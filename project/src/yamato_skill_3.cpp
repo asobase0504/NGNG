@@ -51,6 +51,10 @@ void CYamatoSkill_3::InitAbility()
 		m_Collision->SetParent(&m_apChara->GetPos());
 		SetEndChildren(m_Collision);
 
+		// プレイヤーの操作を無効化
+		m_apChara->SetControlLock(true);
+		m_apChara->SetMoveXZ(0.0f, 0.0f);
+
 		// カメラの方向に合わせる
 		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
 		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
@@ -66,9 +70,8 @@ void CYamatoSkill_3::InitAbility()
 void CYamatoSkill_3::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	Target->Damage(50);
+	Target->TakeDamage(50, Target);
 }
-
 
 //--------------------------------------------------------------
 // スキル生成処理

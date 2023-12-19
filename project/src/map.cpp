@@ -53,7 +53,6 @@ CMap::~CMap()
 //--------------------------------------------------------------
 HRESULT CMap::Init()
 {
-	MapChangeRelese();
 	CStatueManager* manager = CStatueManager::GetInstance();
 	(manager->RandomCreate());
 	(manager->RandomCreate());
@@ -102,7 +101,7 @@ void CMap::Update()
 	if (m_SpawnCnt >= 600)
 	{
 		m_SpawnCnt = 0;
-		CEnemyManager::GetInstance()->RandomSpawn();
+		SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
 	}
 }
 
@@ -122,6 +121,7 @@ void CMap::Load(std::string path)
 		CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
 		object->LoadModel(model["TAG"]);
 		m_model.push_back(object);
+		SetEndChildren(object);
 	}
 
 	size = map["MESH"].size();
@@ -133,8 +133,8 @@ void CMap::Load(std::string path)
 		D3DXVECTOR3 pos(mesh["POS"][0], mesh["POS"][1], mesh["POS"][2]);
 		object->SetPos(pos);
 		object->SetOneMeshSize(D3DXVECTOR3(100.0f,100.0f,100.0f));
-
 		m_mesh.push_back(object);
+		SetEndChildren(object);
 	}
 
 	m_nextMapPath = map["NEXT_MAP"];

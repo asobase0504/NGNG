@@ -21,7 +21,6 @@ public:
 	~CCollisionSphere();
 
 	HRESULT Init();
-	void Update();
 
 	//bool ToCylinder(CCollisionCylinder* inCyinder);
 	bool ToMesh(CCollisionMesh* inMesh);
@@ -33,6 +32,8 @@ public:
 	float GetLength() { return m_length; }
 	float GetExtrusionHeight() { return m_extrusionHeight; }
 
+private:
+	void SetLine() override;
 private:
 	float m_length;
 	float m_extrusionHeight;	// ‰Ÿ‚µo‚·‚‚³

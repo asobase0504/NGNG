@@ -49,26 +49,29 @@ public:
 	//--------------------------------------------------------------------
 	// メンバ関数
 	//--------------------------------------------------------------------
-	HRESULT Init() override;																			// 初期化
-	void Uninit() override;																				// 終了
-	void Update() override;																				// 更新
-	void Draw() override;																				// 描画
+	HRESULT Init() override;	// 初期化
+	void Uninit() override;		// 終了
+	void Update() override;		// 更新
+	void Draw() override;		// 描画
 
-	void SetPos(const D3DXVECTOR3 &pos) override;														// 位置のセッター
-	void SetPosOld(const D3DXVECTOR3 &posOld) { m_posOld = posOld; }									// 過去位置のセッター
-	void SetRot(const D3DXVECTOR3 &rot) override;														// 向きのセッター
-	void SetSize(const D3DXVECTOR3 &size) override;														// 大きさのセッター
+	void SetRotTarget(const D3DXVECTOR3* rot) { m_targetRot = rot; }
+	void SetPosTarget(const D3DXVECTOR3* pos) { m_targetPos = pos; }
 
-	void SetVtx();																						// 頂点座標などの設定
-	void SetCol(const D3DXCOLOR color);																	// 頂点カラーの設定
-	void SetLine(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 start, D3DXVECTOR3 goal, D3DXCOLOR col);	// ラインの設置
+	void SetVtx();								// 頂点座標などの設定
+	void SetColor(const D3DXCOLOR& color) override;			// 頂点カラーの設定
+	void SetLine(D3DXVECTOR3 start, D3DXVECTOR3 goal);	// ラインの設置
+
+
+	static bool m_alldisplay;
 
 private:
 	//--------------------------------------------------------------------
 	// メンバ変数
 	//--------------------------------------------------------------------
-	LPDIRECT3DVERTEXBUFFER9			m_vtxBuff;			// 頂点バッファ
-	D3DXVECTOR3						m_start;			// 始点
-	D3DXVECTOR3						m_goal;				// 終点
+	LPDIRECT3DVERTEXBUFFER9 m_vtxBuff;			// 頂点バッファ
+	D3DXVECTOR3 m_start;			// 始点
+	D3DXVECTOR3 m_goal;				// 終点
+	const D3DXVECTOR3* m_targetPos;
+	const D3DXVECTOR3* m_targetRot;
 };
 #endif

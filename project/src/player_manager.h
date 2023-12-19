@@ -50,6 +50,6 @@ public:
 	const D3DXVECTOR3& GetPlayerPos() { return m_pPlayer->GetPos(); }
 
 private:		// ƒƒ“ƒo•Ï”
-	CPlayer *m_pPlayer;
+	CPlayer* m_pPlayer;
 };
 #endif

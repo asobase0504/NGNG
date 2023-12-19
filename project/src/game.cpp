@@ -44,6 +44,7 @@
 #include "hp_ui.h"
 #include "money_ui.h"
 #include "skill_ui.h"
+#include "difficult.h"
 
 /* サーバー */
 #include "connect.h"
@@ -77,6 +78,8 @@ CGame::~CGame()
 //--------------------------------------------------------------
 HRESULT CGame::Init()
 {
+	CAbnormalDataBase::GetInstance();
+
 	CSkinMeshGroup::GetInstance()->LoadAll();
 
 	CInput::GetKey()->SetCursorErase(false);
@@ -103,21 +106,16 @@ HRESULT CGame::Init()
 	pPlayer->OffUpdate();
 	m_camera->SetTargetPos(pPlayer->GetPos());
 
-	CHPUI::Create(pPlayer->GetHp());
-	CMONEYUI::Create(pPlayer->GetMoney());
-
-	for (int i = 0; i < 4; i++)
-	{
-		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), pPlayer->GetSkill(i));
-	}
-
-	//m_tcp = new CClient;
-	//m_tcp->Init("127.0.0.1", 13567);
+	/*m_tcp = new ConnectManager;
+	m_tcp->Init("127.0.0.1", 13678);*/
 
 	CObject2d* reticle = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	reticle->SetPos(CApplication::CENTER_POS);
 	reticle->SetSize(D3DXVECTOR3(16.f, 16.f,0.f));
 	reticle->SetTexture("RETICLE");
+
+	m_difficult = CDifficult::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
+
 	return S_OK;
 }
 
@@ -135,9 +133,9 @@ void CGame::Uninit()
 	}*/
 
 	CItemDataBase::Uninit();
+	CAbnormalDataBase::Uninit();
 
-	CSkinMeshGroup::GetInstance()->Unload("KENGOU");
-	CSkinMeshGroup::GetInstance()->Unload("SKE");
+	CSkinMeshGroup::GetInstance()->UnloadAll();
 
 	CInput::GetKey()->SetCursorErase(true);
 	CInput::GetKey()->LockCursorPos(false);
@@ -176,41 +174,26 @@ void CGame::Update()
 	{
 		SetChangeMap();
 	}
-	if (pInput->Trigger(DIK_C))
-	{
-		m_skin->ChangeAnim(1);
-	}
-	if (pInput->Trigger(DIK_V))
-	{
-		m_skin->ChangeAnim(0);
-	}
-	if (pInput->Trigger(DIK_X))
-	{
-		CSkinMesh* skin = CSkinMesh::Create("KENGOU");
-		skin->SetPos(D3DXVECTOR3(50.f, 0.f, 50.f));
-	}
 
-	/*if (m_tcp->GetIsConnect())
-	{
-		CPlayer* Player = CPlayerManager::GetInstance()->GetPlayer();
-		CModelData::SSendEnemy sendData;
-		sendData.m_pos = Player->GetPos();
-		sendData.m_rot = Player->GetRot();
-		for (int j = 0; j < 5; j++)
-		{
-			sendData.m_haveAbnormal.abnormalData[j] = 0;
-			sendData.m_haveItem.itemData[j] = 0;
-		}
+	//if (m_tcp->GetIsConnect())
+	//{
+	//	CPlayer* Player = CPlayerManager::GetInstance()->GetPlayer();
+	//	CModelData::SSendPack sendData;
+	//	sendData.m_PlayData.m_pos = Player->GetPos();
+	//	sendData.m_PlayData.m_rot = Player->GetRot();
+	//	for (int j = 0; j < 5; j++)
+	//	{
+	//		sendData.m_haveAbnormal.abnormalData[j] = 0;
+	//		sendData.m_haveItem.itemData[j] = 0;
+	//	}
 
-		sendData.m_motion = 0;
-		sendData.m_log = 2;
-		sendData.m_pushBomComands = 0;
+	//	sendData.m_PlayData.m_motion = 0;
+	//	sendData.m_log = 2;
+	//	sendData.m_PlayData.m_pushBomComands = 0;
 
 
-		m_tcp->SendPlayerData(sendData);
-	}*/
-	
-
+	//	m_tcp->SendPlayerData(sendData);
+	//}
 }
 
 void CGame::SetChangeMap()
@@ -225,18 +208,9 @@ void CGame::SetChangeMap()
 //--------------------------------------------------------------
 void CGame::ChangeMap(std::string inPath)
 {
-	CApplication::GetInstance()->GetTaskGroup()->AllProcess([](CTask* inTask)
-	{
-		if (!inTask->IsMapChangeRelese())
-		{
-			return;
-		}
-
-		inTask->Uninit();
-	});
-
 	if (m_map != nullptr)
 	{
+		m_map->Uninit();
 		m_map = nullptr;
 	}
 

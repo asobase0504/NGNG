@@ -29,7 +29,6 @@ public:
 		LEFT,	// ¶‘µ‚¦
 		RIGHT,	// ‰E‘µ‚¦
 		CENTER,	// ’†‰›‘µ‚¦
-
 	};
 
 public:

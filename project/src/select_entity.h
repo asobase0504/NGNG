@@ -19,6 +19,7 @@ class CCollisionCylinder;
 class CCollisionBox;
 class CCharacter;
 class CSelectUI;
+class CProcedure3D;
 
 //==============================================================
 // クラス
@@ -41,10 +42,13 @@ public:
 
 	virtual bool Select(CCharacter* selectCharacter) = 0;	// 選ばれた時の処理
 
+	CProcedure3D* GetCostUI() { return m_costUI; }
+
 protected:
 	CCollisionCylinder* m_collisionCylinder;	// 選択できる当たり判定
 	CCollisionBox* m_collisionBox;				// 押し出しを行なう当たり判定
 	CSelectUI* m_ui;
+	CProcedure3D* m_costUI;	//コストを3D空間状に描画
 	std::string m_uiText;
 	bool m_isNearCharacter;		// キャラクターに一番近いエンティティであるか否か
 };

@@ -97,8 +97,7 @@ void CGolemSkill_1::AllWayAbility()
 
 		D3DXVECTOR3 pos = m_apChara->GetPos();
 		D3DXVECTOR3 move = m_aimCharacter->GetPos() - pos;
-		m_bullet = CBullet::Create(pos, move * 0.01f, 10.0f, m_apChara->GetAbnormalAttack());
-		m_bullet->SetRelation(m_apChara->GetRelation());
+		m_bullet = CBullet::Create(pos, move * 0.01f, 10.0f);
 		SetEndChildren(m_bullet);
 
 		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 10.0f);
@@ -112,13 +111,6 @@ void CGolemSkill_1::AllWayAbility()
 //--------------------------------------------------------------
 void CGolemSkill_1::HitAbility(CCharacter * Target)
 {
-	if (m_bullet != nullptr)
-	{
-		m_bullet->Uninit();
-		m_bullet = nullptr;
-	}
-
-	CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData(CAbnormalDataBase::ABNORMAL_FIRE)->GetWhenAddFunc();
-	abnormalFunc(Target, CAbnormalDataBase::ABNORMAL_FIRE);
+	m_apChara->DealDamage(Target,0.25f);
 	Uninit();
 }

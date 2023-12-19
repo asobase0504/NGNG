@@ -36,6 +36,8 @@ public:
 	LPDIRECT3DINDEXBUFFER9 GetIdxBuff() { return m_idxBuff; }
 
 private:
+	void SetLine() {};
+private:
 	int m_primitive;
 	LPDIRECT3DVERTEXBUFFER9 m_vtxBuff;
 	LPDIRECT3DINDEXBUFFER9 m_idxBuff;
