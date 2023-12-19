@@ -117,6 +117,9 @@
     <Filter Include="json\map">
       <UniqueIdentifier>{9b784e72-5709-4736-87c7-d6250a6c9b2a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character\01_enemy\bace\activity_state">
+      <UniqueIdentifier>{370baeaa-f988-4915-aad9-0fc966994907}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -341,9 +344,6 @@
     <ClCompile Include="src\enemy.cpp">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClCompile>
-    <ClCompile Include="src\melee_attack.cpp">
-      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
-    </ClCompile>
     <ClCompile Include="src\gold_nugget.cpp">
       <Filter>ソース ファイル\Mode\01_Game\Item\item_object</Filter>
     </ClCompile>
@@ -484,6 +484,9 @@
     </ClCompile>
     <ClCompile Include="src\udp_client.cpp">
       <Filter>ソース ファイル\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy_activity_state.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace\activity_state</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -704,9 +707,6 @@
     <ClInclude Include="src\bullet.h">
       <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
     </ClInclude>
-    <ClInclude Include="src\melee_attack.h">
-      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
-    </ClInclude>
     <ClInclude Include="src\gold_nugget.h">
       <Filter>ソース ファイル\Mode\01_Game\Item\item_object</Filter>
     </ClInclude>
@@ -824,7 +824,6 @@
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
     </ClInclude>
-    <ClInclude Include="src\difficult.h" />
     <ClInclude Include="abnormal_2dui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
@@ -856,6 +855,12 @@
     </ClInclude>
     <ClInclude Include="src\udp_client.h">
       <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy_activity_state.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace\activity_state</Filter>
+    </ClInclude>
+    <ClInclude Include="src\difficult.h">
+      <Filter>ソース ファイル\Mode\01_Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

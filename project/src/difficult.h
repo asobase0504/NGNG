@@ -13,10 +13,10 @@
 #include "objectX.h"
 
 //==============================================================
-// ÉNÉâÉX
+// ëOï˚êÈåæ
 //==============================================================
-
 class CObject2d;
+
 class CDifficult : public CObject
 {
 public:
@@ -24,9 +24,7 @@ public:
 	~CDifficult();
 
 	HRESULT Init() override;
-	void Uninit() override;
 	void Update() override;
-	void Draw() override;
 
 	static CDifficult* Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot, const D3DXVECTOR3& inSize);
 

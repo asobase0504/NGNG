@@ -106,6 +106,7 @@ HRESULT CPlayer::Init()
 	// UI作成
 	CHPUI::Create(GetHp());
 	CMONEYUI::Create(GetMoney());
+
 	for (int i = 0; i < 4; i++)
 	{
 		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i));
