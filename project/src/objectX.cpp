@@ -209,7 +209,7 @@ void CObjectX::Draw()
 	//マテリアルデータのポインタを取得する
 	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
 
-	LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
+	static LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
 
 	for (int nCntMat = 0; nCntMat < (int)m_numMat; nCntMat++)
 	{
