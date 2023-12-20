@@ -111,11 +111,12 @@ public:
 
 	// レベル
 	void SetLevel(int level);
-	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
-	void SetStun(bool isStun) { m_isStun = isStun; }
 	void AddExp(int exp);
 	void AddLevel();
 	int GetLevel() { return m_level; }
+
+	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
+	void SetStun(bool isStun) { m_isStun = isStun; }
 
 	//==============================================================
 	// ゲッターとセッター

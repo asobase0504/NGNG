@@ -78,9 +78,6 @@ void CObjectX::Draw()
 
 	extern LPD3DXEFFECT pEffect;		// シェーダー
 
-	// デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
-
 	if (pEffect == nullptr)
 	{
 		assert(false);

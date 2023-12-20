@@ -19,6 +19,7 @@
 class CController;
 class CCollisionCylinder;
 class CAbnormal2DUI;
+class CCarryingItemGroupUI;
 
 //==============================================================
 // プレイヤークラス
@@ -66,5 +67,6 @@ private:		// メンバ変数
 
 	// UI
 	std::list<CAbnormal2DUI*> m_abnormalUI;	// 状態異常やバフなどのアイコンを表示
+	CCarryingItemGroupUI* m_carringitemGroupUI;	// 所持アイテムUI
 };
 #endif

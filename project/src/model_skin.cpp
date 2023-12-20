@@ -323,11 +323,13 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 	// ライトの方向をシェーダーに渡す
 	pEffect->SetVector(m_hvLightDir, &lightDir);
 
-
 	//ボーンテーブルからバッファの先頭アドレスを取得
 	pBoneCombination = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneBuffer->GetBufferPointer());
 	//dwPrevBoneIDにUINT_MAXの値(0xffffffff)を格納
 	dwPrevBoneID = UINT_MAX;
+
+	LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
+
 	//スキニング計算
 	for (i = 0; i < pMeshContainer->dwBoneNum; i++)
 	{
@@ -388,7 +390,6 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 			pEffect->SetVector(m_hvAmbient, &Ambient);
 		}
 
-		LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
 		if (texture != nullptr)
 		{// テクスチャの適応
 			tex0 = texture;
@@ -421,7 +422,7 @@ void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pF
 	/* pEffectに値が入ってる */
 
 	//スキンメッシュの描画
-	if (pMeshContainer->pSkinInfo == NULL)
+	if (pMeshContainer->pSkinInfo == nullptr)
 	{
 		//通常メッシュの場合
 		MessageBox(NULL, "スキンメッシュXファイルの描画に失敗しました。", NULL, MB_OK);
@@ -456,10 +457,13 @@ void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pF
 		//影響している行列の検索
 		for (k = 0; k < pMeshContainer->dwWeight; k++)
 		{
-			//iMatrixIndexに1度の呼び出しで描画出来る各ボーンを識別する値を格納
+			/*
+			iMatrixIndexに1度の呼び出しで描画出来る各ボーンを識別する値を格納
 			//( このBoneID配列の長さはメッシュの種類によって異なる
 			//( インデックスなしであれば　=　頂点ごとの重み であり
 			// インデックスありであれば　=　ボーン行列パレットのエントリ数)
+			*/
+
 			//現在のボーン(i番目)からみてk番目のボーンid
 			iMatrixIndex = pBoneCombination[i].BoneId[k];
 			//行列の情報があれば

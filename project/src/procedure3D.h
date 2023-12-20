@@ -64,7 +64,7 @@ private:
 	void CalDigit();
 private:
 	// NumberŒ^‚Ì”z—ñ
-	std::list<CNumber3D*> m_pNumber;
+	std::list<CNumber3D*> m_numberObj;
 	// ŠÔ
 	int m_number;
 	int m_digit;

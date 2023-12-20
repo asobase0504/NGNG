@@ -50,6 +50,7 @@ public:
 	void AddSize(const D3DXVECTOR3& inSize);
 
 	void SetNumber(int inNumber);
+	void SetNumber(const int* inNumber);
 	void AddNumber(int inNumber) { SetNumber(m_number + inNumber); }
 	int GetNumber() { return m_number; }
 
@@ -63,9 +64,12 @@ private:
 	void CalDigit();
 private:
 	// NumberŒ^‚Ì”z—ñ
-	std::list<CNumber*> m_pNumber;
-	// ŠÔ
+	std::list<CNumber*> m_numberObj;
+
+	const int* m_pNumber;
 	int m_number;
+
+	// Œ…”
 	int m_digit;
 	float m_interval;
 

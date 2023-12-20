@@ -15,7 +15,7 @@ public:
 	enum ERarity
 	{
 		RARITY_NONE = -1,
-		RARITY_COMMON,
+		RARITY_COMMON = 0,
 		RARITY_UNCOMMON,
 		RARITY_RARE,
 		RARITY_LOSE,	// ÇÕÇ∏ÇÍ(â^ÇÃç’ídóp)

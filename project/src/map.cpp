@@ -64,15 +64,15 @@ HRESULT CMap::Init()
 	(manager->CreateStatue(CStatueManager::CHEST));
 	(manager->CreateStatue(CStatueManager::COMBAT));
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		(manager->CreateStatue(CStatueManager::CHEST));
 	}
 
-	CMesh* sky = CMesh::Create();
-	sky->SetSkyMesh();
-	sky->SetIsCulling(true);
-	sky->SetTexture("SKY");
+	//CMesh* sky = CMesh::Create();
+	//sky->SetSkyMesh();
+	//sky->SetIsCulling(true);
+	//sky->SetTexture("SKY");
 
 	return S_OK;
 }
@@ -101,7 +101,7 @@ void CMap::Update()
 	if (m_SpawnCnt >= 600)
 	{
 		m_SpawnCnt = 0;
-		SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+		//SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
 	}
 }
 
@@ -133,6 +133,7 @@ void CMap::Load(std::string path)
 		D3DXVECTOR3 pos(mesh["POS"][0], mesh["POS"][1], mesh["POS"][2]);
 		object->SetPos(pos);
 		object->SetOneMeshSize(D3DXVECTOR3(100.0f,100.0f,100.0f));
+		object->SetTexture("MESH_BG");
 		m_mesh.push_back(object);
 		SetEndChildren(object);
 	}

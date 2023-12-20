@@ -488,6 +488,9 @@
     <ClCompile Include="src\enemy_activity_state.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace\activity_state</Filter>
     </ClCompile>
+    <ClCompile Include="src\carrying_item_group_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -861,6 +864,9 @@
     </ClInclude>
     <ClInclude Include="src\difficult.h">
       <Filter>ソース ファイル\Mode\01_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\carrying_item_group_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

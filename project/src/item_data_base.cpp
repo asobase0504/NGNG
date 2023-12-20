@@ -72,7 +72,7 @@ void CItemDataBase::Init()
 	item->SetRerity(RARITY_COMMON);
 	m_itemInfo[ITEM_GETA][0] = "下駄";
 	m_itemInfo[ITEM_GETA][1] = "移動速度が増える";
-	m_itemInfo[ITEM_GETA][2] = "ITEM_DANGO_O1";
+	m_itemInfo[ITEM_GETA][2] = "ITEM_DANGO_O2";
 	// 下駄の設定----------------------------------------------------
 	/* 移動速度増加+0.15(0.15) */
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
@@ -108,7 +108,7 @@ void CItemDataBase::Init()
 	item->SetRerity(RARITY_COMMON);
 	m_itemInfo[ITEM_HYOUTAN][0] = "ひょうたん";
 	m_itemInfo[ITEM_HYOUTAN][1] = "攻撃速度と移動速度が増える";
-	m_itemInfo[ITEM_HYOUTAN][2] = "ITEM_DANGO_O1";
+	m_itemInfo[ITEM_HYOUTAN][2] = "ITEM_DANGO_O3";
 	// ひょうたん---------------------------------------------------
 	/* 攻撃速度と移動速度を +0.075%(0.075)ずつする */
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)

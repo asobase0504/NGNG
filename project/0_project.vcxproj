@@ -29,6 +29,7 @@
     <ClCompile Include="abnormal_2dui.cpp" />
     <ClCompile Include="Skill5.cpp" />
     <ClCompile Include="src\arrow.cpp" />
+    <ClCompile Include="src\carrying_item_group_ui.cpp" />
     <ClCompile Include="src\client.cpp" />
     <ClCompile Include="src\difficult.cpp" />
     <ClCompile Include="src\enemy_activity_state.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="abnormal_2dui.h" />
     <ClInclude Include="Skill5.h" />
     <ClInclude Include="src\arrow.h" />
+    <ClInclude Include="src\carrying_item_group_ui.h" />
     <ClInclude Include="src\character_select.h" />
     <ClInclude Include="src\client.h" />
     <ClInclude Include="src\debug_mode.h" />

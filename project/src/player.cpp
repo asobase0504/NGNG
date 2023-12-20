@@ -41,6 +41,7 @@
 #include "money_ui.h"
 #include "skill_ui.h"
 #include "abnormal_2dui.h"
+#include "carrying_item_group_ui.h"
 
 /**/
 #include "procedure3D.h"
@@ -111,6 +112,9 @@ HRESULT CPlayer::Init()
 	{
 		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i));
 	}
+
+	m_carringitemGroupUI = new CCarryingItemGroupUI;
+	m_carringitemGroupUI->Init();
 
 	return S_OK;
 }
@@ -352,6 +356,7 @@ void CPlayer::TakeItem(int id)
 	ui->Init();
 	ui->SetTakeItem((CItemDataBase::EItemType)id);
 
+	m_carringitemGroupUI->CreateCarryingItemUI((CItemDataBase::EItemType)id, &m_haveItem[id]);
 }
 
 //--------------------------------------------------------------
