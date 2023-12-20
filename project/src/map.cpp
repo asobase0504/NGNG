@@ -64,7 +64,7 @@ HRESULT CMap::Init()
 	(manager->CreateStatue(CStatueManager::CHEST));
 	(manager->CreateStatue(CStatueManager::COMBAT));
 
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 50; i++)
 	{
 		(manager->CreateStatue(CStatueManager::CHEST));
 	}
@@ -101,7 +101,7 @@ void CMap::Update()
 	if (m_SpawnCnt >= 600)
 	{
 		m_SpawnCnt = 0;
-		//SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+		SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
 	}
 }
 

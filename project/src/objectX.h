@@ -103,10 +103,10 @@ private:
 	DWORD m_numMat;				// マテリアル情報の数
 
 	CObjectX *m_parent;		// 親モデルの情報
-	bool m_isCollision;			// 当たり判定が必要か
+	bool m_isCollision;		// 当たり判定が必要か
 
-	bool m_isHasOutLine;			// アウトラインを使うか
-	bool m_isHasShadow;			// アウトラインを使うか
+	bool m_isHasOutLine;	// アウトラインを使うか
+	bool m_isHasShadow;		// アウトラインを使うか
 
 	bool m_isBlackFlash;
 
