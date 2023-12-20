@@ -405,7 +405,7 @@ void CPlayer::Select()
 
 		if (entity->GetCostUI() != nullptr)
 		{
-			entity->GetCostUI()->SetDisplay(300.0f > diff);
+			entity->GetCostUI()->SetDisplay(600.0f > diff);
 		}
 
 		if (nearLength > diff)
