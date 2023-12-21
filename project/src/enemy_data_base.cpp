@@ -12,7 +12,6 @@
 #include "abnormal.h"
 #include "enemy.h"
 #include "bullet.h"
-#include "melee_attack.h"
 
 #include "skill.h"
 
@@ -294,7 +293,6 @@ void CEnemyDataBase::Init()
 			if (inEnemy->GetAttackCnt() >= 120)
 			{
 				// ‹ßÚUŒ‚
-				CMeleeAttack::Create(D3DXVECTOR3(inEnemy->GetPos().x, inEnemy->GetPos().y, inEnemy->GetPos().z));
 				inEnemy->SetAttackCnt(0);
 				move *= -0.5f;
 			}

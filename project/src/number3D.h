@@ -35,8 +35,10 @@ public:
 	void SetNumber(int Number) { m_myNumber = Number; }
 
 	void AttachIcon(EIconType icon);
+	EIconType GetIcon() { return m_iconType; }
 
 private:
 	int m_myNumber;
+	EIconType m_iconType;
 };
 #endif

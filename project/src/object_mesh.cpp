@@ -482,8 +482,8 @@ void CMesh::SetVtxMeshSize(int sizeX,int sizeZ)
 		float posx = (float)((i % m_vtxCountX));
 		float posz = ((i / m_vtxCountX)) * -1.0f;
 
-		float texU = 1.0f / m_xsiz * (i % m_vtxCountX);
-		float texV = 1.0f / m_zsiz * (i / m_vtxCountZ);
+		float texU = (i % m_vtxCountX);
+		float texV = (i / m_vtxCountZ);
 
 		// ÉÅÉbÉVÉÖÇê^ÇÒíÜÇ…Ç∑ÇÈï‚ê≥
 		//m_pos = (D3DXVECTOR3(-(posx - 1) * m_meshSize.x * 0.5f, 0.0f, -posz * m_meshSize.z * 0.5f)) + m_pos;

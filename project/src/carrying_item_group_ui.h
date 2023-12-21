@@ -1,47 +1,47 @@
 //==================================================
-// moneyUI.h
-// Author: 梶田大夢
+//
+// 所持しているアイテムUI群
+// Author: YudaKaito
+//
 //==================================================
-#ifndef _CARRYING_ITEM_UI_H_
-#define _CARRYING_ITEM_UI_H_
+#ifndef _CARRYING_ITEM_GROUP_UI_H_
+#define _CARRYING_ITEM_GROUP_UI_H_
 
 //**************************************************
 // インクルード
 //**************************************************
 #include "object.h"
 #include "item_data_base.h"
+#include "carrying_item_ui.h"
 
 //**************************************************
 // 前方前言　実態はNG　ポインタだけならOK
 //**************************************************
 class CObject2d;
 class CProcedure;
+class CCarryingItemUI;
 
 //**************************************************
 // クラス
 //**************************************************
-class CCarryingItemUI : public CObject
+class CCarryingItemGroupUI : public CObject
 {
 public:
-	CCarryingItemUI();
-	~CCarryingItemUI();
+	CCarryingItemGroupUI();
+	~CCarryingItemGroupUI();
 
 	HRESULT Init() override;
 	void Update() override;
 
-	static CCarryingItemUI* Create(CItemDataBase::EItemType inType, const int*);
+	CCarryingItemUI* CreateCarryingItemUI(CItemDataBase::EItemType, const unsigned int* = nullptr);
 
-	CItemDataBase::EItemType GetType() { return m_type; }
-
-	void SetPos(const D3DXVECTOR3&) override;
+private:
+	void Alignment();	// 整列
 
 private:
 	// 描画物
-	CObject2d* m_ItemLogo;	// 状態異常ロゴ
-	CProcedure* m_stack;		// 数字
-
-	CItemDataBase::EItemType m_type;
-	const unsigned int* m_stackCnt;		// stack数
+	std::list<CCarryingItemUI*> m_uiList;
+	CObject2d* m_bg;
 };
 
 #endif // _TIMER_H_

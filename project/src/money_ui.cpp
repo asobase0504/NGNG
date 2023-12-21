@@ -35,7 +35,8 @@ CMONEYUI::~CMONEYUI()
 //--------------------------------------------------
 HRESULT CMONEYUI::Init()
 {
-	m_procedure = CProcedure::Create(D3DXVECTOR3(200.0f,50.0f,0.0f),D3DXVECTOR3(15.0f,15.0f,0.0f),0);
+	m_procedure = CProcedure::Create(D3DXVECTOR3(220.0f,50.0f,0.0f),D3DXVECTOR3(15.0f,15.0f,0.0f),0);
+	m_procedure->SetAlign(CProcedure::EAlign::RIGHT);
 	SetEndChildren(m_procedure);
 
 	return S_OK;

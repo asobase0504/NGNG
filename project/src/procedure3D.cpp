@@ -25,7 +25,7 @@ CProcedure3D::CProcedure3D() :
 	m_digit(0),
 	m_align(CENTER)
 {
-	m_pNumber.clear();
+	m_numberObj.clear();
 }
 
 //--------------------------------------------------
@@ -51,7 +51,7 @@ HRESULT CProcedure3D::Init()
 //--------------------------------------------------
 void CProcedure3D::Uninit()
 {
-	for (CNumber3D* displayNumber : m_pNumber)
+	for (CNumber3D* displayNumber : m_numberObj)
 	{
 		displayNumber->SetMtxWorldParent(nullptr);
 	}
@@ -102,7 +102,7 @@ void CProcedure3D::SetPos(const D3DXVECTOR3& inPos)
 	D3DXMatrixTranslation(&m_mtxTrans, inPos.x, inPos.y, inPos.z);
 
 	int cnt = 0;
-	for (CNumber3D* displayNumber : m_pNumber)
+	for (CNumber3D* displayNumber : m_numberObj)
 	{
 		float posX = 0.0f;
 		switch (m_align)
@@ -131,7 +131,7 @@ void CProcedure3D::SetPos(const D3DXVECTOR3& inPos)
 //--------------------------------------------------
 void CProcedure3D::SetColor(const D3DXCOLOR & inColor)
 {
-	for (CNumber3D* displayNumber : m_pNumber)
+	for (CNumber3D* displayNumber : m_numberObj)
 	{
 		displayNumber->SetColor(inColor);
 	}
@@ -142,7 +142,7 @@ void CProcedure3D::SetColor(const D3DXCOLOR & inColor)
 //--------------------------------------------------
 void CProcedure3D::AddColor(const D3DXCOLOR & inColor)
 {
-	for (CNumber3D* displayNumber : m_pNumber)
+	for (CNumber3D* displayNumber : m_numberObj)
 	{
 		displayNumber->SetColor(inColor + displayNumber->GetColor());
 	}
@@ -154,7 +154,7 @@ void CProcedure3D::AddColor(const D3DXCOLOR & inColor)
 void CProcedure3D::SetSize(const D3DXVECTOR3 & inSize)
 {
 	CObject::SetSize(inSize);
-	for (CNumber3D* displayNumber : m_pNumber)
+	for (CNumber3D* displayNumber : m_numberObj)
 	{
 		displayNumber->SetSize(inSize);
 	}
@@ -166,7 +166,7 @@ void CProcedure3D::SetSize(const D3DXVECTOR3 & inSize)
 //--------------------------------------------------
 void CProcedure3D::AddSize(const D3DXVECTOR3 & inSize)
 {
-	for (CNumber3D* displayNumber : m_pNumber)
+	for (CNumber3D* displayNumber : m_numberObj)
 	{
 		displayNumber->AddSize(inSize);
 	}
@@ -194,7 +194,7 @@ void CProcedure3D::SetNumber(int inNumber)
 
 	// テクスチャ座標の設定
 	int cnt = 0;
-	for (CNumber3D* displayNumber : m_pNumber)
+	for (CNumber3D* displayNumber : m_numberObj)
 	{
 		displayNumber->SetNumber(aPosTexU[cnt]);
 		displayNumber->SetTexPos(10.0f, (float)aPosTexU[cnt]);
@@ -207,7 +207,7 @@ void CProcedure3D::SetNumber(int inNumber)
 //--------------------------------------------------
 void CProcedure3D::SetDisplay(bool isDisplay)
 {
-	for (CNumber3D* displayNumber : m_pNumber)
+	for (CNumber3D* displayNumber : m_numberObj)
 	{
 		displayNumber->SetDisplay(isDisplay);
 	}
@@ -244,19 +244,19 @@ void CProcedure3D::CalDigit()
 		number *= 0.1f;
 	} while (number != 0);
 
-	int diff = m_digit - m_pNumber.size();
+	int diff = m_digit - m_numberObj.size();
 	while (diff != 0)
 	{
 		if (diff < 0)
 		{ // 桁が過剰時
-			m_pNumber.back()->Uninit();
-			m_pNumber.pop_back();	// 削除
+			m_numberObj.back()->Uninit();
+			m_numberObj.pop_back();	// 削除
 			diff++;
 		}
 		else
 		{ // 桁が足りない時
 			CNumber3D* number = CNumber3D::Create();
-			m_pNumber.push_back(number);	// 追加
+			m_numberObj.push_back(number);	// 追加
 			number->SetSize(m_size);
 			SetEndChildren(number);
 			number->SetMtxWorldParent(&m_mtxWorld);

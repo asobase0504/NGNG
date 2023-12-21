@@ -54,3 +54,7 @@ CNumber3D *CNumber3D::Create()
 
 	return pObject;
 }
+
+void CNumber3D::AttachIcon(EIconType icon)
+{
+}

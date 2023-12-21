@@ -66,6 +66,7 @@ HRESULT CItemModel::Init(int inId)
 	m_collisionCylinder->SetLength(20.0f);
 	m_collisionHit = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 20.0f,20.0f);
 	m_collisionHit->SetParent(&m_pos);
+	SetEndChildren(m_collisionHit);
 
 	m_ID = inId;
 

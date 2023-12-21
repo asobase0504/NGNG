@@ -49,14 +49,6 @@ HRESULT CDifficult::Init()
 }
 
 //--------------------------------------------------------------
-// I—¹
-//--------------------------------------------------------------
-void CDifficult::Uninit()
-{
-	CObject::Uninit();
-}
-
-//--------------------------------------------------------------
 // XV
 //--------------------------------------------------------------
 void CDifficult::Update()
@@ -69,7 +61,7 @@ void CDifficult::Update()
 	float size = 0.2f;
 	float gage1 = 0.0f;
 
-	if (m_time >= 1000)
+	if (m_time >= 3000)
 	{
 		m_gameLevel++;
 		m_enemyLevel = m_gameLevel * 10;
@@ -85,19 +77,11 @@ void CDifficult::Update()
 		gage1 = m_gameLevel * size;
 	}
 
-	float gage2 = m_time * 0.0002f;
+	float gage2 = m_time * 0.00002f;
 
 	m_bar->SetTex(PositionVec4(gage1 + gage2, size + gage1 + gage2, 0.0f, 1.0f));
 
 	CObject::Update();
-}
-
-//--------------------------------------------------------------
-// •`‰æ
-//--------------------------------------------------------------
-void CDifficult::Draw()
-{
-	CObject::Draw();
 }
 
 //--------------------------------------------------------------
