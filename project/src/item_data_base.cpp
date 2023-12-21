@@ -416,7 +416,6 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	// ↑チェック済み-----------------------------------------------
 	item = m_item[ITEM_BROKEN_KABUTO];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
@@ -425,12 +424,12 @@ void CItemDataBase::Init()
 	m_itemInfo[ITEM_BROKEN_KABUTO][2] = "ITEM_DANGO_O1";
 	// 壊れた兜---------------------------------------------------------
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// 体力が13%以下になったエリートモンスターを即死させる (+13%)	// TODO　未検証
+	{// 体力が13%以下になったエリートモンスターを即死させる (+13%)
 		if (outCharacter->GetIsElite())
 		{
 			float parcent = 0.0f;
 
-			for (int j = 0; j < cnt; j++)
+			for (int i = 0; i < cnt; i++)
 			{
 				parcent += 13.0f;
 			}
@@ -443,7 +442,7 @@ void CItemDataBase::Init()
 
 			if (hpCurrent <= hp)
 			{// 現在の体力が規定値以下だったら
-				outCharacter->Died();
+				outCharacter->GetHp()->AddItemEffect(-hp);
 			}
 		}
 	});
@@ -456,7 +455,7 @@ void CItemDataBase::Init()
 	m_itemInfo[ITEM_CROW_FEATHER][1] = "ジャンプ回数が増える";
 	m_itemInfo[ITEM_CROW_FEATHER][2] = "ITEM_DANGO_O1";
 	// カラスの羽---------------------------------------------------------
-	// ジャンプ回数 +1 (+1)
+	// ジャンプ回数 +1 (+1)	// なんか増えないなんで　TODO
 	item->SetWhenPickFunc([](CCharacter* inCharacter, int cnt)
 	{
 		inCharacter->GetJumpCount()->AddItemEffect(1);
@@ -521,6 +520,7 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
+	// ↑チェック済み-----------------------------------------------
 	item = m_item[ITEM_CHICK];
 	item->SetModel("ITEM_HIYOKO");
 	item->SetRerity(RARITY_UNCOMMON);

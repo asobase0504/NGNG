@@ -184,6 +184,7 @@ public:
 
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
+	void SetIsElite() { m_isElite = true; }
 
 	// テレポーターを起動したかどうか
 	bool GetIsTeleporter() { return m_isTeleporter; }

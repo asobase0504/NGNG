@@ -99,7 +99,7 @@ bool CSkill::Skill()
 
 	// クールタイムの設定
 	m_atkSpd = m_apChara->GetAtkSpd()->GetCurrent();
-	m_CT = pSkillData->GetCT(m_Name) * m_atkSpd;
+	m_CT = (int)(pSkillData->GetCT(m_Name) * m_atkSpd);
 
 	return true;
 }
