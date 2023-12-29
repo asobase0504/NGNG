@@ -278,7 +278,7 @@ void CCharacter::DealDamage(CCharacter* pEnemy, float SkillMul)
 {
 	m_nonCombat = false;
 
-	if (IsSuccessRate(m_criticalRate.GetMax()))
+	if (IsSuccessRate(/*m_criticalRate.GetMax()*/1.0f))
 	{// クリティカルかどうか
 		m_isCritical = true;
 		m_numCritical++;
@@ -389,7 +389,6 @@ void CCharacter::AbDamage(const int inDamage)
 		Died();
 	}
 }
-
 
 //--------------------------------------------------------------
 // ダメージ計算関数
