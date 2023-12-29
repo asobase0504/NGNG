@@ -335,7 +335,7 @@ bool CCollisionCylinder::ToSphere(CCollisionSphere * inSphere)
 }
 
 //--------------------------------------------------------------
-// 円柱とメッシュ
+// 円柱とメッシュ(等間隔)
 //--------------------------------------------------------------
 bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 {
@@ -348,14 +348,31 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 	CObjectPolygon3D::VERTEX_3D* pVtx = nullptr;			// 頂点情報へのポインタ
 	WORD* pIdx;
 	const int nTri = 3;
+	D3DXVECTOR3 posPoly[nTri];
+	D3DXVECTOR3 pos;
 
 	// 頂点バッファをロックし、頂点情報へのポインタを取得
 	vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 	// インデックスバッファをロック
 	idxBuff->Lock(0, 0, (void**)&pIdx, 0);
 
-	for (int nCnt = 0; nCnt < primitive; nCnt++)
+	int aaaa = 0;
+
+	posPoly[0] = pVtx[pIdx[0]].pos;
+	posPoly[1] = pVtx[pIdx[1]].pos;
+	posPoly[2] = pVtx[pIdx[2]].pos;
+
+	pos = GetPosWorld();
+
+	int x = (int)(fabs(posPoly[1].x - pos.x) / 100.0f * 2.0f * 2.0f);
+	float iii = fabs(posPoly[1].z - pos.z) / 100.0f;
+	int z = (int)iii * 100.0f;
+
+	int answer = x + z;
+
+	for (int nCnt = answer; nCnt < primitive; nCnt++)
 	{
+		aaaa++;
 		if ((pIdx[nCnt + 0] == pIdx[nCnt + 1]) ||
 			(pIdx[nCnt + 0] == pIdx[nCnt + 2]) ||
 			(pIdx[nCnt + 2] == pIdx[nCnt + 1]))
@@ -363,23 +380,25 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 			continue;
 		}
 
-		D3DXVECTOR3 posPoly[nTri];
-		D3DXVECTOR3 pos = GetPosWorld();
+		pos = GetPosWorld();
 
 		// 頂点座標の取得
 		posPoly[0] = pVtx[pIdx[nCnt + 0]].pos;
 		posPoly[1] = pVtx[pIdx[nCnt + 1]].pos;
 		posPoly[2] = pVtx[pIdx[nCnt + 2]].pos;
 
-		if (fabs(posPoly[0].x - pos.x) >= 100.0f && fabs(posPoly[0].z - pos.z) >= 100.0f)
+		if (fabs(posPoly[0].z - pos.z) >= 100.0f &&
+			fabs(posPoly[1].z - pos.z) >= 100.0f &&
+			fabs(posPoly[2].z - pos.z) >= 100.0f)
 		{
+			nCnt -= nCnt % 100;
+			nCnt += 100;
 			continue;
 		}
-		if (fabs(posPoly[1].x - pos.x) >= 100.0f && fabs(posPoly[1].z - pos.z) >= 100.0f)
-		{
-			continue;
-		}
-		if (fabs(posPoly[2].x - pos.x) >= 100.0f && fabs(posPoly[2].z - pos.z) >= 100.0f)
+
+		if (fabs(posPoly[0].x - pos.x) >= 100.0f &&
+			fabs(posPoly[1].x - pos.x) >= 100.0f &&
+			fabs(posPoly[2].x - pos.x) >= 100.0f)
 		{
 			continue;
 		}
@@ -430,16 +449,13 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 			// 当たったオブジェクトの位置を設定
 			float meshHeight = posPoly[0].y - (vecNormal.x * (pos.x - posPoly[0].x) + vecNormal.z * (pos.z - posPoly[0].z)) / vecNormal.y;
 
+			CDebugProc::Print("nCnt : %d\n", nCnt);
 			if (pos.y < meshHeight)
 			{// メッシュの高さよりプレイヤーの高さのほうが下のとき
 				SetPosParent(D3DXVECTOR3(pos.x, meshHeight, pos.z));
+				isLanding = true;
 			}
-			else
-			{
-				break;
-			}
-
-			isLanding = true;
+			break;
 		}
 	}
 
@@ -447,6 +463,11 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 	vtxBuff->Unlock();
 	// 頂点バッファをアンロックする
 	idxBuff->Unlock();
+
+	CDebugProc::Print("x : %d\n", x);
+	CDebugProc::Print("z : %d\n", z);
+	CDebugProc::Print("primitive : %d\n", primitive);
+	CDebugProc::Print("aaa : %d\n", aaaa);
 
 	return isLanding;
 }

@@ -101,7 +101,7 @@ void CMap::Update()
 	if (m_SpawnCnt >= 600)
 	{
 		m_SpawnCnt = 0;
-		SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+		//SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
 	}
 }
 
