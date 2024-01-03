@@ -377,7 +377,7 @@ bool CMesh::CreateMesh(D3DXVECTOR3* pPos)
 
 void CMesh::SetY(std::vector<std::vector<float>> inY)
 {
-	SetVtxMeshSize(inY.size(), inY[0].size());	// サイズ決定
+	SetVtxMeshSize(inY[0].size(), inY.size());	// サイズ決定
 	SetVtxMeshLight();		// 法線設定
 
 	VERTEX_3D* pVtx = NULL;
@@ -391,7 +391,7 @@ void CMesh::SetY(std::vector<std::vector<float>> inY)
 		for (int j = 0; j < (int)inY[i].size(); j++)
 		{
 			// 座標の補正
-			int size = j + i * inY.size();
+			int size = j + i * (int)inY[i].size();
 			pVtx[size].pos.y += inY[i][j] + FloatRandom(-10.0f,10.0f);
 		}
 	}

@@ -100,8 +100,8 @@ HRESULT CCharacter::Init()
 	m_criticalRate.SetCurrent(0.0f);
 	m_criticalDamage.Init(2.0f);
 	m_criticalDamage.SetCurrent(2.0f);
-	m_movePower.Init(2.0f);
-	m_movePower.SetCurrent(2.0f);
+	m_movePower.Init(4.0f);
+	m_movePower.SetCurrent(4.0f);
 	m_dashPower.Init(1.55f);
 	m_dashPower.SetCurrent(1.55f);
 	m_jumpPower.Init();
