@@ -392,7 +392,7 @@ void CMesh::SetY(std::vector<std::vector<float>> inY)
 		{
 			// ç¿ïWÇÃï‚ê≥
 			int size = j + i * inY.size();
-			pVtx[size].pos.y += inY[i][j];
+			pVtx[size].pos.y += inY[i][j] + FloatRandom(-10.0f,10.0f);
 		}
 	}
 
