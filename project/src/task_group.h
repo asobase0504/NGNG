@@ -30,7 +30,6 @@ public:
 		LEVEL_SYSTEM = 0,
 		LEVEL_2D_BG,
 		LEVEL_3D_1,
-		LEVEL_3D_2,
 		LEVEL_2D_1,
 		LEVEL_2D_2,
 		LEVEL_2D_UI,

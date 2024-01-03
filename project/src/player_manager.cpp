@@ -64,6 +64,7 @@ void CPlayerManager::Uninit()
 	{
 		m_playerManager = nullptr;
 	}
+	CTask::Uninit();
 }
 
 //--------------------------------------------------------------

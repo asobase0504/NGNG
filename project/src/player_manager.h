@@ -32,6 +32,21 @@ private:
 	CPlayerManager();
 	static CPlayerManager* m_playerManager;
 
+	// プレイヤー種類
+	enum class EType
+	{
+		YAMATO,
+		MUSASHI
+	};
+
+	// 初期ステータス
+	struct SInitStatus
+	{
+		std::string modelKey;
+		int maxHP;
+		float speed;
+	};
+
 public:
 	// コンストラクタとデストラクタ
 	~CPlayerManager();

@@ -71,7 +71,7 @@ HRESULT CPlayer::Init()
 
 	m_isdash = false;
 	m_isUpdate = true;
-	m_isInertiaMoveLock = false;
+
 	// 初期化処理
 	CCharacter::Init();
 
@@ -145,6 +145,7 @@ void CPlayer::Update()
 		return;
 	}
 
+	// 状態異常UI
 	for (CAbnormal2DUI* ui : m_abnormalUI)
 	{
 		if (m_haveAbnormal[ui->GetType()].s_stack <= 0)

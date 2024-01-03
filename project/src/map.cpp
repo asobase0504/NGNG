@@ -54,25 +54,30 @@ CMap::~CMap()
 HRESULT CMap::Init()
 {
 	CStatueManager* manager = CStatueManager::GetInstance();
-	(manager->RandomCreate());
-	(manager->RandomCreate());
-	(manager->RandomCreate());
-	(manager->RandomCreate());
-	(manager->CreateStatue(CStatueManager::BLOOD));
-	(manager->CreateStatue(CStatueManager::LUCK));
-	(manager->CreateStatue(CStatueManager::TELEPORTER));
-	(manager->CreateStatue(CStatueManager::CHEST));
-	(manager->CreateStatue(CStatueManager::COMBAT));
+	manager->RandomCreate();
+	manager->RandomCreate();
+	manager->RandomCreate();
+	manager->RandomCreate();
+	manager->CreateStatue(CStatueManager::BLOOD);
+	manager->CreateStatue(CStatueManager::LUCK);
+	manager->CreateStatue(CStatueManager::TELEPORTER);
+	manager->CreateStatue(CStatueManager::CHEST);
+	manager->CreateStatue(CStatueManager::COMBAT);
 
 	for (int i = 0; i < 50; i++)
 	{
-		(manager->CreateStatue(CStatueManager::CHEST));
+		manager->CreateStatue(CStatueManager::CHEST);
 	}
 
 	//CMesh* sky = CMesh::Create();
 	//sky->SetSkyMesh();
 	//sky->SetIsCulling(true);
 	//sky->SetTexture("SKY");
+
+	CObject2d* sky = CObject2d::Create();
+	sky->SetSize(CApplication::CENTER_POS);
+	sky->SetPos(CApplication::CENTER_POS);
+	sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
 
 	return S_OK;
 }
@@ -101,7 +106,8 @@ void CMap::Update()
 	if (m_SpawnCnt >= 600)
 	{
 		m_SpawnCnt = 0;
-		//SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+
+		SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
 	}
 }
 

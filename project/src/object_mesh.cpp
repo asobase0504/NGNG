@@ -27,7 +27,7 @@ const int CMesh::START_VERTICAL(15);
 // コンストラクタ
 //--------------------------------------------------------------
 CMesh::CMesh(CTaskGroup::EPriority nPriority) :
-	CObjectPolygon3D(CTaskGroup::EPriority::LEVEL_3D_2),
+	CObjectPolygon3D(CTaskGroup::EPriority::LEVEL_3D_1),
 	m_xsiz(0),			// X軸の面数
 	m_zsiz(0),			// Y軸の面数
 	m_vtxCountX(0),		// X軸の辺の頂点数

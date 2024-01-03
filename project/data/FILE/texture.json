@@ -15,6 +15,7 @@
 	["TEST","data\/TEXTURE\/test.jpg"],
 	["DIFFICULT","data\/TEXTURE\/difficult.png"],
 	["MESH_BG","data\/TEXTURE\/green.jpg"],
+	["HP_BAR","data\/TEXTURE\/hp_bar.jpg"],
 	["ABNORMAL_ICON_FIRE","data\/TEXTURE\/abnormal\/Status_OnFire.png"]
   ]
 }

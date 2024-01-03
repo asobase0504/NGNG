@@ -29,22 +29,25 @@ CHPUI::~CHPUI()
 //--------------------------------------------------
 HRESULT CHPUI::Init()
 {
+
 	m_size = D3DXVECTOR3(200.0f, 15.0f, 0.0f);
 	m_ground = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	m_ground->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
 	m_ground->SetSize(m_size);
 	m_ground->SetPos(D3DXVECTOR3(50.0f, SCREEN_HEIGHT - 70.0f, 0.0f));
 	m_ground->SetColor(D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f));
+	m_ground->SetTexture("HP_BAR");
 
 	m_bar = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	m_bar->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
 	m_bar->SetSize(m_size);
 	m_bar->SetPos(D3DXVECTOR3(50.0f, SCREEN_HEIGHT - 70.0f,0.0f));
 	m_bar->SetColor(D3DXCOLOR(0.0f,1.0f,0.0f,1.0f));
+	m_bar->SetTexture("HP_BAR");
 
-	m_current = CProcedure::Create(D3DXVECTOR3(190.0f + 50.0f, SCREEN_HEIGHT - 70.0f, 0.0f), D3DXVECTOR3(15.0f, 15.0f, 0.0f), 0);
+	m_current = CProcedure::Create(D3DXVECTOR3(190.0f + 50.0f, SCREEN_HEIGHT - 70.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 0);
 	m_current->SetAlign(CProcedure::EAlign::RIGHT);
-	m_max = CProcedure::Create(D3DXVECTOR3(210.0f + 50.0f, SCREEN_HEIGHT - 70.0f, 0.0f), D3DXVECTOR3(15.0f, 15.0f, 0.0f), 0);
+	m_max = CProcedure::Create(D3DXVECTOR3(210.0f + 50.0f, SCREEN_HEIGHT - 70.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 0);
 	m_max->SetAlign(CProcedure::EAlign::LEFT);
 
 	SetEndChildren(m_bar);
