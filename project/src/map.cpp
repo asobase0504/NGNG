@@ -102,13 +102,10 @@ void CMap::Update()
 {
 	m_SpawnCnt++;
 
-	static int number = 0;
-
 	// 一定時間ごとにランダムな敵をスポーンさせる。
-	if (m_SpawnCnt >= 6 && number <= 40)
+	if (m_SpawnCnt >= 600)
 	{
 		m_SpawnCnt = 0;
-		number++;
 		SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
 	}
 }

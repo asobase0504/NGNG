@@ -14,7 +14,11 @@
 #include "application.h"
 
 
+#ifdef _DEBUG
 bool CLine::m_alldisplay = true;
+#else
+bool CLine::m_alldisplay = false;
+#endif
 
 //--------------------------------------------------------------
 // インスタンス生成

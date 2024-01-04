@@ -53,6 +53,7 @@ void CDebugProc::Print(const char *pFormat, ...)
 //--------------------------------------------------------------
 void CDebugProc::Draw(void)
 {
+#ifdef _DEBUG
 	if (CInput::GetKey()->Trigger(DIK_0, -1))
 	{
 		CLine::m_alldisplay = !CLine::m_alldisplay;
@@ -65,11 +66,9 @@ void CDebugProc::Draw(void)
 
 	if (!m_use)
 	{
-#ifdef _DEBUG
 		// テキスト描画
 		RECT rect = { 0, 0, 1280, 720 };
 		m_font->DrawText(NULL, "【 0 】 : 表示\n", -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0x00, 0xff, 0x00));
-#endif // _DEBUG
 		return;
 	}
 	else
@@ -82,6 +81,7 @@ void CDebugProc::Draw(void)
 	// テキスト描画
 	m_font->DrawText(NULL, m_str.c_str(), -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0x00, 0xff, 0x00));
 	m_str.clear();
+#endif // _DEBUG
 }
 
 //--------------------------------------------------------------
