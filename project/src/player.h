@@ -56,12 +56,13 @@ private:
 	void Jump();		// ジャンプ
 	void Select();		// 選ぶ
 
+	void RotateToFace() override;
 private:		// メンバ変数
-	bool			m_isjump;		// ジャンプしているかどうか
-	bool			m_isdash;		// ダッシュしているかどうか
-	bool			m_isskill;		// スキルを使用しているかどうか
-	bool			m_isUpdate;		// 更新を止めるか否か。
-	bool			m_isResult;		// リザルト中か否か
+	bool m_isjump;		// ジャンプしているかどうか
+	bool m_isdash;		// ダッシュしているかどうか
+	bool m_isskill;		// スキルを使用しているかどうか
+	bool m_isUpdate;	// 更新を止めるか否か。
+	bool m_isResult;	// リザルト中か否か
 
 	CController*	m_controller;	// 命令を出す人
 

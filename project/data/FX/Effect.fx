@@ -252,6 +252,33 @@ float4 ToonPS(VS_OUTPUT In) : COLOR0
 	return Out;
 }
 
+//=========================================
+//トゥーンピクセルシェーダー
+//=========================================
+float4 InvisiblePS(VS_OUTPUT In) : COLOR0
+{
+	float4 Out;
+
+	//ハーフランバート拡散照明によるライティング計算
+	float3 L = -(vLightDir.xyz);	// ローカル座標系でのライトベクトル
+
+	//法線ベクトル。
+	float3 N = In.Normal;
+
+	float p = (max(vAmbient, dot(N, L))) + (max(vAmbient, dot(N, -L)));
+	p = p * 0.5f + 0.5f;
+	p = p * p;
+
+	//色情報をテクセルのＵ成分とし、トゥーンマップテクスチャーから光の反射率を取得する
+	float4 Col = In.Color * tex2D(Samp, float2(p, 0.0f));
+	Col.a = 0.25f;
+
+	//色情報を格納する
+	Out = Col;
+
+return Out;
+}
+
 // -------------------------------------------------------------
 // スキンメッシュ
 // -------------------------------------------------------------
@@ -329,5 +356,10 @@ technique Diffuse
 	{
 		VertexShader = NULL;
 		PixelShader = compile ps_2_0 ToonPS();
+	}
+	pass P6	// 透明シェーダ(スキンメッシュ)
+	{
+		VertexShader = NULL;
+		PixelShader = compile ps_2_0 InvisiblePS();
 	}
 }

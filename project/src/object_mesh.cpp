@@ -429,8 +429,8 @@ void CMesh::SetVtxMeshSize(int sizeX,int sizeZ)
 
 	m_vtxCountX = sizeX;	// 頂点数
 	m_vtxCountZ = sizeZ;	// 頂点数
-	m_xsiz = sizeX - 1;				// 面の数
-	m_zsiz = sizeZ - 1;				// 面の数
+	m_xsiz = sizeX - 1;		// 面の数
+	m_zsiz = sizeZ - 1;		// 面の数
 
 	// 頂点数
 	m_vtx = m_vtxCountX * m_vtxCountZ;	// 頂点数を使ってるよ

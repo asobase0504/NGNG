@@ -428,6 +428,21 @@ void CPlayer::Select()
 }
 
 //--------------------------------------------------------------
+// 向いている向きを回転させる
+//--------------------------------------------------------------
+void CPlayer::RotateToFace()
+{
+	if (m_isToFaceRot)
+	{
+		CCharacter::RotateToFace();
+	}
+	else
+	{
+		SetRot(D3DXVECTOR3(0.0f,((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot().y,0.0f));
+	}
+}
+
+//--------------------------------------------------------------
 // コントローラーの設定
 //--------------------------------------------------------------
 void CPlayer::SetController(CController * inOperate)

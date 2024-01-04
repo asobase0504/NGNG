@@ -70,6 +70,32 @@ int IntRandom(int nMax, int nMin)
 }
 
 //--------------------------------------------------------------
+// 角度と現在位置、離す距離で、外周にいる位置を算出
+//--------------------------------------------------------------
+D3DXVECTOR3 CalculatePerimeterPos(const D3DXVECTOR3 & center, const D3DXVECTOR3 & rot, const D3DXVECTOR3 & range)
+{
+	// 計算用マトリックス
+	D3DXMATRIX mtxWorld;
+	D3DXMATRIX mtxRot, mtxTrans;
+
+	D3DXMatrixIdentity(&mtxWorld);	// 行列初期化関数
+
+	// 向きの反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);		// 行列回転関数
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);					// 行列掛け算関数 
+
+	// 位置を反映
+	D3DXMatrixTranslation(&mtxTrans, center.x, center.y, center.z);	// 行列移動関数
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);	// 行列掛け算関数
+
+	// D3DXVECTOR3に反映
+	D3DXVECTOR3 targetPos = range;
+	D3DXVec3TransformCoord(&targetPos, &targetPos, &mtxWorld);
+
+	return targetPos;
+}
+
+//--------------------------------------------------------------
 // 成功確率
 //--------------------------------------------------------------
 bool IsSuccessRate(float inRate)

@@ -40,6 +40,15 @@ float NormalizeAngle(float& pAngle);
 bool Homing(D3DXVECTOR3 *pPosOut, const D3DXVECTOR3 &posNow, const D3DXVECTOR3 &posDest, float fSpeed);
 
 //--------------------------------------------------------------
+// 角度と現在位置、離す距離で、外周にいる位置を算出
+// 引数1  : D3DXVECTOR3 *center	/ 中心位置
+// 引数2  : D3DXVECTOR3 &rot	/ 現在の向き
+// 引数3  : D3DXVECTOR3 &range	/ 離す距離(rotが0の時の位置)
+// 返値  : D3DXVECTOR3 / 外周位置
+//--------------------------------------------------------------
+D3DXVECTOR3 CalculatePerimeterPos(const D3DXVECTOR3 &center, const D3DXVECTOR3 &rot, const D3DXVECTOR3 & range);
+
+//--------------------------------------------------------------
 // 成功確率を渡して成功か否か判断
 // 引数  : float inRate / 成功確率
 // 返値  : bool / 成功

@@ -68,6 +68,7 @@ public:
 	const D3DXVECTOR3& GetNormal() const { return m_normal; }
 
 	void SetAnchor(EAnchor inAnchor) { m_anchor = inAnchor; }
+	void SetIsCulling(bool isCulling) { m_isCulling = isCulling; }
 
 protected:
 	LPDIRECT3DVERTEXBUFFER9	m_vtxBuff;	// 頂点バッファ
@@ -76,5 +77,6 @@ private:
 	D3DXVECTOR3 m_normal;
 	bool m_bBill;
 	EAnchor m_anchor;
+	bool m_isCulling;
 };
 #endif

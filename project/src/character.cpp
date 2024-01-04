@@ -12,7 +12,6 @@
 #include "application.h"
 #include "objectX.h"
 #include "model_skin.h"
-#include "PlayerController.h"
 #include "collision_sphere.h"
 #include "road.h"
 #include "statue_manager.h"
@@ -77,6 +76,7 @@ HRESULT CCharacter::Init()
 	m_isControl = false;
 	m_isTeleporter = false;
 	m_isInertiaMoveLock = false;
+	m_isToFaceRot = true;
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(100);
@@ -90,8 +90,8 @@ HRESULT CCharacter::Init()
 	m_barrier.SetCurrent(100);
 	m_barrierRePopTime.Init(100);
 	m_barrierRePopTime.SetCurrent(100);
-	m_attack.Init(100);
-	m_attack.SetCurrent(100);
+	m_attack.Init(10);
+	m_attack.SetCurrent(10);
 	m_attackSpeed.Init(1.0f);
 	m_attackSpeed.SetCurrent(1.0f);
 	m_defense.Init(10);
@@ -154,18 +154,7 @@ void CCharacter::Update()
 	// 常に起動するアイテム
 	CItemManager::GetInstance()->AllWhenAllways(this, m_haveItem);
 
-	D3DXVECTOR3 move = GetMove();
-	move.y = 0.0f;
-	if (D3DXVec3Length(&move) != 0.0f)
-	{
-		D3DXVec3Normalize(&move, &move);
-		m_destRot = atan2f(move.x, move.z);
-	}
-
-	float dest = m_destRot - m_rot.y;
-	dest *= 0.1f;
-
-	AddRot(D3DXVECTOR3(0.0f, dest, 0.0f));
+	RotateToFace();
 
 	Collision();
 
@@ -424,9 +413,9 @@ void CCharacter::Heal(int heal)
 
 	// ダメージUI生成
 	D3DXVECTOR3 pos = m_pos;
-	//pos.x += FloatRandom(20.0f, -20.0f);
-	//pos.y += FloatRandom(40.0f, 0.0f);
-	//pos.z += FloatRandom(20.0f, -20.0f);
+	pos.x += FloatRandom(20.0f, -20.0f);
+	pos.y += FloatRandom(40.0f, 0.0f);
+	pos.z += FloatRandom(20.0f, -20.0f);
 	CDamegeUI::Create(pos, D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f), HealHp);
 
 	m_hp.AddCurrent(HealHp);
@@ -618,6 +607,25 @@ void CCharacter::Collision()
 		SetMoveY(0.0f);
 		m_jumpCount.SetCurrent(0);
 	}
+}
+
+//--------------------------------------------------------------
+// 向いている向きを回転させる
+//--------------------------------------------------------------
+void CCharacter::RotateToFace()
+{
+	// Y軸向きを慣性で回転
+	D3DXVECTOR3 move = GetMove();
+	move.y = 0.0f;
+	if (D3DXVec3Length(&move) != 0.0f)
+	{
+		D3DXVec3Normalize(&move, &move);
+		m_destRot = atan2f(move.x, move.z);
+	}
+
+	float dest = m_destRot - m_rot.y;
+	dest *= 0.1f;
+	AddRot(D3DXVECTOR3(0.0f, dest, 0.0f));
 }
 
 //--------------------------------------------------------------

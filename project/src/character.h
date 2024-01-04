@@ -195,6 +195,10 @@ public:
 	void SetIsAtkCollision(bool is) { m_isAtkCollision = is; }
 	bool GetIsAtkCollision() { return m_isAtkCollision; }
 
+	// 向いている向きを変える方法
+	void SetToFaceRot(bool is) { m_isToFaceRot = is; RotateToFace(); }
+protected:
+	virtual void RotateToFace();	// 向いている向きを回転させる
 private:
 	virtual void Move();	// 移動
 	void Abnormal();		// 状態異常
@@ -231,6 +235,7 @@ protected:
 	bool m_isTeleporter;	// テレポーターを起動したかどうか
 
 	bool m_isAtkCollision;		// 攻撃を受けなくなる
+	bool m_isToFaceRot;			// 向いている向きを変える方法
 
 	float m_addDamage;
 

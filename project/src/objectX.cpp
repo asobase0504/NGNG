@@ -246,7 +246,7 @@ void CObjectX::Draw()
 		// テクスチャの設定
 		pEffect->SetTexture(m_hTexture, tex0);
 		// 通常モデルの描画
-		pEffect->BeginPass(1);
+		pEffect->BeginPass(m_shaderIndex);
 		m_mesh->DrawSubset(nCntMat);	//モデルパーツの描画
 		pEffect->EndPass();
 

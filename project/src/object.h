@@ -120,6 +120,8 @@ public:
 
 	virtual void SetDisplay(bool display) { m_isDisplay = display; }
 
+protected:
+
 	//=========================================
 	//ハンドル一覧
 	//=========================================
@@ -145,7 +147,8 @@ public:
 	D3DXHANDLE			m_hMtxNum;		// マトリックスの数
 	D3DXHANDLE			m_hBoneStack;	// ボーンのマテリアル情報
 
-protected:
+	int m_shaderIndex;
+
 	D3DXVECTOR3 m_pos;				// 位置
 	D3DXVECTOR3 m_posOld;			// 過去の位置
 	D3DXVECTOR3 m_move;				// 移動量

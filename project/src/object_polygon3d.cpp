@@ -61,6 +61,7 @@ HRESULT CObjectPolygon3D::Init()
 {
 	SetType(CObject::EType::POLYGON);
 	SetBillboard(false);
+	m_isCulling = false;
 
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetInstance()->GetDevice();	// デバイスの取得
 
@@ -179,6 +180,12 @@ void CObjectPolygon3D::Draw()
 
 	// テクスチャの設定
 	pDevice->SetTexture(0, pTexture->GetTexture(m_textureKey));
+
+	if (m_isCulling)
+	{
+		//カリングを切る
+		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	}
 
 	// αテストを有効
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);

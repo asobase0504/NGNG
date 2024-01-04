@@ -66,6 +66,8 @@ HRESULT CObject::Init()
 	m_hBoneStack = pEffect->GetParameterByName(NULL, "mBoneStack");
 
 	m_TimeCnt = m_TimeTarget;
+
+	m_shaderIndex = 1;
 	
 	return S_OK;
 }

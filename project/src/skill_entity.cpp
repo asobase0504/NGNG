@@ -100,7 +100,6 @@ void CSkillEntity::Update()
 			m_Collision->SetParent(&m_apChara->GetPos());
 			SetEndChildren(m_Collision);
 		}
-
 		if (m_Collision == nullptr)
 		{
 			return;
