@@ -39,6 +39,7 @@ public:
 
 private:
 	void SetLine() override;
+	bool ToMeshSurface(D3DXVECTOR3[3], D3DXMATRIX, bool);
 private:
 	float m_length;
 	float m_height;

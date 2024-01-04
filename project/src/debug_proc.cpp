@@ -58,6 +58,10 @@ void CDebugProc::Draw(void)
 		CLine::m_alldisplay = !CLine::m_alldisplay;
 		m_use = !m_use;
 	}
+	else if (CInput::GetKey()->Trigger(DIK_9, -1))
+	{
+		CLine::m_alldisplay = !CLine::m_alldisplay;
+	}
 
 	if (!m_use)
 	{

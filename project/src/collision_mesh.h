@@ -29,18 +29,23 @@ public:
 
 	HRESULT Init();
 
-	static CCollisionMesh* Create(int inPrimitive, LPDIRECT3DVERTEXBUFFER9 inVtxBuff, LPDIRECT3DINDEXBUFFER9 inIdxBuff, D3DXMATRIX inMtxWorld);
+	static CCollisionMesh* Create(int inPrimitive, LPDIRECT3DVERTEXBUFFER9 inVtxBuff, LPDIRECT3DINDEXBUFFER9 inIdxBuff, D3DXMATRIX inMtxWorld,const int x,const int z);
 
 	int GetPrimitive() { return m_primitive; }
 	LPDIRECT3DVERTEXBUFFER9 GetVtxBuff() { return m_vtxBuff; }
 	LPDIRECT3DINDEXBUFFER9 GetIdxBuff() { return m_idxBuff; }
 
+	int GetVtxX() { return m_vtxX; }
+	int GetVtxZ() { return m_vtxZ; }
 private:
 	void SetLine() {};
 private:
 	int m_primitive;
 	LPDIRECT3DVERTEXBUFFER9 m_vtxBuff;
 	LPDIRECT3DINDEXBUFFER9 m_idxBuff;
+
+	int m_vtxX;
+	int m_vtxZ;
 };
 
 #endif	// _COLLISION_MESH_H_

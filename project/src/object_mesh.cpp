@@ -400,7 +400,6 @@ void CMesh::SetY(std::vector<std::vector<float>> inY)
 	m_vtxBuff->Unlock();
 
 	SetVtxMeshLight();		// –@üÝ’è
-
 }
 
 //--------------------------------------------------------------
@@ -505,7 +504,7 @@ void CMesh::SetVtxMeshSize(int sizeX,int sizeZ)
 	m_vtxBuff->Unlock();
 
 	D3DXVECTOR3 pos = GetPos();
-	m_collisionMesh = CCollisionMesh::Create(m_polygonCount, m_vtxBuff, m_idxBuff, m_mtxWorld);
+	m_collisionMesh = CCollisionMesh::Create(m_polygonCount, m_vtxBuff, m_idxBuff, m_mtxWorld, m_vtxCountX, m_vtxCountZ);
 }
 
 //--------------------------------------------------------------

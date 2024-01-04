@@ -39,7 +39,7 @@ HRESULT CCollisionMesh::Init()
 // 当たり判定の生成
 // 引数：メッシュのポリゴン数、頂点数、インデックス数
 //--------------------------------------------------------------
-CCollisionMesh* CCollisionMesh::Create(int inPrimitive, LPDIRECT3DVERTEXBUFFER9 inVtxBuff, LPDIRECT3DINDEXBUFFER9 inIdxBuff, D3DXMATRIX inMtxWorld)
+CCollisionMesh* CCollisionMesh::Create(int inPrimitive, LPDIRECT3DVERTEXBUFFER9 inVtxBuff, LPDIRECT3DINDEXBUFFER9 inIdxBuff, D3DXMATRIX inMtxWorld, const int x, const int z)
 {
 	CCollisionMesh* collision = new CCollisionMesh;
 
@@ -50,6 +50,8 @@ CCollisionMesh* CCollisionMesh::Create(int inPrimitive, LPDIRECT3DVERTEXBUFFER9 
 	collision->m_vtxBuff = inVtxBuff;
 	collision->m_idxBuff = inIdxBuff;
 	collision->SetMtxWorld(inMtxWorld);
+	collision->m_vtxX = x;
+	collision->m_vtxZ = z;
 
 	return collision;
 }
