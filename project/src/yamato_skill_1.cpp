@@ -71,7 +71,7 @@ void CYamatoSkill_1::AllWayAbility()
 
 		float randomY = m_effectPos.y + FloatRandom(10.0f, -10.0f);
 
-		D3DXVECTOR3 targetPos = CalculatePerimeterPos(D3DXVECTOR3(m_effectPos.x, randomY, m_effectPos.z), D3DXVECTOR3(0.0f, m_effectRot, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 25.0f));
+		D3DXVECTOR3 targetPos = CalculatePerimeterPos(D3DXVECTOR3(m_effectPos.x, randomY, m_effectPos.z), D3DXVECTOR3(0.0f, m_effectRot, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 55.0f));
 
 		CObjectPolygon3D* effect = CObjectPolygon3D::Create();
 		effect->SetPos(targetPos);

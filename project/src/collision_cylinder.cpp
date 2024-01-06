@@ -386,11 +386,6 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 	// インデックスバッファのアンロック
 	vtxBuff->Unlock();
 
-	CDebugProc::Print("x : %d\n", x);
-	CDebugProc::Print("z : %d\n", z);
-	CDebugProc::Print("primitive : %d\n", primitive);
-	CDebugProc::Print("aaa : %d\n", aaaa);
-
 	return isLanding;
 }
 

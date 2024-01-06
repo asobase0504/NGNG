@@ -15,6 +15,7 @@
 // 前方前言　実態はNG　ポインタだけならOK
 //**************************************************
 class CProcedure;
+class CObject2d;
 
 //**************************************************
 // クラス
@@ -33,6 +34,7 @@ public:
 private:
 	CStatus<int>* m_money;
 	CProcedure* m_procedure;
+	CObject2d* m_bg;
 	int max_difficult;
 };
 

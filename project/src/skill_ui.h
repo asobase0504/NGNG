@@ -38,6 +38,7 @@ public:
 private:
 	CSkill* m_skill;
 	CProcedure* m_procedure;
+	CObject2d* m_bg;
 	CObject2d* m_ground;
 	CObject2d* m_display;
 	int m_ct;

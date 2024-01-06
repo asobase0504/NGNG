@@ -111,8 +111,8 @@ CStatue* CStatueManager::CreateStatue(D3DXVECTOR3 pos, int type)
 //--------------------------------------------------------------
 CStatue * CStatueManager::CreateStatue(int type)
 {
-	float randomPosX = FloatRandom(2000.0f, -2000.0f);
-	float randomPosZ = FloatRandom(4000.0f, -4000.0f);
+	float randomPosX = FloatRandom(4500.0f, -4500.0f);
+	float randomPosZ = FloatRandom(1500.0f, -1500.0f);
 
 	D3DXVECTOR3 pos(randomPosX, -FLT_MAX, randomPosZ);
 

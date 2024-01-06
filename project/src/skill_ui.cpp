@@ -41,6 +41,9 @@ HRESULT CSkillUI::Init()
 {
 	D3DXVECTOR3 pos(550.f, 250.f, 0.f);
 	D3DXVECTOR3 size(UI_SIZE, UI_SIZE,0.f);
+	m_bg = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	m_bg->SetSize(D3DXVECTOR3(UI_SIZE + 1.5f, UI_SIZE + 1.5f, 0.0f));
+
 	m_ground = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	m_ground->SetAnchor(CObject2d::EAnchor::ANCHOR_TOP);
 	m_ground->SetSize(D3DXVECTOR3(UI_SIZE, UI_SIZE, 0.0f));
@@ -50,7 +53,7 @@ HRESULT CSkillUI::Init()
 	m_display->SetSize(D3DXVECTOR3(UI_SIZE, 0.0f, 0.0f));
 	m_display->SetColor(D3DXCOLOR(0.15f, 0.15f, 0.15f, 0.75f));
 
-	m_procedure = CProcedure::Create(D3DXVECTOR3(m_ground->GetPos().x + (m_ground->GetSize().x),m_ground->GetPos().y,0.0f), D3DXVECTOR3(30.0f, 30.0f, 30.0f), 1);
+	m_procedure = CProcedure::Create(D3DXVECTOR3(m_ground->GetPos().x + (m_ground->GetSize().x),m_ground->GetPos().y + (m_ground->GetSize().y),0.0f), D3DXVECTOR3(25.0f, 25.0f, 25.0f), 1);
 	m_ct = 0;
 
 	return S_OK;
@@ -97,7 +100,9 @@ CSkillUI *CSkillUI::Create(const D3DXVECTOR3& inPos, CSkill* inSkill)
 	ui->m_ground->SetPos(inPos);
 	ui->m_ground->SetTexture(CSkillDataBase::GetInstance()->GetInfo(ui->m_skill->GetName()).texKey);
 	ui->m_display->SetPos(inPos);
-	ui->m_procedure->SetPos(inPos);
-	//ui->m_ctText->SetPos(inPos);
+	D3DXVECTOR3 pos = inPos;
+	pos.y += UI_SIZE;
+	ui->m_bg->SetPos(pos);
+	ui->m_procedure->SetPos(pos);
 	return ui;
 }

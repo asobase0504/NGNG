@@ -110,7 +110,7 @@ HRESULT CPlayer::Init()
 
 	for (int i = 0; i < 4; i++)
 	{
-		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i));
+		CSkillUI::Create(D3DXVECTOR3(1000.0f + 57.5f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i));
 	}
 
 	m_carringitemGroupUI = new CCarryingItemGroupUI;
