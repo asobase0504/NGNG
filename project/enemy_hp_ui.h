@@ -26,6 +26,10 @@ class CCharacter;
 //==============================================================
 class  CEnemy_HPUI : public CObject
 {
+private:
+	static const D3DXVECTOR3 GAGE_SIZE;
+	static const int SUB_TIMING;
+	static const int SUB_TIME;
 public:
 	static CEnemy_HPUI *Create(CCharacter* pEnemy);
 
@@ -36,9 +40,19 @@ public:
 	void Update() override;
 
 	void SetEnemy(CCharacter* enemy) { m_pEnemy = enemy; }
+
+	void SetDisplay(bool display) override;
 private:
-	bool m_isShow;						// ©g‚ğ•`‰æ‚·‚é‚©”Û‚©
 	CCharacter* m_pEnemy;				// ƒGƒlƒ~[
+	bool m_isDamege;
+	int m_subTimingCount;
+	bool m_canSub;
+	int m_subTimeCount;
+	float m_perHP;
+	float m_perDamage;
+	float m_volumeSubPerDamage;	// 1ƒtƒŒ[ƒ€‚Åí‚é—Ê
+
+	// Œ©‚½–Ú
 	CObjectPolygon3D* m_outline;		// ”wŒi(”’)
 	CObjectPolygon3D* m_background;		// ”wŒi(•)
 	CObjectPolygon3D* m_gageHP;			// Œ»‘Ì—Í

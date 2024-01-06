@@ -62,6 +62,7 @@ HRESULT CEnemy::Init()
 
 	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
 
+	// HPUI�̍쐬
 	m_pEHPUI = CEnemy_HPUI::Create(this);
 	SetEndChildren(m_pEHPUI);
 

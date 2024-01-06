@@ -45,10 +45,11 @@ void CItemDataBase::Init()
 		m_itemInfo[i][0] = "未記入----";
 		m_itemInfo[i][1] = "--効果--\n改行";
 		m_itemInfo[i][2] = "ITEM_DANGO_O1";
+		m_item[i]->SetModel("BOX");
 	}
 
 	item = m_item[ITEM_DANGO];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_DANGO");
 	item->SetRerity(RARITY_COMMON);
 	m_itemInfo[ITEM_DANGO][0] = "だんご";
 	m_itemInfo[ITEM_DANGO][1] = "ＨＰが増える";
