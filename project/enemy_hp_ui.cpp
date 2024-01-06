@@ -51,15 +51,15 @@ HRESULT CEnemy_HPUI::Init()
 	m_background->SetColor(D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
 	m_background->SetPriority(CTaskGroup::LEVEL_2D_2);
 
-	m_gage = new CObjectPolygon3D;
-	m_gage->Init();
-	m_gage->SetPriority(CTaskGroup::LEVEL_DEBUG);
-	m_gage->SetAnchor(CObjectPolygon3D::ANCHOR_LEFT);
-	m_gage->SetBillboard(true);
-	m_gage->SetSize(D3DXVECTOR3(10.0f, 1.0f, 0.0f));
-	m_gage->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	m_gageHP = new CObjectPolygon3D;
+	m_gageHP->Init();
+	m_gageHP->SetPriority(CTaskGroup::LEVEL_DEBUG);
+	m_gageHP->SetAnchor(CObjectPolygon3D::ANCHOR_LEFT);
+	m_gageHP->SetBillboard(true);
+	m_gageHP->SetSize(D3DXVECTOR3(10.0f, 1.0f, 0.0f));
+	m_gageHP->SetColor(D3DXCOLOR(0.9f, 0.9f, 0.4f, 1.0f));
 
-	SetEndChildren(m_gage);
+	SetEndChildren(m_gageHP);
 	SetEndChildren(m_background);
 	return S_OK;
 }
@@ -89,7 +89,7 @@ void CEnemy_HPUI::Update()
 	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
 	D3DXMatrixMultiply(&mtx, &mtx, &mtxTrans);
 
-	m_gage->SetPos(D3DXVECTOR3(mtx._41, pos.y + size.y, mtx._43));
+	m_gageHP->SetPos(D3DXVECTOR3(mtx._41, pos.y + size.y, mtx._43));
 
 	m_background->SetPos(D3DXVECTOR3(mtx._41, pos.y + size.y, mtx._43));
 
@@ -99,13 +99,13 @@ void CEnemy_HPUI::Update()
 	if (current <= 0)
 	{
 		m_background->SetDisplay(false);
-		m_gage->SetDisplay(false);
+		m_gageHP->SetDisplay(false);
 		current = 0;
 	}
 
 	float per = current / max;
 
-	m_gage->SetSize(D3DXVECTOR3(10.0f * per, 1.0f, 0.0f));
+	m_gageHP->SetSize(D3DXVECTOR3(10.0f * per, 1.0f, 0.0f));
 }
 
 //--------------------------------------------------------------

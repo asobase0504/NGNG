@@ -37,10 +37,13 @@ public:
 
 	void SetEnemy(CCharacter* enemy) { m_pEnemy = enemy; }
 private:
-	bool m_isShow;
-	CCharacter* m_pEnemy;
-	CObjectPolygon3D* m_background;
-	CObjectPolygon3D* m_gage;
+	bool m_isShow;						// 自身を描画するか否か
+	CCharacter* m_pEnemy;				// エネミー
+	CObjectPolygon3D* m_outline;		// 背景(白)
+	CObjectPolygon3D* m_background;		// 背景(黒)
+	CObjectPolygon3D* m_gageHP;			// 現体力
+	CObjectPolygon3D* m_gageDamage;		// 受けたダメージ
+	std::list<CObjectPolygon3D*> m_abnormalIcons;		// 状態異常
 };
 
 #endif

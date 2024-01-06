@@ -29,11 +29,6 @@ bool CDebugProc::m_use = false;	// ƒtƒHƒ“ƒgî•ñ
 //--------------------------------------------------------------
 void CDebugProc::Print(const char *pFormat, ...)
 {
-	if (!m_use)
-	{
-		return;
-	}
-
 	// •Ï”
 	char aStrCpy[0xfff] = {};
 
@@ -66,9 +61,14 @@ void CDebugProc::Draw(void)
 
 	if (!m_use)
 	{
+		m_str.clear();
+		m_str = "y 0 z : •\Ž¦\n" + m_str;
+		Print(_T("FPS : %d\n"), GetTime());
+
 		// ƒeƒLƒXƒg•`‰æ
 		RECT rect = { 0, 0, 1280, 720 };
-		m_font->DrawText(NULL, "y 0 z : •\Ž¦\n", -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0x00, 0xff, 0x00));
+		m_font->DrawText(NULL, m_str.c_str(), -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0x00, 0xff, 0x00));
+		m_str.clear();
 		return;
 	}
 	else
