@@ -31,9 +31,13 @@ public: /* パブリック関数 */
 	void Load(std::string inKey, std::string inFileName);	// 指定の読み込み
 	void Load(std::vector<std::string> inTexture);			// 指定の読み込み
 	void Unload(std::string inKey);	// 指定の破棄
-	LPDIRECT3DTEXTURE9 GetTexture(std::string inKey);	// 情報の取得
-	LPDIRECT3DTEXTURE9 GetTexture(int inKey);	// 情報の取得
+
 	int SetTexture(std::string inKey);	// 情報の取得
+
+	// 情報の取得
+	LPDIRECT3DTEXTURE9 GetTexture(std::string inKey);	// タグ
+	LPDIRECT3DTEXTURE9 GetTexture(int inKey);	// 生成順
+	LPDIRECT3DTEXTURE9 GetTextureAtPath(std::string inKey);	// パス
 
 private: /* プライベート関数 */
 	bool ExistsPath(std::string inKey) { return m_texturePath.count(inKey) != 0; }	// Map内に指定されたKeyが存在するか否か

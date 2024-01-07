@@ -37,6 +37,19 @@ public:
 	enum EEnemyType
 	{
 		SKELTON,
+		TENGU,
+		TENGU_CHILD,
+		MONSTER,
+		SKY_MONSTER,
+		NURIKABE,
+		ONI_BIG,
+		ONI,
+		KARAKASA,
+		KAPPA,
+		GYUUKI,
+		FOX,
+		DULLAHAN,
+		GASYADOKURO,
 		NINE_FOX,
 		MAX_TYPE
 	};

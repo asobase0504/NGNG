@@ -2,6 +2,19 @@
 	"MODEL": [
 		[ "KENGOU", "data\/SKIN_MESH\/default3.x" ],
 		[ "SKE", "data\/SKIN_MESH\/ske3.x" ],
+		[ "TENGU", "data\/SKIN_MESH\/tengu.x" ],
+		[ "TENGU_CHILD", "data\/SKIN_MESH\/tengu_child.x" ],
+		[ "MONSTER", "data\/SKIN_MESH\/monster.x" ],
+		[ "SKY_MONSTER", "data\/SKIN_MESH\/sky_monster.x" ],
+		[ "NURIKABE", "data\/SKIN_MESH\/nurikabe.x" ],
+		[ "ONI_BIG", "data\/SKIN_MESH\/oni_big.x" ],
+		[ "ONI", "data\/SKIN_MESH\/oni.x" ],
+		[ "KARAKASA", "data\/SKIN_MESH\/karakasa.x" ],
+		[ "KAPPA", "data\/SKIN_MESH\/kappa.x" ],
+		[ "GYUUKI", "data\/SKIN_MESH\/gyuuki.x" ],
+		[ "FOX", "data\/SKIN_MESH\/fox.x" ],
+		[ "DULLAHAN", "data\/SKIN_MESH\/dullahan.x" ],
+		[ "GASYADOKURO", "data\/SKIN_MESH\/gasyadokuro.x" ],
 		[ "NINE_FOX", "data\/SKIN_MESH\/ninefox.x" ]
 	]
 }

@@ -17,6 +17,7 @@
 	["HP_BAR","data\/TEXTURE\/hp_bar.jpg"],
 	["ABNORMAL_ICON_FIRE","data\/TEXTURE\/abnormal\/Status_OnFire.png"],
 	["LINE","data\/TEXTURE\/line.png"],
+	["GRASS","data\/TEXTURE\/grass.png"],
 	["TEST","data\/TEXTURE\/test.jpg"]
   ]
 }

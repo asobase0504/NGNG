@@ -209,7 +209,7 @@ void CObjectX::Draw()
 	//マテリアルデータのポインタを取得する
 	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
 
-	static LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
+	static const LPDIRECT3DTEXTURE9 toonTexture = CTexture::GetInstance()->GetTexture("TOON");
 
 	for (int nCntMat = 0; nCntMat < (int)m_numMat; nCntMat++)
 	{
@@ -238,9 +238,9 @@ void CObjectX::Draw()
 			pEffect->SetVector(m_hvAmbient, &Ambient);
 		}
 
-		if (texture != nullptr)
+		if (toonTexture != nullptr)
 		{// テクスチャの適応
-			tex0 = texture;
+			tex0 = toonTexture;
 		}
 
 		// テクスチャの設定

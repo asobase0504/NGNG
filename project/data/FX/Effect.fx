@@ -329,7 +329,7 @@ technique Diffuse
 {
 	pass P0
 	{
-		VertexShader = compile vs_2_0 ToonVS();
+		VertexShader = compile vs_2_0 VS();
 		PixelShader = compile ps_2_0 ToonPS();
 	}
 	pass P1

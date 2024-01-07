@@ -36,6 +36,7 @@
 		[ "STATUE_CHEST", "data\/MODEL\/statue\/statue_chest.x"],
 		[ "STATUE_CHEST_OPEN", "data\/MODEL\/statue\/statue_chest_open.x"],
 		[ "STATUE_COMBAT", "data\/MODEL\/statue\/statue_combat.x"],
-		[ "STATUE_SHRINE", "data\/MODEL\/statue\/statue_shrine.x"]
+		[ "STATUE_SHRINE", "data\/MODEL\/statue\/statue_shrine.x"],
+		[ "TEST", "data\/MODEL\/enemy\/tyoutinobake.x" ]
 	]
 }

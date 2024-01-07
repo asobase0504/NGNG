@@ -67,7 +67,7 @@ HRESULT CObject::Init()
 
 	m_TimeCnt = m_TimeTarget;
 
-	m_shaderIndex = 1;
+	m_shaderIndex = 0;
 	
 	return S_OK;
 }

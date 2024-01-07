@@ -375,7 +375,157 @@ void CEnemyDataBase::Init()
 		m_status[type].s_size = 50.0f;
 		m_status[type].s_collisionLength = 10.0f;
 		m_status[type].s_collisionHeight = 50.0f;
-		m_status[type].s_modelKey = "SKE";
+		m_status[type].s_modelKey = "MONSTER";
+	}
+
+	{// ìVãÁ
+		type = TENGU;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "TENGU";
+	}
+
+	{// ìVãÁ(è¨)
+		type = TENGU_CHILD;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "TENGU_CHILD";
+	}
+
+	{// âªÇØï®
+		type = MONSTER;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "MONSTER";
+	}
+
+	{// âªÇØï®(ãÛ)
+		type = SKY_MONSTER;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "SKY_MONSTER";
+	}
+
+	{// Ç ÇËÇ©Ç◊
+		type = NURIKABE;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "NURIKABE";
+	}
+
+	{// ãS
+		type = ONI_BIG;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "ONI_BIG";
+	}
+
+	{// ãS(è¨)
+		type = ONI;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "ONI";
+	}
+
+	{// ã„îˆ
+		type = NINE_FOX;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "NINE_FOX";
+	}
+
+	{// ìÇéP
+		type = KARAKASA;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "KARAKASA";
+	}
+
+	{// ã„îˆ
+		type = NINE_FOX;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "NINE_FOX";
+	}
+
+	{// âÕì∂
+		type = KAPPA;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "KAPPA";
+	}
+
+	{// ãçãS
+		type = GYUUKI;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "GYUUKI";
+	}
+
+	{// ÉLÉcÉl
+		type = FOX;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "FOX";
+	}
+
+	{// ÉfÉÖÉâÉnÉì
+		type = DULLAHAN;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "DULLAHAN";
+	}
+
+	{// Ç™ÇµÇ·Ç«Ç≠ÇÎ
+		type = GASYADOKURO;
+		m_status[type].s_hp = 1000;
+		m_status[type].s_attack = 1;
+		m_status[type].s_size = 150.0f;
+		m_status[type].s_collisionLength = 100.0f;
+		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_modelKey = "GASYADOKURO";
 	}
 
 	{// ã„îˆ
