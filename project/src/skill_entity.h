@@ -31,24 +31,24 @@ public:
 
 	//プロトタイプ宣言
 	HRESULT	Init() override;
-	void	Uninit() override;
 	void	Update() override;
 
 	// 静的メンバ関数
-	virtual void InitAbility() = 0;							// スキルが始まるとき
-	virtual void AllWayAbility() {}							// 持続中
-	virtual void UninitAbility() {}							// 終了
+	virtual void InitAbility() = 0;						// スキルが始まるとき
+	virtual void AllWayAbility() {}						// 持続中
+	virtual void UninitAbility() {}						// 終了
 	virtual void HitAbility(CCharacter* Target) {};		// スキルが当たった時の効果
 
-protected:		// メンバ変数
+protected:	// メンバ変数
 	CCharacter*		m_apChara;			// キャラクターのインスタンス
 	CCharacter::ERelation m_relation;
 	CCollision*		m_Collision;		// 当たり判定
 
 	std::string		m_Name;				// スキル名
-	float			m_Duration;			// 効果時間
-	float			m_Interval;			// 多段ヒットの場合次の当たり判定を出現させるまでの時間
-	float			m_Invincible;		// 無敵時間
-	bool			m_isSkill;			// スキル発動中かどうか
+	int m_Duration;			// 効果時間
+	int m_maxDuration;		// 持続する時間の保管
+	int m_Interval;			// 多段ヒットの場合次の当たり判定を出現させるまでの時間
+	float m_Invincible;		// 無敵時間
+	bool m_isSkill;			// スキル発動中かどうか
 };
 #endif

@@ -27,13 +27,7 @@ public:
 	{
 		int				CT;				// クールタイム
 		int				stock;			// ストック数
-		float			damage;			// ダメージ量
-		float			knockback;		// ノックバック量
-		float			duration;		// 持続時間
-		float			interval;		// 多段ヒットの場合次の当たり判定を出現させるまでの時間
-		float			deceleration;	// 減速率
 		float			invincible;		// 無敵時間
-		D3DXVECTOR3		size;			// 当たり判定の大きさ
 	};
 
 	struct SKILL_INFO
@@ -58,13 +52,7 @@ public:
 	ABILITY		GetAbility(std::string tag) { return m_dates[tag].ability; }
 	int			GetCT(std::string tag) { return m_dates[tag].baseInfo.CT; }
 	int			GetStack(std::string tag) { return m_dates[tag].baseInfo.stock; }
-	float		GetDamage(std::string tag) { return m_dates[tag].baseInfo.damage; }
-	float		GetKnockBack(std::string tag) { return m_dates[tag].baseInfo.knockback; }
-	float		GetDuration(std::string tag) { return m_dates[tag].baseInfo.duration; }
-	float		GetInterval(std::string tag) { return m_dates[tag].baseInfo.interval; }
-	float		GetDeceleration(std::string tag) { return m_dates[tag].baseInfo.deceleration; }
 	float		GetInvincible(std::string tag) { return m_dates[tag].baseInfo.invincible; }
-	D3DXVECTOR3 GetSize(std::string tag) { return m_dates[tag].baseInfo.size; }
 
 private:	// メンバ変数
 	CCollision *m_Collision;

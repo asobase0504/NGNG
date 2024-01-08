@@ -45,11 +45,11 @@ void CYamatoSkill_4::InitAbility()
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	if (m_apChara != nullptr)
 	{
-		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_4");
-		m_Invincible = pSkillData->GetInvincible("YAMATO_SKILL_4");
+		m_Duration = 120;
+		m_Invincible = 20;
 		m_Time = 0;
 		// “–‚½‚è”»’è‚ðŽæ“¾
-		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("YAMATO_SKILL_4").x);
+		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40);
 		m_Collision->SetParent(&m_apChara->GetPos());
 
 		// ƒJƒƒ‰‚Ì•ûŒü‚É‡‚í‚¹‚é

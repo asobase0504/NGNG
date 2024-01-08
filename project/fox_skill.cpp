@@ -1,13 +1,15 @@
 //**************************************************************
 //
 // スキル(通常攻撃)
-// Author : 髙野馨將
+// Author : Yuda Kaito
 //
 //**************************************************************
 
 //==============================================================
 // include
 //==============================================================
+#include "fox_skill.h"
+
 #include "skill.h"
 #include "skill_data_base.h"
 #include "skill_entity.h"
@@ -15,7 +17,6 @@
 #include "enemy_manager.h"
 #include "enemy.h"
 #include "collision_sphere.h"
-#include "yamato_skill_1.h"
 #include "utility.h"
 
 #include "object_polygon3d.h"
@@ -23,7 +24,7 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CYamatoSkill_1::CYamatoSkill_1(int nPriority)
+CFoxSkill::CFoxSkill()
 {
 
 }
@@ -31,18 +32,16 @@ CYamatoSkill_1::CYamatoSkill_1(int nPriority)
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CYamatoSkill_1::~CYamatoSkill_1()
+CFoxSkill::~CFoxSkill()
 {
-	
+
 }
 
 //--------------------------------------------------------------
 // スキルが始まるとき
 //--------------------------------------------------------------
-void CYamatoSkill_1::InitAbility()
+void CFoxSkill::InitAbility()
 {
-	m_Duration = 30;
-
 	m_effectCnt = 0;
 	m_apChara->SetToFaceRot(false);
 
@@ -50,8 +49,9 @@ void CYamatoSkill_1::InitAbility()
 	m_effectPos = m_apChara->GetPos();
 	m_effectPos.y += 25.0f;
 
+	m_Duration = 30;
 	// 当たり判定を取得
-	m_Collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30.0f);
+	m_Collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30);
 	m_Collision->SetParent(&m_apChara->GetPos());
 	SetEndChildren(m_Collision);
 }
@@ -59,7 +59,7 @@ void CYamatoSkill_1::InitAbility()
 //--------------------------------------------------------------
 // 常に
 //--------------------------------------------------------------
-void CYamatoSkill_1::AllWayAbility()
+void CFoxSkill::AllWayAbility()
 {
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	m_effectRot += (D3DX_PI * 0.45f * 2.0f) / (30 - 5);
@@ -74,7 +74,7 @@ void CYamatoSkill_1::AllWayAbility()
 
 		CObjectPolygon3D* effect = CObjectPolygon3D::Create();
 		effect->SetPos(targetPos);
-		effect->SetRot(D3DXVECTOR3(0.0f, m_effectRot,0.0f));
+		effect->SetRot(D3DXVECTOR3(0.0f, m_effectRot, 0.0f));
 		effect->SetSize(D3DXVECTOR3(20.0f, 1.0f, 0.0f));
 		effect->SetIsCulling(true);
 		effect->SetTexture("LINE");
@@ -85,7 +85,7 @@ void CYamatoSkill_1::AllWayAbility()
 //--------------------------------------------------------------
 // スキルが終了時
 //--------------------------------------------------------------
-void CYamatoSkill_1::UninitAbility()
+void CFoxSkill::UninitAbility()
 {
 	m_apChara->SetToFaceRot(true);
 }
@@ -93,7 +93,7 @@ void CYamatoSkill_1::UninitAbility()
 //--------------------------------------------------------------
 // スキルが当たった時の効果
 //--------------------------------------------------------------
-void CYamatoSkill_1::HitAbility(CCharacter * Target)
+void CFoxSkill::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
 	m_apChara->DealDamage(Target, 1.5f);
@@ -102,14 +102,11 @@ void CYamatoSkill_1::HitAbility(CCharacter * Target)
 //--------------------------------------------------------------
 // スキル生成処理
 //--------------------------------------------------------------
-CYamatoSkill_1 *CYamatoSkill_1::Create(CCharacter* chara)
+CFoxSkill *CFoxSkill::Create(CCharacter* chara)
 {
-	// 生成処理
-	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
-
-	CYamatoSkill_1* pSkill = new CYamatoSkill_1;
+	CFoxSkill* pSkill = new CFoxSkill;
 	pSkill->m_apChara = chara;
-	pSkill->m_Name = "YAMATO_SKILL_1";
+	pSkill->m_Name = "FOX_SKILL";
 	pSkill->Init();
 
 	return pSkill;

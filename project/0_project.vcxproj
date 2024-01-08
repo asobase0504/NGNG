@@ -27,6 +27,7 @@
     <ClCompile Include="damege_ui.cpp" />
     <ClCompile Include="dullahan.cpp" />
     <ClCompile Include="fox.cpp" />
+    <ClCompile Include="fox_skill.cpp" />
     <ClCompile Include="gasyadokuro.cpp" />
     <ClCompile Include="golem_skill_1.cpp" />
     <ClCompile Include="abnormal_2dui.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="damege_ui.h" />
     <ClInclude Include="dullahan.h" />
     <ClInclude Include="fox.h" />
+    <ClInclude Include="fox_skill.h" />
     <ClInclude Include="gasyadokuro.h" />
     <ClInclude Include="golem_skill_1.h" />
     <ClInclude Include="enemy_hp_ui.h" />

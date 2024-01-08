@@ -41,27 +41,22 @@ CYamatoSkill_3::~CYamatoSkill_3()
 //--------------------------------------------------------------
 void CYamatoSkill_3::InitAbility()
 {
-	// データベースから情報を取得する
-	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
-	if (m_apChara != nullptr)
-	{
-		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_3");
-		// 当たり判定を取得
-		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("YAMATO_SKILL_3").x);
-		m_Collision->SetParent(&m_apChara->GetPos());
-		SetEndChildren(m_Collision);
+	m_Duration = 120;
+	// 当たり判定を取得
+	m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
+	m_Collision->SetParent(&m_apChara->GetPos());
+	SetEndChildren(m_Collision);
 
-		// プレイヤーの操作を無効化
-		m_apChara->SetControlLock(true);
-		m_apChara->SetMoveXZ(0.0f, 0.0f);
+	// プレイヤーの操作を無効化
+	m_apChara->SetControlLock(true);
+	m_apChara->SetMoveXZ(0.0f, 0.0f);
 
-		// カメラの方向に合わせる
-		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
-		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
-		D3DXVec3Normalize(&vecNor, &vecNor);
-		vecNor *= 15.0f;			//移動させたい値を入れる
-		m_apChara->SetMoveXZ(vecNor.x, vecNor.z);
-	}
+	// カメラの方向に合わせる
+	CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
+	D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
+	D3DXVec3Normalize(&vecNor, &vecNor);
+	vecNor *= 15.0f;			//移動させたい値を入れる
+	m_apChara->SetMoveXZ(vecNor.x, vecNor.z);
 }
 
 //--------------------------------------------------------------
@@ -78,9 +73,6 @@ void CYamatoSkill_3::HitAbility(CCharacter * Target)
 //--------------------------------------------------------------
 CYamatoSkill_3 *CYamatoSkill_3::Create(CCharacter* chara)
 {
-	// 生成処理
-	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
-
 	CYamatoSkill_3* pSkill = new CYamatoSkill_3;
 	pSkill->m_apChara = chara;
 	pSkill->m_Name = "YAMATO_SKILL_3";
