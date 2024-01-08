@@ -60,8 +60,6 @@ HRESULT CEnemy::Init()
 	m_skinModel->Load("TENGU");
 	SetEndChildren(m_skinModel);
 
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
-
 	// HPUIの作成
 	m_pEHPUI = CEnemy_HPUI::Create(this);
 	SetEndChildren(m_pEHPUI);
@@ -70,11 +68,6 @@ HRESULT CEnemy::Init()
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
 	SetEndChildren(m_collision);
-
-	// SKILLの作成
-	m_skill.push_back(CSkill::Create());
-	m_skill[0]->SetSkill("GOLEM_SKILL_1",this);
-	SetEndChildren(m_skill[0]);
 
 	m_dropMoney = 5;
 	return S_OK;
@@ -97,7 +90,7 @@ void CEnemy::Update()
 	}
 
 	// 現在のactivityに設定する。
-	m_Activity(this);
+	Move();
 
 	// 更新処理
 	CCharacter::Update();
@@ -108,59 +101,10 @@ void CEnemy::Update()
 }
 
 //--------------------------------------------------------------
-// 読込み
-//--------------------------------------------------------------
-void CEnemy::Load(const CEnemyDataBase::SStatus & status)
-{
-	m_size = D3DXVECTOR3(status.s_size, status.s_size, status.s_size);
-	m_collision->SetHeight(status.s_collisionHeight);
-	m_collision->SetLength(status.s_collisionLength);
-	m_skinModel->Load(status.s_modelKey);
-	m_attack.SetCurrent(status.s_attack);
-	m_hp.SetCurrent(status.s_hp);
-	m_hp.AddMax(status.s_hp);
-}
-
-//--------------------------------------------------------------
 // 死亡判定
 //--------------------------------------------------------------
 void CEnemy::Died()
 {
 	CPlayerManager::GetInstance()->GetPlayer()->GetMoney()->AddCurrent(m_dropMoney);
 	CCharacter::Died();
-}
-
-//--------------------------------------------------------------
-// 生成
-//--------------------------------------------------------------
-void CEnemy::Move()
-{
-	// 移動量の取得
-	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	// 座標の取得
-	D3DXVECTOR3 pos = GetPos();
-
-	// プレイヤーの位置取得
-	D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
-
-	// 敵の追従
-	if (pos.x <= PlayerPos.x)
-	{
-		move.x += MAX_SPEED;
-	}
-	else
-	{
-		move.x -= MAX_SPEED;
-	}
-	if (pos.z <= PlayerPos.z)
-	{
-		move.z += MAX_SPEED;
-	}
-	else
-	{
-		move.z -= MAX_SPEED;
-	}
-
-	SetMoveXZ(move.x,move.z);
 }

@@ -120,6 +120,9 @@
     <Filter Include="ソース ファイル\Mode\01_Game\character\01_enemy\bace\activity_state">
       <UniqueIdentifier>{370baeaa-f988-4915-aad9-0fc966994907}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character\01_enemy\type">
+      <UniqueIdentifier>{084af4d8-07c4-4097-87a1-aea0b57cd99b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -490,6 +493,51 @@
     </ClCompile>
     <ClCompile Include="src\carrying_item_group_ui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="dullahan.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="fox.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="gasyadokuro.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="gyuuki.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="kappa.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="karakasa.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="nine_fox.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="nurikabe.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="oni.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="oni_child.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="skelton.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="tengu.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="tengu_child.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="monster_sky.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="monster.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -867,6 +915,51 @@
     </ClInclude>
     <ClInclude Include="src\carrying_item_group_ui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="dullahan.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="fox.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="gasyadokuro.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="gyuuki.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="kappa.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="karakasa.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="nine_fox.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="nurikabe.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="oni.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="oni_child.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="skelton.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="tengu.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="tengu_child.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="monster_sky.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

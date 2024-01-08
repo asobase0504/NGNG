@@ -328,7 +328,6 @@ void CEnemyDataBase::Init()
 			{
 				// カウント開始
 				inEnemy->SetAttackCnt(0);
-				inEnemy->GetSkill()[0]->Skill();
 				move *= -0.5f;
 			}
 		}
@@ -375,7 +374,7 @@ void CEnemyDataBase::Init()
 		m_status[type].s_size = 50.0f;
 		m_status[type].s_collisionLength = 10.0f;
 		m_status[type].s_collisionHeight = 50.0f;
-		m_status[type].s_modelKey = "MONSTER";
+		m_status[type].s_modelKey = "SKE";
 	}
 
 	{// 天狗
@@ -390,11 +389,11 @@ void CEnemyDataBase::Init()
 
 	{// 天狗(小)
 		type = TENGU_CHILD;
-		m_status[type].s_hp = 1000;
+		m_status[type].s_hp = 100;
 		m_status[type].s_attack = 1;
-		m_status[type].s_size = 150.0f;
-		m_status[type].s_collisionLength = 100.0f;
-		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_size = 50.0f;
+		m_status[type].s_collisionLength = 10.0f;
+		m_status[type].s_collisionHeight = 50.0f;
 		m_status[type].s_modelKey = "TENGU_CHILD";
 	}
 
@@ -448,23 +447,13 @@ void CEnemyDataBase::Init()
 		m_status[type].s_modelKey = "ONI";
 	}
 
-	{// 九尾
-		type = NINE_FOX;
-		m_status[type].s_hp = 1000;
-		m_status[type].s_attack = 1;
-		m_status[type].s_size = 150.0f;
-		m_status[type].s_collisionLength = 100.0f;
-		m_status[type].s_collisionHeight = 150.0f;
-		m_status[type].s_modelKey = "NINE_FOX";
-	}
-
 	{// 唐傘
 		type = KARAKASA;
-		m_status[type].s_hp = 1000;
+		m_status[type].s_hp = 100;
 		m_status[type].s_attack = 1;
-		m_status[type].s_size = 150.0f;
-		m_status[type].s_collisionLength = 100.0f;
-		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_size = 50.0f;
+		m_status[type].s_collisionLength = 10.0f;
+		m_status[type].s_collisionHeight = 50.0f;
 		m_status[type].s_modelKey = "KARAKASA";
 	}
 
@@ -480,11 +469,11 @@ void CEnemyDataBase::Init()
 
 	{// 河童
 		type = KAPPA;
-		m_status[type].s_hp = 1000;
+		m_status[type].s_hp = 100;
 		m_status[type].s_attack = 1;
-		m_status[type].s_size = 150.0f;
-		m_status[type].s_collisionLength = 100.0f;
-		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_size = 50.0f;
+		m_status[type].s_collisionLength = 10.0f;
+		m_status[type].s_collisionHeight = 50.0f;
 		m_status[type].s_modelKey = "KAPPA";
 	}
 
@@ -500,11 +489,11 @@ void CEnemyDataBase::Init()
 
 	{// キツネ
 		type = FOX;
-		m_status[type].s_hp = 1000;
+		m_status[type].s_hp = 100;
 		m_status[type].s_attack = 1;
-		m_status[type].s_size = 150.0f;
-		m_status[type].s_collisionLength = 100.0f;
-		m_status[type].s_collisionHeight = 150.0f;
+		m_status[type].s_size = 50.0f;
+		m_status[type].s_collisionLength = 10.0f;
+		m_status[type].s_collisionHeight = 50.0f;
 		m_status[type].s_modelKey = "FOX";
 	}
 

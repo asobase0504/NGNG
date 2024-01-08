@@ -53,12 +53,6 @@ public:
 	HRESULT	Init() override;
 	void	Update() override;
 
-	void Load(const CEnemyDataBase::SStatus& status);
-
-	// 静的メンバ関数
-	void SetActivity(ACTIVITY_FUNC NowAct) { m_Activity = NowAct; }
-	ACTIVITY_FUNC GetActivity() { return m_Activity; }
-
 	// 攻撃カウントの加算
 	void SetAttackCnt(int Cnt) { m_AttackCnt = Cnt; }
 	void AddAttackCnt(int Cnt) { m_AttackCnt += Cnt; }
@@ -68,10 +62,9 @@ public:
 	void Died() override;
 
 private:
-	void Move();		// 移動
+	virtual void Move() {};		// 移動
 
 private:	// メンバ変数
-	ACTIVITY_FUNC	m_Activity;
 	int				m_AttackCnt;
 	CEnemy_HPUI*	m_pEHPUI;
 	int				m_dropMoney;

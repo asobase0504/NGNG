@@ -25,8 +25,21 @@
     <ClCompile Include="carrying_item_ui.cpp" />
     <ClCompile Include="connect.cpp" />
     <ClCompile Include="damege_ui.cpp" />
+    <ClCompile Include="dullahan.cpp" />
+    <ClCompile Include="fox.cpp" />
+    <ClCompile Include="gasyadokuro.cpp" />
     <ClCompile Include="golem_skill_1.cpp" />
     <ClCompile Include="abnormal_2dui.cpp" />
+    <ClCompile Include="gyuuki.cpp" />
+    <ClCompile Include="kappa.cpp" />
+    <ClCompile Include="karakasa.cpp" />
+    <ClCompile Include="monster.cpp" />
+    <ClCompile Include="monster_sky.cpp" />
+    <ClCompile Include="nine_fox.cpp" />
+    <ClCompile Include="nurikabe.cpp" />
+    <ClCompile Include="oni.cpp" />
+    <ClCompile Include="oni_child.cpp" />
+    <ClCompile Include="skelton.cpp" />
     <ClCompile Include="Skill5.cpp" />
     <ClCompile Include="src\arrow.cpp" />
     <ClCompile Include="src\carrying_item_group_ui.cpp" />
@@ -136,6 +149,8 @@
     <ClCompile Include="src\yamato_skill_1.cpp" />
     <ClCompile Include="src\yamato_skill_2.cpp" />
     <ClCompile Include="src\yamato_skill_3.cpp" />
+    <ClCompile Include="tengu.cpp" />
+    <ClCompile Include="tengu_child.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="yamato_skill_4.cpp" />
   </ItemGroup>
@@ -145,9 +160,22 @@
     <ClInclude Include="carrying_item_ui.h" />
     <ClInclude Include="connect.h" />
     <ClInclude Include="damege_ui.h" />
+    <ClInclude Include="dullahan.h" />
+    <ClInclude Include="fox.h" />
+    <ClInclude Include="gasyadokuro.h" />
     <ClInclude Include="golem_skill_1.h" />
     <ClInclude Include="enemy_hp_ui.h" />
     <ClInclude Include="abnormal_2dui.h" />
+    <ClInclude Include="gyuuki.h" />
+    <ClInclude Include="kappa.h" />
+    <ClInclude Include="karakasa.h" />
+    <ClInclude Include="monster.h" />
+    <ClInclude Include="monster_sky.h" />
+    <ClInclude Include="nine_fox.h" />
+    <ClInclude Include="nurikabe.h" />
+    <ClInclude Include="oni.h" />
+    <ClInclude Include="oni_child.h" />
+    <ClInclude Include="skelton.h" />
     <ClInclude Include="Skill5.h" />
     <ClInclude Include="src\arrow.h" />
     <ClInclude Include="src\carrying_item_group_ui.h" />
@@ -254,6 +282,8 @@
     <ClInclude Include="src\yamato_skill_1.h" />
     <ClInclude Include="src\yamato_skill_2.h" />
     <ClInclude Include="src\yamato_skill_3.h" />
+    <ClInclude Include="tengu.h" />
+    <ClInclude Include="tengu_child.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="yamato_skill_4.h" />
   </ItemGroup>
