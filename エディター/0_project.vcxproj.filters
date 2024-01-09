@@ -1,0 +1,1065 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main">
+      <UniqueIdentifier>{d98e6a9b-a3c5-489a-b787-7efcf3012c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main\01_Input">
+      <UniqueIdentifier>{b5492f8a-70f7-46e3-b088-a1eb3868fb39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main\00_Object">
+      <UniqueIdentifier>{c53256cb-eda0-49e1-83d9-8821475c628f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Particle">
+      <UniqueIdentifier>{c5a5fa9e-472f-4cf8-909a-94d4b1d28fe6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode">
+      <UniqueIdentifier>{4e0a8f10-95eb-467c-8ffa-dc5efedc9c62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main\File">
+      <UniqueIdentifier>{321d770b-9cfd-4d58-b2a8-4f510f81785f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D">
+      <UniqueIdentifier>{4c50ce22-cb4c-4b53-b597-2b3e0b3023e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main\text">
+      <UniqueIdentifier>{89f0b8fa-f086-474d-b8e1-47b31e0b64d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main\02_Collision">
+      <UniqueIdentifier>{403c4199-35ca-4df9-8caa-fb8ce4c5685a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D\camera">
+      <UniqueIdentifier>{a8d215c4-205c-4cc3-b1a4-7f24bc93701d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Server">
+      <UniqueIdentifier>{4a4a5c46-8098-44a6-910b-c995e9fa86af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{c25ca3ea-d346-40d7-ae4b-3795212b1f3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{c70ada01-af2e-491c-accc-46cd316aae73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main\00_Object\number">
+      <UniqueIdentifier>{3e39b9db-9b1d-43c1-b2dc-3a14e639da6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\00_Main\00_Object\model">
+      <UniqueIdentifier>{e4c0dba9-3062-4456-b830-8645664a9deb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\00_Title">
+      <UniqueIdentifier>{1ddbac7c-5219-4943-92c8-793177843ddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game">
+      <UniqueIdentifier>{49403d4c-db67-4593-8246-908061209e6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\Item">
+      <UniqueIdentifier>{4963ad8a-ec04-4e0e-b854-ad931565ddc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\Item\item_object">
+      <UniqueIdentifier>{4843f87a-3975-4ce7-8ba8-1153d1bab0c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\UI">
+      <UniqueIdentifier>{a6fb7bdb-faf6-463e-83e8-6e0915814541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\UI\3D">
+      <UniqueIdentifier>{30b330ef-a34b-44fc-a31a-1816f3a1197a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\UI\2D">
+      <UniqueIdentifier>{5c88fe5f-b14a-4a82-aa59-b46146ce64b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character">
+      <UniqueIdentifier>{8aac6035-1c35-4b27-8404-0ba7fbb53cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character\01_enemy">
+      <UniqueIdentifier>{5fa549ee-5c50-4529-a046-5ef4b0ee785c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character\01_enemy\bace">
+      <UniqueIdentifier>{38e9006d-9e87-4a80-acc4-82bd637324e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character\00_player">
+      <UniqueIdentifier>{dc36bac9-aee1-42a3-ac94-366bda9d7950}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character\02_skill">
+      <UniqueIdentifier>{72beb232-3206-4cde-a97e-16c6701d3460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character\02_skill\bace">
+      <UniqueIdentifier>{fe1c8bd6-869a-423f-8ba2-ade805331be9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character\03_abnormality">
+      <UniqueIdentifier>{3476f976-0f28-4fc6-b760-8f0d95b60701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character\04_controller">
+      <UniqueIdentifier>{5fc2f6af-4d31-4eab-8ef3-320f7670cf42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\map">
+      <UniqueIdentifier>{57ea62fa-5a66-4212-8bda-6d6dcf449835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\select_entity">
+      <UniqueIdentifier>{56de8be3-cf4a-402b-a6f5-e31f4bff6cfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\select_entity\Statue">
+      <UniqueIdentifier>{b19ee9a4-4726-43d0-b635-0347101f5d10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\02_Result">
+      <UniqueIdentifier>{035c48c2-e5de-40a8-99e7-3279f3f45b16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\99_Fade">
+      <UniqueIdentifier>{075d5c8a-23a3-40d3-aa97-d74dbf7a7811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\map">
+      <UniqueIdentifier>{9b784e72-5709-4736-87c7-d6250a6c9b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character\01_enemy\bace\activity_state">
+      <UniqueIdentifier>{370baeaa-f988-4915-aad9-0fc966994907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\character\01_enemy\type">
+      <UniqueIdentifier>{084af4d8-07c4-4097-87a1-aea0b57cd99b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{d918ddc6-8356-4010-8013-3eda04dad2a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\imgui">
+      <UniqueIdentifier>{afa551df-3a67-4182-a015-e46bad8a893d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\precompile.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\application.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\DirectInput.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\inputjoypad.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\inputkeyboard.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\inputmouse.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\debug_proc.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object_mesh.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object_polygon3d.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object2d.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particle.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particle_emitter.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particle_manager.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\letter.cpp">
+      <Filter>ソース ファイル\00_Main\File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mode.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task_group.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sound.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\file.cpp">
+      <Filter>ソース ファイル\00_Main\File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\line.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\light.cpp">
+      <Filter>ソース ファイル\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\title.cpp">
+      <Filter>ソース ファイル\Mode\00_Title</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision.cpp">
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision_cylinder.cpp">
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision_mesh.cpp">
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision_box.cpp">
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision_sphere.cpp">
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\item.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\item_manager.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game.cpp">
+      <Filter>ソース ファイル\Mode\01_Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\item_data_base.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\font.cpp">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\words.cpp">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map_model.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue_combat.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue_luck.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue_manager.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue_blood.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue_chest.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClCompile>
+    <ClCompile Include="src\player.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\00_player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\player_manager.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\00_player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\status.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\character.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\character.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\status.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statue_teleporter.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yamato_skill_1.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera.cpp">
+      <Filter>ソース ファイル\3D\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera_game.cpp">
+      <Filter>ソース ファイル\3D\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\character_select.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\debug_mode.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\road.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="abnormal_data_base.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\03_abnormality</Filter>
+    </ClCompile>
+    <ClCompile Include="abnormal.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\03_abnormality</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yamato_skill_2.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yamato_skill_3.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy_data_base.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy_manager.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="golem_skill_1.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_data_base.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_entity.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gold_nugget.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\Item\item_object</Filter>
+    </ClCompile>
+    <ClCompile Include="connect.cpp">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tcp_client.cpp">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="src\result.cpp">
+      <Filter>ソース ファイル\Mode\02_Result</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\input_touch_panel.cpp">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\arrow.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\Item\item_object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text_font.cpp">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text_object.cpp">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model_data.cpp">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="yamato_skill_4.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_hp_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hp_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\money_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\take_item_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\select_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\flower.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\Item\item_object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\number.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object\number</Filter>
+    </ClCompile>
+    <ClCompile Include="src\number3D.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object\number</Filter>
+    </ClCompile>
+    <ClCompile Include="src\procedure.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object\number</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model_skin.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model_skin_group.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\motion.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\motion_model3D.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objectX.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objectX_group.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\parts.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\procedure3D.cpp">
+      <Filter>ソース ファイル\00_Main\00_Object\number</Filter>
+    </ClCompile>
+    <ClCompile Include="damege_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\select_entity.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\item_model.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerController.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mode_fade.cpp">
+      <Filter>ソース ファイル\Mode\99_Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map_fade.cpp">
+      <Filter>ソース ファイル\Mode\99_Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fade.cpp">
+      <Filter>ソース ファイル\Mode\99_Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="src\server_player.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\00_player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerController.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="carrying_item_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill5.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill5.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
+    <ClCompile Include="abnormal_2dui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\difficult.cpp">
+      <Filter>ソース ファイル\Mode\01_Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\client.cpp">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="src\udp_client.cpp">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy_activity_state.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace\activity_state</Filter>
+    </ClCompile>
+    <ClCompile Include="src\carrying_item_group_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="dullahan.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="fox.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="gasyadokuro.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="gyuuki.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="kappa.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="karakasa.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="nine_fox.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="nurikabe.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="oni.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="oni_child.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="skelton.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="tengu.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="tengu_child.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="monster_sky.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="monster.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClCompile>
+    <ClCompile Include="stage_imgui.cpp">
+      <Filter>ソース ファイル\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_property.cpp">
+      <Filter>ソース ファイル\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_impl_dx9.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_impl_win32.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\implot.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\implot_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\implot_items.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\precompile.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\DirectInput.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\inputjoypad.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\inputkeyboard.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\inputkeydata.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\inputmouse.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\debug_proc.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object_mesh.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object_polygon3d.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object2d.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particle_manager.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particle.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particle_emitter.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\letter.h">
+      <Filter>ソース ファイル\00_Main\File</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mode.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texture.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task_group.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sound.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\line.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer.h">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\light.h">
+      <Filter>ソース ファイル\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\title.h">
+      <Filter>ソース ファイル\Mode\00_Title</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision.h">
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision_cylinder.h">
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision_mesh.h">
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision_box.h">
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item.h">
+      <Filter>ソース ファイル\Mode\01_Game\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item_manager.h">
+      <Filter>ソース ファイル\Mode\01_Game\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\character.h">
+      <Filter>ソース ファイル\Mode\01_Game\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game.h">
+      <Filter>ソース ファイル\Mode\01_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item_data_base.h">
+      <Filter>ソース ファイル\Mode\01_Game\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\font.h">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\words.h">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map_model.h">
+      <Filter>ソース ファイル\Mode\01_Game\map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map.h">
+      <Filter>ソース ファイル\Mode\01_Game\map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue.h">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_combat.h">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_luck.h">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_manager.h">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_blood.h">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_chest.h">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClInclude>
+    <ClInclude Include="src\player.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\00_player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\player_manager.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\00_player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision_sphere.h">
+      <Filter>ソース ファイル\00_Main\02_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\status.h">
+      <Filter>ソース ファイル\Mode\01_Game\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statue_teleporter.h">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity\Statue</Filter>
+    </ClInclude>
+    <ClInclude Include="src\status.h" />
+    <ClInclude Include="src\camera_game.h">
+      <Filter>ソース ファイル\3D\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camera.h">
+      <Filter>ソース ファイル\3D\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\road.h">
+      <Filter>ソース ファイル\00_Main\00_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="abnormal_data_base.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\03_abnormality</Filter>
+    </ClInclude>
+    <ClInclude Include="abnormal.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\03_abnormality</Filter>
+    </ClInclude>
+    <ClInclude Include="src\character_select.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\debug_mode.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yamato_skill_2.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yamato_skill_3.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bullet.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy_data_base.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy_manager.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="golem_skill_1.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yamato_skill_1.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_data_base.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_entity.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>ソース ファイル\Mode\Game\character\skill\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bullet.h">
+      <Filter>ソース ファイル\Mode\Game\character\enemy\bace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gold_nugget.h">
+      <Filter>ソース ファイル\Mode\01_Game\Item\item_object</Filter>
+    </ClInclude>
+    <ClInclude Include="connect.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tcp_client.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="src\result.h">
+      <Filter>ソース ファイル\Mode\02_Result</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\input_touch_panel.h">
+      <Filter>ソース ファイル\00_Main\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\arrow.h">
+      <Filter>ソース ファイル\Mode\01_Game\Item\item_object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\text_font.h">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\text_object.h">
+      <Filter>ソース ファイル\00_Main\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model_data.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="yamato_skill_4.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_hp_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hp_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\money_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\take_item_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\select_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\flower.h">
+      <Filter>ソース ファイル\Mode\01_Game\Item\item_object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\number.h">
+      <Filter>ソース ファイル\00_Main\00_Object\number</Filter>
+    </ClInclude>
+    <ClInclude Include="src\number3D.h">
+      <Filter>ソース ファイル\00_Main\00_Object\number</Filter>
+    </ClInclude>
+    <ClInclude Include="src\procedure.h">
+      <Filter>ソース ファイル\00_Main\00_Object\number</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model_skin.h">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model_skin_group.h">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion.h">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion_model3D.h">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objectX_group.h">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objectX.h">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\parts.h">
+      <Filter>ソース ファイル\00_Main\00_Object\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\procedure3D.h">
+      <Filter>ソース ファイル\00_Main\00_Object\number</Filter>
+    </ClInclude>
+    <ClInclude Include="damege_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\select_entity.h">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item_model.h">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Controller.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerController.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mode_fade.h">
+      <Filter>ソース ファイル\Mode\99_Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map_fade.h">
+      <Filter>ソース ファイル\Mode\99_Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fade.h">
+      <Filter>ソース ファイル\Mode\99_Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="src\server_player.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\00_player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerController.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Controller.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="abnormal_2dui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="abnormal_2dui.h" />
+    <ClInclude Include="src\difficult.h" />
+    <ClInclude Include="src\udp_client.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="src\client.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="carrying_item_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill5.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill5.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\difficult.h">
+      <Filter>ソース ファイル\Mode\01_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\client.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="src\udp_client.h">
+      <Filter>ソース ファイル\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy_activity_state.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace\activity_state</Filter>
+    </ClInclude>
+    <ClInclude Include="src\difficult.h">
+      <Filter>ソース ファイル\Mode\01_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\carrying_item_group_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="dullahan.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="fox.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="gasyadokuro.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="gyuuki.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="kappa.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="karakasa.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="nine_fox.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="nurikabe.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="oni.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="oni_child.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="skelton.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="tengu.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="tengu_child.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="monster_sky.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="src\file.h">
+      <Filter>ソース ファイル\00_Main\File</Filter>
+    </ClInclude>
+    <ClInclude Include="stage_imgui.h">
+      <Filter>ソース ファイル\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_property.h">
+      <Filter>ソース ファイル\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_dx9.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_win32.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\implot.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\implot_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="data\FX\Effect.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\FILE\map\map01.json">
+      <Filter>json\map</Filter>
+    </None>
+    <None Include="data\FILE\map\map02.json">
+      <Filter>json\map</Filter>
+    </None>
+    <None Include="data\FILE\texture.json">
+      <Filter>json</Filter>
+    </None>
+    <None Include="data\FILE\model.json">
+      <Filter>json</Filter>
+    </None>
+    <None Include="data\FILE\skinmesh.json">
+      <Filter>json</Filter>
+    </None>
+  </ItemGroup>
+</Project>
