@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// スキル(回転切り)
+// スキル(通常攻撃)
 // Author : 髙野馨將
 //
 //**************************************************************
@@ -8,22 +8,20 @@
 //==============================================================
 // include
 //==============================================================
+// skill
+#include "monster_skill.h"
 #include "skill.h"
 #include "skill_data_base.h"
-#include "skill_entity.h"
-#include "player_manager.h"
-#include "enemy_manager.h"
-#include "enemy.h"
+
 #include "collision_sphere.h"
-#include "yamato_skill_3.h"
-#include "game.h"
-#include "application.h"
-#include "camera_game.h"
+#include "utility.h"
+
+#include "map.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CYamatoSkill_3::CYamatoSkill_3()
+CMonsterSkill::CMonsterSkill()
 {
 
 }
@@ -31,7 +29,7 @@ CYamatoSkill_3::CYamatoSkill_3()
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CYamatoSkill_3::~CYamatoSkill_3()
+CMonsterSkill::~CMonsterSkill()
 {
 
 }
@@ -39,69 +37,66 @@ CYamatoSkill_3::~CYamatoSkill_3()
 //--------------------------------------------------------------
 // スキルが始まるとき
 //--------------------------------------------------------------
-void CYamatoSkill_3::InitAbility()
+void CMonsterSkill::InitAbility()
 {
-	m_Duration = 120;
+	m_Duration = 400;
+
+	// 狙う先の決定
+	CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this](CCharacter* inChara)
+	{
+		m_aimCharacter = inChara;
+	});
+
 	// 当たり判定を取得
-	m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
+	m_collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30.0f);
 	m_collision->SetParent(&m_apChara->GetPos());
 	SetEndChildren(m_collision);
-
-	// プレイヤーの操作を無効化
-	m_apChara->SetControlLock(true);
-	m_apChara->SetMoveXZ(0.0f, 0.0f);
-
-	// カメラの方向に合わせて突撃
-	CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
-	D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
-	D3DXVec3Normalize(&vecNor, &vecNor);
-	vecNor *= 15.0f;			//移動させたい値を入れる
-	m_apChara->SetMoveXZ(vecNor.x, vecNor.z);
-
-	m_time = 0;
 }
 
 //--------------------------------------------------------------
-// 常時
+// 常に
 //--------------------------------------------------------------
-void CYamatoSkill_3::AllWayAbility()
+void CMonsterSkill::AllWayAbility()
 {
-	m_time++;
+	// "2024/01/09" ホーミングが強いから緩和したい
 
-	/* "2024/01/09" ここ攻撃速度を反映させたい */
-	if (m_time % 20 == 0 && m_collision == nullptr)
+	if (m_apChara->GetSpeed()->GetBuff() <= 5.0f)
 	{
-		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
-		m_collision->SetParent(&m_apChara->GetPos());
-		SetEndChildren(m_collision);
+		m_apChara->GetSpeed()->AddBuffEffect(0.025f);
 	}
+
+	// 追加終了条件
+	if (m_collision == nullptr)
+	{
+		m_Duration = 0;
+	}
+}
+
+//--------------------------------------------------------------
+// スキルが終了時
+//--------------------------------------------------------------
+void CMonsterSkill::UninitAbility()
+{
+	m_apChara->GetSpeed()->ResetBuffEffect();
 }
 
 //--------------------------------------------------------------
 // スキルが当たった時の効果
 //--------------------------------------------------------------
-void CYamatoSkill_3::HitAbility(CCharacter * Target)
+void CMonsterSkill::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	Target->TakeDamage(50, Target);
-}
-
-//--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CYamatoSkill_3::UninitAbility()
-{
-	m_apChara->SetControlLock(false);
+	m_apChara->DealDamage(Target, 0.15f);
 }
 
 //--------------------------------------------------------------
 // スキル生成処理
 //--------------------------------------------------------------
-CYamatoSkill_3 *CYamatoSkill_3::Create(CCharacter* chara)
+CMonsterSkill *CMonsterSkill::Create(CCharacter* chara)
 {
-	CYamatoSkill_3* pSkill = new CYamatoSkill_3;
+	CMonsterSkill* pSkill = new CMonsterSkill;
 	pSkill->m_apChara = chara;
-	pSkill->m_Name = "YAMATO_SKILL_3";
+	pSkill->m_Name = "YAMATO_SKILL_1";
 	pSkill->Init();
 
 	return pSkill;

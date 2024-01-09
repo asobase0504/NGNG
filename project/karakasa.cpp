@@ -54,7 +54,7 @@ HRESULT CKarakasa::Init()
 
 	// SKILLの作成
 	m_skill.push_back(CSkill::Create());
-	m_skill[0]->SetSkill("GOLEM_SKILL_1", this);
+	m_skill[0]->SetSkill("KARAKASA_SKILL", this);
 	SetEndChildren(m_skill[0]);
 
 	return S_OK;
@@ -76,16 +76,7 @@ void CKarakasa::Update()
 	// カウント開始
 	AddAttackCnt(1);
 
-	// エネミーの距離が遠いとき
-	if (distance >= 150.0f)
-	{
-		if (GetAttackCnt() >= 180)
-		{
-			// カウント開始
-			SetAttackCnt(0);
-			GetSkill()[0]->Use();
-		}
-	}
+	m_skill[0]->Use();
 }
 
 //--------------------------------------------------------------
@@ -111,4 +102,9 @@ void CKarakasa::Move()
 	distancePos *= m_movePower.GetCurrent();
 
 	SetMoveXZ(distancePos.x, distancePos.z);
+
+	if (m_state == CCharacter::STATE::GROUND)
+	{
+		SetMoveY(3.0f);
+	}
 }

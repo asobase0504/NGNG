@@ -68,7 +68,7 @@ public:
 	T GetCurrent() { return m_current; }
 	T GetBase() { return m_base; }
 	T GetAddItem() { return m_addItem; }
-	T GetBuffItem() { return m_addBuff; }
+	T GetBuff() { return m_addBuff; }
 	T CalStatus() { return m_current = ((m_base + m_addBuff + m_addItem) * (T)(m_mulBuff * m_mulItem)); }
 
 	float GetMulItem() { return m_mulItem; }
@@ -82,7 +82,7 @@ public:
 	void AddItemEffect(T inAdd) { m_addItem += inAdd; CalStatus(); }
 	void ResetItemEffect(T inAdd) { m_addItem = 0; CalStatus(); }
 	void AddBuffEffect(T inAdd) { m_addBuff += inAdd; CalStatus(); }
-	void ResetBuffEffect(T inAdd) { m_addBuff = 0; CalStatus(); }
+	void ResetBuffEffect() { m_addBuff = 0; CalStatus(); }
 
 	// 最大値
 	void ResetMax(T inAdd) { m_max = 0;}

@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// スキル(回転切り)
+// スキル(通常攻撃)
 // Author : 髙野馨將
 //
 //**************************************************************
@@ -8,22 +8,20 @@
 //==============================================================
 // include
 //==============================================================
+// skill
+#include "karakasa_skill.h"
 #include "skill.h"
 #include "skill_data_base.h"
-#include "skill_entity.h"
-#include "player_manager.h"
-#include "enemy_manager.h"
-#include "enemy.h"
+
 #include "collision_sphere.h"
-#include "yamato_skill_3.h"
-#include "game.h"
-#include "application.h"
-#include "camera_game.h"
+#include "utility.h"
+
+#include "map.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CYamatoSkill_3::CYamatoSkill_3()
+CKarakasaSkill::CKarakasaSkill()
 {
 
 }
@@ -31,7 +29,7 @@ CYamatoSkill_3::CYamatoSkill_3()
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CYamatoSkill_3::~CYamatoSkill_3()
+CKarakasaSkill::~CKarakasaSkill()
 {
 
 }
@@ -39,69 +37,78 @@ CYamatoSkill_3::~CYamatoSkill_3()
 //--------------------------------------------------------------
 // スキルが始まるとき
 //--------------------------------------------------------------
-void CYamatoSkill_3::InitAbility()
+void CKarakasaSkill::InitAbility()
 {
-	m_Duration = 120;
-	// 当たり判定を取得
-	m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
-	m_collision->SetParent(&m_apChara->GetPos());
-	SetEndChildren(m_collision);
+	m_Duration = 400;
 
-	// プレイヤーの操作を無効化
-	m_apChara->SetControlLock(true);
-	m_apChara->SetMoveXZ(0.0f, 0.0f);
+	// 狙う先の決定
+	CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this](CCharacter* inChara)
+	{
+		m_aimCharacter = inChara;
+	});
 
-	// カメラの方向に合わせて突撃
-	CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
-	D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
-	D3DXVec3Normalize(&vecNor, &vecNor);
-	vecNor *= 15.0f;			//移動させたい値を入れる
-	m_apChara->SetMoveXZ(vecNor.x, vecNor.z);
+	m_apChara->SetMoveY(15.0f);
+	m_apChara->SetMoveLock(true);
+	m_apChara->SetInertiaMoveLock(true);
 
 	m_time = 0;
 }
 
 //--------------------------------------------------------------
-// 常時
+// 常に
 //--------------------------------------------------------------
-void CYamatoSkill_3::AllWayAbility()
+void CKarakasaSkill::AllWayAbility()
 {
 	m_time++;
 
-	/* "2024/01/09" ここ攻撃速度を反映させたい */
-	if (m_time % 20 == 0 && m_collision == nullptr)
+	if (m_time == 10)
 	{
-		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
+		D3DXVECTOR3 move = m_aimCharacter->GetPos() - m_apChara->GetPos();
+		D3DXVec3Normalize(&move, &move);
+		move *= 10.0f;
+		m_apChara->SetMove(move);
+
+		// 当たり判定を取得
+		m_collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30.0f);
 		m_collision->SetParent(&m_apChara->GetPos());
 		SetEndChildren(m_collision);
+
+		m_apChara->SetToFaceRot(false);
 	}
+
+	// 終了条件
+	if (m_apChara->GetState() == CCharacter::STATE::GROUND)
+	{
+		m_Duration = 0;
+	}
+}
+
+//--------------------------------------------------------------
+// スキルが終了時
+//--------------------------------------------------------------
+void CKarakasaSkill::UninitAbility()
+{
+	m_apChara->SetMoveLock(false);
+	m_apChara->SetInertiaMoveLock(false);
 }
 
 //--------------------------------------------------------------
 // スキルが当たった時の効果
 //--------------------------------------------------------------
-void CYamatoSkill_3::HitAbility(CCharacter * Target)
+void CKarakasaSkill::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	Target->TakeDamage(50, Target);
-}
-
-//--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CYamatoSkill_3::UninitAbility()
-{
-	m_apChara->SetControlLock(false);
+	m_apChara->DealDamage(Target, 1.5f);
 }
 
 //--------------------------------------------------------------
 // スキル生成処理
 //--------------------------------------------------------------
-CYamatoSkill_3 *CYamatoSkill_3::Create(CCharacter* chara)
+CKarakasaSkill *CKarakasaSkill::Create(CCharacter* chara)
 {
-	CYamatoSkill_3* pSkill = new CYamatoSkill_3;
+	CKarakasaSkill* pSkill = new CKarakasaSkill;
 	pSkill->m_apChara = chara;
-	pSkill->m_Name = "YAMATO_SKILL_3";
+	pSkill->m_Name = "YAMATO_SKILL_1";
 	pSkill->Init();
 
 	return pSkill;

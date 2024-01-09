@@ -111,4 +111,21 @@ void CMonsterSky::Move()
 	distancePos *= m_movePower.GetCurrent();
 
 	SetMoveXZ(distancePos.x, distancePos.z);
+
+	if (m_state == CCharacter::STATE::GROUND)
+	{
+		AddMoveY(10.0f);
+	}
+
+	if (PlayerPos.y + 100.0f > m_pos.y)
+	{
+		SetMoveY(1.0f);
+	}
+
+	if (!m_isMoveLock && !m_isInertiaMoveLock)
+	{
+		// èdóÕÇÃä…òa
+		AddMoveY(0.1f);
+	}
+
 }

@@ -542,6 +542,12 @@
     <ClCompile Include="fox_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
     </ClCompile>
+    <ClCompile Include="karakasa_skill.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
+    <ClCompile Include="monster_skill.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -965,6 +971,12 @@
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
     <ClInclude Include="fox_skill.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClInclude>
+    <ClInclude Include="karakasa_skill.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClInclude>
+    <ClInclude Include="monster_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
     </ClInclude>
   </ItemGroup>

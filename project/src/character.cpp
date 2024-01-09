@@ -386,7 +386,7 @@ int CCharacter::CalDamage(float SkillAtkMul)
 {// 攻撃力 * 
 
 	int CalDamage =
-		(int)(((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
+		(int)(((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuff()) *
 		(m_attack.GetMulBuff() * m_attack.GetMulItem() * SkillAtkMul)));
 
 	return CalDamage;

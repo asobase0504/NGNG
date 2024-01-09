@@ -17,6 +17,11 @@
 //==============================================================
 class CMonsterSky : public CEnemy
 {
+private:
+	enum EActiveType
+	{
+
+	};
 public:
 	// コンストラクタとデストラクタ
 	explicit CMonsterSky();
