@@ -1,5 +1,5 @@
 {
-	"ENEMY": [ [ true, true, false, false, false, false, true, true, true, false, false, false, false, false, false, false ] ],
+	"ENEMY": [ [ true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ] ],
 	"MESH": {
 		"POS": [ 0.0, 0.0, 0.0 ],
 		"VTX_HEIGHT": [
