@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// スキル(リキャスト)
+// スキル(通常攻撃)
 // Author : 髙野馨將
 //
 //**************************************************************
@@ -8,19 +8,17 @@
 //==============================================================
 // include
 //==============================================================
-#include "skill.h"
-#include "skill_data_base.h"
-#include "skill_entity.h"
-#include "player_manager.h"
+// skill
+#include "gasyadokuro_summon_skill.h"
+#include "utility.h"
+#include "map.h"
+
 #include "enemy_manager.h"
-#include "enemy.h"
-#include "collision_sphere.h"
-#include "Skill5.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CSkill5::CSkill5()
+CGasyadokuroSummonSkill::CGasyadokuroSummonSkill()
 {
 
 }
@@ -28,7 +26,7 @@ CSkill5::CSkill5()
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CSkill5::~CSkill5()
+CGasyadokuroSummonSkill::~CGasyadokuroSummonSkill()
 {
 
 }
@@ -36,44 +34,37 @@ CSkill5::~CSkill5()
 //--------------------------------------------------------------
 // スキルが始まるとき
 //--------------------------------------------------------------
-void CSkill5::InitAbility()
+void CGasyadokuroSummonSkill::InitAbility()
 {
-	if (m_apChara != nullptr)
+	m_Duration = 20;
+
+	int summonCount = IntRandom(5, 1);
+	D3DXVECTOR3 posChara = m_apChara->GetPos();
+	D3DXVECTOR3 posSummon = m_apChara->GetPos();
+	for (int i = 0; i < summonCount; i++)
 	{
-		m_Duration = 120;
-		// 当たり判定を取得
-		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40);
-		m_collision->SetParent(&m_apChara->GetPos());
-		SetEndChildren(m_collision);
+		posSummon = posChara;
+		posSummon.x += FloatRandom(400.0f, -400.0f);
+		posSummon.z += FloatRandom(400.0f, -400.0f);
+		CMap::GetMap()->CreateEnemy(posSummon, CEnemyDataBase::EEnemyType::SKELTON);
 	}
 }
 
 //--------------------------------------------------------------
-// スキルが当たった時の効果
+// 常に
 //--------------------------------------------------------------
-void CSkill5::HitAbility(CCharacter * Target)
+void CGasyadokuroSummonSkill::AllWayAbility()
 {
-	// todo プレイヤーの最終的な攻撃力を取得する
-	m_apChara->DealDamage(Target, 1.5f);
-
-	if (Target->GetHp()->GetCurrent() <= 0)
-	{// CTを0にする
-		m_apChara->GetSkill()[5]->SetCT(0);
-	}
-
 }
 
 //--------------------------------------------------------------
 // スキル生成処理
 //--------------------------------------------------------------
-CSkill5 *CSkill5::Create(CCharacter* chara)
+CGasyadokuroSummonSkill *CGasyadokuroSummonSkill::Create(CCharacter* chara)
 {
-	// 生成処理
-	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
-
-	CSkill5* pSkill = new CSkill5;
+	CGasyadokuroSummonSkill* pSkill = new CGasyadokuroSummonSkill;
 	pSkill->m_apChara = chara;
-	pSkill->m_Name = "YAMATO_SKILL_5";
+	pSkill->m_Name = "GASYADOKURO_SUMMON_SKILL";
 	pSkill->Init();
 
 	return pSkill;

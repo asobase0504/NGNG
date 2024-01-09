@@ -50,7 +50,8 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 {
 	CSelectEntity::Init();
 
-	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 25.0f, 0.0f), inRot, D3DXVECTOR3(10.0f, 25.0f, 10.0f), GetMtxWorld());
+	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 25.0f, 0.0f), inRot, D3DXVECTOR3(10.0f, 25.0f, 10.0f));
+	m_collisionBox->SetMtxWorld(GetMtxWorld());
 	m_collisionBox->SetParent(&m_pos);
 	SetEndChildren(m_collisionBox);
 	m_collisionCylinder->SetHeight(20.0f);

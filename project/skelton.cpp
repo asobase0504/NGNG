@@ -73,18 +73,10 @@ void CSkelton::Update()
 	D3DXVECTOR3 distancePos = (PlayerPos - pos);
 	float distance = D3DXVec3Length(&distancePos);
 
-	// カウント開始
-	AddAttackCnt(1);
-
 	// エネミーの距離が遠いとき
 	if (distance >= 150.0f)
 	{
-		if (GetAttackCnt() >= 180)
-		{
-			// カウント開始
-			SetAttackCnt(0);
-			GetSkill()[0]->Use();
-		}
+		GetSkill()[0]->Use();
 	}
 }
 

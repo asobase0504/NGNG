@@ -23,6 +23,8 @@
 #include "golem_skill_1.h"
 #include "karakasa_skill.h"
 #include "monster_skill.h"
+#include "fox_skill.h"
+#include "gasyadokuro_summon_skill.h"
 
 //==============================================================
 // 静的メンバー変数の宣言
@@ -93,7 +95,7 @@ void CSkillDataBase::Init()
 	// ワープ
 	info = &m_dates["YAMATO_SKILL_2"];
 	info->baseInfo.CT = 180;
-	info->baseInfo.stock = 1;
+	info->baseInfo.stock = 3;
 	info->baseInfo.invincible = 0;
 	info->ability = CYamatoSkill_2::Create;
 	info->texKey = "SKILL_ICON_YAMATO2";
@@ -123,6 +125,13 @@ void CSkillDataBase::Init()
 	info->texKey = "SKILL_ICON_YAMATO5";
 	
 	// 弾
+	info = &m_dates["FOX_SKILL"];
+	info->baseInfo.CT = 50;
+	info->baseInfo.stock = 1;
+	info->baseInfo.invincible = 0;
+	info->ability = CGolemSkill_1::Create;
+
+	// 弾
 	info = &m_dates["GOLEM_SKILL_1"];
 	info->baseInfo.CT = 50;
 	info->baseInfo.stock = 1;
@@ -142,4 +151,11 @@ void CSkillDataBase::Init()
 	info->baseInfo.stock = 1;
 	info->baseInfo.invincible = 0;
 	info->ability = CMonsterSkill::Create;
+
+	// 徐々に加速する突撃
+	info = &m_dates["GASYADOKURO_SUMMON_SKILL"];
+	info->baseInfo.CT = 500;
+	info->baseInfo.stock = 1;
+	info->baseInfo.invincible = 0;
+	info->ability = CGasyadokuroSummonSkill::Create;
 }
