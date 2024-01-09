@@ -21,6 +21,8 @@
 
 #include "utility.h"
 
+#include "stage_imgui.h"
+#include "game.h"
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -382,6 +384,13 @@ bool CCollisionCylinder::ToMesh(CCollisionMesh* inMesh)
 		posPoly[2] = pVtx[answer + 1].pos;
 
 		isLanding = ToMeshSurface(posPoly, inMesh->GetMtxWorld(), false);
+	}
+	else
+	{
+		CStageImgui* imgui = CGame::GetImgui();
+		imgui->SetVtx(answer, 0);
+		imgui->SetVtx(answer + vtxX + 1, 1);
+		imgui->SetVtx(answer + 1, 2);
 	}
 	// インデックスバッファのアンロック
 	vtxBuff->Unlock();

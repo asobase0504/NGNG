@@ -14,6 +14,8 @@
 #include "player.h"
 #include "player_manager.h"
 #include "utility.h"
+#include "game.h"
+#include "stage_imgui.h"
 
 //==============================================================
 // íËêî
@@ -221,6 +223,7 @@ bool CMesh::Collision(D3DXVECTOR3* pPos)
 		posLineVec[1] = pVtx[pIdx[nCnt + 1]].pos;
 		posLineVec[2] = pVtx[pIdx[nCnt + 2]].pos;
 
+		
 		if ((pIdx[nCnt + 0] == pIdx[nCnt + 1]) ||
 			(pIdx[nCnt + 0] == pIdx[nCnt + 2]) ||
 			(pIdx[nCnt + 2] == pIdx[nCnt + 1]))

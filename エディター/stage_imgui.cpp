@@ -179,6 +179,7 @@ void CStageImgui::EditMesh(void)
 	static int pointMax[2] = { 0.0 };
 	static float meshSizeFloat[2];
 	static float meshMoveFloat;
+	static float meshSizeFloatHave[3];
 	static D3DXVECTOR3 meshMovePoptimeFloat;
 	static char textmesh[MAX_TEXT] = "";
 	static bool Reverse = false;
@@ -244,6 +245,23 @@ void CStageImgui::EditMesh(void)
 		
 		mesh->SetY(List);
 		
+		//for (int i = 0; i < 1; i++)
+		//{
+		//	int test = m_Vtx[i];
+		//	int hoge = 0;
+		//	int hoge2 = 0;
+		//	hoge = test / SizeZ;
+		//	hoge2 = test / SizeX;
+		//	meshSizeFloatHave[i] = List[hoge][hoge2];
+		//	ImGui::Text(u8"POPX%d :Z%d", hoge, hoge2);
+		//	ImGui::SliderFloat(u8"G‚ê‚Ä‚é’¸“_", &meshSizeFloatHave[i], -5000.0f, 5000.0f);
+		//	List[hoge][hoge2] = meshSizeFloatHave[i];
+		//}
+
+		mesh->SetY(List);
+
+		
+
 		
 	}
 	

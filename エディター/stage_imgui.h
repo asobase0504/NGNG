@@ -95,6 +95,7 @@ public:
 
 	std::string Getfile() { return m_SavefileNeme; }
 	
+	void SetVtx(int inx,int Llst) { m_Vtx[Llst] = inx; }
 	
 private: // プライベート関数
 	void TaskBarUpdate();
@@ -178,6 +179,8 @@ private: // メンバー変数
 	int m_BossAnimationType = 0;
 
 	int m_BossKeySet = 0;
+
+	int m_Vtx[3];
 
 	std::vector<bool> m_list;
 	D3DXVECTOR3 m_PlayerPos;
