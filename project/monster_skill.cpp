@@ -103,8 +103,6 @@ CMonsterSkill *CMonsterSkill::Create(CCharacter* chara)
 {
 	CMonsterSkill* pSkill = new CMonsterSkill;
 	pSkill->m_apChara = chara;
-	pSkill->m_Name = "YAMATO_SKILL_1";
 	pSkill->Init();
-
 	return pSkill;
 }

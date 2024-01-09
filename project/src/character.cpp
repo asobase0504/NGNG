@@ -539,32 +539,6 @@ void CCharacter::Collision()
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
 
-	// 選択できる物体との押し出し当たり判定
-	std::list<CSelectEntity*> list = map->GetSelectEntityList();
-	for (CSelectEntity* inSelectEntity : list)
-	{
-		CCollisionBox* collisionBox = inSelectEntity->GetCollisionBox();
-
-		if (collisionBox == nullptr)
-		{
-			continue;
-		}
-
-		if (!(m_collision->ToBox(collisionBox, true)))
-		{
-			continue;
-		}
-
-		if (m_collision->GetIsTop())
-		{
-			isGround = true;
-		}
-
-		D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
-		SetPos(extrusion);
-		SetMoveXZ(0.0f, 0.0f);
-	}
-
 	// マップモデル
 	for (int i = 0; i < map->GetNumModel(); i++)
 	{
