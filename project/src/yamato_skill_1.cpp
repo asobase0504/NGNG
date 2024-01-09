@@ -51,9 +51,9 @@ void CYamatoSkill_1::InitAbility()
 	m_effectPos.y += 25.0f;
 
 	// “–‚½‚è”»’è‚ðŽæ“¾
-	m_Collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30.0f);
-	m_Collision->SetParent(&m_apChara->GetPos());
-	SetEndChildren(m_Collision);
+	m_collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30.0f);
+	m_collision->SetParent(&m_apChara->GetPos());
+	SetEndChildren(m_collision);
 }
 
 //--------------------------------------------------------------
@@ -104,9 +104,6 @@ void CYamatoSkill_1::HitAbility(CCharacter * Target)
 //--------------------------------------------------------------
 CYamatoSkill_1 *CYamatoSkill_1::Create(CCharacter* chara)
 {
-	// ¶¬ˆ—
-	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
-
 	CYamatoSkill_1* pSkill = new CYamatoSkill_1;
 	pSkill->m_apChara = chara;
 	pSkill->m_Name = "YAMATO_SKILL_1";

@@ -42,9 +42,9 @@ void CSkill5::InitAbility()
 	{
 		m_Duration = 120;
 		// “–‚½‚è”»’è‚ðŽæ“¾
-		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40);
-		m_Collision->SetParent(&m_apChara->GetPos());
-		SetEndChildren(m_Collision);
+		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40);
+		m_collision->SetParent(&m_apChara->GetPos());
+		SetEndChildren(m_collision);
 	}
 }
 

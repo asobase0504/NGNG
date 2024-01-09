@@ -100,9 +100,9 @@ void CGolemSkill_1::AllWayAbility()
 		m_bullet = CBullet::Create(pos, move * 0.01f, 10.0f);
 		SetEndChildren(m_bullet);
 
-		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 10.0f);
-		m_Collision->SetParent(&m_bullet->GetPos());
-		SetEndChildren(m_Collision);
+		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 10.0f);
+		m_collision->SetParent(&m_bullet->GetPos());
+		SetEndChildren(m_collision);
 	}
 }
 

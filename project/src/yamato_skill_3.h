@@ -33,6 +33,7 @@ public:
 
 	void InitAbility() override;										// スキルが始まるとき
 	void HitAbility(CCharacter* Target) override;						// スキルが当たった時の効果
+	void UninitAbility() override;										// 終了
 
 private:		// メンバ変数
 

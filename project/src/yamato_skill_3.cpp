@@ -43,9 +43,9 @@ void CYamatoSkill_3::InitAbility()
 {
 	m_Duration = 120;
 	// 当たり判定を取得
-	m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
-	m_Collision->SetParent(&m_apChara->GetPos());
-	SetEndChildren(m_Collision);
+	m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
+	m_collision->SetParent(&m_apChara->GetPos());
+	SetEndChildren(m_collision);
 
 	// プレイヤーの操作を無効化
 	m_apChara->SetControlLock(true);
@@ -66,6 +66,14 @@ void CYamatoSkill_3::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
 	Target->TakeDamage(50, Target);
+}
+
+//--------------------------------------------------------------
+// 終了処理
+//--------------------------------------------------------------
+void CYamatoSkill_3::UninitAbility()
+{
+	m_apChara->SetControlLock(false);
 }
 
 //--------------------------------------------------------------

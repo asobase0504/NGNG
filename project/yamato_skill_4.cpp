@@ -46,11 +46,11 @@ void CYamatoSkill_4::InitAbility()
 	if (m_apChara != nullptr)
 	{
 		m_Duration = 120;
-		m_Invincible = 20;
 		m_Time = 0;
 		// 当たり判定を取得
-		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40);
-		m_Collision->SetParent(&m_apChara->GetPos());
+		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40);
+		m_collision->SetParent(&m_apChara->GetPos());
+		SetEndChildren(m_collision);
 
 		// カメラの方向に合わせる
 		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
@@ -62,6 +62,8 @@ void CYamatoSkill_4::InitAbility()
 		m_apChara->SetControlLock(true);
 		// 重力・慣性を切る
 		m_apChara->SetInertiaMoveLock(true);
+		// 描画を切る
+		m_apChara->SetDisplay(false);
 	}
 }
 
@@ -72,7 +74,7 @@ void CYamatoSkill_4::AllWayAbility()
 {
 	// 時間の加算
 	m_Time++;
-	if (m_Time > 30)
+	if (m_Time > 20)
 	{
 		// プレイヤーの位置を固定
 		m_apChara->SetMoveLock(true);
@@ -85,18 +87,14 @@ void CYamatoSkill_4::AllWayAbility()
 //--------------------------------------------------------------
 void CYamatoSkill_4::UninitAbility()
 {
-	if (m_apChara->GetControlLock())
-	{//	プレイヤーの操作が無効化されていたら有効化
-		m_apChara->SetControlLock(false);
-	}
-	if (m_apChara->GetMoveLock())
-	{//	プレイヤーの移動が無効化されていたら有効化
-		m_apChara->SetMoveLock(false);
-	}
-	if (m_apChara->GetInertiaMoveLock())
-	{//	慣性・重力が無効化されていたら有効化
-		m_apChara->SetInertiaMoveLock(false);
-	}
+	m_apChara->SetDisplay(true);
+
+	// 操作の有効化
+	m_apChara->SetControlLock(false);
+	// 移動の有効化
+	m_apChara->SetMoveLock(false);
+	// 慣性・重力の有効化
+	m_apChara->SetInertiaMoveLock(false);
 }
 
 //--------------------------------------------------------------

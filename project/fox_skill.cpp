@@ -51,9 +51,9 @@ void CFoxSkill::InitAbility()
 
 	m_Duration = 30;
 	// “–‚½‚è”»’è‚ðŽæ“¾
-	m_Collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30);
-	m_Collision->SetParent(&m_apChara->GetPos());
-	SetEndChildren(m_Collision);
+	m_collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30);
+	m_collision->SetParent(&m_apChara->GetPos());
+	SetEndChildren(m_collision);
 }
 
 //--------------------------------------------------------------
