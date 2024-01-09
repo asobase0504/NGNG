@@ -83,7 +83,7 @@ void CNurikabe::Update()
 		{
 			// カウント開始
 			SetAttackCnt(0);
-			GetSkill()[0]->Skill();
+			GetSkill()[0]->Use();
 		}
 	}
 }

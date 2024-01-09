@@ -41,8 +41,8 @@ HRESULT COniChild::Init()
 	m_size = D3DXVECTOR3(50.0f, 50.0f, 50.0f);
 
 	// 当たり判定
-	m_collision->SetHeight(50.0f);
-	m_collision->SetLength(10.0f);
+	m_collision->SetHeight(100.0f);
+	m_collision->SetLength(20.0f);
 
 	// ステータス
 	m_attack.SetCurrent(1);
@@ -83,7 +83,7 @@ void COniChild::Update()
 		{
 			// カウント開始
 			SetAttackCnt(0);
-			GetSkill()[0]->Skill();
+			GetSkill()[0]->Use();
 		}
 	}
 }

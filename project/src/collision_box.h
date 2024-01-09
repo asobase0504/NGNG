@@ -23,7 +23,7 @@ public:
 	HRESULT Init();
 	void Update();
 
-	//bool ToCylinder(CCollisionCylinder* inCyinder,bool isExtrusion);
+	bool ToCylinder(CCollisionCylinder* inCyinder) override;
 	//bool ToMesh(CCollisionMesh* inMesh);
 	//bool ToBox(CCollisionBox* inBox);
 	//bool ToSphere(CCollisionSphere* inSphere);

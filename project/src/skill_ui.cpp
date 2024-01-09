@@ -64,26 +64,40 @@ HRESULT CSkillUI::Init()
 //--------------------------------------------------
 void CSkillUI::Update()
 {
-	if (m_skill->GetCT() != 0)
+	if (m_skill->GetStock() == m_skill->GetMaxStock())
 	{
-		m_ct = (int)ceil((float)m_skill->GetCT() / 60.0f);
-		m_procedure->SetDisplay(true);
+		m_display->SetDisplay(false);
+		m_procedure->SetDisplay(false);
+		m_bg->SetDisplay(true);
+		m_ground->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 	else
 	{
-		m_ct = 0;
-		m_procedure->SetDisplay(false);
+		// クールダウンの数字を描画するか否か
+		if (m_skill->GetStock() == 0)
+		{ // stockが切れた
+			m_ct = (int)ceil((float)m_skill->GetCT() / 60.0f);
+			m_procedure->SetNumber(m_ct);
+			m_procedure->SetDisplay(true);
+			m_bg->SetDisplay(false);
+
+			m_ground->SetColor(D3DXCOLOR(0.65f,0.65f,0.65f,1.0f));
+		}
+		else
+		{ // まだstockがある
+			m_procedure->SetDisplay(false);
+			m_bg->SetDisplay(true);
+			m_ground->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		}
+
+		// ゲージの作成
+		m_display->SetDisplay(true);
+		int maxCT = CSkillDataBase::GetInstance()->GetCT(m_skill->GetName());
+		float rate = ((float)m_skill->GetCT()) / maxCT;
+		D3DXVECTOR3 size = D3DXVECTOR3(UI_SIZE, UI_SIZE, 0.0f);
+		size.y *= rate;
+		m_display->SetSize(size);
 	}
-
-	int maxCT = CSkillDataBase::GetInstance()->GetCT(m_skill->GetName());
-
-	float rate = ((float)m_skill->GetCT()) / maxCT;
-
-	D3DXVECTOR3 size = D3DXVECTOR3(UI_SIZE, UI_SIZE, 0.0f);
-	size.y *= rate;
-	m_display->SetSize(size);
-
-	m_procedure->SetNumber(m_ct);
 }
 
 //--------------------------------------------------

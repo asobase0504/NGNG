@@ -1,11 +1,11 @@
 //**************************************************************
 //
-// スキル(通常攻撃)
-// Author : 髙野馨將
+// キツネのスキル(通常攻撃)
+// Author : Yuda Kaito
 //
 //**************************************************************
-#ifndef _YAMATO_SKILL_1_H_			// このマクロ定義がされてなかったら
-#define _YAMATO_SKILL_1_H_			// 二重インクルード防止のマクロ定義
+#ifndef _FOX_SKILL_H_	// このマクロ定義がされてなかったら
+#define _FOX_SKILL_H_	// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
@@ -13,27 +13,21 @@
 #include "skill_entity.h"
 
 //==============================================================
-// 前方宣言
-//==============================================================
-class CCharacter;
-class CCollision;
-
-//==============================================================
 // スキルクラス
 //==============================================================
-class CYamatoSkill_1 : public CSkillEntity
+class CFoxSkill : public CSkillEntity
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CYamatoSkill_1();
-	~CYamatoSkill_1();
+	explicit CFoxSkill();
+	~CFoxSkill();
 
 	// 静的メンバ関数
-	static CYamatoSkill_1* Create(CCharacter* chara);		// スキルの生成
+	static CFoxSkill* Create(CCharacter* chara);		// スキルの生成
 
-	void InitAbility() override;					// スキルが始まるとき
-	void AllWayAbility() override;				// スキル中
-	void UninitAbility() override;				// スキル中
+	void InitAbility() override;		// スキルが始まるとき
+	void AllWayAbility() override;		// スキル中
+	void UninitAbility() override;		// スキル終了時
 	void HitAbility(CCharacter* Target) override;	// スキルが当たった時の効果
 
 private:		// メンバ変数

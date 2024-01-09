@@ -110,8 +110,8 @@ void CItemModel::Update()
 	else
 	{
 		static float add = 0.0f;
-		add += 0.05f;
-		SetMove(D3DXVECTOR3(0.0f, sinf(add) * 0.1f, 0.0f));
+		add += 0.0025f;
+		SetMove(D3DXVECTOR3(0.0f, sinf(add) * 0.5f, 0.0f));
 		AddRot(D3DXVECTOR3(0.0f, 0.01f, 0.0f));
 	}
 

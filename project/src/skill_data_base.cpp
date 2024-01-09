@@ -78,15 +78,53 @@ void CSkillDataBase::Uninit()
 //--------------------------------------------------------------
 void CSkillDataBase::Init()
 {
-	m_dates["YAMATO_SKILL_1"] = { 60,1,1,0,30,30,0.7f,0,D3DXVECTOR3(30.0f,30.0f,30.0f),CYamatoSkill_1::Create };
-	m_dates["YAMATO_SKILL_1"].texKey = "SKILL_ICON_YAMATO1";
-	m_dates["YAMATO_SKILL_2"] = { 180,1,1,0,30,5,1.0,0,D3DXVECTOR3(60.0f,60.0f,60.0f),CYamatoSkill_2::Create };
-	m_dates["YAMATO_SKILL_2"].texKey = "SKILL_ICON_YAMATO2";
-	m_dates["YAMATO_SKILL_3"] = { 120,1,1,0,120,20,1.0,0,D3DXVECTOR3(60.0f,60.0f,60.0f),CYamatoSkill_3::Create };
-	m_dates["YAMATO_SKILL_3"].texKey = "SKILL_ICON_YAMATO3";
-	m_dates["YAMATO_SKILL_4"] = { 300,1,1,0,120,20,1.0f,120.0f,D3DXVECTOR3(40.0f,40.0f,40.0f),CYamatoSkill_4::Create };
-	m_dates["YAMATO_SKILL_4"].texKey = "SKILL_ICON_YAMATO4";
-	m_dates["YAMATO_SKILL_5"] = { 300,1,1,0,120,20,1.0f,120.0f,D3DXVECTOR3(40.0f,40.0f,40.0f),CSkill5::Create };
-	m_dates["YAMATO_SKILL_5"].texKey = "SKILL_ICON_YAMATO5";
-	m_dates["GOLEM_SKILL_1"] = { 50,1,1,0,600,0,0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),CGolemSkill_1::Create };
+	SKILL_INFO* info;
+
+	{
+		info = &m_dates["YAMATO_SKILL_1"];
+		info->baseInfo.CT = 60;
+		info->baseInfo.stock = 1;
+		info->baseInfo.invincible = 0;
+		info->ability = CYamatoSkill_1::Create;
+		info->texKey = "SKILL_ICON_YAMATO1";
+	}
+	{
+		info = &m_dates["YAMATO_SKILL_2"];
+		info->baseInfo.CT = 180;
+		info->baseInfo.stock = 1;
+		info->baseInfo.invincible = 0;
+		info->ability = CYamatoSkill_2::Create;
+		info->texKey = "SKILL_ICON_YAMATO2";
+	}
+	{
+		info = &m_dates["YAMATO_SKILL_3"];
+		info->baseInfo.CT = 120;
+		info->baseInfo.stock = 1;
+		info->baseInfo.invincible = 0;
+		info->ability = CYamatoSkill_3::Create;
+		info->texKey = "SKILL_ICON_YAMATO3";
+	}
+	{
+		info = &m_dates["YAMATO_SKILL_4"];
+		info->baseInfo.CT = 300;
+		info->baseInfo.stock = 1;
+		info->baseInfo.invincible = 0;
+		info->ability = CYamatoSkill_4::Create;
+		info->texKey = "SKILL_ICON_YAMATO4";
+	}
+	{
+		info = &m_dates["YAMATO_SKILL_5"];
+		info->baseInfo.CT = 300;
+		info->baseInfo.stock = 1;
+		info->baseInfo.invincible = 0;
+		info->ability = CSkill5::Create;
+		info->texKey = "SKILL_ICON_YAMATO5";
+	}
+	{
+		info = &m_dates["GOLEM_SKILL_1"];
+		info->baseInfo.CT = 50;
+		info->baseInfo.stock = 1;
+		info->baseInfo.invincible = 0;
+		info->ability = CGolemSkill_1::Create;
+	}
 }

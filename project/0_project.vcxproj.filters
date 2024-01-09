@@ -539,6 +539,9 @@
     <ClCompile Include="monster.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
+    <ClCompile Include="fox_skill.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -960,6 +963,9 @@
     </ClInclude>
     <ClInclude Include="monster.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
+    </ClInclude>
+    <ClInclude Include="fox_skill.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

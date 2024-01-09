@@ -205,21 +205,24 @@ private:
 	void Collision();		// 当たり判定
 
 protected:		// メンバ変数
-	CSkinMesh*		m_skinModel;			// モデルのインスタンス
-	CCollisionCylinder*	m_collision;			// 当たり判定
-	ERelation m_relation;
-
-	std::vector<CSkill*> m_skill;
 private:		// ステータス
 
 protected:
+	CSkinMesh* m_skinModel;		// モデルのインスタンス
+	float m_destRot;
+	CCollisionCylinder*	m_collision;	// 当たり判定
+	ERelation m_relation;
+
+	std::vector<CSkill*> m_skill;
+
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;
 	// 持っている状態異常の個数をそれぞれ管理
 	abnormal_count m_haveAbnormal;
 
-	bool m_isMoveLock;		// 移動停止状態か否か。
-	bool m_isControl;		// コントロールを受け付けるか否か。
+	// 移動制限
+	bool m_isMoveLock;			// 移動停止状態か否か。
+	bool m_isControl;			// コントロールを受け付けるか否か。
 	bool m_isInertiaMoveLock;	// 慣性・重力停止状態か否か
 
 	bool m_isDied;			// 死亡状態か否か。
@@ -241,6 +244,7 @@ protected:
 
 	STATE m_state;
 
+	// ステータス
 	CStatus<int> m_hp;							// 体力
 	CStatus<int> m_addHp;						// 追加体力
 	CStatus<int> m_addHpSubTime;				// 追加体力の減少量
@@ -260,10 +264,11 @@ protected:
 	CStatus<int> m_regenetion;					// 自動回復の値
 
 	int m_RegenetionCnt;
+
+	// レベル関係
 	int m_level;
 	float m_exp;
 	float m_reqExp;
 
-	float m_destRot;
 };
 #endif

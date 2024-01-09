@@ -26,6 +26,7 @@ public:
 	bool ToMesh(CCollisionMesh* inMesh);
 	bool ToBox(CCollisionBox* inBox, bool isExtrusion) override;
 	bool ToSphere(CCollisionSphere* inSphere);
+	bool ToCylinder(CCollisionCylinder* inCylinder);
 
 	static CCollisionSphere* Create(const D3DXVECTOR3& pos, const float length);
 

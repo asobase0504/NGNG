@@ -328,7 +328,7 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 	//dwPrevBoneIDにUINT_MAXの値(0xffffffff)を格納
 	dwPrevBoneID = UINT_MAX;
 
-	LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
+	static const LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
 
 	//スキニング計算
 	for (i = 0; i < pMeshContainer->dwBoneNum; i++)

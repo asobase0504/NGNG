@@ -42,7 +42,7 @@ HRESULT CMonster::Init()
 
 	// 当たり判定
 	m_collision->SetHeight(50.0f);
-	m_collision->SetLength(10.0f);
+	m_collision->SetLength(40.0f);
 
 	// ステータス
 	m_attack.SetCurrent(1);
@@ -83,7 +83,7 @@ void CMonster::Update()
 		{
 			// カウント開始
 			SetAttackCnt(0);
-			GetSkill()[0]->Skill();
+			GetSkill()[0]->Use();
 		}
 	}
 }
