@@ -39,7 +39,7 @@ public:
 	void Update() override;
 
 	void Load(std::string path);
-
+	void Save(std::string data);
 	static CMap* GetMap(std::string inPath = "")
 	{
 		if (inPath != "")
@@ -74,6 +74,13 @@ public:
 	void DoDifferentRelation(CCharacter::ERelation,std::function<void(CCharacter*)>);
 
 	std::string GetNextMapPath() { return m_nextMapPath; }
+
+	bool GetEnemyPopList(int index) { return m_EnemyPopList[index]; }
+	void EnemyPopList(std::vector<bool> list)
+	{
+		m_EnemyPopList = list;
+	}
+
 private:
 	static CMap* m_map;
 
@@ -87,11 +94,13 @@ private:
 	std::list<CCharacter*> m_characterList;
 	std::list<CSelectEntity*> m_selectEntity;
 
-	void Save(std::string data);
-	void SaveMesh(nlohmann::json*list);
-	void SaveModel(nlohmann::json*list);
+	std::vector<bool> m_EnemyPopList;
 
-	void LoodMesh(nlohmann::json*list);
-	void LoodModel(nlohmann::json*list);
+
+
+
+//	void EnemyPopList();
+
+	
 };
 #endif

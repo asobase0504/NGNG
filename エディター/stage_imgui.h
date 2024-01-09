@@ -179,7 +179,7 @@ private: // ƒƒ“ƒo[•Ï”
 
 	int m_BossKeySet = 0;
 
-
+	std::vector<bool> m_list;
 	D3DXVECTOR3 m_PlayerPos;
 };
 

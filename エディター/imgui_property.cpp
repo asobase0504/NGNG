@@ -18,7 +18,6 @@
 #include "imgui_internal.h"
 //#include <cmath>
 
-#include <implot.h>
 
 //==================================================
 // ’è‹`
