@@ -108,7 +108,7 @@ bool CCollisionBox::ToCylinder(CCollisionCylinder * inCyinder)
 	return false;
 }
 
-CCollisionBox* CCollisionBox::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const D3DXVECTOR3& size, const D3DXMATRIX& mtx)
+CCollisionBox* CCollisionBox::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const D3DXVECTOR3& size)
 {
 	CCollisionBox* collision = new CCollisionBox;
 
@@ -117,7 +117,6 @@ CCollisionBox* CCollisionBox::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& 
 	collision->Init();
 	collision->SetPos(pos);
 	collision->SetRot(rot);
-	collision->SetMtxWorld(mtx);
 	collision->SetSize(size);
 	collision->SetLine();
 

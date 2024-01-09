@@ -548,6 +548,9 @@
     <ClCompile Include="monster_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
     </ClCompile>
+    <ClCompile Include="gasyadokuro_summon_skill.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -977,6 +980,9 @@
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
     </ClInclude>
     <ClInclude Include="monster_skill.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+    </ClInclude>
+    <ClInclude Include="gasyadokuro_summon_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
     </ClInclude>
   </ItemGroup>

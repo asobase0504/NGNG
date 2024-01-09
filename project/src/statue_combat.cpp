@@ -63,7 +63,7 @@ bool CStatueCombat::Select(CCharacter * selectCharacter)
 		CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
 		int level = pDiff->GetEnemyLevel();
 
-		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), CEnemyDataBase::EEnemyType::MONSTER, level);
+		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), CEnemyDataBase::EEnemyType::GASYADOKURO, level);
 		enemy->TakeItem(CItemDataBase::ITEM_ELITE);
 		enemy->SetIsElite();
 	}

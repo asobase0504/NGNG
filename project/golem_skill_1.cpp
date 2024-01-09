@@ -25,7 +25,6 @@
 // コンストラクタ
 //--------------------------------------------------------------
 CGolemSkill_1::CGolemSkill_1() :
-	m_road(nullptr),
 	m_bullet(nullptr)
 {
 }
@@ -55,6 +54,7 @@ CGolemSkill_1 * CGolemSkill_1::Create(CCharacter * chara)
 //--------------------------------------------------------------
 void CGolemSkill_1::InitAbility()
 {
+	m_Duration = 400;
 	m_chargeTime = 0;
 	m_isCharge = true;
 
@@ -65,17 +65,6 @@ void CGolemSkill_1::InitAbility()
 	{
 		m_aimCharacter = inChara;
 	});
-
-	if (m_aimCharacter == nullptr)
-	{
-		return;
-	}
-
-	m_road = CRoad::Create(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-	m_road->SetShooter(m_apChara);
-	m_road->SetUse(true);
-	m_road->SetTarget(m_aimCharacter);
-	SetEndChildren(m_road);
 }
 
 //--------------------------------------------------------------
@@ -83,15 +72,13 @@ void CGolemSkill_1::InitAbility()
 //--------------------------------------------------------------
 void CGolemSkill_1::AllWayAbility()
 {
-	CSkillEntity::AllWayAbility();
-
 	if (m_aimCharacter == nullptr)
 	{
 		return;
 	}
 
 	m_chargeTime++;
-	if (m_isCharge && m_chargeTime >= 180)
+	if (m_isCharge && m_chargeTime >= 30)
 	{
 		m_isCharge = false;
 
@@ -103,6 +90,11 @@ void CGolemSkill_1::AllWayAbility()
 		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 10.0f);
 		m_collision->SetParent(&m_bullet->GetPos());
 		SetEndChildren(m_collision);
+	}
+
+	if (m_collision == nullptr && !m_isCharge)
+	{
+		m_Duration = 0;
 	}
 }
 

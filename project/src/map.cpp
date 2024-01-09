@@ -21,7 +21,9 @@
 #include "statue.h"
 #include "statue_manager.h"
 #include "enemy_manager.h"
-#include "gold_nugget.h"
+
+#include "game.h"
+#include "difficult.h"
 
 //debug
 #include "item_manager.h"
@@ -178,3 +180,8 @@ void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<v
 	}
 }
 
+void CMap::CreateEnemy(D3DXVECTOR3 inPos, CEnemyDataBase::EEnemyType inType)
+{
+	CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
+	SetEndChildren(CEnemyManager::GetInstance()->CreateEnemy(inPos, inType, pDiff->GetLevel()));
+}

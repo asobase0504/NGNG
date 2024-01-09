@@ -41,7 +41,8 @@ HRESULT CArrow::Init()
 	LoadModel("BOX");
 
 	// “–‚½‚è”»’è
-	m_collision = CCollisionBox::Create(GetPos(), GetRot(), D3DXVECTOR3(10.0f, 10.0f, 10.0f), GetMtxWorld());
+	m_collision = CCollisionBox::Create(GetPos(), GetRot(), D3DXVECTOR3(10.0f, 10.0f, 10.0f));
+	m_collision->SetMtxWorld(GetMtxWorld());
 	m_collision->SetParent(&m_pos);
 
 	return S_OK;
