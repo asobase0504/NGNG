@@ -89,8 +89,10 @@ void CEnemy::Update()
 		return;
 	}
 
-	// Œ»İ‚Ìactivity‚Éİ’è‚·‚éB
-	Move();
+	if (!m_isMoveLock)
+	{
+		Move();
+	}
 
 	// XVˆ—
 	CCharacter::Update();

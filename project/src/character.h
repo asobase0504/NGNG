@@ -197,6 +197,10 @@ public:
 
 	// 向いている向きを変える方法
 	void SetToFaceRot(bool is) { m_isToFaceRot = is; RotateToFace(); }
+
+	// 今いる場所
+	STATE GetState() { return m_state; }
+
 protected:
 	virtual void RotateToFace();	// 向いている向きを回転させる
 private:

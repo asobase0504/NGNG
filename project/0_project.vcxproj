@@ -34,7 +34,9 @@
     <ClCompile Include="gyuuki.cpp" />
     <ClCompile Include="kappa.cpp" />
     <ClCompile Include="karakasa.cpp" />
+    <ClCompile Include="karakasa_skill.cpp" />
     <ClCompile Include="monster.cpp" />
+    <ClCompile Include="monster_skill.cpp" />
     <ClCompile Include="monster_sky.cpp" />
     <ClCompile Include="nine_fox.cpp" />
     <ClCompile Include="nurikabe.cpp" />
@@ -171,7 +173,9 @@
     <ClInclude Include="gyuuki.h" />
     <ClInclude Include="kappa.h" />
     <ClInclude Include="karakasa.h" />
+    <ClInclude Include="karakasa_skill.h" />
     <ClInclude Include="monster.h" />
+    <ClInclude Include="monster_skill.h" />
     <ClInclude Include="monster_sky.h" />
     <ClInclude Include="nine_fox.h" />
     <ClInclude Include="nurikabe.h" />
