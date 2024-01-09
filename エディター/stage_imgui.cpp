@@ -35,8 +35,12 @@
 #include "game.h"
 #include "camera.h"
 #include "enemy.h"
-
+#include "application.h"
 #include "player.h"
+#include "map.h"
+#include "object_mesh.h"
+#include "player_manager.h"
+
 //-----------------------------------------------------------------------------
 // コンストラクタ
 //-----------------------------------------------------------------------------
@@ -163,8 +167,9 @@ void CStageImgui::TaskBarUpdate(void)
 //--------------------------------------------------
 void CStageImgui::EditMesh(void)
 {
-	static int sliderInt = 10;
-	static int AnimationSpeed = 10;
+	static int sliderInt = 0;
+	static int point[2] = {0.0};
+	static int pointMax[2] = { 0.0 };
 	static float meshSizeFloat[2];
 	static float meshMoveFloat;
 	static D3DXVECTOR3 meshMovePoptimeFloat;
@@ -172,7 +177,72 @@ void CStageImgui::EditMesh(void)
 	static bool Reverse = false;
 
 	int Meshint = 0;
+	CMap* map = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetMap();
+	ImGui::SliderInt(u8"選択してるメッシュ", &sliderInt, 0, map->GetNumMesh()-1);
 
+	CMesh *mesh = map->GetMapMesh(sliderInt);
+	if (mesh)
+	{
+		std::vector<std::vector<float>> List = mesh->GetY();
+		int SizeX = List[0].size();
+		int SizeZ = mesh->GetY().size();
+	
+
+		ImGui::SliderInt2(u8"選択してる頂点::XZ", &point[0], 0, SizeX-1);
+		if (point[1] >= SizeZ)
+		{
+			point[1] = SizeZ-1;
+		}
+		meshMoveFloat = List[point[1]][point[0]];
+
+		ImGui::SliderFloat(u8"選択してる頂点", &meshMoveFloat, -5000.0f, 5000.0f);
+
+	
+		List[point[1]][point[0]] = meshMoveFloat;
+
+		ImGui::SliderInt2(u8"隣接してる頂点何個巻き込むか::XZ", &pointMax[0], 0, SizeX - 1);
+		if (pointMax[1] >= SizeZ)
+		{
+			pointMax[1] = SizeZ - 1;
+		}
+
+		//いじる頂点に行くボタン
+		if (ImGui::Button(u8"まとめて同じ値にする"))
+		{// ボタンが押された
+			for (int pointZ = 0; pointZ <= pointMax[1]; pointZ++)
+			{
+				for (int pointX = 0; pointX <= pointMax[0]; pointX++)
+				{
+					int Z = point[1] + pointZ;
+					if (Z >= SizeZ - 1)
+					{
+						Z = SizeZ - 1;
+					}
+					int X = point[0] + pointX;
+					if (X >= SizeX - 1)
+					{
+						X = SizeX - 1;
+					}
+					List[Z][X] = meshMoveFloat;
+				}
+			}
+		}
+			
+		//いじる頂点に行くボタン
+		if (ImGui::Button(u8"選択してる頂点に行く"))
+		{// ボタンが押された
+			D3DXVECTOR3 MeshSize = mesh->GetOneMeshSize();
+			CPlayerManager::GetInstance()->GetPlayer()->SetPos(D3DXVECTOR3((MeshSize.x*point[0]) - MeshSize.x*(SizeX*0.49f), 3000, (MeshSize.z*point[1])+ MeshSize.z*(SizeZ*0.49f)));
+		}
+		
+		mesh->SetY(List);
+		
+		
+		//meshMoveFloat = List[point];
+	
+
+		
+	}
 	
 }
 
@@ -206,16 +276,6 @@ void CStageImgui::EditBoss(CBoss* BossEnemy)
 void CStageImgui::EditPlayer()
 {
 	
-}
-
-//--------------------------------------------------
-// ウインドウ出力処理
-//--------------------------------------------------
-void CStageImgui::Imguigold(void)
-{
-	// ウインドウの命名
-	ImGui::Begin("gold", nullptr, ImGuiWindowFlags_MenuBar);
-	ImGui::End();
 }
 
 //--------------------------------------------------

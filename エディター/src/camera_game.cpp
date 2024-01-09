@@ -55,11 +55,19 @@ void CCameraGame::Update()
 	m_posR = D3DXVECTOR3(0.0f, 100.0f, DISTANCE);
 	m_posV = D3DXVECTOR3(0.0f, 0.0f, -DISTANCE);
 
+
 	D3DXVECTOR3 mouseMove = CInput::GetKey()->GetMouseMove();
 
-	m_rot.x += mouseMove.y * 0.0025f;
-	m_rot.y += mouseMove.x * 0.0025f;
-
+	
+	if (!CInput::GetKey()->GetKey()->Press(DIK_LSHIFT))
+	{
+		//return;
+	}
+	else
+	{
+		m_rot.x += mouseMove.y * 0.0025f;
+		m_rot.y += mouseMove.x * 0.0025f;
+	}
 	if (m_rot.x >= (D3DX_PI * 0.5f))
 	{
 		m_rot.x = (D3DX_PI * 0.5f) * 0.9f;

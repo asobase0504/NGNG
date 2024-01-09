@@ -112,7 +112,7 @@ void CMap::Uninit()
 //--------------------------------------------------------------
 void CMap::Update()
 {
-	m_SpawnCnt++;
+	//m_SpawnCnt++;
 
 	// 一定時間ごとにランダムな敵をスポーンさせる。
 	if (m_SpawnCnt >= 600)
@@ -202,14 +202,8 @@ void CMap::Save(std::string data)
 		{
 			JMap["MESH"]["VTX_HEIGHT"][i] = List->GetY()[i];
 		}
-		
-
-
-	
 	}
 
-	/*SaveMesh(&JMap);
-	SaveModel(&JMap);*/
 	auto jobj = JMap.dump();
 	std::ofstream writing_file;
 	const std::string pathToJSON = data.c_str();

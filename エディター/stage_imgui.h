@@ -76,7 +76,7 @@ public:
 	Pendulum GetPendulum() const { return m_Pendulum; }
 
 	void Imguigold();
-	void ImguiEnemy(void);
+	void ImguiEnemy();
 	void ImguiChangenumber(std::string number,int Number);
 
 	int selectModel();

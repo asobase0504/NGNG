@@ -47,6 +47,7 @@ public:
 	CDifficult* GetDifficult() { return m_difficult; }
 
 	static CStageImgui *GetImgui() { return m_imgui; };
+	CMap *GetMap() { return m_map; };
 	void SetChangeMap();
 	void ChangeMap(std::string);
 private:

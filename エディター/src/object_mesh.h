@@ -65,7 +65,7 @@ public:
 
 	int GetSizeVtx() { return m_vtx; }
 
-
+	
 private:
 	void SetVtxMesh(VERTEX_3D* pVtx, WORD* pIdx, int nCnt, bool isUp);
 	void SetVtxMeshSize(int sizeX, int sizeZ);

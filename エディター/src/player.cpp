@@ -180,7 +180,7 @@ void CPlayer::Update()
 		Jump();
 
 		// 攻撃
-		PAttack();
+		//PAttack();
 	}
 	else
 	{
