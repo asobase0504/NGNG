@@ -51,12 +51,27 @@ void CYamatoSkill_3::InitAbility()
 	m_apChara->SetControlLock(true);
 	m_apChara->SetMoveXZ(0.0f, 0.0f);
 
-	// ƒJƒƒ‰‚Ì•ûŒü‚É‡‚í‚¹‚é
+	// ƒJƒƒ‰‚Ì•ûŒü‚É‡‚í‚¹‚Ä“ËŒ‚
 	CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
 	D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
 	D3DXVec3Normalize(&vecNor, &vecNor);
 	vecNor *= 15.0f;			//ˆÚ“®‚³‚¹‚½‚¢’l‚ð“ü‚ê‚é
 	m_apChara->SetMoveXZ(vecNor.x, vecNor.z);
+
+	m_time = 0;
+}
+
+void CYamatoSkill_3::AllWayAbility()
+{
+	m_time++;
+
+	/* "2024/01/09" ‚±‚±UŒ‚‘¬“x‚ð”½‰f‚³‚¹‚½‚¢ */
+	if (m_time % 20 == 0 && m_collision == nullptr)
+	{
+		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
+		m_collision->SetParent(&m_apChara->GetPos());
+		SetEndChildren(m_collision);
+	}
 }
 
 //--------------------------------------------------------------

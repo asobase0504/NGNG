@@ -208,9 +208,9 @@ protected:		// メンバ変数
 private:		// ステータス
 
 protected:
-	CSkinMesh*		m_skinModel;			// モデルのインスタンス
+	CSkinMesh* m_skinModel;		// モデルのインスタンス
 	float m_destRot;
-	CCollisionCylinder*	m_collision;			// 当たり判定
+	CCollisionCylinder*	m_collision;	// 当たり判定
 	ERelation m_relation;
 
 	std::vector<CSkill*> m_skill;

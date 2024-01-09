@@ -31,11 +31,12 @@ public:
 	// 静的メンバ関数
 	static CYamatoSkill_3	*Create(CCharacter* chara);					// スキルの生成
 
-	void InitAbility() override;										// スキルが始まるとき
-	void HitAbility(CCharacter* Target) override;						// スキルが当たった時の効果
-	void UninitAbility() override;										// 終了
+	void InitAbility() override;					// スキルが始まるとき
+	void AllWayAbility() override;					// 持続中
+	void HitAbility(CCharacter* Target) override;	// スキルが当たった時の効果
+	void UninitAbility() override;					// 終了
 
 private:		// メンバ変数
-
+	int m_time;
 };
 #endif
