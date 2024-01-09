@@ -25,7 +25,7 @@ class CYamatoSkill_2 : public CSkillEntity
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CYamatoSkill_2(int nPriority = 3);
+	explicit CYamatoSkill_2();
 	~CYamatoSkill_2();
 
 	// 静的メンバ関数
