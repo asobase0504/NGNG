@@ -110,7 +110,7 @@ private: // プライベート関数
 	void ImguiPlarer();
 
 
-	void funcFileSave(HWND hWnd, CStageImgui::DATATYPE Mode);
+	void funcFileSave(HWND hWnd);
 	void funcFileLoad(HWND hWnd, CStageImgui::DATATYPE Mode);
 private: // メンバー変数
 

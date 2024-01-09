@@ -125,7 +125,7 @@ bool CStageImgui::Update()
 	//いじる頂点に行くボタン
 	if (ImGui::Button(u8"Save"))
 	{// ボタンが押された
-		map->Save("data/test.json");
+		funcFileSave(CApplication::GetInstance()->GetWindow());
 	}
 
 	CStageImgui::EditMesh();
@@ -258,11 +258,7 @@ void CStageImgui::EditMesh(void)
 		//	List[hoge][hoge2] = meshSizeFloatHave[i];
 		//}
 
-		mesh->SetY(List);
-
-		
-
-		
+		mesh->SetY(List);	
 	}
 	
 	ImGui::Separator();
@@ -440,7 +436,7 @@ void CStageImgui::ImguiChangenumber(std::string number, int Number)
 //========================
 //ウィンドウだしてやるやつ
 //========================
-void CStageImgui::funcFileSave(HWND hWnd, CStageImgui::DATATYPE Mode)
+void CStageImgui::funcFileSave(HWND hWnd)
 {
 	static OPENFILENAME     ofn;
 	static TCHAR            szPath[MAX_PATH];
@@ -466,18 +462,8 @@ void CStageImgui::funcFileSave(HWND hWnd, CStageImgui::DATATYPE Mode)
 
 	if (szFile[0] != '\0')
 	{
-		if (Mode == CStageImgui::ENEMY)
-		{
-			
-		}
-		if (Mode == CStageImgui::MESH)
-		{
-		
-		}
-		if (Mode == CStageImgui::MODEL)
-		{
-			
-		}
+		CMap* map = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetMap();
+		map->Save("data/test.json");
 	}
 	SetCurrentDirectory(szPath);
 }
