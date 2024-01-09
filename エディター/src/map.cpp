@@ -152,6 +152,14 @@ void CMap::Load(std::string path)
 	m_mesh.push_back(object);
 	SetEndChildren(object);
 
+	int enemySize = map["ENEMY"][0].size();
+	
+	for (int i = 0; i < enemySize; i++)
+	{
+		bool isPop = map["ENEMY"][0][i];
+		m_EnemyPopList.push_back(isPop);
+	}
+	
 	//m_nextMapPath = map["NEXT_MAP"];
 }
 
@@ -172,6 +180,7 @@ void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<v
 
 		if (chara->GetRelation() == inRelation)
 		{
+
 			continue;
 		}
 
@@ -203,6 +212,11 @@ void CMap::Save(std::string data)
 			JMap["MESH"]["VTX_HEIGHT"][i] = List->GetY()[i];
 		}
 	}
+	for (int i = 0; i < m_EnemyPopList.size(); i++)
+	{
+		JMap["ENEMY"] = { m_EnemyPopList };
+	}
+	
 
 	auto jobj = JMap.dump();
 	std::ofstream writing_file;
@@ -210,25 +224,5 @@ void CMap::Save(std::string data)
 	writing_file.open(pathToJSON, std::ios::out);
 	writing_file << jobj << std::endl;
 	writing_file.close();
-
-
 }
 
-void CMap::SaveMesh(nlohmann::json*jsonlist)
-{
-	
-	
-}
-
-void CMap::SaveModel(nlohmann::json*list)
-{
-
-}
-
-void CMap::LoodMesh(nlohmann::json*list)
-{
-}
-
-void CMap::LoodModel(nlohmann::json*list)
-{
-}

@@ -33,6 +33,7 @@
 #include "tengu.h"
 #include "tengu_child.h"
 
+#include "map.h"
 //--------------------------------------------------------------
 //静的メンバ変数宣言
 //--------------------------------------------------------------
@@ -156,10 +157,24 @@ CEnemy* CEnemyManager::RandomSpawn()
 	int randomCount = IntRandom(5, 1);
 	float randomPosX = FloatRandom(400.0f, -500.0f);
 	float randomPosZ = FloatRandom(500.0f, -415.0f);
+	int enemyType = 0;
 
 	// エネミータイプのランダム化
-	int enemyType = IntRandom(CEnemyDataBase::EEnemyType::MAX_TYPE, 0);
-
-	CDifficult *pDiff =  ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
+	enemyType = IntRandom(CEnemyDataBase::EEnemyType::MAX_TYPE, 0);
+	while (1)
+	{
+		CMap* map = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetMap();
+		
+		if (map->GetEnemyPopList(enemyType))
+		{
+			break;
+		}
+		enemyType++;
+		if (CEnemyDataBase::EEnemyType::MAX_TYPE == enemyType)
+		{
+			enemyType = 0;
+		}
+	}
+	CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
 	return CreateEnemy(D3DXVECTOR3(randomPosX, 0.0f, randomPosZ), (CEnemyDataBase::EEnemyType)enemyType, pDiff->GetEnemyLevel());
 }

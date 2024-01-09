@@ -90,10 +90,10 @@
 #define SAFE_DELETE_ARRAY(p) if (p) { delete[] (p); (p) = nullptr; }
 
 //ƒ‰ƒCƒuƒ‰ƒŠ
+#define IMGUI_DEFINE_MATH_OPERATORS
 #include "imgui.h"
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_win32.h"
-#define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui_internal.h>
 
 #endif

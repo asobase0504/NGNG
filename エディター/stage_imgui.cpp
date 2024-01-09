@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include "imgui_internal.h"
-#include <implot.h>
+
 
 //-----------------------------------------------------------------------------
 // json
@@ -40,6 +40,7 @@
 #include "map.h"
 #include "object_mesh.h"
 #include "player_manager.h"
+#include "enemy_data_base.h"
 
 //-----------------------------------------------------------------------------
 // コンストラクタ
@@ -120,9 +121,15 @@ bool CStageImgui::Update()
 	ImguiCreate();
 	// テキスト表示
 	ImGui::Text("FPS  : %.2f", ImGui::GetIO().Framerate);
+	CMap* map = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetMap();
+	//いじる頂点に行くボタン
+	if (ImGui::Button(u8"Save"))
+	{// ボタンが押された
+		map->Save("data/test.json");
+	}
 
 	CStageImgui::EditMesh();
-
+	CStageImgui::EditEnemy();
 	//ImGui::SliderFloat3(u8"ロット", &sliderRot.x, -3.14f, 3.14f);
 	//ImGui::Separator();
 
@@ -238,28 +245,86 @@ void CStageImgui::EditMesh(void)
 		mesh->SetY(List);
 		
 		
-		//meshMoveFloat = List[point];
-	
-
-		
 	}
 	
-}
+	ImGui::Separator();
 
-//--------------------------------------------------
-// EditMesh
-//--------------------------------------------------
-void CStageImgui::EditCamera(void)
-{
-	
 
 }
+
 //--------------------------------------------------
 // エネミーの設定
 //--------------------------------------------------
 void CStageImgui::EditEnemy()
 {
+		static int draw_lines = 3;
+		static int max_height_in_lines = 10;
+
+		CMap* map = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetMap();
+		ImGui::SetNextWindowSizeConstraints(ImVec2(0.0f, ImGui::GetTextLineHeightWithSpacing() * 1), ImVec2(FLT_MAX, ImGui::GetTextLineHeightWithSpacing() * max_height_in_lines));
+		// Demonstrate using ImGuiTableColumnFlags_AngledHeader flag to create angled headers
 	
+	
+		if (ImGui::TreeNode(u8"このマップで出るエネミー"))
+		{
+			const char* column_names[] = { "PopList","SKELTON", "TENGU", "TENGU_CHILD", "MONSTER", "SKY_MONSTER", "NURIKABE", "ONI_BIG", "ONI", "KARAKASA", "KAPPA", "GYUUKI", "FOX", "DULLAHAN", "GASYADOKURO","NINE_FOX" };
+			const int columns_count = IM_ARRAYSIZE(column_names);
+		
+			const int rows_count = 1;
+
+			static ImGuiTableFlags table_flags = ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_ScrollX | ImGuiTableFlags_ScrollY | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersInnerH | ImGuiTableFlags_Hideable | ImGuiTableFlags_Resizable | ImGuiTableFlags_Reorderable | ImGuiTableFlags_HighlightHoveredColumn;
+			static bool bools[columns_count * rows_count] = {}; // Dummy storage selection storage
+			static int frozen_cols = 1;
+			static int frozen_rows = 2;
+			
+			for (int i = 0; i < columns_count - 1; i++)
+			{
+				bools[i + 1] = map->GetEnemyPopList(i);
+			}
+
+			if (columns_count != m_list.size())
+			{
+				m_list.resize(columns_count);
+			}
+
+		
+			if (ImGui::BeginTable("table_angled_headers", columns_count, table_flags, ImVec2(0.0f, 17 * 12)))
+			{
+				ImGui::TableSetupColumn(column_names[0], ImGuiTableColumnFlags_NoHide | ImGuiTableColumnFlags_NoReorder);
+				for (int n = 1; n < columns_count; n++)
+					ImGui::TableSetupColumn(column_names[n], ImGuiTableColumnFlags_AngledHeader | ImGuiTableColumnFlags_WidthFixed);
+				ImGui::TableSetupScrollFreeze(frozen_cols, frozen_rows);
+
+				ImGui::TableAngledHeadersRow(); // Draw angled headers for all columns with the ImGuiTableColumnFlags_AngledHeader flag.
+				ImGui::TableHeadersRow();       // Draw remaining headers and allow access to context-menu and other functions.
+				for (int row = 0; row < rows_count; row++)
+				{
+					ImGui::PushID(row);
+					ImGui::TableNextRow();
+					ImGui::TableSetColumnIndex(0);
+					ImGui::AlignTextToFramePadding();
+					ImGui::Text(u8"POP%d", row);
+					for (int column = 1; column < columns_count; column++)
+						if (ImGui::TableSetColumnIndex(column))
+						{
+							ImGui::PushID(column);
+							ImGui::Checkbox("", &bools[row * columns_count + column]);
+							ImGui::PopID();
+						}
+					ImGui::PopID();
+				}
+				ImGui::EndTable();
+			}
+		
+			for (int i = 0; i < columns_count - 1; i++)
+			{
+				m_list[i] = bools[i + 1];
+			}
+			map->EnemyPopList(m_list);
+			ImGui::TreePop();
+		}
+	
+
 }
 
 //--------------------------------------------------
