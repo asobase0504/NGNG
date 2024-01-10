@@ -27,7 +27,6 @@ public:
 	{
 		int				CT;				// クールタイム
 		int				stock;			// ストック数
-		float			invincible;		// 無敵時間
 	};
 
 	struct SKILL_INFO
@@ -52,10 +51,8 @@ public:
 	ABILITY		GetAbility(std::string tag) { return m_dates[tag].ability; }
 	int			GetCT(std::string tag) { return m_dates[tag].baseInfo.CT; }
 	int			GetStack(std::string tag) { return m_dates[tag].baseInfo.stock; }
-	float		GetInvincible(std::string tag) { return m_dates[tag].baseInfo.invincible; }
 
 private:	// メンバ変数
-	CCollision *m_Collision;
 	std::unordered_map<std::string, SKILL_INFO> m_dates;
 };
 #endif

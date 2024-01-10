@@ -24,7 +24,7 @@
 #include "karakasa_skill.h"
 #include "monster_skill.h"
 #include "fox_skill.h"
-#include "gasyadokuro_summon_skill.h"
+#include "summon_skill.h"
 
 //==============================================================
 // 静的メンバー変数の宣言
@@ -88,7 +88,6 @@ void CSkillDataBase::Init()
 	info = &m_dates["YAMATO_SKILL_1"];
 	info->baseInfo.CT = 60;
 	info->baseInfo.stock = 1;
-	info->baseInfo.invincible = 0;
 	info->ability = CYamatoSkill_1::Create;
 	info->texKey = "SKILL_ICON_YAMATO1";
 	
@@ -96,7 +95,6 @@ void CSkillDataBase::Init()
 	info = &m_dates["YAMATO_SKILL_2"];
 	info->baseInfo.CT = 180;
 	info->baseInfo.stock = 3;
-	info->baseInfo.invincible = 0;
 	info->ability = CYamatoSkill_2::Create;
 	info->texKey = "SKILL_ICON_YAMATO2";
 	
@@ -104,7 +102,6 @@ void CSkillDataBase::Init()
 	info = &m_dates["YAMATO_SKILL_3"];
 	info->baseInfo.CT = 120;
 	info->baseInfo.stock = 1;
-	info->baseInfo.invincible = 0;
 	info->ability = CYamatoSkill_3::Create;
 	info->texKey = "SKILL_ICON_YAMATO3";
 	
@@ -112,7 +109,6 @@ void CSkillDataBase::Init()
 	info = &m_dates["YAMATO_SKILL_4"];
 	info->baseInfo.CT = 300;
 	info->baseInfo.stock = 1;
-	info->baseInfo.invincible = 0;
 	info->ability = CYamatoSkill_4::Create;
 	info->texKey = "SKILL_ICON_YAMATO4";
 	
@@ -120,7 +116,6 @@ void CSkillDataBase::Init()
 	info = &m_dates["YAMATO_SKILL_5"];
 	info->baseInfo.CT = 300;
 	info->baseInfo.stock = 1;
-	info->baseInfo.invincible = 0;
 	info->ability = CSkill5::Create;
 	info->texKey = "SKILL_ICON_YAMATO5";
 	
@@ -128,34 +123,36 @@ void CSkillDataBase::Init()
 	info = &m_dates["FOX_SKILL"];
 	info->baseInfo.CT = 50;
 	info->baseInfo.stock = 1;
-	info->baseInfo.invincible = 0;
 	info->ability = CGolemSkill_1::Create;
 
 	// 弾
 	info = &m_dates["GOLEM_SKILL_1"];
 	info->baseInfo.CT = 50;
 	info->baseInfo.stock = 1;
-	info->baseInfo.invincible = 0;
 	info->ability = CGolemSkill_1::Create;
 	
 	// 空中に飛んで突撃
 	info = &m_dates["KARAKASA_SKILL"];
 	info->baseInfo.CT = 500;
 	info->baseInfo.stock = 1;
-	info->baseInfo.invincible = 0;
 	info->ability = CKarakasaSkill::Create;
 
 	// 徐々に加速する突撃
 	info = &m_dates["MONSTER_SKILL"];
 	info->baseInfo.CT = 500;
 	info->baseInfo.stock = 1;
-	info->baseInfo.invincible = 0;
 	info->ability = CMonsterSkill::Create;
 
-	// 徐々に加速する突撃
-	info = &m_dates["GASYADOKURO_SUMMON_SKILL"];
+	// 骸骨を呼ぶスキル
+	info = &m_dates["SKELTON_SUMMON_SKILL"];
 	info->baseInfo.CT = 500;
 	info->baseInfo.stock = 1;
-	info->baseInfo.invincible = 0;
-	info->ability = CGasyadokuroSummonSkill::Create;
+	info->ability = CSkeltonSummonSkill::Create;
+
+	// 骸骨を呼ぶスキル
+	info = &m_dates["FOX_SUMMON_SKILL"];
+	info->baseInfo.CT = 500;
+	info->baseInfo.stock = 1;
+	info->ability = CFoxSummonSkill::Create;
+
 }

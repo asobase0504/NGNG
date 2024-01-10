@@ -9,7 +9,7 @@
 // include
 //==============================================================
 // skill
-#include "gasyadokuro_summon_skill.h"
+#include "summon_skill.h"
 #include "utility.h"
 #include "map.h"
 
@@ -18,7 +18,7 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CGasyadokuroSummonSkill::CGasyadokuroSummonSkill()
+CSummonSkill::CSummonSkill()
 {
 
 }
@@ -26,7 +26,7 @@ CGasyadokuroSummonSkill::CGasyadokuroSummonSkill()
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CGasyadokuroSummonSkill::~CGasyadokuroSummonSkill()
+CSummonSkill::~CSummonSkill()
 {
 
 }
@@ -34,7 +34,7 @@ CGasyadokuroSummonSkill::~CGasyadokuroSummonSkill()
 //--------------------------------------------------------------
 // スキルが始まるとき
 //--------------------------------------------------------------
-void CGasyadokuroSummonSkill::InitAbility()
+void CSummonSkill::InitAbility()
 {
 	m_Duration = 20;
 
@@ -46,26 +46,28 @@ void CGasyadokuroSummonSkill::InitAbility()
 		posSummon = posChara;
 		posSummon.x += FloatRandom(400.0f, -400.0f);
 		posSummon.z += FloatRandom(400.0f, -400.0f);
-		CMap::GetMap()->CreateEnemy(posSummon, CEnemyDataBase::EEnemyType::SKELTON);
+		CMap::GetMap()->CreateEnemy(posSummon, SummonType());
 	}
 }
 
-//--------------------------------------------------------------
-// 常に
-//--------------------------------------------------------------
-void CGasyadokuroSummonSkill::AllWayAbility()
+//==============================================================
+// 召喚スキル(キツネ)
+//==============================================================
+CFoxSummonSkill * CFoxSummonSkill::Create(CCharacter * chara)
 {
+	CFoxSummonSkill* pSkill = new CFoxSummonSkill;
+	pSkill->m_apChara = chara;
+	pSkill->Init();
+	return pSkill;
 }
 
-//--------------------------------------------------------------
-// スキル生成処理
-//--------------------------------------------------------------
-CGasyadokuroSummonSkill *CGasyadokuroSummonSkill::Create(CCharacter* chara)
+//==============================================================
+// 召喚スキル(骸骨)
+//==============================================================
+CSkeltonSummonSkill * CSkeltonSummonSkill::Create(CCharacter * chara)
 {
-	CGasyadokuroSummonSkill* pSkill = new CGasyadokuroSummonSkill;
+	CSkeltonSummonSkill* pSkill = new CSkeltonSummonSkill;
 	pSkill->m_apChara = chara;
-	pSkill->m_Name = "GASYADOKURO_SUMMON_SKILL";
 	pSkill->Init();
-
 	return pSkill;
 }
