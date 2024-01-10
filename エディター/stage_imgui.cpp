@@ -240,11 +240,19 @@ void CStageImgui::EditMesh(void)
 		if (ImGui::Button(u8"選択してる頂点に行く"))
 		{// ボタンが押された
 			D3DXVECTOR3 MeshSize = mesh->GetOneMeshSize();
-			D3DXVECTOR3 PlayerPos = D3DXVECTOR3(((MeshSize.x*point[0]) - MeshSize.x*(SizeX*0.50f)) - 100.0f, 3000, ((MeshSize.z*point[1]) - MeshSize.z*(SizeZ*0.50f)-100.0f));
+
+			D3DXVECTOR3 PlayerPos = D3DXVECTOR3(((MeshSize.x*point[0]) - MeshSize.x*(SizeX*0.50f)), List[point[1]][point[0]], ((MeshSize.z*point[1]) - MeshSize.z*(SizeZ*0.50f)));
 			CPlayerManager::GetInstance()->GetPlayer()->SetPos(PlayerPos);
-		
+			
 		}
-		
+		if (ImGui::Button(u8"重力を消す"))
+		{
+			CPlayerManager::GetInstance()->GetPlayer()->SetInertiaMoveLock(true);
+		}
+		if (ImGui::Button(u8"重力を付ける"))
+		{
+			CPlayerManager::GetInstance()->GetPlayer()->SetInertiaMoveLock(false);
+		}
 		mesh->SetY(List);
 		
 		//for (int i = 0; i < 1; i++)
@@ -284,7 +292,7 @@ void CStageImgui::EditMesh(void)
 		{
 			ListX = 0;
 		}
-		if (ListZ >= -1)
+		if (ListZ <= -1)
 		{
 			ListZ = 0;
 		}
