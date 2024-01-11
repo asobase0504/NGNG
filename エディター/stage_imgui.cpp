@@ -240,9 +240,19 @@ void CStageImgui::EditMesh(void)
 		if (ImGui::Button(u8"選択してる頂点に行く"))
 		{// ボタンが押された
 			D3DXVECTOR3 MeshSize = mesh->GetOneMeshSize();
-			CPlayerManager::GetInstance()->GetPlayer()->SetPos(D3DXVECTOR3((MeshSize.x*point[0]) - MeshSize.x*(SizeX*0.49f), 3000, (MeshSize.z*point[1])+ MeshSize.z*(SizeZ*0.49f)));
+
+			D3DXVECTOR3 PlayerPos = D3DXVECTOR3(((MeshSize.x*point[0]) - MeshSize.x*(SizeX*0.50f)), List[point[1]][point[0]], ((MeshSize.z*point[1]) - MeshSize.z*(SizeZ*0.50f)));
+			CPlayerManager::GetInstance()->GetPlayer()->SetPos(PlayerPos);
+			
 		}
-		
+		if (ImGui::Button(u8"重力を消す"))
+		{
+			CPlayerManager::GetInstance()->GetPlayer()->SetInertiaMoveLock(true);
+		}
+		if (ImGui::Button(u8"重力を付ける"))
+		{
+			CPlayerManager::GetInstance()->GetPlayer()->SetInertiaMoveLock(false);
+		}
 		mesh->SetY(List);
 		
 		//for (int i = 0; i < 1; i++)
@@ -257,6 +267,47 @@ void CStageImgui::EditMesh(void)
 		//	ImGui::SliderFloat(u8"触れてる頂点", &meshSizeFloatHave[i], -5000.0f, 5000.0f);
 		//	List[hoge][hoge2] = meshSizeFloatHave[i];
 		//}
+		D3DXVECTOR3 MeshSize = mesh->GetOneMeshSize();
+		D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
+		
+		PlayerPos.x += MeshSize.x*(SizeX*0.5f);
+		PlayerPos.z -= MeshSize.z*(SizeZ*0.5f);
+		int ListX = PlayerPos.x / MeshSize.x;
+		
+		int ListZ = PlayerPos.z / MeshSize.x;
+		if (ListZ <= -1)
+		{
+			ListZ *= -1;
+		}
+		if (ListX >= SizeX)
+		{
+			ListX = SizeX - 1;
+		}
+		if (ListZ >= SizeZ)
+		{
+			ListZ = SizeZ - 1;
+
+		}
+		if (ListX <= -1)
+		{
+			ListX = 0;
+		}
+		if (ListZ <= -1)
+		{
+			ListZ = 0;
+		}
+		if (ListZ >= -1|| ListX >= -1)
+		{
+			meshSizeFloatHave[0] = List[ListZ][ListX];
+			ImGui::Text(u8"POPX%d :Z%d", ListX, ListZ);
+			ImGui::SliderFloat(u8"触れてる頂点", &meshSizeFloatHave[0], -5000.0f, 5000.0f);
+			List[ListZ][ListX] = meshSizeFloatHave[0];
+		}
+		else
+		{
+			ImGui::Text(u8"頂点がマイナスになってしまいました", ListX, ListZ);
+		}
+	
 
 		mesh->SetY(List);	
 	}
