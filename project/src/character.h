@@ -20,6 +20,7 @@
 // 前方宣言
 //==============================================================
 class CCollisionCylinder;
+class CCollisionBox;
 class CSkill;
 class CAbnormal;
 class CSkinMesh;
@@ -215,6 +216,7 @@ protected:
 	CSkinMesh* m_skinModel;		// モデルのインスタンス
 	float m_destRot;
 	CCollisionCylinder*	m_collision;	// 当たり判定
+	CCollisionBox*	m_extrusion;	// 押し出し用
 	ERelation m_relation;
 
 	std::vector<CSkill*> m_skill;

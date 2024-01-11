@@ -30,6 +30,7 @@
 #include <thread>
 
 #include "damege_ui.h"
+#include "collision_box.h"
 
 //==============================================================
 // 定数宣言
@@ -40,7 +41,8 @@ const int CCharacter::MAX_NON_COMBAT_TIME(300);
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CCharacter::CCharacter(int nPriority) : m_haveItem{}
+CCharacter::CCharacter(int nPriority) : m_haveItem{},
+	m_extrusion(nullptr)
 {
 	if (CMap::GetMap() != nullptr)
 	{
@@ -138,6 +140,9 @@ HRESULT CCharacter::Init()
 	}
 
 	m_state = GROUND;
+
+	m_extrusion = CCollisionBox::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f));
+	m_extrusion->SetParent(&m_pos);
 
 	m_skinModel = CSkinMesh::Create();
 	return S_OK;
@@ -561,6 +566,21 @@ void CCharacter::Collision()
 			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
 			SetPos(extrusion);
 			isGround = true;
+		}
+	}
+
+	// 押し出し位置
+	for (CCharacter* chara : map->GetCharacterList())
+	{
+		if (chara == nullptr || m_collision == nullptr || chara->m_extrusion == nullptr)
+		{
+			continue;
+		}
+
+		if (m_collision->ToBox(chara->m_extrusion, true))
+		{// 押し出した位置
+			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+			SetPos(extrusion);
 		}
 	}
 
