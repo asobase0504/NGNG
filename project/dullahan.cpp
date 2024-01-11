@@ -54,7 +54,7 @@ HRESULT CDullahan::Init()
 
 	// SKILL�̍쐬
 	m_skill.push_back(CSkill::Create());
-	m_skill[0]->SetSkill("GOLEM_SKILL_1", this);
+	m_skill[0]->SetSkill("DUllAHAN_CHARGE_SKILL", this);
 	SetEndChildren(m_skill[0]);
 
 	return S_OK;

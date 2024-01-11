@@ -26,6 +26,8 @@
 #include "fox_skill.h"
 #include "summon_skill.h"
 #include "gasyadokuro_attack_skill.h"
+#include "nurikabe_skill.h"
+#include "dullahan_charge_skill.h"
 
 //==============================================================
 // 静的メンバー変数の宣言
@@ -156,10 +158,21 @@ void CSkillDataBase::Init()
 	info->baseInfo.stock = 1;
 	info->ability = CFoxSummonSkill::Create;
 
-	// 骸骨を呼ぶスキル
+	// がしゃどくろが腕を振り下ろすスキル
 	info = &m_dates["GASYADOKURO_ATTACK_SKILL"];
 	info->baseInfo.CT = 500;
 	info->baseInfo.stock = 1;
 	info->ability = CGasyadokuroAttackSkill::Create;
 
+	// バッタン攻撃スキル
+	info = &m_dates["NURIKABE_SKILL"];
+	info->baseInfo.CT = 500;
+	info->baseInfo.stock = 1;
+	info->ability = CNurikabeSkill::Create;
+
+	// デュラハン突進スキル
+	info = &m_dates["DUllAHAN_CHARGE_SKILL"];
+	info->baseInfo.CT = 500;
+	info->baseInfo.stock = 1;
+	info->ability = CDullahanChargeSkill::Create;
 }
