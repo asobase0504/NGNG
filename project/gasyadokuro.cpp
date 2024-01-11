@@ -54,8 +54,12 @@ HRESULT CGasyadokuro::Init()
 
 	// SKILLの作成
 	m_skill.push_back(CSkill::Create());
-	m_skill[0]->SetSkill("SKELTON_SUMMON_SKILL", this);
+	m_skill[0]->SetSkill("GASYADOKURO_ATTACK_SKILL", this);
 	SetEndChildren(m_skill[0]);
+
+	m_skill.push_back(CSkill::Create());
+	m_skill[1]->SetSkill("SKELTON_SUMMON_SKILL", this);
+	SetEndChildren(m_skill[1]);
 
 	return S_OK;
 }
@@ -73,19 +77,17 @@ void CGasyadokuro::Update()
 	D3DXVECTOR3 distancePos = (PlayerPos - pos);
 	float distance = D3DXVec3Length(&distancePos);
 
-	// カウント開始
-	AddAttackCnt(1);
-
-	// エネミーの距離が遠いとき
-	if (distance >= 150.0f)
+	if (distance <= 170.0f)
 	{
-		if (GetAttackCnt() >= 180)
-		{
-			// カウント開始
-			SetAttackCnt(0);
-			GetSkill()[0]->Use();
-		}
+		// 叩きつけ(左)
+		GetSkill()[0]->Use();
 	}
+	else
+	{
+		// どくろの召喚
+		GetSkill()[1]->Use();
+	}
+
 }
 
 //--------------------------------------------------------------

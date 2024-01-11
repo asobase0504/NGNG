@@ -25,6 +25,7 @@
 #include "monster_skill.h"
 #include "fox_skill.h"
 #include "summon_skill.h"
+#include "gasyadokuro_attack_skill.h"
 
 //==============================================================
 // 静的メンバー変数の宣言
@@ -154,5 +155,11 @@ void CSkillDataBase::Init()
 	info->baseInfo.CT = 500;
 	info->baseInfo.stock = 1;
 	info->ability = CFoxSummonSkill::Create;
+
+	// 骸骨を呼ぶスキル
+	info = &m_dates["GASYADOKURO_ATTACK_SKILL"];
+	info->baseInfo.CT = 500;
+	info->baseInfo.stock = 1;
+	info->ability = CGasyadokuroAttackSkill::Create;
 
 }
