@@ -60,12 +60,12 @@ bool CStatueCombat::Select(CCharacter * selectCharacter)
 		float randX = FloatRandom(1.5f, 0.5f);
 		float randZ = FloatRandom(1.5f, 0.5f);
 
-
 		CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
-		int exp = pDiff->GetEnemyLevel();
+		int level = pDiff->GetEnemyLevel();
 
-		CEnemy *enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), D3DXVECTOR3(50.0f, 50.0f, 50.0f), CEnemyManager::NONE, exp);
+		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), CEnemyDataBase::EEnemyType::DULLAHAN, level);
 		enemy->TakeItem(CItemDataBase::ITEM_ELITE);
+		enemy->SetIsElite();
 	}
 
 	m_collisionCylinder->Uninit();

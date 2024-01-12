@@ -25,7 +25,6 @@
 // コンストラクタ
 //--------------------------------------------------------------
 CGolemSkill_1::CGolemSkill_1() :
-	m_road(nullptr),
 	m_bullet(nullptr)
 {
 }
@@ -55,6 +54,7 @@ CGolemSkill_1 * CGolemSkill_1::Create(CCharacter * chara)
 //--------------------------------------------------------------
 void CGolemSkill_1::InitAbility()
 {
+	m_Duration = 400;
 	m_chargeTime = 0;
 	m_isCharge = true;
 
@@ -65,17 +65,6 @@ void CGolemSkill_1::InitAbility()
 	{
 		m_aimCharacter = inChara;
 	});
-
-	if (m_aimCharacter == nullptr)
-	{
-		return;
-	}
-
-	m_road = CRoad::Create(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-	m_road->SetShooter(m_apChara);
-	m_road->SetUse(true);
-	m_road->SetTarget(m_aimCharacter);
-	SetEndChildren(m_road);
 }
 
 //--------------------------------------------------------------
@@ -83,15 +72,13 @@ void CGolemSkill_1::InitAbility()
 //--------------------------------------------------------------
 void CGolemSkill_1::AllWayAbility()
 {
-	CSkillEntity::AllWayAbility();
-
 	if (m_aimCharacter == nullptr)
 	{
 		return;
 	}
 
 	m_chargeTime++;
-	if (m_isCharge && m_chargeTime >= 180)
+	if (m_isCharge && m_chargeTime >= 30)
 	{
 		m_isCharge = false;
 
@@ -100,9 +87,16 @@ void CGolemSkill_1::AllWayAbility()
 		m_bullet = CBullet::Create(pos, move * 0.01f, 10.0f);
 		SetEndChildren(m_bullet);
 
-		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 10.0f);
-		m_Collision->SetParent(&m_bullet->GetPos());
-		SetEndChildren(m_Collision);
+		// 当たり判定を取得
+		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 10.0f);
+		m_collision.push_back(collision);
+		collision->SetParent(&m_bullet->GetPos());
+		SetEndChildren(collision);
+	}
+
+	if (m_collision.size() <= 0 && !m_isCharge)
+	{
+		m_Duration = 0;
 	}
 }
 
@@ -111,15 +105,6 @@ void CGolemSkill_1::AllWayAbility()
 //--------------------------------------------------------------
 void CGolemSkill_1::HitAbility(CCharacter * Target)
 {
-	m_apChara->DealDamage(Target,0.25f);
-
-	CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData(CAbnormalDataBase::ABNORMAL_FIRE)->GetWhenAddFunc();
-	abnormalFunc(Target, CAbnormalDataBase::ABNORMAL_FIRE);
-
-	abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData(CAbnormalDataBase::ABNORMAL_POISON)->GetWhenAddFunc();
-	abnormalFunc(Target, CAbnormalDataBase::ABNORMAL_POISON);
-
-	abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData(CAbnormalDataBase::ABNORMAL_SLOW)->GetWhenAddFunc();
-	abnormalFunc(Target, CAbnormalDataBase::ABNORMAL_SLOW);
+	m_apChara->DealDamage(Target, 0.25f);
 	Uninit();
 }

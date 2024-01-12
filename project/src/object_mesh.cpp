@@ -27,7 +27,7 @@ const int CMesh::START_VERTICAL(15);
 // コンストラクタ
 //--------------------------------------------------------------
 CMesh::CMesh(CTaskGroup::EPriority nPriority) :
-	CObjectPolygon3D(CTaskGroup::EPriority::LEVEL_3D_2),
+	CObjectPolygon3D(CTaskGroup::EPriority::LEVEL_3D_1),
 	m_xsiz(0),			// X軸の面数
 	m_zsiz(0),			// Y軸の面数
 	m_vtxCountX(0),		// X軸の辺の頂点数
@@ -377,7 +377,7 @@ bool CMesh::CreateMesh(D3DXVECTOR3* pPos)
 
 void CMesh::SetY(std::vector<std::vector<float>> inY)
 {
-	SetVtxMeshSize(inY.size(), inY[0].size());	// サイズ決定
+	SetVtxMeshSize(inY[0].size(), inY.size());	// サイズ決定
 	SetVtxMeshLight();		// 法線設定
 
 	VERTEX_3D* pVtx = NULL;
@@ -391,8 +391,8 @@ void CMesh::SetY(std::vector<std::vector<float>> inY)
 		for (int j = 0; j < (int)inY[i].size(); j++)
 		{
 			// 座標の補正
-			int size = j + i * inY.size();
-			pVtx[size].pos.y += inY[i][j];
+			int size = j + i * (int)inY[i].size();
+			pVtx[size].pos.y += inY[i][j] + FloatRandom(-10.0f,10.0f);
 		}
 	}
 
@@ -400,7 +400,6 @@ void CMesh::SetY(std::vector<std::vector<float>> inY)
 	m_vtxBuff->Unlock();
 
 	SetVtxMeshLight();		// 法線設定
-
 }
 
 //--------------------------------------------------------------
@@ -429,8 +428,8 @@ void CMesh::SetVtxMeshSize(int sizeX,int sizeZ)
 
 	m_vtxCountX = sizeX;	// 頂点数
 	m_vtxCountZ = sizeZ;	// 頂点数
-	m_xsiz = sizeX - 1;				// 面の数
-	m_zsiz = sizeZ - 1;				// 面の数
+	m_xsiz = sizeX - 1;		// 面の数
+	m_zsiz = sizeZ - 1;		// 面の数
 
 	// 頂点数
 	m_vtx = m_vtxCountX * m_vtxCountZ;	// 頂点数を使ってるよ
@@ -482,8 +481,8 @@ void CMesh::SetVtxMeshSize(int sizeX,int sizeZ)
 		float posx = (float)((i % m_vtxCountX));
 		float posz = ((i / m_vtxCountX)) * -1.0f;
 
-		float texU = 1.0f / m_xsiz * (i % m_vtxCountX);
-		float texV = 1.0f / m_zsiz * (i / m_vtxCountZ);
+		float texU = (i % m_vtxCountX);
+		float texV = (i / m_vtxCountZ);
 
 		// メッシュを真ん中にする補正
 		//m_pos = (D3DXVECTOR3(-(posx - 1) * m_meshSize.x * 0.5f, 0.0f, -posz * m_meshSize.z * 0.5f)) + m_pos;
@@ -505,7 +504,7 @@ void CMesh::SetVtxMeshSize(int sizeX,int sizeZ)
 	m_vtxBuff->Unlock();
 
 	D3DXVECTOR3 pos = GetPos();
-	m_collisionMesh = CCollisionMesh::Create(m_polygonCount, m_vtxBuff, m_idxBuff, m_mtxWorld);
+	m_collisionMesh = CCollisionMesh::Create(m_polygonCount, m_vtxBuff, m_idxBuff, m_mtxWorld, m_vtxCountX, m_vtxCountZ);
 }
 
 //--------------------------------------------------------------

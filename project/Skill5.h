@@ -25,7 +25,7 @@ class CSkill5 : public CSkillEntity
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CSkill5(int nPriority = 3);
+	explicit CSkill5();
 	~CSkill5();
 
 	// 静的メンバ関数

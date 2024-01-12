@@ -20,6 +20,7 @@
 // 前方宣言
 //==============================================================
 class CCollisionCylinder;
+class CCollisionBox;
 class CSkill;
 class CAbnormal;
 class CSkinMesh;
@@ -81,8 +82,6 @@ public:
 	// 攻撃
 	void DealDamage(CCharacter* inChara, float SkillMul);
 	void TakeDamage(const int inDamage, CCharacter* inChara);
-	void Attack(CCharacter* pEnemy, float SkillMul);
-	void Damage(const int inDamage);
 	void AbDamage(const int inDamage);
 	int CalDamage(float SkillAtkMul);
 	void AddDamage(float inDamage) { m_addDamage = inDamage; }
@@ -112,12 +111,13 @@ public:
 	abnormal_count GetAbnormalCount() { return m_haveAbnormal; }		// 受けてる状態異常
 
 	// レベル
-	void SetLevel(int level) { m_level = level; }
-	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
-	void SetStun(bool isStun) { m_isStun = isStun; }
+	void SetLevel(int level);
 	void AddExp(int exp);
 	void AddLevel();
 	int GetLevel() { return m_level; }
+
+	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
+	void SetStun(bool isStun) { m_isStun = isStun; }
 
 	//==============================================================
 	// ゲッターとセッター
@@ -186,6 +186,7 @@ public:
 
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
+	void SetIsElite() { m_isElite = true; }
 
 	// テレポーターを起動したかどうか
 	bool GetIsTeleporter() { return m_isTeleporter; }
@@ -195,27 +196,39 @@ public:
 	void SetIsAtkCollision(bool is) { m_isAtkCollision = is; }
 	bool GetIsAtkCollision() { return m_isAtkCollision; }
 
+	// 向いている向きを変える方法
+	void SetToFaceRot(bool is) { m_isToFaceRot = is; RotateToFace(); }
+
+	// 今いる場所
+	STATE GetState() { return m_state; }
+
+protected:
+	virtual void RotateToFace();	// 向いている向きを回転させる
 private:
 	virtual void Move();	// 移動
 	void Abnormal();		// 状態異常
 	void Collision();		// 当たり判定
 
 protected:		// メンバ変数
-	CSkinMesh*		m_skinModel;			// モデルのインスタンス
-	CCollisionCylinder*	m_collision;			// 当たり判定
-	ERelation m_relation;
-
-	std::vector<CSkill*> m_skill;
 private:		// ステータス
 
 protected:
+	CSkinMesh* m_skinModel;		// モデルのインスタンス
+	float m_destRot;
+	CCollisionCylinder*	m_collision;	// 当たり判定
+	CCollisionBox*	m_extrusion;	// 押し出し用
+	ERelation m_relation;
+
+	std::vector<CSkill*> m_skill;
+
 	// 持っているアイテムの個数をそれぞれ管理
 	item_count m_haveItem;
 	// 持っている状態異常の個数をそれぞれ管理
 	abnormal_count m_haveAbnormal;
 
-	bool m_isMoveLock;		// 移動停止状態か否か。
-	bool m_isControl;		// コントロールを受け付けるか否か。
+	// 移動制限
+	bool m_isMoveLock;			// 移動停止状態か否か。
+	bool m_isControl;			// コントロールを受け付けるか否か。
 	bool m_isInertiaMoveLock;	// 慣性・重力停止状態か否か
 
 	bool m_isDied;			// 死亡状態か否か。
@@ -232,11 +245,13 @@ protected:
 
 	bool m_isHitDamage;			// 攻撃をうけたかどうか
 	bool m_isAtkCollision;		// 攻撃を受けなくなる
+	bool m_isToFaceRot;			// 向いている向きを変える方法
 
 	float m_addDamage;
 
 	STATE m_state;
 
+	// ステータス
 	CStatus<int> m_hp;							// 体力
 	CStatus<int> m_addHp;						// 追加体力
 	CStatus<int> m_addHpSubTime;				// 追加体力の減少量
@@ -256,8 +271,11 @@ protected:
 	CStatus<int> m_regenetion;					// 自動回復の値
 
 	int m_RegenetionCnt;
+
+	// レベル関係
 	int m_level;
 	float m_exp;
 	float m_reqExp;
+
 };
 #endif

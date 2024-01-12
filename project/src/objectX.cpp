@@ -78,9 +78,6 @@ void CObjectX::Draw()
 
 	extern LPD3DXEFFECT pEffect;		// シェーダー
 
-	// デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
-
 	if (pEffect == nullptr)
 	{
 		assert(false);
@@ -212,7 +209,7 @@ void CObjectX::Draw()
 	//マテリアルデータのポインタを取得する
 	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_buffMat->GetBufferPointer();
 
-	LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
+	static const LPDIRECT3DTEXTURE9 toonTexture = CTexture::GetInstance()->GetTexture("TOON");
 
 	for (int nCntMat = 0; nCntMat < (int)m_numMat; nCntMat++)
 	{
@@ -241,15 +238,15 @@ void CObjectX::Draw()
 			pEffect->SetVector(m_hvAmbient, &Ambient);
 		}
 
-		if (texture != nullptr)
+		if (toonTexture != nullptr)
 		{// テクスチャの適応
-			tex0 = texture;
+			tex0 = toonTexture;
 		}
 
 		// テクスチャの設定
 		pEffect->SetTexture(m_hTexture, tex0);
 		// 通常モデルの描画
-		pEffect->BeginPass(1);
+		pEffect->BeginPass(m_shaderIndex);
 		m_mesh->DrawSubset(nCntMat);	//モデルパーツの描画
 		pEffect->EndPass();
 
@@ -260,16 +257,6 @@ void CObjectX::Draw()
 	}
 
 	pEffect->End();
-}
-
-//--------------------------------------------------------------
-// 描画
-// Author : Yuda Kaito
-// 概要 : 描画を行う
-//--------------------------------------------------------------
-void CObjectX::DrawMaterial()
-{
-	extern LPD3DXEFFECT pEffect;		// シェーダー
 }
 
 //--------------------------------------------------------------

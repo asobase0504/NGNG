@@ -53,7 +53,7 @@ HRESULT CItemModel::Init(int inId)
 {
 	CSelectEntity::Init();
 	
-	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 1.0f, 1.0f);
+	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 1.5f, 1.5f);
 	D3DXVec3TransformCoord(&move, &move, &m_mtx);
 
 	SetMove(D3DXVECTOR3(move.x,move.y,-move.z));
@@ -66,6 +66,7 @@ HRESULT CItemModel::Init(int inId)
 	m_collisionCylinder->SetLength(20.0f);
 	m_collisionHit = CCollisionCylinder::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 20.0f,20.0f);
 	m_collisionHit->SetParent(&m_pos);
+	SetEndChildren(m_collisionHit);
 
 	m_ID = inId;
 
@@ -90,6 +91,7 @@ void CItemModel::Update()
 			{// ‰Ÿ‚µo‚µ‚½ˆÊ’u
 				D3DXVECTOR3 extrusion = m_collisionHit->GetPosWorld();
 				SetPos(extrusion);
+				AddPos(D3DXVECTOR3(0.0f,10.0f,0.0f));
 				isGround = true;
 			}
 		}
@@ -104,6 +106,13 @@ void CItemModel::Update()
 		{
 			AddMove(D3DXVECTOR3(0.0f, -0.1f, 0.0f));
 		}
+	}
+	else
+	{
+		static float add = 0.0f;
+		add += 0.0025f;
+		SetMove(D3DXVECTOR3(0.0f, sinf(add) * 0.5f, 0.0f));
+		AddRot(D3DXVECTOR3(0.0f, 0.01f, 0.0f));
 	}
 
 	CSelectEntity::Update();

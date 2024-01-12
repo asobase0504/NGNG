@@ -20,7 +20,7 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CSkill5::CSkill5(int nPriority)
+CSkill5::CSkill5()
 {
 
 }
@@ -38,15 +38,14 @@ CSkill5::~CSkill5()
 //--------------------------------------------------------------
 void CSkill5::InitAbility()
 {
-	// データベースから情報を取得する
-	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	if (m_apChara != nullptr)
 	{
-		m_Duration = pSkillData->GetDuration("YAMATO_SKILL_5");
+		m_Duration = 120;
 		// 当たり判定を取得
-		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("YAMATO_SKILL_5").x);
-		m_Collision->SetParent(&m_apChara->GetPos());
-		SetEndChildren(m_Collision);
+		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40);
+		m_collision.push_back(collision);
+		collision->SetParent(&m_apChara->GetPos());
+		SetEndChildren(collision);
 	}
 }
 

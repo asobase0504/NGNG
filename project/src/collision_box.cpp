@@ -1,6 +1,7 @@
 #include "collision_box.h"
 #include "collision_cylinder.h"
 #include "line.h"
+#include "utility.h"
 
 CCollisionBox::CCollisionBox()
 {
@@ -34,7 +35,80 @@ void CCollisionBox::Update()
 
 }
 
-CCollisionBox* CCollisionBox::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const D3DXVECTOR3& size, const D3DXMATRIX& mtx)
+bool CCollisionBox::ToCylinder(CCollisionCylinder * inCyinder)
+{
+	bool isLanding = false;
+
+	D3DXVECTOR3 boxPos = GetPosWorld();
+	D3DXVECTOR3 boxRot = GetRot();
+	D3DXVECTOR3 boxSize = GetSize();
+	D3DXMATRIX boxMtxWorld, mtxTrans, mtxRot;
+
+	D3DXMatrixIdentity(&boxMtxWorld);
+
+	// 向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, boxRot.y, boxRot.x, boxRot.z);
+	D3DXMatrixMultiply(&boxMtxWorld, &boxMtxWorld, &mtxRot);
+	// 位置を反映
+	D3DXMatrixTranslation(&mtxTrans, boxPos.x, boxPos.y, boxPos.z);
+	D3DXMatrixMultiply(&boxMtxWorld, &boxMtxWorld, &mtxTrans);
+
+	D3DXVECTOR3 cylinderPos = inCyinder->GetPosWorld();
+	D3DXVECTOR3 cylinderPosOld = inCyinder->GetPosOld();
+	float radius = inCyinder->GetLength();
+
+	float left = -boxSize.x;		// 左
+	float right = boxSize.x;		// 右
+	float top = boxSize.y;		// 上
+	float bottum = -boxSize.y;	// 下
+	float back = boxSize.z;		// 奥
+	float front = -boxSize.z;	// 前
+
+								// ４つの頂点
+	D3DXVECTOR3 pos[4];
+	pos[0] = D3DXVECTOR3(left - radius, 0.0f, back + radius);
+	pos[1] = D3DXVECTOR3(right + radius, 0.0f, back + radius);
+	pos[2] = D3DXVECTOR3(right + radius, 0.0f, front - radius);
+	pos[3] = D3DXVECTOR3(left - radius, 0.0f, front - radius);
+
+	D3DXVECTOR3 worldPos[4];
+	for (int nCnt = 0; nCnt < 4; nCnt++)
+	{
+		D3DXVec3TransformCoord(&worldPos[nCnt], &pos[nCnt], &boxMtxWorld);
+	}
+
+	D3DXVECTOR3 vecLine[4];
+	vecLine[0] = worldPos[1] - worldPos[0];
+	vecLine[1] = worldPos[2] - worldPos[1];
+	vecLine[2] = worldPos[3] - worldPos[2];
+	vecLine[3] = worldPos[0] - worldPos[3];
+
+	D3DXVECTOR3 vec[4];
+	vec[0] = cylinderPos - worldPos[0];
+	vec[1] = cylinderPos - worldPos[1];
+	vec[2] = cylinderPos - worldPos[2];
+	vec[3] = cylinderPos - worldPos[3];
+
+	float InOut[4];
+	InOut[0] = Vec2Cross(&vecLine[0], &vec[0]);
+	InOut[1] = Vec2Cross(&vecLine[1], &vec[1]);
+	InOut[2] = Vec2Cross(&vecLine[2], &vec[2]);
+	InOut[3] = Vec2Cross(&vecLine[3], &vec[3]);
+
+	// 押出位置
+	D3DXVECTOR3 extrusion(0.0f, 0.0f, 0.0f);
+
+	SetIsTop(false);
+	SetIsUnder(false);
+
+	if (InOut[0] < 0.0f && InOut[1] < 0.0f && InOut[2] < 0.0f && InOut[3] < 0.0f)
+	{
+		return true;
+	}
+	return false;
+}
+
+CCollisionBox* CCollisionBox::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const D3DXVECTOR3& size)
 {
 	CCollisionBox* collision = new CCollisionBox;
 
@@ -43,7 +117,6 @@ CCollisionBox* CCollisionBox::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& 
 	collision->Init();
 	collision->SetPos(pos);
 	collision->SetRot(rot);
-	collision->SetMtxWorld(mtx);
 	collision->SetSize(size);
 	collision->SetLine();
 

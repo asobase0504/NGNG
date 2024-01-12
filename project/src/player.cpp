@@ -40,7 +40,8 @@
 #include "hp_ui.h"
 #include "money_ui.h"
 #include "skill_ui.h"
-#include "player_abnormal_ui.h"
+#include "abnormal_2dui.h"
+#include "carrying_item_group_ui.h"
 
 /**/
 #include "procedure3D.h"
@@ -70,7 +71,7 @@ HRESULT CPlayer::Init()
 
 	m_isdash = false;
 	m_isUpdate = true;
-	m_isInertiaMoveLock = false;
+
 	// 初期化処理
 	CCharacter::Init();
 
@@ -91,7 +92,7 @@ HRESULT CPlayer::Init()
 	}
 
 	// モデルの読み込み
-	m_skinModel = CSkinMesh::Create("KENGOU");
+	m_skinModel->Load("KENGOU");
 
 	// 親子関係の構築
 	SetEndChildren(m_skinModel);
@@ -106,10 +107,14 @@ HRESULT CPlayer::Init()
 	// UI作成
 	CHPUI::Create(GetHp());
 	CMONEYUI::Create(GetMoney());
+
 	for (int i = 0; i < 4; i++)
 	{
-		CSkillUI::Create(D3DXVECTOR3(1000.0f + 55.0f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i));
+		CSkillUI::Create(D3DXVECTOR3(1000.0f + 57.5f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i));
 	}
+
+	m_carringitemGroupUI = new CCarryingItemGroupUI;
+	m_carringitemGroupUI->Init();
 
 	return S_OK;
 }
@@ -140,16 +145,17 @@ void CPlayer::Update()
 		return;
 	}
 
-	for (CPlayerAbnormalUI* ui : m_abnormalUI)
+	// 状態異常UI
+	for (CAbnormal2DUI* ui : m_abnormalUI)
 	{
 		if (m_haveAbnormal[ui->GetType()].s_stack <= 0)
 		{
 			ui->Uninit();
 		}
 	}
-	m_abnormalUI.remove_if([this](CPlayerAbnormalUI* ui) {return (m_haveAbnormal[ui->GetType()].s_stack <= 0); });
+	m_abnormalUI.remove_if([this](CAbnormal2DUI* ui) {return (m_haveAbnormal[ui->GetType()].s_stack <= 0); });
 	int cnt = 0;
-	for (CPlayerAbnormalUI* ui : m_abnormalUI)
+	for (CAbnormal2DUI* ui : m_abnormalUI)
 	{
 		ui->SetPos(D3DXVECTOR3(80.0f + cnt * 60.0f, SCREEN_HEIGHT - 120.0f, 0.0f));
 		cnt++;
@@ -187,8 +193,6 @@ void CPlayer::Update()
 		CResult::Create();
 	}
 
-	SetRot(D3DXVECTOR3(0.0f, ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot().y, 0.0f));
-
 	// 更新処理
 	CCharacter::Update();
 
@@ -217,32 +221,37 @@ void CPlayer::PAttack()
 {
 	bool isSuccess = false;
 
+	if (m_isControl)
+	{
+		return;
+	}
+
 	// 通常攻撃(左クリック)
 	if (m_controller->Skill_1())
 	{
 		// 発動時に生成
-		isSuccess = m_skill[0]->Skill();
+		isSuccess = m_skill[0]->Use();
 	}
 
 	// スキル1(右クリック)
 	if(m_controller->Skill_2())
 	{
 		// 発動時に生成
-		isSuccess = m_skill[2]->Skill();
+		isSuccess = m_skill[2]->Use();
 	}
 
 	// スキル2(シフト)
 	if (m_controller->Skill_3())
 	{
 		// 発動時に生成
-		isSuccess = m_skill[1]->Skill();
+		isSuccess = m_skill[1]->Use();
 	}
 
 	// スキル3(R)
 	if (m_controller->Skill_4())
 	{
 		// 発動時に生成
-		isSuccess = m_skill[3]->Skill();
+		isSuccess = m_skill[3]->Use();
 	}
 
 	if (isSuccess)
@@ -319,6 +328,11 @@ void CPlayer::Move()
 //--------------------------------------------------------------
 void CPlayer::Jump()
 {
+	if (m_isMoveLock || m_isControl)
+	{
+		return;
+	}
+
 	// ジャンプ
 	bool jump = m_controller->Jump();
 
@@ -343,6 +357,7 @@ void CPlayer::TakeItem(int id)
 	ui->Init();
 	ui->SetTakeItem((CItemDataBase::EItemType)id);
 
+	m_carringitemGroupUI->CreateCarryingItemUI((CItemDataBase::EItemType)id, &m_haveItem[id]);
 }
 
 //--------------------------------------------------------------
@@ -352,9 +367,9 @@ void CPlayer::AddAbnormalStack(const int id, const int cnt)
 {
 	if (GetAbnormalCount()[id].s_stack == 0)
 	{
-		m_abnormalUI.push_back(CPlayerAbnormalUI::Create(&m_haveAbnormal[id].s_stack, (CAbnormalDataBase::EAbnormalType)id));
+		m_abnormalUI.push_back(CAbnormal2DUI::Create(&m_haveAbnormal[id].s_stack, (CAbnormalDataBase::EAbnormalType)id));
 		int cnt = 0;
-		for (CPlayerAbnormalUI* ui : m_abnormalUI)
+		for (CAbnormal2DUI* ui : m_abnormalUI)
 		{
 			ui->SetPos(D3DXVECTOR3(80.0f + cnt * 60.0f, SCREEN_HEIGHT - 120.0f,0.0f));
 			cnt++;
@@ -391,7 +406,7 @@ void CPlayer::Select()
 
 		if (entity->GetCostUI() != nullptr)
 		{
-			entity->GetCostUI()->SetDisplay(300.0f > diff);
+			entity->GetCostUI()->SetDisplay(600.0f > diff);
 		}
 
 		if (nearLength > diff)
@@ -409,6 +424,21 @@ void CPlayer::Select()
 		{
 			nearEntity->Select(this);
 		}
+	}
+}
+
+//--------------------------------------------------------------
+// 向いている向きを回転させる
+//--------------------------------------------------------------
+void CPlayer::RotateToFace()
+{
+	if (m_isToFaceRot)
+	{
+		CCharacter::RotateToFace();
+	}
+	else
+	{
+		SetRot(D3DXVECTOR3(0.0f,((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot().y,0.0f));
 	}
 }
 

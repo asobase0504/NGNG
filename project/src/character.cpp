@@ -12,7 +12,6 @@
 #include "application.h"
 #include "objectX.h"
 #include "model_skin.h"
-#include "PlayerController.h"
 #include "collision_sphere.h"
 #include "road.h"
 #include "statue_manager.h"
@@ -31,6 +30,7 @@
 #include <thread>
 
 #include "damege_ui.h"
+#include "collision_box.h"
 
 //==============================================================
 // 定数宣言
@@ -41,7 +41,8 @@ const int CCharacter::MAX_NON_COMBAT_TIME(300);
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CCharacter::CCharacter(int nPriority) : m_haveItem{}
+CCharacter::CCharacter(int nPriority) : m_haveItem{},
+	m_extrusion(nullptr)
 {
 	if (CMap::GetMap() != nullptr)
 	{
@@ -77,6 +78,7 @@ HRESULT CCharacter::Init()
 	m_isControl = false;
 	m_isTeleporter = false;
 	m_isInertiaMoveLock = false;
+	m_isToFaceRot = true;
 	m_isHitDamage = false;
 
 	m_hp.Init(100);
@@ -91,8 +93,8 @@ HRESULT CCharacter::Init()
 	m_barrier.SetCurrent(100);
 	m_barrierRePopTime.Init(100);
 	m_barrierRePopTime.SetCurrent(100);
-	m_attack.Init(100);
-	m_attack.SetCurrent(100);
+	m_attack.Init(10);
+	m_attack.SetCurrent(10);
 	m_attackSpeed.Init(1.0f);
 	m_attackSpeed.SetCurrent(1.0f);
 	m_defense.Init(10);
@@ -101,8 +103,8 @@ HRESULT CCharacter::Init()
 	m_criticalRate.SetCurrent(0.0f);
 	m_criticalDamage.Init(2.0f);
 	m_criticalDamage.SetCurrent(2.0f);
-	m_movePower.Init(2.0f);
-	m_movePower.SetCurrent(2.0f);
+	m_movePower.Init(4.0f);
+	m_movePower.SetCurrent(4.0f);
 	m_dashPower.Init(1.55f);
 	m_dashPower.SetCurrent(1.55f);
 	m_jumpPower.Init();
@@ -111,13 +113,14 @@ HRESULT CCharacter::Init()
 	m_jumpCount.SetCurrent(0);
 	m_jumpCount.AttachMax();
 	m_money.Init();
-	m_money.SetCurrent(50);
+	m_money.SetCurrent(500000);
 	m_regenetionTime.Init(60);
 	m_regenetion.Init(1);
 	m_RegenetionCnt = 0;
 	m_exp = 0;
 	m_level = 1;
 	m_reqExp = m_level * 100;
+	m_destRot = 0.0f;
 
 	m_isStun = false;
 	m_isBlock = false;
@@ -139,6 +142,10 @@ HRESULT CCharacter::Init()
 
 	m_state = GROUND;
 
+	m_extrusion = CCollisionBox::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f));
+	m_extrusion->SetParent(&m_pos);
+
+	m_skinModel = CSkinMesh::Create();
 	return S_OK;
 }
 
@@ -152,6 +159,8 @@ void CCharacter::Update()
 
 	// 常に起動するアイテム
 	CItemManager::GetInstance()->AllWhenAllways(this, m_haveItem);
+
+	RotateToFace();
 
 	Collision();
 
@@ -264,7 +273,7 @@ void CCharacter::DealDamage(CCharacter* pEnemy, float SkillMul)
 {
 	m_nonCombat = false;
 
-	if (IsSuccessRate(m_criticalRate.GetMax()))
+	if (IsSuccessRate(/*m_criticalRate.GetMax()*/1.0f))
 	{// クリティカルかどうか
 		m_isCritical = true;
 		m_numCritical++;
@@ -326,9 +335,9 @@ void CCharacter::TakeDamage(const int inDamage, CCharacter* inChara)
 
 	// ダメージUI生成
 	D3DXVECTOR3 pos = m_pos;
-	pos.x += FloatRandom(20.0f, -20.0f);
-	pos.y += FloatRandom(40.0f, 0.0f);
-	pos.z += FloatRandom(20.0f, -20.0f);
+	pos.x += FloatRandom(m_size.x, -m_size.x);
+	pos.y += FloatRandom(m_size.y, 0.0f);
+	pos.z += FloatRandom(m_size.x, -m_size.x);
 	CDamegeUI::Create(pos,D3DXCOLOR(1.0f,1.0f,1.0f,1.0f),dmg);
 
 	// ダメージ計算
@@ -371,7 +380,7 @@ void CCharacter::AbDamage(const int inDamage)
 	pos.x += FloatRandom(20.0f, -20.0f);
 	pos.y += FloatRandom(40.0f, 0.0f);
 	pos.z += FloatRandom(20.0f, -20.0f);
-	CDamegeUI::Create(pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), dmg);
+	CDamegeUI::Create(pos, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), dmg);
 
 	hp->AddCurrent(-dmg);
 
@@ -381,7 +390,6 @@ void CCharacter::AbDamage(const int inDamage)
 	}
 }
 
-
 //--------------------------------------------------------------
 // ダメージ計算関数
 //--------------------------------------------------------------
@@ -389,7 +397,7 @@ int CCharacter::CalDamage(float SkillAtkMul)
 {// 攻撃力 * 
 
 	int CalDamage =
-		(int)(((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuffItem()) *
+		(int)(((m_attack.GetBase() + m_attack.GetAddItem() + m_attack.GetBuff()) *
 		(m_attack.GetMulBuff() * m_attack.GetMulItem() * SkillAtkMul)));
 
 	return CalDamage;
@@ -416,9 +424,9 @@ void CCharacter::Heal(int heal)
 
 	// ダメージUI生成
 	D3DXVECTOR3 pos = m_pos;
-	//pos.x += FloatRandom(20.0f, -20.0f);
-	//pos.y += FloatRandom(40.0f, 0.0f);
-	//pos.z += FloatRandom(20.0f, -20.0f);
+	pos.x += FloatRandom(20.0f, -20.0f);
+	pos.y += FloatRandom(40.0f, 0.0f);
+	pos.z += FloatRandom(20.0f, -20.0f);
 	CDamegeUI::Create(pos, D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f), HealHp);
 
 	m_hp.AddCurrent(HealHp);
@@ -542,32 +550,6 @@ void CCharacter::Collision()
 	CMap* map = CMap::GetMap();
 	D3DXVECTOR3 pos = GetPos();
 
-	// 選択できる物体との押し出し当たり判定
-	std::list<CSelectEntity*> list = map->GetSelectEntityList();
-	for (CSelectEntity* inSelectEntity : list)
-	{
-		CCollisionBox* collisionBox = inSelectEntity->GetCollisionBox();
-
-		if (collisionBox == nullptr)
-		{
-			continue;
-		}
-
-		if (!(m_collision->ToBox(collisionBox, true)))
-		{
-			continue;
-		}
-
-		if (m_collision->GetIsTop())
-		{
-			isGround = true;
-		}
-
-		D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
-		SetPos(extrusion);
-		SetMoveXZ(0.0f, 0.0f);
-	}
-
 	// マップモデル
 	for (int i = 0; i < map->GetNumModel(); i++)
 	{
@@ -593,6 +575,21 @@ void CCharacter::Collision()
 		}
 	}
 
+	// 押し出し位置
+	for (CCharacter* chara : map->GetCharacterList())
+	{
+		if (chara == nullptr || m_collision == nullptr || chara->m_extrusion == nullptr)
+		{
+			continue;
+		}
+
+		if (m_collision->ToBox(chara->m_extrusion, true))
+		{// 押し出した位置
+			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+			SetPos(extrusion);
+		}
+	}
+
 	static STATE state;
 	state = m_state;
 
@@ -610,6 +607,25 @@ void CCharacter::Collision()
 		SetMoveY(0.0f);
 		m_jumpCount.SetCurrent(0);
 	}
+}
+
+//--------------------------------------------------------------
+// 向いている向きを回転させる
+//--------------------------------------------------------------
+void CCharacter::RotateToFace()
+{
+	// Y軸向きを慣性で回転
+	D3DXVECTOR3 move = GetMove();
+	move.y = 0.0f;
+	if (D3DXVec3Length(&move) != 0.0f)
+	{
+		D3DXVec3Normalize(&move, &move);
+		m_destRot = atan2f(move.x, move.z);
+	}
+
+	float dest = m_destRot - m_rot.y;
+	dest *= 0.1f;
+	AddRot(D3DXVECTOR3(0.0f, dest, 0.0f));
 }
 
 //--------------------------------------------------------------
@@ -646,6 +662,21 @@ void CCharacter::AddLevel()
 
 	// 各種ステータスの調整
 	m_hp.AddMax(m_hp.GetBase() * (1.0f + (m_level * 0.1f)));
+	m_attack.AddBaseState(m_attack.GetBase() * (1.0f + (m_level * 0.1f)));
+	m_attackSpeed.AddBaseState(m_attackSpeed.GetBase() * (1.0f + (m_level * 0.1f)));
+	m_movePower.AddBaseState(m_movePower.GetBase() * (1.0f + (m_level * 0.01f)));
+}
+
+//-----------------------------------------
+// レベルの設定処理
+//-----------------------------------------
+void CCharacter::SetLevel(int level)
+{
+	m_level = level;
+
+	// 各種ステータスの調整
+	m_hp.AddMax(m_hp.GetBase() * (1.0f + (m_level * 0.1f)));
+	m_hp.SetCurrent(m_hp.GetMax());
 	m_attack.AddBaseState(m_attack.GetBase() * (1.0f + (m_level * 0.1f)));
 	m_attackSpeed.AddBaseState(m_attackSpeed.GetBase() * (1.0f + (m_level * 0.1f)));
 	m_movePower.AddBaseState(m_movePower.GetBase() * (1.0f + (m_level * 0.01f)));

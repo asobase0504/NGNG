@@ -20,10 +20,9 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CSkillEntity::CSkillEntity(int nPriority) : 
-	m_Collision(nullptr)
+CSkillEntity::CSkillEntity(int nPriority)
 {
-
+	m_collision.clear();
 }
 
 //--------------------------------------------------------------
@@ -39,12 +38,11 @@ CSkillEntity::~CSkillEntity()
 //--------------------------------------------------------------
 HRESULT CSkillEntity::Init()
 {
-	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	// 初期化
-	m_Duration = pSkillData->GetDuration(m_Name);
-	m_Interval = pSkillData->GetInterval(m_Name);
-	m_Invincible = 0;
+	m_Duration = 0;
+	m_Interval = 0;
 	m_isSkill = false;
+
 	InitAbility();
 
 	m_relation = m_apChara->GetRelation();
@@ -52,22 +50,10 @@ HRESULT CSkillEntity::Init()
 }
 
 //--------------------------------------------------------------
-// 終了処理
-//--------------------------------------------------------------
-void CSkillEntity::Uninit()
-{
-	// 破棄処理
-	CTask::Uninit();
-}
-
-//--------------------------------------------------------------
 // 更新処理
 //--------------------------------------------------------------
 void CSkillEntity::Update()
 {
-	// スキルデータのインスタンスを取得する
-	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
-
 	AllWayAbility();
 
 	if (m_Duration > 0)
@@ -75,84 +61,70 @@ void CSkillEntity::Update()
 		// スキル使用中にする
 		m_isSkill = true;
 
-		// 敵に当たっているか
-		bool collision = false;
-
 		// 効果時間の減少
 		m_Duration--;
-		// 次の当たり判定を出現させるまでの時間を減少
-		m_Interval--;
-		// 無敵時間の減少
-		m_Invincible--;
 
-		if (m_Invincible > 0)
-		{// 無敵状態にする(プレイヤーが見えなくなり、ダメージを受けなくなる)
-			m_apChara->SetDisplay(false);
-		}
-		else
-		{// もとに戻す
-			m_apChara->SetDisplay(true);
-		}
-
-		if (m_Interval <= 0 && m_Collision == nullptr)
-		{// インターバル0以下で当たり判定がなかったら当たり判定を生成する
-			m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize(m_Name).x);
-			m_Collision->SetParent(&m_apChara->GetPos());
-			SetEndChildren(m_Collision);
-		}
-
-		if (m_Collision == nullptr)
-		{
-			return;
-		}
-
-		// 自分とは違う関係を持ってるキャラクターに行う
-		CMap::GetMap()->DoDifferentRelation(m_relation, [this, &collision, &pSkillData](CCharacter* inChara)
-		{
-			if (inChara->GetIsAtkCollision())
-			{
-				return;
-			}
-
-			// 当たり判定
-			bool hit = m_Collision->ToSphere((CCollisionSphere*)inChara->GetCollision());
-			if (hit && m_Interval <= 0)
-			{// ダメージの判定
-				this->HitAbility(inChara);
-				collision = true;
-			}
-		});
-
-		if (collision && m_Collision != nullptr)
-		{// 敵に当たっていたら
-			m_Interval = pSkillData->GetInterval(m_Name);
-			m_Collision->Uninit();
-			m_Collision = nullptr;
-		}
+		// 当たり判定
+		Collision();
 	}
 	else if(m_Duration <= 0)
 	{// 効果時間が0以下になったら
 
 		UninitAbility();
-		if (m_apChara->GetControlLock())
-		{//	プレイヤーの操作が無効化されていたら有効化
-			m_apChara->SetControlLock(false);
-		}
-		if (m_apChara->GetMoveLock())
-		{//	プレイヤーの移動が無効化されていたら有効化
-			m_apChara->SetMoveLock(false);
-		}
 
-		if (m_Collision != nullptr)
+		for (CCollision* collision : m_collision)
 		{// 当たり判定が残っていたら
-			m_Collision->Uninit();
-			m_Collision = nullptr;
+			collision->Uninit();
 		}
+		m_collision.clear();
 		Uninit();
 	}
+}
 
-#ifdef _DEBUG
-	CDebugProc::Print("スキルの効果時間 : %f\n", m_Duration);
-	CDebugProc::Print("当たり判定のインターバル: %f\n", m_Interval);
-#endif // _DEBUG
+//--------------------------------------------------------------
+// 当たり判定
+//--------------------------------------------------------------
+void CSkillEntity::Collision()
+{
+	if (m_collision.size() <= 0)
+	{
+		return;
+	}
+
+	// 敵に当たっているか
+	bool isHit = false;
+	std::list<CCollision*> hitIndex;
+
+	// 自分とは違う関係を持ってるキャラクターに当たり判定を行なう
+	CMap::GetMap()->DoDifferentRelation(m_relation, [this, &isHit, &hitIndex](CCharacter* inChara)
+	{
+		// 攻撃を受ける状態か否か
+		if (inChara->GetIsAtkCollision())
+		{
+			return;
+		}
+
+		// 当たり判定
+		for (CCollision* collision : m_collision)
+		{
+			if (collision->ToCylinder(inChara->GetCollision()))
+			{
+				this->HitAbility(inChara);
+				hitIndex.push_back(collision);
+				isHit = true;
+				break;
+			}
+		}
+	});
+
+	if (isHit && m_collision.size() > 0)
+	{// 敵に当たっていたら
+		hitIndex.unique();
+
+		for (CCollision* index : hitIndex)
+		{
+			index->Uninit();
+			m_collision.remove(index);
+		}
+	}
 }

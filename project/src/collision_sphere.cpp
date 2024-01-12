@@ -1,5 +1,6 @@
 #include "collision_sphere.h"
 #include "collision_mesh.h"
+#include "collision_cylinder.h"
 #include "object_polygon3d.h"
 #include "utility.h"
 #include "line.h"
@@ -144,6 +145,91 @@ bool CCollisionSphere::ToSphere(CCollisionSphere* inSphere)
 	if (addLength >= differenceLength)
 	{
 		return true;
+	}
+
+	return false;
+}
+
+bool CCollisionSphere::ToCylinder(CCollisionCylinder * inCylinder)
+{
+	float lengthSphere = GetLength();
+	D3DXVECTOR3 posWorldSphere = GetPosWorld();
+
+	float cylinderLength = inCylinder->GetLength();
+	float cylinderHeigth = inCylinder->GetHeight();
+	D3DXVECTOR3 posWorldCylinder = inCylinder->GetPosWorld();
+
+	// 円柱の半径と球の半径を足した距離
+	float addLength = cylinderLength + lengthSphere;
+	float addHeight = cylinderHeigth + lengthSphere;
+
+	// 円柱の中心値から球の中心値までの距離
+	D3DXVECTOR3 differenceX = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	differenceX.x = posWorldCylinder.x - posWorldSphere.x;
+
+	D3DXVECTOR3 differenceY = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	differenceY.y = posWorldCylinder.y - posWorldSphere.y;
+
+	D3DXVECTOR3 differenceZ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	differenceZ.z = posWorldCylinder.z - posWorldSphere.z;
+
+	//x,y,zの絶対値の計算
+	float differenceLengthX = D3DXVec3Length(&differenceX);
+	float differenceLengthY = D3DXVec3Length(&differenceY);
+	float differenceLengthZ = D3DXVec3Length(&differenceZ);
+
+	if (differenceLengthX <= addLength
+		&& differenceLengthY < addHeight
+		&& differenceLengthZ <= addLength)
+	{
+		if (posWorldCylinder.z + (cylinderLength * 0.5f) > posWorldSphere.z - lengthSphere
+			&& posWorldCylinder.z - (cylinderLength * 0.5f) < posWorldSphere.z + lengthSphere
+			&& posWorldCylinder.y + (cylinderHeigth * 0.5f) > posWorldSphere.y - lengthSphere
+			&& posWorldCylinder.y - (cylinderHeigth * 0.5f) < posWorldSphere.y + lengthSphere)
+		{
+			if (posWorldCylinder.x + (cylinderLength * 0.5f) > posWorldSphere.x - lengthSphere)
+			{// 左の当たり判定
+				return true;
+			}
+
+			if (posWorldCylinder.x - (cylinderLength * 0.5f) < posWorldSphere.x + lengthSphere)
+			{// 右の当たり判定
+				return true;
+			}
+		}
+
+		if (posWorldCylinder.x + (cylinderLength * 0.5f) > posWorldSphere.x - lengthSphere
+			&& posWorldCylinder.x - (cylinderLength * 0.5f) < posWorldSphere.x + lengthSphere
+			&& posWorldCylinder.y + (cylinderHeigth * 0.5f) > posWorldSphere.y - lengthSphere
+			&& posWorldCylinder.y - (cylinderHeigth * 0.5f) < posWorldSphere.y + lengthSphere)
+		{
+			if (posWorldCylinder.z + (cylinderLength * 0.5f) > posWorldSphere.z - lengthSphere)
+			{// 前の当たり判定
+				return true;
+			}
+
+			if (posWorldCylinder.z - (cylinderLength * 0.5f) < posWorldSphere.z + lengthSphere)
+			{// 奥の当たり判定
+				return true;
+			}
+		}
+
+		if (posWorldCylinder.x + (cylinderLength * 0.5f) > posWorldSphere.x - lengthSphere
+			&& posWorldCylinder.x - (cylinderLength * 0.5f) < posWorldSphere.x + lengthSphere
+			&& posWorldCylinder.z + (cylinderLength * 0.5f) > posWorldSphere.z - lengthSphere
+			&& posWorldCylinder.z - (cylinderLength * 0.5f) < posWorldSphere.z + lengthSphere)
+		{
+			if (posWorldCylinder.y + (cylinderHeigth * 0.5f) < posWorldSphere.y - lengthSphere
+				)
+			{// 上の当たり判定
+				return true;
+			}
+
+			if (posWorldCylinder.y - (cylinderHeigth * 0.5f) > posWorldSphere.y + lengthSphere)
+			{// 下の当たり判定
+				return true;
+			}
+		}
 	}
 
 	return false;

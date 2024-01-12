@@ -48,39 +48,6 @@ CSkinMesh::CSkinMesh() :
 }
 
 //--------------------------------------------------------------
-// 初期化
-//--------------------------------------------------------------
-HRESULT CSkinMesh::Init(std::string pMeshPass)
-{
-	CObject::Init();
-	// デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
-	std::string TmpMeshPass;
-	TmpMeshPass = pMeshPass;
-
-	CSkinMeshGroup::SSkinMeshInfo info = CSkinMeshGroup::GetInstance()->GetSkinMeshInfo(pMeshPass);
-
-	m_pFrameRoot = info.frameRoot;
-	m_pAnimController = info.pAnimController;
-
-	//ボーン行列初期化
-	AllocateAllBoneMatrices(m_pFrameRoot, m_pFrameRoot);
-
-	m_pAnimSet.resize(m_pAnimController->GetNumAnimationSets());
-
-	//アニメーショントラックの取得
-	for (DWORD i = 0; i < m_pAnimController->GetNumAnimationSets(); i++)
-	{
-		//アニメーション取得
-		m_pAnimController->GetAnimationSet(i, &(m_pAnimSet[i]));
-	}
-
-	//すべてのフレーム参照変数の生成
-	CreateFrameArray(m_pFrameRoot);
-	return S_OK;
-}
-
-//--------------------------------------------------------------
 // 更新
 //--------------------------------------------------------------
 void CSkinMesh::Update()
@@ -136,7 +103,7 @@ void CSkinMesh::Draw()
 // Author : 唐﨑結斗
 // 概要 : モーションキャラクター3Dを生成する
 //--------------------------------------------------------------
-CSkinMesh * CSkinMesh::Create(std::string Name)
+CSkinMesh * CSkinMesh::Create(std::string str)
 {
 	// オブジェクトインスタンス
 	CSkinMesh *pSkinMesh = nullptr;
@@ -148,7 +115,12 @@ CSkinMesh * CSkinMesh::Create(std::string Name)
 	assert(pSkinMesh != nullptr);
 
 	// 数値の初期化
-	pSkinMesh->Init(Name);
+	pSkinMesh->Init();
+
+	if (str != "")
+	{
+		pSkinMesh->Load(str);
+	}
 
 	// インスタンスを返す
 	return pSkinMesh;
@@ -351,11 +323,13 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 	// ライトの方向をシェーダーに渡す
 	pEffect->SetVector(m_hvLightDir, &lightDir);
 
-
 	//ボーンテーブルからバッファの先頭アドレスを取得
 	pBoneCombination = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneBuffer->GetBufferPointer());
 	//dwPrevBoneIDにUINT_MAXの値(0xffffffff)を格納
 	dwPrevBoneID = UINT_MAX;
+
+	static const LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
+
 	//スキニング計算
 	for (i = 0; i < pMeshContainer->dwBoneNum; i++)
 	{
@@ -416,7 +390,6 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 			pEffect->SetVector(m_hvAmbient, &Ambient);
 		}
 
-		LPDIRECT3DTEXTURE9 texture = CTexture::GetInstance()->GetTexture("TOON");
 		if (texture != nullptr)
 		{// テクスチャの適応
 			tex0 = texture;
@@ -425,7 +398,7 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 		// テクスチャの設定
 		pEffect->SetTexture(m_hTexture, tex0);
 		// 通常モデルの描画
-		pEffect->BeginPass(1);
+		pEffect->BeginPass(m_shaderIndex);
 		pMeshContainer->MeshData.pMesh->DrawSubset(i);
 		pEffect->EndPass();
 
@@ -449,7 +422,7 @@ void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pF
 	/* pEffectに値が入ってる */
 
 	//スキンメッシュの描画
-	if (pMeshContainer->pSkinInfo == NULL)
+	if (pMeshContainer->pSkinInfo == nullptr)
 	{
 		//通常メッシュの場合
 		MessageBox(NULL, "スキンメッシュXファイルの描画に失敗しました。", NULL, MB_OK);
@@ -484,10 +457,13 @@ void CSkinMesh::RenderMeshContainer(MYMESHCONTAINER* pMeshContainer, MYFRAME* pF
 		//影響している行列の検索
 		for (k = 0; k < pMeshContainer->dwWeight; k++)
 		{
-			//iMatrixIndexに1度の呼び出しで描画出来る各ボーンを識別する値を格納
+			/*
+			iMatrixIndexに1度の呼び出しで描画出来る各ボーンを識別する値を格納
 			//( このBoneID配列の長さはメッシュの種類によって異なる
 			//( インデックスなしであれば　=　頂点ごとの重み であり
 			// インデックスありであれば　=　ボーン行列パレットのエントリ数)
+			*/
+
 			//現在のボーン(i番目)からみてk番目のボーンid
 			iMatrixIndex = pBoneCombination[i].BoneId[k];
 			//行列の情報があれば
@@ -536,6 +512,32 @@ void CSkinMesh::DrawFrame(LPD3DXFRAME pFrameBase)
 	{
 		DrawFrame(pFrame->pFrameFirstChild);
 	}
+}
+
+void CSkinMesh::Load(std::string pMeshPass)
+{
+	// デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
+
+	CSkinMeshGroup::SSkinMeshInfo info = CSkinMeshGroup::GetInstance()->GetSkinMeshInfo(pMeshPass);
+
+	m_pFrameRoot = info.frameRoot;
+	m_pAnimController = info.pAnimController;
+
+	//ボーン行列初期化
+	AllocateAllBoneMatrices(m_pFrameRoot, m_pFrameRoot);
+
+	m_pAnimSet.resize(m_pAnimController->GetNumAnimationSets());
+
+	//アニメーショントラックの取得
+	for (DWORD i = 0; i < m_pAnimController->GetNumAnimationSets(); i++)
+	{
+		//アニメーション取得
+		m_pAnimController->GetAnimationSet(i, &(m_pAnimSet[i]));
+	}
+
+	//すべてのフレーム参照変数の生成
+	CreateFrameArray(m_pFrameRoot);
 }
 
 //--------------------------------------------------------------

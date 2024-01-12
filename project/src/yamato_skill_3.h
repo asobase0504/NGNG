@@ -25,16 +25,18 @@ class CYamatoSkill_3 : public CSkillEntity
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CYamatoSkill_3(int nPriority = 3);
+	explicit CYamatoSkill_3();
 	~CYamatoSkill_3();
 
 	// 静的メンバ関数
 	static CYamatoSkill_3	*Create(CCharacter* chara);					// スキルの生成
 
-	void InitAbility() override;										// スキルが始まるとき
-	void HitAbility(CCharacter* Target) override;						// スキルが当たった時の効果
+	void InitAbility() override;					// スキルが始まるとき
+	void AllWayAbility() override;					// 持続中
+	void HitAbility(CCharacter* Target) override;	// スキルが当たった時の効果
+	void UninitAbility() override;					// 終了
 
 private:		// メンバ変数
-
+	int m_time;
 };
 #endif

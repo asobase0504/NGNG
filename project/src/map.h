@@ -12,6 +12,7 @@
 //==============================================================
 #include "task.h"
 #include "character.h"
+#include "enemy_data_base.h"
 
 //==============================================================
 // É}ÉNÉçêÈåæ
@@ -74,6 +75,8 @@ public:
 	void DoDifferentRelation(CCharacter::ERelation,std::function<void(CCharacter*)>);
 
 	std::string GetNextMapPath() { return m_nextMapPath; }
+
+	void CreateEnemy(D3DXVECTOR3, CEnemyDataBase::EEnemyType);
 private:
 	static CMap* m_map;
 

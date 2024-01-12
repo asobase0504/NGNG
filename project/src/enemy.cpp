@@ -57,11 +57,10 @@ HRESULT CEnemy::Init()
 
 	m_AttackCnt = 0;
 	// モデルの読み込み
-	m_skinModel = CSkinMesh::Create("SKE");
+	m_skinModel->Load("TENGU");
 	SetEndChildren(m_skinModel);
 
-	m_Activity = (CEnemyDataBase::GetInstance()->GetActivityFunc(CEnemyDataBase::EActivityPattern::PATTERN_GOLEM));
-
+	// HPUIの作成
 	m_pEHPUI = CEnemy_HPUI::Create(this);
 	SetEndChildren(m_pEHPUI);
 
@@ -69,11 +68,6 @@ HRESULT CEnemy::Init()
 	m_collision = CCollisionCylinder::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), 10.0f, 10.0f);
 	m_collision->SetParent(&m_pos);
 	SetEndChildren(m_collision);
-
-	// SKILLの作成
-	m_skill.push_back(CSkill::Create());
-	m_skill[0]->SetSkill("GOLEM_SKILL_1",this);
-	SetEndChildren(m_skill[0]);
 
 	m_dropMoney = 5;
 	return S_OK;
@@ -86,7 +80,6 @@ void CEnemy::Update()
 {
 	if (m_isDied)
 	{
-		Uninit();
 		return;
 	}
 
@@ -96,13 +89,10 @@ void CEnemy::Update()
 		return;
 	}
 
-	// 現在のactivityに設定する。
-	m_Activity(this);
-
-	CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
-	int exp = pDiff->GetLevel();
-
-	AddExp(exp);
+	if (!m_isMoveLock)
+	{
+		Move();
+	}
 
 	// 更新処理
 	CCharacter::Update();
@@ -119,39 +109,4 @@ void CEnemy::Died()
 {
 	CPlayerManager::GetInstance()->GetPlayer()->GetMoney()->AddCurrent(m_dropMoney);
 	CCharacter::Died();
-}
-
-//--------------------------------------------------------------
-// 生成
-//--------------------------------------------------------------
-void CEnemy::Move()
-{
-	// 移動量の取得
-	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	// 座標の取得
-	D3DXVECTOR3 pos = GetPos();
-
-	// プレイヤーの位置取得
-	D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
-
-	// 敵の追従
-	if (pos.x <= PlayerPos.x)
-	{
-		move.x += MAX_SPEED;
-	}
-	else
-	{
-		move.x -= MAX_SPEED;
-	}
-	if (pos.z <= PlayerPos.z)
-	{
-		move.z += MAX_SPEED;
-	}
-	else
-	{
-		move.z -= MAX_SPEED;
-	}
-
-	SetMoveXZ(move.x,move.z);
 }

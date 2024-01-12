@@ -44,8 +44,8 @@ HRESULT CMapModel::Init(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot, cons
 {
 	CObjectX::Init();
 
-	D3DXMATRIX mtx = GetMtxWorld();
-	m_collisionBox = CCollisionBox::Create(inPos, inRot, inSize, mtx);
+	m_collisionBox = CCollisionBox::Create(inPos, inRot, inSize);
+	m_collisionBox->SetMtxWorld(GetMtxWorld());
 	SetEndChildren(m_collisionBox);
 
 	return S_OK;
