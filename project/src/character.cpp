@@ -77,6 +77,7 @@ HRESULT CCharacter::Init()
 	m_isControl = false;
 	m_isTeleporter = false;
 	m_isInertiaMoveLock = false;
+	m_isHitDamage = false;
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(100);
@@ -299,6 +300,11 @@ void CCharacter::TakeDamage(const int inDamage, CCharacter* inChara)
 {
 	// ダメージを受けた処理
 	CItemManager::GetInstance()->AllWhenReceive(this, m_haveItem, inChara);
+
+	if (inChara)
+	{
+		m_isHitDamage = true;
+	}
 
 	int dmg = inDamage;
 

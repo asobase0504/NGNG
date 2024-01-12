@@ -230,6 +230,7 @@ protected:
 	bool m_isElite;			// エリート
 	bool m_isTeleporter;	// テレポーターを起動したかどうか
 
+	bool m_isHitDamage;			// 攻撃をうけたかどうか
 	bool m_isAtkCollision;		// 攻撃を受けなくなる
 
 	float m_addDamage;

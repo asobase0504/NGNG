@@ -20,6 +20,7 @@
 #include "yamato_skill_3.h"
 #include "yamato_skill_4.h"
 #include "Skill5.h"
+#include "skill6.h"
 #include "golem_skill_1.h"
 
 //==============================================================
@@ -84,9 +85,11 @@ void CSkillDataBase::Init()
 	m_dates["YAMATO_SKILL_2"].texKey = "SKILL_ICON_YAMATO2";
 	m_dates["YAMATO_SKILL_3"] = { 120,1,1,0,120,20,1.0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),CYamatoSkill_3::Create };
 	m_dates["YAMATO_SKILL_3"].texKey = "SKILL_ICON_YAMATO3";
-	m_dates["YAMATO_SKILL_4"] = { 300,1,1,0,120,20,1.0f,120.0f,D3DXVECTOR3(40.0f,40.0f,40.0f),CYamatoSkill_4::Create };
+	m_dates["YAMATO_SKILL_4"] = { 300,1,1,0,120,20,1.0f,120.0f,D3DXVECTOR3(60.0f,60.0f,60.0f),CYamatoSkill_4::Create };
 	m_dates["YAMATO_SKILL_4"].texKey = "SKILL_ICON_YAMATO4";
 	m_dates["YAMATO_SKILL_5"] = { 300,1,1,0,120,20,1.0f,120.0f,D3DXVECTOR3(40.0f,40.0f,40.0f),CSkill5::Create };
 	m_dates["YAMATO_SKILL_5"].texKey = "SKILL_ICON_YAMATO5";
+	m_dates["SKILL_6"] = { 300,1,1,0,120,20,1.0f,120.0f,D3DXVECTOR3(40.0f,40.0f,40.0f),CSkill6::Create };
+	m_dates["SKILL_6"].texKey = "SKILL_6";
 	m_dates["GOLEM_SKILL_1"] = { 50,1,1,0,600,0,0,0,D3DXVECTOR3(30.0f,30.0f,30.0f),CGolemSkill_1::Create };
 }

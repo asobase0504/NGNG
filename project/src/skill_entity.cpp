@@ -106,7 +106,7 @@ void CSkillEntity::Update()
 			return;
 		}
 
-		// 自分とは違う関係を持ってるキャラクターに行なう
+		// 自分とは違う関係を持ってるキャラクターに行う
 		CMap::GetMap()->DoDifferentRelation(m_relation, [this, &collision, &pSkillData](CCharacter* inChara)
 		{
 			if (inChara->GetIsAtkCollision())

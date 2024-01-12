@@ -465,10 +465,13 @@
       <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
     </ClCompile>
     <ClCompile Include="Skill5.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\difficult.cpp">
-      <Filter>ソース ファイル\Mode\Game\map</Filter>
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="skill6.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -812,11 +815,10 @@
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
     </ClInclude>
-    <ClInclude Include="Skill5.h">
-      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
-    </ClInclude>
-    <ClInclude Include="src\difficult.h">
-      <Filter>ソース ファイル\Mode\Game\map</Filter>
+    <ClInclude Include="Skill5.h" />
+    <ClInclude Include="src\difficult.h" />
+    <ClInclude Include="skill6.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

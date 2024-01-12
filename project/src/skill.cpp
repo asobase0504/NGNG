@@ -90,7 +90,6 @@ bool CSkill::Skill()
 	}
 
 	// クールタイムがなければ当たり判定を生成する
-
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	CSkillEntity* entity = pSkillData->GetAbility(m_Name)(m_apChara);
 
