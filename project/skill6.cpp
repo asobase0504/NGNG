@@ -45,7 +45,7 @@ void CSkill6::InitAbility()
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	if (m_apChara != nullptr)
 	{
-		m_Duration = pSkillData->GetDuration("SKILL_6");
+		m_Duration = 120;
 	}
 }
 
@@ -60,8 +60,9 @@ void CSkill6::AllWayAbility()
 	if (m_Duration > 0)
 	{// 効果中に攻撃されたらカウンターする
 		// 当たり判定を取得
-		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("SKILL_6").x);
-		m_Collision->SetParent(&m_apChara->GetPos());
+		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40.0f);
+		m_collision.push_back(collision);
+		collision->SetParent(&m_apChara->GetPos());
 	}
 }
 
