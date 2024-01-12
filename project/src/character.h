@@ -243,6 +243,7 @@ protected:
 	bool m_isElite;			// エリート
 	bool m_isTeleporter;	// テレポーターを起動したかどうか
 
+	bool m_isHitDamage;			// 攻撃をうけたかどうか
 	bool m_isAtkCollision;		// 攻撃を受けなくなる
 	bool m_isToFaceRot;			// 向いている向きを変える方法
 

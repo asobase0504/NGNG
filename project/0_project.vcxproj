@@ -48,6 +48,7 @@
     <ClCompile Include="oni_child.cpp" />
     <ClCompile Include="skelton.cpp" />
     <ClCompile Include="Skill5.cpp" />
+    <ClCompile Include="skill6.cpp" />
     <ClCompile Include="src\arrow.cpp" />
     <ClCompile Include="src\carrying_item_group_ui.cpp" />
     <ClCompile Include="src\client.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="oni_child.h" />
     <ClInclude Include="skelton.h" />
     <ClInclude Include="Skill5.h" />
+    <ClInclude Include="skill6.h" />
     <ClInclude Include="src\arrow.h" />
     <ClInclude Include="src\carrying_item_group_ui.h" />
     <ClInclude Include="src\character_select.h" />

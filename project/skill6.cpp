@@ -1,6 +1,6 @@
 //**************************************************************
 //
-// スキル(マーセナリーのR)
+// スキル(カウンター)
 // Author : 髙野馨將
 //
 //**************************************************************
@@ -15,7 +15,7 @@
 #include "enemy_manager.h"
 #include "enemy.h"
 #include "collision_sphere.h"
-#include "yamato_skill_4.h"
+#include "skill6.h"
 #include "game.h"
 #include "application.h"
 #include "camera_game.h"
@@ -23,7 +23,7 @@
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
-CYamatoSkill_4::CYamatoSkill_4()
+CSkill6::CSkill6(int nPriority)
 {
 
 }
@@ -31,7 +31,7 @@ CYamatoSkill_4::CYamatoSkill_4()
 //--------------------------------------------------------------
 // デストラクタ
 //--------------------------------------------------------------
-CYamatoSkill_4::~CYamatoSkill_4()
+CSkill6::~CSkill6()
 {
 
 }
@@ -39,88 +39,71 @@ CYamatoSkill_4::~CYamatoSkill_4()
 //--------------------------------------------------------------
 // スキルが始まるとき
 //--------------------------------------------------------------
-void CYamatoSkill_4::InitAbility()
+void CSkill6::InitAbility()
 {
 	// データベースから情報を取得する
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	if (m_apChara != nullptr)
 	{
-		m_Duration = 120;
-		m_Time = 0;
-
-		// 当たり判定を取得
-		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40);
-		m_collision.push_back(collision);
-		collision->SetParent(&m_apChara->GetPos());
-		SetEndChildren(collision);
-
-		// カメラの方向に合わせる
-		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
-		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
-		D3DXVec3Normalize(&vecNor, &vecNor);
-		vecNor *= 15.0f;			//移動させたい値を入れる
-		m_apChara->SetMove(vecNor);
-		// プレイヤーの操作を無効化
-		m_apChara->SetControlLock(true);
-		// 重力・慣性を切る
-		m_apChara->SetInertiaMoveLock(true);
-		// 描画を切る
-		m_apChara->SetDisplay(false);
+		m_Duration = pSkillData->GetDuration("SKILL_6");
 	}
 }
 
 //--------------------------------------------------------------
 // 持続する効果
 //--------------------------------------------------------------
-void CYamatoSkill_4::AllWayAbility()
+void CSkill6::AllWayAbility()
 {
-	// 時間の加算
-	m_Time++;
-	if (m_Time > 20)
-	{
-		// プレイヤーの位置を固定
-		m_apChara->SetMoveLock(true);
-		m_apChara->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	// データベースから情報を取得する
+	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
+
+	if (m_Duration > 0)
+	{// 効果中に攻撃されたらカウンターする
+		// 当たり判定を取得
+		m_Collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), pSkillData->GetSize("SKILL_6").x);
+		m_Collision->SetParent(&m_apChara->GetPos());
 	}
 }
 
 //--------------------------------------------------------------
 // 終了処理
 //--------------------------------------------------------------
-void CYamatoSkill_4::UninitAbility()
+void CSkill6::UninitAbility()
 {
-	m_apChara->SetDisplay(true);
-
-	// 操作の有効化
-	m_apChara->SetControlLock(false);
-	// 移動の有効化
-	m_apChara->SetMoveLock(false);
-	// 慣性・重力の有効化
-	m_apChara->SetInertiaMoveLock(false);
+	if (m_apChara->GetControlLock())
+	{//	プレイヤーの操作が無効化されていたら有効化
+		m_apChara->SetControlLock(false);
+	}
+	if (m_apChara->GetMoveLock())
+	{//	プレイヤーの移動が無効化されていたら有効化
+		m_apChara->SetMoveLock(false);
+	}
+	if (m_apChara->GetInertiaMoveLock())
+	{//	慣性・重力が無効化されていたら有効化
+		m_apChara->SetInertiaMoveLock(false);
+	}
 }
 
 //--------------------------------------------------------------
 // スキルが当たった時の効果
 //--------------------------------------------------------------
-void CYamatoSkill_4::HitAbility(CCharacter * Target)
+void CSkill6::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
 	Target->TakeDamage(50, Target);
-	
-	m_apChara->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 }
 
 //--------------------------------------------------------------
 // スキル生成処理
 //--------------------------------------------------------------
-CYamatoSkill_4 *CYamatoSkill_4::Create(CCharacter* chara)
+CSkill6 *CSkill6::Create(CCharacter* chara)
 {
 	// 生成処理
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 
-	CYamatoSkill_4* pSkill = new CYamatoSkill_4;
+	CSkill6* pSkill = new CSkill6;
 	pSkill->m_apChara = chara;
-	pSkill->m_Name = "YAMATO_SKILL_4";
+	pSkill->m_Name = "SKILL_6"; 
 	pSkill->Init();
 
 	return pSkill;

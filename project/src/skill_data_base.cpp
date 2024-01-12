@@ -20,6 +20,7 @@
 #include "yamato_skill_3.h"
 #include "yamato_skill_4.h"
 #include "Skill5.h"
+#include "skill6.h"
 #include "golem_skill_1.h"
 #include "karakasa_skill.h"
 #include "monster_skill.h"
@@ -175,4 +176,11 @@ void CSkillDataBase::Init()
 	info->baseInfo.CT = 500;
 	info->baseInfo.stock = 1;
 	info->ability = CDullahanChargeSkill::Create;
+
+	// カウンター
+	info = &m_dates["SKILL_6"];
+	info->baseInfo.CT = 300;
+	info->baseInfo.stock = 1;
+	info->ability = CSkill6::Create;
+
 }
