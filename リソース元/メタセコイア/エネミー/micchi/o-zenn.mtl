@@ -1,0 +1,156 @@
+newmtl o_zenn:CowboyBoot_blinn1SG1
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:HumanBody_blinn1SG
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:LongSleeveButtonDown_blinn1SG
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:LongSleeveButtonDown_blinn1SG1
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:Shorts_blinn1SG
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:blinn1SG
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:lambert2SG
+illum 4
+Kd 0.34 0.33 0.71
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl o_zenn:lambert3SG
+illum 4
+Kd 0.02 0.02 0.14
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl o_zenn:lambert4SG
+illum 4
+Kd 0.05 0.05 0.17
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl o_zenn:lambert5SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl o_zenn:lambert6SG
+illum 4
+Kd 0.62 0.65 0.93
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl o_zenn:pasted__CowboyBoot_blinn1SG1
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:pasted__CowboyBoot_blinn1SG2
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:pasted__HumanBody_blinn1SG
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:pasted__LongSleeveButtonDown_blinn1SG
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:pasted__LongSleeveButtonDown_blinn1SG1
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:pasted__LongSleeveButtonDown_blinn1SG2
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:pasted__Shorts_blinn1SG
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:pasted__blinn1SG
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:pasted__blinn1SG1
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:pasted__pasted__CowboyBoot_blinn1SG1
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:pasted__pasted__LongSleeveButtonDown_blinn1SG
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl o_zenn:pasted__pasted__blinn1SG
+illum 4
+Kd 0.92 0.68 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
