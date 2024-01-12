@@ -59,6 +59,11 @@ void CKarakasaSkill::InitAbility()
 //--------------------------------------------------------------
 void CKarakasaSkill::AllWayAbility()
 {
+	if (m_aimCharacter == nullptr)
+	{
+		return;
+	}
+
 	m_time++;
 
 	if (m_time == 10)

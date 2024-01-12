@@ -141,7 +141,7 @@ HRESULT CCharacter::Init()
 
 	m_state = GROUND;
 
-	m_extrusion = CCollisionBox::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f));
+	m_extrusion = CCollisionBox::Create(D3DXVECTOR3(0.0f, 25.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f));
 	m_extrusion->SetParent(&m_pos);
 
 	m_skinModel = CSkinMesh::Create();
