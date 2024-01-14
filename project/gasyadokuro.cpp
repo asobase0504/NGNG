@@ -10,6 +10,7 @@
 //==============================================================
 #include "gasyadokuro.h"
 #include "collision_cylinder.h"
+#include "collision_box.h"
 #include "model_skin.h"
 #include "skill.h"
 #include "player_manager.h"
@@ -41,8 +42,12 @@ HRESULT CGasyadokuro::Init()
 	m_size = D3DXVECTOR3(50.0f, 50.0f, 50.0f);
 
 	// 当たり判定
-	m_collision->SetHeight(250.0f);
-	m_collision->SetLength(30.0f);
+	m_collision->SetHeight(280.0f);
+	m_collision->SetLength(100.0f);
+
+	// 大きさ
+	m_extrusion->SetSize(D3DXVECTOR3(40.0f, 90.0f, 40.0f));
+	m_extrusion->SetPos(D3DXVECTOR3(0.0f, 70.0f, 0.0f));
 
 	// ステータス
 	m_attack.SetCurrent(1);
@@ -50,7 +55,6 @@ HRESULT CGasyadokuro::Init()
 	m_hp.AddMax(100);
 	m_movePower.Init(1.0f);
 	m_movePower.SetCurrent(1.0f);
-
 
 	// SKILLの作成
 	m_skill.push_back(CSkill::Create());

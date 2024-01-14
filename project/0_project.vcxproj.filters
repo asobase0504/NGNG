@@ -533,17 +533,41 @@
     <ClCompile Include="monster_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="Skill5.cpp">
-      <Filter>ソース ファイル\Mode\Game\character\skill</Filter>
-    </ClCompile>
     <ClCompile Include="dullahan_charge_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-	    <ClCompile Include="src\difficult.cpp">
+    <ClCompile Include="src\difficult.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="skill6.cpp">
-      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="yamato_skill_4.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill5.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="summon_skill.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yamato_skill_1.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yamato_skill_2.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yamato_skill_3.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="gyuuki_stamp_skill.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="gasyadokuro_attack_skill.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="nurikabe_skill.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -988,10 +1012,13 @@
     <ClInclude Include="dullahan_charge_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-	    <ClInclude Include="Skill5.h" />
+    <ClInclude Include="Skill5.h" />
     <ClInclude Include="src\difficult.h" />
     <ClInclude Include="skill6.h">
-      <Filter>ソース ファイル\Mode\01_Game\character\02_skill</Filter>
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClInclude>
+    <ClInclude Include="gyuuki_stamp_skill.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -52,18 +52,21 @@ HRESULT CStatueCombat::Init()
 //--------------------------------------------------------------
 bool CStatueCombat::Select(CCharacter * selectCharacter)
 {
+	using enemyType = CEnemyDataBase::EEnemyType;
+
 	D3DXVECTOR3 pos = GetPos();
 
-	for (int nCnt = 0; nCnt < 4; nCnt++)
+	CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
+	int level = pDiff->GetEnemyLevel();
+
+	for (int nCnt = 0; nCnt < 1; nCnt++)
 	{
 		// “G‚Ì¶¬
-		float randX = FloatRandom(1.5f, 0.5f);
-		float randZ = FloatRandom(1.5f, 0.5f);
+		float randX = FloatRandom(300.0f, -300.0f);
+		float randZ = FloatRandom(300.0f, -300.0f);
 
-		CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
-		int level = pDiff->GetEnemyLevel();
-
-		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), CEnemyDataBase::EEnemyType::DULLAHAN, level);
+		enemyType enemyType = enemyType::GYUUKI;
+		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x + randX, pos.y, pos.z + randZ), enemyType, level);
 		enemy->TakeItem(CItemDataBase::ITEM_ELITE);
 		enemy->SetIsElite();
 	}

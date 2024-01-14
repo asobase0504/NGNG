@@ -29,6 +29,7 @@
 #include "gasyadokuro_attack_skill.h"
 #include "nurikabe_skill.h"
 #include "dullahan_charge_skill.h"
+#include "gyuuki_stamp_skill.h"
 
 //==============================================================
 // 静的メンバー変数の宣言
@@ -182,5 +183,11 @@ void CSkillDataBase::Init()
 	info->baseInfo.CT = 300;
 	info->baseInfo.stock = 1;
 	info->ability = CSkill6::Create;
+
+	// 牛鬼スタンプ攻撃
+	info = &m_dates["GYUUKI_STAMP_SKILL"];
+	info->baseInfo.CT = 300;
+	info->baseInfo.stock = 1;
+	info->ability = CGyuukiStampSkill::Create;
 
 }
