@@ -305,13 +305,13 @@
     <ClCompile Include="src\road.cpp">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClCompile>
-    <ClCompile Include="abnormal_data_base.cpp">
+    <ClCompile Include="src\abnormal_data_base.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\03_abnormality</Filter>
     </ClCompile>
-    <ClCompile Include="abnormal.cpp">
+    <ClCompile Include="src\abnormal.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\03_abnormality</Filter>
     </ClCompile>
-    <ClCompile Include="bullet.cpp">
+    <ClCompile Include="src\bullet.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\bace</Filter>
     </ClCompile>
     <ClCompile Include="src\enemy.cpp">
@@ -341,7 +341,7 @@
     <ClCompile Include="src\gold_nugget.cpp">
       <Filter>ソース ファイル\Mode\01_Game\Item\item_object</Filter>
     </ClCompile>
-    <ClCompile Include="connect.cpp">
+    <ClCompile Include="src\connect.cpp">
       <Filter>ソース ファイル\Server</Filter>
     </ClCompile>
     <ClCompile Include="src\tcp_client.cpp">
@@ -368,7 +368,7 @@
     <ClCompile Include="src\skill_ui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClCompile>
-    <ClCompile Include="enemy_hp_ui.cpp">
+    <ClCompile Include="src\enemy_hp_ui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\3D</Filter>
     </ClCompile>
     <ClCompile Include="src\hp_ui.cpp">
@@ -419,7 +419,7 @@
     <ClCompile Include="src\procedure3D.cpp">
       <Filter>ソース ファイル\00_Main\00_Object\number</Filter>
     </ClCompile>
-    <ClCompile Include="damege_ui.cpp">
+    <ClCompile Include="src\damege_ui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\3D</Filter>
     </ClCompile>
     <ClCompile Include="src\select_entity.cpp">
@@ -452,13 +452,13 @@
     <ClCompile Include="src\PlayerController.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
     </ClCompile>
-    <ClCompile Include="carrying_item_ui.cpp">
+    <ClCompile Include="src\carrying_item_ui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClCompile>
-    <ClCompile Include="timer.cpp">
+    <ClCompile Include="src\timer.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClCompile>
-    <ClCompile Include="abnormal_2dui.cpp">
+    <ClCompile Include="src\abnormal_2dui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClCompile>
     <ClCompile Include="src\difficult.cpp">
@@ -476,79 +476,79 @@
     <ClCompile Include="src\carrying_item_group_ui.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClCompile>
-    <ClCompile Include="dullahan.cpp">
+    <ClCompile Include="src\dullahan.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="fox.cpp">
+    <ClCompile Include="src\fox.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="gasyadokuro.cpp">
+    <ClCompile Include="src\gasyadokuro.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="gyuuki.cpp">
+    <ClCompile Include="src\gyuuki.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="kappa.cpp">
+    <ClCompile Include="src\kappa.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="karakasa.cpp">
+    <ClCompile Include="src\karakasa.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="nine_fox.cpp">
+    <ClCompile Include="src\nine_fox.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="nurikabe.cpp">
+    <ClCompile Include="src\nurikabe.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="oni.cpp">
+    <ClCompile Include="src\oni.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="oni_child.cpp">
+    <ClCompile Include="src\oni_child.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="skelton.cpp">
+    <ClCompile Include="src\skelton.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="tengu.cpp">
+    <ClCompile Include="src\tengu.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="tengu_child.cpp">
+    <ClCompile Include="src\tengu_child.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="monster_sky.cpp">
+    <ClCompile Include="src\monster_sky.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="monster.cpp">
+    <ClCompile Include="src\monster.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClCompile>
-    <ClCompile Include="fox_skill.cpp">
+    <ClCompile Include="src\fox_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="golem_skill_1.cpp">
+    <ClCompile Include="src\golem_skill_1.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="karakasa_skill.cpp">
+    <ClCompile Include="src\karakasa_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="monster_skill.cpp">
+    <ClCompile Include="src\monster_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="dullahan_charge_skill.cpp">
+    <ClCompile Include="src\dullahan_charge_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
     <ClCompile Include="src\difficult.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="skill6.cpp">
+    <ClCompile Include="src\skill6.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="yamato_skill_4.cpp">
+    <ClCompile Include="src\yamato_skill_4.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="Skill5.cpp">
+    <ClCompile Include="src\Skill5.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="summon_skill.cpp">
+    <ClCompile Include="src\summon_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
     <ClCompile Include="src\yamato_skill_1.cpp">
@@ -560,16 +560,16 @@
     <ClCompile Include="src\yamato_skill_3.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="gyuuki_stamp_skill.cpp">
+    <ClCompile Include="src\gyuuki_stamp_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="gasyadokuro_attack_skill.cpp">
+    <ClCompile Include="src\gasyadokuro_attack_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="nurikabe_skill.cpp">
+    <ClCompile Include="src\nurikabe_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
-    <ClCompile Include="skelton_skill.cpp">
+    <ClCompile Include="src\skelton_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
   </ItemGroup>
@@ -740,10 +740,10 @@
     <ClInclude Include="src\road.h">
       <Filter>ソース ファイル\00_Main\00_Object</Filter>
     </ClInclude>
-    <ClInclude Include="abnormal_data_base.h">
+    <ClInclude Include="src\abnormal_data_base.h">
       <Filter>ソース ファイル\Mode\01_Game\character\03_abnormality</Filter>
     </ClInclude>
-    <ClInclude Include="abnormal.h">
+    <ClInclude Include="src\abnormal.h">
       <Filter>ソース ファイル\Mode\01_Game\character\03_abnormality</Filter>
     </ClInclude>
     <ClInclude Include="src\character_select.h">
@@ -782,7 +782,7 @@
     <ClInclude Include="src\gold_nugget.h">
       <Filter>ソース ファイル\Mode\01_Game\Item\item_object</Filter>
     </ClInclude>
-    <ClInclude Include="connect.h">
+    <ClInclude Include="src\connect.h">
       <Filter>ソース ファイル\Server</Filter>
     </ClInclude>
     <ClInclude Include="src\tcp_client.h">
@@ -809,7 +809,7 @@
     <ClInclude Include="src\skill_ui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
-    <ClInclude Include="enemy_hp_ui.h">
+    <ClInclude Include="src\enemy_hp_ui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\3D</Filter>
     </ClInclude>
     <ClInclude Include="src\hp_ui.h">
@@ -860,7 +860,7 @@
     <ClInclude Include="src\procedure3D.h">
       <Filter>ソース ファイル\00_Main\00_Object\number</Filter>
     </ClInclude>
-    <ClInclude Include="damege_ui.h">
+    <ClInclude Include="src\damege_ui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\3D</Filter>
     </ClInclude>
     <ClInclude Include="src\select_entity.h">
@@ -893,10 +893,10 @@
     <ClInclude Include="src\Controller.h">
       <Filter>ソース ファイル\Mode\01_Game\character\04_controller</Filter>
     </ClInclude>
-    <ClInclude Include="abnormal_2dui.h">
+    <ClInclude Include="src\abnormal_2dui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
-    <ClInclude Include="abnormal_2dui.h" />
+    <ClInclude Include="src\abnormal_2dui.h" />
     <ClInclude Include="src\difficult.h" />
     <ClInclude Include="src\udp_client.h">
       <Filter>ソース ファイル\Server</Filter>
@@ -904,10 +904,10 @@
     <ClInclude Include="src\client.h">
       <Filter>ソース ファイル\Server</Filter>
     </ClInclude>
-    <ClInclude Include="carrying_item_ui.h">
+    <ClInclude Include="src\carrying_item_ui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
-    <ClInclude Include="timer.h">
+    <ClInclude Include="src\timer.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
     <ClInclude Include="src\difficult.h">
@@ -928,64 +928,64 @@
     <ClInclude Include="src\carrying_item_group_ui.h">
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
-    <ClInclude Include="dullahan.h">
+    <ClInclude Include="src\dullahan.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="fox.h">
+    <ClInclude Include="src\fox.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="gasyadokuro.h">
+    <ClInclude Include="src\gasyadokuro.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="gyuuki.h">
+    <ClInclude Include="src\gyuuki.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="kappa.h">
+    <ClInclude Include="src\kappa.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="karakasa.h">
+    <ClInclude Include="src\karakasa.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="nine_fox.h">
+    <ClInclude Include="src\nine_fox.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="nurikabe.h">
+    <ClInclude Include="src\nurikabe.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="oni.h">
+    <ClInclude Include="src\oni.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="oni_child.h">
+    <ClInclude Include="src\oni_child.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="skelton.h">
+    <ClInclude Include="src\skelton.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="tengu.h">
+    <ClInclude Include="src\tengu.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="tengu_child.h">
+    <ClInclude Include="src\tengu_child.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="monster_sky.h">
+    <ClInclude Include="src\monster_sky.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="monster.h">
+    <ClInclude Include="src\monster.h">
       <Filter>ソース ファイル\Mode\01_Game\character\01_enemy\type</Filter>
     </ClInclude>
-    <ClInclude Include="fox_skill.h">
+    <ClInclude Include="src\fox_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="golem_skill_1.h">
+    <ClInclude Include="src\golem_skill_1.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="karakasa_skill.h">
+    <ClInclude Include="src\karakasa_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="monster_skill.h">
+    <ClInclude Include="src\monster_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="Skill5.h">
+    <ClInclude Include="src\Skill5.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
     <ClInclude Include="src\yamato_skill_1.h">
@@ -997,33 +997,33 @@
     <ClInclude Include="src\yamato_skill_3.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="yamato_skill_4.h">
+    <ClInclude Include="src\yamato_skill_4.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="summon_skill.h">
+    <ClInclude Include="src\summon_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="Skill5.h">
+    <ClInclude Include="src\Skill5.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="gasyadokuro_attack_skill.h">
+    <ClInclude Include="src\gasyadokuro_attack_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="nurikabe_skill.h">
+    <ClInclude Include="src\nurikabe_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="dullahan_charge_skill.h">
+    <ClInclude Include="src\dullahan_charge_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="Skill5.h" />
+    <ClInclude Include="src\Skill5.h" />
     <ClInclude Include="src\difficult.h" />
-    <ClInclude Include="skill6.h">
+    <ClInclude Include="src\skill6.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="gyuuki_stamp_skill.h">
+    <ClInclude Include="src\gyuuki_stamp_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="skelton_skill.h">
+    <ClInclude Include="src\skelton_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
   </ItemGroup>
