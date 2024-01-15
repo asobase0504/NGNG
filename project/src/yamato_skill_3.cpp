@@ -42,10 +42,12 @@ CYamatoSkill_3::~CYamatoSkill_3()
 void CYamatoSkill_3::InitAbility()
 {
 	m_Duration = 120;
+
 	// 当たり判定を取得
-	m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
-	m_collision->SetParent(&m_apChara->GetPos());
-	SetEndChildren(m_collision);
+	CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
+	m_collision.push_back(collision);
+	collision->SetParent(&m_apChara->GetPos());
+	SetEndChildren(collision);
 
 	// プレイヤーの操作を無効化
 	m_apChara->SetControlLock(true);
@@ -69,11 +71,13 @@ void CYamatoSkill_3::AllWayAbility()
 	m_time++;
 
 	/* "2024/01/09" ここ攻撃速度を反映させたい */
-	if (m_time % 20 == 0 && m_collision == nullptr)
+	if (m_time % 20 == 0 && m_collision.empty())
 	{
-		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
-		m_collision->SetParent(&m_apChara->GetPos());
-		SetEndChildren(m_collision);
+		// 当たり判定を取得
+		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
+		m_collision.push_back(collision);
+		collision->SetParent(&m_apChara->GetPos());
+		SetEndChildren(collision);
 	}
 }
 
@@ -83,7 +87,7 @@ void CYamatoSkill_3::AllWayAbility()
 void CYamatoSkill_3::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	Target->TakeDamage(50, Target);
+	m_apChara->DealDamage(Target,1.0f);
 }
 
 //--------------------------------------------------------------

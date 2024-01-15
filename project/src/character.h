@@ -20,6 +20,7 @@
 // 前方宣言
 //==============================================================
 class CCollisionCylinder;
+class CCollisionBox;
 class CSkill;
 class CAbnormal;
 class CSkinMesh;
@@ -59,24 +60,12 @@ public:
 	void	Update() override;
 	void	Draw() override;
 
-	// 静的メンバ関数
-	static CCharacter *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);		// プレイヤーの生成
-
-	CCollisionCylinder* GetCollision() { return m_collision; }
-
-	CSkinMesh* GetModel() { return m_skinModel; }
 	void SetPos(const D3DXVECTOR3& inPos);
 	void SetRot(const D3DXVECTOR3& inRot);
 
-	virtual void TakeItem(int id);	// アイテムを拾う
+	CCollisionCylinder* GetCollision() { return m_collision; }
 
-	// 移動制御
-	void SetMoveLock(bool isLock) { m_isMoveLock = isLock; }
-	bool GetMoveLock() { return m_isMoveLock; }
-	void SetControlLock(bool isLock) { m_isControl = isLock; }
-	bool GetControlLock() { return m_isControl; }
-	void SetInertiaMoveLock(bool isLock) { m_isInertiaMoveLock = isLock; }	// 慣性・重力
-	bool GetInertiaMoveLock() { return m_isInertiaMoveLock; }				// 慣性・重力
+	virtual void TakeItem(int id);	// アイテムを拾う
 
 	// 攻撃
 	void DealDamage(CCharacter* inChara, float SkillMul);
@@ -115,73 +104,45 @@ public:
 	void AddLevel();
 	int GetLevel() { return m_level; }
 
+	//==============================================================
+	// ステータス
+	//==============================================================
+	// 体力
+	void SetHp(CStatus<int> hp) { m_hp = hp; }
+	CStatus<int>* GetHp() { return &m_hp; }	// HP
+	CStatus<int>* GetAddHp() { return &m_addHp; }	// 追加HP
+	CStatus<int>* GetAddHpSub() { return &m_addHpSubTime; }	// 追加HPの減少時間
+	CStatus<int>* GetBarrier() { return &m_barrier; }	// バリア
+	CStatus<unsigned int>* GetBarrierRepopTime() { return &m_barrierRePopTime; }	// バリアの回復時間
+
+	// 攻撃
+	CStatus<unsigned int>* GetAtk() { return &m_attack; }	// 攻撃力
+	CStatus<float>* GetAtkSpd() { return &m_attackSpeed; }	// 攻撃速度
+	CStatus<int>* GetDefense() { return &m_defense; }		// 防御力
+
+	// クリティカル
+	CStatus<float>* GetCriticalRate() { return &m_criticalRate; }	// クリティカル率
+	CStatus<float>* GetCriticalDamage() { return &m_criticalDamage; }	// クリティカルダメージ
+	CStatus<float>* GetSpeed() { return &m_movePower; }	// 移動速度
+
+	// 行動
+	CStatus<unsigned int>* GetJumpCount() { return &m_jumpCount; }	// ジャンプ回数
+	void SetJumpPower(CStatus<float> jump) { m_jumpPower = jump; }
+	CStatus<float>* GetJumpPower() { return &m_jumpPower; }	// ジャンプ力
+
+	CStatus<int>* GetMoney() { return &m_money; }	// 所持金
+
+	ERelation GetRelation() { return m_relation; }	// 関係
+
+	// 状態の取得
+	bool GetIsShield() { return m_isShield; }		// シールド回復するかどうか
+	bool GetIsCritical() { return m_isCritical; }	// クリティカルかどうか
+	int GetNumCritical() { return m_numCritical; }	// クリティカルヒットした数
+	bool GetIsNonCombat() { return m_nonCombat; }	// 非戦闘時かどうか
+	bool GetIsRunning() { return m_isRunning; }		// 走っているかどうか
+
 	void DamageBlock(bool isBlock) { m_isBlock = isBlock; }
 	void SetStun(bool isStun) { m_isStun = isStun; }
-
-	//==============================================================
-	// ゲッターとセッター
-	//==============================================================
-	// ジャンプ回数
-	CStatus<unsigned int>* GetJumpCount() { return &m_jumpCount; }
-
-	// バリアの回復時間
-	CStatus<unsigned int>* GetBarrierRepopTime() { return &m_barrierRePopTime; }
-
-	// 攻撃力
-	CStatus<unsigned int>* GetAtk() { return &m_attack; }
-
-	// 攻撃速度
-	CStatus<float>* GetAtkSpd() { return &m_attackSpeed; }
-	
-	// HP
-	CStatus<int>* GetHp() { return &m_hp; }
-	void SetHp(CStatus<int> hp) { m_hp = hp; }
-
-	// 追加HP
-	CStatus<int>* GetAddHp() { return &m_addHp; }
-
-	// 追加HPの減少時間
-	CStatus<int>* GetAddHpSub() { return &m_addHpSubTime; }
-
-	// バリア
-	CStatus<int>* GetBarrier() { return &m_barrier; }
-
-	// 防御力
-	CStatus<int>* GetDefense() { return &m_defense; }
-
-	// クリティカル率
-	CStatus<float>* GetCriticalRate() { return &m_criticalRate; }
-
-	// クリティカルダメージ
-	CStatus<float>* GetCriticalDamage() { return &m_criticalDamage; }
-
-	// 移動速度
-	CStatus<float>* GetSpeed() { return &m_movePower; }
-	
-	// ジャンプ力
-	CStatus<float>* GetJumpPower() { return &m_jumpPower; }
-	void SetJumpPower(CStatus<float> jump) { m_jumpPower = jump; }
-
-	// 所持金
-	CStatus<int>* GetMoney() { return &m_money; }
-  
-	// 関係
-	ERelation GetRelation() { return m_relation; }
-
-	// シールド回復するかどうか
-	bool GetIsShield() { return m_isShield; }
-
-	// クリティカルかどうか
-	bool GetIsCritical() { return m_isCritical; }
-
-	// クリティカルヒットした数
-	int GetNumCritical() { return m_numCritical; }
-
-	// 非戦闘時かどうか
-	bool GetIsNonCombat() { return m_nonCombat; }
-
-	// 走っているかどうか
-	bool GetIsRunning() { return m_isRunning; }
 
 	// エリートかどうか
 	bool GetIsElite() { return m_isElite; }
@@ -216,12 +177,21 @@ public:
 	// 今いる場所
 	STATE GetState() { return m_state; }
 
+	// 移動制御
+	void SetMoveLock(bool isLock) { m_isMoveLock = isLock; }
+	bool GetMoveLock() { return m_isMoveLock; }
+	void SetControlLock(bool isLock) { m_isControl = isLock; }
+	bool GetControlLock() { return m_isControl; }
+	void SetInertiaMoveLock(bool isLock) { m_isInertiaMoveLock = isLock; }	// 慣性・重力
+	bool GetInertiaMoveLock() { return m_isInertiaMoveLock; }				// 慣性・重力
+
 protected:
 	virtual void RotateToFace();	// 向いている向きを回転させる
 private:
 	virtual void Move();	// 移動
 	void Abnormal();		// 状態異常
 	void Collision();		// 当たり判定
+	void FallDamage();		// 落下ダメージ
 
 protected:		// メンバ変数
 private:		// ステータス
@@ -230,6 +200,7 @@ protected:
 	CSkinMesh* m_skinModel;		// モデルのインスタンス
 	float m_destRot;
 	CCollisionCylinder*	m_collision;	// 当たり判定
+	CCollisionBox*	m_extrusion;	// 押し出し用
 	ERelation m_relation;
 
 	std::vector<CSkill*> m_skill;
@@ -256,6 +227,7 @@ protected:
 	bool m_isElite;			// エリート
 	bool m_isTeleporter;	// テレポーターを起動したかどうか
 
+	bool m_isHitDamage;			// 攻撃をうけたかどうか
 	bool m_isAtkCollision;		// 攻撃を受けなくなる
 	bool m_isToFaceRot;			// 向いている向きを変える方法
 

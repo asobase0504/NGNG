@@ -362,4 +362,9 @@ technique Diffuse
 		VertexShader = NULL;
 		PixelShader = compile ps_2_0 InvisiblePS();
 	}
+	pass P7
+	{
+		VertexShader = NULL;
+		PixelShader = compile ps_2_0 PS();
+	}
 }

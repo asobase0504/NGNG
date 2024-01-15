@@ -44,12 +44,14 @@ protected:	// プライベート関数
 protected:	// メンバ変数
 	CCharacter* m_apChara;			// キャラクターのインスタンス
 	CCharacter::ERelation m_relation;
-	CCollision* m_collision;		// 当たり判定
+	std::list<CCollision*> m_collision;		// 当たり判定
 
 	std::string m_Name;		// スキル名
 	int m_Duration;			// 効果時間
 	int m_maxDuration;		// 持続する時間の保管
 	int m_Interval;			// 多段ヒットの場合次の当たり判定を出現させるまでの時間
 	bool m_isSkill;			// スキル発動中かどうか
+
+	bool m_isHitClear;		// 衝突時当たり判定を消すか否か
 };
 #endif

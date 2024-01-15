@@ -1,7 +1,7 @@
-//**************************************************************
+ï»¿//**************************************************************
 //
-// í‚¢‚ÌÕ’d
-// Author : Š“c‘å–²
+// æˆ¦ã„ã®ç¥­å£‡
+// Author : æ¢¶ç”°å¤§å¤¢
 //
 //**************************************************************
 
@@ -17,7 +17,7 @@
 #include "difficult.h"
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CStatueCombat::CStatueCombat()
 {
@@ -25,7 +25,7 @@ CStatueCombat::CStatueCombat()
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CStatueCombat::~CStatueCombat()
 {
@@ -33,41 +33,47 @@ CStatueCombat::~CStatueCombat()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //--------------------------------------------------------------
 HRESULT CStatueCombat::Init()
 {
-	// ‰Šú‰»ˆ—
+	// åˆæœŸåŒ–å‡¦ç†
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 rot = GetRot();
 	CStatue::Init(pos, rot);
 	LoadModel("STATUE_COMBAT");
-	m_uiText = "í‚¢‚ğn‚ß‚é";
+	m_uiText = "æˆ¦ã„ã‚’å§‹ã‚ã‚‹";
+
+	SetMark("FIGHT");
 
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// ‘I‘ğ
+// é¸æŠæ™‚
 //--------------------------------------------------------------
 bool CStatueCombat::Select(CCharacter * selectCharacter)
 {
+	using enemyType = CEnemyDataBase::EEnemyType;
+
 	D3DXVECTOR3 pos = GetPos();
 
-	for (int nCnt = 0; nCnt < 4; nCnt++)
+	CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
+	int level = pDiff->GetEnemyLevel();
+
+	for (int nCnt = 0; nCnt < 1; nCnt++)
 	{
-		// “G‚Ì¶¬
-		float randX = FloatRandom(1.5f, 0.5f);
-		float randZ = FloatRandom(1.5f, 0.5f);
+		// æ•µã®ç”Ÿæˆ
+		float randX = FloatRandom(300.0f, -300.0f);
+		float randZ = FloatRandom(300.0f, -300.0f);
 
-		CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
-		int level = pDiff->GetEnemyLevel();
-
-		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), CEnemyDataBase::EEnemyType::GASYADOKURO, level);
+		enemyType enemyType = enemyType::ONI_BIG;
+		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x + randX, pos.y, pos.z + randZ), enemyType, level);
 		enemy->TakeItem(CItemDataBase::ITEM_ELITE);
 		enemy->SetIsElite();
 	}
 
+	DeleteMark();
 	m_collisionCylinder->Uninit();
 	m_collisionCylinder = nullptr;
 
@@ -75,7 +81,7 @@ bool CStatueCombat::Select(CCharacter * selectCharacter)
 }
 
 //--------------------------------------------------------------
-// ¶¬
+// ç”Ÿæˆ
 //--------------------------------------------------------------
 CStatueCombat* CStatueCombat::Create(D3DXVECTOR3 pos)
 {

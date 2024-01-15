@@ -85,12 +85,6 @@ HRESULT CGame::Init()
 	CInput::GetKey()->SetCursorErase(false);
 	CInput::GetKey()->LockCursorPos(true);
 
-	// 虚無マップ
-	m_map = CMap::GetMap("data/FILE/map/map01.json");
-
-	m_mapFade = CMapFade::Create();
-	m_mapFade->NextMap("data/FILE/map/map01.json");
-
 	m_camera = new CCameraGame;
 	m_camera->Init();
 
@@ -116,6 +110,12 @@ HRESULT CGame::Init()
 
 	m_difficult = CDifficult::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
 
+	// 虚無マップ
+	m_map = CMap::GetMap("data/FILE/map/map01.json");
+
+	m_mapFade = CMapFade::Create();
+	m_mapFade->NextMap("data/FILE/map/map01.json");
+
 	return S_OK;
 }
 
@@ -132,7 +132,6 @@ void CGame::Uninit()
 		m_tcp = nullptr;
 	}*/
 
-	CItemDataBase::Uninit();
 	CAbnormalDataBase::Uninit();
 
 	CSkinMeshGroup::GetInstance()->UnloadAll();

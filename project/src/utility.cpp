@@ -66,7 +66,7 @@ float FloatRandom(float fMax, float fMin)
 //--------------------------------------------------------------
 int IntRandom(int nMax, int nMin)
 {
-	return (int)((rand() / (float)RAND_MAX) * (nMax - nMin)) + nMin;
+	return (int)(std::round((rand() / (float)RAND_MAX) * (nMax - nMin))) + nMin;
 }
 
 //--------------------------------------------------------------

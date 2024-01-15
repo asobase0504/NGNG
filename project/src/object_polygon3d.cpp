@@ -191,7 +191,7 @@ void CObjectPolygon3D::Draw()
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 
 	// αテストの設定
-	pDevice->SetRenderState(D3DRS_ALPHAREF, 100);
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
 	// ライトを無効

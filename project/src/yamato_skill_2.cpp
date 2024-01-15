@@ -48,9 +48,10 @@ void CYamatoSkill_2::InitAbility()
 		m_Time = 0;
 		m_Duration = 30;
 		// “–‚½‚è”»’è‚ðŽæ“¾
-		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 60.0f);
-		m_collision->SetParent(&m_apChara->GetPos());
-		SetEndChildren(m_collision);
+		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 60.0f);
+		m_collision.push_back(collision);
+		collision->SetParent(&m_apChara->GetPos());
+		SetEndChildren(collision);
 
 		// ƒJƒƒ‰‚Ì•ûŒü‚É‡‚í‚¹‚é
 		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();

@@ -34,7 +34,7 @@ CItemDataBase::CItemDataBase() : m_countKill(0), m_maxAddLife(0)
 //--------------------------------------------------------------
 // 初期化
 //--------------------------------------------------------------
-void CItemDataBase::Init()
+HRESULT CItemDataBase::Init()
 {
 	CItem* item;
 
@@ -750,6 +750,8 @@ void CItemDataBase::Init()
 		inCharacter->GetAtk()->SetCurrent(atk);
 	});
 	//--------------------------------------------------------------
+
+	return S_OK;
 }
 
 //--------------------------------------------------------------
@@ -781,11 +783,9 @@ CItemDataBase::~CItemDataBase()
 //--------------------------------------------------------------
 void CItemDataBase::Uninit()
 {
-	if (m_instance == nullptr)
+	CTask::Uninit();
+	if (m_instance != nullptr)
 	{
-		return;
+		m_instance = nullptr;
 	}
-
-	delete m_instance;
-	m_instance = nullptr;
 }

@@ -22,7 +22,7 @@
 //--------------------------------------------------------------
 CSkillEntity::CSkillEntity(int nPriority)
 {
-	m_collision = nullptr;
+	m_collision.clear();
 }
 
 //--------------------------------------------------------------
@@ -72,11 +72,11 @@ void CSkillEntity::Update()
 
 		UninitAbility();
 
-		if (m_collision != nullptr)
+		for (CCollision* collision : m_collision)
 		{// 当たり判定が残っていたら
-			m_collision->Uninit();
-			m_collision = nullptr;
+			collision->Uninit();
 		}
+		m_collision.clear();
 		Uninit();
 	}
 }
@@ -86,16 +86,17 @@ void CSkillEntity::Update()
 //--------------------------------------------------------------
 void CSkillEntity::Collision()
 {
-	if (m_collision == nullptr)
+	if (m_collision.size() <= 0)
 	{
 		return;
 	}
 
 	// 敵に当たっているか
-	bool collision = false;
+	bool isHit = false;
+	std::list<CCollision*> hitIndex;
 
 	// 自分とは違う関係を持ってるキャラクターに当たり判定を行なう
-	CMap::GetMap()->DoDifferentRelation(m_relation, [this, &collision](CCharacter* inChara)
+	CMap::GetMap()->DoDifferentRelation(m_relation, [this, &isHit, &hitIndex](CCharacter* inChara)
 	{
 		// 攻撃を受ける状態か否か
 		if (inChara->GetIsAtkCollision())
@@ -104,18 +105,26 @@ void CSkillEntity::Collision()
 		}
 
 		// 当たり判定
-		bool hit = m_collision->ToCylinder(inChara->GetCollision());
-		if (hit)
+		for (CCollision* collision : m_collision)
 		{
-			// 衝突処理
-			this->HitAbility(inChara);
-			collision = true;
+			if (collision->ToCylinder(inChara->GetCollision()))
+			{
+				this->HitAbility(inChara);
+				hitIndex.push_back(collision);
+				isHit = true;
+				break;
+			}
 		}
 	});
 
-	if (collision && m_collision != nullptr)
+	if (isHit && m_collision.size() > 0)
 	{// 敵に当たっていたら
-		m_collision->Uninit();
-		m_collision = nullptr;
+		hitIndex.unique();
+
+		for (CCollision* index : hitIndex)
+		{
+			index->Uninit();
+			m_collision.remove(index);
+		}
 	}
 }

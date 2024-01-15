@@ -52,6 +52,7 @@ CSkinMesh::CSkinMesh() :
 //--------------------------------------------------------------
 void CSkinMesh::Update()
 {
+	CDebugProc::Print("motionPos : %f\n", m_CurrentTrackDesc.Position);
 	//アニメーション時間を更新
 	m_AnimeTime++;
 
@@ -395,6 +396,7 @@ void CSkinMesh::ShaderDraw(MYMESHCONTAINER* pMeshContainer, MYFRAME* pFrame)
 			tex0 = texture;
 		}
 
+		pDevice->SetMaterial(&TmpMat);
 		// テクスチャの設定
 		pEffect->SetTexture(m_hTexture, tex0);
 		// 通常モデルの描画
@@ -516,6 +518,8 @@ void CSkinMesh::DrawFrame(LPD3DXFRAME pFrameBase)
 
 void CSkinMesh::Load(std::string pMeshPass)
 {
+	m_shaderIndex = 7;
+
 	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 

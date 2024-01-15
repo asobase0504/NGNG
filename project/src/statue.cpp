@@ -48,6 +48,8 @@ HRESULT CStatue::Init()
 //--------------------------------------------------------------
 HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 {
+	m_pMark = nullptr;
+
 	CSelectEntity::Init();
 
 	m_collisionBox = CCollisionBox::Create(D3DXVECTOR3(0.0f, 25.0f, 0.0f), inRot, D3DXVECTOR3(10.0f, 25.0f, 10.0f));
@@ -71,6 +73,12 @@ HRESULT CStatue::Init(const D3DXVECTOR3 & inPos, const D3DXVECTOR3 & inRot)
 void CStatue::Update()
 {
 	CSelectEntity::Update();
+
+	if (m_pMark != nullptr)
+	{
+		D3DXVECTOR3 pos = GetPos();
+		m_pMark->SetPos(D3DXVECTOR3(pos.x, pos.y + 120.0f, pos.z));
+	}
 
 #ifdef _DEBUG
 #if 0
@@ -136,4 +144,31 @@ void CStatue::UpMesh()
 	}
 	pCylinder->Uninit();
 
+}
+
+//--------------------------------------------------------------
+// マーカーの設置/タイプ設定
+//--------------------------------------------------------------
+void CStatue::SetMark(std::string inKey)
+{
+	D3DXVECTOR3 pos = GetPos();
+
+	m_pMark = CObjectPolygon3D::Create(CTaskGroup::EPriority::LEVEL_2D_1);
+	m_pMark->SetAnchor(CObjectPolygon3D::EAnchor::ANCHOR_CENTER);
+	m_pMark->SetBillboard(true);
+	m_pMark->SetSize(D3DXVECTOR3(20.0f,20.0f,0.0f));
+	m_pMark->SetPos(D3DXVECTOR3(pos.x, pos.y + 120.0f, pos.z));
+	m_pMark->SetColor(D3DXCOLOR(1.0f,1.0f,1.0f, 1.0f));
+	m_pMark->SetTexture(inKey);
+	SetEndChildren(m_pMark);
+}
+
+//--------------------------------------------------------------
+// マーカーの削除
+//--------------------------------------------------------------
+void CStatue::DeleteMark()
+{
+	// マークの終了処理
+	m_pMark->Uninit();
+	m_pMark = nullptr;
 }
