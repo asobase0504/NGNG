@@ -126,6 +126,7 @@ HRESULT CCharacter::Init()
 	m_forwardJumpPoewer = 1.0f;
 	m_itemMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_effectTime = 0;
+	m_isAccel = false;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{

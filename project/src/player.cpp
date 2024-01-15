@@ -323,6 +323,14 @@ void CPlayer::Move()
 			AddMoveXZ(nowMove.x * -0.15f, nowMove.z * -0.15f);
 		}
 	}
+
+	if (m_isAccel)
+	{
+		m_effectTime = 60;
+		D3DXVECTOR3 move = GetMove();
+		SetItemMove(move * m_acceleration);
+		m_isAccel = false;
+	}
 }
 
 //--------------------------------------------------------------
@@ -340,7 +348,7 @@ void CPlayer::Jump()
 
 	if (jump && !m_jumpCount.MaxCurrentSame())
 	{
- 		m_jumpCount.AddCurrent(1);
+		m_jumpCount.AddCurrent(1);
 
 		if (m_isdash)
 		{	

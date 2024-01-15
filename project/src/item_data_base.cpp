@@ -555,14 +555,15 @@ void CItemDataBase::Init()
 	{// 敵が死んだら
 		float upSpeed = 0.05f;
 		int rate = 0;
-		// アイテムとってる分倍率を上げる
+		// アイテムとってる分,倍率を上げる
 		for (int i = 0; i < cnt; i++)
 		{
 			rate += 1;
 		}
 		upSpeed *= rate;
 		// 加算
-		inCharacter->GetSpeed()->AddItemEffect(upSpeed);
+		inCharacter->SetAcceleration(upSpeed);
+		inCharacter->SetIsAccel(true);
 	});
 	//--------------------------------------------------------------
 
@@ -592,7 +593,14 @@ void CItemDataBase::Init()
 	// 攻撃ヒット時に体力を1回復する (回復量+1)
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		inCharacter->Heal(1);
+		int heal = 0;
+
+		for (int i = 0; i <= cnt; i++)
+		{
+			heal += 1;
+		}
+
+		inCharacter->Heal(heal);
 	});
 	//--------------------------------------------------------------
 

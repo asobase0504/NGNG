@@ -201,7 +201,14 @@ public:
 	// 前方に進む力
 	float GetForwardJumpPoewer() { return m_forwardJumpPoewer; }
 	void SetForwardJumpPoewer(float inForwardJumpPoewer) { m_forwardJumpPoewer = inForwardJumpPoewer; }
+
+	// 加速する値
+	void SetAcceleration(float inAcceleration) { m_acceleration = inAcceleration; }
 	
+	// 加速中かどうか
+	void SetIsAccel(bool is) { m_isAccel = is; }
+	bool GetIsAccel() { return m_isAccel; }
+
 	// アイテムの移動量
 	D3DXVECTOR3 GetItemMove() { return m_itemMove; }
 	void SetItemMove(D3DXVECTOR3 inItemMove) { m_itemMove = inItemMove; }
@@ -256,6 +263,9 @@ protected:
 
 	float m_forwardJumpPoewer;	// ジャンプしたときに前方に進む力
 	int m_effectTime;				// 効果時間
+
+	float m_acceleration;		// 敵を倒したときに加速する値
+	bool m_isAccel;				// 加速中かどうか
 
 	D3DXVECTOR3 m_itemMove;
 
