@@ -569,6 +569,9 @@
     <ClCompile Include="nurikabe_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
+    <ClCompile Include="skelton_skill.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -1018,6 +1021,9 @@
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
     <ClInclude Include="gyuuki_stamp_skill.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClInclude>
+    <ClInclude Include="skelton_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
   </ItemGroup>

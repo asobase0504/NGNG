@@ -88,9 +88,9 @@ void CMonster::Move()
 	D3DXVECTOR3 pos = GetPos();
 
 	// プレイヤーの位置取得
-	D3DXVECTOR3 PlayerPos = CPlayerManager::GetInstance()->GetPlayerPos();
+	D3DXVECTOR3 playerPos = CPlayerManager::GetInstance()->GetPlayerPos();
 
-	D3DXVECTOR3 distancePos = (PlayerPos - pos);
+	D3DXVECTOR3 distancePos = (playerPos - pos);
 
 	distancePos.y = 0.0f;
 

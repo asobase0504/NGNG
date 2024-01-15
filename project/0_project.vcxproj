@@ -33,6 +33,7 @@
     <ClCompile Include="gasyadokuro_attack_skill.cpp" />
     <ClCompile Include="gyuuki_stamp_skill.cpp" />
     <ClCompile Include="nurikabe_skill.cpp" />
+    <ClCompile Include="skelton_skill.cpp" />
     <ClCompile Include="summon_skill.cpp" />
     <ClCompile Include="golem_skill_1.cpp" />
     <ClCompile Include="abnormal_2dui.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="gasyadokuro_attack_skill.h" />
     <ClInclude Include="gyuuki_stamp_skill.h" />
     <ClInclude Include="nurikabe_skill.h" />
+    <ClInclude Include="skelton_skill.h" />
     <ClInclude Include="summon_skill.h" />
     <ClInclude Include="golem_skill_1.h" />
     <ClInclude Include="enemy_hp_ui.h" />

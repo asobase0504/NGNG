@@ -119,7 +119,7 @@ HRESULT CCharacter::Init()
 	m_RegenetionCnt = 0;
 	m_exp = 0;
 	m_level = 1;
-	m_reqExp = m_level * 100;
+	m_reqExp = m_level * 100.0f;
 	m_destRot = 0.0f;
 
 	m_isStun = false;
@@ -220,24 +220,6 @@ void CCharacter::Draw()
 }
 
 //--------------------------------------------------------------
-// 生成
-//--------------------------------------------------------------
-CCharacter* CCharacter::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
-{
-	//キャラクター生成
-	CCharacter* pCharacter = new CCharacter;
-
-	if (pCharacter != nullptr)
-	{//NULLチェック
-	 //メンバ変数に代入
-		//初期化
-		pCharacter->Init();
-	}
-
-	return pCharacter;
-}
-
-//--------------------------------------------------------------
 // 位置の設定
 //--------------------------------------------------------------
 void CCharacter::SetPos(const D3DXVECTOR3 & inPos)
@@ -255,6 +237,9 @@ void CCharacter::SetRot(const D3DXVECTOR3 & inRot)
 	CObject::SetRot(inRot);
 }
 
+//--------------------------------------------------------------
+// アイテムを拾う
+//--------------------------------------------------------------
 void CCharacter::TakeItem(int id)
 {
 	m_haveItem[id]++;
@@ -492,12 +477,14 @@ void CCharacter::Abnormal()
 	// 付与されている状態異常を作動させる
 	for (size_t i = 0; i < m_haveAbnormal.size(); i++)
 	{
+		CAbnormal* abnormal = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i);
+
 		if (m_haveAbnormal[i].s_stack <= 0)
 		{
 			continue;
 		}
 
-		CAbnormal::ABNORMAL_FUNC abnormalFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenAllWayFunc();
+		CAbnormal::ABNORMAL_FUNC abnormalFunc = abnormal->GetWhenAllWayFunc();
 
 		if (abnormalFunc == nullptr)
 		{
@@ -515,7 +502,7 @@ void CCharacter::Abnormal()
 		{
 			if (data >= m_haveAbnormal[i].s_effectTime)
 			{// 状態異常を削除する
-				CAbnormal::ABNORMAL_FUNC LostFunc = CAbnormalDataBase::GetInstance()->GetAbnormalData((CAbnormalDataBase::EAbnormalType)i)->GetWhenClearFunc();
+				CAbnormal::ABNORMAL_FUNC LostFunc = abnormal->GetWhenClearFunc();
 
 				//if (Los)
 				{// 失った時の処理を呼び出す
@@ -571,6 +558,7 @@ void CCharacter::Collision()
 		{// 押し出した位置
 			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
 			SetPos(extrusion);
+			FallDamage();
 			isGround = true;
 		}
 	}
@@ -607,6 +595,51 @@ void CCharacter::Collision()
 		SetMoveY(0.0f);
 		m_jumpCount.SetCurrent(0);
 	}
+}
+
+//--------------------------------------------------------------
+// 落下ダメージ
+//--------------------------------------------------------------
+void CCharacter::FallDamage()
+{
+	if (m_move.y >= -10.0f)
+	{
+		return;
+	}
+
+	float speed = m_move.y * 0.5f;
+
+	int dmg = -speed;
+
+	if (dmg <= 0)
+	{
+		return;
+	}
+
+	// ダメージ計算
+	CStatus<int>* hp = GetHp();
+
+	if (m_isBlock)
+	{// ブロックがtrueの時にダメージを0にする
+		dmg = 0;
+		DamageBlock(false);
+	}
+
+	// UI生成
+	D3DXVECTOR3 pos = m_pos;
+	pos.x += FloatRandom(20.0f, -20.0f);
+	pos.y += FloatRandom(40.0f, 0.0f);
+	pos.z += FloatRandom(20.0f, -20.0f);
+	CDamegeUI::Create(pos, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), dmg);
+
+	hp->AddCurrent(-dmg);
+
+	if (m_hp.GetCurrent() <= 0)
+	{
+		m_hp.SetCurrent(1);
+	}
+
+	m_move.y = 0.0f;
 }
 
 //--------------------------------------------------------------
@@ -662,7 +695,7 @@ void CCharacter::AddLevel()
 
 	// 各種ステータスの調整
 	m_hp.AddMax(m_hp.GetBase() * (1.0f + (m_level * 0.1f)));
-	m_attack.AddBaseState(m_attack.GetBase() * (1.0f + (m_level * 0.1f)));
+	m_attack.AddBaseState(m_attack.GetBase() * (1 + (m_level * 0.1f)));
 	m_attackSpeed.AddBaseState(m_attackSpeed.GetBase() * (1.0f + (m_level * 0.1f)));
 	m_movePower.AddBaseState(m_movePower.GetBase() * (1.0f + (m_level * 0.01f)));
 }
@@ -677,7 +710,7 @@ void CCharacter::SetLevel(int level)
 	// 各種ステータスの調整
 	m_hp.AddMax(m_hp.GetBase() * (1.0f + (m_level * 0.1f)));
 	m_hp.SetCurrent(m_hp.GetMax());
-	m_attack.AddBaseState(m_attack.GetBase() * (1.0f + (m_level * 0.1f)));
+	m_attack.AddBaseState(m_attack.GetBase() * (1 + (m_level * 0.1f)));
 	m_attackSpeed.AddBaseState(m_attackSpeed.GetBase() * (1.0f + (m_level * 0.1f)));
 	m_movePower.AddBaseState(m_movePower.GetBase() * (1.0f + (m_level * 0.01f)));
 }
