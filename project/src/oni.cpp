@@ -37,6 +37,7 @@ HRESULT COni::Init()
 
 	// ƒ‚ƒfƒ‹
 	m_skinModel->Load("ONI_BIG");
+	m_skinModel->ChangeAnim(1);
 
 	m_size = D3DXVECTOR3(50.0f, 50.0f, 50.0f);
 
@@ -93,6 +94,7 @@ void COni::Update()
 //--------------------------------------------------------------
 void COni::Move()
 {
+
 	// ˆÚ“®—Ê‚ÌŽæ“¾
 	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
