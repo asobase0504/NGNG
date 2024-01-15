@@ -44,6 +44,8 @@ HRESULT CStatueCombat::Init()
 	LoadModel("STATUE_COMBAT");
 	m_uiText = "í‚¢‚ðŽn‚ß‚é";
 
+	SetMark("FIGHT");
+
 	return S_OK;
 }
 
@@ -63,11 +65,12 @@ bool CStatueCombat::Select(CCharacter * selectCharacter)
 		CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
 		int level = pDiff->GetEnemyLevel();
 
-		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), CEnemyDataBase::EEnemyType::GASYADOKURO, level);
+		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x * randX, pos.y, pos.z * randZ), CEnemyDataBase::EEnemyType::SKY_MONSTER, level);
 		enemy->TakeItem(CItemDataBase::ITEM_ELITE);
 		enemy->SetIsElite();
 	}
 
+	DeleteMark();
 	m_collisionCylinder->Uninit();
 	m_collisionCylinder = nullptr;
 

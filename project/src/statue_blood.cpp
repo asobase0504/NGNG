@@ -52,6 +52,7 @@ HRESULT CStatueBlood::Init()
 	SetEndChildren(m_costUI);
 	m_costUI->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 
+	SetMark("MAKIMONO");
 
 	return S_OK;
 }
@@ -79,6 +80,7 @@ bool CStatueBlood::Select(CCharacter* selectCharacter)
 
 	if (m_hpSubRate >= 1.0f)
 	{
+		DeleteMark();
 		m_collisionCylinder->Uninit();
 		m_collisionCylinder = nullptr;
 		m_costUI->Uninit();

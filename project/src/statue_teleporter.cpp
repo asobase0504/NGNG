@@ -59,6 +59,7 @@ HRESULT CStatueTeleporter::Init()
 	m_bOnce = false;
 	m_btimeAdd = false;
 
+	SetMark("GATE");
 	return S_OK;
 }
 
@@ -106,6 +107,7 @@ bool CStatueTeleporter::Select(CCharacter * selectCharacter)
 		ui->SetHP(m_pEnemy->GetHp());
 		m_pEnemy->SetEndChildren(ui);
 
+		DeleteMark();
 		selectCharacter->SetIsTeleporter(true);
 		m_bOnce = true;
 	}
