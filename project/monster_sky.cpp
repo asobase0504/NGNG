@@ -51,7 +51,6 @@ HRESULT CMonsterSky::Init()
 	m_movePower.Init(1.0f);
 	m_movePower.SetCurrent(1.0f);
 
-
 	// SKILL�̍쐬
 	m_skill.push_back(CSkill::Create());
 	m_skill[0]->SetSkill("GOLEM_SKILL_1", this);
@@ -117,7 +116,7 @@ void CMonsterSky::Move()
 		AddMoveY(10.0f);
 	}
 
-	if (PlayerPos.y + 100.0f > m_pos.y)
+	if (PlayerPos.y + 50.0f > m_pos.y)
 	{
 		SetMoveY(1.0f);
 	}

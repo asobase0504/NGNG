@@ -55,6 +55,8 @@ HRESULT CStatueLuck::Init()
 	m_nItemCount = 0;
 	m_uiText = "‰^‚ðŽŽ‚· [$" + std::to_string(m_nUseMoney) + "]";
 
+	SetMark("FLOWER");
+
 	return S_OK;
 }
 
@@ -100,6 +102,7 @@ bool CStatueLuck::Select(CCharacter * selectCharacter)
 
 	if (m_nItemCount >= 2)
 	{
+		DeleteMark();
 		m_collisionCylinder->Uninit();
 		m_collisionCylinder = nullptr;
 		m_costUI->Uninit();
