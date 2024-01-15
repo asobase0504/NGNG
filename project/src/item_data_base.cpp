@@ -521,7 +521,6 @@ void CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	// ↑チェック済み-----------------------------------------------
 	item = m_item[ITEM_CHICK];
 	item->SetModel("ITEM_HIYOKO");
 	item->SetRerity(RARITY_UNCOMMON);
@@ -529,31 +528,41 @@ void CItemDataBase::Init()
 	m_itemInfo[ITEM_CHICK][1] = "走りながらジャンプすると前方に飛び出す";
 	m_itemInfo[ITEM_CHICK][2] = "ITEM_DANGO_O1";
 	// ひよこ---------------------------------------------------------
-	// 走りながらジャンプすると前方に10m飛び出す (+10m)TODO
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	// 走りながらジャンプすると前方に10m飛び出す (+10m)
+	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
 	{
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
+		float forwardJumpPower = 0.0f;
+
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
+		{
+			forwardJumpPower += 10.0f;
+		}
+
+		inCharacter->SetForwardJumpPoewer(forwardJumpPower);
 	});
 	//--------------------------------------------------------------
 
+	// ↑チェック済み-----------------------------------------------
 	item = m_item[ITEM_ZOURI];
 	item->SetModel("ITEM_ZOURI");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_ZOURI][0] = "草履";
-	m_itemInfo[ITEM_ZOURI][1] = "敵を倒すと移動速度が一定時間上がる";
+	m_itemInfo[ITEM_ZOURI][1] = "敵を倒すとスピードが上がる";
 	m_itemInfo[ITEM_ZOURI][2] = "ITEM_DANGO_O1";
 	// 草履---------------------------------------------------------
 	// 敵を倒すと移動速度が125%上がり、1(+0.5)秒間消える
 	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵が死んだら
-		// 現在の速度
-		float currentSpeed = inCharacter->GetSpeed()->GetCurrent();
-
-		// スピードが上がる割合を計算
-		currentSpeed *= (125 / 100);
-
+		float upSpeed = 0.05f;
+		int rate = 0;
+		// アイテムとってる分倍率を上げる
+		for (int i = 0; i < cnt; i++)
+		{
+			rate += 1;
+		}
+		upSpeed *= rate;
 		// 加算
-		inCharacter->GetSpeed()->AddItemEffect(currentSpeed);
+		inCharacter->GetSpeed()->AddItemEffect(upSpeed);
 	});
 	//--------------------------------------------------------------
 

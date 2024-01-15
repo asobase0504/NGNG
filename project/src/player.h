@@ -63,6 +63,7 @@ private:		// メンバ変数
 	bool m_isskill;		// スキルを使用しているかどうか
 	bool m_isUpdate;	// 更新を止めるか否か。
 	bool m_isResult;	// リザルト中か否か
+	D3DXVECTOR3 m_direction;
 
 	CController*	m_controller;	// 命令を出す人
 

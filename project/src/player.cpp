@@ -78,6 +78,7 @@ HRESULT CPlayer::Init()
 	// 友好状態
 	m_relation = ERelation::FRIENDLY;
 	m_isUpdate = true;
+	m_direction = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
 	{
@@ -308,6 +309,7 @@ void CPlayer::Move()
 			if (m_isdash)
 			{
 				cameraVec *= m_dashPower.GetCurrent();
+				m_direction = cameraVec;
 			}
 			CDebugProc::Print("Player : cameraVec(%f, %f, %f)\n", cameraVec.x, cameraVec.y, cameraVec.z);
 			SetMoveXZ(cameraVec.x, cameraVec.z);
@@ -339,6 +341,18 @@ void CPlayer::Jump()
 	if (jump && !m_jumpCount.MaxCurrentSame())
 	{
  		m_jumpCount.AddCurrent(1);
+
+		if (m_isdash)
+		{	
+			// 効果時間の設定
+			m_effectTime = 30;
+			// 方向を正規化する
+			D3DXVec3Normalize(&m_direction, &m_direction);
+			// 前方に進む力の設定
+			m_direction *= m_forwardJumpPoewer;
+			// 値を渡す
+			SetItemMove(D3DXVECTOR3(m_direction.x, 0.0f, m_direction.z));
+		}
 
 		// ジャンプ力
 		SetMoveY(m_jumpPower.GetCurrent());

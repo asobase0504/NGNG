@@ -198,6 +198,14 @@ public:
 	// 向いている向きを変える方法
 	void SetToFaceRot(bool is) { m_isToFaceRot = is; RotateToFace(); }
 
+	// 前方に進む力
+	float GetForwardJumpPoewer() { return m_forwardJumpPoewer; }
+	void SetForwardJumpPoewer(float inForwardJumpPoewer) { m_forwardJumpPoewer = inForwardJumpPoewer; }
+	
+	// アイテムの移動量
+	D3DXVECTOR3 GetItemMove() { return m_itemMove; }
+	void SetItemMove(D3DXVECTOR3 inItemMove) { m_itemMove = inItemMove; }
+
 	// 今いる場所
 	STATE GetState() { return m_state; }
 
@@ -245,6 +253,11 @@ protected:
 	bool m_isToFaceRot;			// 向いている向きを変える方法
 
 	float m_addDamage;
+
+	float m_forwardJumpPoewer;	// ジャンプしたときに前方に進む力
+	int m_effectTime;				// 効果時間
+
+	D3DXVECTOR3 m_itemMove;
 
 	STATE m_state;
 

@@ -123,6 +123,9 @@ HRESULT CCharacter::Init()
 	m_isBlock = false;
 	m_isAtkCollision = false;
 	m_addDamage = 0.0f;
+	m_forwardJumpPoewer = 1.0f;
+	m_itemMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_effectTime = 0;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
@@ -150,6 +153,16 @@ void CCharacter::Update()
 {
 	// 更新処理
 	CObject::Update();
+
+	m_effectTime--;
+	if (m_effectTime > 0)
+	{
+		AddPos(GetItemMove());
+	}
+	else
+	{
+		m_effectTime = 0;
+	}
 
 	// 常に起動するアイテム
 	CItemManager::GetInstance()->AllWhenAllways(this, m_haveItem);
