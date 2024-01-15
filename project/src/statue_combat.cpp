@@ -67,7 +67,7 @@ bool CStatueCombat::Select(CCharacter * selectCharacter)
 		float randX = FloatRandom(300.0f, -300.0f);
 		float randZ = FloatRandom(300.0f, -300.0f);
 
-		enemyType enemyType = enemyType::GYUUKI;
+		enemyType enemyType = enemyType::ONI_BIG;
 		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x + randX, pos.y, pos.z + randZ), enemyType, level);
 		enemy->TakeItem(CItemDataBase::ITEM_ELITE);
 		enemy->SetIsElite();

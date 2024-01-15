@@ -7,9 +7,11 @@
 #ifndef _ITEM_DATA_
 #define _ITEM_DATA_
 
+#include "task.h"
+
 class CItem;
 
-class CItemDataBase
+class CItemDataBase : public CTask
 {
 public:
 	enum ERarity
@@ -64,13 +66,13 @@ public:
 private:
 	explicit CItemDataBase();
 	static CItemDataBase* m_instance;
-	void Init();
+	HRESULT Init();
 
 public:
 	static CItemDataBase* GetInstance();
 	~CItemDataBase();
 
-	static void Uninit();
+	void Uninit();
 
 public:
 	CItem* GetItemData(EItemType inState) { return m_item[inState]; }

@@ -112,7 +112,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	m_texture = CTexture::GetInstance();
 	m_texture->LoadAll();
 
-	m_modeType = CApplication::MODE_DEBUG;	//現在のモード
+	m_modeType = CApplication::MODE_TITLE;	//現在のモード
 
 	//モードの設定
 	SetMode(m_modeType);
@@ -135,7 +135,6 @@ void CApplication::Uninit()
 {
 	CSkillDataBase::Uninit();
 	CEnemyDataBase::Uninit();
-	CItemDataBase::Uninit();
 	CAbnormalDataBase::Uninit();
 
 	if (m_taskGroup != nullptr)
