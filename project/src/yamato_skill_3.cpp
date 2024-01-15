@@ -42,10 +42,12 @@ CYamatoSkill_3::~CYamatoSkill_3()
 void CYamatoSkill_3::InitAbility()
 {
 	m_Duration = 120;
+
 	// “–‚½‚è”»’è‚ðŽæ“¾
-	m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
-	m_collision->SetParent(&m_apChara->GetPos());
-	SetEndChildren(m_collision);
+	CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
+	m_collision.push_back(collision);
+	collision->SetParent(&m_apChara->GetPos());
+	SetEndChildren(collision);
 
 	// ƒvƒŒƒCƒ„[‚Ì‘€ì‚ð–³Œø‰»
 	m_apChara->SetControlLock(true);
@@ -69,11 +71,13 @@ void CYamatoSkill_3::AllWayAbility()
 	m_time++;
 
 	/* "2024/01/09" ‚±‚±UŒ‚‘¬“x‚ð”½‰f‚³‚¹‚½‚¢ */
-	if (m_time % 20 == 0 && m_collision == nullptr)
+	if (m_time % 20 == 0 && m_collision.empty())
 	{
-		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
-		m_collision->SetParent(&m_apChara->GetPos());
-		SetEndChildren(m_collision);
+		// “–‚½‚è”»’è‚ðŽæ“¾
+		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
+		m_collision.push_back(collision);
+		collision->SetParent(&m_apChara->GetPos());
+		SetEndChildren(collision);
 	}
 }
 

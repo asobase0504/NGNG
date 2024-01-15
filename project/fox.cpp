@@ -10,6 +10,7 @@
 //==============================================================
 #include "fox.h"
 #include "collision_cylinder.h"
+#include "collision_box.h"
 #include "model_skin.h"
 #include "skill.h"
 #include "player_manager.h"
@@ -57,6 +58,9 @@ HRESULT CFox::Init()
 	m_skill[0]->SetSkill("GOLEM_SKILL_1", this);
 	SetEndChildren(m_skill[0]);
 
+	// ‘å‚«‚³
+	m_extrusion->SetSize(D3DXVECTOR3(20.0f, 20.0f, 20.0f));
+
 	return S_OK;
 }
 
@@ -86,6 +90,9 @@ void CFox::Update()
 			GetSkill()[0]->Use();
 		}
 	}
+
+	// ‘å‚«‚³
+	m_extrusion->SetSize(D3DXVECTOR3(20.0f, 20.0f, 20.0f));
 }
 
 //--------------------------------------------------------------

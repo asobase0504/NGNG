@@ -10,6 +10,7 @@
 //==============================================================
 #include "gasyadokuro.h"
 #include "collision_cylinder.h"
+#include "collision_box.h"
 #include "model_skin.h"
 #include "skill.h"
 #include "player_manager.h"
@@ -41,8 +42,12 @@ HRESULT CGasyadokuro::Init()
 	m_size = D3DXVECTOR3(50.0f, 50.0f, 50.0f);
 
 	// 当たり判定
-	m_collision->SetHeight(250.0f);
-	m_collision->SetLength(30.0f);
+	m_collision->SetHeight(280.0f);
+	m_collision->SetLength(100.0f);
+
+	// 大きさ
+	m_extrusion->SetSize(D3DXVECTOR3(40.0f, 90.0f, 40.0f));
+	m_extrusion->SetPos(D3DXVECTOR3(0.0f, 70.0f, 0.0f));
 
 	// ステータス
 	m_attack.SetCurrent(1);
@@ -51,11 +56,14 @@ HRESULT CGasyadokuro::Init()
 	m_movePower.Init(1.0f);
 	m_movePower.SetCurrent(1.0f);
 
-
 	// SKILLの作成
 	m_skill.push_back(CSkill::Create());
-	m_skill[0]->SetSkill("SKELTON_SUMMON_SKILL", this);
+	m_skill[0]->SetSkill("GASYADOKURO_ATTACK_SKILL", this);
 	SetEndChildren(m_skill[0]);
+
+	m_skill.push_back(CSkill::Create());
+	m_skill[1]->SetSkill("SKELTON_SUMMON_SKILL", this);
+	SetEndChildren(m_skill[1]);
 
 	return S_OK;
 }
@@ -73,19 +81,17 @@ void CGasyadokuro::Update()
 	D3DXVECTOR3 distancePos = (PlayerPos - pos);
 	float distance = D3DXVec3Length(&distancePos);
 
-	// カウント開始
-	AddAttackCnt(1);
-
-	// エネミーの距離が遠いとき
-	if (distance >= 150.0f)
+	if (distance <= 170.0f)
 	{
-		if (GetAttackCnt() >= 180)
-		{
-			// カウント開始
-			SetAttackCnt(0);
-			GetSkill()[0]->Use();
-		}
+		// 叩きつけ(左)
+		GetSkill()[0]->Use();
 	}
+	else
+	{
+		// どくろの召喚
+		GetSkill()[1]->Use();
+	}
+
 }
 
 //--------------------------------------------------------------

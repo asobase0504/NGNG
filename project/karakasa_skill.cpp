@@ -59,6 +59,11 @@ void CKarakasaSkill::InitAbility()
 //--------------------------------------------------------------
 void CKarakasaSkill::AllWayAbility()
 {
+	if (m_aimCharacter == nullptr)
+	{
+		return;
+	}
+
 	m_time++;
 
 	if (m_time == 10)
@@ -69,9 +74,10 @@ void CKarakasaSkill::AllWayAbility()
 		m_apChara->SetMove(move);
 
 		// “–‚½‚è”»’è‚ðŽæ“¾
-		m_collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30.0f);
-		m_collision->SetParent(&m_apChara->GetPos());
-		SetEndChildren(m_collision);
+		CCollision* collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30.0f);
+		m_collision.push_back(collision);
+		collision->SetParent(&m_apChara->GetPos());
+		SetEndChildren(collision);
 
 		m_apChara->SetToFaceRot(false);
 	}

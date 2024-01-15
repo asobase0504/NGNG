@@ -10,6 +10,7 @@
 //==============================================================
 #include "dullahan.h"
 #include "collision_cylinder.h"
+#include "collision_box.h"
 #include "model_skin.h"
 #include "skill.h"
 #include "player_manager.h"
@@ -51,11 +52,13 @@ HRESULT CDullahan::Init()
 	m_movePower.Init(1.0f);
 	m_movePower.SetCurrent(1.0f);
 
-
 	// SKILL‚Ìì¬
 	m_skill.push_back(CSkill::Create());
-	m_skill[0]->SetSkill("GOLEM_SKILL_1", this);
+	m_skill[0]->SetSkill("DUllAHAN_CHARGE_SKILL", this);
 	SetEndChildren(m_skill[0]);
+
+	// ‘å‚«‚³
+	m_extrusion->SetSize(D3DXVECTOR3(40.0f,40.0f,40.0f));
 
 	return S_OK;
 }

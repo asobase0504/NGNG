@@ -20,11 +20,16 @@
 #include "yamato_skill_3.h"
 #include "yamato_skill_4.h"
 #include "Skill5.h"
+#include "skill6.h"
 #include "golem_skill_1.h"
 #include "karakasa_skill.h"
 #include "monster_skill.h"
 #include "fox_skill.h"
 #include "summon_skill.h"
+#include "gasyadokuro_attack_skill.h"
+#include "nurikabe_skill.h"
+#include "dullahan_charge_skill.h"
+#include "gyuuki_stamp_skill.h"
 
 //==============================================================
 // 静的メンバー変数の宣言
@@ -154,5 +159,35 @@ void CSkillDataBase::Init()
 	info->baseInfo.CT = 500;
 	info->baseInfo.stock = 1;
 	info->ability = CFoxSummonSkill::Create;
+
+	// がしゃどくろが腕を振り下ろすスキル
+	info = &m_dates["GASYADOKURO_ATTACK_SKILL"];
+	info->baseInfo.CT = 500;
+	info->baseInfo.stock = 1;
+	info->ability = CGasyadokuroAttackSkill::Create;
+
+	// バッタン攻撃スキル
+	info = &m_dates["NURIKABE_SKILL"];
+	info->baseInfo.CT = 500;
+	info->baseInfo.stock = 1;
+	info->ability = CNurikabeSkill::Create;
+
+	// デュラハン突進スキル
+	info = &m_dates["DUllAHAN_CHARGE_SKILL"];
+	info->baseInfo.CT = 500;
+	info->baseInfo.stock = 1;
+	info->ability = CDullahanChargeSkill::Create;
+
+	// カウンター
+	info = &m_dates["SKILL_6"];
+	info->baseInfo.CT = 300;
+	info->baseInfo.stock = 1;
+	info->ability = CSkill6::Create;
+
+	// 牛鬼スタンプ攻撃
+	info = &m_dates["GYUUKI_STAMP_SKILL"];
+	info->baseInfo.CT = 300;
+	info->baseInfo.stock = 1;
+	info->ability = CGyuukiStampSkill::Create;
 
 }

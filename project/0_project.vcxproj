@@ -26,9 +26,13 @@
     <ClCompile Include="connect.cpp" />
     <ClCompile Include="damege_ui.cpp" />
     <ClCompile Include="dullahan.cpp" />
+    <ClCompile Include="dullahan_charge_skill.cpp" />
     <ClCompile Include="fox.cpp" />
     <ClCompile Include="fox_skill.cpp" />
     <ClCompile Include="gasyadokuro.cpp" />
+    <ClCompile Include="gasyadokuro_attack_skill.cpp" />
+    <ClCompile Include="gyuuki_stamp_skill.cpp" />
+    <ClCompile Include="nurikabe_skill.cpp" />
     <ClCompile Include="summon_skill.cpp" />
     <ClCompile Include="golem_skill_1.cpp" />
     <ClCompile Include="abnormal_2dui.cpp" />
@@ -45,6 +49,7 @@
     <ClCompile Include="oni_child.cpp" />
     <ClCompile Include="skelton.cpp" />
     <ClCompile Include="Skill5.cpp" />
+    <ClCompile Include="skill6.cpp" />
     <ClCompile Include="src\arrow.cpp" />
     <ClCompile Include="src\carrying_item_group_ui.cpp" />
     <ClCompile Include="src\client.cpp" />
@@ -165,9 +170,13 @@
     <ClInclude Include="connect.h" />
     <ClInclude Include="damege_ui.h" />
     <ClInclude Include="dullahan.h" />
+    <ClInclude Include="dullahan_charge_skill.h" />
     <ClInclude Include="fox.h" />
     <ClInclude Include="fox_skill.h" />
     <ClInclude Include="gasyadokuro.h" />
+    <ClInclude Include="gasyadokuro_attack_skill.h" />
+    <ClInclude Include="gyuuki_stamp_skill.h" />
+    <ClInclude Include="nurikabe_skill.h" />
     <ClInclude Include="summon_skill.h" />
     <ClInclude Include="golem_skill_1.h" />
     <ClInclude Include="enemy_hp_ui.h" />
@@ -185,6 +194,7 @@
     <ClInclude Include="oni_child.h" />
     <ClInclude Include="skelton.h" />
     <ClInclude Include="Skill5.h" />
+    <ClInclude Include="skill6.h" />
     <ClInclude Include="src\arrow.h" />
     <ClInclude Include="src\carrying_item_group_ui.h" />
     <ClInclude Include="src\character_select.h" />

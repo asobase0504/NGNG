@@ -49,10 +49,10 @@ void CMonsterSkill::InitAbility()
 	});
 
 	// 当たり判定を取得
-	//m_collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30.0f);
-	m_collision = CCollisionBox::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(),D3DXVECTOR3(20.0f,20.0f,50.0f));
-	m_collision->SetParent(&m_apChara->GetPos());
-	SetEndChildren(m_collision);
+	CCollision* collision = CCollisionBox::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(20.0f, 20.0f, 50.0f));
+	m_collision.push_back(collision);
+	collision->SetParent(&m_apChara->GetPos());
+	SetEndChildren(collision);
 }
 
 //--------------------------------------------------------------
@@ -62,9 +62,9 @@ void CMonsterSkill::AllWayAbility()
 {
 	// "2024/01/09" ホーミングが強いから緩和したい
 
-	if (m_collision != nullptr)
+	if (m_collision.size() > 0)
 	{
-		m_collision->SetRot(m_apChara->GetRot());
+		m_collision.front()->SetRot(m_apChara->GetRot());
 	}
 
 	if (m_apChara->GetSpeed()->GetBuff() <= 5.0f)
@@ -73,7 +73,7 @@ void CMonsterSkill::AllWayAbility()
 	}
 
 	// 追加終了条件
-	if (m_collision == nullptr)
+	if (m_collision.size() <= 0)
 	{
 		m_Duration = 0;
 	}

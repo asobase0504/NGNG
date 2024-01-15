@@ -47,16 +47,18 @@ void CYamatoSkill_4::InitAbility()
 	{
 		m_Duration = 120;
 		m_Time = 0;
+
 		// 当たり判定を取得
-		m_collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40);
-		m_collision->SetParent(&m_apChara->GetPos());
-		SetEndChildren(m_collision);
+		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40);
+		m_collision.push_back(collision);
+		collision->SetParent(&m_apChara->GetPos());
+		SetEndChildren(collision);
 
 		// カメラの方向に合わせる
 		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
 		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
 		D3DXVec3Normalize(&vecNor, &vecNor);
-		vecNor *= 25.0f;			//移動させたい値を入れる
+		vecNor *= 15.0f;			//移動させたい値を入れる
 		m_apChara->SetMove(vecNor);
 		// プレイヤーの操作を無効化
 		m_apChara->SetControlLock(true);
@@ -104,6 +106,8 @@ void CYamatoSkill_4::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
 	Target->TakeDamage(50, Target);
+	
+	m_apChara->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 }
 
 //--------------------------------------------------------------
