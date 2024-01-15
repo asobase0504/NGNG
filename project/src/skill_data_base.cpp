@@ -30,6 +30,7 @@
 #include "nurikabe_skill.h"
 #include "dullahan_charge_skill.h"
 #include "gyuuki_stamp_skill.h"
+#include "skelton_skill.h"
 
 //==============================================================
 // 静的メンバー変数の宣言
@@ -189,5 +190,11 @@ void CSkillDataBase::Init()
 	info->baseInfo.CT = 300;
 	info->baseInfo.stock = 1;
 	info->ability = CGyuukiStampSkill::Create;
+
+	// スケルトンの近接攻撃
+	info = &m_dates["SKELTON_SKILL"];
+	info->baseInfo.CT = 300;
+	info->baseInfo.stock = 1;
+	info->ability = CSkeltonSkill::Create;
 
 }

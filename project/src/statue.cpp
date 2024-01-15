@@ -74,6 +74,12 @@ void CStatue::Update()
 {
 	CSelectEntity::Update();
 
+	if (m_pMark != nullptr)
+	{
+		D3DXVECTOR3 pos = GetPos();
+		m_pMark->SetPos(D3DXVECTOR3(pos.x, pos.y + 120.0f, pos.z));
+	}
+
 #ifdef _DEBUG
 #if 0
 	CDebugProc::Print("StatueCollisionBox:pos(%f,%f,%f)\n", m_collisionBox->GetPosWorld().x, m_collisionBox->GetPosWorld().y, m_collisionBox->GetPosWorld().z);
@@ -154,6 +160,7 @@ void CStatue::SetMark(std::string inKey)
 	m_pMark->SetPos(D3DXVECTOR3(pos.x, pos.y + 120.0f, pos.z));
 	m_pMark->SetColor(D3DXCOLOR(1.0f,1.0f,1.0f, 1.0f));
 	m_pMark->SetTexture(inKey);
+	SetEndChildren(m_pMark);
 }
 
 //--------------------------------------------------------------
@@ -163,4 +170,5 @@ void CStatue::DeleteMark()
 {
 	// マークの終了処理
 	m_pMark->Uninit();
+	m_pMark = nullptr;
 }

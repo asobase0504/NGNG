@@ -52,6 +52,7 @@ CSkinMesh::CSkinMesh() :
 //--------------------------------------------------------------
 void CSkinMesh::Update()
 {
+	CDebugProc::Print("motionPos : %f\n", m_CurrentTrackDesc.Position);
 	//アニメーション時間を更新
 	m_AnimeTime++;
 
