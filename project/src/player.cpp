@@ -326,9 +326,9 @@ void CPlayer::Move()
 
 	if (m_isAccel)
 	{
-		m_effectTime = 60;
-		D3DXVECTOR3 move = GetMove();
-		SetItemMove(move * m_acceleration);
+		D3DXVECTOR3 moveAccel = GetMove();
+		D3DXVec3Normalize(&moveAccel, &moveAccel);
+		SetItemMove(moveAccel * m_acceleration);
 		m_isAccel = false;
 	}
 }

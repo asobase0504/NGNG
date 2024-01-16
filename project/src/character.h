@@ -163,6 +163,9 @@ public:
 	float GetForwardJumpPoewer() { return m_forwardJumpPoewer; }
 	void SetForwardJumpPoewer(float inForwardJumpPoewer) { m_forwardJumpPoewer = inForwardJumpPoewer; }
 
+	// 効果時間の設定
+	void SetEffectTime(int inEffectTime) { m_effectTime = inEffectTime; }
+
 	// 加速する値
 	void SetAcceleration(float inAcceleration) { m_acceleration = inAcceleration; }
 	
