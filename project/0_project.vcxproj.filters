@@ -575,6 +575,12 @@
     <ClCompile Include="src\skill_back_step.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
+    <ClCompile Include="src\skill_assault.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_storm.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -1030,6 +1036,12 @@
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
     <ClInclude Include="src\skill_back_step.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_assault.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_storm.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
   </ItemGroup>

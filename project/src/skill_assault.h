@@ -1,11 +1,11 @@
 //**************************************************************
 //
-// バックステップ
+// 突撃攻撃
 // Author : Yuda Kaito
 //
 //**************************************************************
-#ifndef _SKILL_BACK_STEP_H_			// このマクロ定義がされてなかったら
-#define _SKILL_BACK_STEP_H_			// 二重インクルード防止のマクロ定義
+#ifndef _SKILL_ASSAULT_H_			// このマクロ定義がされてなかったら
+#define _SKILL_ASSAULT_H_			// 二重インクルード防止のマクロ定義
 
 //==============================================================
 // include
@@ -15,15 +15,15 @@
 //==============================================================
 // スキルクラス
 //==============================================================
-class CSkillBackStep : public CSkillEntity
+class CSkillAssault : public CSkillEntity
 {
 public:
 	// コンストラクタとデストラクタ
-	explicit CSkillBackStep();
-	~CSkillBackStep();
+	explicit CSkillAssault();
+	~CSkillAssault();
 
 	// 静的メンバ関数
-	static CSkillBackStep* Create(CCharacter* chara);		// スキルの生成
+	static CSkillAssault* Create(CCharacter* chara);		// スキルの生成
 
 	void InitAbility() override;					// スキルが始まるとき
 	void AllWayAbility() override;					// スキル中
@@ -32,5 +32,7 @@ public:
 
 private:	// メンバ変数
 	int m_time;
+
+	bool m_hasAssault;
 };
 #endif
