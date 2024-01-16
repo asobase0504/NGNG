@@ -553,16 +553,11 @@ HRESULT CItemDataBase::Init()
 	// 敵を倒すと移動速度が125%上がり、1(+0.5)秒間消える
 	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵が死んだら
-		float upSpeed = 0.05f;
-		int rate = 0;
-		// アイテムとってる分,倍率を上げる
-		for (int i = 0; i < cnt; i++)
-		{
-			rate += 1;
-		}
-		upSpeed *= rate;
+		float nowSpeed = inCharacter->GetSpeed()->GetCurrent();
+		nowSpeed *= (125 / 100);
+
 		// 加算
-		inCharacter->SetAcceleration(upSpeed);
+		inCharacter->SetAcceleration(nowSpeed);
 		inCharacter->SetIsAccel(true);
 	});
 	//--------------------------------------------------------------
