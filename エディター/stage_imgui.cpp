@@ -121,9 +121,8 @@ void CStageImgui::Uninit(HWND hWnd, WNDCLASSEX wcex)
 bool CStageImgui::Update()
 {
 
-
 	CImguiProperty::Update();
-	ImguiCreate();
+	//ImguiCreate();
 	// テキスト表示
 	ImGui::Text("FPS  : %.2f", ImGui::GetIO().Framerate);
 	CMap* map = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetMap();
@@ -132,10 +131,24 @@ bool CStageImgui::Update()
 	{// ボタンが押された
 		funcFileSave(CApplication::GetInstance()->GetWindow());
 	}
+	// ウインドウの命名
+	ImGui::Begin(u8"メッシュ", nullptr, ImGuiWindowFlags_MenuBar);
 
 	CStageImgui::EditMesh();
+
+	ImGui::End();
+	// ウインドウの命名
+	ImGui::Begin(u8"エネミーリスト", nullptr, ImGuiWindowFlags_MenuBar);
+
 	CStageImgui::EditEnemy();
+
+	ImGui::End();
+	// ウインドウの命名
+	ImGui::Begin(u8"モデル", nullptr, ImGuiWindowFlags_MenuBar);
+
 	CStageImgui::EditModel();
+
+	ImGui::End();
 
 	//ImGui::SliderFloat3(u8"ロット", &sliderRot.x, -3.14f, 3.14f);
 	//ImGui::Separator();
