@@ -12,7 +12,8 @@
 #include "renderer.h"
 #include "objectX_group.h"
 #include "file.h"
-
+#include "game.h"
+#include "stage_imgui.h"
 //==============================================================
 // 定数
 //==============================================================
@@ -55,7 +56,7 @@ void CObjectXGroup::Load(std::string inKey, std::string inFileName)
 {
 	SModelData model = {};
 	std::string fileName = inFileName;
-
+	CApplication::GetInstance()->SetKey(inKey);
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();
 
@@ -130,6 +131,7 @@ void CObjectXGroup::Load(std::string inKey, std::string inFileName)
 
 	//頂点バッファのアンロック
 	model.mesh->UnlockVertexBuffer();
+
 
 	if (!ExistsKey(inKey))
 	{

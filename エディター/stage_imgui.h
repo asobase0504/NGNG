@@ -14,7 +14,7 @@
 #include "imgui_property.h"
 
 
-class CBoss;
+class CMapModel;
 //--------------------------------------------------
 // パーティクル用のImgui表示クラス
 //--------------------------------------------------
@@ -95,6 +95,7 @@ public:
 
 	std::string Getfile() { return m_SavefileNeme; }
 	
+
 	void SetVtx(int inx,int Llst) { m_Vtx[Llst] = inx; }
 	
 private: // プライベート関数
@@ -103,7 +104,7 @@ private: // プライベート関数
 	void EditModel();
 	void EditCamera();
 	void EditEnemy();
-	void EditBoss(CBoss* BossEnemy);
+
 	void EditPlayer();
 	void ImguiCreate();
 	void Imguifilecord();
@@ -184,6 +185,10 @@ private: // メンバー変数
 
 	std::vector<bool> m_list;
 	D3DXVECTOR3 m_PlayerPos;
+
+	
+	CMapModel*m_model;
+	
 };
 
 #endif // !_IMGUI_PROPERTY_H_

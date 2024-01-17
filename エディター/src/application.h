@@ -84,6 +84,8 @@ public:	// ƒƒ“ƒo[ŠÖ”
 	CSound* GetSound() { return m_sound; }
 	CColor* GetColor() { return m_color; }
 
+	void SetKey(std::string List) { m_keyList.push_back(List); }
+	std::vector<std::string> GetKey() { return m_keyList; }
 private:
 	CTexture* m_texture;
 	CRenderer* m_renderer;
@@ -98,5 +100,6 @@ private:
 	HWND m_window;
 	bool m_isActiveWindowThis;
 	WNDCLASSEX m_wcex;
+	std::vector<std::string>m_keyList;
 };
 #endif
