@@ -17,7 +17,7 @@
 //==============================================================
 // 定数
 //==============================================================
-const wchar_t* CObjectXGroup::filePath = L"Data/FILE/model.json";
+const wchar_t* CObjectXGroup::filePath = L"../project/Data/FILE/model.json";
 
 //--------------------------------------------------------------
 // コンストラクタ
