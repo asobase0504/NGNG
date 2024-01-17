@@ -131,6 +131,14 @@ bool CStageImgui::Update()
 	{// ボタンが押された
 		funcFileSave(CApplication::GetInstance()->GetWindow());
 	}
+
+	// ウインドウの命名
+	ImGui::Begin(u8"モデル", nullptr, ImGuiWindowFlags_MenuBar);
+
+	CStageImgui::EditModel();
+
+	ImGui::End();
+
 	// ウインドウの命名
 	ImGui::Begin(u8"メッシュ", nullptr, ImGuiWindowFlags_MenuBar);
 
@@ -143,12 +151,7 @@ bool CStageImgui::Update()
 	CStageImgui::EditEnemy();
 
 	ImGui::End();
-	// ウインドウの命名
-	ImGui::Begin(u8"モデル", nullptr, ImGuiWindowFlags_MenuBar);
 
-	CStageImgui::EditModel();
-
-	ImGui::End();
 
 	//ImGui::SliderFloat3(u8"ロット", &sliderRot.x, -3.14f, 3.14f);
 	//ImGui::Separator();
