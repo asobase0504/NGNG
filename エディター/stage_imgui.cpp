@@ -293,7 +293,7 @@ void CStageImgui::EditModel()
 		modelSizePop[1] = m_model->GetSize().y;
 		modelSizePop[2] = m_model->GetSize().z;
 
-		ImGui::DragFloat3(u8"選んでるmodelのサイズ", &modelSizePop[0], 0.1f, 0.0f, 400.0f);
+		ImGui::DragFloat3(u8"選んでるmodelのサイズ", &modelSizePop[0], 0.1f, 0.0f, 50000.0f);
 	
 		pop_model->SetSize(D3DXVECTOR3(modelSizePop[0], modelSizePop[1], modelSizePop[2]));
 
