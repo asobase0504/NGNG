@@ -82,14 +82,16 @@ CGame::~CGame()
 HRESULT CGame::Init()
 {
 	CAbnormalDataBase::GetInstance();
+	
+	m_imgui = new CStageImgui;
+	m_imgui->Init(CApplication::GetInstance()->GetWindow(), CApplication::GetInstance()->GetRenderer()->GetDevice());
 
 	CSkinMeshGroup::GetInstance()->LoadAll();
 
 	//CInput::GetKey()->SetCursorErase(false);
 	//CInput::GetKey()->LockCursorPos(true);
 
-	m_imgui = new CStageImgui;
-	m_imgui->Init(CApplication::GetInstance()->GetWindow(), CApplication::GetInstance()->GetRenderer()->GetDevice());
+	
 
 	// 虚無マップ
 	m_map = CMap::GetMap("data/test.json");

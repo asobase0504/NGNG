@@ -57,6 +57,7 @@ public:
 		return m_map;
 	}
 
+	void SetMapModel(CMapModel* model) { m_model.push_back(model); }
 	CMapModel* GetMapModel(int inNum) { return m_model[inNum]; }
 	int GetNumModel() { return m_model.size(); }
 

@@ -85,7 +85,7 @@ public:
 	float AABBAndPointLength(CObjectX* inObject, D3DXVECTOR3* outDist = nullptr);
 
 	std::string GetKey() { return modelKey; }
-
+	void SetKey(std::string key) { modelKey = key; }
 private:
 	//--------------------------------------------------------------
 	// ƒƒ“ƒo[•Ï”

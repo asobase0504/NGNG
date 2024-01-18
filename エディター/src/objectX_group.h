@@ -55,5 +55,6 @@ private: /* プライベート関数 */
 
 private:
 	std::map<std::string, SModelData, std::less<>> m_model;	// モデルの情報
+
 };
 #endif
