@@ -398,25 +398,6 @@ HRESULT CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	item = m_item[ITEM_ONIMEN];
-	item->SetModel("BOX");
-	item->SetRerity(RARITY_UNCOMMON);
-	m_itemInfo[ITEM_ONIMEN][0] = "鬼面";
-	m_itemInfo[ITEM_ONIMEN][1] = "4つ以上のデバフがついた敵に死の印が付き、\n受けるダメージが増加する";
-	m_itemInfo[ITEM_ONIMEN][2] = "ITEM_DANGO_O1";
-	// 鬼面---------------------------------------------------------
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// 4つ以上のデバフがついた敵に死の印が付き、受けるダメージが7秒間(+7秒)50%増加する
-		int numDebuff = outCharacter->GetAbnormalTypeCount();
-
-		if (numDebuff >= 4)
-		{// デバフを付与する　TODO
-			//outCharacter->SetAttackAbnormal(CAbnormalDataBase::ABNORMAL_STUN, true);
-		}
-
-	});
-	//--------------------------------------------------------------
-
 	item = m_item[ITEM_BROKEN_KABUTO];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
@@ -570,22 +551,6 @@ HRESULT CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	item = m_item[ITEM_ARROW];
-	item->SetModel("ITEM_ARROW");
-	item->SetRerity(RARITY_UNCOMMON);
-	m_itemInfo[ITEM_ARROW][0] = "矢";
-	m_itemInfo[ITEM_ARROW][1] = "敵を倒すと移動速度が一定時間上がる";
-	m_itemInfo[ITEM_ARROW][2] = "ITEM_DANGO_O1";
-	// 矢---------------------------------------------------------
-	// プライマリースキルを発動すると、矢も投げて、400%(+100%)の基礎ダメージを与える。
-	// 最大3(+1)個の矢を持つことができ、10秒経つとリロードされる
-	item->SetWhenUseSkill([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// 矢を発射 TODO
-		//inCharacter->GetRot()
-		//CArrow* obj = CArrow::Create();
-	});
-	//--------------------------------------------------------------
-
 	item = m_item[ITEM_SEED];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
@@ -707,34 +672,6 @@ HRESULT CItemDataBase::Init()
 			CFlower* obj = CFlower::Create(inCharacter->GetPos(), radius);
 			inCharacter->SetIsTeleporter(false);
 		}
-	});
-	//--------------------------------------------------------------
-
-	item = m_item[ITEM_IRON_WIRE];
-	item->SetModel("BOX");
-	item->SetRerity(RARITY_UNCOMMON);
-	m_itemInfo[ITEM_IRON_WIRE][0] = "鉄線";
-	m_itemInfo[ITEM_IRON_WIRE][1] = "ダメージを受けた際、周囲の敵にダメージを与える";
-	m_itemInfo[ITEM_IRON_WIRE][2] = "ITEM_DANGO_O1";
-	// 鉄線---------------------------------------------------------
-	// ダメージを受けた際、周囲25m(+10m)以内にいる敵最大5体に160%のダメージを与える (+2体)
-	item->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
-	});
-	//--------------------------------------------------------------
-
-	item = m_item[ITEM_HANNYA];
-	item->SetModel("BOX");
-	item->SetRerity(RARITY_RARE);
-	m_itemInfo[ITEM_IRON_WIRE][0] = "般若面";
-	m_itemInfo[ITEM_IRON_WIRE][1] = "1秒以内に4体の敵を倒すと6秒間フレンジー状態になる";
-	m_itemInfo[ITEM_IRON_WIRE][2] = "ITEM_DANGO_O1";
-	// 般若面---------------------------------------------------------
-	// 1秒以内に4体の敵を倒すと6秒間フレンジー状態になる。フレンジー発動中は移動速度が50%、攻撃速度が100%上昇する (+4秒)
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
 	});
 	//--------------------------------------------------------------
 
