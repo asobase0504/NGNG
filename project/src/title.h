@@ -17,6 +17,9 @@
 //==============================================================
 class CSelect;
 class CObject2d;
+class CMap;
+class CMapFade;
+class CTitleCamera;
 
 //==============================================================
 // タイトルクラス
@@ -43,5 +46,8 @@ public:
 private:
 	CSelect* m_start;
 	CObject2d* m_startShadow;
+	CMap* m_map;
+	CMapFade* m_mapFade;
+	CTitleCamera* m_camera;
 };
 #endif

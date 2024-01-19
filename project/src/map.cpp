@@ -33,6 +33,7 @@
 // 静的メンバ変数宣言
 //==============================================================
 CMap* CMap::m_map = nullptr;
+bool CMap::m_isGame = false;
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -59,37 +60,40 @@ CMap::~CMap()
 //--------------------------------------------------------------
 HRESULT CMap::Init()
 {
-	CStatueManager* manager = CStatueManager::GetInstance();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->CreateStatue(CStatueManager::BLOOD);
-	manager->CreateStatue(CStatueManager::LUCK);
-	manager->CreateStatue(CStatueManager::TELEPORTER);
-	manager->CreateStatue(CStatueManager::CHEST);
-	manager->CreateStatue(CStatueManager::COMBAT);
-
-	for (int i = 0; i < 50; i++)
+	if (m_isGame)
 	{
+		CStatueManager* manager = CStatueManager::GetInstance();
+		manager->RandomCreate();
+		manager->RandomCreate();
+		manager->RandomCreate();
+		manager->RandomCreate();
+		manager->CreateStatue(CStatueManager::BLOOD);
+		manager->CreateStatue(CStatueManager::LUCK);
+		manager->CreateStatue(CStatueManager::TELEPORTER);
 		manager->CreateStatue(CStatueManager::CHEST);
-	}
+		manager->CreateStatue(CStatueManager::COMBAT);
 
-	//CMesh* sky = CMesh::Create();
-	//sky->SetSkyMesh();
-	//sky->SetIsCulling(true);
-	//sky->SetTexture("SKY");
+		for (int i = 0; i < 50; i++)
+		{
+			manager->CreateStatue(CStatueManager::CHEST);
+		}
 
-	CObject2d* sky = CObject2d::Create();
-	sky->SetSize(CApplication::CENTER_POS);
-	sky->SetPos(CApplication::CENTER_POS);
-	sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
+		//CMesh* sky = CMesh::Create();
+		//sky->SetSkyMesh();
+		//sky->SetIsCulling(true);
+		//sky->SetTexture("SKY");
 
-	D3DXMATRIX mtx;
-	D3DXMatrixIdentity(&mtx);
-	for (int i = 0; i < CItemDataBase::EItemType::ITEM_MAX; i++)
-	{
-		CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
+		CObject2d* sky = CObject2d::Create();
+		sky->SetSize(CApplication::CENTER_POS);
+		sky->SetPos(CApplication::CENTER_POS);
+		sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
+
+		D3DXMATRIX mtx;
+		D3DXMatrixIdentity(&mtx);
+		for (int i = 0; i < CItemDataBase::EItemType::ITEM_MAX; i++)
+		{
+			CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
+		}
 	}
 
 	return S_OK;
@@ -113,13 +117,16 @@ void CMap::Uninit()
 //--------------------------------------------------------------
 void CMap::Update()
 {
-	m_SpawnCnt++;
-
-	// 一定時間ごとにランダムな敵をスポーンさせる。
-	if (m_SpawnCnt >= 600)
+	if (m_isGame)
 	{
-		m_SpawnCnt = 0;
-		SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+		m_SpawnCnt++;
+
+		// 一定時間ごとにランダムな敵をスポーンさせる。
+		if (m_SpawnCnt >= 600)
+		{
+			m_SpawnCnt = 0;
+			SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+		}
 	}
 }
 

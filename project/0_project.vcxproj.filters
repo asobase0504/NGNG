@@ -572,6 +572,9 @@
     <ClCompile Include="src\skelton_skill.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClCompile>
+    <ClCompile Include="camera_title.cpp">
+      <Filter>ソース ファイル\3D\camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -1025,6 +1028,9 @@
     </ClInclude>
     <ClInclude Include="src\skelton_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClInclude>
+    <ClInclude Include="camera_title.h">
+      <Filter>ソース ファイル\3D\camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

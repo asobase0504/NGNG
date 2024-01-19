@@ -41,8 +41,10 @@ public:
 
 	void Load(std::string path);
 
-	static CMap* GetMap(std::string inPath = "")
+	static CMap* GetMap(std::string inPath = "", bool isGame = true)
 	{
+		m_isGame = isGame;
+
 		if (inPath != "")
 		{
 			if (m_map != nullptr)
@@ -89,5 +91,7 @@ private:
 	std::vector<CMesh*> m_mesh;
 	std::list<CCharacter*> m_characterList;
 	std::list<CSelectEntity*> m_selectEntity;
+
+	static bool m_isGame;
 };
 #endif

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="camera_title.cpp" />
     <ClCompile Include="src\abnormal.cpp" />
     <ClCompile Include="src\abnormal_data_base.cpp" />
     <ClCompile Include="src\bullet.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="src\yamato_skill_4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="camera_title.h" />
     <ClInclude Include="src\abnormal.h" />
     <ClInclude Include="src\abnormal_data_base.h" />
     <ClInclude Include="src\carrying_item_ui.h" />
