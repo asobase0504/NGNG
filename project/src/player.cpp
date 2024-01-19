@@ -232,6 +232,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[0]->Use();
+		m_nonCombat = false;
 	}
 
 	// スキル1(右クリック)
@@ -239,6 +240,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[2]->Use();
+		m_nonCombat = false;
 	}
 
 	// スキル2(シフト)
@@ -246,6 +248,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[1]->Use();
+		m_nonCombat = false;
 	}
 
 	// スキル3(R)
@@ -253,6 +256,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[3]->Use();
+		m_nonCombat = false;
 	}
 
 	if (isSuccess)
@@ -325,11 +329,18 @@ void CPlayer::Move()
 	}
 
 	if (m_isAccel)
-	{
+	{// 敵を倒したときの加速
 		D3DXVECTOR3 moveAccel = GetMove();
 		D3DXVec3Normalize(&moveAccel, &moveAccel);
 		SetItemMove(moveAccel * m_acceleration);
 		m_isAccel = false;
+	}
+
+	if (m_nonCombat)
+	{// 非戦闘時の加速
+		D3DXVECTOR3 moveBase = GetMove();
+		D3DXVec3Normalize(&moveBase, &moveBase);
+		SetItemMove(moveBase * m_nonComAddSpeed);
 	}
 }
 

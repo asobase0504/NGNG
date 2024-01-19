@@ -169,6 +169,9 @@ public:
 	// 加速する値
 	void SetAcceleration(float inAcceleration) { m_acceleration = inAcceleration; }
 	
+	//　非戦闘時に加速する値
+	void SetNonComAddSpeed(float inNonComAddSpeed) { m_nonComAddSpeed = inNonComAddSpeed; }
+
 	// 加速中かどうか
 	void SetIsAccel(bool is) { m_isAccel = is; }
 	bool GetIsAccel() { return m_isAccel; }
@@ -225,6 +228,7 @@ protected:
 	bool m_isBlock;			// 防御できたかできてないか
 	bool m_isStun;			// スタン状態かそうでないか
 	bool m_nonCombat;		// 非戦闘時
+	float m_nonComAddSpeed;	// 非戦闘時に加速する値
 	int m_nonCombatTime;	// 非戦闘時になる時間
 	bool m_isRunning;		// 走っているかどうか
 	bool m_isElite;			// エリート
