@@ -38,16 +38,18 @@ public:
 	void Update() override;
 
 	void SetReferenceTime(const int* inTime) { m_referenceTime = inTime; }
+	void SetReferenceIsBossKill(const bool* inTime) { m_referenceIsBossKill = inTime; }
 
 private:
 	CObject2d* m_ground;	// 下地
 
 	CObject2d* m_barGround;	// ゲージの下地
 	CObject2d* m_bar;		// ゲージ
-	CProcedure* m_progress;	// 進捗度
-	CText* m_text;		// "ボスを倒せ"
+	CText* m_chargeText;		// "耐え忍べ"
+	CText* m_bosskillText;		// "ボスを倒せ"
 	CObject2d* m_completeLine[2];		// 完了ライン
 
 	const int* m_referenceTime;	// 参照タイム
+	const bool* m_referenceIsBossKill;	// 敵の排除
 };
 #endif	// _ITEM_DATA_H_

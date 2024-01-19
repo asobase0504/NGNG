@@ -23,7 +23,7 @@
 
 #include "hp_ui.h"
 
-const int CStatueTeleporter::CHARGE_TIME	(300);
+const int CStatueTeleporter::CHARGE_TIME	(360);
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -85,7 +85,7 @@ void CStatueTeleporter::Update()
 
 	if (m_bOnce)
 	{
-		if (m_isBossDead && (m_time >= MAX_TIME))
+		if (m_isBossDead && (m_time >= CHARGE_TIME))
 		{
 			//-------------------------
 			// マップ移動処理追加
@@ -133,6 +133,7 @@ bool CStatueTeleporter::Select(CCharacter * selectCharacter)
 	CTeleporterEventUI* eventUI = new CTeleporterEventUI;
 	eventUI->Init();
 	eventUI->SetReferenceTime(&m_time);
+	eventUI->SetReferenceIsBossKill(&m_isBossDead);
 	SetEndChildren(eventUI);
 
 	m_btimeAdd = true;
