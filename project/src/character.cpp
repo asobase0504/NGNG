@@ -423,7 +423,8 @@ void CCharacter::Heal(int heal)
 void CCharacter::RatioHeal(float heal)
 {
 	float ratio = m_hp.GetCurrent() * heal;
-	if (ratio <= 1)
+
+	if (ratio <= 1.0f)
 	{
 		ratio = 1.0f;
 	}
@@ -456,6 +457,9 @@ void CCharacter::Died()
 	CMap::GetMap()->SetCharacterList(list);
 }
 
+//--------------------------------------------------------------
+// 描画を切る
+//--------------------------------------------------------------
 void CCharacter::SetDisplay(bool display)
 {
 	CObject::SetDisplay(display);

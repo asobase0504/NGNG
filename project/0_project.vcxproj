@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="select_warp.cpp" />
     <ClCompile Include="src\abnormal.cpp" />
     <ClCompile Include="src\abnormal_data_base.cpp" />
     <ClCompile Include="src\bullet.cpp" />
@@ -166,8 +167,10 @@
     <ClCompile Include="src\tengu_child.cpp" />
     <ClCompile Include="src\timer.cpp" />
     <ClCompile Include="src\yamato_skill_4.cpp" />
+    <ClCompile Include="teleporter_event_ui.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="select_warp.h" />
     <ClInclude Include="src\abnormal.h" />
     <ClInclude Include="src\abnormal_data_base.h" />
     <ClInclude Include="src\carrying_item_ui.h" />
@@ -312,6 +315,7 @@
     <ClInclude Include="src\tengu_child.h" />
     <ClInclude Include="src\timer.h" />
     <ClInclude Include="src\yamato_skill_4.h" />
+    <ClInclude Include="teleporter_event_ui.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">

@@ -1,0 +1,7 @@
+{
+  "SOUND": [
+    [ "ITEMSE", "data\/SOUND\/SE\/Item.mp3", 0 ],
+    [ "EXPLOSION", "data\/SOUND\/SE\/explosion.mp3", 0 ],
+    [ "BEAM", "data\/SOUND\/SE\/Beam.wav", 0 ]
+  ]
+}

@@ -48,7 +48,7 @@ void CSkillStorm::InitAbility()
 	//m_effectBG->SetColor(D3DXCOLOR(0.8f,0.8f,1.0f,0.5f));
 	//SetEndChildren(m_effectBG);
 
-	m_Duration = 60;
+	m_Duration = 180;
 }
 
 //--------------------------------------------------------------
@@ -77,12 +77,12 @@ void CSkillStorm::AllWayAbility()
 	//	m_effectBG->SetPos(pos);
 	//}
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		float rotY = FloatRandom(D3DX_PI, -D3DX_PI);
 		float diff = FloatRandom(120.0f, 0.0f);
 		D3DXVECTOR3 targetPos = CalculatePerimeterPos(m_bullet->GetPos(), D3DXVECTOR3(0.0f, rotY, 0.0f), D3DXVECTOR3(0.0f, 0.0f, diff));
-		targetPos.y += (60 - m_Duration) * 2;
+		targetPos.y += 60.0f + FloatRandom(4.0f,-4.0f);
 
 		CObjectPolygon3D* effect = CObjectPolygon3D::Create();
 		effect->SetPos(targetPos);

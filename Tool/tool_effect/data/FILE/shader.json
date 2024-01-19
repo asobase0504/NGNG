@@ -1,0 +1,41 @@
+{
+  "SHADER": [
+    {
+      "Label": "TEST",
+      "Path": "test.fx",
+      "Technique": {
+        "Technique0": "TechShader"
+      },
+      "Parameter": {
+        "Parameter0": "g_wvp",
+        "Parameter1": "g_tex"
+      }
+    },
+    {
+      "Label": "UVAnimation",
+      "Path": "uvAnimation.fx",
+      "Technique": {
+        "Technique0": "TechShader"
+      },
+      "Parameter": {
+        "Parameter0": "g_wvp",
+        "Parameter1": "g_animationUV",
+        "Parameter2": "g_maskTexture",
+        "Parameter3": "g_hasMaskTexture",
+        "Parameter4": "g_diffuse"
+      }
+    },
+    {
+      "Label": "Instancing",
+      "Path": "instancing_particle.fx",
+      "Technique": {
+        "Technique0": "TechShader"
+      },
+      "Parameter": {
+        "Parameter0": "g_wvp",
+        "Parameter1": "g_tex",
+        "Parameter2": "g_cameraPos"
+      }
+    }
+  ]
+}
