@@ -159,6 +159,27 @@ public:
 	// 向いている向きを変える方法
 	void SetToFaceRot(bool is) { m_isToFaceRot = is; RotateToFace(); }
 
+	// 前方に進む力
+	float GetForwardJumpPoewer() { return m_forwardJumpPoewer; }
+	void SetForwardJumpPoewer(float inForwardJumpPoewer) { m_forwardJumpPoewer = inForwardJumpPoewer; }
+
+	// 効果時間の設定
+	void SetEffectTime(int inEffectTime) { m_effectTime = inEffectTime; }
+
+	// 加速する値
+	void SetAcceleration(float inAcceleration) { m_acceleration = inAcceleration; }
+	
+	//　非戦闘時に加速する値
+	void SetNonComAddSpeed(float inNonComAddSpeed) { m_nonComAddSpeed = inNonComAddSpeed; }
+
+	// 加速中かどうか
+	void SetIsAccel(bool is) { m_isAccel = is; }
+	bool GetIsAccel() { return m_isAccel; }
+
+	// アイテムの移動量
+	D3DXVECTOR3 GetItemMove() { return m_itemMove; }
+	void SetItemMove(D3DXVECTOR3 inItemMove) { m_itemMove = inItemMove; }
+
 	// 今いる場所
 	STATE GetState() { return m_state; }
 
@@ -207,6 +228,7 @@ protected:
 	bool m_isBlock;			// 防御できたかできてないか
 	bool m_isStun;			// スタン状態かそうでないか
 	bool m_nonCombat;		// 非戦闘時
+	float m_nonComAddSpeed;	// 非戦闘時に加速する値
 	int m_nonCombatTime;	// 非戦闘時になる時間
 	bool m_isRunning;		// 走っているかどうか
 	bool m_isElite;			// エリート
@@ -217,6 +239,14 @@ protected:
 	bool m_isToFaceRot;			// 向いている向きを変える方法
 
 	float m_addDamage;
+
+	float m_forwardJumpPoewer;	// ジャンプしたときに前方に進む力
+	int m_effectTime;				// 効果時間
+
+	float m_acceleration;		// 敵を倒したときに加速する値
+	bool m_isAccel;				// 加速中かどうか
+
+	D3DXVECTOR3 m_itemMove;
 
 	STATE m_state;
 
