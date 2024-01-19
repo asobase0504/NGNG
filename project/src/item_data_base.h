@@ -86,6 +86,7 @@ private:	// ƒƒ“ƒo•Ï”
 
 	int m_countKill;	// E‚µ‚½”
 	int m_maxAddLife;	// ‘‚â‚¹‚éÅ‘å’l
+	int m_frame;		// Œø‰ÊŠÔ
 };
 
 using item_count = std::array<unsigned int, CItemDataBase::ITEM_MAX>;

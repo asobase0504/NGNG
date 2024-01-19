@@ -78,6 +78,7 @@ HRESULT CPlayer::Init()
 	// 友好状態
 	m_relation = ERelation::FRIENDLY;
 	m_isUpdate = true;
+	m_direction = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
 	{
@@ -231,6 +232,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[0]->Use();
+		m_nonCombat = false;
 	}
 
 	// スキル1(右クリック)
@@ -238,6 +240,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[2]->Use();
+		m_nonCombat = false;
 	}
 
 	// スキル2(シフト)
@@ -245,6 +248,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[1]->Use();
+		m_nonCombat = false;
 	}
 
 	// スキル3(R)
@@ -252,6 +256,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[3]->Use();
+		m_nonCombat = false;
 	}
 
 	if (isSuccess)
@@ -308,6 +313,7 @@ void CPlayer::Move()
 			if (m_isdash)
 			{
 				cameraVec *= m_dashPower.GetCurrent();
+				m_direction = cameraVec;
 			}
 			CDebugProc::Print("Player : cameraVec(%f, %f, %f)\n", cameraVec.x, cameraVec.y, cameraVec.z);
 			SetMoveXZ(cameraVec.x, cameraVec.z);
@@ -320,6 +326,21 @@ void CPlayer::Move()
 			D3DXVECTOR3 nowMove = GetMove();
 			AddMoveXZ(nowMove.x * -0.15f, nowMove.z * -0.15f);
 		}
+	}
+
+	if (m_isAccel)
+	{// 敵を倒したときの加速
+		D3DXVECTOR3 moveAccel = GetMove();
+		D3DXVec3Normalize(&moveAccel, &moveAccel);
+		SetItemMove(moveAccel * m_acceleration);
+		m_isAccel = false;
+	}
+
+	if (m_nonCombat)
+	{// 非戦闘時の加速
+		D3DXVECTOR3 moveBase = GetMove();
+		D3DXVec3Normalize(&moveBase, &moveBase);
+		SetItemMove(moveBase * m_nonComAddSpeed);
 	}
 }
 
@@ -338,7 +359,19 @@ void CPlayer::Jump()
 
 	if (jump && !m_jumpCount.MaxCurrentSame())
 	{
- 		m_jumpCount.AddCurrent(1);
+		m_jumpCount.AddCurrent(1);
+
+		if (m_isdash)
+		{	
+			// 効果時間の設定
+			m_effectTime = 30;
+			// 方向を正規化する
+			D3DXVec3Normalize(&m_direction, &m_direction);
+			// 前方に進む力の設定
+			m_direction *= m_forwardJumpPoewer;
+			// 値を渡す
+			SetItemMove(D3DXVECTOR3(m_direction.x, 0.0f, m_direction.z));
+		}
 
 		// ジャンプ力
 		SetMoveY(m_jumpPower.GetCurrent());

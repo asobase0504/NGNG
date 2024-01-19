@@ -521,7 +521,6 @@ HRESULT CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	// ↑チェック済み-----------------------------------------------
 	item = m_item[ITEM_CHICK];
 	item->SetModel("ITEM_HIYOKO");
 	item->SetRerity(RARITY_UNCOMMON);
@@ -529,10 +528,17 @@ HRESULT CItemDataBase::Init()
 	m_itemInfo[ITEM_CHICK][1] = "走りながらジャンプすると前方に飛び出す";
 	m_itemInfo[ITEM_CHICK][2] = "ITEM_DANGO_O1";
 	// ひよこ---------------------------------------------------------
-	// 走りながらジャンプすると前方に10m飛び出す (+10m)TODO
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
+	// 走りながらジャンプすると前方に10m飛び出す (+10m)
+	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
 	{
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
+		float forwardJumpPower = 0.0f;
+
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
+		{
+			forwardJumpPower += 10.0f;
+		}
+
+		inCharacter->SetForwardJumpPoewer(forwardJumpPower);
 	});
 	//--------------------------------------------------------------
 
@@ -540,20 +546,27 @@ HRESULT CItemDataBase::Init()
 	item->SetModel("ITEM_ZOURI");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_ZOURI][0] = "草履";
-	m_itemInfo[ITEM_ZOURI][1] = "敵を倒すと移動速度が一定時間上がる";
+	m_itemInfo[ITEM_ZOURI][1] = "敵を倒すとスピードが上がる";
 	m_itemInfo[ITEM_ZOURI][2] = "ITEM_DANGO_O1";
 	// 草履---------------------------------------------------------
 	// 敵を倒すと移動速度が125%上がり、1(+0.5)秒間消える
 	item->SetWhenDeathFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{// 敵が死んだら
-		// 現在の速度
-		float currentSpeed = inCharacter->GetSpeed()->GetCurrent();
+		float nowSpeed = 0;
+		nowSpeed = inCharacter->GetSpeed()->GetCurrent();
+		nowSpeed *= 1.25f;
 
-		// スピードが上がる割合を計算
-		currentSpeed *= (125 / 100);
+		int frame = 60;
+
+		for (int i = 0; i < cnt; i++)
+		{
+			frame += 30;
+		}
 
 		// 加算
-		inCharacter->GetSpeed()->AddItemEffect(currentSpeed);
+		inCharacter->SetAcceleration(nowSpeed);
+		inCharacter->SetIsAccel(true);
+		inCharacter->SetEffectTime(frame);
 	});
 	//--------------------------------------------------------------
 
@@ -583,7 +596,14 @@ HRESULT CItemDataBase::Init()
 	// 攻撃ヒット時に体力を1回復する (回復量+1)
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
 	{
-		inCharacter->Heal(1);
+		int heal = 0;
+
+		for (int i = 0; i < cnt; i++)
+		{
+			heal += 1;
+		}
+
+		inCharacter->Heal(heal);
 	});
 	//--------------------------------------------------------------
 
@@ -596,7 +616,7 @@ HRESULT CItemDataBase::Init()
 	// 足枷---------------------------------------------------------
 	// 攻撃を当てた敵の移動速度が2秒間60%減少する (秒数 +2)
 	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// 
+	{// TODO 逆に早くなってる？
 		outCharacter->AddAbnormalStack(CAbnormalDataBase::ABNORMAL_SLOW);
 	});
 	//--------------------------------------------------------------
@@ -609,22 +629,27 @@ HRESULT CItemDataBase::Init()
 	m_itemInfo[ITEM_SHIELD][2] = "ITEM_DANGO_O1";
 	// 盾---------------------------------------------------------
 	// 走っている間はアーマーが30増加する (+30)
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{
+	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
+	{// TODO 考え中
+		int armor = 0;
+
+		for (int Cnt = 0; Cnt < cnt; Cnt++)
+		{// 持ってる数、割合を増やす
+			armor += 30;
+		}
+
 		if (inCharacter->GetIsRunning())
 		{
-			int armor = 0;
-
-			for (int Cnt = 0; Cnt < cnt; Cnt++)
-			{// 持ってる数、割合を増やす
-				armor += 30;
-			}
-
 			inCharacter->GetBarrier()->AddItemEffect(armor);
+		}
+		else
+		{
+
 		}
 	});
 	//--------------------------------------------------------------
 
+	// ↑チェック済み-----------------------------------------------
 	item = m_item[ITEM_TABI];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
@@ -632,7 +657,7 @@ HRESULT CItemDataBase::Init()
 	m_itemInfo[ITEM_TABI][1] = "非戦闘時の移動速度があがる";
 	m_itemInfo[ITEM_TABI][2] = "ITEM_DANGO_O1";
 	// たび---------------------------------------------------------
-	// 非戦闘時の移動速度 +30% (+30%) // TODO
+	// 非戦闘時の移動速度 +30% (+30%)
 	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
 	{
 		if (inCharacter->GetIsNonCombat())
@@ -645,8 +670,9 @@ HRESULT CItemDataBase::Init()
 				addParcent += 30;
 			}
 
-			speed += speed * (addParcent / 100);
-			inCharacter->GetSpeed()->SetCurrent(speed);
+			float speedUp = speed * (addParcent / 100.0f);
+			inCharacter->SetNonComAddSpeed(speed);
+			inCharacter->SetEffectTime(5);
 		}
 	});
 	//--------------------------------------------------------------
