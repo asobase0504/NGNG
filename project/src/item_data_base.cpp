@@ -570,22 +570,6 @@ HRESULT CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	item = m_item[ITEM_ARROW];
-	item->SetModel("ITEM_ARROW");
-	item->SetRerity(RARITY_UNCOMMON);
-	m_itemInfo[ITEM_ARROW][0] = "矢";
-	m_itemInfo[ITEM_ARROW][1] = "敵を倒すと移動速度が一定時間上がる";
-	m_itemInfo[ITEM_ARROW][2] = "ITEM_DANGO_O1";
-	// 矢---------------------------------------------------------
-	// プライマリースキルを発動すると、矢も投げて、400%(+100%)の基礎ダメージを与える。
-	// 最大3(+1)個の矢を持つことができ、10秒経つとリロードされる
-	item->SetWhenUseSkill([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// 矢を発射 TODO
-		//inCharacter->GetRot()
-		//CArrow* obj = CArrow::Create();
-	});
-	//--------------------------------------------------------------
-
 	item = m_item[ITEM_SEED];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
@@ -621,35 +605,6 @@ HRESULT CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	item = m_item[ITEM_SHIELD];
-	item->SetModel("BOX");
-	item->SetRerity(RARITY_UNCOMMON);
-	m_itemInfo[ITEM_SHIELD][0] = "盾";
-	m_itemInfo[ITEM_SHIELD][1] = "走っている間はアーマーが増加する";
-	m_itemInfo[ITEM_SHIELD][2] = "ITEM_DANGO_O1";
-	// 盾---------------------------------------------------------
-	// 走っている間はアーマーが30増加する (+30)
-	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
-	{// TODO 考え中
-		int armor = 0;
-
-		for (int Cnt = 0; Cnt < cnt; Cnt++)
-		{// 持ってる数、割合を増やす
-			armor += 30;
-		}
-
-		if (inCharacter->GetIsRunning())
-		{
-			inCharacter->GetBarrier()->AddItemEffect(armor);
-		}
-		else
-		{
-
-		}
-	});
-	//--------------------------------------------------------------
-
-	// ↑チェック済み-----------------------------------------------
 	item = m_item[ITEM_TABI];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
@@ -677,20 +632,6 @@ HRESULT CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	item = m_item[ITEM_FLINT];
-	item->SetModel("BOX");
-	item->SetRerity(RARITY_UNCOMMON);
-	m_itemInfo[ITEM_FLINT][0] = "火打石";
-	m_itemInfo[ITEM_FLINT][1] = "発火の効果で、与えるダメージが時間の経過とともに増える";
-	m_itemInfo[ITEM_FLINT][2] = "ITEM_DANGO_O1";
-	// 火打石---------------------------------------------------------
-	// 発火の効果で、与えるダメージが時間の経過とともに+300%(+300%)以上増える
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
-	});
-	//--------------------------------------------------------------
-
 	item = m_item[ITEM_FLOWER];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
@@ -707,34 +648,6 @@ HRESULT CItemDataBase::Init()
 			CFlower* obj = CFlower::Create(inCharacter->GetPos(), radius);
 			inCharacter->SetIsTeleporter(false);
 		}
-	});
-	//--------------------------------------------------------------
-
-	item = m_item[ITEM_IRON_WIRE];
-	item->SetModel("BOX");
-	item->SetRerity(RARITY_UNCOMMON);
-	m_itemInfo[ITEM_IRON_WIRE][0] = "鉄線";
-	m_itemInfo[ITEM_IRON_WIRE][1] = "ダメージを受けた際、周囲の敵にダメージを与える";
-	m_itemInfo[ITEM_IRON_WIRE][2] = "ITEM_DANGO_O1";
-	// 鉄線---------------------------------------------------------
-	// ダメージを受けた際、周囲25m(+10m)以内にいる敵最大5体に160%のダメージを与える (+2体)
-	item->SetWhenReceiveFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
-	});
-	//--------------------------------------------------------------
-
-	item = m_item[ITEM_HANNYA];
-	item->SetModel("BOX");
-	item->SetRerity(RARITY_RARE);
-	m_itemInfo[ITEM_IRON_WIRE][0] = "般若面";
-	m_itemInfo[ITEM_IRON_WIRE][1] = "1秒以内に4体の敵を倒すと6秒間フレンジー状態になる";
-	m_itemInfo[ITEM_IRON_WIRE][2] = "ITEM_DANGO_O1";
-	// 般若面---------------------------------------------------------
-	// 1秒以内に4体の敵を倒すと6秒間フレンジー状態になる。フレンジー発動中は移動速度が50%、攻撃速度が100%上昇する (+4秒)
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
 	});
 	//--------------------------------------------------------------
 
