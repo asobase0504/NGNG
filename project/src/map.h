@@ -41,12 +41,21 @@ public:
 
 	void Load(std::string path);
 
-	static CMap* GetMap(std::string inPath = "")
+	static CMap* GetMap()
 	{
+		return m_map;
+	}
+
+	static void SetMap(std::string inPath = "", bool isGame = true) 
+	{
+		m_isGame = isGame;
+
 		if (inPath != "")
 		{
 			if (m_map != nullptr)
 			{
+				m_map->Uninit();
+				delete m_map;
 				m_map = nullptr;
 			}
 
@@ -54,10 +63,8 @@ public:
 			m_map->Load(inPath);
 			m_map->Init();
 		}
-
-		return m_map;
-	}
-
+	
+	};
 	CMapModel* GetMapModel(int inNum) { return m_model[inNum]; }
 	int GetNumModel() { return m_model.size(); }
 
@@ -89,5 +96,7 @@ private:
 	std::vector<CMesh*> m_mesh;
 	std::list<CCharacter*> m_characterList;
 	std::list<CSelectEntity*> m_selectEntity;
+
+	static bool m_isGame;
 };
 #endif

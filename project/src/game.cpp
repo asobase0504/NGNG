@@ -111,10 +111,10 @@ HRESULT CGame::Init()
 	m_difficult = CDifficult::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
 
 	// 虚無マップ
-	m_map = CMap::GetMap("data/FILE/map/map01.json");
+	CMap::SetMap("data/FILE/map/map03.json");
 
 	m_mapFade = CMapFade::Create();
-	m_mapFade->NextMap("data/FILE/map/map01.json");
+	m_mapFade->NextMap("data/FILE/map/map03.json");
 
 	return S_OK;
 }
@@ -191,6 +191,6 @@ void CGame::ChangeMap(std::string inPath)
 
 	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
 	player->OnUpdate();
-	m_map = CMap::GetMap(inPath);
+	CMap::SetMap(inPath);
 	m_map->InCharacterList(player);
 }

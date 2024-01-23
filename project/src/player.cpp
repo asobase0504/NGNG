@@ -437,45 +437,49 @@ void CPlayer::Select()
 {
 	CMap* map = CMap::GetMap();
 
-	std::list<CSelectEntity*> list = map->GetSelectEntityList();
-
-	CSelectEntity* nearEntity;
-	float nearLength = FLT_MAX;
-
-	for (CSelectEntity* entity : list)
+	if (map != nullptr)
 	{
-		entity->NoDisplayUI();
+		std::list<CSelectEntity*> list = map->GetSelectEntityList();
 
-		if (entity->GetSelectCollision() == nullptr)
+		CSelectEntity* nearEntity;
+		float nearLength = FLT_MAX;
+
+		for (CSelectEntity* entity : list)
 		{
-			continue;
+			entity->NoDisplayUI();
+
+			if (entity->GetSelectCollision() == nullptr)
+			{
+				continue;
+			}
+
+			D3DXVECTOR3 diffPos = m_pos - entity->GetPos();
+
+			float diff = D3DXVec3Length(&diffPos);
+
+			if (entity->GetCostUI() != nullptr)
+			{
+				entity->GetCostUI()->SetDisplay(600.0f > diff);
+			}
+
+			if (nearLength > diff)
+			{
+				nearLength = diff;
+				nearEntity = entity;
+			}
 		}
 
-		D3DXVECTOR3 diffPos = m_pos - entity->GetPos();
-
-		float diff = D3DXVec3Length(&diffPos);
-
-		if (entity->GetCostUI() != nullptr)
+		if (nearEntity->GetSelectCollision()->ToCylinder(GetCollision()))
 		{
-			entity->GetCostUI()->SetDisplay(600.0f > diff);
-		}
+			nearEntity->DisplayUI();
 
-		if (nearLength > diff)
-		{
-			nearLength = diff;
-			nearEntity = entity;
+			if (m_controller->Select())
+			{
+				nearEntity->Select(this);
+			}
 		}
 	}
-
-	if (nearEntity->GetSelectCollision()->ToCylinder(GetCollision()))
-	{
-		nearEntity->DisplayUI();
-
-		if (m_controller->Select())
-		{
-			nearEntity->Select(this);
-		}
-	}
+	
 }
 
 //--------------------------------------------------------------

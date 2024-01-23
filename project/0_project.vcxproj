@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="effect_damage_camera.cpp" />
     <ClCompile Include="select_warp.cpp" />
+    <ClCompile Include="camera_title.cpp" />
     <ClCompile Include="src\abnormal.cpp" />
     <ClCompile Include="src\abnormal_data_base.cpp" />
     <ClCompile Include="src\bullet.cpp" />
@@ -172,8 +173,6 @@
     <ClCompile Include="ui_bg.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="effect_damage_camera.h" />
-    <ClInclude Include="select_warp.h" />
     <ClInclude Include="src\abnormal.h" />
     <ClInclude Include="src\abnormal_data_base.h" />
     <ClInclude Include="src\carrying_item_ui.h" />
@@ -330,6 +329,7 @@
   <ItemGroup>
     <None Include="data\FILE\map\map01.json" />
     <None Include="data\FILE\map\map02.json" />
+    <None Include="data\FILE\map\map03.json" />
     <None Include="data\FILE\model.json" />
     <None Include="data\FILE\skinmesh.json" />
     <None Include="data\FILE\texture.json" />

@@ -91,13 +91,11 @@ HRESULT CGame::Init()
 	//CInput::GetKey()->SetCursorErase(false);
 	//CInput::GetKey()->LockCursorPos(true);
 
-	
-
 	// 虚無マップ
 	m_map = CMap::GetMap("data/test.json");
 
 	m_mapFade = CMapFade::Create();
-	m_mapFade->NextMap("data/FILE/map/map01.json");
+	m_mapFade->NextMap("data/FILE/map/map02.json");
 
 	m_camera = new CCameraGame;
 	m_camera->Init();
@@ -175,18 +173,6 @@ void CGame::Update()
 	pInput = CInput::GetKey();
 
 	CModeFade* pFade = CApplication::GetInstance()->GetFade();
-	if (pInput->Trigger(DIK_F1))
-	{
-		//pFade->NextMode(CApplication::MODE_DEBUG);
-	}
-	if (pInput->Trigger(DIK_F5))
-	{
-		pFade->NextMode(CApplication::MODE_DEBUG);
-	}
-	if (pInput->Trigger(DIK_6))
-	{
-		SetChangeMap();
-	}
 
 	//if (m_tcp->GetIsConnect())
 	//{

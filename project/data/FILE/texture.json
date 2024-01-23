@@ -2,7 +2,8 @@
 	"TEXTURE": [
 	["SKY","data\/TEXTURE\/Sky.jpg"],
 	["TOON","data\/TEXTURE\/toon.png"],
-	["TITLE_LOGO","data\/TEXTURE\/TEXT\/title.png"],
+	["TITLE_BG","data\/TEXTURE\/green.jpg"],
+	["TITLE_LOGO","data\/TEXTURE\/title.png"],
 	["NUMBER","data\/TEXTURE\/number002_1.png"],
 	["RETICLE","data\/TEXTURE\/reticle.png"],
 	["ITEM_DANGO_O1","data\/TEXTURE\/item\/dango_white_1.png"],

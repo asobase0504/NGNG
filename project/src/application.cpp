@@ -254,6 +254,8 @@ void CApplication::SetMode(MODE mode)
 	// ‰Šú‰»ˆ—
 	if (FAILED(m_mode->Init()))	//‰æ–ÊƒTƒCƒY
 	{
+		int a = 0;
+
 		//‰Šú‰»ˆ—‚ª¸”s‚µ‚½ê‡
 		return;
 	}

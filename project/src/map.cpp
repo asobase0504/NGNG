@@ -1,6 +1,6 @@
 //**************************************************************
 // 
-// ƒ}ƒbƒv‚Ìì¬
+// ãƒãƒƒãƒ—ã®ä½œæˆ
 // Author : Tomidokoro Tomoki
 // 
 //**************************************************************
@@ -30,12 +30,13 @@
 #include "item_data_base.h"
 
 //==============================================================
-// Ã“Iƒƒ“ƒo•Ï”éŒ¾
+// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°å®£è¨€
 //==============================================================
 CMap* CMap::m_map = nullptr;
+bool CMap::m_isGame = false;
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CMap::CMap() :
 	CTask(CTaskGroup::EPriority::LEVEL_SYSTEM)
@@ -47,7 +48,7 @@ CMap::CMap() :
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CMap::~CMap()
 {
@@ -55,25 +56,27 @@ CMap::~CMap()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»
+// åˆæœŸåŒ–
 //--------------------------------------------------------------
 HRESULT CMap::Init()
 {
-	CStatueManager* manager = CStatueManager::GetInstance();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->CreateStatue(CStatueManager::BLOOD);
-	manager->CreateStatue(CStatueManager::LUCK);
-	manager->CreateStatue(CStatueManager::TELEPORTER);
-	manager->CreateStatue(CStatueManager::CHEST);
-	manager->CreateStatue(CStatueManager::COMBAT);
-
-	for (int i = 0; i < 50; i++)
+	if (m_isGame)
 	{
+		CStatueManager* manager = CStatueManager::GetInstance();
+		manager->RandomCreate();
+		manager->RandomCreate();
+		manager->RandomCreate();
+		manager->RandomCreate();
+		manager->CreateStatue(CStatueManager::BLOOD);
+		manager->CreateStatue(CStatueManager::LUCK);
+		manager->CreateStatue(CStatueManager::TELEPORTER);
 		manager->CreateStatue(CStatueManager::CHEST);
-	}
+		manager->CreateStatue(CStatueManager::COMBAT);
+
+		for (int i = 0; i < 50; i++)
+		{
+			manager->CreateStatue(CStatueManager::CHEST);
+		}
 
 	CObject2d* sky = CObject2d::Create();
 	sky->SetSize(CApplication::CENTER_POS);
@@ -86,12 +89,11 @@ HRESULT CMap::Init()
 	//{
 	//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
 	//}
-
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// I—¹
+// çµ‚äº†
 //--------------------------------------------------------------
 void CMap::Uninit()
 {
@@ -99,27 +101,34 @@ void CMap::Uninit()
 	m_model.clear();
 	m_characterList.clear();
 	m_selectEntity.clear();
-
+	if (m_map != nullptr)
+	{
+		m_map = nullptr;
+	}
 	CTask::Uninit();
+
 }
 
 //--------------------------------------------------------------
-// XV
+// æ›´æ–°
 //--------------------------------------------------------------
 void CMap::Update()
 {
-	m_SpawnCnt++;
-
-	// ˆê’èŠÔ‚²‚Æ‚Éƒ‰ƒ“ƒ_ƒ€‚È“G‚ğƒXƒ|[ƒ“‚³‚¹‚éB
-	if (m_SpawnCnt >= 600)
+	if (m_isGame)
 	{
-		m_SpawnCnt = 0;
-		SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+		m_SpawnCnt++;
+
+		// ä¸€å®šæ™‚é–“ã”ã¨ã«ãƒ©ãƒ³ãƒ€ãƒ ãªæ•µã‚’ã‚¹ãƒãƒ¼ãƒ³ã•ã›ã‚‹ã€‚
+		if (m_SpawnCnt >= 600)
+		{
+			m_SpawnCnt = 0;
+			SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+		}
 	}
 }
 
 //--------------------------------------------------------------
-// “Ç‚İ
+// èª­è¾¼ã¿
 //--------------------------------------------------------------
 void CMap::Load(std::string path)
 {
@@ -152,14 +161,14 @@ void CMap::Load(std::string path)
 }
 
 //--------------------------------------------------------------
-// ˆá‚¤ŠÖŒW‚Ì‚à‚Ì‚ÉŠÖ”‚ğs‚¤
+// é•ã†é–¢ä¿‚ã®ã‚‚ã®ã«é–¢æ•°ã‚’è¡Œã†
 //--------------------------------------------------------------
 void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
 {
 	std::list<CCharacter*> charaList = GetCharacterList();
 
 	for (CCharacter* chara : charaList)
-	{// UŒ‚”ÍˆÍ‚É“G‚ª‚¢‚é‚©”»’è‚·‚é
+	{// æ”»æ’ƒç¯„å›²ã«æ•µãŒã„ã‚‹ã‹åˆ¤å®šã™ã‚‹
 
 		if (chara->IsDeleted())
 		{

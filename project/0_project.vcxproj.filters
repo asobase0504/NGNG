@@ -596,6 +596,9 @@
     <ClCompile Include="effect_damage_camera.cpp">
       <Filter>ソース ファイル\Mode\01_Game\effect</Filter>
     </ClCompile>
+    <ClCompile Include="camera_title.cpp">
+      <Filter>ソース ファイル\3D\camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -1053,24 +1056,6 @@
     <ClInclude Include="src\skill_back_step.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="src\skill_assault.h">
-      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
-    </ClInclude>
-    <ClInclude Include="src\skill_storm.h">
-      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
-    </ClInclude>
-    <ClInclude Include="select_warp.h">
-      <Filter>ソース ファイル\Mode\01_Game\select_entity</Filter>
-    </ClInclude>
-    <ClInclude Include="teleporter_event_ui.h">
-      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_bg.h">
-      <Filter>ソース ファイル\Mode\01_Game\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="effect_damage_camera.h">
-      <Filter>ソース ファイル\Mode\01_Game\effect</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
@@ -1092,6 +1077,9 @@
     </None>
     <None Include="data\FILE\skinmesh.json">
       <Filter>json</Filter>
+    </None>
+    <None Include="data\FILE\map\map03.json">
+      <Filter>json\map</Filter>
     </None>
   </ItemGroup>
 </Project>

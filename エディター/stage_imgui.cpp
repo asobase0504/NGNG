@@ -152,7 +152,6 @@ bool CStageImgui::Update()
 
 	ImGui::End();
 
-
 	//ImGui::SliderFloat3(u8"ロット", &sliderRot.x, -3.14f, 3.14f);
 	//ImGui::Separator();
 
@@ -235,7 +234,7 @@ void CStageImgui::EditModel()
 	CMap* map = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetMap();
 	if (ImGui::Button(u8"モデル生成"))
 	{// ボタンが押された
-		CMapModel*popmodel = CMapModel::Create(m_model->GetPos(), m_model->GetRot(), m_model->GetSize());
+		CMapModel*popmodel = CMapModel::Create(CPlayerManager::GetInstance()->GetPlayer()->GetPos(), m_model->GetRot(), m_model->GetSize());
 		popmodel->LoadModel(m_NowModelName);
 		map->SetMapModel(popmodel);
 	}
