@@ -126,6 +126,11 @@ HRESULT CCharacter::Init()
 	m_isBlock = false;
 	m_isAtkCollision = false;
 	m_addDamage = 0.0f;
+	m_forwardJumpPoewer = 1.0f;
+	m_itemMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_effectTime = 0;
+	m_isAccel = false;
+	m_nonComAddSpeed = 0.0f;
 
 	for (int i = 0; i < CAbnormalDataBase::ABNORMAL_MAX; i++)
 	{
@@ -157,6 +162,16 @@ void CCharacter::Update()
 	// 更新処理
 	CObject::Update();
 
+	m_effectTime--;
+	if (m_effectTime > 0)
+	{
+		AddPos(GetItemMove());
+	}
+	else
+	{
+		m_effectTime = 0;
+	}
+
 	// 常に起動するアイテム
 	CItemManager::GetInstance()->AllWhenAllways(this, m_haveItem);
 
@@ -185,6 +200,16 @@ void CCharacter::Update()
 			m_nonCombat = true;
 			m_nonCombatTime = 0;
 		}
+	}
+
+	if (m_pos.y < -900.0f)
+	{
+		SetPos(m_groundPos);
+	}
+
+	if (m_state == STATE::GROUND)
+	{
+		m_groundPos = m_pos;
 	}
 }
 
@@ -423,7 +448,8 @@ void CCharacter::Heal(int heal)
 void CCharacter::RatioHeal(float heal)
 {
 	float ratio = m_hp.GetCurrent() * heal;
-	if (ratio <= 1)
+
+	if (ratio <= 1.0f)
 	{
 		ratio = 1.0f;
 	}
@@ -456,6 +482,9 @@ void CCharacter::Died()
 	CMap::GetMap()->SetCharacterList(list);
 }
 
+//--------------------------------------------------------------
+// 描画を切る
+//--------------------------------------------------------------
 void CCharacter::SetDisplay(bool display)
 {
 	CObject::SetDisplay(display);

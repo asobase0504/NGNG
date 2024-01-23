@@ -146,34 +146,6 @@ void CGame::Uninit()
 //--------------------------------------------------------------
 void CGame::Update()
 {
-	if (CApplication::GetInstance()->IsActiveWindow())
-	{
-		CInput::GetKey()->SetCursorErase(false);
-		CInput::GetKey()->LockCursorPos(true);
-	}
-	else
-	{
-		CInput::GetKey()->SetCursorErase(true);
-		CInput::GetKey()->LockCursorPos(false);
-	}
-
-	CInput* pInput;
-	pInput = CInput::GetKey();
-
-	CModeFade* pFade = CApplication::GetInstance()->GetFade();
-	if (pInput->Trigger(DIK_F1))
-	{
-		//pFade->NextMode(CApplication::MODE_DEBUG);
-	}
-	if (pInput->Trigger(DIK_F5))
-	{
-		pFade->NextMode(CApplication::MODE_DEBUG);
-	}
-	if (pInput->Trigger(DIK_6))
-	{
-		SetChangeMap();
-	}
-
 	//if (m_tcp->GetIsConnect())
 	//{
 	//	CPlayer* Player = CPlayerManager::GetInstance()->GetPlayer();
@@ -195,6 +167,10 @@ void CGame::Update()
 	//}
 }
 
+//--------------------------------------------------------------
+// マップの切り替え
+// Author : Yuda Kaito
+//--------------------------------------------------------------
 void CGame::SetChangeMap()
 {
 	CPlayerManager::GetInstance()->GetPlayer()->OffUpdate();

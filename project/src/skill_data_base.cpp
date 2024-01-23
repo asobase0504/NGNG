@@ -31,6 +31,9 @@
 #include "dullahan_charge_skill.h"
 #include "gyuuki_stamp_skill.h"
 #include "skelton_skill.h"
+#include "skill_back_step.h"
+#include "skill_assault.h"
+#include "skill_storm.h"
 
 //==============================================================
 // 静的メンバー変数の宣言
@@ -197,4 +200,21 @@ void CSkillDataBase::Init()
 	info->baseInfo.stock = 1;
 	info->ability = CSkeltonSkill::Create;
 
+	// バックステップ
+	info = &m_dates["BACK_STEP"];
+	info->baseInfo.CT = 100;
+	info->baseInfo.stock = 1;
+	info->ability = CSkillBackStep::Create;
+
+	// 突進
+	info = &m_dates["ASSAULT"];
+	info->baseInfo.CT = 100;
+	info->baseInfo.stock = 1;
+	info->ability = CSkillAssault::Create;
+
+	// 突進
+	info = &m_dates["STORM"];
+	info->baseInfo.CT = 100;
+	info->baseInfo.stock = 1;
+	info->ability = CSkillStorm::Create;
 }

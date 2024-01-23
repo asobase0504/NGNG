@@ -42,6 +42,11 @@
 #include "skill_ui.h"
 #include "abnormal_2dui.h"
 #include "carrying_item_group_ui.h"
+#include "ui_bg.h"
+#include "timer.h"
+
+/* 演出 */
+#include "effect_damage_camera.h"
 
 /**/
 #include "procedure3D.h"
@@ -78,6 +83,7 @@ HRESULT CPlayer::Init()
 	// 友好状態
 	m_relation = ERelation::FRIENDLY;
 	m_isUpdate = true;
+	m_direction = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	for (int nCnt = 0; nCnt < MAX_SKILL; nCnt++)
 	{
@@ -105,16 +111,18 @@ HRESULT CPlayer::Init()
 	m_collision->SetParent(&m_pos);
 
 	// UI作成
-	CHPUI::Create(GetHp());
-	CMONEYUI::Create(GetMoney());
-
+	m_uiList.push_back(CUIBackGround::Create(D3DXVECTOR2(CApplication::CENTER_POS.x - 500.0f, 75.0f), D3DXVECTOR2(75.0f, 45.0f), 0.25f));
+	m_uiList.push_back(CUIBackGround::Create(D3DXVECTOR2(SCREEN_WIDTH * 0.9f, 120.0f), D3DXVECTOR2(100.0f, 90.0f),0.25f));
+	m_uiList.push_back(CHPUI::Create(GetHp()));
+	m_uiList.push_back(CMONEYUI::Create(GetMoney()));
+	m_uiList.push_back(CTimer::Create());
 	for (int i = 0; i < 4; i++)
 	{
-		CSkillUI::Create(D3DXVECTOR3(1000.0f + 57.5f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i));
+		m_uiList.push_back(CSkillUI::Create(D3DXVECTOR3(1000.0f + 57.5f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i)));
 	}
-
 	m_carringitemGroupUI = new CCarryingItemGroupUI;
 	m_carringitemGroupUI->Init();
+	m_carringitemGroupUI;
 
 	return S_OK;
 }
@@ -189,8 +197,7 @@ void CPlayer::Update()
 
 	if (IsDied() && !m_isResult)
 	{
-		m_isResult = true;
-		CResult::Create();
+		Result();
 	}
 
 	// 更新処理
@@ -231,6 +238,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[0]->Use();
+		m_nonCombat = false;
 	}
 
 	// スキル1(右クリック)
@@ -238,6 +246,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[2]->Use();
+		m_nonCombat = false;
 	}
 
 	// スキル2(シフト)
@@ -245,6 +254,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[1]->Use();
+		m_nonCombat = false;
 	}
 
 	// スキル3(R)
@@ -252,6 +262,7 @@ void CPlayer::PAttack()
 	{
 		// 発動時に生成
 		isSuccess = m_skill[3]->Use();
+		m_nonCombat = false;
 	}
 
 	if (isSuccess)
@@ -308,6 +319,7 @@ void CPlayer::Move()
 			if (m_isdash)
 			{
 				cameraVec *= m_dashPower.GetCurrent();
+				m_direction = cameraVec;
 			}
 			CDebugProc::Print("Player : cameraVec(%f, %f, %f)\n", cameraVec.x, cameraVec.y, cameraVec.z);
 			SetMoveXZ(cameraVec.x, cameraVec.z);
@@ -320,6 +332,21 @@ void CPlayer::Move()
 			D3DXVECTOR3 nowMove = GetMove();
 			AddMoveXZ(nowMove.x * -0.15f, nowMove.z * -0.15f);
 		}
+	}
+
+	if (m_isAccel)
+	{// 敵を倒したときの加速
+		D3DXVECTOR3 moveAccel = GetMove();
+		D3DXVec3Normalize(&moveAccel, &moveAccel);
+		SetItemMove(moveAccel * m_acceleration);
+		m_isAccel = false;
+	}
+
+	if (m_nonCombat)
+	{// 非戦闘時の加速
+		D3DXVECTOR3 moveBase = GetMove();
+		D3DXVec3Normalize(&moveBase, &moveBase);
+		SetItemMove(moveBase * m_nonComAddSpeed);
 	}
 }
 
@@ -338,7 +365,19 @@ void CPlayer::Jump()
 
 	if (jump && !m_jumpCount.MaxCurrentSame())
 	{
- 		m_jumpCount.AddCurrent(1);
+		m_jumpCount.AddCurrent(1);
+
+		if (m_isdash)
+		{	
+			// 効果時間の設定
+			m_effectTime = 30;
+			// 方向を正規化する
+			D3DXVec3Normalize(&m_direction, &m_direction);
+			// 前方に進む力の設定
+			m_direction *= m_forwardJumpPoewer;
+			// 値を渡す
+			SetItemMove(D3DXVECTOR3(m_direction.x, 0.0f, m_direction.z));
+		}
 
 		// ジャンプ力
 		SetMoveY(m_jumpPower.GetCurrent());
@@ -377,6 +416,18 @@ void CPlayer::AddAbnormalStack(const int id, const int cnt)
 	}
 
 	CCharacter::AddAbnormalStack(id, cnt);
+}
+
+void CPlayer::TakeDamage(const int inDamage, CCharacter * inChara)
+{
+	CEffectDamageCamera::Create();
+	CCharacter::TakeDamage(inDamage, inChara);
+}
+
+void CPlayer::AbDamage(const int inDamage)
+{
+	CEffectDamageCamera::Create();
+	CCharacter::AbDamage(inDamage);
 }
 
 //--------------------------------------------------------------
@@ -440,6 +491,29 @@ void CPlayer::RotateToFace()
 	{
 		SetRot(D3DXVECTOR3(0.0f,((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot().y,0.0f));
 	}
+}
+
+//--------------------------------------------------------------
+// リザルト
+//--------------------------------------------------------------
+void CPlayer::Result()
+{
+	for (CAbnormal2DUI* ui : m_abnormalUI)
+	{
+		ui->Uninit();
+	}
+	m_abnormalUI.clear();
+
+	for (CObject* ui : m_uiList)
+	{
+		ui->Uninit();
+	}
+	m_uiList.clear();
+
+	m_carringitemGroupUI->Uninit();
+
+	m_isResult = true;
+	CResult::Create();
 }
 
 //--------------------------------------------------------------

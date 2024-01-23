@@ -14,7 +14,7 @@
 class CText : public CObject
 {
 public:
-	CText(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_BG);
+	CText();
 	~CText();
 	HRESULT Init() override;
 	void Uninit() override;
@@ -26,6 +26,8 @@ public:
 
 	void SetCountXfast(int fast) { m_wordsPopCountXfast = fast; m_wordsPopCountX = m_wordsPopCountXfast; };
 	void SetRelease(bool Nottimerdelete) { m_isRelease = Nottimerdelete; };
+
+	void SetColor(const D3DXCOLOR &inColor) override;
 private:
 
 	D3DXCOLOR col;

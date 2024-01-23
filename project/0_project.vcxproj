@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="effect_damage_camera.cpp" />
+    <ClCompile Include="select_warp.cpp" />
     <ClCompile Include="camera_title.cpp" />
     <ClCompile Include="src\abnormal.cpp" />
     <ClCompile Include="src\abnormal_data_base.cpp" />
@@ -35,7 +37,9 @@
     <ClCompile Include="src\gyuuki_stamp_skill.cpp" />
     <ClCompile Include="src\nurikabe_skill.cpp" />
     <ClCompile Include="src\skelton_skill.cpp" />
+    <ClCompile Include="src\skill_assault.cpp" />
     <ClCompile Include="src\skill_back_step.cpp" />
+    <ClCompile Include="src\skill_storm.cpp" />
     <ClCompile Include="src\summon_skill.cpp" />
     <ClCompile Include="src\golem_skill_1.cpp" />
     <ClCompile Include="src\abnormal_2dui.cpp" />
@@ -165,9 +169,10 @@
     <ClCompile Include="src\tengu_child.cpp" />
     <ClCompile Include="src\timer.cpp" />
     <ClCompile Include="src\yamato_skill_4.cpp" />
+    <ClCompile Include="teleporter_event_ui.cpp" />
+    <ClCompile Include="ui_bg.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera_title.h" />
     <ClInclude Include="src\abnormal.h" />
     <ClInclude Include="src\abnormal_data_base.h" />
     <ClInclude Include="src\carrying_item_ui.h" />
@@ -182,7 +187,9 @@
     <ClInclude Include="src\gyuuki_stamp_skill.h" />
     <ClInclude Include="src\nurikabe_skill.h" />
     <ClInclude Include="src\skelton_skill.h" />
+    <ClInclude Include="src\skill_assault.h" />
     <ClInclude Include="src\skill_back_step.h" />
+    <ClInclude Include="src\skill_storm.h" />
     <ClInclude Include="src\summon_skill.h" />
     <ClInclude Include="src\golem_skill_1.h" />
     <ClInclude Include="src\enemy_hp_ui.h" />
@@ -310,6 +317,8 @@
     <ClInclude Include="src\tengu_child.h" />
     <ClInclude Include="src\timer.h" />
     <ClInclude Include="src\yamato_skill_4.h" />
+    <ClInclude Include="teleporter_event_ui.h" />
+    <ClInclude Include="ui_bg.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">

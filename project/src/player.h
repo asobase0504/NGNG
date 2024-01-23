@@ -50,6 +50,10 @@ public:
 
 	void AddAbnormalStack(const int id, const int cnt = 1) override;
 
+	void TakeDamage(const int inDamage, CCharacter* inChara) override;
+	void AbDamage(const int inDamage) override;
+
+
 private:
 	void PAttack();		// 攻撃
 	void Move();		// 移動
@@ -57,16 +61,20 @@ private:
 	void Select();		// 選ぶ
 
 	void RotateToFace() override;
+
+	void Result();
 private:		// メンバ変数
 	bool m_isjump;		// ジャンプしているかどうか
 	bool m_isdash;		// ダッシュしているかどうか
 	bool m_isskill;		// スキルを使用しているかどうか
 	bool m_isUpdate;	// 更新を止めるか否か。
 	bool m_isResult;	// リザルト中か否か
+	D3DXVECTOR3 m_direction;	// 方向
 
 	CController*	m_controller;	// 命令を出す人
 
 	// UI
+	std::list<CObject*> m_uiList;
 	std::list<CAbnormal2DUI*> m_abnormalUI;	// 状態異常やバフなどのアイコンを表示
 	CCarryingItemGroupUI* m_carringitemGroupUI;	// 所持アイテムUI
 };

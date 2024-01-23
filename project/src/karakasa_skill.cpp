@@ -41,6 +41,8 @@ void CKarakasaSkill::InitAbility()
 {
 	m_Duration = 400;
 
+	m_aimCharacter = nullptr;
+
 	// ‘_‚¤æ‚ÌŒˆ’è
 	CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this](CCharacter* inChara)
 	{

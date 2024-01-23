@@ -126,6 +126,9 @@
     <Filter Include="ソース ファイル\Mode\01_Game\character\02_skill\type">
       <UniqueIdentifier>{43bca4e3-774c-47d7-b01c-fa0c9b74e110}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\effect">
+      <UniqueIdentifier>{57954b71-28c3-4b26-8c4b-26e25abc1569}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -574,6 +577,24 @@
     </ClCompile>
     <ClCompile Include="src\skill_back_step.cpp">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_assault.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill_storm.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClCompile>
+    <ClCompile Include="select_warp.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\select_entity</Filter>
+    </ClCompile>
+    <ClCompile Include="teleporter_event_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_bg.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="effect_damage_camera.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\effect</Filter>
     </ClCompile>
     <ClCompile Include="camera_title.cpp">
       <Filter>ソース ファイル\3D\camera</Filter>
@@ -1032,8 +1053,9 @@
     <ClInclude Include="src\skelton_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="camera_title.h" />
-    <ClInclude Include="src\skill_back_step.h" />
+    <ClInclude Include="src\skill_back_step.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">

@@ -19,8 +19,11 @@
 #include "utility.h"
 #include "application.h"
 #include "game.h"
+#include "teleporter_event_ui.h"
 
 #include "hp_ui.h"
+
+const int CStatueTeleporter::CHARGE_TIME	(360);
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -58,6 +61,9 @@ HRESULT CStatueTeleporter::Init()
 	m_uiText = "テレポート起動";
 	m_bOnce = false;
 	m_btimeAdd = false;
+	m_isBossDead = false;
+
+	m_pEnemy = nullptr;
 
 	SetMark("GATE");
 	return S_OK;
@@ -68,9 +74,18 @@ HRESULT CStatueTeleporter::Init()
 //--------------------------------------------------------------
 void CStatueTeleporter::Update()
 {
+	if (m_pEnemy != nullptr)
+	{
+		if (m_pEnemy->IsDied())
+		{
+			m_isBossDead = true;
+			m_pEnemy = nullptr;
+		}
+	}
+
 	if (m_bOnce)
 	{
-		if ((m_pEnemy->IsDied()) && (m_time >= MAX_TIME))
+		if (m_isBossDead && (m_time >= CHARGE_TIME))
 		{
 			//-------------------------
 			// マップ移動処理追加
@@ -101,16 +116,25 @@ bool CStatueTeleporter::Select(CCharacter * selectCharacter)
 		popPos.x += FloatRandom(100.0f, -100.0f);
 		popPos.z += FloatRandom(100.0f, -100.0f);
 
-		m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(popPos, CEnemyDataBase::NINE_FOX,5);
+		m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(popPos, CEnemyDataBase::SKELTON,5);
 		CBossHPUI* ui = new CBossHPUI;
 		ui->Init();
 		ui->SetHP(m_pEnemy->GetHp());
 		m_pEnemy->SetEndChildren(ui);
 
 		DeleteMark();
+		m_collisionCylinder->Uninit();
+		m_collisionCylinder = nullptr;
+
 		selectCharacter->SetIsTeleporter(true);
 		m_bOnce = true;
 	}
+
+	CTeleporterEventUI* eventUI = new CTeleporterEventUI;
+	eventUI->Init();
+	eventUI->SetReferenceTime(&m_time);
+	eventUI->SetReferenceIsBossKill(&m_isBossDead);
+	SetEndChildren(eventUI);
 
 	m_btimeAdd = true;
 

@@ -1,0 +1,9 @@
+{
+  "MODEL": [
+    [ "SPHERE", "data\/MODEL\/sphere.x" ],
+    [ "PLANE", "data\/MODEL\/plane.x" ],
+    [ "PLANE_CIRCLE", "data\/MODEL\/plane_circle.x" ],
+    [ "CYLINDER", "data\/MODEL\/cylinder.x" ],
+    [ "CUBE", "data\/MODEL\/cube.x" ]
+  ]
+}

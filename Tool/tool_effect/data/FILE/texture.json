@@ -1,0 +1,20 @@
+{
+  "TEXTURE": [
+    [ "STAR", "data\/TEXTURE\/star.png" ],
+    [ "HEART", "data\/TEXTURE\/heart.png" ],
+    [ "BRIGHT", "data\/TEXTURE\/bright.png" ],
+    [ "BRIGHT2", "data\/TEXTURE\/bright2.png" ],
+    [ "JEWEL", "data\/TEXTURE\/jewel.png" ],
+    [ "COIN", "data\/TEXTURE\/coin.png" ],
+    [ "SMOKE", "data\/TEXTURE\/smoke.png" ],
+    [ "SOUL", "data\/TEXTURE\/soul.png" ],
+    [ "FLARE", "data\/TEXTURE\/flare.png" ],
+    [ "RAY", "data\/TEXTURE\/ray.png" ],
+    [ "UP", "data\/TEXTURE\/up.png" ],
+    [ "WAVE", "data\/TEXTURE\/wave.png" ],
+    [ "BLUE", "data\/TEXTURE\/blue.png" ],
+    [ "EFFECT_TEX1", "data\/TEXTURE\/effect_texture1.png" ],
+    [ "ICON_PARTICLE", "data\/TEXTURE\/Icon\/icon_particle.png" ],
+    [ "ICON_SOUND", "data\/TEXTURE\/Icon\/icon_sound.png"]
+  ]
+}

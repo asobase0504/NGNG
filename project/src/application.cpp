@@ -114,10 +114,10 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 
 	m_modeType = CApplication::MODE_TITLE;	//現在のモード
 
+	m_fade = CModeFade::Create();
+
 	//モードの設定
 	SetMode(m_modeType);
-
-	m_fade = CModeFade::Create();
 
 	CSkillDataBase::GetInstance();
 	CEnemyDataBase::GetInstance();

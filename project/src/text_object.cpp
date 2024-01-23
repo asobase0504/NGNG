@@ -14,7 +14,7 @@
 //=============================================================================
 // コンストラクタ関数
 //=============================================================================
-CText::CText(CTaskGroup::EPriority list) : CObject(list)
+CText::CText() : CObject(CTaskGroup::LEVEL_2D_UI)
 {
 }
 
@@ -157,7 +157,8 @@ CText *CText::Create(D3DXVECTOR3 SetPos, D3DXVECTOR3 SetSize, int DeleteTime, in
 
 CText * CText::Create(const D3DXVECTOR2 & inPos, const D3DXVECTOR2 & inSize, const char * Text)
 {
-	return nullptr;
+	return Create(D3DXVECTOR3(inPos.x, inPos.y,0.0f), D3DXVECTOR3(inSize.x, inSize.y, 0.0f),0,0,Text);
+
 }
 
 
@@ -189,4 +190,18 @@ void CText::TextLetter(const char * Text, int SpeedText)
 void CText::Setfunc(std::function<void(void)> func)
 {
 	m_func = func;
+}
+
+void CText::SetColor(const D3DXCOLOR & inColor)
+{
+	CObject::SetColor(inColor);
+	for (CWords* words : m_words)
+	{
+		if (words == nullptr)
+		{
+			continue;
+		}
+
+		words->SetColor(inColor);
+	}
 }

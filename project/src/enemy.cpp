@@ -70,6 +70,8 @@ HRESULT CEnemy::Init()
 	SetEndChildren(m_collision);
 
 	m_dropMoney = 5;
+
+	m_diedCount = 0;
 	return S_OK;
 }
 
@@ -80,6 +82,12 @@ void CEnemy::Update()
 {
 	if (m_isDied)
 	{
+		m_diedCount++;
+
+		if (m_diedCount > 30)
+		{
+			Uninit();
+		}
 		return;
 	}
 

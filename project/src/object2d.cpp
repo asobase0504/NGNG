@@ -148,6 +148,11 @@ void CObject2d::Update()
 {
 	CObject::Update();
 
+	if (IsDeleted())
+	{
+		return;
+	}
+
 	VERTEX_2D *pVtx; //頂点へのポインタ
 
 	// 頂点バッファをロックし頂点情報へのポインタを取得

@@ -120,6 +120,7 @@ public:
 
 	virtual void SetDisplay(bool display) { m_isDisplay = display; }
 
+	void SetLife(const int life) { m_life = life; }
 protected:
 
 	//=========================================
@@ -163,5 +164,7 @@ protected:
 	std::string m_textureKey;	// テクスチャにアクセスするキー
 
 	bool m_isDisplay;
+
+	int m_life;
 };
 #endif

@@ -1,0 +1,90 @@
+{
+  "DataTag": "Begin",
+  "Object": [
+    {
+      "Altitude": 0,
+      "Behavior": 0,
+      "Color": {
+        "A": 1,
+        "B": 1,
+        "G": 1,
+        "R": 1
+      },
+      "ColorAttenuation": 0.5,
+      "CreateRandomPos": false,
+      "CreateRange": 0,
+      "DelayStartTime": 0,
+      "DestColor": {
+        "A": 1,
+        "B": 1,
+        "G": 1,
+        "R": 1
+      },
+      "ModelTag": "CUBE",
+      "ParticleType": 0,
+      "Physics": [
+        [
+          "Type",
+          0
+        ],
+        [
+          "Bounce",
+          [
+            "BounceFactor",
+            0
+          ],
+          [
+            "Coefficient",
+            2
+          ]
+        ],
+        [
+          "Air",
+          [
+            "VectorFactor",
+            0
+          ],
+          [
+            "Coefficient",
+            0
+          ]
+        ]
+      ],
+      "PopTime": 75,
+      "PosOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Quantity": 5,
+      "Radius": 360,
+      "RandomMax": 0,
+      "RandomMin": 0,
+      "RandomRotateMax": 0,
+      "RandomRotateMin": 0,
+      "RotateAngle": 0,
+      "RotateRadius": 0,
+      "Scale": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scaling": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "SeparateTrailColors": false,
+      "TextureTag": "FLARE",
+      "Trail": false,
+      "UseRandom": false,
+      "Velocity": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "VelocityAttenuation": 0,
+      "Weight": 0
+    }
+  ]
+}
