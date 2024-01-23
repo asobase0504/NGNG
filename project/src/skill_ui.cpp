@@ -56,6 +56,11 @@ HRESULT CSkillUI::Init()
 	m_procedure = CProcedure::Create(D3DXVECTOR3(m_ground->GetPos().x + (m_ground->GetSize().x),m_ground->GetPos().y + (m_ground->GetSize().y),0.0f), D3DXVECTOR3(25.0f, 25.0f, 25.0f), 1);
 	m_ct = 0;
 
+	SetEndChildren(m_bg);
+	SetEndChildren(m_ground);
+	SetEndChildren(m_display);
+	SetEndChildren(m_procedure);
+
 	return S_OK;
 }
 

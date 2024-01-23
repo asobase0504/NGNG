@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="effect_damage_camera.cpp" />
     <ClCompile Include="select_warp.cpp" />
     <ClCompile Include="src\abnormal.cpp" />
     <ClCompile Include="src\abnormal_data_base.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="ui_bg.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="effect_damage_camera.h" />
     <ClInclude Include="select_warp.h" />
     <ClInclude Include="src\abnormal.h" />
     <ClInclude Include="src\abnormal_data_base.h" />

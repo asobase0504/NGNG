@@ -69,8 +69,8 @@ public:
 
 	// 攻撃
 	void DealDamage(CCharacter* inChara, float SkillMul);
-	void TakeDamage(const int inDamage, CCharacter* inChara);
-	void AbDamage(const int inDamage);
+	virtual void TakeDamage(const int inDamage, CCharacter* inChara);
+	virtual void AbDamage(const int inDamage);
 	int CalDamage(float SkillAtkMul);
 	void AddDamage(float inDamage) { m_addDamage = inDamage; }
 

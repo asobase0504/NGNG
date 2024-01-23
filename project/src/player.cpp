@@ -45,6 +45,9 @@
 #include "ui_bg.h"
 #include "timer.h"
 
+/* 演出 */
+#include "effect_damage_camera.h"
+
 /**/
 #include "procedure3D.h"
 
@@ -108,21 +111,18 @@ HRESULT CPlayer::Init()
 	m_collision->SetParent(&m_pos);
 
 	// UI作成
-	CUIBackGround::Create(D3DXVECTOR2(CApplication::CENTER_POS.x - 500.0f, 75.0f), D3DXVECTOR2(75.0f, 45.0f),0.25f);
-	CUIBackGround::Create(D3DXVECTOR2(SCREEN_WIDTH * 0.9f, 120.0f), D3DXVECTOR2(100.0f, 90.0f),0.25f);
-
-	CHPUI::Create(GetHp());
-	CMONEYUI::Create(GetMoney());
-
-	CTimer::Create();
-
+	m_uiList.push_back(CUIBackGround::Create(D3DXVECTOR2(CApplication::CENTER_POS.x - 500.0f, 75.0f), D3DXVECTOR2(75.0f, 45.0f), 0.25f));
+	m_uiList.push_back(CUIBackGround::Create(D3DXVECTOR2(SCREEN_WIDTH * 0.9f, 120.0f), D3DXVECTOR2(100.0f, 90.0f),0.25f));
+	m_uiList.push_back(CHPUI::Create(GetHp()));
+	m_uiList.push_back(CMONEYUI::Create(GetMoney()));
+	m_uiList.push_back(CTimer::Create());
 	for (int i = 0; i < 4; i++)
 	{
-		CSkillUI::Create(D3DXVECTOR3(1000.0f + 57.5f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i));
+		m_uiList.push_back(CSkillUI::Create(D3DXVECTOR3(1000.0f + 57.5f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i)));
 	}
-
 	m_carringitemGroupUI = new CCarryingItemGroupUI;
 	m_carringitemGroupUI->Init();
+	m_carringitemGroupUI;
 
 	return S_OK;
 }
@@ -197,8 +197,7 @@ void CPlayer::Update()
 
 	if (IsDied() && !m_isResult)
 	{
-		m_isResult = true;
-		CResult::Create();
+		Result();
 	}
 
 	// 更新処理
@@ -419,6 +418,18 @@ void CPlayer::AddAbnormalStack(const int id, const int cnt)
 	CCharacter::AddAbnormalStack(id, cnt);
 }
 
+void CPlayer::TakeDamage(const int inDamage, CCharacter * inChara)
+{
+	CEffectDamageCamera::Create();
+	CCharacter::TakeDamage(inDamage, inChara);
+}
+
+void CPlayer::AbDamage(const int inDamage)
+{
+	CEffectDamageCamera::Create();
+	CCharacter::AbDamage(inDamage);
+}
+
 //--------------------------------------------------------------
 // 選ぶ
 //--------------------------------------------------------------
@@ -480,6 +491,29 @@ void CPlayer::RotateToFace()
 	{
 		SetRot(D3DXVECTOR3(0.0f,((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot().y,0.0f));
 	}
+}
+
+//--------------------------------------------------------------
+// リザルト
+//--------------------------------------------------------------
+void CPlayer::Result()
+{
+	for (CAbnormal2DUI* ui : m_abnormalUI)
+	{
+		ui->Uninit();
+	}
+	m_abnormalUI.clear();
+
+	for (CObject* ui : m_uiList)
+	{
+		ui->Uninit();
+	}
+	m_uiList.clear();
+
+	m_carringitemGroupUI->Uninit();
+
+	m_isResult = true;
+	CResult::Create();
 }
 
 //--------------------------------------------------------------

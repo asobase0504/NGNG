@@ -22,6 +22,10 @@ HRESULT CTimer::Init()
 	m_minutes = CProcedure::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.9f + 10.0f, 60.0f, 0.0f), D3DXVECTOR3(18.0f, 18.0f, 0.0f), 0);
 	m_minutes->SetAlign(CProcedure::EAlign::RIGHT);
 	m_minutes->SetMinimumDigit(2);
+
+	SetEndChildren(m_second);
+	SetEndChildren(m_minutes);
+	SetEndChildren(m_koron);
 	return S_OK;
 }
 

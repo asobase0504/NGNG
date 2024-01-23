@@ -13,7 +13,8 @@ CCarryingItemGroupUI::~CCarryingItemGroupUI()
 HRESULT CCarryingItemGroupUI::Init()
 {
 	m_bg = CUIBackGround::Create(D3DXVECTOR2(CApplication::CENTER_POS.x, 75.0f), D3DXVECTOR2(400.0f, 45.0f),0.25f);
-	
+	SetEndChildren(m_bg);
+
 	return S_OK;
 }
 
@@ -32,7 +33,10 @@ CCarryingItemUI* CCarryingItemGroupUI::CreateCarryingItemUI(CItemDataBase::EItem
 		}
 	}
 
-	m_uiList.push_back(CCarryingItemUI::Create(inType, (const int*)m_stack));
+	CCarryingItemUI* item = CCarryingItemUI::Create(inType, (const int*)m_stack);
+	m_uiList.push_back(item);
+	SetEndChildren(item);
+
 	Alignment();
 	return nullptr;
 }
