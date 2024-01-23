@@ -68,5 +68,7 @@ private:	// メンバ変数
 	int				m_AttackCnt;
 	CEnemy_HPUI*	m_pEHPUI;
 	int				m_dropMoney;
+
+	int m_diedCount;
 };
 #endif

@@ -68,6 +68,7 @@ HRESULT CObject::Init()
 	m_TimeCnt = m_TimeTarget;
 
 	m_shaderIndex = 0;
+	m_life = -1;
 	
 	return S_OK;
 }
@@ -77,6 +78,16 @@ HRESULT CObject::Init()
 //--------------------------------------------------------------
 void CObject::Update()
 {
+	if (m_life >= 0)
+	{
+		m_life--;
+
+		if (m_life <= 0)
+		{
+			Uninit();
+		}
+	}
+
 	m_posOld = m_pos;
 
 	// ˆÚ“®

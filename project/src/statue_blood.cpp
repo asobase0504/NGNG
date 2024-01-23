@@ -63,13 +63,13 @@ HRESULT CStatueBlood::Init()
 bool CStatueBlood::Select(CCharacter* selectCharacter)
 {
 	CCharacter* character = selectCharacter;
-	CStatus<int>* hp = character->GetHp();
 	CStatus<int>* money = character->GetMoney();
+
 	// ƒvƒŒƒCƒ„[‚ÌHP‚Æ‚¨‹à‚ð’²®‚µ‚ÄÝ’è
 
-	int max = hp->GetMax();
+	int max = character->GetHp()->GetMax();
 	int point = (int)(max * m_hpSubRate);
-	hp->AddCurrent(-point);
+	character->AbDamage(point);
 	money->AddCurrent(point);
 
 	m_hpSubRate *= 2.5f;

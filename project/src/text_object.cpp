@@ -190,3 +190,17 @@ void CText::Setfunc(std::function<void(void)> func)
 {
 	m_func = func;
 }
+
+void CText::SetColor(const D3DXCOLOR & inColor)
+{
+	CObject::SetColor(inColor);
+	for (CWords* words : m_words)
+	{
+		if (words == nullptr)
+		{
+			continue;
+		}
+
+		words->SetColor(inColor);
+	}
+}

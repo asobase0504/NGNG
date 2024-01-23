@@ -13,11 +13,6 @@
 #include "statue.h"
 
 //==============================================================
-// マクロ宣言
-//==============================================================
-#define MAX_TIME	(3000)
-
-//==============================================================
 // 前方宣言
 //==============================================================
 class CEnemy;
@@ -29,6 +24,8 @@ class CCollisionCylinder;
 //==============================================================
 class CStatueTeleporter : public CStatue
 {
+public:
+	static const int CHARGE_TIME;
 public:
 	// コンストラクタとデストラクタ
 	explicit CStatueTeleporter(int nPriority = 3);
@@ -48,6 +45,7 @@ private:	// メンバ変数
 	int m_time;
 	bool m_bOnce;
 	bool m_btimeAdd;
+	bool m_isBossDead;
 };
 #endif
 

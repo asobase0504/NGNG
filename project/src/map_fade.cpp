@@ -53,7 +53,8 @@ void CMapFade::NextMap(std::string nextMap)
 	/* ↓フェードを移行する場合↓ */
 
 	Init();
-	m_nextMap = nextMap;
+	m_nextMap = "data/FILE/map/map01.json";
+	//m_nextMap = nextMap;
 	SetColor(D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 	m_fade = FADEIN;
 }

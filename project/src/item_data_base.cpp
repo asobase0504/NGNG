@@ -586,35 +586,6 @@ HRESULT CItemDataBase::Init()
 	});
 	//--------------------------------------------------------------
 
-	item = m_item[ITEM_SHIELD];
-	item->SetModel("BOX");
-	item->SetRerity(RARITY_UNCOMMON);
-	m_itemInfo[ITEM_SHIELD][0] = "盾";
-	m_itemInfo[ITEM_SHIELD][1] = "走っている間はアーマーが増加する";
-	m_itemInfo[ITEM_SHIELD][2] = "ITEM_DANGO_O1";
-	// 盾---------------------------------------------------------
-	// 走っている間はアーマーが30増加する (+30)
-	item->SetWhenAlwaysFunc([](CCharacter* inCharacter, int cnt)
-	{// TODO 考え中
-		int armor = 0;
-
-		for (int Cnt = 0; Cnt < cnt; Cnt++)
-		{// 持ってる数、割合を増やす
-			armor += 30;
-		}
-
-		if (inCharacter->GetIsRunning())
-		{
-			inCharacter->GetBarrier()->AddItemEffect(armor);
-		}
-		else
-		{
-
-		}
-	});
-	//--------------------------------------------------------------
-
-	// ↑チェック済み-----------------------------------------------
 	item = m_item[ITEM_TABI];
 	item->SetModel("BOX");
 	item->SetRerity(RARITY_UNCOMMON);
@@ -639,20 +610,6 @@ HRESULT CItemDataBase::Init()
 			inCharacter->SetNonComAddSpeed(speed);
 			inCharacter->SetEffectTime(5);
 		}
-	});
-	//--------------------------------------------------------------
-
-	item = m_item[ITEM_FLINT];
-	item->SetModel("BOX");
-	item->SetRerity(RARITY_UNCOMMON);
-	m_itemInfo[ITEM_FLINT][0] = "火打石";
-	m_itemInfo[ITEM_FLINT][1] = "発火の効果で、与えるダメージが時間の経過とともに増える";
-	m_itemInfo[ITEM_FLINT][2] = "ITEM_DANGO_O1";
-	// 火打石---------------------------------------------------------
-	// 発火の効果で、与えるダメージが時間の経過とともに+300%(+300%)以上増える
-	item->SetWhenInflictFunc([](CCharacter* inCharacter, int cnt, CCharacter* outCharacter)
-	{// TODO
-		//inCharacter->GetCriticalRate()->AddItemEffect(5);
 	});
 	//--------------------------------------------------------------
 
