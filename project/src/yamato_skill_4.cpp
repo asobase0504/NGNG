@@ -105,8 +105,8 @@ void CYamatoSkill_4::UninitAbility()
 void CYamatoSkill_4::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	Target->TakeDamage(50, Target);
-	
+	m_apChara->DealDamage(Target, 1.0f);
+
 	m_apChara->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 }
 

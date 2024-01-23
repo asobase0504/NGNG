@@ -41,6 +41,7 @@
 #include "object_mesh.h"
 #include "player_manager.h"
 #include "enemy_data_base.h"
+#include "map_model.h"
 
 //-----------------------------------------------------------------------------
 // コンストラクタ
@@ -66,6 +67,9 @@ HWND CStageImgui::Init(HWND hWnd, LPDIRECT3DDEVICE9 pDevice)
 	// 初期化
 	HWND outWnd = CImguiProperty::Init(hWnd, pDevice);
 
+	m_model = CMapModel::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+	m_model->LoadModel("BOX");
+	m_NowModelName = "BOX";
 	// 鉄球データを初期化
 	m_Pendulum.type = 0;
 	m_Pendulum.coefficient = 0.0f;
@@ -99,6 +103,7 @@ HWND CStageImgui::Init(HWND hWnd, LPDIRECT3DDEVICE9 pDevice)
 	m_KeySet = 0;
 	m_indexModel = 0;
 	m_indexNouEnemy = 0;
+
 	return outWnd;
 }
 
@@ -116,9 +121,8 @@ void CStageImgui::Uninit(HWND hWnd, WNDCLASSEX wcex)
 bool CStageImgui::Update()
 {
 
-
 	CImguiProperty::Update();
-	ImguiCreate();
+	//ImguiCreate();
 	// テキスト表示
 	ImGui::Text("FPS  : %.2f", ImGui::GetIO().Framerate);
 	CMap* map = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetMap();
@@ -128,8 +132,27 @@ bool CStageImgui::Update()
 		funcFileSave(CApplication::GetInstance()->GetWindow());
 	}
 
+	// ウインドウの命名
+	ImGui::Begin(u8"モデル", nullptr, ImGuiWindowFlags_MenuBar);
+
+	CStageImgui::EditModel();
+
+	ImGui::End();
+
+	// ウインドウの命名
+	ImGui::Begin(u8"メッシュ", nullptr, ImGuiWindowFlags_MenuBar);
+
 	CStageImgui::EditMesh();
+
+	ImGui::End();
+	// ウインドウの命名
+	ImGui::Begin(u8"エネミーリスト", nullptr, ImGuiWindowFlags_MenuBar);
+
 	CStageImgui::EditEnemy();
+
+	ImGui::End();
+
+
 	//ImGui::SliderFloat3(u8"ロット", &sliderRot.x, -3.14f, 3.14f);
 	//ImGui::Separator();
 
@@ -151,9 +174,134 @@ void CStageImgui::Draw()
 //--------------------------------------------------
 // EditModel
 //--------------------------------------------------
-void CStageImgui::EditModel(void)
+void CStageImgui::EditModel()
 {
-	ImGui::Separator();
+	float modelPos[3];
+
+	modelPos[0] = m_model->GetPos().x;
+	modelPos[1] = m_model->GetPos().y;
+	modelPos[2] = m_model->GetPos().z;
+
+	ImGui::DragFloat3(u8"modelの位置", &modelPos[0],0.5f, -5000.0f, 5000.0f);
+
+	m_model->SetPos(D3DXVECTOR3(modelPos[0], modelPos[1], modelPos[2]));
+
+	float modelRot[3];
+
+	modelRot[0] = m_model->GetRot().x;
+	modelRot[1] = m_model->GetRot().y;
+	modelRot[2] = m_model->GetRot().z;
+
+	ImGui::DragFloat3(u8"modelの回転", &modelRot[0], 0.01f, -3.14f, 3.14f);
+
+	m_model->SetRot(D3DXVECTOR3(modelRot[0], modelRot[1], modelRot[2]));
+
+	float modelSize[3];
+
+	modelSize[0] = m_model->GetSize().x;
+	modelSize[1] = m_model->GetSize().y;
+	modelSize[2] = m_model->GetSize().z;
+
+	ImGui::DragFloat3(u8"modelのサイズ", &modelSize[0], 0.1f, 0.0f, 400.0f);
+
+	m_model->SetSize(D3DXVECTOR3(modelSize[0], modelSize[1], modelSize[2]));
+
+	//--------------------
+	//配置してたモデル設定
+	//--------------------
+	std::vector<std::string> model =  CApplication::GetInstance()->GetKey();
+
+	if (ImGui::BeginCombo(u8"モデルのタイプ", m_NowModelName.c_str(), 0))
+	{//特殊設定
+		for (int i = 0; i < model.size(); i++)
+		{
+			const bool is_selected = ((int)m_indexTex == i);
+
+			if (ImGui::Selectable(model[i].c_str(), is_selected))
+			{// 選ばれた選択肢に変更
+				m_indexTex = i;
+				m_NowModelName = model[i].c_str();
+				m_model->LoadModel(m_NowModelName);
+			}
+
+			if (is_selected)
+			{// 選択肢の項目を開く
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+	CMap* map = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetMap();
+	if (ImGui::Button(u8"モデル生成"))
+	{// ボタンが押された
+		CMapModel*popmodel = CMapModel::Create(m_model->GetPos(), m_model->GetRot(), m_model->GetSize());
+		popmodel->LoadModel(m_NowModelName);
+		map->SetMapModel(popmodel);
+	}
+
+	CMapModel*pop_model = nullptr;
+	bool list = false;
+
+	if (ImGui::BeginCombo(u8"生成してるモデル", m_NowEnemyName.c_str(), 0))
+	{//特殊設定
+		for (int i = 0; i < map->GetNumModel(); i++)
+		{
+			const bool is_selected2 = ((int)m_indexNouEnemy == i);
+			std::string m_model = std::to_string(i);
+			if (ImGui::Selectable(m_model.c_str(), is_selected2))
+			{// 選ばれた選択肢に変更
+				m_indexNouEnemy = i;
+				m_NowEnemyName = m_indexNouEnemy;
+				list = true;
+			}
+
+			if (is_selected2)
+			{// 選択肢の項目を開く
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
+	if (map->GetNumModel() != 0)
+	{
+		pop_model = map->GetMapModel(m_indexNouEnemy);
+	}
+	
+	if (pop_model != nullptr)
+	{
+		float modelPosPop[3];
+		float modelRotPop[3];
+		float modelSizePop[3];
+		modelPosPop[0] = pop_model->GetPos().x;
+		modelPosPop[1] = pop_model->GetPos().y;
+		modelPosPop[2] = pop_model->GetPos().z;
+
+		ImGui::DragFloat3(u8"選んでるmodelの位置", &modelPosPop[0], 0.5f, -5000.0f, 5000.0f);
+
+		pop_model->SetPos(D3DXVECTOR3(modelPosPop[0], modelPosPop[1], modelPosPop[2]));
+
+		modelRotPop[0] = pop_model->GetRot().x;
+		modelRotPop[1] = pop_model->GetRot().y;
+		modelRotPop[2] = pop_model->GetRot().z;
+
+		ImGui::DragFloat3(u8"選んでるmodelの回転", &modelRotPop[0], 0.01f, -3.14f, 3.14f);
+
+		pop_model->SetRot(D3DXVECTOR3(modelRotPop[0], modelRotPop[1], modelRotPop[2]));
+
+		modelSizePop[0] = m_model->GetSize().x;
+		modelSizePop[1] = m_model->GetSize().y;
+		modelSizePop[2] = m_model->GetSize().z;
+
+		ImGui::DragFloat3(u8"選んでるmodelのサイズ", &modelSizePop[0], 0.1f, 0.0f, 50000.0f);
+	
+		pop_model->SetSize(D3DXVECTOR3(modelSizePop[0], modelSizePop[1], modelSizePop[2]));
+
+		if (ImGui::Button(u8"出てるモデルの変更（上で選択してるやつになるよ）"))
+		{// ボタンが押された
+			pop_model->LoadModel(m_NowModelName);
+		}
+	}
 }
 
 //--------------------------------------------------
@@ -186,7 +334,7 @@ void CStageImgui::EditMesh(void)
 
 	int Meshint = 0;
 	CMap* map = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetMap();
-	ImGui::SliderInt(u8"選択してるメッシュ", &sliderInt, 0, map->GetNumMesh()-1);
+	ImGui::DragInt(u8"選択してるメッシュ", &sliderInt, 0, map->GetNumMesh()-1,1);
 
 	CMesh *mesh = map->GetMapMesh(sliderInt);
 	if (mesh)
@@ -196,19 +344,19 @@ void CStageImgui::EditMesh(void)
 		int SizeZ = mesh->GetY().size();
 	
 
-		ImGui::SliderInt2(u8"選択してる頂点::XZ", &point[0], 0, SizeX-1);
+		ImGui::DragInt2(u8"選択してる頂点::XZ", &point[0], 1.0f, 0, SizeX-1);
 		if (point[1] >= SizeZ)
 		{
 			point[1] = SizeZ-1;
 		}
 		meshMoveFloat = List[point[1]][point[0]];
 
-		ImGui::SliderFloat(u8"選択してる頂点", &meshMoveFloat, -5000.0f, 5000.0f);
+		ImGui::DragFloat(u8"選択してる頂点", &meshMoveFloat,0.5f, -5000.0f, 5000.0f);
 
 	
 		List[point[1]][point[0]] = meshMoveFloat;
 
-		ImGui::SliderInt2(u8"隣接してる頂点何個巻き込むか::XZ", &pointMax[0], 0, SizeX - 1);
+		ImGui::DragInt2(u8"隣接してる頂点何個巻き込むか::XZ", &pointMax[0],1.0f, 0, SizeX - 1);
 		if (pointMax[1] >= SizeZ)
 		{
 			pointMax[1] = SizeZ - 1;
@@ -300,7 +448,7 @@ void CStageImgui::EditMesh(void)
 		{
 			meshSizeFloatHave[0] = List[ListZ][ListX];
 			ImGui::Text(u8"POPX%d :Z%d", ListX, ListZ);
-			ImGui::SliderFloat(u8"触れてる頂点", &meshSizeFloatHave[0], -5000.0f, 5000.0f);
+			ImGui::DragFloat(u8"触れてる頂点", &meshSizeFloatHave[0],  0.5f, -5000.0f, 5000.0f);
 			List[ListZ][ListX] = meshSizeFloatHave[0];
 		}
 		else
@@ -392,13 +540,7 @@ void CStageImgui::EditEnemy()
 
 }
 
-//--------------------------------------------------
-// BOSS
-//--------------------------------------------------
-void CStageImgui::EditBoss(CBoss* BossEnemy)
-{
-	
-}
+
 
 //--------------------------------------------------
 // Playerの動き
@@ -514,7 +656,7 @@ void CStageImgui::funcFileSave(HWND hWnd)
 	if (szFile[0] != '\0')
 	{
 		CMap* map = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetMap();
-		map->Save("data/test.json");
+		map->Save(szFile);
 	}
 	SetCurrentDirectory(szPath);
 }
