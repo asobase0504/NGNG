@@ -69,9 +69,9 @@ HRESULT CTitle::Init(void)
 		titleLogo->SetTexture("TITLE_LOGO");
 
 		// ‹•–³ƒ}ƒbƒv
-	/*	m_map = CMap::GetMap("data/FILE/map/map03.json",false);
+		m_map = CMap::GetMap("data/FILE/map/map03.json",false);
 
-		m_mapFade = CMapFade::Create();*/
+		m_mapFade = CMapFade::Create();
 
 		//m_mapFade->NextMap("data/FILE/map/map01.json");
 
