@@ -38,28 +38,23 @@ public:
 		ITEM_KIBORI,			// 熊の木彫り
 		ITEM_BAKUTIKU,			// 爆竹
 		ITEM_MAKIBISI,			// まきびし
-		ITEM_HEAD,				// 首級
+		ITEM_DOSU,				// ドス
 		ITEM_KUNAI,				// くない
-		ITEM_FUR,				// 毛皮
 		ITEM_KITUNEMEN,			// 狐面
 		ITEM_KAZAGURUMA,		// 風車
 		ITEM_KOBAN,				// 小判
-		ITEM_ONIMEN,			// 鬼面
-		ITEM_BROKEN_KABUTO,		// 壊れた兜
+		ITEM_DENDENDAIKO,		// 電電太鼓
 		ITEM_CROW_FEATHER,		// カラスの羽
 		ITEM_TOISI,				// 砥石
 		ITEM_DRIP_BAG,			// 点滴袋
 		ITEM_CHICK,				// ひよこ
 		ITEM_ZOURI,				// 草履
-		ITEM_ARROW,				// 矢
 		ITEM_SEED,				// 種子
 		ITEM_FETTERS,			// 足枷
 		ITEM_SHIELD,			// 盾
-		ITEM_TABI,				// たび
+		ITEM_WADAIKO,			// たび
 		ITEM_FLINT,				// 火打石
 		ITEM_FLOWER,			// 花
-		ITEM_IRON_WIRE,			// 鉄線
-		ITEM_HANNYA,			// はんにゃのめん
 		ITEM_ELITE,				// エリートかどうか
 		ITEM_MAX
 	};
