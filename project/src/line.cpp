@@ -75,6 +75,8 @@ CLine::~CLine()
 //--------------------------------------------------------------
 HRESULT CLine::Init()
 {
+	CObject::Init();
+
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();		//デバイスへのポインタ
 
@@ -215,6 +217,11 @@ void CLine::Draw()
 //--------------------------------------------------------------
 void CLine::SetVtx()
 {
+	if (IsDeleted())
+	{
+		return;
+	}
+
 	//頂点情報へのポインタを生成
 	VERTEX_3D *pVtx;
 
