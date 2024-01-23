@@ -39,6 +39,13 @@
 		[ "STATUE_SHRINE", "data\/MODEL\/statue\/statue_shrine.x"],
 		[ "TEST", "data\/MODEL\/enemy\/tyoutinobake.x" ],
 		[ "STONE_SMALL", "data\/MODEL\/stage\/small_stone.x" ],
-		[ "STONE_BIG", "data\/MODEL\/stage\/big_stone.x"]
+		[ "STONE_BIG", "data\/MODEL\/stage\/big_stone.x"],
+		[ "GREATEST_WALL", "data\/MODEL\/stage\/greatest_wall.x"],
+		[ "GREATEST_MOUTAIN", "data\/MODEL\/stage\/greatest_mountain.x"],
+		[ "TREE_BANANA", "data\/MODEL\/stage\/tree_banana.x"],
+		[ "TREE_PLAM", "data\/MODEL\/stage\/tree_plam.x"],
+		[ "ROCK", "data\/MODEL\/stage\/rock.x"],
+		[ "ROCK2", "data\/MODEL\/stage\/rock_2.x"],
+		[ "ROCK_WALL", "data\/MODEL\/stage\/rock_wall.x"]
 	]
 }

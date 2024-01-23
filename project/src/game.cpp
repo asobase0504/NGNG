@@ -111,10 +111,10 @@ HRESULT CGame::Init()
 	m_difficult = CDifficult::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
 
 	// 虚無マップ
-	m_map = CMap::GetMap("data/FILE/map/map01.json");
+	m_map = CMap::GetMap("data/FILE/map/map03.json");
 
 	m_mapFade = CMapFade::Create();
-	m_mapFade->NextMap("data/FILE/map/map01.json");
+	m_mapFade->NextMap("data/FILE/map/map03.json");
 
 	return S_OK;
 }

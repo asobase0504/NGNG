@@ -1046,5 +1046,14 @@
     <None Include="data\FILE\skinmesh.json">
       <Filter>json</Filter>
     </None>
+    <None Include="..\project\data\FILE\model.json">
+      <Filter>json</Filter>
+    </None>
+    <None Include="data\FILE\map\map03.json">
+      <Filter>json\map</Filter>
+    </None>
+    <None Include="..\..\..\..\Downloads\map\map7.json">
+      <Filter>json\map</Filter>
+    </None>
   </ItemGroup>
 </Project>

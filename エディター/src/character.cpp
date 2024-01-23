@@ -101,7 +101,7 @@ HRESULT CCharacter::Init()
 	m_criticalDamage.Init(2.0f);
 	m_criticalDamage.SetCurrent(2.0f);
 	m_movePower.Init(4.0f);
-	m_movePower.SetCurrent(4.0f);
+	m_movePower.SetCurrent(24.0f);
 	m_dashPower.Init(1.55f);
 	m_dashPower.SetCurrent(1.55f);
 	m_jumpPower.Init();
@@ -566,18 +566,18 @@ void CCharacter::Collision()
 	}
 
 	// マップモデル
-	for (int i = 0; i < map->GetNumModel(); i++)
-	{
-		if (m_collision->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
-		{// 押し出した位置
-			D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
-			SetPos(extrusion);
-			if (m_collision->GetIsTop())
-			{
-				isGround = true;
-			}
-		}
-	}
+	//for (int i = 0; i < map->GetNumModel(); i++)
+	//{
+	//	if (m_collision->ToBox(map->GetMapModel(i)->GetCollisionBox(), true))
+	//	{// 押し出した位置
+	//		D3DXVECTOR3 extrusion = m_collision->GetPosWorld();
+	//		SetPos(extrusion);
+	//		if (m_collision->GetIsTop())
+	//		{
+	//			isGround = true;
+	//		}
+	//	}
+	//}
 
 	// マップメッシュ
 	for (int i = 0; i < map->GetNumMesh(); i++)

@@ -1032,6 +1032,8 @@
     <ClInclude Include="src\skelton_skill.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
+    <ClInclude Include="camera_title.h" />
+    <ClInclude Include="src\skill_back_step.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
@@ -1053,6 +1055,9 @@
     </None>
     <None Include="data\FILE\skinmesh.json">
       <Filter>json</Filter>
+    </None>
+    <None Include="data\FILE\map\map03.json">
+      <Filter>json\map</Filter>
     </None>
   </ItemGroup>
 </Project>

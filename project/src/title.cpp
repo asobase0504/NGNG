@@ -69,13 +69,9 @@ HRESULT CTitle::Init(void)
 		titleLogo->SetTexture("TITLE_LOGO");
 
 		// ‹•–³ƒ}ƒbƒv
-		m_map = CMap::GetMap("data/FILE/map/map01.json",false);
+	/*	m_map = CMap::GetMap("data/FILE/map/map03.json",false);
 
-		m_mapFade = CMapFade::Create();
-
-		CObjectX* obj = CObjectX::Create(D3DXVECTOR3(0.0f,0.0f,0.0f));
-		obj->LoadModel("STONE_BIG");
-		obj->CalculationVtx();
+		m_mapFade = CMapFade::Create();*/
 
 		//m_mapFade->NextMap("data/FILE/map/map01.json");
 

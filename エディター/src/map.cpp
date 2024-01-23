@@ -57,21 +57,6 @@ CMap::~CMap()
 //--------------------------------------------------------------
 HRESULT CMap::Init()
 {
-	CStatueManager* manager = CStatueManager::GetInstance();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->CreateStatue(CStatueManager::BLOOD);
-	manager->CreateStatue(CStatueManager::LUCK);
-	manager->CreateStatue(CStatueManager::TELEPORTER);
-	manager->CreateStatue(CStatueManager::CHEST);
-	manager->CreateStatue(CStatueManager::COMBAT);
-
-	for (int i = 0; i < 50; i++)
-	{
-		manager->CreateStatue(CStatueManager::CHEST);
-	}
 
 	//CMesh* sky = CMesh::Create();
 	//sky->SetSkyMesh();
