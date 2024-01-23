@@ -47,6 +47,8 @@ HRESULT CProcedure::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int inNumber)
 {
 	m_number = inNumber;
 
+	m_minimumDigit = 1;
+
 	m_size = size;
 
 	// Œ…”‚ð”‚¦‚é
@@ -208,6 +210,12 @@ CProcedure *CProcedure::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int number)
 	return pProcedure;
 }
 
+void CProcedure::SetMinimumDigit(int count)
+{
+	m_minimumDigit = count;
+	SetNumber(m_number);
+}
+
 //--------------------------------------------------
 // Œ…”‚ð”‚¦‚é
 //--------------------------------------------------
@@ -239,5 +247,15 @@ void CProcedure::CalDigit()
 			diff--;
 		}
 	}
+
+	while (m_minimumDigit > m_numberObj.size())
+	{
+		CNumber* number = CNumber::Create();
+		m_numberObj.push_back(number);	// ’Ç‰Á
+		number->SetSize(m_size);
+		SetEndChildren(number);
+		m_digit++;
+	}
+
 	SetPos(m_pos);
 }

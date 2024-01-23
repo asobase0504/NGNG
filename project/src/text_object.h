@@ -14,7 +14,7 @@
 class CText : public CObject
 {
 public:
-	CText(CTaskGroup::EPriority list = CTaskGroup::LEVEL_2D_BG);
+	CText();
 	~CText();
 	HRESULT Init() override;
 	void Uninit() override;

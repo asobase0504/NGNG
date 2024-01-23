@@ -19,6 +19,7 @@
 //**************************************************
 class CObject2d;
 class CProcedure;
+class CUIBackGround;
 class CCarryingItemUI;
 
 //**************************************************
@@ -41,7 +42,7 @@ private:
 private:
 	// •`‰æ•¨
 	std::list<CCarryingItemUI*> m_uiList;
-	CObject2d* m_bg;
+	CUIBackGround* m_bg;
 };
 
 #endif // _TIMER_H_

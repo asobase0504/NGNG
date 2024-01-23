@@ -18,11 +18,12 @@
 	["ABNORMAL_ICON_FIRE","data\/TEXTURE\/abnormal\/Status_OnFire.png"],
 	["LINE","data\/TEXTURE\/line.png"],
 	["GRASS","data\/TEXTURE\/grass.png"],
-	["TEST","data\/TEXTURE\/test.jpg"],
 	["GATE","data\/TEXTURE\/STATUE\/gate.png"],
 	["WAVE","data\/TEXTURE\/STATUE\/wave.png"],
 	["MAKIMONO","data\/TEXTURE\/STATUE\/makimono.png"],
 	["FIGHT","data\/TEXTURE\/STATUE\/fight.png"],
-	["FLOWER","data\/TEXTURE\/STATUE\/flower.png"]
+	["FLOWER","data\/TEXTURE\/STATUE\/flower.png"],
+	["UI_BG","data\/TEXTURE\/bg.jpg"],
+	["TEST","data\/TEXTURE\/test.jpg"]
   ]
 }

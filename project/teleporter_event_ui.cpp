@@ -6,7 +6,7 @@
 
 const D3DXVECTOR3 CTeleporterEventUI::GROUND_POS	(SCREEN_WIDTH * 0.9f, 120.0f, 0.0f);
 const D3DXVECTOR3 CTeleporterEventUI::BAR_SIZE		(80.0f, 8.0f, 0.0f);
-const D3DXVECTOR3 CTeleporterEventUI::BAR_POS		(GROUND_POS.x - BAR_SIZE.x, 160.0f, 0.0f);
+const D3DXVECTOR3 CTeleporterEventUI::BAR_POS		(GROUND_POS.x - BAR_SIZE.x, 150.0f, 0.0f);
 
 CTeleporterEventUI::CTeleporterEventUI(CTaskGroup::EPriority list)
 {
@@ -19,10 +19,6 @@ CTeleporterEventUI::~CTeleporterEventUI()
 HRESULT CTeleporterEventUI::Init()
 {
 	D3DXVECTOR3 size(100.0f, 90.0f, 0.0f);
-	m_ground = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
-	m_ground->SetSize(size);
-	m_ground->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.9f, 120.0f, 0.0f));
-	m_ground->SetColor(D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.5f));
 
 	size = D3DXVECTOR3(70.0f, 15.0f, 0.0f);
 	m_barGround = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
@@ -40,9 +36,8 @@ HRESULT CTeleporterEventUI::Init()
 	m_bar->SetTexture("HP_BAR");
 
 	m_chargeText = CText::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.9f - BAR_SIZE.x, BAR_POS.y - BAR_SIZE.y - 7.5f - 2.0f, 0.0f), D3DXVECTOR3(7.5f, 7.5f, 0.0f), 0, 0, "‘Ï‚¦‚ë");
-	m_bosskillText = CText::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.9f - BAR_SIZE.x, 210.0f, 0.0f), D3DXVECTOR3(7.5f, 7.5f, 0.0f), 0, 0, "ƒ{ƒX‚ð“|‚¹");
+	m_bosskillText = CText::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.9f - BAR_SIZE.x, 180.0f, 0.0f), D3DXVECTOR3(7.5f, 7.5f, 0.0f), 0, 0, "ƒ{ƒX‚ð“|‚¹");
 
-	SetEndChildren(m_ground);
 	SetEndChildren(m_barGround);
 	SetEndChildren(m_bar);
 	SetEndChildren(m_chargeText);

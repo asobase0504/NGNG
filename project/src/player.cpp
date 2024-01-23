@@ -42,6 +42,8 @@
 #include "skill_ui.h"
 #include "abnormal_2dui.h"
 #include "carrying_item_group_ui.h"
+#include "ui_bg.h"
+#include "timer.h"
 
 /**/
 #include "procedure3D.h"
@@ -106,8 +108,13 @@ HRESULT CPlayer::Init()
 	m_collision->SetParent(&m_pos);
 
 	// UI作成
+	CUIBackGround::Create(D3DXVECTOR2(CApplication::CENTER_POS.x - 500.0f, 75.0f), D3DXVECTOR2(75.0f, 45.0f),0.25f);
+	CUIBackGround::Create(D3DXVECTOR2(SCREEN_WIDTH * 0.9f, 120.0f), D3DXVECTOR2(100.0f, 90.0f),0.25f);
+
 	CHPUI::Create(GetHp());
 	CMONEYUI::Create(GetMoney());
+
+	CTimer::Create();
 
 	for (int i = 0; i < 4; i++)
 	{

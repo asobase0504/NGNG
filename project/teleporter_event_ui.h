@@ -41,8 +41,6 @@ public:
 	void SetReferenceIsBossKill(const bool* inTime) { m_referenceIsBossKill = inTime; }
 
 private:
-	CObject2d* m_ground;	// 下地
-
 	CObject2d* m_barGround;	// ゲージの下地
 	CObject2d* m_bar;		// ゲージ
 	CText* m_chargeText;		// "耐え忍べ"

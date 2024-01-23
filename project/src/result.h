@@ -16,6 +16,7 @@
 // ‘O•ûéŒ¾
 //==============================================================
 class CObject2d;
+class CText;
 
 //==============================================================
 // ƒNƒ‰ƒX
@@ -35,5 +36,7 @@ public:
 
 private:
 	CObject2d* m_title;
+	CObject2d* m_bg;
+	CText* m_text;
 };
 #endif	// _GOLD_NUGGET_H_

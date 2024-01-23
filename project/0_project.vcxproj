@@ -168,6 +168,7 @@
     <ClCompile Include="src\timer.cpp" />
     <ClCompile Include="src\yamato_skill_4.cpp" />
     <ClCompile Include="teleporter_event_ui.cpp" />
+    <ClCompile Include="ui_bg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="select_warp.h" />
@@ -316,6 +317,7 @@
     <ClInclude Include="src\timer.h" />
     <ClInclude Include="src\yamato_skill_4.h" />
     <ClInclude Include="teleporter_event_ui.h" />
+    <ClInclude Include="ui_bg.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">

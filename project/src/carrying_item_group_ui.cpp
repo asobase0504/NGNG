@@ -1,5 +1,5 @@
 #include "carrying_item_group_ui.h"
-#include "object2d.h"
+#include "ui_bg.h"
 #include "application.h"
 
 CCarryingItemGroupUI::CCarryingItemGroupUI()
@@ -12,11 +12,8 @@ CCarryingItemGroupUI::~CCarryingItemGroupUI()
 
 HRESULT CCarryingItemGroupUI::Init()
 {
-	m_bg = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
-	m_bg->SetPos(D3DXVECTOR3(CApplication::CENTER_POS.x, 75.0f, 0.0f));
-	m_bg->SetSize(D3DXVECTOR3(400.0f, 45.0f, 0.0f));
-	m_bg->SetColor(D3DXCOLOR(0.2f, 0.2f, 0.2f, 0.1f));
-
+	m_bg = CUIBackGround::Create(D3DXVECTOR2(CApplication::CENTER_POS.x, 75.0f), D3DXVECTOR2(400.0f, 45.0f),0.25f);
+	
 	return S_OK;
 }
 

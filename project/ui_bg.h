@@ -2,8 +2,8 @@
 // moneyUI.h
 // Author: 梶田大夢
 //==================================================
-#ifndef _TIMER_H_
-#define _TIMER_H_
+#ifndef _UI_BG_H_
+#define _UI_BG_H_
 
 //**************************************************
 // インクルード
@@ -13,29 +13,25 @@
 //**************************************************
 // 前方前言　実態はNG　ポインタだけならOK
 //**************************************************
-class CText;
+class CObject2d;
 class CProcedure;
 
 //**************************************************
 // クラス
 //**************************************************
-class CTimer : public CObject
+class CUIBackGround : public CObject
 {
 public:
-	CTimer();
-	~CTimer();
+	CUIBackGround();
+	~CUIBackGround();
 
-	HRESULT Init() override;
-	void Update() override;
-
-	static CTimer* Create();
+	static CUIBackGround* Create(D3DXVECTOR2, D3DXVECTOR2,float);
 
 private:
-	int m_time;
-
-	CProcedure* m_second;	// 秒
-	CProcedure* m_minutes;	// 分
-	CText* m_koron;			// コロン
+	// 描画物
+	CObject2d* m_bg;		// 背景
+	CObject2d* m_outLine;	// outline
+	CObject2d* m_corner[8];	// 角
 };
 
 #endif // _TIMER_H_

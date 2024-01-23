@@ -11,6 +11,7 @@
 #include "result.h"
 
 #include "object2d.h"
+#include "text_object.h"
 
 #include "application.h"
 #include "input.h"
@@ -44,9 +45,20 @@ HRESULT CResult::Init()
 	D3DXVECTOR3 center = CApplication::CENTER_POS;
 
 	{// タイトルへ行くボタンの位置
-		m_title = CObject2d::Create();
+		m_bg = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+		m_bg->SetPos(center);
+		m_bg->SetSize(center);
+		m_bg->SetColor(D3DXCOLOR(0.2f, 0.2f, 0.2f, 0.2f));
+	}
+
+	{// タイトルへ行くボタンの位置
+		m_title = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 		m_title->SetPos(center);
 		m_title->SetSize(D3DXVECTOR3(100.0f, 30.0f, 0.0f));
+	}
+
+	{
+		m_text = CText::Create(D3DXVECTOR2(center.x + 200.0f,center.y + 200.0f),D3DXVECTOR2(25.0f,25.0f),"終了");
 	}
 
 	return S_OK;

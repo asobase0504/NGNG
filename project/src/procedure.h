@@ -60,6 +60,8 @@ public:
 
 	void SetAlign(EAlign inAlign) { m_align = inAlign; SetPos(m_pos); }
 
+	void SetMinimumDigit(int count);
+
 private:
 	void CalDigit();
 private:
@@ -71,6 +73,7 @@ private:
 
 	// Œ…”
 	int m_digit;
+	int m_minimumDigit;
 	float m_interval;
 
 	EAlign m_align;	// ‘µ‚¦•û
