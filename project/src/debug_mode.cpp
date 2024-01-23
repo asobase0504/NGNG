@@ -82,7 +82,7 @@ HRESULT CDebugMode::Init(void)
 	CMONEYUI::Create(pPlayer->GetMoney());
 
 	// ƒ}ƒbƒv‚Ì¶¬
-	CMap::GetMap("data/FILE/map/map01.json");
+	CMap::SetMap("data/FILE/map/map01.json");
 
 	return S_OK;
 }

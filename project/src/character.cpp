@@ -44,6 +44,7 @@ const int CCharacter::MAX_NON_COMBAT_TIME(300);
 CCharacter::CCharacter(int nPriority) : m_haveItem{},
 	m_extrusion(nullptr)
 {
+	CMap *map = CMap::GetMap();
 	if (CMap::GetMap() != nullptr)
 	{
 		CMap::GetMap()->InCharacterList(this);

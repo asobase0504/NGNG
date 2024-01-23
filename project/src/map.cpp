@@ -108,8 +108,12 @@ void CMap::Uninit()
 	m_model.clear();
 	m_characterList.clear();
 	m_selectEntity.clear();
-
+	if (m_map != nullptr)
+	{
+		m_map = nullptr;
+	}
 	CTask::Uninit();
+
 }
 
 //--------------------------------------------------------------
