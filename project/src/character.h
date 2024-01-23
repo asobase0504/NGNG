@@ -203,6 +203,8 @@ protected:		// メンバ変数
 private:		// ステータス
 
 protected:
+	D3DXVECTOR3 m_groundPos;
+
 	CSkinMesh* m_skinModel;		// モデルのインスタンス
 	float m_destRot;
 	CCollisionCylinder*	m_collision;	// 当たり判定

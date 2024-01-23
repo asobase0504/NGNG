@@ -201,6 +201,16 @@ void CCharacter::Update()
 			m_nonCombatTime = 0;
 		}
 	}
+
+	if (m_pos.y < -900.0f)
+	{
+		SetPos(m_groundPos);
+	}
+
+	if (m_state == STATE::GROUND)
+	{
+		m_groundPos = m_pos;
+	}
 }
 
 //--------------------------------------------------------------
