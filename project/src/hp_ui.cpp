@@ -29,6 +29,7 @@ CHPUI::~CHPUI()
 //--------------------------------------------------
 HRESULT CHPUI::Init()
 {
+	CObject::Init();
 
 	m_size = D3DXVECTOR3(200.0f, 15.0f, 0.0f);
 	m_ground = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);

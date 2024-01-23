@@ -1,6 +1,6 @@
 //**************************************************************
 // 
-// ƒ}ƒbƒv‚Ìì¬
+// ãƒãƒƒãƒ—ã®ä½œæˆ
 // Author : Tomidokoro Tomoki
 // 
 //**************************************************************
@@ -30,13 +30,13 @@
 #include "item_data_base.h"
 
 //==============================================================
-// Ã“Iƒƒ“ƒo•Ï”éŒ¾
+// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°å®£è¨€
 //==============================================================
 CMap* CMap::m_map = nullptr;
 bool CMap::m_isGame = false;
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CMap::CMap() :
 	CTask(CTaskGroup::EPriority::LEVEL_SYSTEM)
@@ -48,7 +48,7 @@ CMap::CMap() :
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CMap::~CMap()
 {
@@ -56,7 +56,7 @@ CMap::~CMap()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»
+// åˆæœŸåŒ–
 //--------------------------------------------------------------
 HRESULT CMap::Init()
 {
@@ -78,29 +78,22 @@ HRESULT CMap::Init()
 			manager->CreateStatue(CStatueManager::CHEST);
 		}
 
-		//CMesh* sky = CMesh::Create();
-		//sky->SetSkyMesh();
-		//sky->SetIsCulling(true);
-		//sky->SetTexture("SKY");
+	CObject2d* sky = CObject2d::Create();
+	sky->SetSize(CApplication::CENTER_POS);
+	sky->SetPos(CApplication::CENTER_POS);
+	sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
 
-		CObject2d* sky = CObject2d::Create();
-		sky->SetSize(CApplication::CENTER_POS);
-		sky->SetPos(CApplication::CENTER_POS);
-		sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
-
-		D3DXMATRIX mtx;
-		D3DXMatrixIdentity(&mtx);
-		for (int i = 0; i < CItemDataBase::EItemType::ITEM_MAX; i++)
-		{
-			CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
-		}
-	}
-
+	//D3DXMATRIX mtx;
+	//D3DXMatrixIdentity(&mtx);
+	//for (int i = 0; i < CItemDataBase::EItemType::ITEM_MAX; i++)
+	//{
+	//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
+	//}
 	return S_OK;
 }
 
 //--------------------------------------------------------------
-// I—¹
+// çµ‚äº†
 //--------------------------------------------------------------
 void CMap::Uninit()
 {
@@ -117,7 +110,7 @@ void CMap::Uninit()
 }
 
 //--------------------------------------------------------------
-// XV
+// æ›´æ–°
 //--------------------------------------------------------------
 void CMap::Update()
 {
@@ -125,7 +118,7 @@ void CMap::Update()
 	{
 		m_SpawnCnt++;
 
-		// ˆê’èŠÔ‚²‚Æ‚Éƒ‰ƒ“ƒ_ƒ€‚È“G‚ğƒXƒ|[ƒ“‚³‚¹‚éB
+		// ä¸€å®šæ™‚é–“ã”ã¨ã«ãƒ©ãƒ³ãƒ€ãƒ ãªæ•µã‚’ã‚¹ãƒãƒ¼ãƒ³ã•ã›ã‚‹ã€‚
 		if (m_SpawnCnt >= 600)
 		{
 			m_SpawnCnt = 0;
@@ -135,7 +128,7 @@ void CMap::Update()
 }
 
 //--------------------------------------------------------------
-// “Ç‚İ
+// èª­è¾¼ã¿
 //--------------------------------------------------------------
 void CMap::Load(std::string path)
 {
@@ -168,14 +161,14 @@ void CMap::Load(std::string path)
 }
 
 //--------------------------------------------------------------
-// ˆá‚¤ŠÖŒW‚Ì‚à‚Ì‚ÉŠÖ”‚ğs‚¤
+// é•ã†é–¢ä¿‚ã®ã‚‚ã®ã«é–¢æ•°ã‚’è¡Œã†
 //--------------------------------------------------------------
 void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
 {
 	std::list<CCharacter*> charaList = GetCharacterList();
 
 	for (CCharacter* chara : charaList)
-	{// UŒ‚”ÍˆÍ‚É“G‚ª‚¢‚é‚©”»’è‚·‚é
+	{// æ”»æ’ƒç¯„å›²ã«æ•µãŒã„ã‚‹ã‹åˆ¤å®šã™ã‚‹
 
 		if (chara->IsDeleted())
 		{

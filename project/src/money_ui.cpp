@@ -35,6 +35,8 @@ CMONEYUI::~CMONEYUI()
 //--------------------------------------------------
 HRESULT CMONEYUI::Init()
 {
+	CObject::Init();
+
 	// ”wŒi‚Ìì¬
 	m_bg = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	m_bg->SetPos(D3DXVECTOR3(140.0f, 50.0f, 0.0f));

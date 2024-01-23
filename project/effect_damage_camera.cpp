@@ -14,7 +14,7 @@ HRESULT CEffectDamageCamera::Init()
 	CObject2d::Init();
 	SetPos(CApplication::CENTER_POS);
 	SetSize(CApplication::CENTER_POS);
-	SetColor(D3DXCOLOR(0.02f,0.02f,0.02f,0.5f));
+	SetColor(D3DXCOLOR(0.03f,0.01f,0.01f,0.5f));
 
 	m_time = 12;
 	m_maxTime = 12;

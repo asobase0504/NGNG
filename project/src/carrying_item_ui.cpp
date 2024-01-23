@@ -12,6 +12,7 @@ CCarryingItemUI::~CCarryingItemUI()
 
 HRESULT CCarryingItemUI::Init()
 {
+	CObject::Init();
 	m_ItemLogo = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	m_ItemLogo->SetSize(D3DXVECTOR3(25.0f,25.0f,0.0f));
 	m_ItemLogo->SetTexture("ITEM_DANGO_O1");

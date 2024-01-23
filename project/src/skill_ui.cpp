@@ -39,6 +39,7 @@ CSkillUI::~CSkillUI()
 //--------------------------------------------------
 HRESULT CSkillUI::Init()
 {
+	CObject::Init();
 	D3DXVECTOR3 pos(550.f, 250.f, 0.f);
 	D3DXVECTOR3 size(UI_SIZE, UI_SIZE,0.f);
 	m_bg = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);

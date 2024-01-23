@@ -42,6 +42,7 @@ CTakeItemUI::~CTakeItemUI()
 //--------------------------------------------------------------
 HRESULT CTakeItemUI::Init()
 {
+	CObject::Init();
 	m_displayCnt = 0;
 
 	m_ground = CObject2d::Create(CTaskGroup::LEVEL_2D_UI);

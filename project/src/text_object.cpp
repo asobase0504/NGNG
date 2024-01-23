@@ -30,6 +30,7 @@ CText::~CText()
 //=============================================================================
 HRESULT CText::Init()
 {
+	CObject::Init();
 	m_newlineCount = 0;
 	m_wordsPopCount = 0;
 	m_wordsPopCountX = 0;
