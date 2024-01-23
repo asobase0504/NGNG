@@ -37,6 +37,7 @@ CProcedure::~CProcedure()
 //--------------------------------------------------
 HRESULT CProcedure::Init()
 {
+	CObject::Init();
 	return S_OK;
 }
 
@@ -45,6 +46,7 @@ HRESULT CProcedure::Init()
 //--------------------------------------------------
 HRESULT CProcedure::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, const int inNumber)
 {
+	CObject::Init();
 	m_number = inNumber;
 
 	m_minimumDigit = 1;

@@ -18,6 +18,7 @@ CTeleporterEventUI::~CTeleporterEventUI()
 
 HRESULT CTeleporterEventUI::Init()
 {
+	CObject::Init();
 	D3DXVECTOR3 size(100.0f, 90.0f, 0.0f);
 
 	size = D3DXVECTOR3(70.0f, 15.0f, 0.0f);

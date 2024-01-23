@@ -38,6 +38,7 @@ CSelectUI::~CSelectUI()
 //--------------------------------------------------------------
 HRESULT CSelectUI::Init()
 {
+	CObject::Init();
 	m_pos = D3DXVECTOR3(SCREEN_WIDTH - 310.0f, CApplication::CENTER_POS.y + 100.0f, 0.0f);
 
 	m_ground = CObject2d::Create(CTaskGroup::LEVEL_2D_UI);

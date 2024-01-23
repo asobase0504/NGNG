@@ -13,6 +13,7 @@ CAbnormal2DUI::~CAbnormal2DUI()
 
 HRESULT CAbnormal2DUI::Init()
 {
+	CObject::Init();
 	m_abnormalLogo = CObject2d::Create(CTaskGroup::LEVEL_2D_UI);
 	SetEndChildren(m_abnormalLogo);
 	m_abnormalLogo->SetSize(D3DXVECTOR3(25.0f,25.0f,0.0f));
