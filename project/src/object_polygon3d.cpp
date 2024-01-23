@@ -59,6 +59,8 @@ CObjectPolygon3D::~CObjectPolygon3D()
 //--------------------------------------------------------------
 HRESULT CObjectPolygon3D::Init()
 {
+	CObject::Init();
+
 	SetType(CObject::EType::POLYGON);
 	SetBillboard(false);
 	m_isCulling = false;

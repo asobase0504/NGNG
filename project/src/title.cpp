@@ -88,7 +88,7 @@ HRESULT CTitle::Init(void)
 //--------------------------------------------------------------
 // ”jŠü
 //--------------------------------------------------------------
-void CTitle::Uninit(void)
+void CTitle::Uninit()
 {
 	CApplication::GetInstance()->GetSound()->Stop();
 }
@@ -96,20 +96,15 @@ void CTitle::Uninit(void)
 //--------------------------------------------------------------
 // XVˆ—
 //--------------------------------------------------------------
-void CTitle::Update(void)
+void CTitle::Update()
 {
 	CInput* pInput;
 	pInput = CInput::GetKey();
 
 	CModeFade* pFade = CApplication::GetInstance()->GetFade();
 
-	if (pInput->Trigger(DIK_RETURN))
+	if (pInput->Trigger(DIK_RETURN,-1))
 	{
 		pFade->NextMode(CApplication::MODE_GAME);
-	}
-
-	if (pInput->Trigger(DIK_K))
-	{
-		pFade->NextMode(CApplication::MODE_SELECT);
 	}
 }

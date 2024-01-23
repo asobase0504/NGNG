@@ -59,6 +59,8 @@ CObject2d::~CObject2d()
 //--------------------------------------------------------------
 HRESULT CObject2d::Init()
 {
+	CObject::Init();
+
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_scale = 10.0f;
 
@@ -295,6 +297,11 @@ void CObject2d::Animation()
 //--------------------------------------------------------------
 void CObject2d::SetTex(PositionVec4 Tex)
 {
+	if (IsDeleted())
+	{
+		return;
+	}
+
 	VERTEX_2D *pVtx; //頂点へのポインタ
 
 	 //頂点バッファをロックし頂点情報へのポインタを取得
