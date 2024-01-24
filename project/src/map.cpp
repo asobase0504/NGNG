@@ -104,6 +104,7 @@ HRESULT CMap::Init()
 //--------------------------------------------------------------
 void CMap::Uninit()
 {
+
 	m_mesh.clear();
 	m_model.clear();
 	m_characterList.clear();

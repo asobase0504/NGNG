@@ -1056,6 +1056,10 @@
     <ClInclude Include="src\skill_back_step.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
+    <ClInclude Include="src\skill_assault.h" />
+    <ClInclude Include="src\skill_storm.h" />
+    <ClInclude Include="teleporter_event_ui.h" />
+    <ClInclude Include="ui_bg.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">
@@ -1079,6 +1083,9 @@
       <Filter>json</Filter>
     </None>
     <None Include="data\FILE\map\map03.json">
+      <Filter>json\map</Filter>
+    </None>
+    <None Include="data\FILE\map\null_map.json">
       <Filter>json\map</Filter>
     </None>
   </ItemGroup>
