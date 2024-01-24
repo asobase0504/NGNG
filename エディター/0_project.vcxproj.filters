@@ -1055,5 +1055,8 @@
     <None Include="..\..\..\..\Downloads\map\map7.json">
       <Filter>json\map</Filter>
     </None>
+    <None Include="data\FILE\map\forest_map.json">
+      <Filter>json\map</Filter>
+    </None>
   </ItemGroup>
 </Project>

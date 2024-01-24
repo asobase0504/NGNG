@@ -85,6 +85,11 @@ void CItemModel::Update()
 		bool isGround = false;
 		CMap* map = CApplication::GetInstance()->GetMap();
 
+		if (map == nullptr)
+		{
+			return;
+		}
+
 		for (int i = 0; i < map->GetNumMesh(); i++)
 		{
 			if (m_collisionHit->ToMesh(map->GetMapMesh(i)->GetCollisionMesh()))
