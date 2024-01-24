@@ -126,6 +126,29 @@ bool CCollisionCylinder::ToBox(CCollisionBox* inBox, bool isExtrusion)
 	float back = boxSize.z;		// ‰œ
 	float front = -boxSize.z;	// ‘O
 
+	float maxSize;
+	if (boxSize.x > boxSize.y)
+	{
+		maxSize = boxSize.x;
+	}
+	else
+	{
+		maxSize = boxSize.y;
+	}
+	if (maxSize < boxSize.z)
+	{
+		maxSize = boxSize.z;
+	}
+	maxSize += radius;
+	
+	D3DXVECTOR3 diffPos =GetPosWorld() - inBox->GetPosWorld();
+	float diff = D3DXVec3LengthSq(&diffPos);
+
+	if (maxSize < diff)
+	{
+		return false;
+	}
+
 	// ‚S‚Â‚Ì’¸“_
 	D3DXVECTOR3 pos[4];
 	pos[0] = D3DXVECTOR3(left - radius, 0.0f, back + radius);
