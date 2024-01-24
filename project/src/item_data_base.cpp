@@ -105,7 +105,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_HYOUTAN];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_GOURD");
 	item->SetRerity(RARITY_COMMON);
 	m_itemInfo[ITEM_HYOUTAN][0] = "ひょうたん";
 	m_itemInfo[ITEM_HYOUTAN][1] = "攻撃速度と移動速度が増える";
@@ -125,7 +125,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_BANBOO_WATERBOX];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_BAMBOO");
 	item->SetRerity(RARITY_COMMON);
 	m_itemInfo[ITEM_BANBOO_WATERBOX][0] = "竹の水筒";
 	m_itemInfo[ITEM_BANBOO_WATERBOX][1] = "攻撃速度が増える";
@@ -161,7 +161,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_KIBORI];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_KUMANOKIBORI");
 	item->SetRerity(RARITY_COMMON);
 	m_itemInfo[ITEM_KIBORI][0] = "熊の木彫り";
 	m_itemInfo[ITEM_KIBORI][1] = "確率でブロックする";
@@ -543,7 +543,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_FETTERS];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_ASIKASE");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_FETTERS][0] = "足枷";
 	m_itemInfo[ITEM_FETTERS][1] = "攻撃を当てた敵の移動速度が減少する";
@@ -557,7 +557,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_WADAIKO];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_WADAIKO");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_WADAIKO][0] = "和太鼓";
 	m_itemInfo[ITEM_WADAIKO][1] = "非戦闘時の移動速度があがる";
