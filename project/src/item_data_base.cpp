@@ -29,6 +29,13 @@ CItemDataBase* CItemDataBase::m_instance(nullptr);
 //--------------------------------------------------------------
 CItemDataBase::CItemDataBase() : m_countKill(0), m_maxAddLife(0)
 {
+	for (int i = 0; i < ITEM_MAX; i++)
+	{
+		m_item[i] = nullptr;
+		m_itemInfo[i][0] = "\0";
+		m_itemInfo[i][1] = "\0";
+		m_itemInfo[i][2] = "\0";
+	}
 }
 
 //--------------------------------------------------------------

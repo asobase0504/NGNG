@@ -13,6 +13,7 @@ CTimer::~CTimer()
 
 HRESULT CTimer::Init()
 {
+	CObject::Init();
 	m_second = CProcedure::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.9f + 20.0f, 60.0f, 0.0f), D3DXVECTOR3(18.0f, 18.0f, 0.0f), 0);
 	m_second->SetAlign(CProcedure::EAlign::LEFT);
 	m_second->SetMinimumDigit(2);

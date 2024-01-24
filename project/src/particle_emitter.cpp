@@ -44,6 +44,7 @@ CParticleEmitter::~CParticleEmitter()
 //--------------------------------------------------------------
 HRESULT CParticleEmitter::Init()
 {
+	CObject::Init();
 	return S_OK;
 }
 
