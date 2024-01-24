@@ -43,7 +43,7 @@ void CMonsterSkill::InitAbility()
 	m_Duration = 400;
 
 	// ‘_‚¤æ‚ÌŒˆ’è
-	CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this](CCharacter* inChara)
+	CApplication::GetInstance()->GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this](CCharacter* inChara)
 	{
 		m_aimCharacter = inChara;
 	});

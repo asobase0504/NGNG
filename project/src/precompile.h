@@ -84,6 +84,8 @@
 // Input
 #include "input.h"
 
+#include "application.h"
+
 // Delete
 #define SAFE_RELEASE(p) if (p) { (p)->Release(); (p) = nullptr; }
 #define SAFE_DELETE(p) if (p) { delete (p); (p) = nullptr; }

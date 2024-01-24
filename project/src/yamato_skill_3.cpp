@@ -54,7 +54,7 @@ void CYamatoSkill_3::InitAbility()
 	m_apChara->SetMoveXZ(0.0f, 0.0f);
 
 	// ƒJƒƒ‰‚Ì•ûŒü‚É‡‚í‚¹‚Ä“ËŒ‚
-	CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
+	CCamera *camera = CApplication::GetInstance()->GetModeClass()->GetCamera();
 	D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
 	D3DXVec3Normalize(&vecNor, &vecNor);
 	vecNor *= 15.0f;			//ˆÚ“®‚³‚¹‚½‚¢’l‚ð“ü‚ê‚é

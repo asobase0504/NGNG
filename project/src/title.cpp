@@ -51,7 +51,7 @@ HRESULT CTitle::Init(void)
 		m_camera->Init();
 
 		// カメラの設定
-		m_camera->SetPosR(D3DXVECTOR3(0.0f,500.0f,0.0f));
+		((CTitleCamera*)m_camera)->SetPosR(D3DXVECTOR3(0.0f,500.0f,0.0f));
 	}
 
 	{
@@ -69,17 +69,7 @@ HRESULT CTitle::Init(void)
 		titleLogo->SetTexture("TITLE_LOGO");
 
 		// 虚無マップ
-		CMap::SetMap("data/FILE/map/map03.json",false);
-
-		m_mapFade = CMapFade::Create();
-
-		//m_mapFade->NextMap("data/FILE/map/map01.json");
-
-		//CObject2d* titleBg = CObject2d::Create();
-		//titleBg->SetPos(CApplication::CENTER_POS);
-		//titleBg->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.25f));
-		//titleBg->SetSize(CApplication::CENTER_POS * 0.9f);
-		//titleBg->SetTexture("TITLE_BG");
+		CApplication::GetInstance()->GetModeClass()->CreateMap("data/FILE/map/map03.json");
 	}
 
 	return S_OK;
@@ -90,6 +80,7 @@ HRESULT CTitle::Init(void)
 //--------------------------------------------------------------
 void CTitle::Uninit()
 {
+	CMode::Uninit();
 	CApplication::GetInstance()->GetSound()->Stop();
 }
 

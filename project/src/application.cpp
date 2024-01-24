@@ -260,3 +260,8 @@ void CApplication::SetMode(MODE mode)
 		return;
 	}
 }
+
+CMap* CApplication::GetMap()
+{
+	return m_mode->GetMap();
+}

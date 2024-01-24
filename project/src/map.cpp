@@ -1,4 +1,4 @@
-//**************************************************************
+﻿//**************************************************************
 // 
 // マップの作成
 // Author : Tomidokoro Tomoki
@@ -32,7 +32,6 @@
 //==============================================================
 // 静的メンバ変数宣言
 //==============================================================
-CMap* CMap::m_map = nullptr;
 bool CMap::m_isGame = false;
 
 //--------------------------------------------------------------
@@ -62,21 +61,23 @@ HRESULT CMap::Init()
 {
 	if (m_isGame)
 	{
-		CStatueManager* manager = CStatueManager::GetInstance();
-		manager->RandomCreate();
-		manager->RandomCreate();
-		manager->RandomCreate();
-		manager->RandomCreate();
-		manager->CreateStatue(CStatueManager::BLOOD);
-		manager->CreateStatue(CStatueManager::LUCK);
-		manager->CreateStatue(CStatueManager::TELEPORTER);
-		manager->CreateStatue(CStatueManager::CHEST);
-		manager->CreateStatue(CStatueManager::COMBAT);
+	}
 
-		for (int i = 0; i < 50; i++)
-		{
-			manager->CreateStatue(CStatueManager::CHEST);
-		}
+	CStatueManager* manager = CStatueManager::GetInstance();
+	manager->RandomCreate();
+	manager->RandomCreate();
+	manager->RandomCreate();
+	manager->RandomCreate();
+	manager->CreateStatue(CStatueManager::BLOOD);
+	manager->CreateStatue(CStatueManager::LUCK);
+	manager->CreateStatue(CStatueManager::TELEPORTER);
+	manager->CreateStatue(CStatueManager::CHEST);
+	manager->CreateStatue(CStatueManager::COMBAT);
+
+	for (int i = 0; i < 50; i++)
+	{
+		manager->CreateStatue(CStatueManager::CHEST);
+	}
 
 	CObject2d* sky = CObject2d::Create();
 	sky->SetSize(CApplication::CENTER_POS);
@@ -101,12 +102,7 @@ void CMap::Uninit()
 	m_model.clear();
 	m_characterList.clear();
 	m_selectEntity.clear();
-	if (m_map != nullptr)
-	{
-		m_map = nullptr;
-	}
 	CTask::Uninit();
-
 }
 
 //--------------------------------------------------------------

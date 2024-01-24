@@ -90,8 +90,7 @@ void CStatueTeleporter::Update()
 			//-------------------------
 			// ƒ}ƒbƒvˆÚ“®ˆ—’Ç‰Á
 			//-------------------------
-			CGame* game = (CGame*)(CApplication::GetInstance()->GetModeClass());
-			game->SetChangeMap();
+			CApplication::GetInstance()->GetModeClass()->ChangeMap();
 		}
 	}
 

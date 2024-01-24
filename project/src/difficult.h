@@ -1,6 +1,6 @@
-//**************************************************************
+ï»¿//**************************************************************
 //
-// “ïˆÕ“xƒVƒXƒeƒ€
+// é›£æ˜“åº¦ã‚·ã‚¹ãƒ†ãƒ 
 // Author: Tomidokoro Tomoki
 //
 //**************************************************************
@@ -13,7 +13,7 @@
 #include "objectX.h"
 
 //==============================================================
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 //==============================================================
 class CObject2d;
 
@@ -29,7 +29,7 @@ public:
 	static CDifficult* Create(const D3DXVECTOR3& inPos, const D3DXVECTOR3& inRot, const D3DXVECTOR3& inSize);
 
 	void SetCounter(bool is) { m_isCount = is; }
-	int GetLevel() { return m_gameLevel; }
+	int GetLevel() { return (int)m_gameLevel; }
 	int GetEnemyLevel() { return m_enemyLevel; }
 private:
 	int m_time;

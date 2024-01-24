@@ -42,20 +42,14 @@ public:
 	void Uninit() override;
 	void Update() override;
 
-	CCameraGame* GetCamera() { return m_camera; }
+	//CCameraGame* GetCamera() { return m_camera; }
 	CPlayerController* GetController() { return m_controller; }
 	CDifficult* GetDifficult() { return m_difficult; }
 
-	void SetChangeMap();
-	void ChangeMap(std::string);
 private:
 	CPlayerManager* m_player;	// プレイヤー
 	CPlayerController* m_controller;	// コントローラー
 	CEnemyManager* m_enemy;		// 敵
-	CCameraGame* m_camera;
-	CMap* m_map;
-	CLight* m_light;
-	CMapFade* m_mapFade;
 	ConnectManager*m_tcp;
 	CDifficult* m_difficult;
 };

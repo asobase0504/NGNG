@@ -59,8 +59,7 @@
 // コンストラクタ
 // Author : Yuda Kaito
 //--------------------------------------------------------------
-CGame::CGame() :
-	m_map(nullptr)
+CGame::CGame()
 {
 }
 
@@ -98,7 +97,8 @@ HRESULT CGame::Init()
 	m_controller->SetToOrder(pPlayer);
 	pPlayer->SetController(m_controller);
 	pPlayer->OffUpdate();
-	m_camera->SetTargetPos(pPlayer->GetPos());
+
+	((CCameraGame*)m_camera)->SetTargetPos(pPlayer->GetPos());
 
 	/*m_tcp = new ConnectManager;
 	m_tcp->Init("127.0.0.1", 13678);*/
@@ -111,10 +111,7 @@ HRESULT CGame::Init()
 	m_difficult = CDifficult::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
 
 	// 虚無マップ
-	CMap::SetMap("data/FILE/map/map03.json");
-
-	m_mapFade = CMapFade::Create();
-	m_mapFade->NextMap("data/FILE/map/map03.json");
+	CreateMap("data/FILE/map/map03.json");
 
 	return S_OK;
 }
@@ -165,32 +162,4 @@ void CGame::Update()
 
 	//	m_tcp->SendPlayerData(sendData);
 	//}
-}
-
-//--------------------------------------------------------------
-// マップの切り替え
-// Author : Yuda Kaito
-//--------------------------------------------------------------
-void CGame::SetChangeMap()
-{
-	CPlayerManager::GetInstance()->GetPlayer()->OffUpdate();
-	m_mapFade->NextMap(m_map->GetNextMapPath());
-}
-
-//--------------------------------------------------------------
-// マップの作成
-// Author : Yuda Kaito
-//--------------------------------------------------------------
-void CGame::ChangeMap(std::string inPath)
-{
-	if (m_map != nullptr)
-	{
-		m_map->Uninit();
-		m_map = nullptr;
-	}
-
-	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
-	player->OnUpdate();
-	CMap::SetMap(inPath);
-	m_map->InCharacterList(player);
 }

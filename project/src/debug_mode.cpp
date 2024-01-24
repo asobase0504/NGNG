@@ -81,9 +81,6 @@ HRESULT CDebugMode::Init(void)
 	CHPUI::Create(pPlayer->GetHp());
 	CMONEYUI::Create(pPlayer->GetMoney());
 
-	// ƒ}ƒbƒv‚Ì¶¬
-	CMap::SetMap("data/FILE/map/map01.json");
-
 	return S_OK;
 }
 

@@ -125,7 +125,7 @@ void CStatue::SetRot(const D3DXVECTOR3 & inRot)
 //--------------------------------------------------------------
 void CStatue::UpMesh()
 {
-	CMap* map = CMap::GetMap();
+	CMap* map = CApplication::GetInstance()->GetMap();
 	D3DXVECTOR3 pos = GetPos();
 
 	// 上に上げる処理

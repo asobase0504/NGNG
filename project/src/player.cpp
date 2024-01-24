@@ -435,7 +435,7 @@ void CPlayer::AbDamage(const int inDamage)
 //--------------------------------------------------------------
 void CPlayer::Select()
 {
-	CMap* map = CMap::GetMap();
+	CMap* map = CApplication::GetInstance()->GetMap();
 
 	if (map != nullptr)
 	{
