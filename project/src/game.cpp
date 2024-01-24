@@ -110,7 +110,6 @@ HRESULT CGame::Init()
 
 	m_difficult = CDifficult::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
 
-	// 虚無マップ
 	CreateMap("data/FILE/map/map03.json");
 	GetMap()->RandomStatueSummon();
 
@@ -164,3 +163,4 @@ void CGame::Update()
 	//	m_tcp->SendPlayerData(sendData);
 	//}
 }
+

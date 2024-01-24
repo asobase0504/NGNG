@@ -315,6 +315,7 @@
   <ItemGroup>
     <None Include="..\..\..\..\Downloads\map\map7.json" />
     <None Include="..\project\data\FILE\model.json" />
+    <None Include="data\FILE\map\forest_map.json" />
     <None Include="data\FILE\map\map01.json" />
     <None Include="data\FILE\map\map02.json" />
     <None Include="data\FILE\map\map03.json" />

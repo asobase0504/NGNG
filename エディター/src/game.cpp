@@ -95,7 +95,7 @@ HRESULT CGame::Init()
 	m_map = CMap::GetMap("data/test.json");
 
 	m_mapFade = CMapFade::Create();
-	m_mapFade->NextMap("data/FILE/map/map02.json");
+	m_mapFade->NextMap("data/FILE/map/snow_map2.json");
 
 	m_camera = new CCameraGame;
 	m_camera->Init();

@@ -1,6 +1,6 @@
 ﻿//**************************************************************
 // 
-// マップの作成
+// �}�b�v�̍쐬
 // Author : Tomidokoro Tomoki
 // 
 //**************************************************************
@@ -30,12 +30,12 @@
 #include "item_data_base.h"
 
 //==============================================================
-// 静的メンバ変数宣言
+// �ÓI�����o�ϐ��錾
 //==============================================================
 bool CMap::m_isGame = false;
 
 //--------------------------------------------------------------
-// コンストラクタ
+// �R���X�g���N�^
 //--------------------------------------------------------------
 CMap::CMap() :
 	CTask(CTaskGroup::EPriority::LEVEL_SYSTEM)
@@ -47,7 +47,7 @@ CMap::CMap() :
 }
 
 //--------------------------------------------------------------
-// デストラクタ
+// �f�X�g���N�^
 //--------------------------------------------------------------
 CMap::~CMap()
 {
@@ -55,7 +55,7 @@ CMap::~CMap()
 }
 
 //--------------------------------------------------------------
-// 初期化
+// ������
 //--------------------------------------------------------------
 HRESULT CMap::Init()
 {
@@ -85,80 +85,80 @@ void CMap::Uninit()
 	CTask::Uninit();
 }
 
-//--------------------------------------------------------------
-// 更新
-//--------------------------------------------------------------
-void CMap::Update()
-{
-	if (m_isGame)
+	//--------------------------------------------------------------
+	// �X�V
+	//--------------------------------------------------------------
+	void CMap::Update()
 	{
-		m_SpawnCnt++;
-
-		// 一定時間ごとにランダムな敵をスポーンさせる。
-		if (m_SpawnCnt >= 600)
+		if (m_isGame)
 		{
-			m_SpawnCnt = 0;
-			SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+			m_SpawnCnt++;
+
+			// ��莞�Ԃ��ƂɃ����_���ȓG���X�|�[��������B
+			if (m_SpawnCnt >= 600)
+			{
+				m_SpawnCnt = 0;
+				SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+			}
 		}
 	}
-}
 
-//--------------------------------------------------------------
-// 読込み
-//--------------------------------------------------------------
-void CMap::Load(std::string path)
-{
-	nlohmann::json map = LoadJson(path);
-
-	int size = map["MODEL"].size();
-	for (int i = 0; i < size; i++)
+	//--------------------------------------------------------------
+	// �Ǎ���
+	//--------------------------------------------------------------
+	void CMap::Load(std::string path)
 	{
-		nlohmann::json model = map["MODEL"][i];
-		D3DXVECTOR3 pos(model["POS"][0], model["POS"][1], model["POS"][2]);
-		D3DXVECTOR3 rot(model["ROT"][0], model["ROT"][1], model["ROT"][2]);
-		CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
-		object->LoadModel(model["TAG"]);
-		m_model.push_back(object);
+		nlohmann::json map = LoadJson(path);
+
+		int size = map["MODEL"].size();
+		for (int i = 0; i < size; i++)
+		{
+			nlohmann::json model = map["MODEL"][i];
+			D3DXVECTOR3 pos(model["POS"][0], model["POS"][1], model["POS"][2]);
+			D3DXVECTOR3 rot(model["ROT"][0], model["ROT"][1], model["ROT"][2]);
+			CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
+			object->LoadModel(model["TAG"]);
+			m_model.push_back(object);
+			SetEndChildren(object);
+		}
+
+		size = map["MESH"].size();
+		nlohmann::json mesh = map["MESH"];
+		CMesh* object = CMesh::Create();
+		object->SetY(mesh["VTX_HEIGHT"]);
+		D3DXVECTOR3 pos(mesh["POS"][0], mesh["POS"][1], mesh["POS"][2]);
+		object->SetPos(pos);
+		object->SetOneMeshSize(D3DXVECTOR3(100.0f, 100.0f, 100.0f));
+		object->SetTexture("MESH_BG");
+		m_mesh.push_back(object);
 		SetEndChildren(object);
+
+		m_nextMapPath = map["NEXT_MAP"];
 	}
 
-	size = map["MESH"].size();
-	nlohmann::json mesh = map["MESH"];
-	CMesh* object = CMesh::Create();
-	object->SetY(mesh["VTX_HEIGHT"]);
-	D3DXVECTOR3 pos(mesh["POS"][0], mesh["POS"][1], mesh["POS"][2]);
-	object->SetPos(pos);
-	object->SetOneMeshSize(D3DXVECTOR3(100.0f,100.0f,100.0f));
-	object->SetTexture("MESH_BG");
-	m_mesh.push_back(object);
-	SetEndChildren(object);
+	//--------------------------------------------------------------
+	// �Ⴄ�֌W�̂��̂Ɋ֐����s��
+	//--------------------------------------------------------------
+	void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
+	{
+		std::list<CCharacter*> charaList = GetCharacterList();
 
-	m_nextMapPath = map["NEXT_MAP"];
-}
+		for (CCharacter* chara : charaList)
+		{// �U���͈͂ɓG�����邩���肷��
 
-//--------------------------------------------------------------
-// 違う関係のものに関数を行う
-//--------------------------------------------------------------
-void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
-{
-	std::list<CCharacter*> charaList = GetCharacterList();
+			if (chara->IsDeleted())
+			{
+				continue;
+			}
 
-	for (CCharacter* chara : charaList)
-	{// 攻撃範囲に敵がいるか判定する
+			if (chara->GetRelation() == inRelation)
+			{
+				continue;
+			}
 
-		if (chara->IsDeleted())
-		{
-			continue;
+			inFunc(chara);
 		}
-
-		if (chara->GetRelation() == inRelation)
-		{
-			continue;
-		}
-
-		inFunc(chara);
 	}
-}
 
 void CMap::CreateEnemy(D3DXVECTOR3 inPos, CEnemyDataBase::EEnemyType inType)
 {

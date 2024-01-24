@@ -569,7 +569,10 @@ void CCharacter::Collision()
 
 	CMap* map = CApplication::GetInstance()->GetMap();
 	D3DXVECTOR3 pos = GetPos();
-
+	if (map == nullptr)
+	{
+		return;
+	}
 	// マップモデル
 	for (int i = 0; i < map->GetNumModel(); i++)
 	{
