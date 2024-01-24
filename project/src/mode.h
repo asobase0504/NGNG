@@ -36,6 +36,8 @@ public:
 	void CreateMap(std::string inPath);
 	void ChangeMap();
 
+	CMapFade* GetMapFade() { return m_mapFade; }
+
 	CCamera* GetCamera() { return m_camera; }
 
 protected:

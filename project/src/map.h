@@ -59,7 +59,11 @@ public:
 	std::string GetNextMapPath() { return m_nextMapPath; }
 
 	void CreateEnemy(D3DXVECTOR3, CEnemyDataBase::EEnemyType);
+
+	void RandomStatueSummon();
+
 private:
+
 	std::string m_nextMapPath;	//次のマップ
 
 	int m_SpawnCnt;	// エネミーの出現タイム

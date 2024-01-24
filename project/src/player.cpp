@@ -150,7 +150,7 @@ void CPlayer::Update()
 {
 	if (!m_isUpdate)
 	{
-		return;
+		//return;
 	}
 
 	// 状態異常UI
@@ -437,49 +437,55 @@ void CPlayer::Select()
 {
 	CMap* map = CApplication::GetInstance()->GetMap();
 
-	if (map != nullptr)
+	if (map == nullptr)
 	{
-		std::list<CSelectEntity*> list = map->GetSelectEntityList();
+		return;
+	}
 
-		CSelectEntity* nearEntity;
-		float nearLength = FLT_MAX;
+	std::list<CSelectEntity*> list = map->GetSelectEntityList();
 
-		for (CSelectEntity* entity : list)
+	if (list.size() == 0)
+	{
+		return;
+	}
+
+	CSelectEntity* nearEntity;
+	float nearLength = FLT_MAX;
+
+	for (CSelectEntity* entity : list)
+	{
+		entity->NoDisplayUI();
+
+		if (entity->GetSelectCollision() == nullptr)
 		{
-			entity->NoDisplayUI();
-
-			if (entity->GetSelectCollision() == nullptr)
-			{
-				continue;
-			}
-
-			D3DXVECTOR3 diffPos = m_pos - entity->GetPos();
-
-			float diff = D3DXVec3Length(&diffPos);
-
-			if (entity->GetCostUI() != nullptr)
-			{
-				entity->GetCostUI()->SetDisplay(600.0f > diff);
-			}
-
-			if (nearLength > diff)
-			{
-				nearLength = diff;
-				nearEntity = entity;
-			}
+			continue;
 		}
 
-		if (nearEntity->GetSelectCollision()->ToCylinder(GetCollision()))
-		{
-			nearEntity->DisplayUI();
+		D3DXVECTOR3 diffPos = m_pos - entity->GetPos();
 
-			if (m_controller->Select())
-			{
-				nearEntity->Select(this);
-			}
+		float diff = D3DXVec3Length(&diffPos);
+
+		if (entity->GetCostUI() != nullptr)
+		{
+			entity->GetCostUI()->SetDisplay(600.0f > diff);
+		}
+
+		if (nearLength > diff)
+		{
+			nearLength = diff;
+			nearEntity = entity;
 		}
 	}
-	
+
+	if (nearEntity->GetSelectCollision()->ToCylinder(GetCollision()))
+	{
+		nearEntity->DisplayUI();
+
+		if (m_controller->Select())
+		{
+			nearEntity->Select(this);
+		}
+	}
 }
 
 //--------------------------------------------------------------

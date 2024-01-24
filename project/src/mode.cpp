@@ -34,6 +34,9 @@ void CMode::CreateMap(std::string inPath)
 
 void CMode::ChangeMap()
 {
-	CPlayerManager::GetInstance()->GetPlayer()->OffUpdate();
+	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
+	player->OffUpdate();
 	CreateMap(m_map->GetNextMapPath());
+	player->OnUpdate();
+	player->SetPos(D3DXVECTOR3(0.0f, -100.0f, 0.0f));
 }

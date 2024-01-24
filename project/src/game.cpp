@@ -112,6 +112,7 @@ HRESULT CGame::Init()
 
 	// 虚無マップ
 	CreateMap("data/FILE/map/map03.json");
+	GetMap()->RandomStatueSummon();
 
 	return S_OK;
 }
