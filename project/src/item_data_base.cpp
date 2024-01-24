@@ -220,7 +220,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_DOSU];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_DOSU");
 	item->SetRerity(RARITY_COMMON);
 	m_itemInfo[ITEM_DOSU][0] = "ドス";
 	m_itemInfo[ITEM_DOSU][1] = "敵を倒した時、回復する";
@@ -369,7 +369,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_DENDENDAIKO];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_DENDENDAIKO");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_DENDENDAIKO][0] = "電電太鼓";
 	m_itemInfo[ITEM_DENDENDAIKO][1] = "体力が一定以下になったエリートモンスターを\n即死させる";
@@ -401,7 +401,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_CROW_FEATHER];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_CROW_FEATHER");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_CROW_FEATHER][0] = "カラスの羽";
 	m_itemInfo[ITEM_CROW_FEATHER][1] = "ジャンプ回数が増える";
@@ -419,7 +419,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_TOISI];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_TOISI");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_TOISI][0] = "砥石";
 	m_itemInfo[ITEM_TOISI][1] = "クリティカル確率が上昇し、クリティカルが発生するごとに\n体力が回復する";
@@ -449,7 +449,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_DRIP_BAG];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_DRIP_BAG");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_DRIP_BAG][0] = "点滴袋";
 	m_itemInfo[ITEM_DRIP_BAG][1] = "敵を倒すごとに体力が永続的に1増える";
@@ -473,7 +473,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_CHICK];
-	item->SetModel("ITEM_HIYOKO");
+	item->SetModel("ITEM_CHICK");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_CHICK][0] = "ひよこ";
 	m_itemInfo[ITEM_CHICK][1] = "走りながらジャンプすると前方に飛び出す";
@@ -522,7 +522,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_SEED];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_SEED");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_SEED][0] = "種子";
 	m_itemInfo[ITEM_SEED][1] = "攻撃ヒット時に体力を回復する";
@@ -584,7 +584,7 @@ HRESULT CItemDataBase::Init()
 	//--------------------------------------------------------------
 
 	item = m_item[ITEM_FLOWER];
-	item->SetModel("BOX");
+	item->SetModel("ITEM_FLOWER");
 	item->SetRerity(RARITY_UNCOMMON);
 	m_itemInfo[ITEM_FLOWER][0] = "花";
 	m_itemInfo[ITEM_FLOWER][1] = "テレポーターイベント中近くの味方を\n回復するヒーリングノヴァを生成する";
