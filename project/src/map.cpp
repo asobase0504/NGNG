@@ -1,6 +1,6 @@
 //**************************************************************
 // 
-// „Éû„ÉÉ„Éó„ÅÆ‰ΩúÊàê
+// É}ÉbÉvÇÃçÏê¨
 // Author : Tomidokoro Tomoki
 // 
 //**************************************************************
@@ -30,13 +30,13 @@
 #include "item_data_base.h"
 
 //==============================================================
-// ÈùôÁöÑ„É°„É≥„ÉêÂ§âÊï∞ÂÆ£Ë®Ä
+// ê√ìIÉÅÉìÉoïœêîêÈåæ
 //==============================================================
 CMap* CMap::m_map = nullptr;
 bool CMap::m_isGame = false;
 
 //--------------------------------------------------------------
-// „Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø
+// ÉRÉìÉXÉgÉâÉNÉ^
 //--------------------------------------------------------------
 CMap::CMap() :
 	CTask(CTaskGroup::EPriority::LEVEL_SYSTEM)
@@ -48,7 +48,7 @@ CMap::CMap() :
 }
 
 //--------------------------------------------------------------
-// „Éá„Çπ„Éà„É©„ÇØ„Çø
+// ÉfÉXÉgÉâÉNÉ^
 //--------------------------------------------------------------
 CMap::~CMap()
 {
@@ -56,7 +56,7 @@ CMap::~CMap()
 }
 
 //--------------------------------------------------------------
-// ÂàùÊúüÂåñ
+// èâä˙âª
 //--------------------------------------------------------------
 HRESULT CMap::Init()
 {
@@ -78,115 +78,115 @@ HRESULT CMap::Init()
 			manager->CreateStatue(CStatueManager::CHEST);
 		}
 
-	CObject2d* sky = CObject2d::Create();
-	sky->SetSize(CApplication::CENTER_POS);
-	sky->SetPos(CApplication::CENTER_POS);
-	sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
+		CObject2d* sky = CObject2d::Create();
+		sky->SetSize(CApplication::CENTER_POS);
+		sky->SetPos(CApplication::CENTER_POS);
+		sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
 
-	//D3DXMATRIX mtx;
-	//D3DXMatrixIdentity(&mtx);
-	//for (int i = 0; i < CItemDataBase::EItemType::ITEM_MAX; i++)
-	//{
-	//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
-	//}
-	return S_OK;
-}
-
-//--------------------------------------------------------------
-// ÁµÇ‰∫Ü
-//--------------------------------------------------------------
-void CMap::Uninit()
-{
-
-	m_mesh.clear();
-	m_model.clear();
-	m_characterList.clear();
-	m_selectEntity.clear();
-	if (m_map != nullptr)
-	{
-		m_map = nullptr;
+		//D3DXMATRIX mtx;
+		//D3DXMatrixIdentity(&mtx);
+		//for (int i = 0; i < CItemDataBase::EItemType::ITEM_MAX; i++)
+		//{
+		//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
+		//}
+		return S_OK;
 	}
-	CTask::Uninit();
-
 }
-
-//--------------------------------------------------------------
-// Êõ¥Êñ∞
-//--------------------------------------------------------------
-void CMap::Update()
-{
-	if (m_isGame)
+	//--------------------------------------------------------------
+	// èIóπ
+	//--------------------------------------------------------------
+	void CMap::Uninit()
 	{
-		m_SpawnCnt++;
 
-		// ‰∏ÄÂÆöÊôÇÈñì„Åî„Å®„Å´„É©„É≥„ÉÄ„É†„Å™Êïµ„Çí„Çπ„Éù„Éº„É≥„Åï„Åõ„Çã„ÄÇ
-		if (m_SpawnCnt >= 600)
+		m_mesh.clear();
+		m_model.clear();
+		m_characterList.clear();
+		m_selectEntity.clear();
+		if (m_map != nullptr)
 		{
-			m_SpawnCnt = 0;
-			SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+			m_map = nullptr;
+		}
+		CTask::Uninit();
+
+	}
+
+	//--------------------------------------------------------------
+	// çXêV
+	//--------------------------------------------------------------
+	void CMap::Update()
+	{
+		if (m_isGame)
+		{
+			m_SpawnCnt++;
+
+			// àÍíËéûä‘Ç≤Ç∆Ç…ÉâÉìÉ_ÉÄÇ»ìGÇÉXÉ|Å[ÉìÇ≥ÇπÇÈÅB
+			if (m_SpawnCnt >= 600)
+			{
+				m_SpawnCnt = 0;
+				SetEndChildren(CEnemyManager::GetInstance()->RandomSpawn());
+			}
 		}
 	}
-}
 
-//--------------------------------------------------------------
-// Ë™≠Ëæº„Åø
-//--------------------------------------------------------------
-void CMap::Load(std::string path)
-{
-	nlohmann::json map = LoadJson(path);
-
-	int size = map["MODEL"].size();
-	for (int i = 0; i < size; i++)
+	//--------------------------------------------------------------
+	// ì«çûÇ›
+	//--------------------------------------------------------------
+	void CMap::Load(std::string path)
 	{
-		nlohmann::json model = map["MODEL"][i];
-		D3DXVECTOR3 pos(model["POS"][0], model["POS"][1], model["POS"][2]);
-		D3DXVECTOR3 rot(model["ROT"][0], model["ROT"][1], model["ROT"][2]);
-		CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
-		object->LoadModel(model["TAG"]);
-		m_model.push_back(object);
+		nlohmann::json map = LoadJson(path);
+
+		int size = map["MODEL"].size();
+		for (int i = 0; i < size; i++)
+		{
+			nlohmann::json model = map["MODEL"][i];
+			D3DXVECTOR3 pos(model["POS"][0], model["POS"][1], model["POS"][2]);
+			D3DXVECTOR3 rot(model["ROT"][0], model["ROT"][1], model["ROT"][2]);
+			CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
+			object->LoadModel(model["TAG"]);
+			m_model.push_back(object);
+			SetEndChildren(object);
+		}
+
+		size = map["MESH"].size();
+		nlohmann::json mesh = map["MESH"];
+		CMesh* object = CMesh::Create();
+		object->SetY(mesh["VTX_HEIGHT"]);
+		D3DXVECTOR3 pos(mesh["POS"][0], mesh["POS"][1], mesh["POS"][2]);
+		object->SetPos(pos);
+		object->SetOneMeshSize(D3DXVECTOR3(100.0f, 100.0f, 100.0f));
+		object->SetTexture("MESH_BG");
+		m_mesh.push_back(object);
 		SetEndChildren(object);
+
+		m_nextMapPath = map["NEXT_MAP"];
 	}
 
-	size = map["MESH"].size();
-	nlohmann::json mesh = map["MESH"];
-	CMesh* object = CMesh::Create();
-	object->SetY(mesh["VTX_HEIGHT"]);
-	D3DXVECTOR3 pos(mesh["POS"][0], mesh["POS"][1], mesh["POS"][2]);
-	object->SetPos(pos);
-	object->SetOneMeshSize(D3DXVECTOR3(100.0f,100.0f,100.0f));
-	object->SetTexture("MESH_BG");
-	m_mesh.push_back(object);
-	SetEndChildren(object);
+	//--------------------------------------------------------------
+	// à·Ç§ä÷åWÇÃÇ‡ÇÃÇ…ä÷êîÇçsÇ§
+	//--------------------------------------------------------------
+	void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
+	{
+		std::list<CCharacter*> charaList = GetCharacterList();
 
-	m_nextMapPath = map["NEXT_MAP"];
-}
+		for (CCharacter* chara : charaList)
+		{// çUåÇîÕàÕÇ…ìGÇ™Ç¢ÇÈÇ©îªíËÇ∑ÇÈ
 
-//--------------------------------------------------------------
-// ÈÅï„ÅÜÈñ¢‰øÇ„ÅÆ„ÇÇ„ÅÆ„Å´Èñ¢Êï∞„ÇíË°å„ÅÜ
-//--------------------------------------------------------------
-void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
-{
-	std::list<CCharacter*> charaList = GetCharacterList();
+			if (chara->IsDeleted())
+			{
+				continue;
+			}
 
-	for (CCharacter* chara : charaList)
-	{// ÊîªÊíÉÁØÑÂõ≤„Å´Êïµ„Åå„ÅÑ„Çã„ÅãÂà§ÂÆö„Åô„Çã
+			if (chara->GetRelation() == inRelation)
+			{
+				continue;
+			}
 
-		if (chara->IsDeleted())
-		{
-			continue;
+			inFunc(chara);
 		}
-
-		if (chara->GetRelation() == inRelation)
-		{
-			continue;
-		}
-
-		inFunc(chara);
 	}
-}
 
-void CMap::CreateEnemy(D3DXVECTOR3 inPos, CEnemyDataBase::EEnemyType inType)
-{
-	CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
-	SetEndChildren(CEnemyManager::GetInstance()->CreateEnemy(inPos, inType, pDiff->GetLevel()));
-}
+	void CMap::CreateEnemy(D3DXVECTOR3 inPos, CEnemyDataBase::EEnemyType inType)
+	{
+		CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
+		SetEndChildren(CEnemyManager::GetInstance()->CreateEnemy(inPos, inType, pDiff->GetLevel()));
+	}
