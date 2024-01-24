@@ -79,18 +79,19 @@ HRESULT CMap::Init()
 		manager->CreateStatue(CStatueManager::CHEST);
 	}
 
-	CObject2d* sky = CObject2d::Create();
-	sky->SetSize(CApplication::CENTER_POS);
-	sky->SetPos(CApplication::CENTER_POS);
-	sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
+		CObject2d* sky = CObject2d::Create();
+		sky->SetSize(CApplication::CENTER_POS);
+		sky->SetPos(CApplication::CENTER_POS);
+		sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
 
-	//D3DXMATRIX mtx;
-	//D3DXMatrixIdentity(&mtx);
-	//for (int i = 0; i < CItemDataBase::EItemType::ITEM_MAX; i++)
-	//{
-	//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
-	//}
-	return S_OK;
+		//D3DXMATRIX mtx;
+		//D3DXMatrixIdentity(&mtx);
+		//for (int i = 0; i < CItemDataBase::EItemType::ITEM_MAX; i++)
+		//{
+		//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
+		//}
+		return S_OK;
+	}
 }
 
 //--------------------------------------------------------------
