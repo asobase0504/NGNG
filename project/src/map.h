@@ -62,6 +62,8 @@ public:
 
 	void RandomStatueSummon();
 
+	void SetIsGame(bool isGame) { m_isGame = isGame; }
+
 private:
 
 	std::string m_nextMapPath;	//次のマップ
@@ -74,6 +76,6 @@ private:
 	std::list<CCharacter*> m_characterList;
 	std::list<CSelectEntity*> m_selectEntity;
 
-	static bool m_isGame;
+	bool m_isGame;
 };
 #endif

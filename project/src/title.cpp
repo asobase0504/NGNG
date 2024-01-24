@@ -72,6 +72,8 @@ HRESULT CTitle::Init(void)
 		CApplication::GetInstance()->GetModeClass()->CreateMap("data/FILE/map/map03.json");
 	}
 
+	CApplication::GetInstance()->GetSound()->Play(CSound::LABEL_SE_CRY);
+
 	return S_OK;
 }
 

@@ -38,5 +38,6 @@ void CMode::ChangeMap()
 	player->OffUpdate();
 	CreateMap(m_map->GetNextMapPath());
 	player->OnUpdate();
+	m_map->InCharacterList(player);
 	player->SetPos(D3DXVECTOR3(0.0f, -100.0f, 0.0f));
 }

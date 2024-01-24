@@ -45,4 +45,5 @@ CMapFade * CMapFade::Create()
 void CMapFade::Change()
 {
 	CApplication::GetInstance()->GetModeClass()->ChangeMap();
+	CApplication::GetInstance()->GetModeClass()->GetMap()->RandomStatueSummon();
 }

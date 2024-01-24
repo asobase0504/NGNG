@@ -14,8 +14,8 @@ HRESULT CEffectDamageCamera::Init()
 	CObject2d::Init();
 	SetPos(CApplication::CENTER_POS);
 	SetSize(CApplication::CENTER_POS);
-	SetColor(D3DXCOLOR(0.03f,0.01f,0.01f,0.5f));
-
+	SetColor(D3DXCOLOR(0.95f,0.05f,0.05f,0.5f));
+	SetTexture("DAMAGE_EFFECT");
 	m_time = 12;
 	m_maxTime = 12;
 	return S_OK;

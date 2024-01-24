@@ -27,6 +27,7 @@ public:
 	{
 		LABEL_NONE = -1,
 		LABEL_BGM_TITLE = 0,	// ƒ^ƒCƒgƒ‹
+		LABEL_SE_CRY,			// –Â‚«º
 		LABEL_MAX,
 	};
 

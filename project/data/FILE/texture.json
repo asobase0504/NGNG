@@ -48,6 +48,7 @@
 	["FIGHT","data\/TEXTURE\/STATUE\/fight.png"],
 	["FLOWER","data\/TEXTURE\/STATUE\/flower.png"],
 	["UI_BG","data\/TEXTURE\/bg.jpg"],
+	["DAMAGE_EFFECT","data\/TEXTURE\/damage.png"],
 	["TEST","data\/TEXTURE\/test.jpg"]
   ]
 }

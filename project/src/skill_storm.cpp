@@ -66,7 +66,7 @@ void CSkillStorm::AllWayAbility()
 			m_collision.push_back(collision);
 			collision->SetParent(&m_bullet->GetPos());
 
-			m_bullet->SetEndChildren(collision);
+ 			m_bullet->SetEndChildren(collision);
 		}
 	}
 

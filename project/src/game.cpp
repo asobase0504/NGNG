@@ -113,6 +113,11 @@ HRESULT CGame::Init()
 	// 虚無マップ
 	CreateMap("data/FILE/map/map03.json");
 	GetMap()->RandomStatueSummon();
+	GetMap()->InCharacterList(pPlayer);
+	GetMap()->SetIsGame(true);
+
+	CApplication::GetInstance()->GetSound()->Play(CSound::LABEL_SE_CRY);
+	CApplication::GetInstance()->GetSound()->Play(CSound::LABEL_BGM_TITLE);
 
 	return S_OK;
 }
@@ -136,6 +141,9 @@ void CGame::Uninit()
 
 	CInput::GetKey()->SetCursorErase(true);
 	CInput::GetKey()->LockCursorPos(false);
+
+	CApplication::GetInstance()->GetSound()->Play(CSound::LABEL_SE_CRY);
+	CApplication::GetInstance()->GetSound()->Play(CSound::LABEL_BGM_TITLE);
 }
 
 //--------------------------------------------------------------
