@@ -116,7 +116,7 @@ void CObjectX::Draw()
 
 	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
-	D3DXVECTOR3 CameraRot = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera()->GetRot();
+	D3DXVECTOR3 CameraRot = CApplication::GetInstance()->GetModeClass()->GetCamera()->GetRot();
 
 	// 大きさを反映
 	D3DXMatrixScaling(&mtxScale, m_scale.x, m_scale.y, m_scale.z);

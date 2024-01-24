@@ -35,28 +35,8 @@ CMapFade * CMapFade::Create()
 	if (pObject != nullptr)
 	{
 		pObject->Init();
-		pObject->m_nextMap = "data/FILE/map/map01.json";
 	}
 	return pObject;
-}
-
-//--------------------------------------------------------------
-// 次のマップ
-//--------------------------------------------------------------
-void CMapFade::NextMap(std::string nextMap)
-{
-	if (m_fade != FADENON)
-	{
-		return;
-	}
-
-	/* ↓フェードを移行する場合↓ */
-
-	Init();
-	m_nextMap = "data/FILE/map/map01.json";
-	//m_nextMap = nextMap;
-	SetColor(D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
-	m_fade = FADEIN;
 }
 
 //--------------------------------------------------------------
@@ -64,6 +44,5 @@ void CMapFade::NextMap(std::string nextMap)
 //--------------------------------------------------------------
 void CMapFade::Change()
 {
-	CGame* game = (CGame*)(CApplication::GetInstance()->GetModeClass());
-	game->ChangeMap(m_nextMap);
+	CApplication::GetInstance()->GetModeClass()->ChangeMap();
 }

@@ -48,6 +48,5 @@ private:
 	CObject2d* m_startShadow;
 	CMap* m_map;
 	CMapFade* m_mapFade;
-	CTitleCamera* m_camera;
 };
 #endif

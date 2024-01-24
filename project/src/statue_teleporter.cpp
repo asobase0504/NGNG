@@ -22,6 +22,7 @@
 #include "teleporter_event_ui.h"
 
 #include "hp_ui.h"
+#include "map_fade.h"
 
 const int CStatueTeleporter::CHARGE_TIME	(360);
 
@@ -90,8 +91,7 @@ void CStatueTeleporter::Update()
 			//-------------------------
 			// ƒ}ƒbƒvˆÚ“®ˆ—’Ç‰Á
 			//-------------------------
-			CGame* game = (CGame*)(CApplication::GetInstance()->GetModeClass());
-			game->SetChangeMap();
+			CApplication::GetInstance()->GetModeClass()->GetMapFade()->Start();
 		}
 	}
 

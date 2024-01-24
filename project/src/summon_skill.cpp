@@ -14,6 +14,8 @@
 #include "map.h"
 
 #include "enemy_manager.h"
+#include "application.h"
+#include "mode.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -46,7 +48,7 @@ void CSummonSkill::InitAbility()
 		posSummon = posChara;
 		posSummon.x += FloatRandom(400.0f, -400.0f);
 		posSummon.z += FloatRandom(400.0f, -400.0f);
-		CMap::GetMap()->CreateEnemy(posSummon, SummonType());
+		CApplication::GetInstance()->GetModeClass()->GetMap()->CreateEnemy(posSummon, SummonType());
 	}
 }
 

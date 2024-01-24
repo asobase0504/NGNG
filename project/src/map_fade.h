@@ -28,10 +28,8 @@ public:
 	~CMapFade();
 
 	static CMapFade* Create();
-	void NextMap(std::string nextMap);
 private:
 	void Change() override;
 private:
-	std::string m_nextMap;
 };
 #endif

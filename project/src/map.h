@@ -1,11 +1,11 @@
-//**************************************************************
+ï»¿//**************************************************************
 //
-// ƒ}ƒbƒv‚Ìƒwƒbƒ_[
+// ãƒãƒƒãƒ—ã®ãƒ˜ãƒƒãƒ€ãƒ¼
 // Author:Tomidokoro Tomoki
 //
 //**************************************************************
-#ifndef _MAP_H_		//‚±‚Ìƒ}ƒNƒ‚ª’è‹`‚³‚ê‚Ä‚È‚©‚Á‚½‚ç
-#define _MAP_H_		//2dƒCƒ“ƒNƒ‹[ƒh–h~‚Ìƒ}ƒNƒ’è‹`
+#ifndef _MAP_H_		//ã“ã®ãƒã‚¯ãƒ­ãŒå®šç¾©ã•ã‚Œã¦ãªã‹ã£ãŸã‚‰
+#define _MAP_H_		//2é‡ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰é˜²æ­¢ã®ãƒã‚¯ãƒ­å®šç¾©
 
 //==============================================================
 // include
@@ -15,18 +15,18 @@
 #include "enemy_data_base.h"
 
 //==============================================================
-// ƒ}ƒNƒéŒ¾
+// ãƒã‚¯ãƒ­å®£è¨€
 //==============================================================
 
 //==============================================================
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 //==============================================================
 class CMesh;
 class CMapModel;
 class CSelectEntity;
 
 //==============================================================
-// ƒ}ƒbƒvƒNƒ‰ƒX
+// ãƒãƒƒãƒ—ã‚¯ãƒ©ã‚¹
 //==============================================================
 class CMap : public CTask
 {
@@ -41,36 +41,11 @@ public:
 
 	void Load(std::string path);
 
-	static CMap* GetMap()
-	{
-		return m_map;
-	}
-
-	static void SetMap(std::string inPath = "", bool isGame = true) 
-	{
-		m_isGame = isGame;
-
-		if (inPath != "")
-		{
-			if (m_map != nullptr)
-			{
-				m_map->Uninit();
-				delete m_map;
-				m_map = nullptr;
-			}
-
-			m_map = new CMap;
-			m_map->Load(inPath);
-			m_map->Init();
-		}
-	
-	};
 	CMapModel* GetMapModel(int inNum) { return m_model[inNum]; }
 	int GetNumModel() { return m_model.size(); }
 
 	CMesh* GetMapMesh(int inNum) { return m_mesh[inNum]; }
 	int GetNumMesh() { return m_mesh.size(); }
-
 
 	void InSelectEntityList(CSelectEntity* inselectEntity) { m_selectEntity.push_back(inselectEntity); }
 	std::list<CSelectEntity*> GetSelectEntityList() { return m_selectEntity; }
@@ -84,14 +59,16 @@ public:
 	std::string GetNextMapPath() { return m_nextMapPath; }
 
 	void CreateEnemy(D3DXVECTOR3, CEnemyDataBase::EEnemyType);
+
+	void RandomStatueSummon();
+
 private:
-	static CMap* m_map;
 
-	std::string m_nextMapPath;	//Ÿ‚Ìƒ}ƒbƒv
+	std::string m_nextMapPath;	//æ¬¡ã®ãƒãƒƒãƒ—
 
-	int m_SpawnCnt;	// ƒGƒlƒ~[‚ÌoŒ»ƒ^ƒCƒ€
+	int m_SpawnCnt;	// ã‚¨ãƒãƒŸãƒ¼ã®å‡ºç¾ã‚¿ã‚¤ãƒ 
 
-	// ‘¶İ‚·‚éObject
+	// å­˜åœ¨ã™ã‚‹Object
 	std::vector<CMapModel*> m_model;
 	std::vector<CMesh*> m_mesh;
 	std::list<CCharacter*> m_characterList;

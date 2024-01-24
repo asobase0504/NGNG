@@ -54,7 +54,7 @@ void CYamatoSkill_2::InitAbility()
 		SetEndChildren(collision);
 
 		// ƒJƒƒ‰‚Ì•ûŒü‚É‡‚í‚¹‚é
-		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
+		CCamera *camera = CApplication::GetInstance()->GetModeClass()->GetCamera();
 		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
 		D3DXVec3Normalize(&vecNor, &vecNor);
 		vecNor *= 30.0f;			//ˆÚ“®‚³‚¹‚½‚¢’l‚ð“ü‚ê‚é

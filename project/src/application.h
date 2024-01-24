@@ -25,6 +25,7 @@ class CSound;
 class CTaskGroup;
 class CObjectXGroup;
 class CColor;
+class CMap;
 
 //==============================================================
 // マネジャークラス
@@ -83,6 +84,8 @@ public:	// メンバー関数
 	CMode* GetModeClass() { return m_mode; }
 	CSound* GetSound() { return m_sound; }
 	CColor* GetColor() { return m_color; }
+
+	CMap* GetMap();
 
 private:
 	CTexture* m_texture;

@@ -43,7 +43,7 @@ void CNurikabeSkill::InitAbility()
 	m_Duration = 30;
 
 	// ‘_‚¤æ‚ÌŒˆ’è
-	CMap::GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this](CCharacter* inChara)
+	CApplication::GetInstance()->GetMap()->DoDifferentRelation(m_apChara->GetRelation(), [this](CCharacter* inChara)
 	{
 		m_aimCharacter = inChara;
 	});

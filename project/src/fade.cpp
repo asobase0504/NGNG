@@ -82,3 +82,16 @@ void CFade::Update(void)
 		}
 	}
 }
+
+void CFade::Start()
+{
+	if (m_fade != FADENON)
+	{
+		return;
+	}
+
+	/* ↓フェードを移行する場合↓ */
+
+	Init();
+	m_fade = FADEIN;
+}

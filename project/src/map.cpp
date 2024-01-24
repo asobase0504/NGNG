@@ -1,6 +1,6 @@
-//**************************************************************
+ï»¿//**************************************************************
 // 
-// ƒ}ƒbƒv‚Ìì¬
+// ï¿½}ï¿½bï¿½vï¿½Ìì¬
 // Author : Tomidokoro Tomoki
 // 
 //**************************************************************
@@ -30,13 +30,12 @@
 #include "item_data_base.h"
 
 //==============================================================
-// Ã“Iƒƒ“ƒo•Ï”éŒ¾
+// ï¿½Ã“Iï¿½ï¿½ï¿½ï¿½ï¿½oï¿½Ïï¿½ï¿½éŒ¾
 //==============================================================
-CMap* CMap::m_map = nullptr;
 bool CMap::m_isGame = false;
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 //--------------------------------------------------------------
 CMap::CMap() :
 	CTask(CTaskGroup::EPriority::LEVEL_SYSTEM)
@@ -48,7 +47,7 @@ CMap::CMap() :
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ï¿½fï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 //--------------------------------------------------------------
 CMap::~CMap()
 {
@@ -56,62 +55,38 @@ CMap::~CMap()
 }
 
 //--------------------------------------------------------------
-// ‰Šú‰»
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //--------------------------------------------------------------
 HRESULT CMap::Init()
 {
-	if (m_isGame)
-	{
-		CStatueManager* manager = CStatueManager::GetInstance();
-		manager->RandomCreate();
-		manager->RandomCreate();
-		manager->RandomCreate();
-		manager->RandomCreate();
-		manager->CreateStatue(CStatueManager::BLOOD);
-		manager->CreateStatue(CStatueManager::LUCK);
-		manager->CreateStatue(CStatueManager::TELEPORTER);
-		manager->CreateStatue(CStatueManager::CHEST);
-		manager->CreateStatue(CStatueManager::COMBAT);
+	CObject2d* sky = CObject2d::Create();
+	sky->SetSize(CApplication::CENTER_POS);
+	sky->SetPos(CApplication::CENTER_POS);
+	sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
 
-		for (int i = 0; i < 50; i++)
-		{
-			manager->CreateStatue(CStatueManager::CHEST);
-		}
-
-		CObject2d* sky = CObject2d::Create();
-		sky->SetSize(CApplication::CENTER_POS);
-		sky->SetPos(CApplication::CENTER_POS);
-		sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
-
-		//D3DXMATRIX mtx;
-		//D3DXMatrixIdentity(&mtx);
-		//for (int i = 0; i < CItemDataBase::EItemType::ITEM_MAX; i++)
-		//{
-		//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
-		//}
-		return S_OK;
-	}
+	//D3DXMATRIX mtx;
+	//D3DXMatrixIdentity(&mtx);
+	//for (int i = 0; i < CItemDataBase::EItemType::ITEM_MAX; i++)
+	//{
+	//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
+	//}
+	return S_OK;
 }
-	//--------------------------------------------------------------
-	// I—¹
-	//--------------------------------------------------------------
-	void CMap::Uninit()
-	{
 
-		m_mesh.clear();
-		m_model.clear();
-		m_characterList.clear();
-		m_selectEntity.clear();
-		if (m_map != nullptr)
-		{
-			m_map = nullptr;
-		}
-		CTask::Uninit();
-
-	}
+//--------------------------------------------------------------
+// çµ‚äº†
+//--------------------------------------------------------------
+void CMap::Uninit()
+{
+	m_mesh.clear();
+	m_model.clear();
+	m_characterList.clear();
+	m_selectEntity.clear();
+	CTask::Uninit();
+}
 
 	//--------------------------------------------------------------
-	// XV
+	// ï¿½Xï¿½V
 	//--------------------------------------------------------------
 	void CMap::Update()
 	{
@@ -119,7 +94,7 @@ HRESULT CMap::Init()
 		{
 			m_SpawnCnt++;
 
-			// ˆê’èŠÔ‚²‚Æ‚Éƒ‰ƒ“ƒ_ƒ€‚È“G‚ğƒXƒ|[ƒ“‚³‚¹‚éB
+			// ï¿½ï¿½èï¿½Ô‚ï¿½ï¿½Æ‚Éƒï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½È“Gï¿½ï¿½ï¿½Xï¿½|ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 			if (m_SpawnCnt >= 600)
 			{
 				m_SpawnCnt = 0;
@@ -129,7 +104,7 @@ HRESULT CMap::Init()
 	}
 
 	//--------------------------------------------------------------
-	// “Ç‚İ
+	// ï¿½Çï¿½ï¿½ï¿½
 	//--------------------------------------------------------------
 	void CMap::Load(std::string path)
 	{
@@ -162,14 +137,14 @@ HRESULT CMap::Init()
 	}
 
 	//--------------------------------------------------------------
-	// ˆá‚¤ŠÖŒW‚Ì‚à‚Ì‚ÉŠÖ”‚ğs‚¤
+	// ï¿½á‚¤ï¿½ÖŒWï¿½Ì‚ï¿½ï¿½Ì‚ÉŠÖï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
 	//--------------------------------------------------------------
 	void CMap::DoDifferentRelation(CCharacter::ERelation inRelation, std::function<void(CCharacter*)> inFunc)
 	{
 		std::list<CCharacter*> charaList = GetCharacterList();
 
 		for (CCharacter* chara : charaList)
-		{// UŒ‚”ÍˆÍ‚É“G‚ª‚¢‚é‚©”»’è‚·‚é
+		{// ï¿½Uï¿½ï¿½ï¿½ÍˆÍ‚É“Gï¿½ï¿½ï¿½ï¿½ï¿½é‚©ï¿½ï¿½ï¿½è‚·ï¿½ï¿½
 
 			if (chara->IsDeleted())
 			{
@@ -185,8 +160,28 @@ HRESULT CMap::Init()
 		}
 	}
 
-	void CMap::CreateEnemy(D3DXVECTOR3 inPos, CEnemyDataBase::EEnemyType inType)
+void CMap::CreateEnemy(D3DXVECTOR3 inPos, CEnemyDataBase::EEnemyType inType)
+{
+	CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
+	SetEndChildren(CEnemyManager::GetInstance()->CreateEnemy(inPos, inType, pDiff->GetLevel()));
+}
+
+void CMap::RandomStatueSummon()
+{
+	CStatueManager* manager = CStatueManager::GetInstance();
+	manager->RandomCreate();
+	manager->RandomCreate();
+	manager->RandomCreate();
+	manager->RandomCreate();
+	manager->CreateStatue(CStatueManager::BLOOD);
+	manager->CreateStatue(CStatueManager::LUCK);
+	manager->CreateStatue(CStatueManager::TELEPORTER);
+	manager->CreateStatue(CStatueManager::CHEST);
+	manager->CreateStatue(CStatueManager::COMBAT);
+
+	for (int i = 0; i < 50; i++)
 	{
-		CDifficult *pDiff = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetDifficult();
-		SetEndChildren(CEnemyManager::GetInstance()->CreateEnemy(inPos, inType, pDiff->GetLevel()));
+		manager->CreateStatue(CStatueManager::CHEST);
 	}
+
+}

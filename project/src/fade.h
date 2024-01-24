@@ -43,6 +43,8 @@ public:
 
 	FADE* GetFade() { return& m_fade; }
 
+	void Start();
+
 private:
 	virtual void Change() = 0;
 protected:

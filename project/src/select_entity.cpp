@@ -20,7 +20,7 @@ CSelectEntity::CSelectEntity() :
 	m_ui(nullptr),
 	m_costUI(nullptr)
 {
-	CMap* map = CMap::GetMap();
+	CMap* map = CApplication::GetInstance()->GetMap();
 	map->InSelectEntityList(this);
 	map->SetEndChildren(this);
 }

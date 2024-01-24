@@ -96,7 +96,7 @@ void CSkillEntity::Collision()
 	std::list<CCollision*> hitIndex;
 
 	// 自分とは違う関係を持ってるキャラクターに当たり判定を行なう
-	CMap::GetMap()->DoDifferentRelation(m_relation, [this, &isHit, &hitIndex](CCharacter* inChara)
+	CApplication::GetInstance()->GetMap()->DoDifferentRelation(m_relation, [this, &isHit, &hitIndex](CCharacter* inChara)
 	{
 		// 攻撃を受ける状態か否か
 		if (inChara->GetIsAtkCollision())

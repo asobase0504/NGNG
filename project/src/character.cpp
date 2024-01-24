@@ -32,6 +32,9 @@
 #include "damege_ui.h"
 #include "collision_box.h"
 
+#include "application.h"
+#include "mode.h"
+
 //==============================================================
 // 定数宣言
 //==============================================================
@@ -44,10 +47,10 @@ const int CCharacter::MAX_NON_COMBAT_TIME(300);
 CCharacter::CCharacter(int nPriority) : m_haveItem{},
 	m_extrusion(nullptr)
 {
-	CMap *map = CMap::GetMap();
-	if (CMap::GetMap() != nullptr)
+	CMap *map = CApplication::GetInstance()->GetMap();
+	if (map != nullptr)
 	{
-		CMap::GetMap()->InCharacterList(this);
+		map->InCharacterList(this);
 	}
 	m_skill.clear();
 }
@@ -478,9 +481,9 @@ void CCharacter::Regenation()
 void CCharacter::Died()
 {
 	m_isDied = true;
-	std::list<CCharacter*> list = CMap::GetMap()->GetCharacterList();
+	std::list<CCharacter*> list = CApplication::GetInstance()->GetModeClass()->GetMap()->GetCharacterList();
 	list.remove(this);
-	CMap::GetMap()->SetCharacterList(list);
+	CApplication::GetInstance()->GetMap()->SetCharacterList(list);
 }
 
 //--------------------------------------------------------------
@@ -564,7 +567,7 @@ void CCharacter::Collision()
 {
 	bool isGround = false;
 
-	CMap* map = CMap::GetMap();
+	CMap* map = CApplication::GetInstance()->GetMap();
 	D3DXVECTOR3 pos = GetPos();
 	if (map == nullptr)
 	{

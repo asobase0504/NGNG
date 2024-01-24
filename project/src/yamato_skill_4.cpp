@@ -18,7 +18,7 @@
 #include "yamato_skill_4.h"
 #include "game.h"
 #include "application.h"
-#include "camera_game.h"
+#include "camera.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -55,7 +55,7 @@ void CYamatoSkill_4::InitAbility()
 		SetEndChildren(collision);
 
 		// カメラの方向に合わせる
-		CCameraGame *camera = ((CGame*)CApplication::GetInstance()->GetModeClass())->GetCamera();
+		CCamera *camera = CApplication::GetInstance()->GetModeClass()->GetCamera();
 		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
 		D3DXVec3Normalize(&vecNor, &vecNor);
 		vecNor *= 15.0f;			//移動させたい値を入れる

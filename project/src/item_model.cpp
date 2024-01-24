@@ -83,7 +83,7 @@ void CItemModel::Update()
 	if (m_collisionHit != nullptr)
 	{
 		bool isGround = false;
-		CMap* map = CMap::GetMap();
+		CMap* map = CApplication::GetInstance()->GetMap();
 
 		if (map == nullptr)
 		{
@@ -129,7 +129,7 @@ void CItemModel::Update()
 bool CItemModel::Select(CCharacter * selectCharacter)
 {
 	selectCharacter->TakeItem(m_ID);
-	CMap::GetMap()->RemoveSelectEntityList(this);
+	CApplication::GetInstance()->GetMap()->RemoveSelectEntityList(this);
 	Uninit();
 	return false;
 }
