@@ -46,6 +46,12 @@
 		[ "TREE_PLAM", "data\/MODEL\/stage\/tree_plam.x"],
 		[ "ROCK", "data\/MODEL\/stage\/rock.x"],
 		[ "ROCK2", "data\/MODEL\/stage\/rock_2.x"],
-		[ "ROCK_WALL", "data\/MODEL\/stage\/rock_wall.x"]
+		[ "ROCK_WALL", "data\/MODEL\/stage\/rock_wall.x"],
+		[ "TREE_HARDWOOD", "data\/MODEL\/stage\/tree_hardwood.x"],
+		[ "TREE_CONIFER", "data\/MODEL\/stage\/tree_conifer.x"],
+		[ "ROCK_SNOW","data\/MODEL\/stage\/rock_snow.x"],
+		[ "ROCK_SNOW_2","data\/MODEL\/stage\/rock_snow_2.x"],
+		[ "ROCK_SNOW_WALL","data\/MODEL\/stage\/rock_snow_wall.x"],
+		[ "GREATE_SNOW_WALL","data\/MODEL\/stage\/snow_greate_wall.x"]
 	]
 }
