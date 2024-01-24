@@ -61,23 +61,22 @@ HRESULT CMap::Init()
 {
 	if (m_isGame)
 	{
-	}
 
-	CStatueManager* manager = CStatueManager::GetInstance();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->RandomCreate();
-	manager->CreateStatue(CStatueManager::BLOOD);
-	manager->CreateStatue(CStatueManager::LUCK);
-	manager->CreateStatue(CStatueManager::TELEPORTER);
-	manager->CreateStatue(CStatueManager::CHEST);
-	manager->CreateStatue(CStatueManager::COMBAT);
-
-	for (int i = 0; i < 50; i++)
-	{
+		CStatueManager* manager = CStatueManager::GetInstance();
+		manager->RandomCreate();
+		manager->RandomCreate();
+		manager->RandomCreate();
+		manager->RandomCreate();
+		manager->CreateStatue(CStatueManager::BLOOD);
+		manager->CreateStatue(CStatueManager::LUCK);
+		manager->CreateStatue(CStatueManager::TELEPORTER);
 		manager->CreateStatue(CStatueManager::CHEST);
-	}
+		manager->CreateStatue(CStatueManager::COMBAT);
+
+		for (int i = 0; i < 50; i++)
+		{
+			manager->CreateStatue(CStatueManager::CHEST);
+		}
 
 		CObject2d* sky = CObject2d::Create();
 		sky->SetSize(CApplication::CENTER_POS);
