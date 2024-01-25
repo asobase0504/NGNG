@@ -27,6 +27,7 @@ public:
 
 	static CUIBackGround* Create(D3DXVECTOR2, D3DXVECTOR2,float);
 
+	void SetPouseUpdate(bool isUpdate) override;
 private:
 	// •`‰æ•¨
 	CObject2d* m_bg;		// ”wŒi

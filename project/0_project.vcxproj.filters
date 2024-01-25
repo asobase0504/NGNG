@@ -596,14 +596,14 @@
     <ClCompile Include="ui_bg.cpp">
       <Filter>ソース ファイル\Mode\01_Game\UI</Filter>
     </ClCompile>
-    <ClCompile Include="effect_damage_camera.cpp">
-      <Filter>ソース ファイル\Mode\01_Game\effect</Filter>
-    </ClCompile>
     <ClCompile Include="camera_title.cpp">
       <Filter>ソース ファイル\3D\camera</Filter>
     </ClCompile>
     <ClCompile Include="pause.cpp">
       <Filter>ソース ファイル\Mode\01_Game\10_pause</Filter>
+    </ClCompile>
+    <ClCompile Include="effect_damage_camera.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1078,6 +1078,9 @@
     </ClInclude>
     <ClInclude Include="src\skill_assault.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClInclude>
+    <ClInclude Include="effect_damage_camera.h">
+      <Filter>ソース ファイル\Mode\01_Game\effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

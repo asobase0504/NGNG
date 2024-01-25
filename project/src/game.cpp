@@ -28,6 +28,7 @@
 #include "object_mesh.h"
 #include "object_polygon3d.h"
 #include "model_skin_group.h"
+#include "model_skin.h"
 
 /* Game系統 */
 #include "player.h"
@@ -49,7 +50,8 @@
 /* サーバー */
 #include "connect.h"
 
-#include "model_skin.h"
+/*  */
+#include "pause.h"
 
 //==============================================================
 // 定数
@@ -151,6 +153,12 @@ void CGame::Uninit()
 //--------------------------------------------------------------
 void CGame::Update()
 {
+	if(CInput::GetKey()->Trigger(DIK_P, -1))
+	{
+		CPause* pause = new CPause;
+		pause->Init();
+	}
+
 	//if (m_tcp->GetIsConnect())
 	//{
 	//	CPlayer* Player = CPlayerManager::GetInstance()->GetPlayer();

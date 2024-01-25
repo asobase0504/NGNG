@@ -193,7 +193,7 @@ void CApplication::Update()
 #ifdef _DEBUG
 	static bool ppp = true;
 	CDebugProc::Print("ƒ|[ƒYy F2 z : %s\n", ppp ? "OFF" : "STOP");
-	if (CInput::GetKey()->Trigger(DIK_F2))
+	if (CInput::GetKey()->Trigger(DIK_F2,-1))
 	{
 		m_taskGroup->Pause(ppp);
 		ppp = !ppp;

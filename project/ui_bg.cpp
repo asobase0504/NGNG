@@ -50,3 +50,15 @@ CUIBackGround * CUIBackGround::Create(D3DXVECTOR2 inPos, D3DXVECTOR2 inSize,floa
 
 	return ui_bg;
 }
+
+void CUIBackGround::SetPouseUpdate(bool isUpdate)
+{
+	CTask::SetPouseUpdate(isUpdate);
+	m_bg->SetPouseUpdate(isUpdate);
+	m_outLine->SetPouseUpdate(isUpdate);
+
+	for (int i = 0; i < 8; i++)
+	{
+		m_corner[i]->SetPouseUpdate(isUpdate);
+	}
+}

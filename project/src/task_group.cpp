@@ -102,7 +102,7 @@ void CTaskGroup::Update()
 {
 	AllProcess([](CTask* task)
 	{
-		if (!(!task->IsDeleted() && task->NeedUpdate()))
+		if (task->IsDeleted() || !task->NeedUpdate())
 		{
 			return;
 		}
@@ -424,7 +424,7 @@ CTask * CTaskGroup::SearchSameRolePrev(CTask * inTask)
 //--------------------------------------------------------------
 void CTaskGroup::Pause(bool isPause)
 {
-	if (isPause)
+	if(isPause)
 	{
 		AllProcess([](CTask* task) { task->PauseOn(); });
 	}
