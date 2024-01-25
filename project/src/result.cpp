@@ -18,6 +18,8 @@
 #include "mode_fade.h"
 #include "ui_bg.h"
 
+#include "mouse_object.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 // Author : Buriya Kota
@@ -40,8 +42,9 @@ CResult::~CResult()
 //--------------------------------------------------------------
 HRESULT CResult::Init()
 {
-	CInput::GetKey()->SetCursorErase(true);
-	CInput::GetKey()->LockCursorPos(false);
+	CMouseObject* mouseObj = new CMouseObject;
+	mouseObj->Init();
+	SetEndChildren(mouseObj);
 
 	D3DXVECTOR3 center = CApplication::CENTER_POS;
 

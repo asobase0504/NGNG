@@ -112,6 +112,10 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 	m_texture = CTexture::GetInstance();
 	m_texture->LoadAll();
 
+	// inputÇÃèÛë‘
+	CInput::GetKey()->SetCursorErase(false);
+	CInput::GetKey()->LockCursorPos(true);
+
 	m_modeType = CApplication::MODE_TITLE;	//åªç›ÇÃÉÇÅ[Éh
 
 	m_fade = CModeFade::Create();

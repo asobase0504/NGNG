@@ -605,6 +605,9 @@
     <ClCompile Include="effect_damage_camera.cpp">
       <Filter>ソース ファイル\Mode\01_Game\effect</Filter>
     </ClCompile>
+    <ClCompile Include="mouse_object.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -1081,6 +1084,9 @@
     </ClInclude>
     <ClInclude Include="effect_damage_camera.h">
       <Filter>ソース ファイル\Mode\01_Game\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="mouse_object.h">
+      <Filter>ソース ファイル\Mode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -23,6 +23,11 @@
 #include "map_fade.h"
 #include "camera_title.h"
 
+#include "mouse_object.h"
+
+#include "ui_bg.h"
+#include "text_object.h"
+
 //=============================================================================
 // コンストラクタ
 //--------------------------------------------------------------
@@ -42,6 +47,10 @@ CTitle::~CTitle()
 //--------------------------------------------------------------
 HRESULT CTitle::Init(void)
 {
+	CMouseObject* mouseObj = new CMouseObject;
+	mouseObj->Init();
+	SetEndChildren(mouseObj);
+
 	// ライト
 	CLight* light = new CLight;
 	light->Init();
@@ -74,6 +83,12 @@ HRESULT CTitle::Init(void)
 
 	CApplication::GetInstance()->GetSound()->Play(CSound::LABEL_SE_CRY);
 
+	{
+		D3DXVECTOR2 pos(CApplication::CENTER_POS.x + 400.0f, 600.0f);
+		CUIBackGround::Create(pos, D3DXVECTOR2(200.0f, 30.0f), 1.0f);
+		CText::Create(pos, D3DXVECTOR2(25.0f, 25.0f), "始める");
+	}
+
 	return S_OK;
 }
 
@@ -96,8 +111,10 @@ void CTitle::Update()
 
 	CModeFade* pFade = CApplication::GetInstance()->GetFade();
 
-	if (pInput->Trigger(DIK_RETURN,-1))
+	bool ClickRetry = pInput->TriggerTouchClick(D3DXVECTOR3(CApplication::CENTER_POS.x + 400.0f, 600.0f,0.0f), D3DXVECTOR3(200.0f, 30.0f,0.0f));
+	if (pInput->Trigger(DIK_RETURN,-1) || ClickRetry)
 	{
 		pFade->NextMode(CApplication::MODE_GAME);
 	}
+
 }

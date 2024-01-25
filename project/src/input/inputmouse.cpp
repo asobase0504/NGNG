@@ -106,6 +106,7 @@ void CInputMouse::Uninit(void)
 //=============================================================================
 void CInputMouse::Update(void)
 {
+	ShowCursor(m_bCursorErase);
 	// •Ï”éŒ¾
 	DIMOUSESTATE2 aKeyState;		// ƒ}ƒEƒX“ü—Íî•ñ
 	int nCntKey;

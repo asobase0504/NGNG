@@ -28,7 +28,6 @@ public:
 	~CMode() override {}
 
 	virtual HRESULT Init() override = 0;
-	virtual void Uninit() override {};
 	virtual void Update() override = 0;
 	virtual void Draw() override {};
 

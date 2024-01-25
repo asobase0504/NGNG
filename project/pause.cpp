@@ -4,6 +4,7 @@
 #include "text_object.h"
 #include "application.h"
 #include "mode_fade.h"
+#include "mouse_object.h"
 
 CPause::CPause()
 {
@@ -15,8 +16,10 @@ CPause::~CPause()
 
 HRESULT CPause::Init()
 {
-	CInput::GetKey()->SetCursorErase(true);
-	CInput::GetKey()->LockCursorPos(false);
+	CMouseObject* mouseObj = new CMouseObject;
+	mouseObj->Init();
+	mouseObj->SetPouseUpdate(true);
+	SetEndChildren(mouseObj);
 
 	SetPouseUpdate(true);
 	m_BG = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
@@ -56,6 +59,8 @@ HRESULT CPause::Init()
 
 void CPause::Uninit()
 {
+	CInput::GetKey()->SetCursorErase(false);
+	CInput::GetKey()->LockCursorPos(true);
 	CApplication::GetInstance()->GetTaskGroup()->Pause(false);
 	CTask::Uninit();
 }

@@ -50,7 +50,8 @@ void CTitleCamera::Update()
 	m_posR = D3DXVECTOR3(0.0f, 100.0f, DISTANCE);
 	m_posV = D3DXVECTOR3(0.0f, 0.0f, -DISTANCE);
 
-	D3DXVECTOR3 mouseMove = CInput::GetKey()->GetMouseMove();
+	//D3DXVECTOR3 mouseMove = CInput::GetKey()->GetMouseMove();
+	D3DXVECTOR3 mouseMove(0.0f,0.0f,0.0f);
 
 	m_rot.x += mouseMove.y * 0.0025f;
 	m_rot.y += mouseMove.x * 0.0025f;

@@ -83,9 +83,6 @@ HRESULT CGame::Init()
 
 	CSkinMeshGroup::GetInstance()->LoadAll();
 
-	CInput::GetKey()->SetCursorErase(false);
-	CInput::GetKey()->LockCursorPos(true);
-
 	m_camera = new CCameraGame;
 	m_camera->Init();
 
@@ -139,9 +136,6 @@ void CGame::Uninit()
 	CAbnormalDataBase::Uninit();
 
 	CSkinMeshGroup::GetInstance()->UnloadAll();
-
-	CInput::GetKey()->SetCursorErase(true);
-	CInput::GetKey()->LockCursorPos(false);
 
 	CApplication::GetInstance()->GetSound()->Play(CSound::LABEL_SE_CRY);
 	CApplication::GetInstance()->GetSound()->Play(CSound::LABEL_BGM_TITLE);
