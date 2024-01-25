@@ -129,6 +129,9 @@
     <Filter Include="ソース ファイル\Mode\01_Game\effect">
       <UniqueIdentifier>{57954b71-28c3-4b26-8c4b-26e25abc1569}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Mode\01_Game\10_pause">
+      <UniqueIdentifier>{d95c9843-44d2-46e0-b789-ecf63dc38598}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precompile.cpp">
@@ -599,6 +602,9 @@
     <ClCompile Include="camera_title.cpp">
       <Filter>ソース ファイル\3D\camera</Filter>
     </ClCompile>
+    <ClCompile Include="pause.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\10_pause</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -924,7 +930,6 @@
       <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
     <ClInclude Include="src\abnormal_2dui.h" />
-    <ClInclude Include="src\difficult.h" />
     <ClInclude Include="src\udp_client.h">
       <Filter>ソース ファイル\Server</Filter>
     </ClInclude>
@@ -1056,10 +1061,24 @@
     <ClInclude Include="src\skill_back_step.h">
       <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
     </ClInclude>
-    <ClInclude Include="src\skill_assault.h" />
-    <ClInclude Include="src\skill_storm.h" />
-    <ClInclude Include="teleporter_event_ui.h" />
-    <ClInclude Include="ui_bg.h" />
+    <ClInclude Include="pause.h">
+      <Filter>ソース ファイル\Mode\01_Game\10_pause</Filter>
+    </ClInclude>
+    <ClInclude Include="teleporter_event_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_bg.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\difficult.h">
+      <Filter>ソース ファイル\Mode\01_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_storm.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill_assault.h">
+      <Filter>ソース ファイル\Mode\01_Game\character\02_skill\type</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="data\FX\Effect.fx">

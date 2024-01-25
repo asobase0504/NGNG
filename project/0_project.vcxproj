@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="effect_damage_camera.cpp" />
+    <ClCompile Include="pause.cpp" />
     <ClCompile Include="select_warp.cpp" />
     <ClCompile Include="camera_title.cpp" />
     <ClCompile Include="src\abnormal.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="ui_bg.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="pause.h" />
     <ClInclude Include="src\abnormal.h" />
     <ClInclude Include="src\abnormal_data_base.h" />
     <ClInclude Include="src\carrying_item_ui.h" />
