@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="effect_damage_camera.cpp" />
+    <ClCompile Include="go_teleporter_ui.cpp" />
     <ClCompile Include="mouse_object.cpp" />
     <ClCompile Include="pause.cpp" />
     <ClCompile Include="select_warp.cpp" />
@@ -176,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="effect_damage_camera.h" />
+    <ClInclude Include="go_teleporter_ui.h" />
     <ClInclude Include="mouse_object.h" />
     <ClInclude Include="pause.h" />
     <ClInclude Include="src\abnormal.h" />

@@ -14,6 +14,14 @@
 class CText : public CObject
 {
 public:
+	// ëµÇ¶ï˚
+	enum EAlign
+	{
+		LEFT,	// ç∂ëµÇ¶
+		RIGHT,	// âEëµÇ¶
+		CENTER,	// íÜâõëµÇ¶
+	};
+public:
 	CText();
 	~CText();
 	HRESULT Init() override;
@@ -28,6 +36,9 @@ public:
 	void SetRelease(bool Nottimerdelete) { m_isRelease = Nottimerdelete; };
 
 	void SetColor(const D3DXCOLOR &inColor) override;
+	void SetAlign(EAlign align) { m_align = align; }
+
+	void SetDisplay(bool) override;
 private:
 
 	D3DXCOLOR col;
@@ -49,6 +60,8 @@ private:
 	CFont::FONT m_FontType;
 	std::vector<CWords*> m_words;
 	std::function<void(void)> m_func;
+	EAlign m_align;
+
 	void TextLetter(const char * Text, int SpeedText);
 	void SetFont(CFont::FONT FontType) { m_FontType = FontType; };
 };

@@ -608,6 +608,9 @@
     <ClCompile Include="mouse_object.cpp">
       <Filter>ソース ファイル\Mode</Filter>
     </ClCompile>
+    <ClCompile Include="go_teleporter_ui.cpp">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\precompile.h">
@@ -1087,6 +1090,9 @@
     </ClInclude>
     <ClInclude Include="mouse_object.h">
       <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="go_teleporter_ui.h">
+      <Filter>ソース ファイル\Mode\01_Game\UI\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

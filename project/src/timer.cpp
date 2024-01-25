@@ -18,7 +18,7 @@ HRESULT CTimer::Init()
 	m_second->SetAlign(CProcedure::EAlign::LEFT);
 	m_second->SetMinimumDigit(2);
 
-	m_koron = CText::Create(D3DXVECTOR2(SCREEN_WIDTH * 0.9f - 30.0f, 60.0f), D3DXVECTOR2(12.0f, 12.0f),"F");
+	m_koron = CText::Create(D3DXVECTOR2(SCREEN_WIDTH * 0.9f - 15.0f, 60.0f), D3DXVECTOR2(12.0f, 12.0f),"F");
 
 	m_minutes = CProcedure::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.9f + 10.0f, 60.0f, 0.0f), D3DXVECTOR3(18.0f, 18.0f, 0.0f), 0);
 	m_minutes->SetAlign(CProcedure::EAlign::RIGHT);

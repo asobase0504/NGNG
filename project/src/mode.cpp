@@ -35,6 +35,7 @@ void CMode::CreateMap(std::string inPath)
 void CMode::ChangeMap()
 {
 	CPlayer* player = CPlayerManager::GetInstance()->GetPlayer();
+	player->SetIsTeleporter(false);
 	player->OffUpdate();
 	CreateMap(m_map->GetNextMapPath());
 	player->OnUpdate();

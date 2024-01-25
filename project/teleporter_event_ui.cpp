@@ -6,7 +6,7 @@
 
 const D3DXVECTOR3 CTeleporterEventUI::GROUND_POS	(SCREEN_WIDTH * 0.9f, 120.0f, 0.0f);
 const D3DXVECTOR3 CTeleporterEventUI::BAR_SIZE		(80.0f, 8.0f, 0.0f);
-const D3DXVECTOR3 CTeleporterEventUI::BAR_POS		(GROUND_POS.x - BAR_SIZE.x, 150.0f, 0.0f);
+const D3DXVECTOR3 CTeleporterEventUI::BAR_POS		(GROUND_POS.x - BAR_SIZE.x, 160.0f, 0.0f);
 
 CTeleporterEventUI::CTeleporterEventUI(CTaskGroup::EPriority list)
 {

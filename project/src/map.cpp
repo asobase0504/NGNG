@@ -59,13 +59,7 @@ HRESULT CMap::Init()
 	sky->SetSize(CApplication::CENTER_POS);
 	sky->SetPos(CApplication::CENTER_POS);
 	sky->SetColor(D3DXCOLOR(0.8f, 0.8f, 1.0f, 1.0f));
-
-	//D3DXMATRIX mtx;
-	//D3DXMatrixIdentity(&mtx);
-	//for (int i = 0; i < CItemDataBase::EItemType::ITEM_MAX; i++)
-	//{
-	//	CItemManager::GetInstance()->CreateItem(D3DXVECTOR3(-2001 + i * 50.0f, 100.0f, 1000.0f), mtx, (CItemDataBase::EItemType)i);
-	//}
+	sky->SetColor(D3DXCOLOR(0.8f, 0.5f, 0.2f, 1.0f));
 	return S_OK;
 }
 
@@ -175,7 +169,7 @@ void CMap::RandomStatueSummon()
 	manager->CreateStatue(CStatueManager::CHEST);
 	manager->CreateStatue(CStatueManager::COMBAT);
 
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 25; i++)
 	{
 		manager->CreateStatue(CStatueManager::CHEST);
 	}

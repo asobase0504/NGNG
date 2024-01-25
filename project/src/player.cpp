@@ -44,6 +44,7 @@
 #include "carrying_item_group_ui.h"
 #include "ui_bg.h"
 #include "timer.h"
+#include "text_object.h"
 
 /* 演出 */
 #include "effect_damage_camera.h"
@@ -124,6 +125,10 @@ HRESULT CPlayer::Init()
 	m_carringitemGroupUI->Init();
 	m_carringitemGroupUI;
 
+	CText* targt = CText::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.8f + 25.0f, 125.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 0, 0, "目標");
+	m_goTeleporterTextUI = CText::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.9f - 80.0f, 160.0f - 7.5f - 2.0f, 0.0f), D3DXVECTOR3(7.5f, 7.5f, 0.0f), 0, 0, "テレポーターを目指せ");
+
+
 	return S_OK;
 }
 
@@ -148,9 +153,13 @@ void CPlayer::Uninit()
 //--------------------------------------------------------------
 void CPlayer::Update()
 {
-	if (!m_isUpdate)
+	if (m_isTeleporter)
 	{
-		//return;
+		m_goTeleporterTextUI->SetDisplay(false);
+	}
+	else
+	{
+		m_goTeleporterTextUI->SetDisplay(true);
 	}
 
 	// 状態異常UI
@@ -521,6 +530,7 @@ void CPlayer::Result()
 	m_uiList.clear();
 
 	m_carringitemGroupUI->Uninit();
+	m_goTeleporterTextUI->Uninit();
 
 	m_isResult = true;
 	CResult::Create();

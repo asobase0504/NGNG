@@ -53,5 +53,6 @@ public:
 
 	HRESULT Init() override;
 
+	void SetNameUI(std::string);
 };
 #endif	// _ITEM_DATA_H_

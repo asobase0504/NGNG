@@ -41,6 +41,8 @@ HRESULT CText::Init()
 	m_DesTimar = 0;
 	m_func = nullptr;
 
+	m_align = LEFT;
+
 	return S_OK;
 }
 
@@ -66,7 +68,22 @@ void CText::Update()
 {
 	CObject::Update();
 
-	D3DXVECTOR3 Pos= GetPos();
+	D3DXVECTOR3 Pos = GetPos();
+
+	switch (m_align)
+	{
+	case CText::LEFT:
+		Pos.x -= m_size.x;
+		break;
+	case CText::RIGHT:
+		break;
+	case CText::CENTER:
+		Pos.x -= m_ALLText.size() * 0.5f * m_size.x *1.15f;
+		break;
+	default:
+		break;
+	}
+
 	m_AddCount++;
 	if (m_AddCount >= m_Addnumber)
 	{
@@ -95,7 +112,7 @@ void CText::Update()
 					{	//‚¶‚á‚È‚©‚Á‚½‚Æ‚«
 						m_AddLetter++;
 						m_words[m_wordsPopCount] = CWords::Create(m_Text.c_str(),
-							D3DXVECTOR3(Pos.x + m_size.x * 2.15f * (m_wordsPopCountX + 1), Pos.y + m_newlineCount * 100.0f, Pos.z),
+							D3DXVECTOR3(Pos.x + m_size.x * 2.15f * (m_wordsPopCountX + 1), Pos.y + m_newlineCount * m_size.y * 2.15f, Pos.z),
 							m_size * 0.75f,	// ”¼Šp•¶Žš‚¾‚µ¬‚³‚­‚µ‚½B’l‚Í“K“–
 							m_FontType);
 						m_wordsPopCount++;
@@ -204,5 +221,17 @@ void CText::SetColor(const D3DXCOLOR & inColor)
 		}
 
 		words->SetColor(inColor);
+	}
+}
+
+void CText::SetDisplay(bool isDisplay)
+{
+	for (CWords* words : m_words)
+	{
+		if (words == nullptr)
+		{
+			continue;
+		}
+		words->SetDisplay(isDisplay);
 	}
 }

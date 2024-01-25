@@ -117,7 +117,7 @@ HRESULT CCharacter::Init()
 	m_jumpCount.SetCurrent(0);
 	m_jumpCount.AttachMax();
 	m_money.Init();
-	m_money.SetCurrent(500000);
+	m_money.SetCurrent(0);
 	m_regenetionTime.Init(60);
 	m_regenetion.Init(1);
 	m_RegenetionCnt = 0;

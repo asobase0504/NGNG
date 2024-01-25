@@ -108,7 +108,7 @@ void CStatueTeleporter::Update()
 //--------------------------------------------------------------
 // ‘I‚ñ‚¾
 //--------------------------------------------------------------
-bool CStatueTeleporter::Select(CCharacter * selectCharacter)
+bool CStatueTeleporter::Select(CCharacter* selectCharacter)
 {
 	if (!m_bOnce)
 	{
@@ -116,10 +116,11 @@ bool CStatueTeleporter::Select(CCharacter * selectCharacter)
 		popPos.x += FloatRandom(100.0f, -100.0f);
 		popPos.z += FloatRandom(100.0f, -100.0f);
 
-		m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(popPos, CEnemyDataBase::SKELTON,5);
+		m_pEnemy = CEnemyManager::GetInstance()->CreateEnemy(popPos, CEnemyDataBase::GASYADOKURO,5);
 		CBossHPUI* ui = new CBossHPUI;
 		ui->Init();
 		ui->SetHP(m_pEnemy->GetHp());
+		ui->SetNameUI("‚ª‚µ‚áé‘é");
 		m_pEnemy->SetEndChildren(ui);
 
 		DeleteMark();

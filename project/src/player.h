@@ -20,6 +20,7 @@ class CController;
 class CCollisionCylinder;
 class CAbnormal2DUI;
 class CCarryingItemGroupUI;
+class CText;
 
 //==============================================================
 // プレイヤークラス
@@ -53,7 +54,6 @@ public:
 	void TakeDamage(const int inDamage, CCharacter* inChara) override;
 	void AbDamage(const int inDamage) override;
 
-
 private:
 	void PAttack();		// 攻撃
 	void Move();		// 移動
@@ -77,5 +77,6 @@ private:		// メンバ変数
 	std::list<CObject*> m_uiList;
 	std::list<CAbnormal2DUI*> m_abnormalUI;	// 状態異常やバフなどのアイコンを表示
 	CCarryingItemGroupUI* m_carringitemGroupUI;	// 所持アイテムUI
+	CText* m_goTeleporterTextUI;
 };
 #endif

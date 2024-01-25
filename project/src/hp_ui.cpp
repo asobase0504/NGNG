@@ -90,10 +90,13 @@ CHPUI* CHPUI::Create(CStatus<int>* inHp)
 	return ui;
 }
 
+// BossHPUI—p
+#include "text_object.h"
+
 HRESULT CBossHPUI::Init()
 {
 	m_size = D3DXVECTOR3(300.0f, 10.0f, 0.0f);
-	m_pos = D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 70.0f, 0.0f);
+	m_pos = D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 140.0f, 0.0f);
 	m_ground = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
 	m_ground->SetAnchor(CObject2d::EAnchor::ANCHOR_LEFT);
 	m_ground->SetSize(m_size);
@@ -108,12 +111,19 @@ HRESULT CBossHPUI::Init()
 	m_bar->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 	SetEndChildren(m_bar);
 
-	m_current = CProcedure::Create(D3DXVECTOR3(m_pos.x - 10.0f, 70.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 0);
+	m_current = CProcedure::Create(D3DXVECTOR3(m_pos.x - 10.0f, 140.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 0);
 	m_current->SetAlign(CProcedure::EAlign::RIGHT);
 	SetEndChildren(m_current);
-	m_max = CProcedure::Create(D3DXVECTOR3(m_pos.x + 10.0f, 70.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 0);
+	m_max = CProcedure::Create(D3DXVECTOR3(m_pos.x + 10.0f, 140.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 0);
 	m_max->SetAlign(CProcedure::EAlign::LEFT);
 	SetEndChildren(m_max);
 
 	return S_OK;
+}
+
+void CBossHPUI::SetNameUI(std::string inName)
+{
+	CText* text = CText::Create(D3DXVECTOR2(SCREEN_WIDTH * 0.5f, 170.0f), D3DXVECTOR2(15.0f, 15.0f), inName.c_str());
+	text->SetAlign(CText::EAlign::CENTER);
+	SetEndChildren(text);
 }

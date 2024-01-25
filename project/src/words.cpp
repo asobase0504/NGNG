@@ -42,6 +42,11 @@ HRESULT CWords::Init(void)
 //------------------------------------
 void CWords::Draw()
 {
+	if (!m_isDisplay)
+	{
+		return;
+	}
+
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetInstance()->GetRenderer()->GetDevice();		//デバイスへのポインタ
 
