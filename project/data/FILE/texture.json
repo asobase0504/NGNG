@@ -38,6 +38,7 @@
 	["SKILL_ICON_YAMATO4","data\/TEXTURE\/skill\/skill2.jpg"],
 	["DIFFICULT","data\/TEXTURE\/difficult.png"],
 	["MESH_BG","data\/TEXTURE\/green.jpg"],
+	["MESH_BG_SNOW","data\/TEXTURE\/GROUND\/ground12.jpg"],
 	["HP_BAR","data\/TEXTURE\/hp_bar.jpg"],
 	["ABNORMAL_ICON_FIRE","data\/TEXTURE\/abnormal\/Status_OnFire.png"],
 	["LINE","data\/TEXTURE\/line.png"],

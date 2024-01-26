@@ -759,9 +759,8 @@ void CCharacter::SetLevel(int level)
 	// 各種ステータスの調整
 	m_hp.AddMax(m_hp.GetBase() * (1.0f + (m_level * 0.1f)));
 	m_hp.SetCurrent(m_hp.GetMax());
-	m_attack.AddBaseState(m_attack.GetBase() * (1 + (m_level * 0.1f)));
+	m_attack.AddBaseState(m_attack.GetBase() * (1 + (m_level * 0.25f)));
 	m_attackSpeed.AddBaseState(m_attackSpeed.GetBase() * (1.0f + (m_level * 0.1f)));
-	m_movePower.AddBaseState(m_movePower.GetBase() * (1.0f + (m_level * 0.01f)));
 }
 
 //-----------------------------------------

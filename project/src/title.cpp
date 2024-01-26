@@ -78,7 +78,7 @@ HRESULT CTitle::Init(void)
 		titleLogo->SetTexture("TITLE_LOGO");
 
 		// ‹•–³ƒ}ƒbƒv
-		CApplication::GetInstance()->GetModeClass()->CreateMap("data/FILE/map/map03.json");
+		CApplication::GetInstance()->GetModeClass()->CreateMap("data/FILE/map/forest_map_title.json");
 	}
 
 	CApplication::GetInstance()->GetSound()->Play(CSound::LABEL_SE_CRY);

@@ -109,7 +109,7 @@ HRESULT CGame::Init()
 
 	m_difficult = CDifficult::Create(D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,0.0f,0.0f));
 
-	CreateMap("data/FILE/map/map03.json");
+	CreateMap("data/FILE/map/forest_map.json");
 	GetMap()->RandomStatueSummon();
 	GetMap()->InCharacterList(pPlayer);
 	GetMap()->SetIsGame(true);
