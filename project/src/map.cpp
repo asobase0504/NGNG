@@ -106,7 +106,7 @@ void CMap::Load(std::string path)
 		nlohmann::json model = map["MODEL"][i];
 		D3DXVECTOR3 pos(model["POS"][0], model["POS"][1], model["POS"][2]);
 		D3DXVECTOR3 rot(model["ROT"][0], model["ROT"][1], model["ROT"][2]);
-		CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
+		CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(model["SIZE"][0], model["SIZE"][1], model["SIZE"][2]));
 		object->LoadModel(model["TAG"]);
 		m_model.push_back(object);
 		SetEndChildren(object);
