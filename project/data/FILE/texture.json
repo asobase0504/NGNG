@@ -38,6 +38,7 @@
 	["SKILL_ICON_YAMATO4","data\/TEXTURE\/skill\/skill3.jpg"],
 	["DIFFICULT","data\/TEXTURE\/difficult.png"],
 	["MESH_BG","data\/TEXTURE\/green.jpg"],
+	["MESH_BG_SNOW","data\/TEXTURE\/GROUND\/ground12.jpg"],
 	["HP_BAR","data\/TEXTURE\/hp_bar.jpg"],
 	["ABNORMAL_ICON_FIRE","data\/TEXTURE\/abnormal\/Status_OnFire.png"],
 	["LINE","data\/TEXTURE\/line.png"],
@@ -49,6 +50,11 @@
 	["FLOWER","data\/TEXTURE\/STATUE\/flower.png"],
 	["UI_BG","data\/TEXTURE\/bg.jpg"],
 	["DAMAGE_EFFECT","data\/TEXTURE\/damage.png"],
-	["TEST","data\/TEXTURE\/test.jpg"]
+	["TEXT_M1","data\/TEXTURE\/TEXT\/m1.png"],
+	["TEXT_M2","data\/TEXTURE\/TEXT\/m2.png"],
+	["TEXT_SHIFT","data\/TEXTURE\/TEXT\/Shift.png"],
+	["TEXT_R","data\/TEXTURE\/TEXT\/R.png"],
+	["TEXT_R","data\/TEXTURE\/TEXT\/R.png"],
+	["STORM","data\/TEXTURE\/storm.png"]
   ]
 }

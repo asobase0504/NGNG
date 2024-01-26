@@ -64,6 +64,7 @@ void CSelectUI::SetText(std::string inText)
 {
 	assert(m_text == nullptr);
 
+	inText = "E:" + inText;
 	D3DXVECTOR3 textPos = m_pos + D3DXVECTOR3(-100.0f, 0.0f, 0.0f);
 	m_text = CText::Create(textPos, D3DXVECTOR3(7.5f, 7.5f, 0.0f), 0, 0, inText.c_str());
 	SetEndChildren(m_text);

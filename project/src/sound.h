@@ -28,6 +28,7 @@ public:
 		LABEL_NONE = -1,
 		LABEL_BGM_TITLE = 0,	// タイトル
 		LABEL_SE_CRY,			// 鳴き声
+		LABEL_SE_LANDING,		// 着地音
 		LABEL_MAX,
 	};
 

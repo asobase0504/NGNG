@@ -80,9 +80,7 @@ void CDullahan::Update()
 	AddAttackCnt(1);
 
 	// エネミーの距離が遠いとき
-	if (distance >= 150.0f)
 	{
-		if (GetAttackCnt() >= 180)
 		{
 			// カウント開始
 			SetAttackCnt(0);

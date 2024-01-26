@@ -82,7 +82,7 @@ void CNurikabeSkill::UninitAbility()
 void CNurikabeSkill::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	m_apChara->DealDamage(Target, 0.15f);
+	m_apChara->DealDamage(Target, 1.0f);
 }
 
 //--------------------------------------------------------------

@@ -46,7 +46,7 @@ public:
 		ONI,
 		KARAKASA,
 		KAPPA,
-		GYUUKI,
+		//GYUUKI,
 		FOX,
 		DULLAHAN,
 		GASYADOKURO,

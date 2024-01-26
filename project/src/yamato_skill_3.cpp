@@ -20,6 +20,9 @@
 #include "application.h"
 #include "camera_game.h"
 
+#include "object_polygon3d.h"
+#include "utility.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -41,17 +44,13 @@ CYamatoSkill_3::~CYamatoSkill_3()
 //--------------------------------------------------------------
 void CYamatoSkill_3::InitAbility()
 {
-	m_Duration = 120;
+	m_Duration = 30;
 
 	// 当たり判定を取得
-	CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
+	CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 60.0f);
 	m_collision.push_back(collision);
 	collision->SetParent(&m_apChara->GetPos());
 	SetEndChildren(collision);
-
-	// プレイヤーの操作を無効化
-	m_apChara->SetControlLock(true);
-	m_apChara->SetMoveXZ(0.0f, 0.0f);
 
 	// カメラの方向に合わせて突撃
 	CCamera *camera = CApplication::GetInstance()->GetModeClass()->GetCamera();
@@ -74,10 +73,29 @@ void CYamatoSkill_3::AllWayAbility()
 	if (m_time % 20 == 0 && m_collision.empty())
 	{
 		// 当たり判定を取得
-		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30.0f);
+		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 60.0f);
 		m_collision.push_back(collision);
 		collision->SetParent(&m_apChara->GetPos());
 		SetEndChildren(collision);
+	}
+
+	if (m_time % 10 == 0)
+	{
+		float rotX = FloatRandom(D3DX_PI, -D3DX_PI);
+		float rotY = FloatRandom(D3DX_PI, -D3DX_PI);
+		float rotZ = FloatRandom(D3DX_PI, -D3DX_PI);
+		float diff = FloatRandom(120.0f, 0.0f);
+		D3DXVECTOR3 targetPos = m_apChara->GetPos();
+		targetPos.y += 20.0f;
+
+		CObjectPolygon3D* effect = CObjectPolygon3D::Create();
+		effect->SetPos(targetPos);
+		effect->SetRot(D3DXVECTOR3(rotX, rotY, rotZ));
+		effect->SetSize(D3DXVECTOR3(60.0f, 60.0f, 0.0f));
+		effect->SetIsCulling(true);
+		effect->SetTexture("STORM");
+		effect->SetLife(10);
+		SetEndChildren(effect);
 	}
 }
 
@@ -87,7 +105,7 @@ void CYamatoSkill_3::AllWayAbility()
 void CYamatoSkill_3::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	m_apChara->DealDamage(Target,1.0f);
+	m_apChara->DealDamage(Target,2.0f);
 }
 
 //--------------------------------------------------------------
