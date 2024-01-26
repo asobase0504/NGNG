@@ -401,7 +401,7 @@ void CEnemyDataBase::Init()
 		type = MONSTER;
 		m_status[type].s_hp = 1000;
 		m_status[type].s_attack = 1;
-		m_status[type].s_size = 150.0f;
+		m_status[type].s_size = 200.0f;
 		m_status[type].s_collisionLength = 100.0f;
 		m_status[type].s_collisionHeight = 150.0f;
 		m_status[type].s_modelKey = "MONSTER";
