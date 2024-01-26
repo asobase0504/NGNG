@@ -84,6 +84,7 @@ HRESULT CCharacter::Init()
 	m_isInertiaMoveLock = false;
 	m_isToFaceRot = true;
 	m_isHitDamage = false;
+	m_isMuteki = false;
 
 	m_hp.Init(100);
 	m_hp.SetCurrent(100);
@@ -163,6 +164,8 @@ HRESULT CCharacter::Init()
 //--------------------------------------------------------------
 void CCharacter::Update()
 {
+	m_stateOld = m_state;
+
 	// 更新処理
 	CObject::Update();
 
@@ -321,6 +324,11 @@ void CCharacter::DealDamage(CCharacter* pEnemy, float SkillMul)
 //--------------------------------------------------------------
 void CCharacter::TakeDamage(const int inDamage, CCharacter* inChara)
 {
+	if (m_isMuteki)
+	{
+		return;
+	}
+
 	// ダメージを受けた処理
 	CItemManager::GetInstance()->AllWhenReceive(this, m_haveItem, inChara);
 
@@ -373,6 +381,11 @@ void CCharacter::TakeDamage(const int inDamage, CCharacter* inChara)
 //--------------------------------------------------------------
 void CCharacter::AbDamage(const int inDamage)
 {
+	if (m_isMuteki)
+	{
+		return;
+	}
+
 	int dmg = inDamage;
 
 	// ダメージ計算

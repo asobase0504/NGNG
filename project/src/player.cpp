@@ -119,8 +119,30 @@ HRESULT CPlayer::Init()
 	m_uiList.push_back(CTimer::Create());
 	for (int i = 0; i < 4; i++)
 	{
-		m_uiList.push_back(CSkillUI::Create(D3DXVECTOR3(1000.0f + 57.5f * i, SCREEN_HEIGHT - 90.0f, 0.0f), GetSkill(i)));
+		m_uiList.push_back(CSkillUI::Create(D3DXVECTOR3(950.0f + 57.5f * i, SCREEN_HEIGHT - 110.0f, 0.0f), GetSkill(i)));
 	}
+
+	CObject2d* key;
+	key = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	key->SetPos(D3DXVECTOR3(950.0f, SCREEN_HEIGHT - 45.0f,0.0f));
+	key->SetSize(D3DXVECTOR3(24.0f, 12.0f, 0.0f));
+	key->SetTexture("TEXT_M1");
+
+	key = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	key->SetPos(D3DXVECTOR3(950.0f + 57.5f, SCREEN_HEIGHT - 45.0f, 0.0f));
+	key->SetSize(D3DXVECTOR3(24.0f, 12.0f, 0.0f));
+	key->SetTexture("TEXT_M2");
+
+	key = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	key->SetPos(D3DXVECTOR3(950.0f + 57.5f * 2.0f, SCREEN_HEIGHT - 45.0f, 0.0f));
+	key->SetSize(D3DXVECTOR3(24.0f, 12.0f, 0.0f));
+	key->SetTexture("TEXT_SHIFT");
+
+	key = CObject2d::Create(CTaskGroup::EPriority::LEVEL_2D_UI);
+	key->SetPos(D3DXVECTOR3(950.0f + 57.5f * 3.0f, SCREEN_HEIGHT - 45.0f, 0.0f));
+	key->SetSize(D3DXVECTOR3(24.0f, 12.0f, 0.0f));
+	key->SetTexture("TEXT_R");
+
 	m_carringitemGroupUI = new CCarryingItemGroupUI;
 	m_carringitemGroupUI->Init();
 	m_carringitemGroupUI;
@@ -254,7 +276,7 @@ void CPlayer::PAttack()
 	if(m_controller->Skill_2())
 	{
 		// 発動時に生成
-		isSuccess = m_skill[2]->Use();
+		isSuccess = m_skill[1]->Use();
 		m_nonCombat = false;
 	}
 
@@ -262,7 +284,7 @@ void CPlayer::PAttack()
 	if (m_controller->Skill_3())
 	{
 		// 発動時に生成
-		isSuccess = m_skill[1]->Use();
+		isSuccess = m_skill[2]->Use();
 		m_nonCombat = false;
 	}
 
@@ -429,12 +451,22 @@ void CPlayer::AddAbnormalStack(const int id, const int cnt)
 
 void CPlayer::TakeDamage(const int inDamage, CCharacter * inChara)
 {
+	if (m_isMuteki)
+	{
+		return;
+	}
+
 	CEffectDamageCamera::Create();
 	CCharacter::TakeDamage(inDamage, inChara);
 }
 
 void CPlayer::AbDamage(const int inDamage)
 {
+	if (m_isMuteki)
+	{
+		return;
+	}
+
 	CEffectDamageCamera::Create();
 	CCharacter::AbDamage(inDamage);
 }

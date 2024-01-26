@@ -84,6 +84,8 @@
 // Input
 #include "input.h"
 
+#include "sound.h"
+
 #include "application.h"
 
 // Delete

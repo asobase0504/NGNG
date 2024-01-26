@@ -20,6 +20,9 @@
 #include "application.h"
 #include "camera.h"
 
+#include "object_polygon3d.h"
+#include "utility.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -49,7 +52,7 @@ void CYamatoSkill_4::InitAbility()
 		m_Time = 0;
 
 		// 当たり判定を取得
-		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 40);
+		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 90);
 		m_collision.push_back(collision);
 		collision->SetParent(&m_apChara->GetPos());
 		SetEndChildren(collision);
@@ -66,6 +69,7 @@ void CYamatoSkill_4::InitAbility()
 		m_apChara->SetInertiaMoveLock(true);
 		// 描画を切る
 		m_apChara->SetDisplay(false);
+		m_apChara->SetIsMuteki(true);
 	}
 }
 
@@ -82,6 +86,29 @@ void CYamatoSkill_4::AllWayAbility()
 		m_apChara->SetMoveLock(true);
 		m_apChara->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
+
+	if (m_Time % 20 == 0 && m_collision.empty())
+	{
+		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 90);
+		m_collision.push_back(collision);
+		collision->SetParent(&m_apChara->GetPos());
+		SetEndChildren(collision);
+	}
+
+	float rotY = FloatRandom(D3DX_PI, -D3DX_PI);
+	float diff = FloatRandom(120.0f, 0.0f);
+	D3DXVECTOR3 targetPos = CalculatePerimeterPos(m_apChara->GetPos(), D3DXVECTOR3(0.0f, rotY, 0.0f), D3DXVECTOR3(0.0f, 0.0f, diff));
+	targetPos.y += FloatRandom(80.0f, 0.0f);
+
+	CObjectPolygon3D* effect = CObjectPolygon3D::Create();
+	effect->SetPos(targetPos);
+	effect->SetRot(D3DXVECTOR3(0.0f, rotY, 0.0f));
+	effect->SetSize(D3DXVECTOR3(20.0f, 1.0f, 0.0f));
+	effect->SetIsCulling(true);
+	effect->SetTexture("LINE");
+	effect->SetLife(20);
+	SetEndChildren(effect);
+
 }
 
 //--------------------------------------------------------------
@@ -97,6 +124,8 @@ void CYamatoSkill_4::UninitAbility()
 	m_apChara->SetMoveLock(false);
 	// 慣性・重力の有効化
 	m_apChara->SetInertiaMoveLock(false);
+
+	m_apChara->SetIsMuteki(false);
 }
 
 //--------------------------------------------------------------

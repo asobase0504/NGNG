@@ -51,7 +51,7 @@ void CYamatoSkill_1::InitAbility()
 	m_effectPos.y += 25.0f;
 
 	// “–‚½‚è”»’è‚ðŽæ“¾
-	CCollision* collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 30.0f);
+	CCollision* collision = CCollisionSphere::Create(CalculatePerimeterPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f), m_apChara->GetRot(), D3DXVECTOR3(0.0f, 0.0f, 50.0f)), 40.0f);
 	m_collision.push_back(collision);
 	collision->SetParent(&m_apChara->GetPos());
 	SetEndChildren(collision);

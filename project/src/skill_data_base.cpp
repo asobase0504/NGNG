@@ -101,14 +101,14 @@ void CSkillDataBase::Init()
 	info->texKey = "SKILL_ICON_YAMATO1";
 	
 	// ワープ
-	info = &m_dates["YAMATO_SKILL_2"];
+	info = &m_dates["YAMATO_SKILL_3"];
 	info->baseInfo.CT = 180;
 	info->baseInfo.stock = 3;
 	info->ability = CYamatoSkill_2::Create;
 	info->texKey = "SKILL_ICON_YAMATO2";
 	
 	// 回転切り
-	info = &m_dates["YAMATO_SKILL_3"];
+	info = &m_dates["YAMATO_SKILL_2"];
 	info->baseInfo.CT = 120;
 	info->baseInfo.stock = 1;
 	info->ability = CYamatoSkill_3::Create;
