@@ -28,6 +28,11 @@ public:
 		LABEL_NONE = -1,
 		LABEL_BGM_TITLE = 0,	// É^ÉCÉgÉã
 		LABEL_SE_CRY,			// ñ¬Ç´ê∫
+		LEVEL_SE_SHIFT,			// shift
+		LEVEL_SE_SKILL_1,		// skill1
+		LEVEL_SE_SKILL_3,		// skill3
+		LEVEL_SE_SKILL_4,		// skill4
+		LEVEL_SE_DAMAGE,		// damage
 		LABEL_MAX,
 	};
 

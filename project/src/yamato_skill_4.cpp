@@ -19,6 +19,8 @@
 #include "game.h"
 #include "application.h"
 #include "camera.h"
+#include "application.h"
+#include "sound.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -66,6 +68,8 @@ void CYamatoSkill_4::InitAbility()
 		m_apChara->SetInertiaMoveLock(true);
 		// 描画を切る
 		m_apChara->SetDisplay(false);
+		// sound
+		CApplication::GetInstance()->GetSound()->Play(CSound::LEVEL_SE_SKILL_4);
 	}
 }
 

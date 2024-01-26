@@ -17,7 +17,12 @@
 const CSound::SParam CSound::PARAM[] =
 {// 各音素材のパラメータ
 	{ "data/SOUND/BGM/BGM_02.wav", -1 },
-	{ "data/SOUND/SE/cry_1.wav", -1 }
+	{ "data/SOUND/SE/cry_1.wav", -1 },
+	{ "data/SOUND/SE/shift.wav", 0 },
+	{ "data/SOUND/SE/skill1.wav", 0 },
+	{ "data/SOUND/SE/skill2.wav", 0 },
+	{ "data/SOUND/SE/skill4.wav", 0 },
+	{ "data/SOUND/SE/damage.wav", 0 }
 };
 
 static_assert(sizeof(CSound::PARAM) / sizeof(CSound::PARAM[0]) == CSound::LABEL_MAX, "soundが合わない");

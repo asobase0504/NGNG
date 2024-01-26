@@ -20,6 +20,9 @@
 
 #include "object_polygon3d.h"
 
+#include "application.h"
+#include "sound.h"
+
 //--------------------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------------------
@@ -55,6 +58,8 @@ void CYamatoSkill_1::InitAbility()
 	m_collision.push_back(collision);
 	collision->SetParent(&m_apChara->GetPos());
 	SetEndChildren(collision);
+	// sound
+	CApplication::GetInstance()->GetSound()->Play(CSound::LEVEL_SE_SKILL_1);
 }
 
 //--------------------------------------------------------------

@@ -48,6 +48,7 @@
 
 /* 演出 */
 #include "effect_damage_camera.h"
+#include "sound.h"
 
 /**/
 #include "procedure3D.h"
