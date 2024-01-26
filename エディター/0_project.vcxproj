@@ -319,6 +319,7 @@
     <None Include="data\FILE\map\map01.json" />
     <None Include="data\FILE\map\map02.json" />
     <None Include="data\FILE\map\map03.json" />
+    <None Include="data\FILE\map\snow_map2.json" />
     <None Include="data\FILE\model.json" />
     <None Include="data\FILE\skinmesh.json" />
     <None Include="data\FILE\texture.json" />
