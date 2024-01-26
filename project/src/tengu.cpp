@@ -38,7 +38,7 @@ HRESULT CTengu::Init()
 	// ƒ‚ƒfƒ‹
 	m_skinModel->Load("TENGU");
 
-	m_size = D3DXVECTOR3(50.0f, 100.0f, 50.0f);
+	m_size = D3DXVECTOR3(50.0f, 130.0f, 50.0f);
 
 	// “–‚½‚è”»’è
 	m_collision->SetHeight(100.0f);

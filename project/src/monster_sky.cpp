@@ -38,7 +38,7 @@ HRESULT CMonsterSky::Init()
 	// ƒ‚ƒfƒ‹
 	m_skinModel->Load("SKY_MONSTER");
 
-	m_size = D3DXVECTOR3(50.0f, 50.0f, 50.0f);
+	m_size = D3DXVECTOR3(50.0f, 75.0f, 50.0f);
 
 	// “–‚½‚è”»’è
 	m_collision->SetHeight(50.0f);
