@@ -15,6 +15,7 @@
 #include "game.h"
 #include "application.h"
 #include "difficult.h"
+#include "sound.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -67,7 +68,7 @@ bool CStatueCombat::Select(CCharacter * selectCharacter)
 		float randX = FloatRandom(300.0f, -300.0f);
 		float randZ = FloatRandom(300.0f, -300.0f);
 
-		enemyType enemyType = enemyType::MONSTER;
+		enemyType enemyType = enemyType::NINE_FOX;
 		CEnemy* enemy = CEnemyManager::GetInstance()->CreateEnemy(D3DXVECTOR3(pos.x + randX, pos.y, pos.z + randZ), enemyType, level);
 		enemy->TakeItem(CItemDataBase::ITEM_ELITE);
 		enemy->SetIsElite();
@@ -76,6 +77,9 @@ bool CStatueCombat::Select(CCharacter * selectCharacter)
 	DeleteMark();
 	m_collisionCylinder->Uninit();
 	m_collisionCylinder = nullptr;
+
+	// sound
+	CApplication::GetInstance()->GetSound()->Play(CSound::LEVEL_SE_STATUE);
 
 	return true;
 }

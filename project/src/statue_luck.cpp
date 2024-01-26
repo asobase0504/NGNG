@@ -13,6 +13,8 @@
 #include "input.h"
 #include "utility.h"
 #include "procedure3D.h"
+#include "application.h"
+#include "sound.h"
 
 namespace
 {
@@ -56,6 +58,9 @@ HRESULT CStatueLuck::Init()
 	m_uiText = "‰^‚ðŽŽ‚· [$" + std::to_string(m_nUseMoney) + "]";
 
 	SetMark("FLOWER");
+
+	// sound
+	CApplication::GetInstance()->GetSound()->Play(CSound::LEVEL_SE_STATUE);
 
 	return S_OK;
 }

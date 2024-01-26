@@ -19,6 +19,8 @@
 #include "game.h"
 #include "application.h"
 #include "camera_game.h"
+#include "application.h"
+#include "sound.h"
 
 #include "object_polygon3d.h"
 #include "utility.h"
@@ -60,6 +62,9 @@ void CYamatoSkill_3::InitAbility()
 	m_apChara->SetMoveXZ(vecNor.x, vecNor.z);
 
 	m_time = 0;
+
+	// sound
+	CApplication::GetInstance()->GetSound()->Play(CSound::LEVEL_SE_SKILL_3);
 }
 
 //--------------------------------------------------------------
