@@ -23,7 +23,8 @@
 
 #include "hp_ui.h"
 #include "map_fade.h"
-
+#include "sound.h"
+ 
 const int CStatueTeleporter::CHARGE_TIME	(360);
 
 //--------------------------------------------------------------
@@ -138,6 +139,9 @@ bool CStatueTeleporter::Select(CCharacter* selectCharacter)
 	SetEndChildren(eventUI);
 
 	m_btimeAdd = true;
+
+	// sound
+	CApplication::GetInstance()->GetSound()->Play(CSound::LEVEL_SE_STATUE);
 
 	return true;
 }

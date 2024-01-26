@@ -33,6 +33,7 @@ public:
 		LEVEL_SE_SKILL_3,		// skill3
 		LEVEL_SE_SKILL_4,		// skill4
 		LEVEL_SE_DAMAGE,		// damage
+		LEVEL_SE_STATUE,		// statue
 		LABEL_MAX,
 	};
 

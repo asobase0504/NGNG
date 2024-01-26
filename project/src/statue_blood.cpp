@@ -13,6 +13,8 @@
 #include "player_manager.h"
 #include "select_ui.h"
 #include "procedure3D.h"
+#include "application.h"
+#include "sound.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -86,6 +88,9 @@ bool CStatueBlood::Select(CCharacter* selectCharacter)
 		m_costUI->Uninit();
 		m_costUI = nullptr;
 	}
+
+	// sound
+	CApplication::GetInstance()->GetSound()->Play(CSound::LEVEL_SE_STATUE);
 
 	return true;
 }

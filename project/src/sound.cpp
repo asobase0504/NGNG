@@ -22,7 +22,8 @@ const CSound::SParam CSound::PARAM[] =
 	{ "data/SOUND/SE/skill1.wav", 0 },
 	{ "data/SOUND/SE/skill2.wav", 0 },
 	{ "data/SOUND/SE/skill4.wav", 0 },
-	{ "data/SOUND/SE/damage.wav", 0 }
+	{ "data/SOUND/SE/damage.wav", 0 },
+	{ "data/SOUND/SE/statue.wav", 0 }
 };
 
 static_assert(sizeof(CSound::PARAM) / sizeof(CSound::PARAM[0]) == CSound::LABEL_MAX, "soundÇ™çáÇÌÇ»Ç¢");

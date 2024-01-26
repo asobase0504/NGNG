@@ -15,6 +15,7 @@
 #include "game.h"
 #include "application.h"
 #include "difficult.h"
+#include "sound.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -76,6 +77,9 @@ bool CStatueCombat::Select(CCharacter * selectCharacter)
 	DeleteMark();
 	m_collisionCylinder->Uninit();
 	m_collisionCylinder = nullptr;
+
+	// sound
+	CApplication::GetInstance()->GetSound()->Play(CSound::LEVEL_SE_STATUE);
 
 	return true;
 }
