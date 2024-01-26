@@ -118,6 +118,8 @@ void CMap::Load(std::string path)
 
 		}
 		CMapModel* object = CMapModel::Create(pos, rot, size);
+
+
 		object->LoadModel(model["TAG"]);
 		m_model.push_back(object);
 		SetEndChildren(object);
