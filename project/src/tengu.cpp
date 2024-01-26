@@ -38,7 +38,7 @@ HRESULT CTengu::Init()
 	// モデル
 	m_skinModel->Load("TENGU");
 
-	m_size = D3DXVECTOR3(50.0f, 100.0f, 50.0f);
+	m_size = D3DXVECTOR3(50.0f, 130.0f, 50.0f);
 
 	// 当たり判定
 	m_collision->SetHeight(100.0f);
@@ -74,7 +74,6 @@ void CTengu::Update()
 	float distance = D3DXVec3Length(&distancePos);
 
 	// エネミーの距離が遠いとき
-	if (distance >= 150.0f)
 	{
 		GetSkill()[0]->Use();
 	}

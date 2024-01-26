@@ -4,11 +4,11 @@
 // Author  : katsuki mizuki
 //
 //**************************************************************
-#ifndef _SOUND_H_	//‚±‚Ìƒ}ƒNƒ’è‹`‚ª‚³‚ê‚Ä‚È‚©‚Á‚½‚ç
-#define _SOUND_H_	//‚QdƒCƒ“ƒNƒ‹[ƒh–h~‚Ìƒ}ƒNƒ’è‹`
+#ifndef _SOUND_H_	//ã“ã®ãƒã‚¯ãƒ­å®šç¾©ãŒã•ã‚Œã¦ãªã‹ã£ãŸã‚‰
+#define _SOUND_H_	//ï¼’é‡ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰é˜²æ­¢ã®ãƒã‚¯ãƒ­å®šç¾©
 
 //==================================================
-// ƒCƒ“ƒNƒ‹[ƒh
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 //==================================================
 #pragma push_macro("new")
 #undef new
@@ -17,38 +17,39 @@
 #include <xaudio2.h>
 
 //==================================================
-// ’è‹`
+// å®šç¾©
 //==================================================
 class CSound
 {
-	/* «’è‹`« */
+	/* â†“å®šç¾©â†“ */
 public:
 	enum ELabel
 	{
 		LABEL_NONE = -1,
-		LABEL_BGM_TITLE = 0,	// ƒ^ƒCƒgƒ‹
-		LABEL_SE_CRY,			// –Â‚«º
+		LABEL_BGM_TITLE = 0,	// ã‚¿ã‚¤ãƒˆãƒ«
+		LABEL_SE_CRY,			// é³´ãå£°
 		LEVEL_SE_SHIFT,			// shift
 		LEVEL_SE_SKILL_1,		// skill1
 		LEVEL_SE_SKILL_3,		// skill3
 		LEVEL_SE_SKILL_4,		// skill4
 		LEVEL_SE_DAMAGE,		// damage
 		LEVEL_SE_STATUE,		// statue
+		LABEL_SE_LANDING,		// ç€åœ°éŸ³
 		LABEL_MAX,
 	};
 
 	struct SParam
 	{
-		char *pFileName;	// ƒtƒ@ƒCƒ‹–¼
-		int loop;			// ƒ‹[ƒv
+		char *pFileName;	// ãƒ•ã‚¡ã‚¤ãƒ«å
+		int loop;			// ãƒ«ãƒ¼ãƒ—
 	};
 
-	static const SParam PARAM[];	// ƒpƒ‰ƒ[ƒ^‚Ìî•ñ
+	static const SParam PARAM[];	// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®æƒ…å ±
 
-	/* «ƒƒ“ƒoŠÖ”« */
+	/* â†“ãƒ¡ãƒ³ãƒé–¢æ•°â†“ */
 public:
-	CSound();	// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	~CSound();	// ƒfƒXƒgƒ‰ƒNƒ^
+	CSound();	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	~CSound();	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 
 public:
 	HRESULT Init(HWND hWnd);
@@ -58,16 +59,16 @@ public:
 	void Stop();
 
 private:
-	HRESULT CheckChunk(HANDLE hFile, DWORD format, DWORD* pChunkSize, DWORD* pChunkDataPosition);	// ƒ`ƒƒƒ“ƒN‚Ìƒ`ƒFƒbƒN
-	HRESULT LoadChunkData(HANDLE hFile, void* pBuffer, DWORD dwBuffersize, DWORD dwBufferoffset);	// ƒ`ƒƒƒ“ƒNƒf[ƒ^‚Ì“Ç‚İ‚İ
+	HRESULT CheckChunk(HANDLE hFile, DWORD format, DWORD* pChunkSize, DWORD* pChunkDataPosition);	// ãƒãƒ£ãƒ³ã‚¯ã®ãƒã‚§ãƒƒã‚¯
+	HRESULT LoadChunkData(HANDLE hFile, void* pBuffer, DWORD dwBuffersize, DWORD dwBufferoffset);	// ãƒãƒ£ãƒ³ã‚¯ãƒ‡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿
 
-	/* «ƒƒ“ƒo•Ï”« */
+	/* â†“ãƒ¡ãƒ³ãƒå¤‰æ•°â†“ */
 private: 
-	IXAudio2* m_pXAudio2;							// XAudio2ƒIƒuƒWƒFƒNƒg‚Ö‚ÌƒCƒ“ƒ^[ƒtƒFƒCƒX
-	IXAudio2MasteringVoice* m_pMasteringVoice;		// ƒ}ƒXƒ^[ƒ{ƒCƒX
-	IXAudio2SourceVoice* m_pSourceVoice[LABEL_MAX];	// ƒ\[ƒXƒ{ƒCƒX
-	BYTE* m_pDataAudio[LABEL_MAX];					// ƒI[ƒfƒBƒIƒf[ƒ^
-	DWORD m_sizeAudio[LABEL_MAX];					// ƒI[ƒfƒBƒIƒf[ƒ^ƒTƒCƒY
+	IXAudio2* m_pXAudio2;							// XAudio2ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹
+	IXAudio2MasteringVoice* m_pMasteringVoice;		// ãƒã‚¹ã‚¿ãƒ¼ãƒœã‚¤ã‚¹
+	IXAudio2SourceVoice* m_pSourceVoice[LABEL_MAX];	// ã‚½ãƒ¼ã‚¹ãƒœã‚¤ã‚¹
+	BYTE* m_pDataAudio[LABEL_MAX];					// ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªãƒ‡ãƒ¼ã‚¿
+	DWORD m_sizeAudio[LABEL_MAX];					// ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 };
 
 #endif // !_SOUND_H_

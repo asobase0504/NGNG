@@ -54,7 +54,7 @@ HRESULT CStatueBlood::Init()
 	SetEndChildren(m_costUI);
 	m_costUI->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 
-	SetMark("MAKIMONO");
+	SetMark("FIGHT");
 
 	return S_OK;
 }

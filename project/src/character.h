@@ -191,6 +191,9 @@ public:
 	void SetInertiaMoveLock(bool isLock) { m_isInertiaMoveLock = isLock; }	// 慣性・重力
 	bool GetInertiaMoveLock() { return m_isInertiaMoveLock; }				// 慣性・重力
 
+
+	void SetIsMuteki(bool isMoteki) { m_isMuteki = isMoteki; }
+
 protected:
 	virtual void RotateToFace();	// 向いている向きを回転させる
 private:
@@ -236,6 +239,8 @@ protected:
 	bool m_isElite;			// エリート
 	bool m_isTeleporter;	// テレポーターを起動したかどうか
 
+	bool m_isMuteki;
+
 	bool m_isHitDamage;			// 攻撃をうけたかどうか
 	bool m_isAtkCollision;		// 攻撃を受けなくなる
 	bool m_isToFaceRot;			// 向いている向きを変える方法
@@ -250,6 +255,7 @@ protected:
 
 	D3DXVECTOR3 m_itemMove;
 
+	STATE m_stateOld;
 	STATE m_state;
 
 	// ステータス

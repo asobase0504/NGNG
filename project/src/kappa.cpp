@@ -38,7 +38,7 @@ HRESULT CKappa::Init()
 	// モデル
 	m_skinModel->Load("KAPPA");
 
-	m_size = D3DXVECTOR3(50.0f, 50.0f, 50.0f);
+	m_size = D3DXVECTOR3(50.0f, 55.0f, 50.0f);
 
 	// 当たり判定
 	m_collision->SetHeight(50.0f);
@@ -77,9 +77,7 @@ void CKappa::Update()
 	AddAttackCnt(1);
 
 	// エネミーの距離が遠いとき
-	if (distance >= 150.0f)
 	{
-		if (GetAttackCnt() >= 180)
 		{
 			// カウント開始
 			SetAttackCnt(0);

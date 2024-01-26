@@ -39,7 +39,7 @@ HRESULT COni::Init()
 	m_skinModel->Load("ONI_BIG");
 	m_skinModel->ChangeAnim(1);
 
-	m_size = D3DXVECTOR3(50.0f, 50.0f, 50.0f);
+	m_size = D3DXVECTOR3(50.0f, 130.0f, 50.0f);
 
 	// 当たり判定
 	m_collision->SetHeight(100.0f);
@@ -78,9 +78,7 @@ void COni::Update()
 	AddAttackCnt(1);
 
 	// エネミーの距離が遠いとき
-	if (distance >= 150.0f)
 	{
-		if (GetAttackCnt() >= 180)
 		{
 			// カウント開始
 			SetAttackCnt(0);

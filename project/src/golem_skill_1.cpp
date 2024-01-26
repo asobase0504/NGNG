@@ -105,6 +105,6 @@ void CGolemSkill_1::AllWayAbility()
 //--------------------------------------------------------------
 void CGolemSkill_1::HitAbility(CCharacter * Target)
 {
-	m_apChara->DealDamage(Target, 0.25f);
+	m_apChara->DealDamage(Target, 0.15f);
 	Uninit();
 }

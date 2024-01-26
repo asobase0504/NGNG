@@ -106,7 +106,18 @@ void CMap::Load(std::string path)
 		nlohmann::json model = map["MODEL"][i];
 		D3DXVECTOR3 pos(model["POS"][0], model["POS"][1], model["POS"][2]);
 		D3DXVECTOR3 rot(model["ROT"][0], model["ROT"][1], model["ROT"][2]);
-		CMapModel* object = CMapModel::Create(pos, rot, D3DXVECTOR3(10.0f, 10.0f, 10.0f));
+
+		D3DXVECTOR3 size;
+		if (model["SIZE"].size() != 0)
+		{
+			size = D3DXVECTOR3(model["SIZE"][0], model["SIZE"][1], model["SIZE"][2]);
+		}
+		else
+		{
+			size = D3DXVECTOR3(10.0f, 10.0f, 10.0f);
+
+		}
+		CMapModel* object = CMapModel::Create(pos, rot, size);
 		object->LoadModel(model["TAG"]);
 		m_model.push_back(object);
 		SetEndChildren(object);
@@ -119,7 +130,7 @@ void CMap::Load(std::string path)
 	D3DXVECTOR3 pos(mesh["POS"][0], mesh["POS"][1], mesh["POS"][2]);
 	object->SetPos(pos);
 	object->SetOneMeshSize(D3DXVECTOR3(100.0f,100.0f,100.0f));
-	object->SetTexture("MESH_BG");
+	object->SetTexture(mesh["TEX"]);
 	m_mesh.push_back(object);
 	SetEndChildren(object);
 
