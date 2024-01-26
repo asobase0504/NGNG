@@ -105,7 +105,7 @@ void CYamatoSkill_3::AllWayAbility()
 void CYamatoSkill_3::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	m_apChara->DealDamage(Target,1.0f);
+	m_apChara->DealDamage(Target,2.0f);
 }
 
 //--------------------------------------------------------------

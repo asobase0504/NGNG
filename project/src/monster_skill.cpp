@@ -93,7 +93,7 @@ void CMonsterSkill::UninitAbility()
 void CMonsterSkill::HitAbility(CCharacter * Target)
 {
 	// todo プレイヤーの最終的な攻撃力を取得する
-	m_apChara->DealDamage(Target, 0.15f);
+	m_apChara->DealDamage(Target, 0.55f);
 }
 
 //--------------------------------------------------------------

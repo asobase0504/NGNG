@@ -119,9 +119,9 @@ CEnemy* CEnemyManager::CreateEnemy(D3DXVECTOR3 pos, CEnemyDataBase::EEnemyType t
 	case CEnemyDataBase::KAPPA:
 		enemy = new CKappa;
 		break;
-	case CEnemyDataBase::GYUUKI:
-		enemy = new CGyuuki;
-		break;
+	//case CEnemyDataBase::GYUUKI:
+	//	enemy = new CGyuuki;
+	//	break;
 	case CEnemyDataBase::FOX:
 		enemy = new CFox;
 		break;

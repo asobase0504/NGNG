@@ -74,7 +74,6 @@ void CTengu::Update()
 	float distance = D3DXVec3Length(&distancePos);
 
 	// エネミーの距離が遠いとき
-	if (distance >= 150.0f)
 	{
 		GetSkill()[0]->Use();
 	}
