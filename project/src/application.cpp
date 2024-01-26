@@ -85,7 +85,7 @@ HRESULT CApplication::Init(HWND hWnd, HINSTANCE hInstance)
 
 	// ƒŒƒ“ƒ_ƒ‰[‚Ì‰Šú‰»ˆ—
 	m_renderer = CRenderer::GetInstance();
-	if (FAILED(m_renderer->Init(hWnd, true)))
+	if (FAILED(m_renderer->Init(hWnd, false)))
 	{
 		return E_FAIL;
 	}
