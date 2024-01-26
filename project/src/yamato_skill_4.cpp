@@ -1,7 +1,7 @@
 //**************************************************************
 //
-// ƒXƒLƒ‹(ƒ}[ƒZƒiƒŠ[‚ÌR)
-// Author : ûü–ìŠ]›’
+// ã‚¹ã‚­ãƒ«(ãƒãƒ¼ã‚»ãƒŠãƒªãƒ¼ã®R)
+// Author : é«™é‡é¦¨å°‡
 //
 //**************************************************************
 
@@ -19,12 +19,14 @@
 #include "game.h"
 #include "application.h"
 #include "camera.h"
+#include "application.h"
+#include "sound.h"
 
 #include "object_polygon3d.h"
 #include "utility.h"
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CYamatoSkill_4::CYamatoSkill_4()
 {
@@ -32,7 +34,7 @@ CYamatoSkill_4::CYamatoSkill_4()
 }
 
 //--------------------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------------------
 CYamatoSkill_4::~CYamatoSkill_4()
 {
@@ -40,49 +42,51 @@ CYamatoSkill_4::~CYamatoSkill_4()
 }
 
 //--------------------------------------------------------------
-// ƒXƒLƒ‹‚ªn‚Ü‚é‚Æ‚«
+// ã‚¹ã‚­ãƒ«ãŒå§‹ã¾ã‚‹ã¨ã
 //--------------------------------------------------------------
 void CYamatoSkill_4::InitAbility()
 {
-	// ƒf[ƒ^ƒx[ƒX‚©‚çî•ñ‚ğæ“¾‚·‚é
+	// ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‹ã‚‰æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 	if (m_apChara != nullptr)
 	{
 		m_Duration = 120;
 		m_Time = 0;
 
-		// “–‚½‚è”»’è‚ğæ“¾
+		// å½“ãŸã‚Šåˆ¤å®šã‚’å–å¾—
 		CCollision* collision = CCollisionSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 90);
 		m_collision.push_back(collision);
 		collision->SetParent(&m_apChara->GetPos());
 		SetEndChildren(collision);
 
-		// ƒJƒƒ‰‚Ì•ûŒü‚É‡‚í‚¹‚é
+		// ã‚«ãƒ¡ãƒ©ã®æ–¹å‘ã«åˆã‚ã›ã‚‹
 		CCamera *camera = CApplication::GetInstance()->GetModeClass()->GetCamera();
 		D3DXVECTOR3 vecNor = camera->GetPosR() - camera->GetPos();
 		D3DXVec3Normalize(&vecNor, &vecNor);
-		vecNor *= 15.0f;			//ˆÚ“®‚³‚¹‚½‚¢’l‚ğ“ü‚ê‚é
+		vecNor *= 15.0f;			//ç§»å‹•ã•ã›ãŸã„å€¤ã‚’å…¥ã‚Œã‚‹
 		m_apChara->SetMove(vecNor);
-		// ƒvƒŒƒCƒ„[‚Ì‘€ì‚ğ–³Œø‰»
+		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ“ä½œã‚’ç„¡åŠ¹åŒ–
 		m_apChara->SetControlLock(true);
-		// d—ÍEŠµ«‚ğØ‚é
+		// é‡åŠ›ãƒ»æ…£æ€§ã‚’åˆ‡ã‚‹
 		m_apChara->SetInertiaMoveLock(true);
-		// •`‰æ‚ğØ‚é
+		// æç”»ã‚’åˆ‡ã‚‹
 		m_apChara->SetDisplay(false);
+		// sound
+		CApplication::GetInstance()->GetSound()->Play(CSound::LEVEL_SE_SKILL_4);
 		m_apChara->SetIsMuteki(true);
 	}
 }
 
 //--------------------------------------------------------------
-// ‘±‚·‚éŒø‰Ê
+// æŒç¶šã™ã‚‹åŠ¹æœ
 //--------------------------------------------------------------
 void CYamatoSkill_4::AllWayAbility()
 {
-	// ŠÔ‚Ì‰ÁZ
+	// æ™‚é–“ã®åŠ ç®—
 	m_Time++;
 	if (m_Time > 20)
 	{
-		// ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ğŒÅ’è
+		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã‚’å›ºå®š
 		m_apChara->SetMoveLock(true);
 		m_apChara->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	}
@@ -112,39 +116,39 @@ void CYamatoSkill_4::AllWayAbility()
 }
 
 //--------------------------------------------------------------
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //--------------------------------------------------------------
 void CYamatoSkill_4::UninitAbility()
 {
 	m_apChara->SetDisplay(true);
 
-	// ‘€ì‚Ì—LŒø‰»
+	// æ“ä½œã®æœ‰åŠ¹åŒ–
 	m_apChara->SetControlLock(false);
-	// ˆÚ“®‚Ì—LŒø‰»
+	// ç§»å‹•ã®æœ‰åŠ¹åŒ–
 	m_apChara->SetMoveLock(false);
-	// Šµ«Ed—Í‚Ì—LŒø‰»
+	// æ…£æ€§ãƒ»é‡åŠ›ã®æœ‰åŠ¹åŒ–
 	m_apChara->SetInertiaMoveLock(false);
 
 	m_apChara->SetIsMuteki(false);
 }
 
 //--------------------------------------------------------------
-// ƒXƒLƒ‹‚ª“–‚½‚Á‚½‚ÌŒø‰Ê
+// ã‚¹ã‚­ãƒ«ãŒå½“ãŸã£ãŸæ™‚ã®åŠ¹æœ
 //--------------------------------------------------------------
 void CYamatoSkill_4::HitAbility(CCharacter * Target)
 {
-	// todo ƒvƒŒƒCƒ„[‚ÌÅI“I‚ÈUŒ‚—Í‚ğæ“¾‚·‚é
+	// todo ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æœ€çµ‚çš„ãªæ”»æ’ƒåŠ›ã‚’å–å¾—ã™ã‚‹
 	m_apChara->DealDamage(Target, 1.0f);
 
 	m_apChara->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 }
 
 //--------------------------------------------------------------
-// ƒXƒLƒ‹¶¬ˆ—
+// ã‚¹ã‚­ãƒ«ç”Ÿæˆå‡¦ç†
 //--------------------------------------------------------------
 CYamatoSkill_4 *CYamatoSkill_4::Create(CCharacter* chara)
 {
-	// ¶¬ˆ—
+	// ç”Ÿæˆå‡¦ç†
 	CSkillDataBase *pSkillData = CSkillDataBase::GetInstance();
 
 	CYamatoSkill_4* pSkill = new CYamatoSkill_4;

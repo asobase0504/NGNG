@@ -17,8 +17,9 @@
 #include "collision_sphere.h"
 #include "yamato_skill_2.h"
 #include "game.h"
-#include "application.h"
 #include "camera_game.h"
+#include "application.h"
+#include "sound.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -63,6 +64,8 @@ void CYamatoSkill_2::InitAbility()
 		m_apChara->SetControlLock(true);
 		// 重力・慣性を切る
 		m_apChara->SetInertiaMoveLock(true);
+		// sound
+		CApplication::GetInstance()->GetSound()->Play(CSound::LEVEL_SE_SHIFT);
 	}
 }
 

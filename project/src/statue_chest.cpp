@@ -12,6 +12,8 @@
 #include "collision_cylinder.h"
 #include "collision_box.h"
 #include "procedure3D.h"
+#include "application.h"
+#include "sound.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
@@ -82,6 +84,9 @@ bool CStatueChest::Select(CCharacter * selectCharacter)
 	m_collisionCylinder = nullptr;
 
 	LoadModel("STATUE_CHEST_OPEN");
+	// sound
+	CApplication::GetInstance()->GetSound()->Play(CSound::LEVEL_SE_STATUE);
+
 	return true;
 }
 

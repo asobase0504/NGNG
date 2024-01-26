@@ -29,7 +29,6 @@ public:
 	{
 		ITEM_NONE = -1,
 		ITEM_DANGO,				// だんご
-		ITEM_SHURIKEN,			// 手裏剣
 		ITEM_GETA,				// 下駄
 		ITEM_UMBRELLA,			// 傘
 		ITEM_HYOUTAN,			// ひょうたん
@@ -51,9 +50,7 @@ public:
 		ITEM_ZOURI,				// 草履
 		ITEM_SEED,				// 種子
 		ITEM_FETTERS,			// 足枷
-		ITEM_SHIELD,			// 盾
-		ITEM_WADAIKO,			// たび
-		ITEM_FLINT,				// 火打石
+		ITEM_WADAIKO,			// 和太鼓
 		ITEM_FLOWER,			// 花
 		ITEM_ELITE,				// エリートかどうか
 		ITEM_MAX

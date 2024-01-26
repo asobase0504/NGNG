@@ -19,6 +19,7 @@
 #include "application.h"
 #include "game.h"
 #include "utility.h"
+#include "sound.h"
 
 //--------------------------------------------------------------
 // コンストラクタ
