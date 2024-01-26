@@ -44,7 +44,7 @@ HRESULT CStatueCombat::Init()
 	LoadModel("STATUE_COMBAT");
 	m_uiText = "戦いを始める";
 
-	SetMark("FIGHT");
+	SetMark("MAKIMONO");
 
 	return S_OK;
 }
